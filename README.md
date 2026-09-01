@@ -6,8 +6,6 @@
 
 Stop inventing UX rules from memory. Open UX is a shared, cited catalog agents list, fetch, and audit against. v1: Forms → field labels. Register for a key on the hosted service; self-host without our cloud. Telemetry improves the shared catalog — we never store your UI payloads.
 
-Product landing (designer-owned): [docs/LANDING.md](docs/LANDING.md).
-
 ## What it is
 
 A small, machine-readable store of UX guidelines plus tools so an agent can:
