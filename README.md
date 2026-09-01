@@ -4,7 +4,7 @@
 
 **Cited UX rules agents audit against.**
 
-Stop inventing UX rules from memory. Open UX is a shared, cited catalog agents list, fetch, and audit against. v1: Forms → field labels. Request an invite on the hosted service; self-host without our cloud. Telemetry improves the shared catalog — we never store your UI payloads.
+Stop inventing UX rules from memory. Open UX is a shared, cited catalog agents list, fetch, and audit against. Request an invite on the hosted service; self-host without our cloud. Telemetry improves the shared catalog — we never store your UI payloads.
 
 ## What it is
 
@@ -24,21 +24,19 @@ Use the hosted endpoint (request an invite, redeem for an API key) or self-host 
 - Everyone shares the same guidelines. Creating an account only lets you use the service — it doesn’t give you a private rulebook.
 - An accessibility or **WCAG compliance** checker — we do not claim WCAG conformance, contrast, or screen-reader names
 
-## v1 scope
+## Catalog
 
-**Category:** Forms  
-**Segment:** Field labels  
-**Three cited rules:**
+Cited catalog in [`catalog/*.json`](catalog/), listed, fetched, and audited via MCP. One shared catalog for every caller — never forked per tenant. Index plus schema: [`catalog/index.json`](catalog/index.json), [`catalog/schema.json`](catalog/schema.json).
+
+Example seed rows in [`catalog/forms.json`](catalog/forms.json) (not the whole product):
 
 | id | Rule | Citation |
 | --- | --- | --- |
-| `forms.field_labels.visible_label` | Every input has a visible label. Placeholder text alone is not enough. | [Apple HIG — Text fields](https://developer.apple.com/design/human-interface-guidelines/text-fields), Material |
+| `forms.field_labels.visible_label` | Every input has a visible label. Placeholder text alone is not enough. | [NN/g — Placeholders in Form Fields Are Harmful](https://www.nngroup.com/articles/form-design-placeholders/), Material 3 |
 | `forms.field_labels.label_stays_visible` | The field label remains visible while the field has a value (floating or persistent — not replaced by the value alone). | [Material 3 — Text fields](https://m3.material.io/components/text-fields/guidelines) |
 | `forms.field_labels.error_identifies_and_fixes` | Error text identifies the field and tells the user how to fix it. | [NN/g — Error-Message Guidelines](https://www.nngroup.com/articles/error-message-guidelines/) |
 
-Those ids are the Designer LIVE seed (UNS-44), kept as the first three rows in [`catalog/forms.json`](catalog/forms.json). Actions/verbs live in [`catalog/actions.json`](catalog/actions.json). The on-disk index is [`catalog/index.json`](catalog/index.json).
-
-**Out of v1:** other form segments, screenshots, search, suggest-fixes, bulk ingest, inventing look, a server LLM grader.
+Soft size ~50–100 KB. Hard ceiling ~384 KB.
 
 ## Tools
 
@@ -53,12 +51,6 @@ Verdicts are `pass`, `fail`, or `incomplete`. `reasons[]` reuse catalog `pass_wh
 
 There is no server-side grading model.
 
-## Catalog
-
-Lane files plus index: [`catalog/actions.json`](catalog/actions.json), [`catalog/forms.json`](catalog/forms.json), [`catalog/govuk.json`](catalog/govuk.json), [`catalog/nng.json`](catalog/nng.json), [`catalog/fluent.json`](catalog/fluent.json), [`catalog/polar.json`](catalog/polar.json), [`catalog/spectrum.json`](catalog/spectrum.json), [`catalog/ant.json`](catalog/ant.json), [`catalog/mui.json`](catalog/mui.json), [`catalog/uswds.json`](catalog/uswds.json), [`catalog/canada.json`](catalog/canada.json), [`catalog/nsw.json`](catalog/nsw.json), [`catalog/gold.json`](catalog/gold.json), [`catalog/nl.json`](catalog/nl.json), [`catalog/suomi.json`](catalog/suomi.json), [`catalog/index.json`](catalog/index.json), [`catalog/schema.json`](catalog/schema.json). Never forked per tenant.
-
-Soft size ~50–100 KB. Hard ceiling ~384 KB.
-
 ## Hosted vs self-host
 
 | | Hosted HTTP | Self-host stdio |
@@ -67,7 +59,7 @@ Soft size ~50–100 KB. Hard ceiling ~384 KB.
 | Limits | Soft ~60/min and ~1k/day per key | None |
 | Telemetry | Callers (key_hash), tool mix, verdicts, rule ids, target type | Off |
 
-See [docs/PRIVACY.md](docs/PRIVACY.md) and [docs/DEPLOY.md](docs/DEPLOY.md). Display name is **Open UX**. Do not put “MCP” in the H1 or marketplace title.
+Hosted: [https://open-ux.dev](https://open-ux.dev) — MCP at [https://open-ux.dev/mcp](https://open-ux.dev/mcp), invite at [https://open-ux.dev/invite](https://open-ux.dev/invite). Privacy: [docs/PRIVACY.md](docs/PRIVACY.md).
 
 ## Layout
 
@@ -75,31 +67,26 @@ See [docs/PRIVACY.md](docs/PRIVACY.md) and [docs/DEPLOY.md](docs/DEPLOY.md). Dis
 packages/mcp     Python FastMCP server
 catalog/         shared rules JSON + schema
 clients/claude   thin Claude plugin / install craft (no duplicate rule bodies)
-docs/            LANDING.md + readme-hero.svg (designer craft), PRIVACY.md, DEPLOY.md
-packs/           honest imp.* / eor.e* notes for this scaffold
+docs/            PRIVACY.md, readme-hero.svg
 ```
 
 Package name: `@3dyonic/open-ux` (Claude plugin / npm scope). Python distribution: `open-ux`.
 
 ## Quick start
 
-**Connect → key → list → one audit.** Thursday: URL + key in client settings. Plugin registry comes after that proof.
+**Connect → key → list → one audit.**
 
 ### Hosted
 
-1. Request an invite on `/invite` (`POST /invite/request`). When approved, redeem the one-time `inv_…` token (`POST /invite/redeem`) → bearer API key (`uxmcp_…`).
-2. Point your client at the hosted `/mcp` URL (deploy your own; no public URL in this repo yet).
+1. Request an invite at [https://open-ux.dev/invite](https://open-ux.dev/invite) (`POST /invite/request`). When approved, redeem the one-time `inv_…` token (`POST /invite/redeem`) → bearer API key (`uxmcp_…`).
+2. Point your client at [https://open-ux.dev/mcp](https://open-ux.dev/mcp).
 3. Call `list_guidelines`, then `audit` a snippet.
 
 Hosted tools return 401 without a key. One shared catalog for every caller.
 
-### Claude plugin
-
-Thin install from [`clients/claude`](clients/claude). Connect → list rules → one audit. The plugin does not ship a second copy of the catalog.
-
 ### Self-host / run locally
 
-Same tools from `packages/mcp` over stdio. No invite step. Same catalog as hosted.
+Same tools from `packages/mcp` over stdio. No invite step. Same catalog as hosted. Telemetry off.
 
 ```bash
 python -m venv .venv && source .venv/bin/activate
@@ -120,13 +107,12 @@ cd packages/mcp && python -m pytest
 On the hosted service:
 
 - **Never stored:** `audit.content`, prompts, or other UI / PII bodies
-- **Telemetry:** callers, tool mix, verdicts, rule ids (and target type / size as needed)
+- **Telemetry:** callers (`key_hash`), tool mix, verdicts, rule ids, target type
+- **Retention:** 30 days or less; `POST /account/delete` wipes that account
 
 Self-host: your process, your logs. Telemetry off.
 
-## Status
-
-Early. v1 is the three Forms → field-labels rules above; the catalog file is still a stub until Designer UNS-44 lands. Merge of this scaffold is held for Architect review.
+Full page: [docs/PRIVACY.md](docs/PRIVACY.md).
 
 ## License
 
