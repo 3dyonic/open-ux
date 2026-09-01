@@ -12,6 +12,7 @@ from open_ux.audit import audit as run_audit
 from open_ux.auth import AuthError, HashedKeyVerifier, register, revoke_account
 from open_ux.catalog import EMPTY_NOTE, content_hash, get_by_id, list_index, load_catalog
 from open_ux.landing import LANDING_HTML
+from open_ux.register_page import REGISTER_HTML
 from open_ux.settings import Settings
 from open_ux.store import get_store
 
@@ -160,8 +161,10 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             }
         )
 
-    @mcp.custom_route("/register", methods=["POST"])
+    @mcp.custom_route("/register", methods=["GET", "POST"])
     async def register_route(request: Request) -> Response:
+        if request.method == "GET":
+            return HTMLResponse(REGISTER_HTML)
         if not hosted:
             return JSONResponse(
                 {"error": "Registration is hosted-only. Self-host stdio needs no key."},
