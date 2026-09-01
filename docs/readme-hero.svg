@@ -6,7 +6,7 @@
   <text x="84" y="124" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="18" font-weight="600" fill="#1f2328">Catalog</text>
   <text x="84" y="152" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="13" fill="#656d76">Cited rules · one file</text>
   <rect x="84" y="176" width="240" height="36" rx="4" fill="#ddf4ff" stroke="#0969da" stroke-width="1"/>
-  <text x="96" y="198" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace" font-size="12" fill="#0969da">forms.field_labels&</text>
+  <text x="96" y="198" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace" font-size="12" fill="#0969da">forms.field_labels…</text>
   <rect x="84" y="224" width="240" height="36" rx="4" fill="#f6f8fa" stroke="#d0d7de"/>
   <text x="96" y="246" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace" font-size="12" fill="#656d76">jobs[] · patterns[]</text>
   <rect x="84" y="272" width="240" height="36" rx="4" fill="#f6f8fa" stroke="#d0d7de"/>
