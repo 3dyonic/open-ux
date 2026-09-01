@@ -1,0 +1,341 @@
+{
+  "version": "0.1.0",
+  "guidelines": [
+    {
+      "id": "suomi.static-validation-on-submit-default",
+      "category": "Forms",
+      "segment": "Validation",
+      "title": "static validation on submit default",
+      "rule": "Static validation on submit is the recommended default — errors appear together via ErrorSummary above the form; focus moves to the summary heading. Dual-cite NN/g prefer-inline and GCDS blur-validate; conflict flag, not a house winner. Unique claim: submit-time summary as the cognitive default.",
+      "citation": {
+        "source": "Suomi.fi — Static form",
+        "url": "https://designsystem.suomi.fi/patterns/static-form/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Submit-time ErrorSummary above the form with focus to the summary heading or (dual-cite) inline/blur school applied consistently — not mixed as one house winner."
+      ],
+      "fail_when": [
+        "Schools mixed on one form (submit-summary and blur-inline claimed as one default) with no cited system."
+      ],
+      "severity": "major",
+      "jobs": [
+        "recover_from_invalid_input"
+      ],
+      "do_not_claim": "A house winner vs NN/g inline / GCDS blur; ErrorSummary link-text row as this timing row."
+    },
+    {
+      "id": "suomi.errorsummary-link-text-equals-field-error",
+      "category": "Forms",
+      "segment": "Errors",
+      "title": "errorsummary link text equals field error",
+      "rule": "ErrorSummary link text = the field’s error text — same wording in both places so either context still reads.",
+      "citation": {
+        "source": "Suomi.fi — Static form",
+        "url": "https://designsystem.suomi.fi/patterns/static-form/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Each ErrorSummary link uses the same wording as that field’s error text."
+      ],
+      "fail_when": [
+        "Summary link wording differs from the field error (e.g. only the field label in the summary)."
+      ],
+      "severity": "major",
+      "jobs": [
+        "recover_from_invalid_input",
+        "explain_failure_next_to_cause"
+      ],
+      "do_not_claim": "Submit-time default as this wording row; GOV.UK error summary as a merge that drops same-wording."
+    },
+    {
+      "id": "suomi.default-required-optional-in-parentheses",
+      "category": "Forms",
+      "segment": "Required / optional",
+      "title": "default required optional in parentheses",
+      "rule": "Default: fields are required; optional is `(optionalText)` in parentheses on the label. Dual-cite NL `(niet verplicht)` / NN/g; this names the Finnish default-required + parenthetical optional. Locked dual-cite; no house marker.",
+      "citation": {
+        "source": "Suomi.fi — TextInput",
+        "url": "https://designsystem.suomi.fi/components/textinput/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "One named school applied consistently: default-required + optional in parentheses (Suomi.fi); or NL `(niet verplicht)` + above-form key; or mark-the-minority; or mark-both."
+      ],
+      "fail_when": [
+        "Optional vs required unmarked; schools mixed on one form; a house marker invented."
+      ],
+      "severity": "major",
+      "jobs": [
+        "name_a_control"
+      ],
+      "do_not_claim": "A house required marker; NL Dutch wording as this Finnish parenthetical row."
+    },
+    {
+      "id": "suomi.toast-10s-hover-stick-then-float",
+      "category": "Feedback",
+      "segment": "Toast",
+      "title": "toast 10s hover stick then float",
+      "rule": "Toast: 10 seconds or while hovered; slide out the top; stick then float top-right on scroll — success that needs no action. Dual-cite Spectrum ≥5s vs Ant Message 3s; no house seconds.",
+      "citation": {
+        "source": "Suomi.fi — Toast",
+        "url": "https://designsystem.suomi.fi/components/toast/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Duration is one named school applied consistently (Suomi.fi 10s or while hovered; Spectrum ≥5s; Ant 3s). Suomi.fi geometry when that school is used: stick-top then float top-right after scroll; slide-out dismiss; success with no required response."
+      ],
+      "fail_when": [
+        "A house seconds value not in {10s+hover, ≥5s, 3s}; or a success-toast that requires a response; or collapsing the three durations into one house timer."
+      ],
+      "severity": "major",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "do_not_claim": "A house toast duration; Notification first-load split as this row."
+    },
+    {
+      "id": "suomi.notification-first-load-not-post-action",
+      "category": "Feedback",
+      "segment": "Notification",
+      "title": "notification first load not post action",
+      "rule": "Notification is first-load page content, not a post-action pop-in — `role=\"region\"`. Dynamic after interaction → InlineAlert. Dual-cite NSW in-page vs global alert.",
+      "citation": {
+        "source": "Suomi.fi — Notification",
+        "url": "https://designsystem.suomi.fi/components/notification/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "`Notification` is on the initial page load; post-action dynamic feedback uses InlineAlert."
+      ],
+      "fail_when": [
+        "`Notification` is used as a post-interaction popup."
+      ],
+      "severity": "major",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "do_not_claim": "Toast row; NSW in-page vs global as a merge; ErrorSummary."
+    },
+    {
+      "id": "suomi.hide-breadcrumbs-on-mobile",
+      "category": "Wayfinding",
+      "segment": "Breadcrumb",
+      "title": "hide breadcrumbs on mobile",
+      "rule": "Hide breadcrumbs on mobile — content starts higher; mobile breadcrumb is hard motorically. Dual-cite USWDS omit-on-home; this is viewport hide, not home omit. Don’t use breadcrumbs on 2–3 level sites.",
+      "citation": {
+        "source": "Suomi.fi — Breadcrumb",
+        "url": "https://designsystem.suomi.fi/components/breadcrumb/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Breadcrumbs are hidden at mobile viewport; not used on 2–3 level sites."
+      ],
+      "fail_when": [
+        "Mobile shows a breadcrumb trail; or breadcrumbs are used on a 2–3 level site."
+      ],
+      "severity": "major",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "do_not_claim": "USWDS omit-on-home as this viewport-hide row."
+    },
+    {
+      "id": "suomi.button-max-three-words-mobile-full-width",
+      "category": "Actions",
+      "segment": "Buttons",
+      "title": "button max three words mobile full width",
+      "rule": "Button label ≤3 words; verb; capital first letter; full-width on mobile, shrink-to-content on desktop. Inverted variant not on images unless contrast holds. Dual-cite Actions explicit verb; unique bits are the three-word cap and mobile full-width.",
+      "citation": {
+        "source": "Suomi.fi — Button",
+        "url": "https://designsystem.suomi.fi/components/button/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Action labels ≤3 words, verb-first, capital first letter; small screens span the viewport; desktop width follows the label; inverted not on images unless contrast holds."
+      ],
+      "fail_when": [
+        "Action label longer than three words; mobile button does not span the viewport; desktop is a fixed wide block; inverted on an image without contrast."
+      ],
+      "severity": "major",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "do_not_claim": "One primary per view; Actions explicit-verb without the three-word cap."
+    },
+    {
+      "id": "suomi.time-field-60px-hint-tmm-always-visible",
+      "category": "Forms",
+      "segment": "Time",
+      "title": "time field 60px hint tmm always visible",
+      "rule": "Time field is fixed ~60px; hint `t.mm` always visible; component normalises to Finnish time — not placeholder-only format. Dual-cite USWDS time picker increments. Placeholder/label lock: format is not only in a placeholder.",
+      "citation": {
+        "source": "Suomi.fi — TimeInput",
+        "url": "https://designsystem.suomi.fi/components/timeinput/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Time input is ~60px wide; `t.mm` hint is always visible; value is normalised to Finnish time."
+      ],
+      "fail_when": [
+        "Time format lives only in a placeholder; field is far wider than the named ~60px with no always-visible hint."
+      ],
+      "severity": "major",
+      "jobs": [
+        "keep_field_purpose_visible_while_filled"
+      ],
+      "do_not_claim": "Date `PP.KK.VVVV` hint as this time row; USWDS increments as a merge."
+    },
+    {
+      "id": "suomi.date-hint-ppkkvvvv-calendar-optional-focus-trap",
+      "category": "Forms",
+      "segment": "Date",
+      "title": "date hint ppkkvvvv calendar optional focus trap",
+      "rule": "Date hint `PP.KK.VVVV` (or `p.k.vvvv`) always visible; calendar optional; focus is trapped while the calendar is open. Dual-cite USWDS typeable date / GOV.UK memorable date.",
+      "citation": {
+        "source": "Suomi.fi — DateInput",
+        "url": "https://designsystem.suomi.fi/components/dateinput/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Date format hint is always visible; the field is typeable; calendar (if present) is optional and traps focus while open."
+      ],
+      "fail_when": [
+        "Date format is only in a placeholder; calendar is the only entry path; calendar open without focus trap."
+      ],
+      "severity": "major",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "do_not_claim": "Time `t.mm` row; USWDS typeable / GOV.UK memorable as a merge that drops the Finnish hint + trap."
+    },
+    {
+      "id": "suomi.search-hide-label-only-if-name-states-context",
+      "category": "Forms",
+      "segment": "Search",
+      "title": "search hide label only if name states context",
+      "rule": "Search: visually hide the label only if the accessible name states the search context (“Hae sivustolta” / “Hae toimipisteitä”). Placeholder is visual extra. Clear control appears once there is a query. Skip search on tiny single-page tools. Placeholder/label lock: this is not a general placeholder-as-label pass.",
+      "citation": {
+        "source": "Suomi.fi — SearchInput",
+        "url": "https://designsystem.suomi.fi/components/searchinput/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "If the search label is visually hidden, the accessible name states context; placeholder is extra; clear appears once there is a query; tiny single-page tools may omit search."
+      ],
+      "fail_when": [
+        "Visually hidden search label with a generic name that does not state context; or ordinary non-search fields hide the label citing this."
+      ],
+      "severity": "major",
+      "jobs": [
+        "avoid_placeholder_as_label"
+      ],
+      "do_not_claim": "NL header-search placeholder exception as this context-name row; GOLD search placement."
+    },
+    {
+      "id": "suomi.pagination-skip-link-to-listing",
+      "category": "Wayfinding",
+      "segment": "Pagination",
+      "title": "pagination skip link to listing",
+      "rule": "Pagination: skip-link (or in-page link) back to the listing; optional page-number field when there are many pages; SR copy without odd punctuation (“Sivu 1 kautta 20”). Dual-cite USWDS/NSW pagination.",
+      "citation": {
+        "source": "Suomi.fi — Pagination",
+        "url": "https://designsystem.suomi.fi/components/pagination/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "A skip/in-page link returns to the listing; many-page sets may include a page-number field; SR text avoids odd punctuation."
+      ],
+      "fail_when": [
+        "Pagination has no way back to the listing start; SR copy uses odd punctuation instead of the named pattern."
+      ],
+      "severity": "major",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "do_not_claim": "USWDS/NSW pagination as a merge that drops skip-back-to-listing."
+    },
+    {
+      "id": "suomi.toggle-button-immediate-input-submit",
+      "category": "Forms",
+      "segment": "Toggle",
+      "title": "toggle button immediate input submit",
+      "rule": "Toggle has two variants: `button` (immediate action) vs `input` (in a form) — always one default state; not a checkbox. Dual-cite Ant/Lightning immediate-toggle; Suomi names the form-input variant. Locked dual-cite by variant; no global winner.",
+      "citation": {
+        "source": "Suomi.fi — Toggle",
+        "url": "https://designsystem.suomi.fi/components/toggle/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Button-toggle applies immediately with no extra confirm; input-toggle waits for submit — or Ant/Lightning always-immediate switch used as that school on that surface. Checkbox is not the state-change control. Always one default state."
+      ],
+      "fail_when": [
+        "Button-toggle requires extra confirm; input-toggle applies immediately while treated as a submit-time form control; checkbox used for state change; a global “all switches immediate” house rule that erases the variant split."
+      ],
+      "severity": "major",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "do_not_claim": "A global immediate-vs-submit winner."
+    },
+    {
+      "id": "suomi.radio-extras-hidden-then-indented",
+      "category": "Forms",
+      "segment": "Radios",
+      "title": "radio extras hidden then indented",
+      "rule": "Radio extras: additional fields stay hidden, then show indented under the selected radio — not a second “radios vs checkboxes” row.",
+      "citation": {
+        "source": "Suomi.fi — RadioButton",
+        "url": "https://designsystem.suomi.fi/components/radiobutton/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Extra fields for a radio are hidden until that radio is selected, then appear indented under it."
+      ],
+      "fail_when": [
+        "Extra fields for unselected radios are visible; extras appear unindented / disconnected from the selected radio."
+      ],
+      "severity": "major",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "do_not_claim": "Radios vs checkboxes vs toggle (already filed)."
+    },
+    {
+      "id": "suomi.file-hint-and-datetime-fieldset",
+      "category": "Forms",
+      "segment": "File / datetime",
+      "title": "file hint and datetime fieldset",
+      "rule": "File: `hintText` states max size / types / count; `dragAreaText` names drag-and-drop; `addedFileAriaText` is read before the filename; `removeFileText` names remove. Dual-cite USWDS prefer-one-file. Datetime combo: wrap date+time in a fieldset with a legend; desktop uses external HintText/StatusText ids on `aria-describedby`; mobile uses built-in hint/status because fields stack.",
+      "citation": {
+        "source": "Suomi.fi — FileInput · Date+time pattern https://designsystem.suomi.fi/patterns/datetime/",
+        "url": "https://designsystem.suomi.fi/components/fileinput/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "File hints name size/types/count; drag and remove strings are named; added-file SR text precedes the filename. Date+time share a fieldset/legend; desktop external hint/status ids; mobile built-in hint/status on stacked fields."
+      ],
+      "fail_when": [
+        "File input has no size/types/count hint; date+time are unrelated fields with no shared legend; desktop omits external describedby ids while claiming this pattern."
+      ],
+      "severity": "major",
+      "jobs": [
+        "group_related_inputs"
+      ],
+      "do_not_claim": "USWDS prefer-one-file / file types+size as a merge that drops the named string props; date-hint `PP.KK.VVVV` as this fieldset row."
+    }
+  ],
+  "jobs": [
+    "recover_from_invalid_input",
+    "explain_failure_next_to_cause",
+    "name_a_control",
+    "announce_system_status",
+    "wayfind_after_nav",
+    "pick_primary_action",
+    "keep_field_purpose_visible_while_filled",
+    "choose_control_for_choice",
+    "avoid_placeholder_as_label",
+    "group_related_inputs"
+  ],
+  "patterns": []
+}

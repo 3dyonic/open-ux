@@ -1171,6 +1171,86 @@
       "lane": "forms"
     },
     {
+      "id": "gold.consistent-not-uniform",
+      "title": "consistent not uniform",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "lane": "gold"
+    },
+    {
+      "id": "gold.visual-loudness-primary-secondary-tertiary",
+      "title": "visual loudness primary secondary tertiary",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "lane": "gold"
+    },
+    {
+      "id": "gold.next-primary-save-progress-secondary",
+      "title": "next primary save progress secondary",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "lane": "gold"
+    },
+    {
+      "id": "gold.avoid-select-except-long-lists",
+      "title": "avoid select except long lists",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "gold"
+    },
+    {
+      "id": "gold.progress-indicator-out-of-order-returnable",
+      "title": "progress indicator out of order returnable",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "lane": "gold"
+    },
+    {
+      "id": "gold.search-placement-home-vs-results",
+      "title": "search placement home vs results",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "lane": "gold"
+    },
+    {
+      "id": "gold.search-input-attributes",
+      "title": "search input attributes",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "lane": "gold"
+    },
+    {
+      "id": "gold.card-one-inner-link-hit-area",
+      "title": "card one inner link hit area",
+      "jobs": [
+        "keep_hit_target_usable"
+      ],
+      "lane": "gold"
+    },
+    {
+      "id": "gold.accordion-find-in-page-misses-collapsed",
+      "title": "accordion find in page misses collapsed",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "lane": "gold"
+    },
+    {
+      "id": "gold.no-abbr-expand-on-first-mention",
+      "title": "no abbr expand on first mention",
+      "jobs": [
+        "name_a_control"
+      ],
+      "lane": "gold"
+    },
+    {
       "id": "govuk.date-input-only-memorable",
       "title": "date input only memorable",
       "jobs": [
@@ -1410,6 +1490,135 @@
         "use_familiar_control"
       ],
       "lane": "mui"
+    },
+    {
+      "id": "nl.header-search-placeholder-visible-search-control",
+      "title": "header search placeholder visible search control",
+      "jobs": [
+        "avoid_placeholder_as_label"
+      ],
+      "lane": "nl"
+    },
+    {
+      "id": "nl.no-forced-input-patterns-or-masks",
+      "title": "no forced input patterns or masks",
+      "jobs": [
+        "recover_from_invalid_input"
+      ],
+      "lane": "nl"
+    },
+    {
+      "id": "nl.dont-reject-valid-variants",
+      "title": "dont reject valid variants",
+      "jobs": [
+        "recover_from_invalid_input"
+      ],
+      "lane": "nl"
+    },
+    {
+      "id": "nl.no-min-max-length-names-places",
+      "title": "no min max length names places",
+      "jobs": [
+        "recover_from_invalid_input"
+      ],
+      "lane": "nl"
+    },
+    {
+      "id": "nl.no-select-multiple",
+      "title": "no select multiple",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "nl"
+    },
+    {
+      "id": "nl.step-n-of-m-in-title-and-above-form",
+      "title": "step n of m in title and above form",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "lane": "nl"
+    },
+    {
+      "id": "nl.last-step-is-send-not-volgende",
+      "title": "last step is send not volgende",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "lane": "nl"
+    },
+    {
+      "id": "nl.labels-contain-only-text",
+      "title": "labels contain only text",
+      "jobs": [
+        "name_a_control"
+      ],
+      "lane": "nl"
+    },
+    {
+      "id": "nl.privacy-terms-link-outside-label",
+      "title": "privacy terms link outside label",
+      "jobs": [
+        "name_a_control"
+      ],
+      "lane": "nl"
+    },
+    {
+      "id": "nl.form-draft-links-new-tab-named-in-link",
+      "title": "form draft links new tab named in link",
+      "jobs": [
+        "name_a_control"
+      ],
+      "lane": "nl"
+    },
+    {
+      "id": "nl.success-confirms-what-not-bounce-home",
+      "title": "success confirms what not bounce home",
+      "jobs": [
+        "write_empty_state"
+      ],
+      "lane": "nl"
+    },
+    {
+      "id": "nl.name-next-organisational-steps",
+      "title": "name next organisational steps",
+      "jobs": [
+        "write_empty_state"
+      ],
+      "lane": "nl"
+    },
+    {
+      "id": "nl.dont-auto-dismiss-status-announce-complete",
+      "title": "dont auto dismiss status announce complete",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "lane": "nl"
+    },
+    {
+      "id": "nl.mark-optional-niet-verplicht-above-form",
+      "title": "mark optional niet verplicht above form",
+      "jobs": [
+        "name_a_control"
+      ],
+      "lane": "nl"
+    },
+    {
+      "id": "nl.long-legal-jargon-before-form-not-tooltip",
+      "title": "long legal jargon before form not tooltip",
+      "jobs": [
+        "keep_field_purpose_visible_while_filled"
+      ],
+      "lane": "nl"
+    },
+    {
+      "id": "nl.native-required-bubbles-not-error-ui",
+      "title": "native required bubbles not error ui",
+      "jobs": [
+        "recover_from_invalid_input",
+        "explain_failure_next_to_cause"
+      ],
+      "lane": "nl"
     },
     {
       "id": "nng.too-few-options-radios-not-dropdown",
@@ -2035,6 +2244,119 @@
         "name_a_control"
       ],
       "lane": "spectrum"
+    },
+    {
+      "id": "suomi.static-validation-on-submit-default",
+      "title": "static validation on submit default",
+      "jobs": [
+        "recover_from_invalid_input"
+      ],
+      "lane": "suomi"
+    },
+    {
+      "id": "suomi.errorsummary-link-text-equals-field-error",
+      "title": "errorsummary link text equals field error",
+      "jobs": [
+        "recover_from_invalid_input",
+        "explain_failure_next_to_cause"
+      ],
+      "lane": "suomi"
+    },
+    {
+      "id": "suomi.default-required-optional-in-parentheses",
+      "title": "default required optional in parentheses",
+      "jobs": [
+        "name_a_control"
+      ],
+      "lane": "suomi"
+    },
+    {
+      "id": "suomi.toast-10s-hover-stick-then-float",
+      "title": "toast 10s hover stick then float",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "lane": "suomi"
+    },
+    {
+      "id": "suomi.notification-first-load-not-post-action",
+      "title": "notification first load not post action",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "lane": "suomi"
+    },
+    {
+      "id": "suomi.hide-breadcrumbs-on-mobile",
+      "title": "hide breadcrumbs on mobile",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "lane": "suomi"
+    },
+    {
+      "id": "suomi.button-max-three-words-mobile-full-width",
+      "title": "button max three words mobile full width",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "lane": "suomi"
+    },
+    {
+      "id": "suomi.time-field-60px-hint-tmm-always-visible",
+      "title": "time field 60px hint tmm always visible",
+      "jobs": [
+        "keep_field_purpose_visible_while_filled"
+      ],
+      "lane": "suomi"
+    },
+    {
+      "id": "suomi.date-hint-ppkkvvvv-calendar-optional-focus-trap",
+      "title": "date hint ppkkvvvv calendar optional focus trap",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "suomi"
+    },
+    {
+      "id": "suomi.search-hide-label-only-if-name-states-context",
+      "title": "search hide label only if name states context",
+      "jobs": [
+        "avoid_placeholder_as_label"
+      ],
+      "lane": "suomi"
+    },
+    {
+      "id": "suomi.pagination-skip-link-to-listing",
+      "title": "pagination skip link to listing",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "lane": "suomi"
+    },
+    {
+      "id": "suomi.toggle-button-immediate-input-submit",
+      "title": "toggle button immediate input submit",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "suomi"
+    },
+    {
+      "id": "suomi.radio-extras-hidden-then-indented",
+      "title": "radio extras hidden then indented",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "suomi"
+    },
+    {
+      "id": "suomi.file-hint-and-datetime-fieldset",
+      "title": "file hint and datetime fieldset",
+      "jobs": [
+        "group_related_inputs"
+      ],
+      "lane": "suomi"
     },
     {
       "id": "uswds.filled-next-outline-this-page",
