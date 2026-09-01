@@ -18,9 +18,7 @@ jobs:
       - name: Install
         run: pip install -e ".[dev]"
       - name: Validate catalog
-        working-directory: .
-        run: |
-          pip install -e packages/mcp
-          python -m open_ux validate-catalog
+        working-directory: ${{ github.workspace }}
+        run: python -m open_ux validate-catalog
       - name: Test
         run: python -m pytest -q

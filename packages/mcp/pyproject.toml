@@ -25,7 +25,7 @@ dev = ["pytest>=8", "pytest-asyncio>=0.24", "httpx>=0.27"]
 open-ux = "open_ux.__main__:main"
 
 [tool.hatch.build.targets.wheel]
-only-include = ["open_ux"]
+packages = ["src/open_ux"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
