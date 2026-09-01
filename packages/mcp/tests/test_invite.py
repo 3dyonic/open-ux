@@ -160,3 +160,26 @@ def test_approve_invite_cli(tmp_env: Path, capsys: pytest.CaptureFixture[str]) -
     assert out["email"] == "ada@example.com"
     assert out["token"].startswith("inv_")
     assert "/invite/redeem?token=" in out["redeem_url"]
+
+
+def test_admin_approve_is_json_only_no_html(tmp_env: Path) -> None:
+    from open_ux import invite_page
+
+    assert not hasattr(invite_page, "ADMIN_HTML")
+    assert "Approve" not in invite_page.REQUEST_HTML
+    assert "Approve" not in invite_page.REQUESTED_HTML
+    assert "Approve" not in invite_page.REDEEM_HTML
+
+    with _hosted_client(tmp_env) as client:
+        get = client.get("/admin/invite/approve")
+        assert get.status_code != 200
+        assert "text/html" not in get.headers.get("content-type", "")
+
+        posted = client.post(
+            "/admin/invite/approve",
+            headers={"Authorization": "Bearer test-admin-token"},
+            json={"email": "ada@example.com"},
+        )
+        assert posted.status_code == 200
+        assert posted.headers.get("content-type", "").startswith("application/json")
+        assert "text/html" not in posted.headers.get("content-type", "")
