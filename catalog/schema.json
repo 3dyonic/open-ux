@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/3dyonic/open-ux/catalog/schema.json",
   "title": "Open UX catalog",
-  "description": "One shared, cited guideline catalog. Design ~50–100 KB; hard ceiling ~256 KB. Optional jobs[] and patterns[] may be empty. Do not invent house rules.",
+  "description": "One shared, cited guideline catalog. Design ~50–100 KB; hard ceiling ~384 KB. Optional jobs[] and patterns[] may be empty. Do not invent house rules.",
   "type": "object",
   "additionalProperties": false,
   "required": ["version", "guidelines"],

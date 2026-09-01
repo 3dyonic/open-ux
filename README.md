@@ -55,9 +55,9 @@ There is no server-side grading model.
 
 ## Catalog
 
-Lane files plus index: [`catalog/actions.json`](catalog/actions.json), [`catalog/forms.json`](catalog/forms.json), [`catalog/govuk.json`](catalog/govuk.json), [`catalog/nng.json`](catalog/nng.json), [`catalog/fluent.json`](catalog/fluent.json), [`catalog/polar.json`](catalog/polar.json), [`catalog/spectrum.json`](catalog/spectrum.json), [`catalog/ant.json`](catalog/ant.json), [`catalog/mui.json`](catalog/mui.json), [`catalog/uswds.json`](catalog/uswds.json), [`catalog/canada.json`](catalog/canada.json), [`catalog/nsw.json`](catalog/nsw.json), [`catalog/index.json`](catalog/index.json), [`catalog/schema.json`](catalog/schema.json). Never forked per tenant.
+Lane files plus index: [`catalog/actions.json`](catalog/actions.json), [`catalog/forms.json`](catalog/forms.json), [`catalog/govuk.json`](catalog/govuk.json), [`catalog/nng.json`](catalog/nng.json), [`catalog/fluent.json`](catalog/fluent.json), [`catalog/polar.json`](catalog/polar.json), [`catalog/spectrum.json`](catalog/spectrum.json), [`catalog/ant.json`](catalog/ant.json), [`catalog/mui.json`](catalog/mui.json), [`catalog/uswds.json`](catalog/uswds.json), [`catalog/canada.json`](catalog/canada.json), [`catalog/nsw.json`](catalog/nsw.json), [`catalog/gold.json`](catalog/gold.json), [`catalog/nl.json`](catalog/nl.json), [`catalog/suomi.json`](catalog/suomi.json), [`catalog/index.json`](catalog/index.json), [`catalog/schema.json`](catalog/schema.json). Never forked per tenant.
 
-Soft size ~50–100 KB. Hard ceiling ~256 KB.
+Soft size ~50–100 KB. Hard ceiling ~384 KB.
 
 ## Hosted vs self-host
 

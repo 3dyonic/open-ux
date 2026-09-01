@@ -19,9 +19,11 @@ BODY_KEYS = {"pass_when", "fail_when", "rule", "citation", "check"}
 EXTRA_SAMPLE = "govuk.date-input-only-memorable"
 HARVEST3_SAMPLE = "spectrum.quiet-vs-standard-background"
 HARVEST4_SAMPLE = "uswds.filled-next-outline-this-page"
+HARVEST5_SAMPLE = "gold.consistent-not-uniform"
 EXTRA_PREFIXES = ("govuk.", "nng.", "fluent.", "polar.")
 HARVEST3_PREFIXES = ("spectrum.", "ant.", "mui.")
 HARVEST4_PREFIXES = ("uswds.", "canada.", "nsw.")
+HARVEST5_PREFIXES = ("gold.", "nl.", "suomi.")
 
 
 @pytest.mark.asyncio
@@ -83,10 +85,10 @@ def _assert_index_rows(rows: list[dict]) -> None:
 async def test_list_index_has_no_rule_bodies(live_catalog: Path) -> None:
     mcp = create_mcp(hosted=False)
     async with Client(mcp) as client:
-        listed = await client.call_tool("list_guidelines", {"limit": 300, "offset": 0})
+        listed = await client.call_tool("list_guidelines", {"limit": 400, "offset": 0})
         data = listed.data
         assert data["catalog"]["status"] == "ok"
-        assert data["total"] == 269
+        assert data["total"] == 309
         _assert_index_rows(data["guidelines"])
         ids = {row["id"] for row in data["guidelines"]}
         for seed in LIVE_SEED:
@@ -98,13 +100,18 @@ async def test_list_index_has_no_rule_bodies(live_catalog: Path) -> None:
         harvest4 = [
             row for row in data["guidelines"] if row["id"].startswith(HARVEST4_PREFIXES)
         ]
+        harvest5 = [
+            row for row in data["guidelines"] if row["id"].startswith(HARVEST5_PREFIXES)
+        ]
         assert len(extra) == 73
         assert len(harvest3) == 56
         assert len(harvest4) == 46
+        assert len(harvest5) == 40
         assert EXTRA_SAMPLE in ids
         assert HARVEST3_SAMPLE in ids
         assert HARVEST4_SAMPLE in ids
-        for row in extra + harvest3 + harvest4:
+        assert HARVEST5_SAMPLE in ids
+        for row in extra + harvest3 + harvest4 + harvest5:
             dumped = json.dumps(row)
             assert "pass_when" not in dumped
             assert '"rule"' not in dumped
@@ -210,6 +217,26 @@ async def test_get_harvest4_guideline_returns_full_body(live_catalog: Path) -> N
         assert body["found"] is True
         g = body["guideline"]
         assert g["id"] == HARVEST4_SAMPLE
+        assert "lane" not in g
+        assert g["rule"]
+        assert g["pass_when"]
+        assert g["fail_when"]
+        assert g["do_not_claim"]
+        assert "when_to_use" not in g
+        assert "when_not" not in g
+        assert g["citation"]["url"].startswith("https://")
+        assert "](<" not in g["citation"]["url"]
+
+
+@pytest.mark.asyncio
+async def test_get_harvest5_guideline_returns_full_body(live_catalog: Path) -> None:
+    mcp = create_mcp(hosted=False)
+    async with Client(mcp) as client:
+        got = await client.call_tool("get_guideline", {"id": HARVEST5_SAMPLE})
+        body = got.data
+        assert body["found"] is True
+        g = body["guideline"]
+        assert g["id"] == HARVEST5_SAMPLE
         assert "lane" not in g
         assert g["rule"]
         assert g["pass_when"]

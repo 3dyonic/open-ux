@@ -42,7 +42,7 @@ class Catalog:
 def _validate_size(n: int) -> None:
     if n > HARD_CATALOG_BYTES:
         raise CatalogError(
-            f"Catalog is {n} bytes; hard ceiling is {HARD_CATALOG_BYTES} (~256 KB)."
+            f"Catalog is {n} bytes; hard ceiling is {HARD_CATALOG_BYTES} (~384 KB)."
         )
 
 

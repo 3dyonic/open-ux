@@ -1,0 +1,244 @@
+{
+  "version": "0.1.0",
+  "guidelines": [
+    {
+      "id": "gold.consistent-not-uniform",
+      "category": "Foundations",
+      "segment": "Principles",
+      "title": "consistent not uniform",
+      "rule": "Consistent, not uniform — same behaviour for common components; services may apply their own colour, type, sub-logo, and flows without disrupting the shared default.",
+      "citation": {
+        "source": "GOLD — Principles",
+        "url": "https://github.com/designsystemau/gold-design-system-site/blob/main/content/about/principles.md"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Shared components keep the same behaviour; service colour/type/sub-logo/flow differences do not change that default behaviour."
+      ],
+      "fail_when": [
+        "A service restyles a common control so its behaviour no longer matches the shared default."
+      ],
+      "severity": "major",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "do_not_claim": "Visual loudness / one-primary as this principle; a house brand-token set."
+    },
+    {
+      "id": "gold.visual-loudness-primary-secondary-tertiary",
+      "category": "Actions",
+      "segment": "Buttons",
+      "title": "visual loudness primary secondary tertiary",
+      "rule": "Visual loudness is a named three-level scale: primary / secondary / tertiary so designers can balance visual priority. Dual-cite Actions one-primary; this row is the three-loudness scale, not a second “one primary” rule.",
+      "citation": {
+        "source": "GOLD — Buttons wayfinding",
+        "url": "https://github.com/designsystemau/gold-design-system-site/blob/main/content/components/buttons/rationale/wayfinding.md"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Button variants on a view map to primary / secondary / tertiary loudness; one primary remains the dual-cite cap."
+      ],
+      "fail_when": [
+        "All actions share the same loudness with no primary/secondary/tertiary distinction, claimed as this GOLD scale."
+      ],
+      "severity": "major",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "do_not_claim": "Actions one-primary as this three-level row; Next vs Save-progress pairing as this scale."
+    },
+    {
+      "id": "gold.next-primary-save-progress-secondary",
+      "category": "Actions",
+      "segment": "Multi-page form",
+      "title": "next primary save progress secondary",
+      "rule": "Multi-page pairing: Next page is primary; Save progress is secondary.",
+      "citation": {
+        "source": "GOLD — Form template tips",
+        "url": "https://github.com/designsystemau/gold-design-system-site/blob/main/content/templates/form/tips.md"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "On a multi-page form, Next page is the primary control and Save progress is secondary."
+      ],
+      "fail_when": [
+        "Save progress is styled as primary, or Next page is demoted below Save progress."
+      ],
+      "severity": "major",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "do_not_claim": "The three-loudness scale as this pairing; NL last-step-is-send as this GOLD Next/Save pair."
+    },
+    {
+      "id": "gold.avoid-select-except-long-lists",
+      "category": "Forms",
+      "segment": "Choice",
+      "title": "avoid select except long lists",
+      "rule": "Avoid select except long lists — selects hide content, are inconsistent across devices, and are hard for low digital literacy. Small lists (e.g. Australian state/territory) → radios / checkboxes / text. Long lists (e.g. country) may trade usability for compactness. Dual-cite GOV.UK / USWDS / NSW cutoffs; no house number.",
+      "citation": {
+        "source": "GOLD — Select usage",
+        "url": "https://github.com/designsystemau/gold-design-system-site/blob/main/content/components/select/rationale/usage.md"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Short lists use radios/checkboxes/text; select is reserved for long lists (e.g. country). Dual-cite cutoff schools are not collapsed into a house N."
+      ],
+      "fail_when": [
+        "A short list (e.g. state/territory) is a select; or a house numeric cutoff is invented as GOLD."
+      ],
+      "severity": "major",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "do_not_claim": "A house “use select above N options”; NL `<select multiple>` ban as this single-select usage row."
+    },
+    {
+      "id": "gold.progress-indicator-out-of-order-returnable",
+      "category": "Wayfinding",
+      "segment": "Progress",
+      "title": "progress indicator out of order returnable",
+      "rule": "Progress indicator is for out-of-order, returnable tasks (tax return / driver’s licence). Named states: `todo` / `doing` / `done`. Dual-cite USWDS linear step indicator and GOV.UK “test without a progress indicator”; do not collapse into one progress widget.",
+      "citation": {
+        "source": "GOLD — Progress indicator",
+        "url": "https://github.com/designsystemau/gold-design-system-site/blob/main/content/components/progress-indicator/default.md"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Non-linear returnable tasks use the GOLD indicator with todo/doing/done; linear wizards are not forced into this widget (USWDS linear / GOV.UK test-without remain dual-cites)."
+      ],
+      "fail_when": [
+        "A linear one-way wizard is this GOLD out-of-order indicator, or todo/doing/done is collapsed with USWDS linear / GOV.UK no-indicator into one house widget."
+      ],
+      "severity": "major",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "do_not_claim": "USWDS linear step indicator or GOV.UK test-without as this GOLD row; NL step n of m in `document.title`."
+    },
+    {
+      "id": "gold.search-placement-home-vs-results",
+      "category": "Wayfinding",
+      "segment": "Search",
+      "title": "search placement home vs results",
+      "rule": "Search placement — landing/home: top-right (where people expect it). Results page: search box closer to the results so query and hits read as related. Dual-cite USWDS persist-query / homepage-is-a-box.",
+      "citation": {
+        "source": "GOLD — Searchbox placement",
+        "url": "https://github.com/designsystemau/gold-design-system-site/blob/main/content/components/searchbox/rationale/placement.md"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Home search is top-right; results-page search sits close to the hits."
+      ],
+      "fail_when": [
+        "Home search is not where people expect (top-right); results-page search is far from the hits."
+      ],
+      "severity": "major",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "do_not_claim": "Search input attributes (autocomplete/spellcheck) as this placement row; USWDS persist-query as a merge."
+    },
+    {
+      "id": "gold.search-input-attributes",
+      "category": "Forms",
+      "segment": "Search",
+      "title": "search input attributes",
+      "rule": "Search input attributes — `autocomplete` on search can leak sensitive queries on shared machines. `autocorrect` / `spellcheck` conflict with server-side search correction. Do not rely on `required` as the only “empty search” message.",
+      "citation": {
+        "source": "GOLD — Searchbox attributes",
+        "url": "https://github.com/designsystemau/gold-design-system-site/blob/main/content/components/searchbox/rationale/attributes.md"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Search does not use `autocomplete` in a way that stores sensitive queries; `autocorrect`/`spellcheck` are not fighting server-side correction; empty search is not messaged by `required` alone."
+      ],
+      "fail_when": [
+        "Search `autocomplete` stores queries on a shared machine; `required` is the only empty-search message."
+      ],
+      "severity": "major",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "do_not_claim": "Header-search placeholder exception; Suomi visually-hidden search label as this attributes row."
+    },
+    {
+      "id": "gold.card-one-inner-link-hit-area",
+      "category": "Hit targets",
+      "segment": "Card",
+      "title": "card one inner link hit area",
+      "rule": "Card: one inner link; hit-area wraps the card. Do not wrap the whole card in `<a>` (screen readers announce the entire contents; the links landmark becomes unusable). Keep a large click target via CSS hit-area on a single inner anchor. Dual-cite USWDS “card is an action, not a frame.”",
+      "citation": {
+        "source": "GOLD — Card as links",
+        "url": "https://github.com/designsystemau/gold-design-system-site/blob/main/content/components/card/rationale/card-link.md"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "One inner `<a>`; CSS hit-area makes the card clickable; the card itself is not the `<a>`."
+      ],
+      "fail_when": [
+        "The whole card is wrapped in `<a>`, or multiple competing links sit in the card without a single inner-anchor pattern."
+      ],
+      "severity": "major",
+      "jobs": [
+        "keep_hit_target_usable"
+      ],
+      "do_not_claim": "USWDS “card is an action” as a merge that drops the inner-anchor + landmark fail."
+    },
+    {
+      "id": "gold.accordion-find-in-page-misses-collapsed",
+      "category": "Wayfinding",
+      "segment": "Accordion",
+      "title": "accordion find in page misses collapsed",
+      "rule": "Accordion: hidden copy is invisible to Find in page — browsers’ find does not match collapsed accordion text. Dual-cite USWDS “use only if users need a few pieces”; this names the find-in-page failure.",
+      "citation": {
+        "source": "GOLD — Accordion usage",
+        "url": "https://github.com/designsystemau/gold-design-system-site/blob/main/content/components/accordion/rationale/usage.md"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Content people must find with Find in page is not only inside a collapsed accordion."
+      ],
+      "fail_when": [
+        "Essential copy lives only in collapsed accordion panels (Find in page cannot match it)."
+      ],
+      "severity": "major",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "do_not_claim": "USWDS accordion-sparingly as a merge that drops the find-in-page name."
+    },
+    {
+      "id": "gold.no-abbr-expand-on-first-mention",
+      "category": "Content",
+      "segment": "Abbreviations",
+      "title": "no abbr expand on first mention",
+      "rule": "Don’t use `<abbr>`; expand on first mention. Screen-reader support for `<abbr>` is limited. Write “Australian Football League (AFL)” then “AFL”. Dual-cite Canada abbreviations (widest-audience test); GOLD names the element ban + first-mention pattern.",
+      "citation": {
+        "source": "GOLD — Body abbreviations",
+        "url": "https://github.com/designsystemau/gold-design-system-site/blob/main/content/components/body/rationale/abbreviation.md"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "First mention is expanded with the short form in parentheses; later mentions use the short form; no `<abbr>`."
+      ],
+      "fail_when": [
+        "`<abbr>` is used, or the short form appears first with no expansion."
+      ],
+      "severity": "major",
+      "jobs": [
+        "name_a_control"
+      ],
+      "do_not_claim": "Canada widest-audience abbreviations as a merge that drops the `<abbr>` ban."
+    }
+  ],
+  "jobs": [
+    "use_familiar_control",
+    "pick_primary_action",
+    "choose_control_for_choice",
+    "wayfind_after_nav",
+    "keep_hit_target_usable",
+    "name_a_control"
+  ],
+  "patterns": []
+}

@@ -1,0 +1,387 @@
+{
+  "version": "0.1.0",
+  "guidelines": [
+    {
+      "id": "nl.header-search-placeholder-visible-search-control",
+      "category": "Forms",
+      "segment": "Search",
+      "title": "header search placeholder visible search control",
+      "rule": "Header search may use placeholder + visible Search control — the only named placeholder-as-visible-label exception: visually hidden `<label>`, placeholder “Zoek”, submit with text and/or magnifying-glass. Does not pass on ordinary fields. Dual-cite Forms no-placeholder-as-label. Placeholder/label lock unchanged.",
+      "citation": {
+        "source": "NL Design System — Placeholders zoekfunctie",
+        "url": "https://nldesignsystem.nl/richtlijnen/formulieren/placeholders/zoekfunctie/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Header search: hidden `<label>` + placeholder “Zoek” + visible Search control. Ordinary fields still have a visible label (lock)."
+      ],
+      "fail_when": [
+        "An ordinary field uses placeholder as its only label, citing this exception; or header search has no visible Search control and no accessible name."
+      ],
+      "severity": "major",
+      "jobs": [
+        "avoid_placeholder_as_label"
+      ],
+      "do_not_claim": "Placeholder-as-label as passing on non-search fields; GOLD search attributes as this exception."
+    },
+    {
+      "id": "nl.no-forced-input-patterns-or-masks",
+      "category": "Forms",
+      "segment": "Text input",
+      "title": "no forced input patterns or masks",
+      "rule": "No forced input patterns / masks — `pattern` + JS that blocks non-matching keystrokes fails foreign phone numbers, “call afternoons only”, and letter names. Password-style exact format is the exception and must be in the description, not a vanishing placeholder. Dual-cite Spectrum format-valid icon (format-match, not a mask); do not collapse. `inputmode=\"numeric\"` is fine.",
+      "citation": {
+        "source": "NL Design System — Geen invoerpatronen",
+        "url": "https://nldesignsystem.nl/richtlijnen/formulieren/voorkom-fouten/geen-invoerpatronen/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "No HTML `pattern` and no mask that strips keys or jumps the caret on flexible fields; format lives in a description; `inputmode=\"numeric\"` may be present. Password exact-match (described) is the named exception."
+      ],
+      "fail_when": [
+        "HTML `pattern` and/or JS that strips keys or jumps the caret."
+      ],
+      "severity": "major",
+      "jobs": [
+        "recover_from_invalid_input"
+      ],
+      "do_not_claim": "Spectrum format-valid icon as this ban; placeholder as the format instruction (placeholder lock); `inputmode=\"numeric\"` as a fail; don’t-reject-variants as this row."
+    },
+    {
+      "id": "nl.dont-reject-valid-variants",
+      "category": "Forms",
+      "segment": "Validation",
+      "title": "dont reject valid variants",
+      "rule": "Don’t reject valid variants — accept `+` addressing in email (`naam+werk@…`); postcodes with/without space and case; trim pasted leading/trailing spaces. Normalise in software instead of erroring the person.",
+      "citation": {
+        "source": "NL Design System — Keur niet te snel af",
+        "url": "https://nldesignsystem.nl/richtlijnen/formulieren/voorkom-fouten/keur-niet-te-snel-af/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Email accepts `+` in the local-part; postcode variants with/without space and mixed case are accepted and normalised; pasted spaces are trimmed."
+      ],
+      "fail_when": [
+        "`naam+werk@…` is rejected; `1234 AA` vs `1234AA` vs case/spaces is rejected instead of normalised."
+      ],
+      "severity": "major",
+      "jobs": [
+        "recover_from_invalid_input"
+      ],
+      "do_not_claim": "HTML `pattern`/mask ban as this row; format-upfront copy as this row."
+    },
+    {
+      "id": "nl.no-min-max-length-names-places",
+      "category": "Forms",
+      "segment": "Constraints",
+      "title": "no min max length names places",
+      "rule": "No min/max length on names and places — one-character given names and 50-character place names exist. Dual-cite USWDS “raise the DB limit” / character-count not as a cap.",
+      "citation": {
+        "source": "NL Design System — Geen min/max lengte",
+        "url": "https://nldesignsystem.nl/richtlijnen/formulieren/vragen/geen-min-max-lengte/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Unconstrained name and place fields have no rejecting `minLength`/`maxLength`."
+      ],
+      "fail_when": [
+        "`minLength`/`maxLength` rejects a one-character name or a long toponym."
+      ],
+      "severity": "major",
+      "jobs": [
+        "recover_from_invalid_input"
+      ],
+      "do_not_claim": "Character-count component; USWDS raise-the-cap as a merge."
+    },
+    {
+      "id": "nl.no-select-multiple",
+      "category": "Forms",
+      "segment": "Choice",
+      "title": "no select multiple",
+      "rule": "Don’t use `<select multiple>` — keyboard/VoiceOver (Safari) cannot operate it. Use checkboxes for multi-pick.",
+      "citation": {
+        "source": "NL Design System — Iedereen kan invullen",
+        "url": "https://nldesignsystem.nl/richtlijnen/formulieren/wanneer-welk-form-element/iedereen-kan-invullen/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Multi-choice uses checkboxes, not native `<select multiple>`."
+      ],
+      "fail_when": [
+        "Native `<select multiple>` is the control."
+      ],
+      "severity": "major",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "do_not_claim": "GOLD avoid-select-except-long-lists as this multi-select ban; NSW multi-select pattern as a winner."
+    },
+    {
+      "id": "nl.step-n-of-m-in-title-and-above-form",
+      "category": "Forms",
+      "segment": "Multi-step",
+      "title": "step n of m in title and above form",
+      "rule": "Step n of m in `document.title` and above the form — e.g. `Stap 2 van 6`. Prefer text over a progress bar (scales under zoom). If a SPA swaps steps on one URL, still update the title. Dual-cite GOV.UK “test without a progress indicator”; this names the title + heading pair and SPA title rewrite. Conditional step counts: NL says evidence is insufficient — do not invent a house rule.",
+      "citation": {
+        "source": "NL Design System — Voortgang tonen",
+        "url": "https://nldesignsystem.nl/richtlijnen/formulieren/meerdere-stappen/voortgang-tonen/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "`document.title` and the heading above the form both include step n of m (text, not only a bar); SPA step swaps update the title."
+      ],
+      "fail_when": [
+        "Step n of m is missing from the title or from above the form; SPA keeps a stale title; a house rule for conditional step counts is invented."
+      ],
+      "severity": "major",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "do_not_claim": "GOLD out-of-order progress indicator; GOV.UK test-without as a merge that drops title+heading; a house conditional-count rule."
+    },
+    {
+      "id": "nl.last-step-is-send-not-volgende",
+      "category": "Forms",
+      "segment": "Multi-step",
+      "title": "last step is send not volgende",
+      "rule": "Last step is not “Volgende” — final submit names send (`Versturen` / outcome). Show a check-page of answers with edit before that. Dual-cite GOV.UK check-answers; this names the label change on the last step.",
+      "citation": {
+        "source": "NL Design System — Verzenden aangeven",
+        "url": "https://nldesignsystem.nl/richtlijnen/formulieren/meerdere-stappen/verzenden-aangeven/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Last-step button names send/outcome, not “Volgende”; answers are shown with edit before send."
+      ],
+      "fail_when": [
+        "Last step still says “Volgende” / “Next”, or there is no check-page with edit."
+      ],
+      "severity": "major",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "do_not_claim": "GOV.UK check-answers as a merge that drops the last-step label change; GOLD Next-primary/Save-secondary; “Volgende stap”/“Vorige stap” as a second Actions clone (kept in this row)."
+    },
+    {
+      "id": "nl.labels-contain-only-text",
+      "category": "Forms",
+      "segment": "Labels",
+      "title": "labels contain only text",
+      "rule": "Labels contain only text — no links, buttons, tooltips, or headings inside `<label>`. Voice control and screen readers break. Dual-cite clickable-label (Vercel) without stuffing interactive children into the label.",
+      "citation": {
+        "source": "NL Design System — Labels alleen tekst",
+        "url": "https://nldesignsystem.nl/richtlijnen/formulieren/labels/alleen-tekst/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "`<label>` contains text only — no nested link, button, tooltip, or heading."
+      ],
+      "fail_when": [
+        "Interactive or heading content is nested inside `<label>`."
+      ],
+      "severity": "major",
+      "jobs": [
+        "name_a_control"
+      ],
+      "do_not_claim": "Privacy-link-outside-label as a duplicate of this general ban; visible-label lock as this row."
+    },
+    {
+      "id": "nl.privacy-terms-link-outside-label",
+      "category": "Forms",
+      "segment": "Labels",
+      "title": "privacy terms link outside label",
+      "rule": "Privacy / terms link sits outside the label — not “I agree to the [privacy policy]” as a nested `<a>`. Put the link above, or in a fieldset description via `aria-describedby`.",
+      "citation": {
+        "source": "NL Design System — Niet in label",
+        "url": "https://nldesignsystem.nl/richtlijnen/formulieren/links/niet-in-label/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Policy/terms link is above the control or in a fieldset description (`aria-describedby`), not nested in the `<label>`."
+      ],
+      "fail_when": [
+        "A privacy/terms `<a>` is nested inside the agreement `<label>`."
+      ],
+      "severity": "major",
+      "jobs": [
+        "name_a_control"
+      ],
+      "do_not_claim": "Labels-contain-only-text as this privacy-pattern row; contact pages."
+    },
+    {
+      "id": "nl.form-draft-links-new-tab-named-in-link",
+      "category": "Forms",
+      "segment": "Links",
+      "title": "form draft links new tab named in link",
+      "rule": "In-form links that must not lose the draft open in a new tab, and say so in the link text — `target=\"_blank\"` plus visible “(opent in een nieuwe tab)” (or icon + equivalent SR text inside the link). Dual-cite USWDS identify-destination; this is draft-preservation + in-link announcement.",
+      "citation": {
+        "source": "NL Design System — Nieuwe tab",
+        "url": "https://nldesignsystem.nl/richtlijnen/formulieren/links/nieuwe-tab/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Draft-preserving form links use `target=\"_blank\"` and name the new tab in the link’s visible/SR text."
+      ],
+      "fail_when": [
+        "A form link opens a new tab with no in-link announcement, or a same-tab link drops the draft with no new-tab path when the source required it."
+      ],
+      "severity": "major",
+      "jobs": [
+        "name_a_control"
+      ],
+      "do_not_claim": "USWDS identify-destination as a merge that drops draft-preservation; labels-only-text as this row."
+    },
+    {
+      "id": "nl.success-confirms-what-not-bounce-home",
+      "category": "Empty/failure",
+      "segment": "Success",
+      "title": "success confirms what not bounce home",
+      "rule": "Success is not “form sent” or a bounce to home — visible confirmation of what went through (repeat in mail or “Mijn omgeving”). Dual-cite empty/failure success copy; NL names bounce-home as fail.",
+      "citation": {
+        "source": "NL Design System — Succesmelding",
+        "url": "https://nldesignsystem.nl/richtlijnen/formulieren/bevestigingspagina/succesmelding/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "After send, the person sees what was submitted (on-page and/or in mail / “Mijn omgeving”), not only “sent”."
+      ],
+      "fail_when": [
+        "Success is only “form sent”, or the person is bounced to home with no confirmation of what went through."
+      ],
+      "severity": "major",
+      "jobs": [
+        "write_empty_state"
+      ],
+      "do_not_claim": "Next organisational steps as this “what went through” row; empty/failure success-copy as a merge that drops bounce-home."
+    },
+    {
+      "id": "nl.name-next-organisational-steps",
+      "category": "Empty/failure",
+      "segment": "Success",
+      "title": "name next organisational steps",
+      "rule": "Name the next organisational steps — e.g. case number, who acts, how the person hears back. (Contact-channel pages not filed.)",
+      "citation": {
+        "source": "NL Design System — Vervolgstappen",
+        "url": "https://nldesignsystem.nl/richtlijnen/formulieren/bevestigingspagina/vervolgstappen/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Confirmation names what happens next: case number and/or who acts and/or how the person hears back."
+      ],
+      "fail_when": [
+        "Confirmation has no next organisational step (no case number, actor, or how they hear back)."
+      ],
+      "severity": "major",
+      "jobs": [
+        "write_empty_state"
+      ],
+      "do_not_claim": "Contact-channel pages; success-what-went-through as this next-steps row."
+    },
+    {
+      "id": "nl.dont-auto-dismiss-status-announce-complete",
+      "category": "System status",
+      "segment": "Live status",
+      "title": "dont auto dismiss status announce complete",
+      "rule": "Don’t auto-dismiss status; if the message is time-bound, announce completion — “uploading…” may vanish when done and a live region must say “upload complete.” Dual-cite Spectrum toast ≥5s / Suomi 10s; no house seconds.",
+      "citation": {
+        "source": "NL Design System — Enough time",
+        "url": "https://nldesignsystem.nl/richtlijnen/formulieren/status/enough-time/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Status that is still relevant stays; time-bound status that vanishes is replaced by a live-region completion announcement."
+      ],
+      "fail_when": [
+        "Status auto-dismisses with no completion announcement."
+      ],
+      "severity": "major",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "do_not_claim": "A house toast duration; Suomi toast geometry as this live-region row."
+    },
+    {
+      "id": "nl.mark-optional-niet-verplicht-above-form",
+      "category": "Forms",
+      "segment": "Required / optional",
+      "title": "mark optional niet verplicht above form",
+      "rule": "Mark the exception: `(niet verplicht)` not “optioneel” — NL research prefers marking optional fields because most asked fields should be required. Instruction above the form. Dual-cite NN/g mark-optional / Fluent all-required-one-instruction / Spectrum never-mark-optional / Suomi parenthetical optional; do not pick a house winner. Unique claims: Dutch wording and above-form key.",
+      "citation": {
+        "source": "NL Design System — Verplichte velden",
+        "url": "https://nldesignsystem.nl/richtlijnen/formulieren/voorkom-fouten/verplichte-velden/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "One cited school applied consistently: NL `(niet verplicht)` + above-form key; or Suomi default-required + parenthetical optional; or mark-the-minority; or mark-both. On an NL-school form, optional is `(niet verplicht)` not “optioneel”, with the key above the form."
+      ],
+      "fail_when": [
+        "Optional vs required unmarked; schools mixed on one form; a house asterisk invented; NL-school form uses “optioneel” or puts the key only in a tooltip."
+      ],
+      "severity": "major",
+      "jobs": [
+        "name_a_control"
+      ],
+      "do_not_claim": "A house required marker; Suomi parenthetical optional as this Dutch-wording/above-form row."
+    },
+    {
+      "id": "nl.long-legal-jargon-before-form-not-tooltip",
+      "category": "Forms",
+      "segment": "Help",
+      "title": "long legal jargon before form not tooltip",
+      "rule": "Long or legal jargon lives before the form, not in tooltips — extra click/keystroke hides important copy; screen readers miss loose blocks between questions. Dual-cite Spectrum tooltip last-resort.",
+      "citation": {
+        "source": "NL Design System — Descriptions lengte",
+        "url": "https://nldesignsystem.nl/richtlijnen/formulieren/descriptions/lengte/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Long/legal help is before the form (or on an intro page), not only in a tooltip or loose between questions."
+      ],
+      "fail_when": [
+        "Important long/legal copy is only in a tooltip or only as a loose block between questions."
+      ],
+      "severity": "major",
+      "jobs": [
+        "keep_field_purpose_visible_while_filled"
+      ],
+      "do_not_claim": "Spectrum tooltip-last-resort as a merge; format-in-description from the `pattern` ban as this length/placement row."
+    },
+    {
+      "id": "nl.native-required-bubbles-not-error-ui",
+      "category": "Forms",
+      "segment": "Errors",
+      "title": "native required bubbles not error ui",
+      "rule": "Native HTML `required` / browser bubbles are not the error UI — insufficient explanation, especially with `pattern`. Prefer custom client errors; `novalidate` once JS loads if `required` was a no-JS fallback. Server-side validation is the guideline. Dual-cite GOLD server-side + error list (not a separate GOLD unique in this 40).",
+      "citation": {
+        "source": "NL Design System — HTML formuliervalidatie",
+        "url": "https://nldesignsystem.nl/richtlijnen/formulieren/foutmeldingen/html-formuliervalidatie/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "With JS, native bubbles are not the error UI (`novalidate` if `required` is a no-JS fallback); errors are custom; server-side validation remains."
+      ],
+      "fail_when": [
+        "Browser `required`/`pattern` bubbles are the only error UI after JS has loaded."
+      ],
+      "severity": "major",
+      "jobs": [
+        "recover_from_invalid_input",
+        "explain_failure_next_to_cause"
+      ],
+      "do_not_claim": "GOV.UK error-summary as this native-bubble ban; an invented GOLD “server-side” unique; WCAG numbers."
+    }
+  ],
+  "jobs": [
+    "avoid_placeholder_as_label",
+    "recover_from_invalid_input",
+    "choose_control_for_choice",
+    "wayfind_after_nav",
+    "pick_primary_action",
+    "name_a_control",
+    "write_empty_state",
+    "announce_system_status",
+    "keep_field_purpose_visible_while_filled",
+    "explain_failure_next_to_cause"
+  ],
+  "patterns": []
+}
