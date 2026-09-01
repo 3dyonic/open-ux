@@ -142,6 +142,15 @@ class Store:
             row = cur.execute("SELECT COUNT(*) AS n FROM waitlist").fetchone()
         return int(row["n"])
 
+    def list_waitlist(self) -> list[dict[str, str]]:
+        """Waitlist emails newest first. Email and created_at only."""
+        with self.cursor() as cur:
+            rows = cur.execute(
+                "SELECT email, created_at FROM waitlist "
+                "ORDER BY created_at DESC, id DESC"
+            ).fetchall()
+        return [{"email": r["email"], "created_at": r["created_at"]} for r in rows]
+
     def issue_invite(self, email: str, token_hash: str, expires_at: str) -> None:
         now = _iso(_utcnow())
         with self.cursor() as cur:

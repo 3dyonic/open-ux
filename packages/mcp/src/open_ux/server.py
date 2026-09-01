@@ -249,6 +249,14 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             }
         )
 
+    @mcp.custom_route("/admin/invite/waitlist", methods=["GET"])
+    async def admin_invite_waitlist(request: Request) -> Response:
+        if not hosted:
+            return JSONResponse({"error": "Hosted-only."}, status_code=400)
+        if not _admin_authorized(request, settings):
+            return JSONResponse({"error": "Unauthorized."}, status_code=401)
+        return JSONResponse({"items": store.list_waitlist()})
+
     @mcp.custom_route("/admin/invite/approve", methods=["POST"])
     async def admin_invite_approve(request: Request) -> Response:
         if not hosted:
