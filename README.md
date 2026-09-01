@@ -60,7 +60,7 @@ packages/mcp/     # Python FastMCP server
 clients/claude/   # thin plugin (pointers only; do not duplicate rule bodies)
 docs/
   LANDING.md      # designer — product landing copy
-  readme-hero.svg # designer — catalog → tools → pass/fail (not yet)
+  readme-hero.svg # designer — catalog → tools → pass/fail
 ```
 
 Display name is **Open UX**. Do not put “MCP” in the H1 or marketplace title.
