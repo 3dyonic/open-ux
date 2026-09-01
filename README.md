@@ -8,7 +8,7 @@ Stop inventing UX rules from memory. Open UX is a shared, cited catalog agents l
 
 ## What it is
 
-A small, machine-readable store of UX guidelines plus tools so an agent can:
+A curated, machine-readable store of UX guidelines plus tools so an agent can:
 
 1. **List** the current rules
 2. **Fetch** a full cited rule
@@ -21,8 +21,7 @@ Use the hosted endpoint (register with email, get an API key) or self-host the s
 ## What it isn’t
 
 - A generative design copilot, redesign product, or “does this look good?” scorer
-- A full design system, token set, or house visual language
-- Per-tenant catalogs — one shared catalog; auth is who may call, not whose rules
+- Everyone shares the same guidelines. Creating an account only lets you use the service — it doesn’t give you a private rulebook.
 - An accessibility or **WCAG compliance** checker — we do not claim WCAG conformance, contrast, or screen-reader names
 
 ## v1 scope
