@@ -1,8 +1,13 @@
 # Open UX
 
+<!-- Designer-owned: docs/readme-hero.svg — catalog → tools → pass/fail. Do not invent brand art; file may arrive in a follow-up commit. -->
+![Catalog → tools → pass/fail](docs/readme-hero.svg)
+
 **Stop inventing UX rules from memory.**
 
 UX rules live in PDFs, blog posts, and chat. Agents invent them or misquote them. Open UX is a shared, cited catalog those agents can list, fetch, and audit against. One catalog. Hybrid checks. Not a vibes tool.
+
+Product landing (designer-owned): [docs/LANDING.md](docs/LANDING.md).
 
 ## What it is
 
@@ -53,6 +58,9 @@ Verdicts are `pass`, `fail`, or `incomplete`. Default audit scope is the Forms �
 catalog/          # rules JSON — one shared catalog
 packages/mcp/     # Python FastMCP server
 clients/claude/   # thin plugin (pointers only; do not duplicate rule bodies)
+docs/
+  LANDING.md      # designer — product landing copy
+  readme-hero.svg # designer — catalog → tools → pass/fail (not yet)
 ```
 
 Display name is **Open UX**. Do not put “MCP” in the H1 or marketplace title.
