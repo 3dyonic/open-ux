@@ -11,7 +11,7 @@ primary_region = "iad"
 [env]
   OPEN_UX_MODE = "hosted"
   OPEN_UX_HOSTED = "1"
-  OPEN_UX_CATALOG = "/app/catalog/guidelines.json"
+  OPEN_UX_CATALOG = "/app/catalog"
   OPEN_UX_SCHEMA = "/app/catalog/schema.json"
   OPEN_UX_DATA_DIR = "/data"
   OPEN_UX_DATABASE = "/data/open-ux.sqlite"

@@ -18,7 +18,7 @@ RETENTION_DAYS = 30
 def _repo_root() -> Path:
     here = Path(__file__).resolve()
     for candidate in here.parents:
-        if (candidate / "catalog" / "guidelines.json").is_file():
+        if (candidate / "catalog" / "schema.json").is_file():
             return candidate
     return Path.cwd()
 
@@ -41,12 +41,11 @@ class Settings:
             hosted = os.environ.get("OPEN_UX_MODE", "stdio") == "hosted" or os.environ.get(
                 "OPEN_UX_HOSTED", ""
             ).lower() in {"1", "true", "yes"}
-        catalog = Path(
-            os.environ.get("OPEN_UX_CATALOG", root / "catalog" / "guidelines.json")
+        catalog = Path(os.environ.get("OPEN_UX_CATALOG", root / "catalog"))
+        schema_default = (
+            catalog / "schema.json" if catalog.is_dir() else catalog.parent / "schema.json"
         )
-        schema = Path(
-            os.environ.get("OPEN_UX_SCHEMA", catalog.parent / "schema.json")
-        )
+        schema = Path(os.environ.get("OPEN_UX_SCHEMA", schema_default))
         data_dir = Path(os.environ.get("OPEN_UX_DATA_DIR", root / "data"))
         database = Path(
             os.environ.get("OPEN_UX_DATABASE", data_dir / "open-ux.sqlite")

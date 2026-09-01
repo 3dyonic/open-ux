@@ -1,0 +1,1197 @@
+{
+  "version": "0.1.0",
+  "guidelines": [
+    {
+      "id": "forms.field_labels.visible_label",
+      "category": "Forms",
+      "segment": "Field labels",
+      "title": "visible label",
+      "rule": "Place a clear label outside the field so users always know what information belongs there.",
+      "citation": {
+        "source": "NN/g — Placeholders in Form Fields Are Harmful; Material 3 — Text fields",
+        "url": "https://www.nngroup.com/articles/form-design-placeholders/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Each input has a clear label outside the field, visible before and during use."
+      ],
+      "fail_when": [
+        "No outside label; the field is named only by inside text or not at all."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.field_labels.label_stays_visible",
+      "category": "Forms",
+      "segment": "Field labels",
+      "title": "label stays visible",
+      "rule": "Keep the label visible while the user types and checks the value; do not rely on text that disappears inside the field.",
+      "citation": {
+        "source": "NN/g — Placeholders in Form Fields Are Harmful; Material 3 — Text fields",
+        "url": "https://www.nngroup.com/articles/form-design-placeholders/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "While the field has focus or a value, the label remains on screen."
+      ],
+      "fail_when": [
+        "After typing starts, only the value remains; the naming text has disappeared."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.field_labels.error_identifies_and_fixes",
+      "category": "Forms",
+      "segment": "Errors",
+      "title": "error identifies and fixes",
+      "rule": "Error messages identify the problem and give constructive advice so the user can fix it.",
+      "citation": {
+        "source": "NN/g — 10 Design Guidelines for Reporting Errors in Forms; NN/g — Website Forms Usability; Vercel Web Interface Guidelines",
+        "url": "https://www.nngroup.com/articles/errors-forms-design-guidelines/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "On error, visible text says what is wrong and how to fix it (or the next step)."
+      ],
+      "fail_when": [
+        "Copy is generic, does not identify the problem, or gives no constructive advice. (Preserve-input is cited; this row checks the message, not whether the value was wiped.)"
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.field_labels.placeholder_hint_conflict",
+      "category": "Forms",
+      "segment": "Field labels",
+      "title": "placeholder hint conflict",
+      "rule": "CONFLICT — NN/g: do not use placeholder as the label; put essential hints outside the field so they stay visible. Apple HIG: a text field may show placeholder hint text to communicate purpose, and because that text disappears also include a separate label. Tidwell Input Prompt fills an empty field with a prompt of expected input; Tidwell Input Hints put an explanatory comment next to the field (NN/g side). Dual-cite; not two winners.",
+      "citation": {
+        "source": "NN/g — Placeholders in Form Fields Are Harmful; Apple HIG — Text fields; Apple HIG — Entering data; Designing Interfaces 3e ch. Getting Input — Input Hints; Input Prompt (Tidwell, Brewer, Valencia)",
+        "url": "https://www.nngroup.com/articles/form-design-placeholders/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "A separate label is present. If in-field hint/prompt exists, it is extra, not the only name for the field. Essential format/help that must stay readable is also available outside the field (NN/g / Tidwell hints) without treating Apple’s extra hint as a fail."
+      ],
+      "fail_when": [
+        "Placeholder or in-field prompt is the only label (agreed fail across the cites)."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.errors.inline_after_complete",
+      "category": "Forms",
+      "segment": "Errors",
+      "title": "inline after complete",
+      "rule": "Prefer inline validation after the user finishes a field; do not show an error before input is complete or on fields they have not reached.",
+      "citation": {
+        "source": "NN/g — 10 Design Guidelines for Reporting Errors in Forms (§1, §7)",
+        "url": "https://www.nngroup.com/articles/errors-forms-design-guidelines/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Field error can appear after the user finishes that field (blur/complete), without a full-form submit as the only path; no error while still typing that field; untouched later fields stay quiet."
+      ],
+      "fail_when": [
+        "Errors only after full submit; or error appears mid-keystroke on the active field; or untouched fields are marked invalid."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.errors.success_complex_fields",
+      "category": "Forms",
+      "segment": "Errors",
+      "title": "success complex fields",
+      "rule": "For complex fields, show successful entry (and instant rules as the user types) without spamming success on merely-required empty-to-filled fields.",
+      "citation": {
+        "source": "NN/g — 10 Design Guidelines for Reporting Errors in Forms (§2)",
+        "url": "https://www.nngroup.com/articles/errors-forms-design-guidelines/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "A complex field (multiple rules, e.g. password) shows success and/or live rule checks; simple required fields do not get a success state for merely becoming non-empty."
+      ],
+      "fail_when": [
+        "Complex field shows only errors, or every required field flashes success when filled."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.errors.next_to_field_not_summary_only",
+      "category": "Forms",
+      "segment": "Errors",
+      "title": "next to field not summary only",
+      "rule": "Put the error next to the field in error; a top validation summary must not be the only indication.",
+      "citation": {
+        "source": "NN/g — 10 Design Guidelines for Reporting Errors in Forms (§3, §8); Designing Interfaces 3e ch. Getting Input — Error Messages (Tidwell, Brewer, Valencia); Vercel Web Interface Guidelines",
+        "url": "https://www.nngroup.com/articles/errors-forms-design-guidelines/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Error text sits next to the field; if a summary exists, field-level indication is also present."
+      ],
+      "fail_when": [
+        "Only a distant banner, dialog, or summary list; the field itself has no error copy."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.errors.not_color_only",
+      "category": "Forms",
+      "segment": "Errors",
+      "title": "not color only",
+      "rule": "Differentiate error from normal field state with color plus non-color cues (outline, weight, icon); do not rely on color alone.",
+      "citation": {
+        "source": "NN/g — 10 Design Guidelines for Reporting Errors in Forms (§4, §5); NN/g — Website Forms Usability",
+        "url": "https://www.nngroup.com/articles/errors-forms-design-guidelines/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Error state uses color and at least one non-color cue (outline, weight, icon, or error text)."
+      ],
+      "fail_when": [
+        "Error is only a color change (e.g. red border or red text with no other cue)."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.errors.modal_not_only_copy",
+      "category": "Forms",
+      "segment": "Errors",
+      "title": "modal not only copy",
+      "rule": "Use modals for form errors sparingly; do not put the only copy of a field error in a dialog that must be dismissed before the field can be fixed.",
+      "citation": {
+        "source": "NN/g — 10 Design Guidelines for Reporting Errors in Forms (§6)",
+        "url": "https://www.nngroup.com/articles/errors-forms-design-guidelines/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "The field can be corrected with its error copy still available outside a must-dismiss dialog (or with no modal)."
+      ],
+      "fail_when": [
+        "The only field-error copy is in a modal that must be dismissed before editing the field."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.errors.not_tooltip_only",
+      "category": "Forms",
+      "segment": "Errors",
+      "title": "not tooltip only",
+      "rule": "Do not require hover or an extra click on an icon to read the error message.",
+      "citation": {
+        "source": "NN/g — 10 Design Guidelines for Reporting Errors in Forms (§9)",
+        "url": "https://www.nngroup.com/articles/errors-forms-design-guidelines/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Error message is readable without hover and without clicking an extra icon."
+      ],
+      "fail_when": [
+        "Error text is only in a tooltip, title, or icon-click overlay."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.errors.repeated_extra_help",
+      "category": "Forms",
+      "segment": "Errors",
+      "title": "repeated extra help",
+      "rule": "When the same error repeats (three or more times in one attempt), provide extra help: review error patterns, refine the design, and make messages more actionable.",
+      "citation": {
+        "source": "NN/g — 10 Design Guidelines for Reporting Errors in Forms (§10)",
+        "url": "https://www.nngroup.com/articles/errors-forms-design-guidelines/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "On the third-or-more same error in one attempt, the UI offers extra help and more actionable copy than the first showing."
+      ],
+      "fail_when": [
+        "The same error copy repeats three or more times with no added help."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.errors.replace_supporting_text",
+      "category": "Forms",
+      "segment": "Errors",
+      "title": "replace supporting text",
+      "rule": "Swap supporting text for error text; do not stack error text on top of supporting text (layout shift).",
+      "citation": {
+        "source": "Material 3 — Text fields",
+        "url": "https://m3.material.io/components/text-fields/guidelines"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "In error, supporting text is replaced by error text in the same slot; layout does not grow a second line under the hint."
+      ],
+      "fail_when": [
+        "Error stacks on supporting text and shifts the layout."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.errors.focus_first_error",
+      "category": "Forms",
+      "segment": "Errors",
+      "title": "focus first error",
+      "rule": "On submit, move focus to the first field in error.",
+      "citation": {
+        "source": "Vercel Web Interface Guidelines — Forms",
+        "url": "https://github.com/vercel-labs/web-interface-guidelines/blob/main/command.md"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "After a failed submit, focus is on the first field in error."
+      ],
+      "fail_when": [
+        "Focus stays on Submit or elsewhere, not the first error field."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.length.keep_short",
+      "category": "Forms",
+      "segment": "Length",
+      "title": "keep short",
+      "rule": "Keep the form short: remove fields that can be derived, collected later, or omitted.",
+      "citation": {
+        "source": "NN/g — Website Forms Usability",
+        "url": "https://www.nngroup.com/articles/web-form-design/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Asked fields are needed now; derivable, deferrable, or omitable data is not on this form."
+      ],
+      "fail_when": [
+        "The form asks for unused-now, already-known, or computable data."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.layout.group_related_labels_fields",
+      "category": "Forms",
+      "segment": "Layout",
+      "title": "group related labels fields",
+      "rule": "Visually group related labels and fields; put each label close to its field (not equidistant from several).",
+      "citation": {
+        "source": "NN/g — Website Forms Usability",
+        "url": "https://www.nngroup.com/articles/web-form-design/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Related fields share a visual group; each label is closer to its own field than to neighbors."
+      ],
+      "fail_when": [
+        "Related fields are ungrouped, or a label sits equally between two controls."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.layout.single_column",
+      "category": "Forms",
+      "segment": "Layout",
+      "title": "single column",
+      "rule": "Present fields in a single column (short related fields such as city/state/zip may share a row).",
+      "citation": {
+        "source": "NN/g — Website Forms Usability",
+        "url": "https://www.nngroup.com/articles/web-form-design/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Independent fields stack in one column; only short related fields share a row."
+      ],
+      "fail_when": [
+        "Unrelated fields sit in multiple columns that force a zigzag fill path."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.layout.logical_sequence",
+      "category": "Forms",
+      "segment": "Layout",
+      "title": "logical sequence",
+      "rule": "Sequence fields and choices in a logical, conventional order and make Tab order match that sequence.",
+      "citation": {
+        "source": "NN/g — Website Forms Usability",
+        "url": "https://www.nngroup.com/articles/web-form-design/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Visual order matches a conventional task order; Tab moves in that same order."
+      ],
+      "fail_when": [
+        "Fields jump topics, or Tab order disagrees with visual order."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.structure.progressive_disclosure",
+      "category": "Forms",
+      "segment": "Structure",
+      "title": "progressive disclosure",
+      "rule": "Show only what is needed at the current step; reveal further fields as the user progresses (pages or conditional logic).",
+      "citation": {
+        "source": "NN/g — 4 Principles to Reduce Cognitive Load in Forms",
+        "url": "https://www.nngroup.com/articles/4-principles-reduce-cognitive-load/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Only the current step’s needed fields are shown; later or conditional fields appear when relevant."
+      ],
+      "fail_when": [
+        "Every possible question is visible at once on a long flow with no paging or conditionals."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.transparency.requirements_before_start",
+      "category": "Forms",
+      "segment": "Transparency",
+      "title": "requirements before start",
+      "rule": "Before a long form, communicate requirements up front (time, materials, deadlines, attempt limits, whether progress is saved).",
+      "citation": {
+        "source": "NN/g — 4 Principles to Reduce Cognitive Load in Forms",
+        "url": "https://www.nngroup.com/articles/4-principles-reduce-cognitive-load/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Before the first field of a long form, time, materials, deadlines, attempt limits, and save behavior that apply are stated."
+      ],
+      "fail_when": [
+        "Those requirements appear only mid-form or after failure — or not at all on a long form."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.transparency.progress_on_long_forms",
+      "category": "Forms",
+      "segment": "Transparency",
+      "title": "progress on long forms",
+      "rule": "On long forms, show a clear progress indicator of how much is done and how much remains.",
+      "citation": {
+        "source": "NN/g — 4 Principles to Reduce Cognitive Load in Forms",
+        "url": "https://www.nngroup.com/articles/4-principles-reduce-cognitive-load/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Long form shows done vs remaining progress."
+      ],
+      "fail_when": [
+        "Long form has no progress indication."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.copy.plain_language",
+      "category": "Forms",
+      "segment": "Copy",
+      "title": "plain language",
+      "rule": "Write labels and instructions in plain language that mirrors how users talk about the information.",
+      "citation": {
+        "source": "NN/g — 4 Principles to Reduce Cognitive Load in Forms",
+        "url": "https://www.nngroup.com/articles/4-principles-reduce-cognitive-load/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Labels/instructions use ordinary words for the asked data."
+      ],
+      "fail_when": [
+        "Copy requires unexplained jargon to know what to enter."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.copy.positive_wording",
+      "category": "Forms",
+      "segment": "Copy",
+      "title": "positive wording",
+      "rule": "Use positive wording; avoid negatives that force users to reverse the statement (especially opt-in checkboxes).",
+      "citation": {
+        "source": "NN/g — 4 Principles to Reduce Cognitive Load in Forms",
+        "url": "https://www.nngroup.com/articles/4-principles-reduce-cognitive-load/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Statements (esp. opt-in checkboxes) are positive; checking means agreement with a direct statement."
+      ],
+      "fail_when": [
+        "User must reverse a negative (e.g. “don’t not email me”) to opt in or out."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.copy.no_double_barreled",
+      "category": "Forms",
+      "segment": "Copy",
+      "title": "no double barreled",
+      "rule": "Do not ask two things in one question; split double-barreled items.",
+      "citation": {
+        "source": "NN/g — 4 Principles to Reduce Cognitive Load in Forms",
+        "url": "https://www.nngroup.com/articles/4-principles-reduce-cognitive-load/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Each question/control asks one thing."
+      ],
+      "fail_when": [
+        "One item asks two things (and/or) that could disagree."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.fields.distinguish_optional_required",
+      "category": "Forms",
+      "segment": "Fields",
+      "title": "distinguish optional required",
+      "rule": "Distinguish optional and required fields; limit optional fields and label them as optional.",
+      "citation": {
+        "source": "NN/g — Website Forms Usability",
+        "url": "https://www.nngroup.com/articles/web-form-design/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Optional vs required is visible; optional fields are few and labeled optional."
+      ],
+      "fail_when": [
+        "Mix of optional and required with no marking, or many unlabeled optionals."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.fields.explain_format_upfront",
+      "category": "Forms",
+      "segment": "Fields",
+      "title": "explain format upfront",
+      "rule": "If a field requires a specific format or type of input, state those instructions before the user fails.",
+      "citation": {
+        "source": "NN/g — Website Forms Usability",
+        "url": "https://www.nngroup.com/articles/web-form-design/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Format/type instructions are visible next to the field before submit failure."
+      ],
+      "fail_when": [
+        "Format is stated only in a post-submit error, or never."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.fields.required_before_proceed",
+      "category": "Forms",
+      "segment": "Fields",
+      "title": "required before proceed",
+      "rule": "Make people understand they must provide required data before they can proceed (for example enable Next only after required fields are filled).",
+      "citation": {
+        "source": "Apple HIG — Entering data",
+        "url": "https://developer.apple.com/design/human-interface-guidelines/entering-data"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "User can tell required data blocks proceed (disabled Next/Submit until required filled, or equivalent explicit gate)."
+      ],
+      "fail_when": [
+        "User can proceed with required fields empty and only learns on a later error, with no prior indication they must provide the data."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.actions.avoid_reset_clear",
+      "category": "Forms",
+      "segment": "Actions",
+      "title": "avoid reset clear",
+      "rule": "Avoid Reset and Clear on web forms; if Cancel is needed for sensitive data, give it much less prominence than Submit.",
+      "citation": {
+        "source": "NN/g — Website Forms Usability",
+        "url": "https://www.nngroup.com/articles/web-form-design/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "No form-wide Reset/Clear; if Cancel exists for sensitive data, it is visually weaker than Submit."
+      ],
+      "fail_when": [
+        "Reset/Clear wipes the form, or Cancel equals/competes with Submit."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.inputs.match_control_and_size",
+      "category": "Forms",
+      "segment": "Inputs",
+      "title": "match control and size",
+      "rule": "Match the control and field size to the type and expected length of input (avoid dropdowns for two or three options that can be radios; size the text field to the expected value).",
+      "citation": {
+        "source": "NN/g — Website Forms Usability; Apple HIG — Text fields",
+        "url": "https://www.nngroup.com/articles/web-form-design/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Two–three options are radios (not a dropdown); text field width fits typical expected length."
+      ],
+      "fail_when": [
+        "Two–three options hidden in a dropdown, or a long value is clipped in a too-narrow field (or a tiny value sits in an oversized unmatched control)."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.inputs.helpful_constraints",
+      "category": "Forms",
+      "segment": "Inputs",
+      "title": "helpful constraints",
+      "rule": "Where acceptable values are known, constrain input so invalid data cannot be entered instead of failing later.",
+      "citation": {
+        "source": "NN/g — 4 Principles to Reduce Cognitive Load in Forms",
+        "url": "https://www.nngroup.com/articles/4-principles-reduce-cognitive-load/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Known-valid set is constrained (picker, allowed charset, max length, stepper) so invalid values cannot be entered."
+      ],
+      "fail_when": [
+        "Known-valid set is free text rejected only after entry."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.inputs.use_device_features",
+      "category": "Forms",
+      "segment": "Inputs",
+      "title": "use device features",
+      "rule": "Populate the field from phone features when they apply (camera, GPS, voice, contacts).",
+      "citation": {
+        "source": "NN/g — A Checklist for Designing Mobile Input Fields",
+        "url": "https://www.nngroup.com/articles/mobile-input-checklist/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Where camera, GPS, voice, or contacts can supply the value, that path is offered."
+      ],
+      "fail_when": [
+        "Applicable device capture is typing-only."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.inputs.compute_from_other_info",
+      "category": "Forms",
+      "segment": "Inputs",
+      "title": "compute from other info",
+      "rule": "Compute the value from other information when you can (for example state from ZIP, skip a coupon the user does not have).",
+      "citation": {
+        "source": "NN/g — A Checklist for Designing Mobile Input Fields",
+        "url": "https://www.nngroup.com/articles/mobile-input-checklist/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Values derivable from answers already given are filled or skipped (e.g. state from ZIP)."
+      ],
+      "fail_when": [
+        "User re-enters data the form could compute, or is forced through a field that does not apply."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.inputs.allow_paste_and_drag",
+      "category": "Forms",
+      "segment": "Inputs",
+      "title": "allow paste and drag",
+      "rule": "Allow copy/paste (never block paste) and, where the platform supports it, drag-and-drop into the field.",
+      "citation": {
+        "source": "NN/g — A Checklist for Designing Mobile Input Fields; Vercel Web Interface Guidelines; Apple HIG — Entering data",
+        "url": "https://www.nngroup.com/articles/mobile-input-checklist/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Paste into the field works; copy out works; drag-and-drop works where the platform supports it."
+      ],
+      "fail_when": [
+        "Paste is blocked or stripped by the field."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.inputs.matching_keyboard_and_type",
+      "category": "Forms",
+      "segment": "Inputs",
+      "title": "matching keyboard and type",
+      "rule": "Show the keyboard and input type that match the content (email, tel, URL, number, and equivalent platform keyboards).",
+      "citation": {
+        "source": "NN/g — A Checklist for Designing Mobile Input Fields; Apple HIG — Text fields; Vercel Web Interface Guidelines",
+        "url": "https://www.nngroup.com/articles/mobile-input-checklist/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Email/tel/URL/number (and equivalents) use matching `type`/`inputmode`/platform keyboard."
+      ],
+      "fail_when": [
+        "Those contents use a generic text keyboard."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.inputs.no_autocorrect_identity_fields",
+      "category": "Forms",
+      "segment": "Inputs",
+      "title": "no autocorrect identity fields",
+      "rule": "Do not autocorrect names, addresses, or emails; turn spellcheck off on emails, codes, and usernames.",
+      "citation": {
+        "source": "NN/g — A Checklist for Designing Mobile Input Fields; Vercel Web Interface Guidelines",
+        "url": "https://www.nngroup.com/articles/mobile-input-checklist/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Name, address, email: autocorrect off. Email, code, username: spellcheck off."
+      ],
+      "fail_when": [
+        "Those fields autocorrect or spellcheck as prose."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.inputs.allow_typos_abbreviations",
+      "category": "Forms",
+      "segment": "Inputs",
+      "title": "allow typos abbreviations",
+      "rule": "Allow typos or abbreviations rather than rejecting near-matches the system can interpret.",
+      "citation": {
+        "source": "NN/g — A Checklist for Designing Mobile Input Fields",
+        "url": "https://www.nngroup.com/articles/mobile-input-checklist/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Interpretable near-matches (typo, abbreviation) are accepted."
+      ],
+      "fail_when": [
+        "Near-matches the system could interpret are rejected."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.inputs.forgiving_format_autoformat",
+      "category": "Forms",
+      "segment": "Inputs",
+      "title": "forgiving format autoformat",
+      "rule": "Accept the value in whatever recognizable format the user types and autoformat it; do not force a single syntax.",
+      "citation": {
+        "source": "NN/g — A Checklist for Designing Mobile Input Fields; Designing Interfaces 3e ch. Getting Input — Forgiving Format (Tidwell, Brewer, Valencia)",
+        "url": "https://www.nngroup.com/articles/mobile-input-checklist/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Recognizable variants are accepted and autoformatted."
+      ],
+      "fail_when": [
+        "A single punctuation/syntax is required; other recognizable forms are rejected."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.inputs.structured_format",
+      "category": "Forms",
+      "segment": "Inputs",
+      "title": "structured format",
+      "rule": "When a strict syntax is required, put that structure into the control (segmented fields or visible separators) instead of a blank box.",
+      "citation": {
+        "source": "Designing Interfaces 3e ch. Getting Input — Structured Format (Tidwell, Brewer, Valencia)",
+        "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Strict-syntax values use segmented fields or visible separators."
+      ],
+      "fail_when": [
+        "Strict syntax is a blank box plus after-the-fact format errors only."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.inputs.fill_in_the_blanks",
+      "category": "Forms",
+      "segment": "Inputs",
+      "title": "fill in the blanks",
+      "rule": "When a label/control pair is awkward, present the request as a short sentence with blanks to fill in.",
+      "citation": {
+        "source": "Designing Interfaces 3e ch. Getting Input — Fill-in-the-Blanks (Tidwell, Brewer, Valencia)",
+        "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Awkward label/control pairs are recast as a short sentence with blanks."
+      ],
+      "fail_when": [
+        "The request is an awkward disconnected label+blank where a sentence-blank would fit the cited pattern."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.inputs.password_strength_meter",
+      "category": "Forms",
+      "segment": "Inputs",
+      "title": "password strength meter",
+      "rule": "While a new password is typed, show a strength meter (and rules) so the user can see whether the value meets the system’s bar.",
+      "citation": {
+        "source": "Designing Interfaces 3e ch. Getting Input — Password Strength Meter (Tidwell, Brewer, Valencia); NN/g — 10 Design Guidelines for Reporting Errors in Forms (§2)",
+        "url": "https://www.nngroup.com/articles/errors-forms-design-guidelines/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "During new-password entry, a meter and the rules are visible and update."
+      ],
+      "fail_when": [
+        "New-password field has no meter and/or no rules while typing."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.inputs.autocompletion",
+      "category": "Forms",
+      "segment": "Inputs",
+      "title": "autocompletion",
+      "rule": "As the user types a value with a known set of completions, suggest and complete matches.",
+      "citation": {
+        "source": "Designing Interfaces 3e ch. Getting Input — Autocompletion (Tidwell, Brewer, Valencia); NN/g — A Checklist for Designing Mobile Input Fields",
+        "url": "https://www.nngroup.com/articles/mobile-input-checklist/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Known completion set: suggestions appear from typed prefix and can complete the value."
+      ],
+      "fail_when": [
+        "Known set is typed from memory with no suggestions."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.inputs.dropdown_chooser",
+      "category": "Forms",
+      "segment": "Inputs",
+      "title": "dropdown chooser",
+      "rule": "For a bounded choice set, let the user pick from a drop-down chooser rather than typing the value from memory.",
+      "citation": {
+        "source": "Designing Interfaces 3e ch. Getting Input — Drop-down Chooser (Tidwell, Brewer, Valencia)",
+        "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Bounded set is picked from a drop-down (or equivalent chooser), not typed from memory."
+      ],
+      "fail_when": [
+        "Bounded list is a blank the user must recall."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.inputs.list_builder",
+      "category": "Forms",
+      "segment": "Inputs",
+      "title": "list builder",
+      "rule": "When the user must assemble a list of items, provide a list builder (available vs selected), not a single free-text dump.",
+      "citation": {
+        "source": "Designing Interfaces 3e ch. Getting Input — List Builder (Tidwell, Brewer, Valencia)",
+        "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Assembling a list uses available-vs-selected (add/remove) UI."
+      ],
+      "fail_when": [
+        "Multi-item list is one free-text dump."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.inputs.good_defaults_smart_prefills",
+      "category": "Forms",
+      "segment": "Inputs",
+      "title": "good defaults smart prefills",
+      "rule": "Prefill with good defaults and smart values the user can accept or edit.",
+      "citation": {
+        "source": "Designing Interfaces 3e ch. Getting Input — Good Defaults and Smart Prefills (Tidwell, Brewer, Valencia); NN/g — A Checklist for Designing Mobile Input Fields",
+        "url": "https://www.nngroup.com/articles/mobile-input-checklist/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Known defaults, history, or frequent values are prefilled and editable."
+      ],
+      "fail_when": [
+        "User retypes a known default/history/frequent value with no prefill."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.inputs.get_from_system",
+      "category": "Forms",
+      "segment": "Inputs",
+      "title": "get from system",
+      "rule": "Get information from the system whenever possible; do not ask people to type data you can gather automatically or with permission.",
+      "citation": {
+        "source": "Apple HIG — Entering data",
+        "url": "https://developer.apple.com/design/human-interface-guidelines/entering-data"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Data the system can gather (auto or with permission) is gathered, not typed."
+      ],
+      "fail_when": [
+        "User types data the system already has or can request."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.inputs.never_prepopulate_password",
+      "category": "Forms",
+      "segment": "Inputs",
+      "title": "never prepopulate password",
+      "rule": "Never prepopulate a password field; ask people to enter it or use biometric or keychain authentication.",
+      "citation": {
+        "source": "Apple HIG — Entering data",
+        "url": "https://developer.apple.com/design/human-interface-guidelines/entering-data"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Password field is empty of a visible/pre-filled password; entry is typing or biometric/keychain."
+      ],
+      "fail_when": [
+        "A password value is prepopulated in the field."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.inputs.offer_choices_not_only_text",
+      "category": "Forms",
+      "segment": "Inputs",
+      "title": "offer choices not only text",
+      "rule": "When possible, offer choices (picker, menu, or other selection) instead of requiring text entry.",
+      "citation": {
+        "source": "Apple HIG — Entering data",
+        "url": "https://developer.apple.com/design/human-interface-guidelines/entering-data"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Where a known choice set exists, user picks (picker/menu/selection) instead of typing."
+      ],
+      "fail_when": [
+        "Known choice set is text-entry only."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.inputs.clear_button",
+      "category": "Forms",
+      "segment": "Inputs",
+      "title": "clear button",
+      "rule": "Display a trailing Clear control so people can erase the field without repeatedly tapping Delete.",
+      "citation": {
+        "source": "Apple HIG — Text fields",
+        "url": "https://developer.apple.com/design/human-interface-guidelines/text-fields"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Filled text field shows a trailing Clear that empties that field."
+      ],
+      "fail_when": [
+        "User can only erase by repeated Delete; no trailing Clear."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.inputs.combo_box",
+      "category": "Forms",
+      "segment": "Inputs",
+      "title": "combo box",
+      "rule": "When text input must be paired with a list of choices, use a combo box.",
+      "citation": {
+        "source": "Apple HIG — Text fields",
+        "url": "https://developer.apple.com/design/human-interface-guidelines/text-fields"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Type-plus-list task uses a combo box (text field + choice list)."
+      ],
+      "fail_when": [
+        "Type-plus-list is split into disconnected text and list, or list-only when typing is required."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.inputs.html_autocomplete_and_name",
+      "category": "Forms",
+      "segment": "Inputs",
+      "title": "html autocomplete and name",
+      "rule": "Give inputs `autocomplete` and a meaningful `name`.",
+      "citation": {
+        "source": "Vercel Web Interface Guidelines — Forms",
+        "url": "https://github.com/vercel-labs/web-interface-guidelines/blob/main/command.md"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Inputs have `autocomplete` and a meaningful `name`."
+      ],
+      "fail_when": [
+        "Missing `autocomplete` or missing/meaningless `name`."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.inputs.shared_hit_target_choice",
+      "category": "Forms",
+      "segment": "Inputs",
+      "title": "shared hit target choice",
+      "rule": "Checkbox and radio label and control share a single hit target (no dead zones).",
+      "citation": {
+        "source": "Vercel Web Interface Guidelines — Forms",
+        "url": "https://github.com/vercel-labs/web-interface-guidelines/blob/main/command.md"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Click/tap on label, control, or the space between toggles the same choice."
+      ],
+      "fail_when": [
+        "Dead zone between control and label; only the small control hits."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.mobile.visible_with_keyboard",
+      "category": "Forms",
+      "segment": "Mobile",
+      "title": "visible with keyboard",
+      "rule": "Keep the field visible in both orientations when the keyboard is displayed.",
+      "citation": {
+        "source": "NN/g — A Checklist for Designing Mobile Input Fields",
+        "url": "https://www.nngroup.com/articles/mobile-input-checklist/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Focused field stays visible with the on-screen keyboard in portrait and landscape."
+      ],
+      "fail_when": [
+        "Keyboard covers the field in an orientation so the value cannot be seen."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.labels.clickable",
+      "category": "Forms",
+      "segment": "Field labels",
+      "title": "clickable",
+      "rule": "Labels are clickable (`htmlFor` or wrapping the control).",
+      "citation": {
+        "source": "Vercel Web Interface Guidelines — Forms",
+        "url": "https://github.com/vercel-labs/web-interface-guidelines/blob/main/command.md"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Activating the label focuses or toggles the associated control via `htmlFor` or wrapping."
+      ],
+      "fail_when": [
+        "Label click does nothing; no association."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.submit.enabled_until_request",
+      "category": "Forms",
+      "segment": "Submit",
+      "title": "enabled until request",
+      "rule": "Keep Submit enabled until the request starts; then show a spinner on the request.",
+      "citation": {
+        "source": "Vercel Web Interface Guidelines — Forms",
+        "url": "https://github.com/vercel-labs/web-interface-guidelines/blob/main/command.md"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Submit stays enabled until the request starts; then a spinner (in-flight) shows."
+      ],
+      "fail_when": [
+        "Submit is disabled before the request starts, or in-flight has no spinner."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    },
+    {
+      "id": "forms.navigation.warn_unsaved",
+      "category": "Forms",
+      "segment": "Navigation",
+      "title": "warn unsaved",
+      "rule": "Warn before navigation that would lose unsaved changes.",
+      "citation": {
+        "source": "Vercel Web Interface Guidelines — Forms",
+        "url": "https://github.com/vercel-labs/web-interface-guidelines/blob/main/command.md"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Leaving with unsaved changes prompts a warning."
+      ],
+      "fail_when": [
+        "Navigation discards unsaved values with no warning."
+      ],
+      "severity": "major",
+      "jobs": [
+        "forms"
+      ]
+    }
+  ],
+  "jobs": [
+    "forms"
+  ],
+  "patterns": []
+}

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Any, Literal
 
-from open_ux.catalog import EMPTY_NOTE, Catalog, get_by_id, select
+from open_ux.catalog import EMPTY_NOTE, Catalog, get_by_id, select_by_jobs
 
 Verdict = Literal["pass", "fail", "incomplete"]
 
@@ -38,33 +38,55 @@ def _unknown(guideline_id: str) -> dict[str, Any]:
     }
 
 
+def _catalog_meta(catalog: Catalog) -> dict[str, Any]:
+    return {
+        "status": "empty" if catalog.empty else "ok",
+        "guideline_count": len(catalog.guidelines),
+        "version": catalog.version,
+    }
+
+
 def audit(
     catalog: Catalog,
     *,
     target_type: str,
     content: str,
     guideline_ids: list[str] | None = None,
+    jobs: str | list[str] | None = None,
 ) -> dict[str, Any]:
     if target_type not in {"html", "jsx", "description"}:
         raise ValueError("target.type must be html, jsx, or description")
 
-    requested = list(guideline_ids or [])
+    requested = [gid for gid in (guideline_ids or []) if gid]
+    job_scope = jobs if isinstance(jobs, list) else ([jobs] if jobs else [])
+    job_scope = [j for j in job_scope if j]
+
+    if not requested and not job_scope:
+        payload: dict[str, Any] = {
+            "error": "audit requires jobs or guideline_ids; the full catalog is never run.",
+            "results": [],
+            "summary": {"pass": 0, "fail": 0, "incomplete": 0},
+            "catalog": _catalog_meta(catalog),
+        }
+        if catalog.empty:
+            payload["note"] = EMPTY_NOTE
+        return payload
+
     results: list[dict[str, Any]] = []
 
     if catalog.empty:
         for gid in requested:
             results.append(_unknown(gid))
-        summary = _summary(results)
-        return {
+        if not requested:
+            # jobs-only on an empty catalog: nothing to grade.
+            pass
+        payload = {
             "results": results,
-            "summary": summary,
-            "catalog": {
-                "status": "empty",
-                "guideline_count": 0,
-                "version": catalog.version,
-            },
+            "summary": _summary(results),
+            "catalog": _catalog_meta(catalog),
             "note": EMPTY_NOTE,
         }
+        return payload
 
     if requested:
         for gid in requested:
@@ -74,17 +96,13 @@ def audit(
             else:
                 results.append(_grade(g, target_type=target_type, content=content))
     else:
-        for g in select(catalog, None):
+        for g in select_by_jobs(catalog, job_scope):
             results.append(_grade(g, target_type=target_type, content=content))
 
     return {
         "results": results,
         "summary": _summary(results),
-        "catalog": {
-            "status": "ok",
-            "guideline_count": len(catalog.guidelines),
-            "version": catalog.version,
-        },
+        "catalog": _catalog_meta(catalog),
     }
 
 
