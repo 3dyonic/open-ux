@@ -1,0 +1,658 @@
+{
+  "version": "0.1.0",
+  "guidelines": [
+    {
+      "id": "nng.too-few-options-radios-not-dropdown",
+      "category": "Forms",
+      "segment": "Choice",
+      "title": "too few options radios not dropdown",
+      "rule": "Too few options → radios, not dropdown (NN/g “handful” / ~under 5; DS cutoffs cited on-page: USWDS <7, M3 6, Carbon 3).",
+      "citation": {
+        "source": "NN/g — Does Your Form Really Need a Dropdown List?",
+        "url": "https://www.nngroup.com/articles/dropdown-list/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "A handful of options (~under 5; other cited DS cutoffs on-page) is radios, not a dropdown."
+      ],
+      "fail_when": [
+        "Two–few options hidden in a dropdown."
+      ],
+      "severity": "major",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "do_not_claim": "One house cutoff that collapses NN/g handful vs USWDS <7 vs M3 6 vs Carbon 3 vs Polar <4. Overlap with Forms 54: `forms.inputs.match_control_and_size`, `dropdown_chooser`, `combo_box`, `offer_choices_not_only_text`."
+    },
+    {
+      "id": "nng.too-many-combobox-not-long-dropdown",
+      "category": "Forms",
+      "segment": "Choice",
+      "title": "too many combobox not long dropdown",
+      "rule": "Too many (~15+) → combobox, not a long dropdown.",
+      "citation": {
+        "source": "NN/g — Does Your Form Really Need a Dropdown List?",
+        "url": "https://www.nngroup.com/articles/dropdown-list/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "A ~15+ set is a combobox (type + list), not a long dropdown."
+      ],
+      "fail_when": [
+        "A long dropdown of ~15+ with no type-to-find."
+      ],
+      "severity": "major",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "do_not_claim": "Apple combo-box pairing (`forms.inputs.combo_box`) as a duplicate; a house “15” as law."
+    },
+    {
+      "id": "nng.familiar-values-type-not-dropdown",
+      "category": "Forms",
+      "segment": "Choice",
+      "title": "familiar values type not dropdown",
+      "rule": "Highly familiar/predictable values → type, not dropdown.",
+      "citation": {
+        "source": "NN/g — Does Your Form Really Need a Dropdown List?",
+        "url": "https://www.nngroup.com/articles/dropdown-list/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Familiar/predictable values (e.g. name-like known strings) are typed."
+      ],
+      "fail_when": [
+        "Those values are only in a dropdown."
+      ],
+      "severity": "major",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "do_not_claim": "Autocompletion suggestions as this row."
+    },
+    {
+      "id": "nng.dropdown-ok-narrow-middle",
+      "category": "Forms",
+      "segment": "Choice",
+      "title": "dropdown ok narrow middle",
+      "rule": "Dropdown OK in a narrow middle (~5–10) when the field is secondary or compactness matters.",
+      "citation": {
+        "source": "NN/g — Does Your Form Really Need a Dropdown List?",
+        "url": "https://www.nngroup.com/articles/dropdown-list/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "A ~5–10 secondary/compact field may use a dropdown."
+      ],
+      "fail_when": [
+        "Treating “dropdown never” or “dropdown always” as the rule for this middle band."
+      ],
+      "severity": "major",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "do_not_claim": "GOV.UK select-last-resort as a winner over this band."
+    },
+    {
+      "id": "nng.listbox-vs-dropdown",
+      "category": "Forms",
+      "segment": "Choice",
+      "title": "listbox vs dropdown",
+      "rule": "Dropdown to downplay alternatives / keep a default; listbox to expose options and encourage change.",
+      "citation": {
+        "source": "NN/g — Listboxes vs. Dropdown Lists",
+        "url": "https://www.nngroup.com/articles/listbox-dropdown/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Dropdown is used to keep a default / downplay alternatives; listbox is used when options should stay visible and change is encouraged."
+      ],
+      "fail_when": [
+        "Listbox hides alternatives that should stay visible, or a dropdown is used when the design needs to encourage changing the default."
+      ],
+      "severity": "major",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "do_not_claim": "Radio vs dropdown (separate rows)."
+    },
+    {
+      "id": "nng.keyboard-typeahead-in-dropdowns",
+      "category": "Forms",
+      "segment": "Choice",
+      "title": "keyboard typeahead in dropdowns",
+      "rule": "Keyboard typeahead in dropdowns; avoid dropdown when typing is faster (state/country).",
+      "citation": {
+        "source": "NN/g — Dropdowns: Design Guidelines",
+        "url": "https://www.nngroup.com/articles/drop-down-menus/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Dropdowns support typeahead; state/country (typing faster) is not a dropdown."
+      ],
+      "fail_when": [
+        "Dropdown with no typeahead, or state/country forced through a dropdown."
+      ],
+      "severity": "major",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "do_not_claim": "Mobile checkout “open field not iOS picker” as this row (see `nng.open-field-state-and-card-expiry`)."
+    },
+    {
+      "id": "nng.avoid-cascading-dropdowns",
+      "category": "Forms",
+      "segment": "Choice",
+      "title": "avoid cascading dropdowns",
+      "rule": "Avoid cascading/interdependent dropdowns (options that appear/disappear from another widget).",
+      "citation": {
+        "source": "NN/g — Dropdowns: Design Guidelines",
+        "url": "https://www.nngroup.com/articles/drop-down-menus/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Choice sets are not chained so that a second dropdown’s options appear/disappear from the first."
+      ],
+      "fail_when": [
+        "Interdependent dropdowns where the next list is populated only by the previous widget."
+      ],
+      "severity": "major",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "do_not_claim": "GOV.UK conditional reveal of a related question (different pattern)."
+    },
+    {
+      "id": "nng.checkboxes-multi-radios-exclusive",
+      "category": "Forms",
+      "segment": "Choice",
+      "title": "checkboxes multi radios exclusive",
+      "rule": "Checkboxes = independent multi; radios = mutually exclusive exactly-one.",
+      "citation": {
+        "source": "NN/g — Checkboxes vs. Radio Buttons",
+        "url": "https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Independent multi uses checkboxes; exactly-one uses radios."
+      ],
+      "fail_when": [
+        "Checkboxes for mutually exclusive exactly-one, or radios for independent multi."
+      ],
+      "severity": "major",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "do_not_claim": "Visuals (next row); GOV.UK “don’t assume from visuals alone”."
+    },
+    {
+      "id": "nng.standard-visuals-checkbox-square-radio-circle",
+      "category": "Forms",
+      "segment": "Choice",
+      "title": "standard visuals checkbox square radio circle",
+      "rule": "Standard visuals: checkbox square; radio circle with solid inner.",
+      "citation": {
+        "source": "NN/g — Checkboxes vs. Radio Buttons",
+        "url": "https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Checkboxes are squares; radios are circles with a solid inner when selected."
+      ],
+      "fail_when": [
+        "Swapped or nonstandard shapes that make the two indistinguishable."
+      ],
+      "severity": "major",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "do_not_claim": "Brand icon swaps as a house exception."
+    },
+    {
+      "id": "nng.vertical-one-choice-per-line",
+      "category": "Forms",
+      "segment": "Choice",
+      "title": "vertical one choice per line",
+      "rule": "Vertical one-choice-per-line; space carefully if horizontal.",
+      "citation": {
+        "source": "NN/g — Checkboxes vs. Radio Buttons",
+        "url": "https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Choices are stacked one per line, or a horizontal row is carefully spaced so each label maps to one control."
+      ],
+      "fail_when": [
+        "Crowded horizontal choices that attach the wrong label to a control."
+      ],
+      "severity": "major",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "do_not_claim": "Hit-target px floors."
+    },
+    {
+      "id": "nng.prefer-radios-over-dropdowns-when-visible",
+      "category": "Forms",
+      "segment": "Choice",
+      "title": "prefer radios over dropdowns when visible",
+      "rule": "Prefer radios over dropdowns when options can stay visible.",
+      "citation": {
+        "source": "NN/g — Checkboxes vs. Radio Buttons",
+        "url": "https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "A set that can stay visible is radios (or equivalent exposed list), not a dropdown."
+      ],
+      "fail_when": [
+        "Options that fit on screen are hidden in a dropdown."
+      ],
+      "severity": "major",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "do_not_claim": "The ~5–10 secondary compactness exception (`nng.dropdown-ok-narrow-middle`)."
+    },
+    {
+      "id": "nng.radio-set-comprehensive-other-type-in",
+      "category": "Forms",
+      "segment": "Choice",
+      "title": "radio set comprehensive other type in",
+      "rule": "Radio set must be comprehensive; add Other + type-in if not.",
+      "citation": {
+        "source": "NN/g — Checkboxes vs. Radio Buttons",
+        "url": "https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Every valid answer is in the set, or Other + type-in covers the rest."
+      ],
+      "fail_when": [
+        "Set is incomplete and there is no Other + type-in."
+      ],
+      "severity": "major",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "do_not_claim": "Silent preselect of a guessed Other."
+    },
+    {
+      "id": "nng.always-select-one-radio-by-default",
+      "category": "Forms",
+      "segment": "Choice",
+      "title": "always select one radio by default",
+      "rule": "Always select one radio by default (users cannot return to “none”). Dual-cite with GOV.UK no-preselect-on-questions and Polar default-when-possible: satisfy “always one selected” with explicit None when none is valid — do not force a guessed answer.",
+      "citation": {
+        "source": "NN/g — Radio Buttons: Select One by Default",
+        "url": "https://www.nngroup.com/articles/radio-buttons-default-selection/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "The radio set has a selected value. If “none” is valid, that value is an explicit None. Settings: current/safe default."
+      ],
+      "fail_when": [
+        "No selected radio (stuck with no way back to none, or an empty set); or a guessed real answer is preselected on a question where none/unknown is valid; or a global always/never with no question-vs-settings split."
+      ],
+      "severity": "major",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "do_not_claim": "A winner over GOV.UK questions or Polar “Select” placeholder when no logical default. Overlap with Forms 54: `forms.inputs.good_defaults_smart_prefills`."
+    },
+    {
+      "id": "nng.users-rarely-change-defaults",
+      "category": "Forms",
+      "segment": "Defaults",
+      "title": "users rarely change defaults",
+      "rule": "Users rarely change defaults — pick most common/safe, not first-alpha; don’t always default the most expensive.",
+      "citation": {
+        "source": "NN/g — The Power of Defaults",
+        "url": "https://www.nngroup.com/articles/the-power-of-defaults/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Default is the common or safe value, not alphabetical-first and not automatically the most expensive."
+      ],
+      "fail_when": [
+        "First-alpha or most-expensive default with no common/safe basis."
+      ],
+      "severity": "major",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "do_not_claim": "Question silent-preselect (locked dual-cite); Tidwell Good Defaults as a merge."
+    },
+    {
+      "id": "nng.eas-framework",
+      "category": "Forms",
+      "segment": "Effort",
+      "title": "eas framework",
+      "rule": "EAS framework (named): Eliminate → Automate → Simplify (one row, not a re-dump of keep-short / device features).",
+      "citation": {
+        "source": "NN/g — EAS Framework",
+        "url": "https://www.nngroup.com/articles/eas-framework-simplify-forms/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Form effort is attacked in that order: eliminate, then automate, then simplify what remains."
+      ],
+      "fail_when": [
+        "The named order is inverted (simplify first while still asking for eliminable/automatable data)."
+      ],
+      "severity": "major",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "do_not_claim": "Re-listing `keep_short` / `use_device_features` / `compute_from_other_info` as this row. Overlap with Forms 54: `forms.length.keep_short`, `compute_from_other_info`, `use_device_features`. One named EAS row only."
+    },
+    {
+      "id": "nng.show-the-rules",
+      "category": "Forms",
+      "segment": "Password",
+      "title": "show the rules",
+      "rule": "Show the Rules — requirements visible the whole time the field is selected (not a hidden link; not inside the placeholder).",
+      "citation": {
+        "source": "NN/g — Password Creation: 3 Ways To Make It Easier",
+        "url": "https://www.nngroup.com/articles/password-creation/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "While the password-creation field is selected, the requirements stay visible outside the placeholder."
+      ],
+      "fail_when": [
+        "Rules only in a hidden link, only in the placeholder, or only after submit."
+      ],
+      "severity": "major",
+      "jobs": [
+        "recover_from_invalid_input"
+      ],
+      "do_not_claim": "Strength meter (`forms.inputs.password_strength_meter`). Overlap with Forms 54: `forms.inputs.password_strength_meter` + `forms.fields.explain_format_upfront`. Meter already skipped; this row is requirements visible the whole time the field is selected."
+    },
+    {
+      "id": "nng.show-the-input-password-creation",
+      "category": "Forms",
+      "segment": "Password",
+      "title": "show the input password creation",
+      "rule": "Show the Input — unmask: desktop hidden by default + “Show password”; mobile/tablet shown by default + hide control. Separate from login (two checks, not a fight).",
+      "citation": {
+        "source": "NN/g — Password Creation: 3 Ways To Make It Easier",
+        "url": "https://www.nngroup.com/articles/password-creation/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Creation on mobile/tablet: value shown by default with a hide control. Desktop creation: masked by default with Show password."
+      ],
+      "fail_when": [
+        "Mobile/tablet creation starts masked with no hide/show path that matches shown-by-default; desktop creation has no Show; or login’s mask-by-default is treated as this creation row."
+      ],
+      "severity": "major",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "do_not_claim": "Login masking (`nng.login-mask-plus-show-password`); never-prepopulate-password."
+    },
+    {
+      "id": "nng.dont-repeat-password-email-fields",
+      "category": "Forms",
+      "segment": "Registration",
+      "title": "dont repeat password email fields",
+      "rule": "Don’t repeat password/email fields; confirm on a later page instead.",
+      "citation": {
+        "source": "NN/g — A Checklist for Registration and Login Forms on Mobile",
+        "url": "https://www.nngroup.com/articles/checklist-registration-login/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Email and password are each asked once; confirmation is a later page, not a second identical field."
+      ],
+      "fail_when": [
+        "Confirm-email or confirm-password duplicate fields on the same form."
+      ],
+      "severity": "major",
+      "jobs": [
+        "group_related_inputs"
+      ],
+      "do_not_claim": "Login Show password."
+    },
+    {
+      "id": "nng.login-mask-plus-show-password",
+      "category": "Forms",
+      "segment": "Password",
+      "title": "login mask plus show password",
+      "rule": "Login: mask by default + Show password (differs from creation-on-mobile). Two checks, not a fight.",
+      "citation": {
+        "source": "NN/g — A Checklist for Registration and Login Forms on Mobile",
+        "url": "https://www.nngroup.com/articles/checklist-registration-login/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Login password is masked by default and has Show password."
+      ],
+      "fail_when": [
+        "Login shown-by-default with no mask, or masked with no Show."
+      ],
+      "severity": "major",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "do_not_claim": "Mobile creation shown-by-default as a contradiction of this row."
+    },
+    {
+      "id": "nng.forgot-password-link",
+      "category": "Forms",
+      "segment": "Login",
+      "title": "forgot password link",
+      "rule": "Forgot password link on every login.",
+      "citation": {
+        "source": "NN/g — A Checklist for Registration and Login Forms on Mobile",
+        "url": "https://www.nngroup.com/articles/checklist-registration-login/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Every login surface has a forgot-password link."
+      ],
+      "fail_when": [
+        "Login with no forgot-password path."
+      ],
+      "severity": "major",
+      "jobs": [
+        "recover_from_invalid_input"
+      ],
+      "do_not_claim": "Recovery-flow copy quality."
+    },
+    {
+      "id": "nng.alt-registration-and-biometric-login",
+      "category": "Forms",
+      "segment": "Login",
+      "title": "alt registration and biometric login",
+      "rule": "Alt registration (social/federated) + biometric login where the platform has it.",
+      "citation": {
+        "source": "NN/g — A Checklist for Registration and Login Forms on Mobile",
+        "url": "https://www.nngroup.com/articles/checklist-registration-login/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Federated/social registration is offered; biometric login is offered where the platform has it."
+      ],
+      "fail_when": [
+        "Platform has the capability and neither alt registration nor biometric is offered when this checklist applies."
+      ],
+      "severity": "major",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "do_not_claim": "That every product must ship every social provider."
+    },
+    {
+      "id": "nng.guest-checkout-prominent",
+      "category": "Forms",
+      "segment": "Checkout",
+      "title": "guest checkout prominent",
+      "rule": "Guest checkout prominent (above sign-in); optional password in-flow; mark password optional; user-benefit copy not newsletter pitch.",
+      "citation": {
+        "source": "NN/g — Don’t Force Users to Register Before They Can Buy; NN/g — The Mobile Checkout Experience",
+        "url": "https://www.nngroup.com/articles/optional-registration/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Guest checkout is prominent and above sign-in; password in-flow is optional and labeled optional; copy states user benefit, not a newsletter pitch."
+      ],
+      "fail_when": [
+        "Forced register-before-buy; guest buried under sign-in; password required in-flow; newsletter pitch as the reason."
+      ],
+      "severity": "major",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "do_not_claim": "Paywalled 137-rec report."
+    },
+    {
+      "id": "nng.cart-easy-remove-no-extra-update",
+      "category": "Forms",
+      "segment": "Checkout",
+      "title": "cart easy remove no extra update",
+      "rule": "Cart: easy Remove per line; no extra Update button to commit quantity.",
+      "citation": {
+        "source": "NN/g — The Mobile Checkout Experience",
+        "url": "https://www.nngroup.com/articles/mobile-checkout-ux/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Each line has easy Remove; quantity commits without a separate Update button."
+      ],
+      "fail_when": [
+        "Remove is hard to find, or quantity needs an extra Update to commit."
+      ],
+      "severity": "major",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "do_not_claim": "Undo snackbar (see `nng.support-undo-discoverable`)."
+    },
+    {
+      "id": "nng.order-summary-easy-to-find-mobile",
+      "category": "Forms",
+      "segment": "Checkout",
+      "title": "order summary easy to find mobile",
+      "rule": "Order summary easy to find on mobile (not only below the fold).",
+      "citation": {
+        "source": "NN/g — The Mobile Checkout Experience",
+        "url": "https://www.nngroup.com/articles/mobile-checkout-ux/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "On mobile checkout, order summary is findable without only living below the fold."
+      ],
+      "fail_when": [
+        "Summary only below the fold with no easy way to find it."
+      ],
+      "severity": "major",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "do_not_claim": "A required sticky-bar implementation."
+    },
+    {
+      "id": "nng.open-field-state-and-card-expiry",
+      "category": "Forms",
+      "segment": "Checkout",
+      "title": "open field state and card expiry",
+      "rule": "Open field, not iOS picker/dropdown, for state and card expiry.",
+      "citation": {
+        "source": "NN/g — The Mobile Checkout Experience",
+        "url": "https://www.nngroup.com/articles/mobile-checkout-ux/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "State and card expiry are open fields (typeable), not iOS pickers/dropdowns."
+      ],
+      "fail_when": [
+        "State or expiry uses a picker/dropdown as the only entry."
+      ],
+      "severity": "major",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "do_not_claim": "All dropdowns everywhere (see choice-cutoff rows)."
+    },
+    {
+      "id": "nng.mobile-friendly-payment-options",
+      "category": "Forms",
+      "segment": "Checkout",
+      "title": "mobile friendly payment options",
+      "rule": "Mobile-friendly payment options without overwhelming; photo-to-fill card; cross-device cart.",
+      "citation": {
+        "source": "NN/g — The Mobile Checkout Experience",
+        "url": "https://www.nngroup.com/articles/mobile-checkout-ux/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Payment options stay usable on mobile without an overwhelming list; card can be filled from a photo; cart works across devices."
+      ],
+      "fail_when": [
+        "Overwhelming payment list, no photo-to-fill where the article’s pattern applies, or cart that cannot continue on another device."
+      ],
+      "severity": "major",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "do_not_claim": "A required set of named wallets."
+    },
+    {
+      "id": "nng.modal-and-nonmodal-dialogs",
+      "category": "Dialogs",
+      "segment": "Modal vs nonmodal",
+      "title": "modal and nonmodal dialogs",
+      "rule": "Modal & Nonmodal Dialogs (7 numbered): (1) Important warnings / prevent or correct critical errors. (2) Request info critical to continuing the current process. (3) May fragment a complex workflow into simpler steps. (4) Ask for info that, if provided, significantly lessens work. (5) Do not use for nonessential, off-flow information. (6) Avoid interrupting high-stake processes such as checkout. (7) Avoid when the decision needs sources unavailable inside the modal.",
+      "citation": {
+        "source": "NN/g — Modal & Nonmodal Dialogs",
+        "url": "https://www.nngroup.com/articles/modal-nonmodal-dialog/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "A modal is used for 1–4; not used for 5–7 (nonessential off-flow; interrupting checkout; decision needs outside sources)."
+      ],
+      "fail_when": [
+        "Modal for nonessential/off-flow; modal interrupting checkout; modal that needs sources not inside it; or no modal when a critical warning / critical-to-continue request applies."
+      ],
+      "severity": "major",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "do_not_claim": "Confirmation-dialog copy (`actions.confirm.*`); form-error-only-in-modal (`forms.errors.modal_not_only_copy`); Polar complex-form modal (dual-cite, keep both named)."
+    },
+    {
+      "id": "nng.support-undo-discoverable",
+      "category": "Actions",
+      "segment": "Control",
+      "title": "support undo discoverable",
+      "rule": "Support Undo that stays discoverable — visible control; snackbar-only undo that vanishes in seconds is a miss. Always allow Back; cancel in-progress. (Heuristic #3 not filed as a catalog row.)",
+      "citation": {
+        "source": "NN/g — User Control and Freedom",
+        "url": "https://www.nngroup.com/articles/user-control-and-freedom/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Undo is a discoverable visible control (not only a vanishing snackbar); Back is available; in-progress work can be cancelled."
+      ],
+      "fail_when": [
+        "Undo only as a seconds-long snackbar; no Back; no cancel in-progress."
+      ],
+      "severity": "major",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "do_not_claim": "Heuristic #3 as a row; `actions.multilevel_undo` / `actions.cancelability` as merges. Overlap with Actions 40: `multilevel_undo` / `cancelability`."
+    }
+  ],
+  "jobs": [
+    "choose_control_for_choice",
+    "use_familiar_control",
+    "recover_from_invalid_input",
+    "group_related_inputs",
+    "pick_primary_action",
+    "wayfind_after_nav"
+  ],
+  "patterns": []
+}

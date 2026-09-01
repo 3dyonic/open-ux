@@ -1,0 +1,524 @@
+{
+  "version": "0.1.0",
+  "guidelines": [
+    {
+      "id": "govuk.date-input-only-memorable",
+      "category": "Forms",
+      "segment": "Dates",
+      "title": "date input only memorable",
+      "rule": "Use date input only for memorable or look-up dates — not for dates users won’t know exactly.",
+      "citation": {
+        "source": "GOV.UK Design System — Date input",
+        "url": "https://design-system.service.gov.uk/components/date-input/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Day/month/year date input is used for dates people know or can look up (e.g. date of birth, document date)."
+      ],
+      "fail_when": [
+        "Date input is used for a date the user will not know exactly."
+      ],
+      "severity": "major",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "do_not_claim": "Calendar vs approximate/relative (see `govuk.four-date-types` / `govuk.calendar-control-when`)."
+    },
+    {
+      "id": "govuk.never-auto-tab-date-fields",
+      "category": "Forms",
+      "segment": "Dates",
+      "title": "never auto tab date fields",
+      "rule": "Never auto-tab between day/month/year fields.",
+      "citation": {
+        "source": "GOV.UK Design System — Date input",
+        "url": "https://design-system.service.gov.uk/components/date-input/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Focus stays in the current day, month, or year field until the user moves it."
+      ],
+      "fail_when": [
+        "Completing one segment auto-tabs into the next."
+      ],
+      "severity": "major",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "do_not_claim": "Autocomplete tokens (see `govuk.dob-autocomplete-tokens`)."
+    },
+    {
+      "id": "govuk.dob-autocomplete-tokens",
+      "category": "Forms",
+      "segment": "Dates",
+      "title": "dob autocomplete tokens",
+      "rule": "Date of birth fields use autocomplete tokens `bday-day` / `bday-month` / `bday-year`.",
+      "citation": {
+        "source": "GOV.UK Design System — Date input",
+        "url": "https://design-system.service.gov.uk/components/date-input/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "DOB day/month/year inputs have those autocomplete tokens."
+      ],
+      "fail_when": [
+        "DOB segments omit the tokens or use a generic autocomplete."
+      ],
+      "severity": "major",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "do_not_claim": "Generic HTML autocomplete+name (`forms.inputs.html_autocomplete_and_name`); typeahead suggestions. Overlap with Forms 54: tokens are the new claim."
+    },
+    {
+      "id": "govuk.four-date-types",
+      "category": "Forms",
+      "segment": "Dates",
+      "title": "four date types",
+      "rule": "Distinguish four date types: memorable; from documents/cards; approximate; relative.",
+      "citation": {
+        "source": "GOV.UK Design System — Dates (pattern)",
+        "url": "https://design-system.service.gov.uk/patterns/dates/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "The control matches the type (memorable / document / approximate / relative) rather than one date widget for all."
+      ],
+      "fail_when": [
+        "One date-input/calendar is used regardless of whether the date is memorable, documented, approximate, or relative."
+      ],
+      "severity": "major",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "do_not_claim": "A house fifth type."
+    },
+    {
+      "id": "govuk.calendar-control-when",
+      "category": "Forms",
+      "segment": "Dates",
+      "title": "calendar control when",
+      "rule": "Calendar control only if the date is near future or recent past and weekday/week-of-month matters; never JS-only — always also a text entry.",
+      "citation": {
+        "source": "GOV.UK Design System — Dates (pattern)",
+        "url": "https://design-system.service.gov.uk/patterns/dates/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "A calendar is used only when both conditions hold, and a text entry exists as well (not JS-only)."
+      ],
+      "fail_when": [
+        "Calendar for dates that fail those conditions, or calendar with no text-entry alternative."
+      ],
+      "severity": "major",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "do_not_claim": "Date-input-for-memorable as the calendar rule."
+    },
+    {
+      "id": "govuk.example-dates-unambiguous-order",
+      "category": "Forms",
+      "segment": "Dates",
+      "title": "example dates unambiguous order",
+      "rule": "Example dates: day ≥13, month ≤9 (e.g. 27 3 2007) so order is unambiguous and leading zeros aren’t required.",
+      "citation": {
+        "source": "GOV.UK Design System — Dates (pattern)",
+        "url": "https://design-system.service.gov.uk/patterns/dates/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Hint/example uses a day of 13 or more and a month of 9 or less, without requiring leading zeros."
+      ],
+      "fail_when": [
+        "Example like 03/04/2007 (ambiguous order) or an example that implies leading zeros are required."
+      ],
+      "severity": "major",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "do_not_claim": "Locale date-format law."
+    },
+    {
+      "id": "govuk.labels-sentence-case-no-colons-above",
+      "category": "Forms",
+      "segment": "Field labels",
+      "title": "labels sentence case no colons above",
+      "rule": "Labels: sentence case, no trailing colons, above the control.",
+      "citation": {
+        "source": "GOV.UK Design System — Text input",
+        "url": "https://design-system.service.gov.uk/components/text-input/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Visible label is sentence case, has no trailing colon, and sits above the control."
+      ],
+      "fail_when": [
+        "Title Case / ALL CAPS, trailing colon, or label beside/inside as the only placement."
+      ],
+      "severity": "major",
+      "jobs": [
+        "name_a_control"
+      ],
+      "do_not_claim": "LIVE visible-label existence (`forms.field_labels.visible_label`); Fluent left-align-when-tight; Polar 1–3 word cap. Overlap with Forms 54: beyond LIVE `visible_label` / `label_stays_visible`."
+    },
+    {
+      "id": "govuk.select-last-resort",
+      "category": "Forms",
+      "segment": "Choice",
+      "title": "select last resort",
+      "rule": "Select is last resort on public services; ask questions that shrink the list first.",
+      "citation": {
+        "source": "GOV.UK Design System — Select",
+        "url": "https://design-system.service.gov.uk/components/select/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Public-service flow avoids a long select until questions have shrunk the list, or select is not used."
+      ],
+      "fail_when": [
+        "A long public-service select is the first/only way to choose, with no shrinking questions."
+      ],
+      "severity": "major",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "do_not_claim": "A house option-count cutoff (see NN/g / Polar choice cutoffs). Overlap with Forms 54: `forms.inputs.match_control_and_size`, `dropdown_chooser`, `combo_box`, `offer_choices_not_only_text`. Dual-cite DS cutoffs; no house number."
+    },
+    {
+      "id": "govuk.select-preselect-settings-not-questions",
+      "category": "Forms",
+      "segment": "Choice",
+      "title": "select preselect settings not questions",
+      "rule": "Select: pre-select for settings; do not pre-select for questions (influence). Dual-cite with NN/g always-default-radio (via explicit None) and Polar default-when-possible — not a winner.",
+      "citation": {
+        "source": "GOV.UK Design System — Select",
+        "url": "https://design-system.service.gov.uk/components/select/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Question select/radio: no silent preselected answer; if “none” is valid, an explicit None is in the set. Settings: the current or safe value is selected."
+      ],
+      "fail_when": [
+        "A question silently preselects a guessed answer; or a settings control has a logical current/safe value and leaves it unselected; or a global “always/never preselect” with no question-vs-settings split."
+      ],
+      "severity": "major",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "do_not_claim": "Forcing a guessed question answer to satisfy “always default a radio”. Overlap with Forms 54: `forms.inputs.good_defaults_smart_prefills`. Encode question vs settings; do not collapse into Tidwell Good Defaults."
+    },
+    {
+      "id": "govuk.radios-left-of-labels",
+      "category": "Forms",
+      "segment": "Choice",
+      "title": "radios left of labels",
+      "rule": "Radios sit left of their labels.",
+      "citation": {
+        "source": "GOV.UK Design System — Radios",
+        "url": "https://design-system.service.gov.uk/components/radios/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Each radio control is to the left of its label."
+      ],
+      "fail_when": [
+        "Label left / control right (or stacked so the control is not left of the label)."
+      ],
+      "severity": "major",
+      "jobs": [
+        "name_a_control"
+      ],
+      "do_not_claim": "Hit-target sharing (`forms.inputs.shared_hit_target_choice`); LTR-only as a world rule."
+    },
+    {
+      "id": "govuk.dont-assume-single-vs-multi-from-visuals",
+      "category": "Forms",
+      "segment": "Choice",
+      "title": "dont assume single vs multi from visuals",
+      "rule": "Don’t assume users know single- vs multi-select from radio vs checkbox visuals alone.",
+      "citation": {
+        "source": "GOV.UK Design System — Radios",
+        "url": "https://design-system.service.gov.uk/components/radios/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Copy or grouping makes single- vs multi-select explicit; visuals are not the only cue."
+      ],
+      "fail_when": [
+        "Only the radio/checkbox shape tells people whether one or many can be chosen."
+      ],
+      "severity": "major",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "do_not_claim": "The control-type rule itself (see `nng.checkboxes-multi-radios-exclusive`)."
+    },
+    {
+      "id": "govuk.radio-divider-or",
+      "category": "Forms",
+      "segment": "Choice",
+      "title": "radio divider or",
+      "rule": "Use a radio divider (usually “or”) for an unlike option.",
+      "citation": {
+        "source": "GOV.UK Design System — Radios",
+        "url": "https://design-system.service.gov.uk/components/radios/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "An unlike option (e.g. “None of these”, “I don’t know”) is separated with a divider, usually “or”."
+      ],
+      "fail_when": [
+        "Unlike option sits in the same undifferentiated list as the similar options."
+      ],
+      "severity": "major",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "do_not_claim": "That every set needs a divider."
+    },
+    {
+      "id": "govuk.conditionally-reveal-related-question",
+      "category": "Forms",
+      "segment": "Structure",
+      "title": "conditionally reveal related question",
+      "rule": "Conditionally reveal a related question on the chosen radio/checkbox.",
+      "citation": {
+        "source": "GOV.UK Design System — Radios; GOV.UK Design System — Checkboxes",
+        "url": "https://design-system.service.gov.uk/components/radios/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "A follow-up that applies only to one choice is revealed when that radio/checkbox is chosen."
+      ],
+      "fail_when": [
+        "Related follow-up is always visible, or never available after the choice."
+      ],
+      "severity": "major",
+      "jobs": [
+        "group_related_inputs"
+      ],
+      "do_not_claim": "Generic progressive disclosure (`forms.structure.progressive_disclosure`) as a second copy of this row. Overlap with Forms 54: `forms.structure.progressive_disclosure`."
+    },
+    {
+      "id": "govuk.item-hints-one-sentence",
+      "category": "Forms",
+      "segment": "Copy",
+      "title": "item hints one sentence",
+      "rule": "Item hints: one short sentence, no full stops; no links in hint text.",
+      "citation": {
+        "source": "GOV.UK Design System — Radios; GOV.UK Design System — Select",
+        "url": "https://design-system.service.gov.uk/components/radios/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Per-item hint is one short sentence without a full stop and without links."
+      ],
+      "fail_when": [
+        "Multi-sentence hints, trailing full stops, or links inside hint text."
+      ],
+      "severity": "major",
+      "jobs": [
+        "name_a_control"
+      ],
+      "do_not_claim": "Field-level helper text (Fluent); placeholder-as-hint (skipped)."
+    },
+    {
+      "id": "govuk.button-types-named",
+      "category": "Actions",
+      "segment": "Buttons",
+      "title": "button types named",
+      "rule": "Button types named: default; Start; secondary; warning (destructive).",
+      "citation": {
+        "source": "GOV.UK Design System — Button",
+        "url": "https://design-system.service.gov.uk/components/button/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "The button’s type matches its role (default / Start / secondary / warning for destructive)."
+      ],
+      "fail_when": [
+        "Destructive uses default styling, or Start/secondary/warning are used for the wrong role."
+      ],
+      "severity": "major",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "do_not_claim": "One-primary (`actions.buttons.one_primary`); default-not-destructive as a second winner. Overlap with Actions 40: `actions.buttons.default_not_destructive`."
+    },
+    {
+      "id": "govuk.dont-use-disabled-buttons",
+      "category": "Actions",
+      "segment": "Submit",
+      "title": "dont use disabled buttons",
+      "rule": "Don’t use disabled buttons on public/question flows — keep the button enabled and explain on press (GOV.UK). Settings Save MAY disable until requireds are complete ONLY if the disabled reason is visible and the label stays perceivable (Fluent). Dual-cite; not a global never/always.",
+      "citation": {
+        "source": "GOV.UK Design System — Button; Fluent 2 — Field usage (disabled control; label/helper stay perceivable)",
+        "url": "https://design-system.service.gov.uk/components/button/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Public/question: submit stays enabled; pressing it with incomplete/invalid input explains why. Settings Save: either the same enabled+explain pattern, or disabled until requireds are complete with the reason visible and the label still perceivable."
+      ],
+      "fail_when": [
+        "Disabled with no explanation; or a single global never-disable / always-disable that ignores question vs settings."
+      ],
+      "severity": "major",
+      "jobs": [
+        "disable_or_confirm_destructive"
+      ],
+      "do_not_claim": "A house winner vs `forms.submit.enabled_until_request` / `forms.fields.required_before_proceed`. Overlap with Forms 54 disabled-submit conflict and Actions 40 `actions.buttons.distinguishable_states` / `actions.buttons.loading_on_button` / `govuk.stop-accidental-double-submit`. Same lock — not a new winner."
+    },
+    {
+      "id": "govuk.stop-accidental-double-submit",
+      "category": "Actions",
+      "segment": "Submit",
+      "title": "stop accidental double submit",
+      "rule": "Stop accidental double submit.",
+      "citation": {
+        "source": "GOV.UK Design System — Button",
+        "url": "https://design-system.service.gov.uk/components/button/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "A second press cannot send a duplicate submit (e.g. after the request has started)."
+      ],
+      "fail_when": [
+        "Repeated presses queue duplicate submits."
+      ],
+      "severity": "major",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "do_not_claim": "Loading-on-button as the only allowed mechanism (`actions.buttons.loading_on_button`); disabling-before-request as a global (see disabled-submit lock)."
+    },
+    {
+      "id": "govuk.file-upload-reuse-already-uploaded",
+      "category": "Forms",
+      "segment": "File upload",
+      "title": "file upload reuse already uploaded",
+      "rule": "File upload: let users reuse a file already uploaded.",
+      "citation": {
+        "source": "GOV.UK Design System — File upload",
+        "url": "https://design-system.service.gov.uk/components/file-upload/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "A file already uploaded in the journey can be reused without re-picking from disk."
+      ],
+      "fail_when": [
+        "Every step that needs the file requires a fresh upload with no reuse."
+      ],
+      "severity": "major",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "do_not_claim": "Multi-file builders (`forms.inputs.list_builder`)."
+    },
+    {
+      "id": "govuk.question-pages-continue-back-no-sliders",
+      "category": "Forms",
+      "segment": "Question pages",
+      "title": "question pages continue back no sliders",
+      "rule": "Question pages: Continue (not “Submit” jargon); Back link; don’t use range sliders.",
+      "citation": {
+        "source": "GOV.UK Design System — Question pages",
+        "url": "https://design-system.service.gov.uk/patterns/question-pages/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Question page primary is Continue (not Submit); a Back link is present; no range slider for the answer."
+      ],
+      "fail_when": [
+        "Submit jargon on a question page; no Back; or a range slider as the answer control."
+      ],
+      "severity": "major",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "do_not_claim": "Fluent multistep “Next not Continue” as a winner — dual-cite by surface (question page vs multistep settings). Overlap with Actions 40: `actions.copy.verbs_for_actions`."
+    },
+    {
+      "id": "govuk.task-list-statuses",
+      "category": "Forms",
+      "segment": "Structure",
+      "title": "task list statuses",
+      "rule": "Task list statuses (Not started / Cannot start yet / In progress / Completed) plus complete-multiple-tasks grouping.",
+      "citation": {
+        "source": "GOV.UK Design System — Task list; GOV.UK Design System — Complete multiple tasks",
+        "url": "https://design-system.service.gov.uk/components/task-list/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Tasks show those statuses (as they apply) and related tasks are grouped for completing multiple tasks."
+      ],
+      "fail_when": [
+        "No statuses, invented status labels that drop Cannot-start-yet / In-progress, or an ungrouped dump of tasks."
+      ],
+      "severity": "major",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "do_not_claim": "Long-form progress bar (`forms.transparency.progress_on_long_forms`)."
+    },
+    {
+      "id": "govuk.error-summary-plus-per-field",
+      "category": "Forms",
+      "segment": "Errors",
+      "title": "error summary plus per field",
+      "rule": "Error summary + per-field errors + focus the summary + link each item to the answer. Compatible with NN/g “not summary-only”; GOV.UK requires the summary as well.",
+      "citation": {
+        "source": "GOV.UK Design System — Error summary",
+        "url": "https://design-system.service.gov.uk/components/error-summary/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "On submit errors: a summary is focused, each summary item links to its answer, and each field also has its error."
+      ],
+      "fail_when": [
+        "Summary only (no per-field); per-field only (no summary on this pattern); summary not focused; items don’t link to answers."
+      ],
+      "severity": "major",
+      "jobs": [
+        "recover_from_invalid_input",
+        "explain_failure_next_to_cause"
+      ],
+      "do_not_claim": "A winner vs Vercel focus-first-field (`forms.errors.focus_first_error`); Polar banner (dual-cite, see `polar.long-form-errors-banner-plus-inline`). Overlap with Forms 54: `forms.errors.next_to_field_not_summary_only` + `forms.errors.focus_first_error`. Compatible with “not summary-only”; do not drop the summary."
+    },
+    {
+      "id": "govuk.character-count-fieldset-legend",
+      "category": "Forms",
+      "segment": "Inputs",
+      "title": "character count fieldset legend",
+      "rule": "Character count when a limit is justified; consider word count if more helpful; fieldset+legend to group related controls. (Also named, merged here: break a hard open question into radios instead of one textarea.)",
+      "citation": {
+        "source": "GOV.UK Design System — Character count; GOV.UK Design System — Fieldset",
+        "url": "https://design-system.service.gov.uk/components/character-count/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "A justified limit uses a character count (or word count if that is more helpful). Related controls are grouped with fieldset and legend. A hard open question is radios rather than one textarea when that split applies."
+      ],
+      "fail_when": [
+        "Unjustified limit with no count; related controls ungrouped; a hard closed choice dumped into a textarea."
+      ],
+      "severity": "major",
+      "jobs": [
+        "group_related_inputs"
+      ],
+      "do_not_claim": "M3 swap supporting text for error (`forms.errors.replace_supporting_text`)."
+    }
+  ],
+  "jobs": [
+    "choose_control_for_choice",
+    "use_familiar_control",
+    "name_a_control",
+    "group_related_inputs",
+    "pick_primary_action",
+    "disable_or_confirm_destructive",
+    "announce_system_status",
+    "recover_from_invalid_input",
+    "explain_failure_next_to_cause"
+  ],
+  "patterns": []
+}

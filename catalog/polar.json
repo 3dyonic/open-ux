@@ -1,0 +1,293 @@
+{
+  "version": "0.1.0",
+  "guidelines": [
+    {
+      "id": "polar.match-shopify-admin-voice",
+      "category": "Copy",
+      "segment": "Voice",
+      "title": "match shopify admin voice",
+      "rule": "Match Shopify admin voice; tone shifts (errors more direct than onboarding tips).",
+      "citation": {
+        "source": "Shopify — Product content principles",
+        "url": "https://shopify.dev/docs/apps/design/content"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "App copy matches admin voice; errors are more direct than onboarding tips."
+      ],
+      "fail_when": [
+        "Off-admin voice, or the same chipper onboarding tone on errors."
+      ],
+      "severity": "major",
+      "jobs": [
+        "tone_of_voice_for_failure"
+      ],
+      "do_not_claim": "A house flavour deck."
+    },
+    {
+      "id": "polar.dont-duplicate-content",
+      "category": "Copy",
+      "segment": "Structure",
+      "title": "dont duplicate content",
+      "rule": "Don’t duplicate content (no second page title under the title bar; no extra nav that copies App nav).",
+      "citation": {
+        "source": "Shopify — Product content principles",
+        "url": "https://shopify.dev/docs/apps/design/content"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "One page title; no extra nav that copies App nav."
+      ],
+      "fail_when": [
+        "A second title under the title bar, or duplicate App nav."
+      ],
+      "severity": "major",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "do_not_claim": "Wayfinding cluster breadcrumbs."
+    },
+    {
+      "id": "polar.plain-language-grade-7",
+      "category": "Copy",
+      "segment": "Language",
+      "title": "plain language grade 7",
+      "rule": "Plain language ~US grade 7; no jargon; no idioms; scannable headings/bullets/short sentences.",
+      "citation": {
+        "source": "Shopify — Product content principles",
+        "url": "https://shopify.dev/docs/apps/design/content"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Copy is ~grade 7, jargon- and idiom-free, with scannable headings/bullets/short sentences."
+      ],
+      "fail_when": [
+        "Jargon, idioms, or dense unscannable blocks."
+      ],
+      "severity": "major",
+      "jobs": [
+        "tone_of_voice_for_failure"
+      ],
+      "do_not_claim": "`forms.copy.plain_language` as a merge that drops the Polar grade-7 name. Overlap with Forms 54: `forms.copy.plain_language`."
+    },
+    {
+      "id": "polar.be-consistent-no-synonyms",
+      "category": "Copy",
+      "segment": "Language",
+      "title": "be consistent no synonyms",
+      "rule": "Be consistent — no synonyms for a key concept/action.",
+      "citation": {
+        "source": "Shopify — Product content principles",
+        "url": "https://shopify.dev/docs/apps/design/content"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "A key concept/action uses one term."
+      ],
+      "fail_when": [
+        "Synonyms for the same key concept/action."
+      ],
+      "severity": "major",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "do_not_claim": "`actions.copy.consistent_words` as a delete of this Polar-named row. Overlap with Actions 40: `actions.copy.consistent_words`."
+    },
+    {
+      "id": "polar.encourage-action-cta-verb",
+      "category": "Actions",
+      "segment": "Copy",
+      "title": "encourage action cta verb",
+      "rule": "Encourage action — CTA starts with a strong verb; active voice; break complicated tasks into steps.",
+      "citation": {
+        "source": "Shopify — Product content principles",
+        "url": "https://shopify.dev/docs/apps/design/content"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "CTA starts with a strong verb; active voice; complicated tasks are stepped."
+      ],
+      "fail_when": [
+        "Noun-only or weak CTA; passive; complicated task as one blob."
+      ],
+      "severity": "major",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "do_not_claim": "`actions.copy.verbs_for_actions` as a merge that drops Polar’s stepped-tasks half. Overlap with Actions 40: `verbs_for_actions`."
+    },
+    {
+      "id": "polar.guide-dont-prescribe",
+      "category": "Copy",
+      "segment": "Voice",
+      "title": "guide dont prescribe",
+      "rule": "Guide, don’t prescribe — merchant in control; enough info to decide.",
+      "citation": {
+        "source": "Shopify — Product content principles",
+        "url": "https://shopify.dev/docs/apps/design/content"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Copy guides with enough to decide; merchant stays in control."
+      ],
+      "fail_when": [
+        "Prescriptive copy that removes the decision, or too little to decide."
+      ],
+      "severity": "major",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "do_not_claim": "NN/g UI-copy / confirmation already-filed verb+noun / no “you can”."
+    },
+    {
+      "id": "polar.select-4plus-choice-list-under-4",
+      "category": "Forms",
+      "segment": "Choice",
+      "title": "select 4plus choice list under 4",
+      "rule": "Select for 4+ options; Choice list for <4.",
+      "citation": {
+        "source": "Polaris — Select",
+        "url": "https://polaris.shopify.com/components/selection-and-input/select"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Fewer than 4 → choice list; 4+ → select (Polar named cutoffs)."
+      ],
+      "fail_when": [
+        "Polar surface uses select for <4 or choice list for a long 4+ set as if the Polar cutoff were ignored."
+      ],
+      "severity": "major",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "do_not_claim": "A house number that beats NN/g handful / GOV.UK last-resort / USWDS <7 / M3 6 / Carbon 3. Overlap with Forms 54: `forms.inputs.match_control_and_size`, `dropdown_chooser`, `combo_box`, `offer_choices_not_only_text`."
+    },
+    {
+      "id": "polar.default-option-selected-when-possible",
+      "category": "Forms",
+      "segment": "Choice",
+      "title": "default option selected when possible",
+      "rule": "Default option selected whenever possible; “Select” placeholder only if no logical default. Dual-cite with GOV.UK settings vs questions and NN/g always-default-radio via explicit None — not a winner.",
+      "citation": {
+        "source": "Polaris — Select",
+        "url": "https://polaris.shopify.com/components/selection-and-input/select"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Settings / when a logical current-or-safe default exists, it is selected. If no logical default, a “Select” placeholder is allowed in addition to a visible label (placeholder is extra, never only label). Questions: do not use this row to force a guessed answer; use explicit None when none is valid."
+      ],
+      "fail_when": [
+        "Logical default exists on settings and is unused; or “Select” placeholder is the only label; or a guessed question answer is forced."
+      ],
+      "severity": "major",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "do_not_claim": "Placeholder-as-hint as a new Polar row (skipped). Overlap with Forms 54: `forms.inputs.good_defaults_smart_prefills`."
+    },
+    {
+      "id": "polar.labels-1-3-words-sentence-case-i18n",
+      "category": "Forms",
+      "segment": "Field labels",
+      "title": "labels 1 3 words sentence case i18n",
+      "rule": "Labels 1–3 words, sentence case, no articles/punctuation; independent sentences (not the first half of a sentence finished by the options) — i18n.",
+      "citation": {
+        "source": "Polaris — Select",
+        "url": "https://polaris.shopify.com/components/selection-and-input/select"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Label is 1–3 words, sentence case, no articles/punctuation, and a full independent sentence (options don’t complete the label)."
+      ],
+      "fail_when": [
+        "Long label, Title Case, articles/punctuation, or “Choose your…” finished by the options (breaks i18n)."
+      ],
+      "severity": "major",
+      "jobs": [
+        "name_a_control"
+      ],
+      "do_not_claim": "GOV.UK no-colons / Fluent top-align as this word-count rule. Overlap with Forms 54: beyond LIVE `visible_label` / `label_stays_visible`."
+    },
+    {
+      "id": "polar.validate-after-finished-interacting",
+      "category": "Forms",
+      "segment": "Errors",
+      "title": "validate after finished interacting",
+      "rule": "Validate after the merchant finished interacting (not before). Overlap NN/g §7; Polar names it on the component.",
+      "citation": {
+        "source": "Polaris — Text field",
+        "url": "https://polaris.shopify.com/components/selection-and-input/text-field"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Validation runs after interaction with the field finishes, not while it is still being completed."
+      ],
+      "fail_when": [
+        "Error shown before the merchant finished interacting."
+      ],
+      "severity": "major",
+      "jobs": [
+        "recover_from_invalid_input"
+      ],
+      "do_not_claim": "Deleting `forms.errors.inline_after_complete`; this is the Polar-named component row. Overlap with Forms 54: `forms.errors.inline_after_complete` (NN/g §7). Keep the named row; do not re-dump §7."
+    },
+    {
+      "id": "polar.long-form-errors-banner-plus-inline",
+      "category": "Forms",
+      "segment": "Errors",
+      "title": "long form errors banner plus inline",
+      "rule": "Long/complex form errors: critical banner at top + move focus to it + inline field errors. Dual-cite with GOV.UK error summary.",
+      "citation": {
+        "source": "Polaris — Banner",
+        "url": "https://polaris.shopify.com/components/banner"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Long/complex form: critical banner at top, focus moves to it, plus inline field errors."
+      ],
+      "fail_when": [
+        "Banner only, inline only, or focus not moved to the banner."
+      ],
+      "severity": "major",
+      "jobs": [
+        "recover_from_invalid_input",
+        "explain_failure_next_to_cause"
+      ],
+      "do_not_claim": "A winner vs GOV.UK error summary; dropping either summary/banner or inline (`forms.errors.next_to_field_not_summary_only`). Overlap with Forms 54: `forms.errors.next_to_field_not_summary_only` + `forms.errors.focus_first_error`."
+    },
+    {
+      "id": "polar.dont-use-modals-for-complex-forms",
+      "category": "Dialogs",
+      "segment": "Modal",
+      "title": "dont use modals for complex forms",
+      "rule": "Don’t use modals for complex forms or large information; max two bottom actions; tertiary never dismisses.",
+      "citation": {
+        "source": "Polaris — Modal",
+        "url": "https://polaris.shopify.com/components/overlays/modal"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Complex forms / large information are not in a modal; modal has at most two bottom actions; a tertiary action does not dismiss."
+      ],
+      "fail_when": [
+        "Complex form or large information in a modal; more than two bottom actions; tertiary dismisses."
+      ],
+      "severity": "major",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "do_not_claim": "NN/g modal 7-list as a merge; `actions.button_groups` “three or four”. Overlap with Actions 40: `button_groups` / confirm."
+    }
+  ],
+  "jobs": [
+    "tone_of_voice_for_failure",
+    "wayfind_after_nav",
+    "pick_primary_action",
+    "choose_control_for_choice",
+    "name_a_control",
+    "recover_from_invalid_input",
+    "explain_failure_next_to_cause",
+    "use_familiar_control"
+  ],
+  "patterns": []
+}
