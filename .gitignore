@@ -26,6 +26,13 @@ pnpm-debug.log*
 .env.*
 !.env.example
 
+# Local hosted store
+data/
+*.sqlite
+*.sqlite-journal
+
 # OS / editors
 .DS_Store
 *.swp
+.idea/
+.vscode/

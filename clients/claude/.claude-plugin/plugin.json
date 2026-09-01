@@ -1,0 +1,15 @@
+{
+  "name": "open-ux",
+  "displayName": "Open UX",
+  "version": "0.1.0",
+  "description": "cited UX rules agents audit against / shared cited guidelines",
+  "author": {
+    "name": "3dyonic",
+    "url": "https://github.com/3dyonic"
+  },
+  "homepage": "https://github.com/3dyonic/open-ux",
+  "repository": "https://github.com/3dyonic/open-ux",
+  "license": "MIT",
+  "keywords": ["ux", "guidelines", "audit"],
+  "mcpServers": "./.mcp.json"
+}

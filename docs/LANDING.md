@@ -37,7 +37,33 @@ No branding skill. No MCP in H1. HITL Primer tokens for color (bg `#f6f8fa`, ink
 
 ## What's out
 
-- A design system or house look for the product (separate Figma DS track)
-- Accessibility / WCAG compliance claims
-- Per-tenant catalogs
-- Server-side LLM grader
+- A design system or house look
+- Server-side LLM grading
+- Per-tenant rulebooks
+- Accessibility claims as the product
+
+---
+
+## Claude plugin card
+
+| Field | Copy |
+|-------|------|
+| **Name** | Open UX |
+| **Short description** | Cited UX rules agents audit against |
+| **Long description** | Open UX keeps a shared catalog of cited UX guidelines so agents stop inventing rules from memory. List and fetch rules, then audit UI against them. v1 covers Forms → field labels. |
+
+---
+
+## GitHub About
+
+Open UX — shared, cited UX guidelines agents can list, fetch, and audit against. One catalog. Hybrid checks. No vibes.
+
+## README lead (optional)
+
+Stop inventing UX rules from memory. Open UX is a shared, cited catalog agents list, fetch, and audit against. v1: Forms → field labels. Register for a key on the hosted service; self-host without our cloud. Telemetry improves the shared catalog — we never store your UI payloads.
+
+---
+
+## Footer / trust
+
+One open catalog. Registration gates who may call — not which rules exist. Privacy: no raw audit content in logs.

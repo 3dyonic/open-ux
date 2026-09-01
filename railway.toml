@@ -1,0 +1,14 @@
+# Railway alternative to Fly.io. Same Docker image.
+# Set OPEN_UX_PEPPER and OPEN_UX_PUBLIC_URL in Railway variables.
+# Attach a volume at /data so keys and telemetry survive restarts.
+
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 3
+
+[service]
+internalPort = 8080

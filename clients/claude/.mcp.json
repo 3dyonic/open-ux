@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "open-ux": {
+      "type": "http",
+      "url": "${OPEN_UX_URL}",
+      "headers": {
+        "Authorization": "Bearer ${OPEN_UX_API_KEY}"
+      }
+    }
+  }
+}
