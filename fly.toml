@@ -1,43 +1,45 @@
-# Open UX — Fly.io
-# Deploy: fly launch --no-deploy && fly volumes create open_ux_data --size 1 && fly secrets set OPEN_UX_PEPPER=... && fly deploy
-# Then set OPEN_UX_PUBLIC_URL to the assigned https URL.
+# fly.toml app configuration file generated for open-ux on 2026-09-01T16:40:57Z
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
 
-app = "open-ux"
-primary_region = "iad"
+app = 'open-ux'
+primary_region = 'iad'
 
 [build]
-  dockerfile = "Dockerfile"
+  dockerfile = 'Dockerfile'
 
 [env]
-  OPEN_UX_MODE = "hosted"
-  OPEN_UX_HOSTED = "1"
-  OPEN_UX_CATALOG = "/app/catalog/guidelines.json"
-  OPEN_UX_SCHEMA = "/app/catalog/schema.json"
-  OPEN_UX_DATA_DIR = "/data"
-  OPEN_UX_DATABASE = "/data/open-ux.sqlite"
-  OPEN_UX_TELEMETRY = "1"
-  PORT = "8080"
+  OPEN_UX_CATALOG = '/app/catalog/guidelines.json'
+  OPEN_UX_DATABASE = '/data/open-ux.sqlite'
+  OPEN_UX_DATA_DIR = '/data'
+  OPEN_UX_HOSTED = '1'
+  OPEN_UX_MODE = 'hosted'
+  OPEN_UX_SCHEMA = '/app/catalog/schema.json'
+  OPEN_UX_TELEMETRY = '1'
+  PORT = '8080'
+
+[[mounts]]
+  source = 'open_ux_data'
+  destination = '/data'
 
 [http_service]
   internal_port = 8080
   force_https = true
-  auto_stop_machines = "stop"
+  auto_stop_machines = 'stop'
   auto_start_machines = true
   min_machines_running = 0
-  processes = ["app"]
+  processes = ['app']
 
-[[http_service.checks]]
-  interval = "15s"
-  timeout = "2s"
-  grace_period = "10s"
-  method = "GET"
-  path = "/health"
-
-[[mounts]]
-  source = "open_ux_data"
-  destination = "/data"
+  [[http_service.checks]]
+    interval = '15s'
+    timeout = '2s'
+    grace_period = '10s'
+    method = 'GET'
+    path = '/health'
 
 [[vm]]
-  memory = "256mb"
-  cpu_kind = "shared"
+  memory = '256mb'
+  cpu_kind = 'shared'
   cpus = 1
+  memory_mb = 512
