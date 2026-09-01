@@ -35,6 +35,11 @@ def test_landing_has_figma_sections_and_register_cta(tmp_env: Path) -> None:
 
     assert "Cited catalog · agents audit · no vibes" in html
     assert "Stop inventing UX rules from memory. Open UX is a shared, cited catalog agents list, fetch, and audit against." in html
+    assert html.index('class="hero-body"') < html.index('class="ctas"')
+    assert ".hero-copy" in html
+    assert "gap: 20px" in html
+    assert "height: 38px" in html
+    assert "height: 143px" in html
     assert ">Get a key</a>" in html
     assert ">Request access</a>" in html
     assert ">How it works</h2>" in html

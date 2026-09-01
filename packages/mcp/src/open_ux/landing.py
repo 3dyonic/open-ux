@@ -102,7 +102,6 @@ LANDING_HTML = """<!DOCTYPE html>
       background: transparent;
       color: var(--ink);
       border: 1px solid var(--ink);
-      padding: 9px 15px;
     }
     .hero {
       display: flex;
@@ -117,7 +116,7 @@ LANDING_HTML = """<!DOCTYPE html>
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      gap: 14px;
+      gap: 20px;
       width: 620px;
       max-width: 100%;
     }
@@ -154,8 +153,12 @@ LANDING_HTML = """<!DOCTYPE html>
     .ctas {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 20px;
       align-items: center;
+    }
+    .ctas .btn {
+      height: 38px;
+      padding: 10px 16px;
     }
     .ill {
       display: flex;
@@ -316,12 +319,14 @@ LANDING_HTML = """<!DOCTYPE html>
     }
     .how-cards {
       display: flex;
-      flex-wrap: wrap;
       gap: 16px;
       width: 100%;
+      align-items: stretch;
     }
     .how-card {
-      flex: 1 1 280px;
+      flex: 1 1 0;
+      height: 143px;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
       gap: 10px;
