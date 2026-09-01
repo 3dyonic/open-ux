@@ -162,6 +162,24 @@ def test_approve_invite_cli(tmp_env: Path, capsys: pytest.CaptureFixture[str]) -
     assert "/invite/redeem?token=" in out["redeem_url"]
 
 
+def test_redeem_get_hides_success_until_minted_key(tmp_env: Path) -> None:
+    with _hosted_client(tmp_env) as client:
+        html = client.get("/invite/redeem").text
+
+    assert '<div class="card" id="redeem-card">' in html
+    assert '<div class="card" id="success-card" hidden>' in html
+    assert ".card[hidden]" in html
+    assert 'class="key" id="key-text"></div>' in html
+    assert "uxmcp_" + "\u2022" * 16 not in html.split('<div class="key"', 1)[1].split("</div>", 1)[0]
+    assert "function hideSuccess" in html
+    assert "successCard.hidden = true" in html
+    show_success = html.split("issuedKey = data.key", 1)[1]
+    assert "successCard.hidden = false" in show_success
+    error_branch = html.split("if (!res.ok || !data.key)", 1)[1].split("issuedKey = data.key", 1)[0]
+    assert "showError()" in error_branch
+    assert "successCard.hidden = false" not in error_branch
+
+
 def test_admin_approve_is_json_only_no_html(tmp_env: Path) -> None:
     from open_ux import invite_page
 

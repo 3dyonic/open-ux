@@ -90,15 +90,17 @@ def test_invite_request_page_matches_figma(tmp_env: Path) -> None:
     assert ">GitHub</a>" in html
     assert 'href="https://github.com/3dyonic/open-ux"' in html
 
-    assert ">Request invite</p>" in html
+    assert ">Request invite</h1>" in html
     assert "Join the waitlist. We’ll email a one-time invite when approved." in html
     assert '<label for="email">Email</label>' in html
     assert 'placeholder="you@company.com"' in html
-    assert '<button class="btn btn-primary" type="submit">Request invite</button>' in html
+    assert '<button class="btn btn--primary" type="submit">Request invite</button>' in html
     assert "No key yet — approval issues a one-time invite link." in html
     assert "Enter a valid email to request an invite." in html
     assert "We couldn’t add you to the waitlist. Check the email and try again." in html
-    assert "input.is-invalid" in html
+    assert "REQUEST ERROR" in html
+    assert "card--error" in html
+    assert "field__input" in html
     assert "--danger: #cf222e" in html
     assert 'fetch("/invite/request"' in html
     assert "Get a key" not in html
@@ -120,7 +122,7 @@ def test_invite_requested_page_matches_figma(tmp_env: Path) -> None:
     with TestClient(app) as client:
         html = client.get("/invite/requested").text
 
-    assert ">You’re on the list</p>" in html
+    assert ">You’re on the list</h1>" in html
     assert "Thanks — we’ll email a one-time invite when your request is approved." in html
     assert "Already have an invite? Open the link from your email to redeem." in html
     assert 'class="logo-mark"' in html
@@ -132,25 +134,38 @@ def test_invite_redeem_page_matches_figma(tmp_env: Path) -> None:
     with TestClient(app) as client:
         html = client.get("/invite/redeem").text
 
-    assert ">Redeem invite</p>" in html
+    assert ">Redeem invite</h1>" in html
     assert "Paste your invite token, or open the link from your email." in html
     assert '<label for="token">Invite token</label>' in html
     assert 'placeholder="inv_••••••••••••"' in html
-    assert '<button class="btn btn-primary" type="submit">Redeem</button>' in html
+    assert '<button class="btn btn--primary" type="submit">Redeem</button>' in html
     assert "Redeeming burns the invite and mints your uxmcp_ key once." in html
     assert "Invite invalid or already used. Request a new one if needed." in html
     assert "This invite isn’t valid. It may be used, expired, or mistyped." in html
+    assert "REDEEM ERROR" in html
+    assert '<div class="card" id="redeem-card">' in html
+    assert '<div class="card" id="success-card" hidden>' in html
+    assert "card--error" in html
+    assert "field__input" in html
 
-    assert ">Your key</p>" in html
+    # First load is Redeem 16:70 only. Success 11:56 stays hidden until a minted key.
+    assert 'id="success-card" hidden' in html
+    assert ".card[hidden]" in html
+    assert 'class="key" id="key-text"></div>' in html
+    assert ">Your key</h1>" in html
     assert "Invite redeemed. Copy your key — we won’t show it in full again." in html
-    assert "uxmcp_••••••••••••••••" in html
     assert ">Copy</button>" in html
     assert "Copy key" not in html
     assert "Back to home" not in html
     assert "Use as bearer on /mcp. Self-host stdio needs no auth." in html
     assert 'fetch("/invite/redeem"' in html
     assert "navigator.clipboard.writeText(issuedKey)" in html
+    assert "hideSuccess" in html
+    assert "successCard.hidden = true" in html
+    assert "successCard.hidden = false" in html
+    assert 'if (!res.ok || !data.key)' in html
     assert "--accent-bg: #ddf4ff" in html
+    assert "--success: #1a7f37" in html
 
 
 def test_plugin_title_is_open_ux() -> None:
