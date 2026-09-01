@@ -4,12 +4,12 @@ Pick **Fly.io** or **Railway**. Same Docker image. One machine + volume is enoug
 
 Public URL shape: `https://<app>/mcp` for the streamable HTTP endpoint. Landing is `https://<app>/`. Invite request is `https://<app>/invite`. Health: `https://<app>/health`.
 
-Auth: waitlist email → admin approve → redeem one-time invite → `uxmcp_` bearer. GitHub OAuth is deferred. Admin UI is out; approve via CLI or `POST /admin/invite/approve`.
+Auth: waitlist email → admin approve → redeem one-time invite → `uxmcp_` bearer. GitHub OAuth is deferred. Admin UI is out; list waitlist via `GET /admin/invite/waitlist`; approve via CLI or `POST /admin/invite/approve`.
 
 Secrets (all required for hosted invite):
 
 - `OPEN_UX_PEPPER` — hashes keys and invite tokens
-- `OPEN_UX_ADMIN_TOKEN` — bearer for `POST /admin/invite/approve`
+- `OPEN_UX_ADMIN_TOKEN` — bearer for `GET /admin/invite/waitlist` and `POST /admin/invite/approve`
 - `OPEN_UX_PUBLIC_URL` — origin used in redeem URLs returned to the PO
 
 SQLite is created under `OPEN_UX_DATA_DIR` (Fly/Railway volume `/data`). Never commit it.
@@ -43,7 +43,12 @@ railway up
 
 1. Open `/` — H1 is **Open UX**. **Get a key** goes to `/invite`.
 2. Request invite with email (waitlist). `#register` and `/register` redirect into `/invite`.
-3. Approve from the machine or over HTTP (returns token + redeem URL once):
+3. List the waitlist (Operator notify; email + `created_at` only, newest first). Approve stays POST only — do not auto-approve:
+
+```bash
+curl -sS "$OPEN_UX_PUBLIC_URL/admin/invite/waitlist" \
+  -H "Authorization: Bearer $OPEN_UX_ADMIN_TOKEN"
+```
 
 ```bash
 python -m open_ux approve-invite user@company.com

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from datetime import datetime
 from pathlib import Path
 
 import pytest
@@ -51,6 +52,11 @@ def test_self_host_has_no_invite(tmp_env: Path) -> None:
         assert response.status_code == 400
         legacy = client.post("/register", json={"email": "ada@example.com"})
         assert legacy.status_code == 400
+        waitlist = client.get(
+            "/admin/invite/waitlist",
+            headers={"Authorization": "Bearer test-admin-token"},
+        )
+        assert waitlist.status_code == 400
         open_mcp = client.post("/mcp", json={})
         assert open_mcp.status_code != 401
 
@@ -201,3 +207,80 @@ def test_admin_approve_is_json_only_no_html(tmp_env: Path) -> None:
         assert posted.status_code == 200
         assert posted.headers.get("content-type", "").startswith("application/json")
         assert "text/html" not in posted.headers.get("content-type", "")
+
+
+def test_admin_waitlist_empty(tmp_env: Path) -> None:
+    with _hosted_client(tmp_env) as client:
+        response = client.get(
+            "/admin/invite/waitlist",
+            headers={"Authorization": "Bearer test-admin-token"},
+        )
+        assert response.status_code == 200
+        assert response.headers.get("content-type", "").startswith("application/json")
+        assert response.json() == {"items": []}
+
+
+def test_admin_waitlist_after_request_invite(tmp_env: Path) -> None:
+    settings = Settings.load(hosted=True)
+    store = get_store(settings)
+    request_invite("Ada@Example.com", settings=settings, store=store)
+    request_invite("second@example.com", settings=settings, store=store)
+    with _hosted_client(tmp_env) as client:
+        response = client.get(
+            "/admin/invite/waitlist",
+            headers={"Authorization": "Bearer test-admin-token"},
+        )
+    assert response.status_code == 200
+    body = response.json()
+    items = body["items"]
+    emails = [row["email"] for row in items]
+    assert emails == ["second@example.com", "ada@example.com"]
+    for row in items:
+        assert set(row.keys()) == {"email", "created_at"}
+        parsed = datetime.fromisoformat(row["created_at"])
+        assert parsed.tzinfo is not None
+
+
+def test_admin_waitlist_requires_bearer(tmp_env: Path) -> None:
+    with _hosted_client(tmp_env) as client:
+        missing = client.get("/admin/invite/waitlist")
+        assert missing.status_code == 401
+        wrong = client.get(
+            "/admin/invite/waitlist",
+            headers={"Authorization": "Bearer nope"},
+        )
+        assert wrong.status_code == 401
+
+
+def test_admin_waitlist_response_has_no_secrets(tmp_env: Path) -> None:
+    settings = Settings.load(hosted=True)
+    with _hosted_client(tmp_env) as client:
+        client.post("/invite/request", json={"email": "ada@example.com"})
+        approved = client.post(
+            "/admin/invite/approve",
+            headers={"Authorization": "Bearer test-admin-token"},
+            json={"email": "ada@example.com"},
+        )
+        token = approved.json()["token"]
+        minted = client.post("/invite/redeem", json={"token": token})
+        key = minted.json()["key"]
+        listed = client.get(
+            "/admin/invite/waitlist",
+            headers={"Authorization": "Bearer test-admin-token"},
+        )
+    assert listed.status_code == 200
+    body = listed.json()
+    raw = listed.text
+    assert set(body.keys()) == {"items"}
+    for row in body["items"]:
+        assert set(row.keys()) == {"email", "created_at"}
+    assert "uxmcp_" not in raw
+    assert "inv_" not in raw
+    assert "audit.content" not in raw
+    assert '"content"' not in raw
+    assert hash_key(token, settings.pepper) not in raw
+    assert hash_key(key, settings.pepper) not in raw
+    payload = json.dumps(body)
+    assert "uxmcp_" not in payload
+    assert "inv_" not in payload
+    assert "content" not in payload
