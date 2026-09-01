@@ -1,4 +1,4 @@
-"""Public `/` HTML: Figma marketing chrome plus the existing register form."""
+"""Public `/` HTML: Figma marketing chrome. Get a key CTA goes to `/register`."""
 
 from __future__ import annotations
 
@@ -109,22 +109,6 @@ LANDING_HTML = """<!DOCTYPE html>
       color: var(--ink);
       border: 1px solid var(--line);
     }
-    .register {
-      max-width: 42rem;
-      margin: 0 auto;
-      padding: 0 1rem 64px;
-      background: var(--paper);
-    }
-    .register-wrap {
-      width: 100%;
-      background: var(--paper);
-    }
-    label { display: block; margin: 0.75rem 0 0.25rem; }
-    input { width: 100%; padding: 0.4rem; }
-    button { margin-top: 0.75rem; padding: 0.4rem 0.8rem; }
-    .out { white-space: pre-wrap; background: #1111; padding: 0.75rem; min-height: 2rem; }
-    .warn { font-size: 0.9rem; }
-    code, pre { font-family: ui-monospace, monospace; font-size: 0.9em; }
     .how {
       display: flex;
       flex-direction: column;
@@ -218,23 +202,10 @@ LANDING_HTML = """<!DOCTYPE html>
     <p class="sub">Cited UX rules agents audit against</p>
     <p class="hero-body">Stop inventing UX rules from memory. Open UX is a shared, cited catalog agents list, fetch, and audit against.</p>
     <div class="ctas">
-      <a class="cta cta-primary" id="get-key" href="#register">Get a key</a>
+      <a class="cta cta-primary" id="get-key" href="/register">Get a key</a>
       <a class="cta cta-secondary" href="https://github.com/3dyonic/open-ux">View on GitHub</a>
     </div>
   </section>
-  <div class="register-wrap">
-  <section class="register" id="register">
-  <p>Install path: <strong>connect → key → list → one audit</strong>.</p>
-  <p>Hosted calls need a bearer key. Register with email (issue / revoke only). Self-host stdio needs no key.</p>
-  <form id="reg">
-    <label for="email">Email</label>
-    <input id="email" name="email" type="email" required autocomplete="email">
-    <button type="submit">Register</button>
-  </form>
-  <p class="warn">The key is shown once. Put URL + key in client settings (Thursday path). Catalog is empty until cited seed rules land.</p>
-  <pre class="out" id="out"></pre>
-  </section>
-  </div>
   <section class="how">
     <h2>How it works</h2>
     <div class="how-cards">
@@ -261,20 +232,7 @@ LANDING_HTML = """<!DOCTYPE html>
     <p>Privacy: no raw audit content in logs.</p>
   </footer>
   <script>
-    document.getElementById('reg').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const email = document.getElementById('email').value;
-      const res = await fetch('/register', {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ email })
-      });
-      const data = await res.json();
-      document.getElementById('out').textContent = JSON.stringify(data, null, 2);
-    });
-    document.getElementById('get-key').addEventListener('click', () => {
-      document.getElementById('email').focus();
-    });
+    if (location.hash === '#register') location.replace('/register');
   </script>
 </body>
 </html>

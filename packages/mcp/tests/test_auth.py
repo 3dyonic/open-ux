@@ -25,6 +25,11 @@ def test_mcp_unauthorized_without_key(tmp_env: Path) -> None:
 
 def test_register_issues_uxmcp_key(tmp_env: Path) -> None:
     with _hosted_client(tmp_env) as client:
+        page = client.get("/register")
+        assert page.status_code == 200
+        assert "text/html" in page.headers.get("content-type", "")
+        assert ">Get a key</p>" in page.text
+
         response = client.post("/register", json={"email": "ada@example.com"})
         assert response.status_code == 200
         data = response.json()

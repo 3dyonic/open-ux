@@ -22,7 +22,7 @@ def test_landing_h1_is_open_ux(tmp_env: Path) -> None:
         assert "Cited UX rules agents audit against" in html
 
 
-def test_landing_has_figma_sections_and_existing_register(tmp_env: Path) -> None:
+def test_landing_has_figma_sections_and_register_cta(tmp_env: Path) -> None:
     mcp = create_mcp(hosted=True)
     app = mcp.http_app(path="/mcp", stateless_http=True, transport="http")
     with TestClient(app) as client:
@@ -51,16 +51,13 @@ def test_landing_has_figma_sections_and_existing_register(tmp_env: Path) -> None
 
     assert html.count('href="https://github.com/3dyonic/open-ux"') >= 2
     assert 'id="get-key"' in html
-    assert 'href="#register"' in html
-    assert 'id="register"' in html
-    assert 'id="reg"' in html
-    assert '<label for="email">Email</label>' in html
-    assert 'id="email"' in html
-    assert '<button type="submit">Register</button>' in html
-    assert "fetch('/register'" in html
-    assert "document.getElementById('email').focus()" in html
-    assert "Install path:" in html
-    assert "The key is shown once." in html
+    assert 'href="/register"' in html
+    assert "location.hash === '#register'" in html
+    assert 'id="reg"' not in html
+    assert '<button type="submit">Register</button>' not in html
+    assert "Install path:" not in html
+    assert "The key is shown once." not in html
+    assert "fetch('/register'" not in html
 
     assert "--bg: #f6f8fa" in html
     assert "--paper: #ffffff" in html
@@ -72,6 +69,57 @@ def test_landing_has_figma_sections_and_existing_register(tmp_env: Path) -> None
     assert "--danger-bg: #ffebe9" in html
     assert "--success: #1a7f37" in html
     assert "--success-bg: #dafbe1" in html
+
+
+def test_register_page_matches_get_a_key_figma(tmp_env: Path) -> None:
+    mcp = create_mcp(hosted=True)
+    app = mcp.http_app(path="/mcp", stateless_http=True, transport="http")
+    with TestClient(app) as client:
+        html = client.get("/register").text
+
+    assert "MCP" not in html.split("<title>", 1)[1].split("</title>", 1)[0]
+    assert "@media" not in html
+    assert "favicon" not in html.lower()
+    assert "og:image" not in html.lower()
+
+    assert 'class="logo-mark"' in html
+    assert '<span class="wordmark">Open UX</span>' in html
+    assert ">GitHub</a>" in html
+    assert 'href="https://github.com/3dyonic/open-ux"' in html
+
+    assert ">Get a key</p>" in html
+    assert "Email in → API key out. One shared catalog; registration only gates who may call." in html
+    assert '<label for="email">Email</label>' in html
+    assert 'placeholder="you@company.com"' in html
+    assert '<button class="btn btn-primary" type="submit">Get a key</button>' in html
+    assert "No marketing mail — this only mints your uxmcp_ key." in html
+
+    assert ">Your key</p>" in html
+    assert "Save this key — we won’t show it again in full." in html
+    assert "uxmcp_••••••••••••••••" in html
+    assert ">Copy key</button>" in html
+    assert ">Back to home</a>" in html
+    assert 'href="/"' in html
+    assert "Point your client at /mcp with this bearer key." in html
+
+    assert 'id="register"' in html
+    assert 'id="reg"' in html
+    assert 'id="email"' in html
+    assert "Enter a valid email so we can mint your key." in html
+    assert "input.is-invalid" in html
+    assert "--danger: #cf222e" in html
+    assert "fetch('/register'" in html
+    assert "navigator.clipboard.writeText(issuedKey)" in html
+
+    assert "--bg: #f6f8fa" in html
+    assert "--paper: #ffffff" in html
+    assert "--ink: #1f2328" in html
+    assert "--muted: #656d76" in html
+    assert "--line: #d0d7de" in html
+    assert "--accent: #0969da" in html
+    assert "--accent-bg: #ddf4ff" in html
+    assert "--radius: 6px" in html
+
 
 
 def test_plugin_title_is_open_ux() -> None:
