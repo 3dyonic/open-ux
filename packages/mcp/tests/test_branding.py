@@ -32,25 +32,18 @@ def test_plugin_title_is_open_ux() -> None:
     assert "MCP" not in plugin.get("description", "")
 
 
-def test_readme_embeds_relative_hero_and_landing() -> None:
+def test_readme_embeds_relative_hero() -> None:
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
     assert readme.startswith("# Open UX\n")
     assert "MCP" not in readme.split("\n", 1)[0]
     assert "![Open UX: catalog to audit flow](docs/readme-hero.svg)" in readme
-    assert "[docs/LANDING.md](docs/LANDING.md)" in readme
+    assert "[docs/LANDING.md](docs/LANDING.md)" not in readme
     assert "pip install -e \"packages/mcp[dev]\"" in readme
     assert "python -m pytest" in readme
 
 
-def test_designer_landing_craft_is_not_a_stub() -> None:
-    landing = (ROOT / "docs/LANDING.md").read_text(encoding="utf-8")
-    assert landing.startswith("# Open UX — landing craft (v1)\n")
-    assert "STUB" not in landing.upper()
-    assert "placeholder for designer" not in landing.lower()
-    assert "## Claude plugin card" in landing
-    assert "## Footer / trust" in landing
-    assert "**H1:** Open UX" in landing
-    assert "**Subtitle:** Cited UX rules agents audit against" in landing
+def test_designer_landing_craft_is_not_in_the_public_repo() -> None:
+    assert not (ROOT / "docs/LANDING.md").exists()
 
 
 def test_readme_hero_svg_is_parseable_and_complete() -> None:
