@@ -1,0 +1,266 @@
+{
+  "version": "0.1.0",
+  "guidelines": [
+    {
+      "id": "fluent.labels-top-aligned-by-default",
+      "category": "Forms",
+      "segment": "Field labels",
+      "title": "labels top aligned by default",
+      "rule": "Labels top-aligned by default; left-align only if space is tight and fields are consistent type/width.",
+      "citation": {
+        "source": "Fluent 2 — Field usage",
+        "url": "https://fluent2.microsoft.design/components/web/react/core/field/usage"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Labels sit above fields; left-aligned labels only when space is tight and fields share type/width."
+      ],
+      "fail_when": [
+        "Left-aligned labels on mixed-type/width fields, or as the default when space is not tight."
+      ],
+      "severity": "major",
+      "jobs": [
+        "name_a_control"
+      ],
+      "do_not_claim": "GOV.UK above-the-control as a merge of sentence-case/colons. Overlap with Forms 54: beyond LIVE `visible_label` / `label_stays_visible`."
+    },
+    {
+      "id": "fluent.required-asterisk-or-one-instruction",
+      "category": "Forms",
+      "segment": "Fields",
+      "title": "required asterisk or one instruction",
+      "rule": "Required: red asterisk via required prop; if all fields required, one instruction — not an asterisk on every field; two-field sign-in may omit.",
+      "citation": {
+        "source": "Fluent 2 — Field usage",
+        "url": "https://fluent2.microsoft.design/components/web/react/core/field/usage"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Mixed required/optional uses the required asterisk. All-required uses one instruction, not an asterisk on every field. Two-field sign-in may omit."
+      ],
+      "fail_when": [
+        "Asterisk on every field of an all-required form (beyond the two-field sign-in omit), or required unmarked in a mixed form."
+      ],
+      "severity": "major",
+      "jobs": [
+        "name_a_control"
+      ],
+      "do_not_claim": "NN/g mark-optional (`forms.fields.distinguish_optional_required`) as a winner. Overlap with Forms 54: `forms.fields.distinguish_optional_required`."
+    },
+    {
+      "id": "fluent.disabled-field-label-stays-perceivable",
+      "category": "Forms",
+      "segment": "Fields",
+      "title": "disabled field label stays perceivable",
+      "rule": "Disabled field: control disabled; label (and helper/validation) stay enabled so AT can still perceive them. Settings Save MAY disable until requireds are complete only with visible reason + this perceivable label (dual-cite with GOV.UK don’t-disable on public/question).",
+      "citation": {
+        "source": "Fluent 2 — Field usage",
+        "url": "https://fluent2.microsoft.design/components/web/react/core/field/usage"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Disabled control still has a perceivable (not disabled-away) label and helper/validation. If Settings Save is disabled, the reason is visible and the label stays perceivable."
+      ],
+      "fail_when": [
+        "Disabled control whose label/helper/validation cannot be perceived; or disabled Save with no visible reason."
+      ],
+      "severity": "major",
+      "jobs": [
+        "name_a_control"
+      ],
+      "do_not_claim": "Global never-disable on public/question flows (see `govuk.dont-use-disabled-buttons`)."
+    },
+    {
+      "id": "fluent.helper-text-below",
+      "category": "Forms",
+      "segment": "Copy",
+      "title": "helper text below",
+      "rule": "Helper text below for format/accepted values; bullets if several sentences; skip the period on helper and placeholder.",
+      "citation": {
+        "source": "Fluent 2 — Field usage",
+        "url": "https://fluent2.microsoft.design/components/web/react/core/field/usage"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Format/accepted-values helper sits below; several sentences use bullets; helper/placeholder omit the period."
+      ],
+      "fail_when": [
+        "Helper above/missing for needed format; several sentences as one block with end periods."
+      ],
+      "severity": "major",
+      "jobs": [
+        "name_a_control"
+      ],
+      "do_not_claim": "Placeholder as the only label (skipped; Forms lock). GOV.UK item-hint no full stops is a sibling, not a merge."
+    },
+    {
+      "id": "fluent.validation-messages-brief-no-end-punctuation",
+      "category": "Forms",
+      "segment": "Errors",
+      "title": "validation messages brief no end punctuation",
+      "rule": "Validation messages brief; no end punctuation unless multiple sentences.",
+      "citation": {
+        "source": "Fluent 2 — Field usage",
+        "url": "https://fluent2.microsoft.design/components/web/react/core/field/usage"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Brief validation; no end punctuation on a single sentence; punctuation only if multiple sentences."
+      ],
+      "fail_when": [
+        "Single-sentence validation with a trailing period, or long un-brief validation."
+      ],
+      "severity": "major",
+      "jobs": [
+        "recover_from_invalid_input",
+        "explain_failure_next_to_cause"
+      ],
+      "do_not_claim": "Error identifies-and-fixes (`forms.field_labels.error_identifies_and_fixes`)."
+    },
+    {
+      "id": "fluent.create-labels-new-thing",
+      "category": "Actions",
+      "segment": "Copy",
+      "title": "create labels new thing",
+      "rule": "Create labels: “New {thing}”; menu trigger “New”; menu items drop the word New.",
+      "citation": {
+        "source": "Fluent 2 — Button usage",
+        "url": "https://fluent2.microsoft.design/components/web/react/core/button/usage"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Create action is “New {thing}”; the menu trigger is “New”; items inside drop New."
+      ],
+      "fail_when": [
+        "Menu items repeat New, or the create control is unlabeled / generic Add with no New pattern where this usage applies."
+      ],
+      "severity": "major",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "do_not_claim": "NN/g verb-leading as a merge. Overlap with Actions 40: `actions.copy.verbs_for_actions`."
+    },
+    {
+      "id": "fluent.split-button-dont-repeat-primary",
+      "category": "Actions",
+      "segment": "Buttons",
+      "title": "split button dont repeat primary",
+      "rule": "Split button: full phrase on the rest-state primary; don’t repeat that primary in the secondary list.",
+      "citation": {
+        "source": "Fluent 2 — Button usage",
+        "url": "https://fluent2.microsoft.design/components/web/react/core/button/usage"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Rest-state primary has the full phrase; the secondary list does not repeat that primary."
+      ],
+      "fail_when": [
+        "Primary phrase is incomplete, or the same primary is duplicated in the list."
+      ],
+      "severity": "major",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "do_not_claim": "Button-groups count (`actions.button_groups`)."
+    },
+    {
+      "id": "fluent.multistep-next-not-continue",
+      "category": "Actions",
+      "segment": "Copy",
+      "title": "multistep next not continue",
+      "rule": "Multistep: Next not Continue; Previous not Back. Dual-cite with GOV.UK question-page Continue / Back — by surface, not a winner.",
+      "citation": {
+        "source": "Fluent 2 — Button usage",
+        "url": "https://fluent2.microsoft.design/components/web/react/core/button/usage"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Multistep settings/wizard uses Next and Previous. Question pages still use Continue and Back (GOV.UK)."
+      ],
+      "fail_when": [
+        "Multistep uses Continue/Back as this Fluent usage; or a global Next/Continue winner applied to the other surface."
+      ],
+      "severity": "major",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "do_not_claim": "NN/g prefer specific verb over generic Next as a winner that bans Next here. Overlap with Actions 40: `actions.copy.verbs_for_actions` (prefer specific verb over generic Next) and GOV.UK question-page Continue."
+    },
+    {
+      "id": "fluent.end-of-task-labels-named",
+      "category": "Actions",
+      "segment": "Copy",
+      "title": "end of task labels named",
+      "rule": "End-of-task labels named: Done, Finish, Close, Got it, Dismiss (pick the one that matches the outcome).",
+      "citation": {
+        "source": "Fluent 2 — Button usage",
+        "url": "https://fluent2.microsoft.design/components/web/react/core/button/usage"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "End-of-task uses one of Done / Finish / Close / Got it / Dismiss that matches the outcome."
+      ],
+      "fail_when": [
+        "Generic OK, or a name that does not match the outcome (e.g. Dismiss when the task finishes a commit)."
+      ],
+      "severity": "major",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "do_not_claim": "`actions.copy.explicit_verb_not_ok` as a merge; Close vs Cancel keep-vs-abandon."
+    },
+    {
+      "id": "fluent.apply-versus-save-prefer-autosave",
+      "category": "Actions",
+      "segment": "Copy",
+      "title": "apply versus save prefer autosave",
+      "rule": "Apply versus Save; prefer autosave; if not, Save + success/error via message bar or confirmation toast.",
+      "citation": {
+        "source": "Fluent 2 — Button usage",
+        "url": "https://fluent2.microsoft.design/components/web/react/core/button/usage"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Apply vs Save is used for the right scope; autosave is preferred; without autosave, Save reports success/error via message bar or confirmation toast."
+      ],
+      "fail_when": [
+        "Apply/Save mixed up; no autosave and no success/error after Save."
+      ],
+      "severity": "major",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "do_not_claim": "Disabled-until-complete as this row (that lock lives on `govuk.dont-use-disabled-buttons` + `fluent.disabled-field-label-stays-perceivable`); `actions.close_saves_separate_cancel` as a merge."
+    },
+    {
+      "id": "fluent.ios-chrome-back-done-cancel",
+      "category": "Actions",
+      "segment": "Buttons",
+      "title": "ios chrome back done cancel",
+      "rule": "iOS chrome: Back top-left; Done/Save top-right; Cancel top-left when paired with Done/Save, else Cancel top-right.",
+      "citation": {
+        "source": "Fluent 2 — iOS Button usage",
+        "url": "https://fluent2.microsoft.design/components/ios/core/button/usage"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "iOS: Back top-left; Done/Save top-right; Cancel top-left when paired with Done/Save, otherwise Cancel top-right."
+      ],
+      "fail_when": [
+        "Those controls swapped against that pairing."
+      ],
+      "severity": "major",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "do_not_claim": "A global web OK/Cancel order (`actions.buttons.follow_platform_ok_cancel_order`). Overlap with Actions 40: `follow_platform_ok_cancel_order`."
+    }
+  ],
+  "jobs": [
+    "name_a_control",
+    "recover_from_invalid_input",
+    "explain_failure_next_to_cause",
+    "pick_primary_action"
+  ],
+  "patterns": []
+}

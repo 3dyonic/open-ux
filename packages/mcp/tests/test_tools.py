@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 import pytest
@@ -15,6 +16,8 @@ LIVE_SEED = (
 )
 INDEX_KEYS = {"id", "title", "jobs", "lane"}
 BODY_KEYS = {"pass_when", "fail_when", "rule", "citation", "check"}
+EXTRA_SAMPLE = "govuk.date-input-only-memorable"
+EXTRA_PREFIXES = ("govuk.", "nng.", "fluent.", "polar.")
 
 
 @pytest.mark.asyncio
@@ -79,11 +82,18 @@ async def test_list_index_has_no_rule_bodies(live_catalog: Path) -> None:
         listed = await client.call_tool("list_guidelines", {"limit": 200, "offset": 0})
         data = listed.data
         assert data["catalog"]["status"] == "ok"
-        assert data["total"] == 94
+        assert data["total"] == 167
         _assert_index_rows(data["guidelines"])
         ids = {row["id"] for row in data["guidelines"]}
         for seed in LIVE_SEED:
             assert seed in ids
+        extra = [row for row in data["guidelines"] if row["id"].startswith(EXTRA_PREFIXES)]
+        assert len(extra) == 73
+        assert EXTRA_SAMPLE in ids
+        for row in extra:
+            dumped = json.dumps(row)
+            assert "pass_when" not in dumped
+            assert '"rule"' not in dumped
 
 
 @pytest.mark.asyncio
@@ -134,6 +144,26 @@ async def test_search_lane_forms_only(live_catalog: Path) -> None:
         assert all(row["id"].startswith("forms.") for row in data["guidelines"])
         for seed in LIVE_SEED:
             assert seed in {row["id"] for row in data["guidelines"]}
+
+
+@pytest.mark.asyncio
+async def test_get_extra_harvest_guideline_returns_full_body(live_catalog: Path) -> None:
+    mcp = create_mcp(hosted=False)
+    async with Client(mcp) as client:
+        got = await client.call_tool("get_guideline", {"id": EXTRA_SAMPLE})
+        body = got.data
+        assert body["found"] is True
+        g = body["guideline"]
+        assert g["id"] == EXTRA_SAMPLE
+        assert "lane" not in g
+        assert g["rule"]
+        assert g["pass_when"]
+        assert g["fail_when"]
+        assert g["do_not_claim"]
+        assert "when_to_use" not in g
+        assert "when_not" not in g
+        assert g["citation"]["url"].startswith("https://")
+        assert "](<" not in g["citation"]["url"]
 
 
 @pytest.mark.asyncio

@@ -93,7 +93,11 @@
           "type": "array",
           "items": { "type": "string" }
         },
-        "source_scheme": { "type": "string" }
+        "source_scheme": { "type": "string" },
+        "do_not_claim": {
+          "type": "string",
+          "description": "Craft-pass fence. Optional; omit when the source row has none."
+        }
       }
     },
     "citation": {
