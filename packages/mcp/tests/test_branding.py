@@ -33,21 +33,22 @@ def test_landing_has_figma_sections_and_register_cta(tmp_env: Path) -> None:
     assert "favicon" not in html.lower()
     assert "og:image" not in html.lower()
 
-    assert "v1 — Forms → field labels · one catalog · no vibes" in html
+    assert "Cited catalog · agents audit · no vibes" in html
     assert "Stop inventing UX rules from memory. Open UX is a shared, cited catalog agents list, fetch, and audit against." in html
     assert ">Get a key</a>" in html
-    assert ">View on GitHub</a>" in html
+    assert ">Request access</a>" in html
     assert ">How it works</h2>" in html
-    assert "1. Connect" in html
+    assert ">Connect</h3>" in html
     assert "Install the Claude client (or any MCP client) and paste your key." in html
-    assert "2. List / get" in html
+    assert "List · get" in html
     assert "Browse the shared catalog; every rule carries a citation." in html
-    assert "3. Audit" in html
-    assert "Send UI (html / jsx / description); get pass, fail, or incomplete with the rule id — not a guess." in html
-    assert "fail · placeholder-only label" in html
-    assert "pass · visible label present" in html
-    assert "One open catalog. Registration gates who may call — not which rules exist." in html
-    assert "Privacy: no raw audit content in logs." in html
+    assert ">Audit</h3>" in html
+    assert "Send UI (html / jsx / description); get pass, fail, or incomplete with the rule id." in html
+    assert "invented rule · no source" in html
+    assert "cited rule · source attached" in html
+    assert "Join the waitlist. One key after approve and redeem — no vibes." in html
+    assert "Open UX · cited UX rules agents audit against" in html
+    assert "github.com/3dyonic/open-ux" in html
 
     assert html.count('href="https://github.com/3dyonic/open-ux"') >= 2
     assert 'id="get-key"' in html
@@ -61,17 +62,21 @@ def test_landing_has_figma_sections_and_register_cta(tmp_env: Path) -> None:
     assert "The key is shown once." not in html
     assert "fetch('/register'" not in html
     assert "fetch('/invite/request'" not in html
+    assert "Full name" not in html
 
-    assert "--bg: #f6f8fa" in html
-    assert "--paper: #ffffff" in html
-    assert "--ink: #1f2328" in html
-    assert "--muted: #656d76" in html
-    assert "--line: #d0d7de" in html
-    assert "--accent: #0969da" in html
-    assert "--danger: #cf222e" in html
-    assert "--danger-bg: #ffebe9" in html
-    assert "--success: #1a7f37" in html
-    assert "--success-bg: #dafbe1" in html
+    assert "--paper: #F9F6F2" in html
+    assert "--ink: #1F1B16" in html
+    assert "--muted: #6A6056" in html
+    assert "--line: #DED4C8" in html
+    assert "--pip: #FF4B00" in html
+    assert "--pip-soft: #FFECE0" in html
+    assert "--danger: #B82A2A" in html
+    assert "--success: #1A7F37" in html
+    assert "--radius: 6px" in html
+    assert "IBM Plex Sans" in html
+    assert "IBM Plex Mono" in html
+    assert "#7B61FF" not in html
+    assert "#796EFF" not in html
 
 
 def test_invite_request_page_matches_figma(tmp_env: Path) -> None:
@@ -85,35 +90,45 @@ def test_invite_request_page_matches_figma(tmp_env: Path) -> None:
     assert "favicon" not in html.lower()
     assert "og:image" not in html.lower()
 
-    assert 'class="logo-mark"' in html
+    assert 'class="pip"' in html
     assert '<span class="wordmark">Open UX</span>' in html
     assert ">GitHub</a>" in html
     assert 'href="https://github.com/3dyonic/open-ux"' in html
+    assert ">Get a key</a>" in html
 
-    assert ">Request invite</h1>" in html
-    assert "Join the waitlist. We’ll email a one-time invite when approved." in html
+    assert "Invite · waitlist, one key after approve" in html
+    assert ">Request access</h1>" in html
+    assert "Join the waitlist. We email a one-time redeem when you are approved." in html
     assert '<label for="email">Email</label>' in html
-    assert 'placeholder="you@company.com"' in html
-    assert '<button class="btn btn--primary" type="submit">Request invite</button>' in html
+    assert 'placeholder="you@studio.com"' in html
+    assert '<button class="btn btn--primary" type="submit">Request access</button>' in html
+    assert "Already have a token? Redeem it." in html
+    assert 'href="/invite/redeem"' in html
     assert "No key yet — approval issues a one-time invite link." in html
     assert "Enter a valid email to request an invite." in html
     assert "We couldn’t add you to the waitlist. Check the email and try again." in html
     assert "REQUEST ERROR" in html
     assert "card--error" in html
     assert "field__input" in html
-    assert "--danger: #cf222e" in html
+    assert "--danger: #B82A2A" in html
     assert 'fetch("/invite/request"' in html
-    assert "Get a key" not in html
     assert "Email in → API key out" not in html
+    assert "Full name" not in html
+    assert 'name="name"' not in html
+    assert 'id="name"' not in html
+    assert html.count("<input") == 1
+    assert html.count('type="email"') == 1
 
-    assert "--bg: #f6f8fa" in html
-    assert "--paper: #ffffff" in html
-    assert "--ink: #1f2328" in html
-    assert "--muted: #656d76" in html
-    assert "--line: #d0d7de" in html
-    assert "--accent: #0969da" in html
-    assert "--accent-bg: #ddf4ff" in html
+    assert "--paper: #F9F6F2" in html
+    assert "--ink: #1F1B16" in html
+    assert "--muted: #6A6056" in html
+    assert "--line: #DED4C8" in html
+    assert "--pip: #FF4B00" in html
+    assert "--pip-soft: #FFECE0" in html
     assert "--radius: 6px" in html
+    assert "IBM Plex Sans" in html
+    assert "IBM Plex Mono" in html
+    assert "#7B61FF" not in html
 
 
 def test_invite_requested_page_matches_figma(tmp_env: Path) -> None:
@@ -125,7 +140,12 @@ def test_invite_requested_page_matches_figma(tmp_env: Path) -> None:
     assert ">You’re on the list</h1>" in html
     assert "Thanks — we’ll email a one-time invite when your request is approved." in html
     assert "Already have an invite? Open the link from your email to redeem." in html
-    assert 'class="logo-mark"' in html
+    assert "Invite · waitlist" in html
+    assert "No key on this screen — key appears only after a real redeem." in html
+    assert 'class="pip"' in html
+    assert "Full name" not in html
+    assert "--paper: #F9F6F2" in html
+    assert "--pip: #FF4B00" in html
 
 
 def test_invite_redeem_page_matches_figma(tmp_env: Path) -> None:
@@ -135,6 +155,7 @@ def test_invite_redeem_page_matches_figma(tmp_env: Path) -> None:
         html = client.get("/invite/redeem").text
 
     assert ">Redeem invite</h1>" in html
+    assert "Invite · redeem once" in html
     assert "Paste your invite token, or open the link from your email." in html
     assert '<label for="token">Invite token</label>' in html
     assert 'placeholder="inv_••••••••••••"' in html
@@ -143,15 +164,18 @@ def test_invite_redeem_page_matches_figma(tmp_env: Path) -> None:
     assert "Invite invalid or already used. Request a new one if needed." in html
     assert "This invite isn’t valid. It may be used, expired, or mistyped." in html
     assert "REDEEM ERROR" in html
+    assert "Error is exclusive — Success / key is not shown on this state." in html
     assert '<div class="card" id="redeem-card">' in html
     assert '<div class="card" id="success-card" hidden>' in html
     assert "card--error" in html
     assert "field__input" in html
+    assert "Full name" not in html
 
-    # First load is Redeem 16:70 only. Success 11:56 stays hidden until a minted key.
+    # First load is Redeem 13:55 only. Success 13:78 stays hidden until a minted key.
     assert 'id="success-card" hidden' in html
     assert ".card[hidden]" in html
     assert 'class="key" id="key-text"></div>' in html
+    assert "Redeemed · key once" in html
     assert ">Your key</h1>" in html
     assert "Invite redeemed. Copy your key — we won’t show it in full again." in html
     assert ">Copy</button>" in html
@@ -164,8 +188,11 @@ def test_invite_redeem_page_matches_figma(tmp_env: Path) -> None:
     assert "successCard.hidden = true" in html
     assert "successCard.hidden = false" in html
     assert 'if (!res.ok || !data.key)' in html
-    assert "--accent-bg: #ddf4ff" in html
-    assert "--success: #1a7f37" in html
+    assert "--pip-soft: #FFECE0" in html
+    assert "--pip: #FF4B00" in html
+    assert "--paper: #F9F6F2" in html
+    assert "--success: #1A7F37" in html
+    assert "IBM Plex Mono" in html
 
 
 def test_plugin_title_is_open_ux() -> None:
