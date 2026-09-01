@@ -41,3 +41,12 @@ def tmp_env(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
 @pytest.fixture()
 def catalog_dir(tmp_env: Path) -> Path:
     return tmp_env / "catalog"
+
+
+@pytest.fixture()
+def live_catalog(tmp_env: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
+    root = Path(__file__).resolve().parents[3]
+    catalog = root / "catalog"
+    monkeypatch.setenv("OPEN_UX_CATALOG", str(catalog))
+    monkeypatch.setenv("OPEN_UX_SCHEMA", str(catalog / "schema.json"))
+    return catalog

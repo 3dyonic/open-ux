@@ -1,0 +1,889 @@
+{
+  "version": "0.1.0",
+  "guidelines": [
+    {
+      "id": "actions.button_groups",
+      "category": "Actions",
+      "segment": "Layout",
+      "title": "button groups",
+      "rule": "Present related actions as a small cluster of buttons, aligned horizontally or vertically; split into more groups if there are more than three or four actions.",
+      "citation": {
+        "source": "Designing Interfaces 3e ch. Doing Things — Button Groups (Tidwell, Brewer, Valencia)",
+        "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Related actions sit in one small horizontal or vertical cluster; more than three or four are split into further groups."
+      ],
+      "fail_when": [
+        "Related actions are scattered, or more than three or four sit in one undifferentiated strip."
+      ],
+      "severity": "major",
+      "jobs": [
+        "actions"
+      ]
+    },
+    {
+      "id": "actions.hover_or_popup_tools",
+      "category": "Actions",
+      "segment": "Tools",
+      "title": "hover or popup tools",
+      "rule": "Associate an object with tools that appear on hover or as a pop-up rather than crowding the main chrome.",
+      "citation": {
+        "source": "Designing Interfaces 3e ch. Doing Things — Hover or Pop-Up Tools (Tidwell, Brewer, Valencia)",
+        "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Occasional object tools appear on hover or in a pop-up tied to the object; they are not stuffed into persistent chrome."
+      ],
+      "fail_when": [
+        "Occasional tools occupy the main chrome and crowd it."
+      ],
+      "severity": "major",
+      "jobs": [
+        "actions"
+      ]
+    },
+    {
+      "id": "actions.action_panel",
+      "category": "Actions",
+      "segment": "Tools",
+      "title": "action panel",
+      "rule": "Instead of burying a large set of related commands in menus, present them on a richly organized panel that stays visible.",
+      "citation": {
+        "source": "Designing Interfaces 3e ch. Doing Things — Action Panel (Tidwell, Brewer, Valencia)",
+        "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "A large related command set is on a visible, organized panel."
+      ],
+      "fail_when": [
+        "That set exists only buried in menus, with no staying-visible panel."
+      ],
+      "severity": "major",
+      "jobs": [
+        "actions"
+      ]
+    },
+    {
+      "id": "actions.prominent_done_or_assumed_next",
+      "category": "Actions",
+      "segment": "Completion",
+      "title": "prominent done or assumed next",
+      "rule": "Place the control that finishes the transaction (or the assumed next step) at the end of the visual flow; make it prominent and well labeled.",
+      "citation": {
+        "source": "Designing Interfaces 3e ch. Doing Things — Prominent Done or Assumed Next Step (Tidwell, Brewer, Valencia)",
+        "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Finish / assumed-next sits at the end of the visual flow, is prominent, and is well labeled."
+      ],
+      "fail_when": [
+        "That control is weak, unlabeled, or not at the end of the flow."
+      ],
+      "severity": "major",
+      "jobs": [
+        "actions"
+      ]
+    },
+    {
+      "id": "actions.smart_menu_items",
+      "category": "Actions",
+      "segment": "Menus",
+      "title": "smart menu items",
+      "rule": "Change menu labels dynamically so they state precisely what the command will do when invoked.",
+      "citation": {
+        "source": "Designing Interfaces 3e ch. Doing Things — Smart Menu Items (Tidwell, Brewer, Valencia)",
+        "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Menu labels reword with context to state the actual command."
+      ],
+      "fail_when": [
+        "Labels stay generic/static and do not state what will happen."
+      ],
+      "severity": "major",
+      "jobs": [
+        "actions"
+      ]
+    },
+    {
+      "id": "actions.preview",
+      "category": "Actions",
+      "segment": "Feedback",
+      "title": "preview",
+      "rule": "Show a preview or summary of what will happen when the user performs the action.",
+      "citation": {
+        "source": "Designing Interfaces 3e ch. Doing Things — Preview (Tidwell, Brewer, Valencia)",
+        "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "A preview or summary of the result is available before the person commits."
+      ],
+      "fail_when": [
+        "The action commits with no preview or summary of what will happen."
+      ],
+      "severity": "major",
+      "jobs": [
+        "actions"
+      ]
+    },
+    {
+      "id": "actions.cancelability",
+      "category": "Actions",
+      "segment": "Control",
+      "title": "cancelability",
+      "rule": "Provide a way to instantly cancel a time-consuming operation with no side effects.",
+      "citation": {
+        "source": "Designing Interfaces 3e ch. Doing Things — Cancelability (Tidwell, Brewer, Valencia)",
+        "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "A time-consuming operation can be cancelled at once, with no side effects from the cancelled work."
+      ],
+      "fail_when": [
+        "No cancel, cancel is not instant, or cancel still applies side effects."
+      ],
+      "severity": "major",
+      "jobs": [
+        "actions"
+      ]
+    },
+    {
+      "id": "actions.multilevel_undo",
+      "category": "Actions",
+      "segment": "Control",
+      "title": "multilevel undo",
+      "rule": "Let the user reverse a series of actions, not only the last one.",
+      "citation": {
+        "source": "Designing Interfaces 3e ch. Doing Things — Multilevel Undo (Tidwell, Brewer, Valencia)",
+        "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "More than the last action can be reversed."
+      ],
+      "fail_when": [
+        "No undo, or only last-action undo."
+      ],
+      "severity": "major",
+      "jobs": [
+        "actions"
+      ]
+    },
+    {
+      "id": "actions.command_history",
+      "category": "Actions",
+      "segment": "Control",
+      "title": "command history",
+      "rule": "Keep a visible record of what was done, to what, and when, as the user performs actions.",
+      "citation": {
+        "source": "Designing Interfaces 3e ch. Doing Things — Command History (Tidwell, Brewer, Valencia)",
+        "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "A visible record shows what was done, to what, and when."
+      ],
+      "fail_when": [
+        "No visible history of what / to what / when."
+      ],
+      "severity": "major",
+      "jobs": [
+        "actions"
+      ]
+    },
+    {
+      "id": "actions.macros",
+      "category": "Actions",
+      "segment": "Control",
+      "title": "macros",
+      "rule": "Let users compose a sequence of smaller actions into one reusable macro.",
+      "citation": {
+        "source": "Designing Interfaces 3e ch. Doing Things — Macros (Tidwell, Brewer, Valencia)",
+        "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "A sequence of smaller actions can be composed into one reusable macro."
+      ],
+      "fail_when": [
+        "Repeated sequences cannot be recorded or reused as a macro."
+      ],
+      "severity": "major",
+      "jobs": [
+        "actions"
+      ]
+    },
+    {
+      "id": "actions.copy.short_clear_sentence_case",
+      "category": "Actions",
+      "segment": "Copy",
+      "title": "short clear sentence case",
+      "rule": "Keep command labels short and clear (NN/g: just enough text, typically up to 2–4 words, drop articles; M3: ideally 1–3 words, sentence case, no wrap).",
+      "citation": {
+        "source": "NN/g — UI Copy: UX Guidelines for Command Names and Keyboard Shortcuts; Material 3 — Buttons",
+        "url": "https://www.nngroup.com/articles/ui-copy/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Label is short and clear: typically 2–4 words (NN/g), articles dropped; and ideally 1–3 words, sentence case, no wrap (M3)."
+      ],
+      "fail_when": [
+        "Wrapping, padded articles, or a long unclear command name."
+      ],
+      "severity": "major",
+      "jobs": [
+        "actions"
+      ]
+    },
+    {
+      "id": "actions.copy.consequent_state",
+      "category": "Actions",
+      "segment": "Copy",
+      "title": "consequent state",
+      "rule": "Command labels describe the state the system will move into, not the current state.",
+      "citation": {
+        "source": "NN/g — UI Copy",
+        "url": "https://www.nngroup.com/articles/ui-copy/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "The label names the consequent state."
+      ],
+      "fail_when": [
+        "The label names the current state instead of the state after the command."
+      ],
+      "severity": "major",
+      "jobs": [
+        "actions"
+      ]
+    },
+    {
+      "id": "actions.copy.verbs_for_actions",
+      "category": "Actions",
+      "segment": "Copy",
+      "title": "verbs for actions",
+      "rule": "Lead with a verb (or a specific verb phrase) for commands that initiate an action or submit information; prefer a specific verb over a generic Next.",
+      "citation": {
+        "source": "NN/g — UI Copy",
+        "url": "https://www.nngroup.com/articles/ui-copy/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Action/submit commands lead with a verb or specific verb phrase, not a generic Next."
+      ],
+      "fail_when": [
+        "Noun-only or generic Next where a specific verb is available."
+      ],
+      "severity": "major",
+      "jobs": [
+        "actions"
+      ]
+    },
+    {
+      "id": "actions.copy.adjectives_for_appearance",
+      "category": "Actions",
+      "segment": "Copy",
+      "title": "adjectives for appearance",
+      "rule": "Use adjectives that name the resulting appearance for commands that change an element’s look or system state (for example Bold, Italic).",
+      "citation": {
+        "source": "NN/g — UI Copy",
+        "url": "https://www.nngroup.com/articles/ui-copy/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Look/state-change commands use adjectives that name the resulting appearance (e.g. Bold, Italic)."
+      ],
+      "fail_when": [
+        "Those commands use unrelated verbs or vague names instead of the appearance adjective."
+      ],
+      "severity": "major",
+      "jobs": [
+        "actions"
+      ]
+    },
+    {
+      "id": "actions.copy.avoid_vague_names",
+      "category": "Actions",
+      "segment": "Copy",
+      "title": "avoid vague names",
+      "rule": "Avoid vague, cutesy, or faddish command names; text should be straightforward, descriptive, and accurate.",
+      "citation": {
+        "source": "NN/g — UI Copy",
+        "url": "https://www.nngroup.com/articles/ui-copy/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Names are straightforward, descriptive, and accurate."
+      ],
+      "fail_when": [
+        "Vague, cutesy, or faddish command names."
+      ],
+      "severity": "major",
+      "jobs": [
+        "actions"
+      ]
+    },
+    {
+      "id": "actions.copy.tooltips_clarify_outcomes",
+      "category": "Actions",
+      "segment": "Copy",
+      "title": "tooltips clarify outcomes",
+      "rule": "When an icon or button initiates an action, include a tooltip that states the outcome without conflicting with the visible label.",
+      "citation": {
+        "source": "NN/g — UI Copy",
+        "url": "https://www.nngroup.com/articles/ui-copy/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "An action-initiating icon or button has a tooltip that states the outcome and does not conflict with the visible label."
+      ],
+      "fail_when": [
+        "No tooltip on that control, or the tooltip conflicts with the visible label."
+      ],
+      "severity": "major",
+      "jobs": [
+        "actions"
+      ]
+    },
+    {
+      "id": "actions.copy.limit_branded_terms",
+      "category": "Actions",
+      "segment": "Copy",
+      "title": "limit branded terms",
+      "rule": "Limit branded terms in command text (application name on the app menu and Help is enough); other commands stay nonbranded.",
+      "citation": {
+        "source": "NN/g — UI Copy",
+        "url": "https://www.nngroup.com/articles/ui-copy/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "App name appears on the app menu and Help as needed; other command text is nonbranded."
+      ],
+      "fail_when": [
+        "Brand/product name stuffed into ordinary command labels."
+      ],
+      "severity": "major",
+      "jobs": [
+        "actions"
+      ]
+    },
+    {
+      "id": "actions.copy.consistent_words",
+      "category": "Actions",
+      "segment": "Copy",
+      "title": "consistent words",
+      "rule": "Use the same command words in every menu, dialog, or flow for the same action; add a noun when the verb alone is ambiguous.",
+      "citation": {
+        "source": "NN/g — UI Copy",
+        "url": "https://www.nngroup.com/articles/ui-copy/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "The same action uses the same words across menus, dialogs, and flows; a noun is added when the verb alone is ambiguous."
+      ],
+      "fail_when": [
+        "The same action is labeled differently in different places, or an ambiguous verb stands alone."
+      ],
+      "severity": "major",
+      "jobs": [
+        "actions"
+      ]
+    },
+    {
+      "id": "actions.copy.explicit_verb_not_ok",
+      "category": "Actions",
+      "segment": "Copy",
+      "title": "explicit verb not ok",
+      "rule": "Do not use generic OK; name the button with the action it commits (and prefer explicit Cancel/Close/Apply text over an unlabeled X).",
+      "citation": {
+        "source": "NN/g — UI Copy; NN/g — OK-Cancel or Cancel-OK; NN/g — Cancel vs Close",
+        "url": "https://www.nngroup.com/articles/ui-copy/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "The button names the action it commits; Cancel/Close/Apply are explicit text, not an unlabeled X as the name."
+      ],
+      "fail_when": [
+        "Generic OK, or an unlabeled X as the only name for cancel/close/apply."
+      ],
+      "severity": "major",
+      "jobs": [
+        "actions"
+      ]
+    },
+    {
+      "id": "actions.copy.ellipsis_needs_more_input",
+      "category": "Actions",
+      "segment": "Copy",
+      "title": "ellipsis needs more input",
+      "rule": "Append an ellipsis when the command needs more information or opens another window, view, or app.",
+      "citation": {
+        "source": "NN/g — UI Copy; Apple HIG — Buttons",
+        "url": "https://www.nngroup.com/articles/ui-copy/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Ellipsis is present when more input is required or another window/view/app opens; absent when the action completes immediately."
+      ],
+      "fail_when": [
+        "Ellipsis on an immediate-complete command, or no ellipsis when more input / another view is required."
+      ],
+      "severity": "major",
+      "jobs": [
+        "actions"
+      ]
+    },
+    {
+      "id": "actions.buttons.follow_platform_ok_cancel_order",
+      "category": "Actions",
+      "segment": "Buttons",
+      "title": "follow platform ok cancel order",
+      "rule": "Follow the platform convention for OK/Cancel order (Windows: OK first; Apple: OK last; web: the platform of most users).",
+      "citation": {
+        "source": "NN/g — OK-Cancel or Cancel-OK",
+        "url": "https://www.nngroup.com/articles/ok-cancel-or-cancel-ok/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Commit/dismiss order matches the platform (Windows OK first; Apple OK last; web = platform of most users)."
+      ],
+      "fail_when": [
+        "A third invented sequence, or the opposite of the target platform."
+      ],
+      "severity": "major",
+      "jobs": [
+        "actions"
+      ]
+    },
+    {
+      "id": "actions.buttons.default_not_destructive",
+      "category": "Actions",
+      "segment": "Buttons",
+      "title": "default not destructive",
+      "rule": "Highlight the common choice as default/primary, but do not assign default or primary to a destructive action (and do not default Yes on a confirmation).",
+      "citation": {
+        "source": "NN/g — OK-Cancel or Cancel-OK; Apple HIG — Buttons (don’t assign primary to destructive); NN/g — Confirmation Dialogs (§6 avoid default Yes)",
+        "url": "https://www.nngroup.com/articles/ok-cancel-or-cancel-ok/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "The common choice is default/primary; destructive is not default/primary; confirmation does not default Yes."
+      ],
+      "fail_when": [
+        "Destructive or confirmation-Yes is the default/primary."
+      ],
+      "severity": "major",
+      "jobs": [
+        "actions"
+      ]
+    },
+    {
+      "id": "actions.close_saves_separate_cancel",
+      "category": "Actions",
+      "segment": "Close vs Cancel",
+      "title": "close saves separate cancel",
+      "rule": "Treat Close as dismiss-and-keep-work and provide a separate Cancel to abandon; when in doubt, save then out.",
+      "citation": {
+        "source": "NN/g — Cancel vs Close",
+        "url": "https://www.nngroup.com/articles/cancel-vs-close/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Close (or X-as-close) dismisses and keeps work; a separate Cancel abandons; when in doubt, save then out."
+      ],
+      "fail_when": [
+        "One control means both keep and abandon, or Close discards with no separate abandon path."
+      ],
+      "severity": "major",
+      "jobs": [
+        "actions"
+      ]
+    },
+    {
+      "id": "actions.confirm.serious_or_undo",
+      "category": "Actions",
+      "segment": "Confirmation",
+      "title": "serious or undo",
+      "rule": "Before actions with serious consequences (especially those that cannot be undone), use a confirmation dialog, or offer an undo window; never make destruction immediate.",
+      "citation": {
+        "source": "NN/g — Confirmation Dialogs (§1); NN/g — Cancel vs Close (ask for confirmation); Vercel Web Interface Guidelines (destructive actions need confirmation modal or undo)",
+        "url": "https://www.nngroup.com/articles/confirmation-dialog/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Serious / irreversible actions have a confirmation dialog or an undo window; destruction is not immediate."
+      ],
+      "fail_when": [
+        "Immediate irreversible destructive commit with neither confirm nor undo."
+      ],
+      "severity": "major",
+      "jobs": [
+        "actions"
+      ]
+    },
+    {
+      "id": "actions.confirm.not_routine",
+      "category": "Actions",
+      "segment": "Confirmation",
+      "title": "not routine",
+      "rule": "Do not use confirmation dialogs for routine actions, or people will stop reading them.",
+      "citation": {
+        "source": "NN/g — Confirmation Dialogs (§2)",
+        "url": "https://www.nngroup.com/articles/confirmation-dialog/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Routine actions proceed with no confirmation dialog."
+      ],
+      "fail_when": [
+        "Confirmation dialogs on routine actions."
+      ],
+      "severity": "major",
+      "jobs": [
+        "actions"
+      ]
+    },
+    {
+      "id": "actions.confirm.specific_consequences",
+      "category": "Actions",
+      "segment": "Confirmation",
+      "title": "specific consequences",
+      "rule": "Restate the request with specific, user-centric consequences; do not ask only “Are you sure?”",
+      "citation": {
+        "source": "NN/g — Confirmation Dialogs (§3)",
+        "url": "https://www.nngroup.com/articles/confirmation-dialog/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "The confirmation restates the request with specific, user-centric consequences."
+      ],
+      "fail_when": [
+        "Only “Are you sure?” (or equivalent) with no specific consequence."
+      ],
+      "severity": "major",
+      "jobs": [
+        "actions"
+      ]
+    },
+    {
+      "id": "actions.confirm.response_summarizes_outcome",
+      "category": "Actions",
+      "segment": "Confirmation",
+      "title": "response summarizes outcome",
+      "rule": "Label responses with what will happen (Delete file / Keep file), not Yes/No.",
+      "citation": {
+        "source": "NN/g — Confirmation Dialogs (§4)",
+        "url": "https://www.nngroup.com/articles/confirmation-dialog/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Confirmation actions are labeled with the outcome (e.g. Delete file / Keep file)."
+      ],
+      "fail_when": [
+        "Yes/No (or OK) on the confirmation."
+      ],
+      "severity": "major",
+      "jobs": [
+        "actions"
+      ]
+    },
+    {
+      "id": "actions.confirm.progressive_disclosure",
+      "category": "Actions",
+      "segment": "Confirmation",
+      "title": "progressive disclosure",
+      "rule": "Keep confirmation copy short and offer a way to learn more before commit.",
+      "citation": {
+        "source": "NN/g — Confirmation Dialogs (§5)",
+        "url": "https://www.nngroup.com/articles/confirmation-dialog/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Confirmation copy is short; extra detail is available before commit."
+      ],
+      "fail_when": [
+        "All extra consequence detail dumped on the first screen, or no way to learn more when extra detail exists."
+      ],
+      "severity": "major",
+      "jobs": [
+        "actions"
+      ]
+    },
+    {
+      "id": "actions.confirm.nonstandard_for_extreme",
+      "category": "Actions",
+      "segment": "Confirmation",
+      "title": "nonstandard for extreme",
+      "rule": "For particularly dangerous rare operations, require a nonstandard confirm (for example typing a word), reserved so it does not become a new habit.",
+      "citation": {
+        "source": "NN/g — Confirmation Dialogs (§7)",
+        "url": "https://www.nngroup.com/articles/confirmation-dialog/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Particularly dangerous rare operations require a nonstandard confirm (e.g. typing a word), used rarely enough that it is not habitual."
+      ],
+      "fail_when": [
+        "Extreme danger committed with a single OK click, or nonstandard confirm used so often it is a new habit."
+      ],
+      "severity": "major",
+      "jobs": [
+        "actions"
+      ]
+    },
+    {
+      "id": "actions.confirm.bypass_educational",
+      "category": "Actions",
+      "segment": "Confirmation",
+      "title": "bypass educational",
+      "rule": "If an educational confirmation is shown for a new non-serious side effect, let the user turn off future repeats.",
+      "citation": {
+        "source": "NN/g — Confirmation Dialogs (§8)",
+        "url": "https://www.nngroup.com/articles/confirmation-dialog/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Educational confirmation for a new non-serious side effect offers a way to turn off future repeats."
+      ],
+      "fail_when": [
+        "That confirmation has no bypass."
+      ],
+      "severity": "major",
+      "jobs": [
+        "actions"
+      ]
+    },
+    {
+      "id": "actions.proximity.separate_consequential",
+      "category": "Actions",
+      "segment": "Proximity",
+      "title": "separate consequential",
+      "rule": "Do not place highly consequential or destructive actions directly next to benign confirmatory options.",
+      "citation": {
+        "source": "NN/g — Dangerous UX: Consequential Options Close to Benign Options",
+        "url": "https://www.nngroup.com/articles/proximity-consequential-options/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Highly consequential or destructive actions are not directly next to benign confirmatory options."
+      ],
+      "fail_when": [
+        "Destructive sits in the same tight cluster as benign confirm/save."
+      ],
+      "severity": "major",
+      "jobs": [
+        "actions"
+      ]
+    },
+    {
+      "id": "actions.proximity.redundant_visual_signals",
+      "category": "Actions",
+      "segment": "Proximity",
+      "title": "redundant visual signals",
+      "rule": "Separate the consequential option with space and redundant visual signals (color, icon, size, alignment), not the label alone.",
+      "citation": {
+        "source": "NN/g — Dangerous UX: Consequential Options Close to Benign Options",
+        "url": "https://www.nngroup.com/articles/proximity-consequential-options/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "The consequential option is separated with space and more than one of color, icon, size, alignment — not the label alone."
+      ],
+      "fail_when": [
+        "Distinction is label-only, or a single non-label cue with no space."
+      ],
+      "severity": "major",
+      "jobs": [
+        "actions"
+      ]
+    },
+    {
+      "id": "actions.icons.always_visible_text_label",
+      "category": "Actions",
+      "segment": "Icons",
+      "title": "always visible text label",
+      "rule": "Put a text label next to the icon and keep it visible at all times; do not reveal the label only on hover.",
+      "citation": {
+        "source": "NN/g — Icon Usability",
+        "url": "https://www.nngroup.com/articles/icon-usability/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Command icons have an always-visible text label next to the icon."
+      ],
+      "fail_when": [
+        "Icon-only command, or label only on hover/tooltip."
+      ],
+      "severity": "major",
+      "jobs": [
+        "actions"
+      ]
+    },
+    {
+      "id": "actions.buttons.distinguishable_states",
+      "category": "Actions",
+      "segment": "Buttons",
+      "title": "distinguishable states",
+      "rule": "Button states (enabled, disabled, hover, focus, pressed) must be visually distinguishable from each other.",
+      "citation": {
+        "source": "NN/g — Button States: Communicate Interaction",
+        "url": "https://www.nngroup.com/articles/button-states-communicate-interaction/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Enabled, disabled, hover, focus, and pressed are visually distinguishable from each other."
+      ],
+      "fail_when": [
+        "Any two of those states look the same."
+      ],
+      "severity": "major",
+      "jobs": [
+        "actions"
+      ]
+    },
+    {
+      "id": "actions.buttons.loading_on_button",
+      "category": "Actions",
+      "segment": "Buttons",
+      "title": "loading on button",
+      "rule": "For a slow action, show loading on the button itself (spinner on the control that was pressed).",
+      "citation": {
+        "source": "NN/g — Button States: Communicate Interaction; Apple HIG — Buttons (activity indicator when the action does not complete instantly)",
+        "url": "https://www.nngroup.com/articles/button-states-communicate-interaction/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "A slow action shows a spinner/activity indicator on the pressed button itself."
+      ],
+      "fail_when": [
+        "No loading on a slow action, or loading only elsewhere (page bar, toast) with none on the control."
+      ],
+      "severity": "major",
+      "jobs": [
+        "actions"
+      ]
+    },
+    {
+      "id": "actions.buttons.one_primary",
+      "category": "Actions",
+      "segment": "Buttons",
+      "title": "one primary",
+      "rule": "Use one primary (filled) action in the view; other actions use weaker styles.",
+      "citation": {
+        "source": "NN/g — Button States: Communicate Interaction; Material 3 — Buttons (filled style ideally for only one action on a page)",
+        "url": "https://www.nngroup.com/articles/button-states-communicate-interaction/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "One primary/filled action in the view; others use weaker styles."
+      ],
+      "fail_when": [
+        "Multiple filled/high-emphasis primaries, or no primary/weaker distinction."
+      ],
+      "severity": "major",
+      "jobs": [
+        "actions"
+      ]
+    },
+    {
+      "id": "actions.buttons.press_state",
+      "category": "Actions",
+      "segment": "Buttons",
+      "title": "press state",
+      "rule": "Always include a press state on a custom button so the control feels like it accepted input.",
+      "citation": {
+        "source": "Apple HIG — Buttons",
+        "url": "https://developer.apple.com/design/human-interface-guidelines/buttons"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Custom buttons have a press state that shows the control accepted input."
+      ],
+      "fail_when": [
+        "Custom button has no press/active visual."
+      ],
+      "severity": "major",
+      "jobs": [
+        "actions"
+      ]
+    },
+    {
+      "id": "actions.buttons.style_not_size",
+      "category": "Actions",
+      "segment": "Buttons",
+      "title": "style not size",
+      "rule": "Use style, not size, to distinguish the preferred choice among a set of same-role buttons.",
+      "citation": {
+        "source": "Apple HIG — Buttons",
+        "url": "https://developer.apple.com/design/human-interface-guidelines/buttons"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "The preferred same-role button is distinguished by style, not by making it larger."
+      ],
+      "fail_when": [
+        "The preferred button is bigger rather than restyled."
+      ],
+      "severity": "major",
+      "jobs": [
+        "actions"
+      ]
+    },
+    {
+      "id": "actions.menus.unavailable_state",
+      "category": "Actions",
+      "segment": "Menus",
+      "title": "unavailable state",
+      "rule": "Show when a menu item is unavailable (typically dimmed); if every item is unavailable, keep the menu itself openable.",
+      "citation": {
+        "source": "Apple HIG — Menus",
+        "url": "https://developer.apple.com/design/human-interface-guidelines/menus"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Unavailable items are shown as unavailable (typically dimmed); if all items are unavailable, the menu still opens."
+      ],
+      "fail_when": [
+        "Unavailable items are omitted with no unavailable state, or the menu cannot be opened when every item is unavailable."
+      ],
+      "severity": "major",
+      "jobs": [
+        "actions"
+      ]
+    },
+    {
+      "id": "actions.menus.frequent_items_first",
+      "category": "Actions",
+      "segment": "Menus",
+      "title": "frequent items first",
+      "rule": "List important or frequently used menu items first (still grouping related commands).",
+      "citation": {
+        "source": "Apple HIG — Menus",
+        "url": "https://developer.apple.com/design/human-interface-guidelines/menus"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Important or frequently used items are listed first, with related commands still grouped."
+      ],
+      "fail_when": [
+        "Frequent items are buried, or first-listing scatters related commands with no grouping."
+      ],
+      "severity": "major",
+      "jobs": [
+        "actions"
+      ]
+    }
+  ],
+  "jobs": [
+    "actions"
+  ],
+  "patterns": []
+}

@@ -36,7 +36,7 @@ Use the hosted endpoint (request an invite, redeem for an API key) or self-host 
 | `forms.field_labels.label_stays_visible` | The field label remains visible while the field has a value (floating or persistent — not replaced by the value alone). | [Material 3 — Text fields](https://m3.material.io/components/text-fields/guidelines) |
 | `forms.field_labels.error_identifies_and_fixes` | Error text identifies the field and tells the user how to fix it. | [NN/g — Error-Message Guidelines](https://www.nngroup.com/articles/error-message-guidelines/) |
 
-Those ids are the Designer seed (UNS-44). This repo ships a schema-valid **stub** in [`catalog/guidelines.json`](catalog/guidelines.json) until that content lands. Tools return honest empty / incomplete — they do not invent rule bodies.
+Those ids are the Designer LIVE seed (UNS-44), kept as the first three rows in [`catalog/forms.json`](catalog/forms.json). Actions/verbs live in [`catalog/actions.json`](catalog/actions.json). The on-disk index is [`catalog/index.json`](catalog/index.json).
 
 **Out of v1:** other form segments, screenshots, search, suggest-fixes, bulk ingest, inventing look, a server LLM grader.
 
@@ -44,17 +44,18 @@ Those ids are the Designer seed (UNS-44). This repo ships a schema-valid **stub*
 
 | Tool | Input | Output |
 | --- | --- | --- |
-| `list_guidelines` | Optional `category`, `segment` | Thin index: id, title, category, segment, severity |
-| `get_guideline` | `id` | Full rule: text, citation, check method, examples |
-| `audit` | `{ target: { type: "html" \| "jsx" \| "description", content }, guideline_ids? }` | `{ results: [{ guideline_id, verdict, reasons }], summary }` |
+| `list_guidelines` | `limit`, `offset` | Paged index: id, title, jobs, lane |
+| `search_guidelines` | `query` and/or `jobs` and/or `lane` | Same index shape |
+| `get_guideline` | `id` | Full rule body |
+| `audit` | `{ target: { type: "html" \| "jsx" \| "description", content }, jobs? , guideline_ids? }` | `{ results: [{ guideline_id, verdict, reasons }], summary }` |
 
-Verdicts are `pass`, `fail`, or `incomplete`. `reasons[]` reuse catalog `pass_when` / `fail_when` plus the rule id. Default audit scope is the Forms → field-labels seed if `guideline_ids` is omitted — empty while the catalog is a stub.
+Verdicts are `pass`, `fail`, or `incomplete`. `reasons[]` reuse catalog `pass_when` / `fail_when` plus the rule id. `audit` requires `jobs` or `guideline_ids` and never runs the whole catalog.
 
 There is no server-side grading model.
 
 ## Catalog
 
-One shared JSON file: [`catalog/guidelines.json`](catalog/guidelines.json) + [`catalog/schema.json`](catalog/schema.json). Never forked per tenant. Optional `jobs[]` / `patterns[]` may be empty.
+Lane files plus index: [`catalog/actions.json`](catalog/actions.json), [`catalog/forms.json`](catalog/forms.json), [`catalog/index.json`](catalog/index.json), [`catalog/schema.json`](catalog/schema.json). Never forked per tenant.
 
 Soft size ~50–100 KB. Hard ceiling ~256 KB.
 

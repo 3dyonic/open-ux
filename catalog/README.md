@@ -1,11 +1,12 @@
 # Catalog
 
-One shared JSON catalog. Never forked per tenant.
+One shared cited catalog, split by lane:
 
-This file is a **schema-valid stub**. Guideline bodies land when Designer [UNS-44](https://linear.app/3dyonic/issue/UNS-44) (Forms → field labels ×3) is written into `guidelines.json`. Until then:
+- `actions.json` — 40 Actions/verbs guidelines (UNS-65 craft-pass)
+- `forms.json` — 54 Forms guidelines (UNS-66 craft-pass; first three are the LIVE seed)
+- `index.json` — all lanes, `{id,title,jobs,lane}` only (no rule bodies)
+- `schema.json` — guideline document shape
 
-- `guidelines`, `jobs`, and `patterns` stay empty arrays
-- tools return honest empty / incomplete
-- nobody invents rule wording here
+The loader merges lane files. `lane` is index-only and is not stored on guideline objects.
 
 Soft size: ~50–100 KB. Hard ceiling: ~256 KB (`open_ux.catalog` enforces both).

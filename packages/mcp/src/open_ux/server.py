@@ -108,7 +108,10 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         name="Open UX",
         instructions=(
             "Open UX: cited UX rules agents audit against. "
-            "Tools: list_guidelines, get_guideline, audit. Hybrid C — no server LLM. "
+            "Tools: list_guidelines, search_guidelines, get_guideline, audit. "
+            "Hybrid C — no server LLM. "
+            "list/search return a paged index (id, title, jobs, lane) only. "
+            "audit requires jobs or guideline_ids; never the whole catalog. "
             "If the catalog is empty, return empty/incomplete; do not invent rules."
         ),
         version="0.1.0",
@@ -118,15 +121,52 @@ def create_mcp(*, hosted: bool) -> FastMCP:
 
     @mcp.tool
     def list_guidelines(
-        category: str | None = None,
-        segment: str | None = None,
+        limit: int = 50,
+        offset: int = 0,
     ) -> dict[str, Any]:
-        """Thin index of catalog guidelines. Empty until cited seed rules land."""
-        items = list_index(catalog, category=category, segment=segment)
+        """Paged index only: id, title, jobs, lane. No rule bodies."""
+        items, total = list_index(catalog, limit=limit, offset=offset)
         _maybe_telemetry(settings, tool="list_guidelines")
         payload: dict[str, Any] = {
             "guidelines": items,
             "count": len(items),
+            "total": total,
+            "limit": limit,
+            "offset": offset,
+            "catalog": {
+                "status": "empty" if catalog.empty else "ok",
+                "guideline_count": len(catalog.guidelines),
+                "version": catalog.version,
+            },
+        }
+        if catalog.empty:
+            payload["note"] = EMPTY_NOTE
+        return payload
+
+    @mcp.tool
+    def search_guidelines(
+        query: str | None = None,
+        jobs: str | None = None,
+        lane: str | None = None,
+        limit: int = 50,
+        offset: int = 0,
+    ) -> dict[str, Any]:
+        """Search the paged index by query and/or jobs and/or lane. No rule bodies."""
+        items, total = list_index(
+            catalog,
+            query=query,
+            jobs=jobs,
+            lane=lane,
+            limit=limit,
+            offset=offset,
+        )
+        _maybe_telemetry(settings, tool="search_guidelines")
+        payload: dict[str, Any] = {
+            "guidelines": items,
+            "count": len(items),
+            "total": total,
+            "limit": limit,
+            "offset": offset,
             "catalog": {
                 "status": "empty" if catalog.empty else "ok",
                 "guideline_count": len(catalog.guidelines),
@@ -139,7 +179,7 @@ def create_mcp(*, hosted: bool) -> FastMCP:
 
     @mcp.tool
     def get_guideline(id: str) -> dict[str, Any]:
-        """Fetch one guideline by id. Does not invent missing rules."""
+        """Fetch one full guideline body by id. Does not invent missing rules."""
         found = get_by_id(catalog, id)
         _maybe_telemetry(
             settings,
@@ -161,9 +201,11 @@ def create_mcp(*, hosted: bool) -> FastMCP:
     def audit(
         target: AuditTarget,
         guideline_ids: list[str] | None = None,
+        jobs: str | None = None,
     ) -> dict[str, Any]:
         """Audit html | jsx | description. Deterministic Hybrid C. No server LLM.
 
+        Requires jobs or guideline_ids — never runs the whole catalog.
         reasons[] reuse catalog pass_when / fail_when plus the rule id.
         Raw content is never persisted (length + optional hash only).
         """
@@ -172,6 +214,7 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             target_type=target.type,
             content=target.content,
             guideline_ids=guideline_ids,
+            jobs=jobs,
         )
         _maybe_telemetry(
             settings,

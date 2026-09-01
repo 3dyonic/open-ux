@@ -63,6 +63,6 @@ curl -sS -X POST "$OPEN_UX_PUBLIC_URL/admin/invite/approve" \
 
 4. Recipient opens the redeem URL (or pastes `inv_…` on `/invite/redeem`) → copy `uxmcp_` key once.
 5. Client settings: URL `https://<host>/mcp` + bearer key.
-6. `list_guidelines` then one `audit`. Catalog is empty until UNS-44 lands.
+6. `list_guidelines` (paged index) then one scoped `audit` (`jobs` or `guideline_ids`).
 
 Self-host (no Fly/Railway): `python -m open_ux stdio` and point the client at that process. No invite step.
