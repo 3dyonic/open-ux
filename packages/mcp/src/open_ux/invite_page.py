@@ -99,6 +99,22 @@ _CSS = """
       border: 1px solid var(--line);
       border-radius: var(--radius);
     }
+    .card[hidden] {
+      display: none;
+    }
+    .kicker {
+      display: none;
+      margin: 0;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--danger);
+    }
+    .card--error .kicker {
+      display: block;
+    }
+    .card--error label {
+      color: var(--muted);
+    }
     .title {
       margin: 0;
       font-size: 24px;
@@ -126,7 +142,7 @@ _CSS = """
       font-weight: 600;
       color: var(--ink);
     }
-    .input {
+    .field__input {
       width: 100%;
       padding: 10px 12px;
       border: 1px solid var(--line);
@@ -136,11 +152,8 @@ _CSS = """
       font-family: inherit;
       font-size: 14px;
     }
-    .input::placeholder {
+    .field__input::placeholder {
       color: var(--muted);
-    }
-    .input.is-invalid {
-      border-color: var(--danger);
     }
     .helper {
       display: none;
@@ -171,20 +184,17 @@ _CSS = """
       cursor: pointer;
       text-decoration: none;
     }
-    .btn-primary {
+    .btn--primary {
       background: var(--accent);
       color: var(--paper);
       border: none;
     }
-    .key-box {
+    .key {
       width: 100%;
       padding: 12px;
       background: var(--accent-bg);
       border: 1px solid var(--accent);
       border-radius: var(--radius);
-    }
-    .key-text {
-      margin: 0;
       font-size: 14px;
       font-weight: 600;
       color: var(--accent);
@@ -244,15 +254,16 @@ def _page(main: str, script: str) -> str:
 REQUEST_HTML = _page(
     """
     <div class="card" id="request-card">
-      <p class="title">Request invite</p>
+      <p class="kicker" id="request-error-kicker">REQUEST ERROR</p>
+      <h1 class="title">Request invite</h1>
       <p class="sub" id="request-sub">Join the waitlist. We’ll email a one-time invite when approved.</p>
       <form id="invite-request" method="post" action="/invite/request" novalidate>
         <div class="field">
           <label for="email">Email</label>
-          <input class="input" id="email" name="email" type="email" autocomplete="email" placeholder="you@company.com" aria-describedby="email-error">
+          <input class="field__input" id="email" name="email" type="email" autocomplete="email" placeholder="you@company.com" aria-describedby="email-error">
         </div>
         <p class="helper" id="email-error">Enter a valid email to request an invite.</p>
-        <button class="btn btn-primary" type="submit">Request invite</button>
+        <button class="btn btn--primary" type="submit">Request invite</button>
         <p class="foot" id="request-foot">No key yet — approval issues a one-time invite link.</p>
       </form>
     </div>
@@ -263,6 +274,7 @@ REQUEST_HTML = _page(
     const ERROR_SUB = "We couldn’t add you to the waitlist. Check the email and try again.";
 
     const form = document.getElementById("invite-request");
+    const card = document.getElementById("request-card");
     const emailInput = document.getElementById("email");
     const helper = document.getElementById("email-error");
     const sub = document.getElementById("request-sub");
@@ -274,7 +286,7 @@ REQUEST_HTML = _page(
     }
 
     function showError() {
-      emailInput.classList.add("is-invalid");
+      card.classList.add("card--error");
       emailInput.setAttribute("aria-invalid", "true");
       helper.classList.add("is-visible");
       sub.textContent = ERROR_SUB;
@@ -282,7 +294,7 @@ REQUEST_HTML = _page(
     }
 
     function clearError() {
-      emailInput.classList.remove("is-invalid");
+      card.classList.remove("card--error");
       emailInput.removeAttribute("aria-invalid");
       helper.classList.remove("is-visible");
       sub.textContent = DEFAULT_SUB;
@@ -315,7 +327,7 @@ REQUEST_HTML = _page(
 REQUESTED_HTML = _page(
     """
     <div class="card" id="requested-card">
-      <p class="title">You’re on the list</p>
+      <h1 class="title">You’re on the list</h1>
       <p class="sub">Thanks — we’ll email a one-time invite when your request is approved.</p>
       <p class="foot">Already have an invite? Open the link from your email to redeem.</p>
     </div>
@@ -326,25 +338,24 @@ REQUESTED_HTML = _page(
 REDEEM_HTML = _page(
     """
     <div class="card" id="redeem-card">
-      <p class="title">Redeem invite</p>
+      <p class="kicker" id="redeem-error-kicker">REDEEM ERROR</p>
+      <h1 class="title">Redeem invite</h1>
       <p class="sub" id="redeem-sub">Paste your invite token, or open the link from your email.</p>
       <form id="invite-redeem" method="post" action="/invite/redeem" novalidate>
         <div class="field">
           <label for="token">Invite token</label>
-          <input class="input" id="token" name="token" type="text" autocomplete="off" spellcheck="false" placeholder="inv_••••••••••••" aria-describedby="token-error">
+          <input class="field__input" id="token" name="token" type="text" autocomplete="off" spellcheck="false" placeholder="inv_••••••••••••" aria-describedby="token-error">
         </div>
         <p class="helper" id="token-error">Invite invalid or already used. Request a new one if needed.</p>
-        <button class="btn btn-primary" type="submit">Redeem</button>
+        <button class="btn btn--primary" type="submit">Redeem</button>
         <p class="foot" id="redeem-foot">Redeeming burns the invite and mints your uxmcp_ key once.</p>
       </form>
     </div>
     <div class="card" id="success-card" hidden>
-      <p class="title">Your key</p>
+      <h1 class="title">Your key</h1>
       <p class="sub">Invite redeemed. Copy your key — we won’t show it in full again.</p>
-      <div class="key-box">
-        <p class="key-text" id="key-text">uxmcp_••••••••••••••••</p>
-      </div>
-      <button class="btn btn-primary" type="button" id="copy-key">Copy</button>
+      <div class="key" id="key-text"></div>
+      <button class="btn btn--primary" type="button" id="copy-key">Copy</button>
       <p class="foot">Use as bearer on /mcp. Self-host stdio needs no auth.</p>
     </div>
 """,
@@ -367,8 +378,16 @@ REDEEM_HTML = _page(
     const q = params.get("token");
     if (q) tokenInput.value = q;
 
+    function hideSuccess() {
+      issuedKey = "";
+      keyText.textContent = "";
+      successCard.hidden = true;
+    }
+
     function showError() {
-      tokenInput.classList.add("is-invalid");
+      hideSuccess();
+      redeemCard.hidden = false;
+      redeemCard.classList.add("card--error");
       tokenInput.setAttribute("aria-invalid", "true");
       helper.classList.add("is-visible");
       sub.textContent = ERROR_SUB;
@@ -376,7 +395,7 @@ REDEEM_HTML = _page(
     }
 
     function clearError() {
-      tokenInput.classList.remove("is-invalid");
+      redeemCard.classList.remove("card--error");
       tokenInput.removeAttribute("aria-invalid");
       helper.classList.remove("is-visible");
       sub.textContent = DEFAULT_SUB;
