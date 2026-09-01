@@ -5,7 +5,7 @@
     "status": "coded"
   },
   "eor.e2.unauthorized": {
-    "claim": "Hosted HTTP list/get/audit path (MCP endpoint) is 401 without a bearer key; register issues uxmcp_.",
+    "claim": "Hosted HTTP list/get/audit path (MCP endpoint) is 401 without a bearer key; invite redeem issues uxmcp_.",
     "evidence": "packages/mcp/tests/test_auth.py",
     "status": "coded"
   },

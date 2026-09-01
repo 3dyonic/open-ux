@@ -6,6 +6,8 @@ from pathlib import Path
 
 
 KEY_PREFIX = "uxmcp_"
+INVITE_PREFIX = "inv_"
+INVITE_TTL_DAYS = 14
 SOFT_CATALOG_BYTES = 100 * 1024
 HARD_CATALOG_BYTES = 256 * 1024
 RATE_PER_MINUTE = 60
@@ -28,6 +30,7 @@ class Settings:
     schema_path: Path
     database_path: Path
     pepper: str
+    admin_token: str
     telemetry: bool
     public_url: str
 
@@ -59,6 +62,7 @@ class Settings:
             schema_path=schema,
             database_path=database,
             pepper=os.environ.get("OPEN_UX_PEPPER", ""),
+            admin_token=os.environ.get("OPEN_UX_ADMIN_TOKEN", ""),
             telemetry=telemetry and hosted,
             public_url=os.environ.get("OPEN_UX_PUBLIC_URL", "").rstrip("/"),
         )

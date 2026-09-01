@@ -4,7 +4,7 @@
 
 **Cited UX rules agents audit against.**
 
-Stop inventing UX rules from memory. Open UX is a shared, cited catalog agents list, fetch, and audit against. v1: Forms → field labels. Register for a key on the hosted service; self-host without our cloud. Telemetry improves the shared catalog — we never store your UI payloads.
+Stop inventing UX rules from memory. Open UX is a shared, cited catalog agents list, fetch, and audit against. v1: Forms → field labels. Request an invite on the hosted service; self-host without our cloud. Telemetry improves the shared catalog — we never store your UI payloads.
 
 ## What it is
 
@@ -16,7 +16,7 @@ A curated, machine-readable store of UX guidelines plus tools so an agent can:
 
 Audits are **hybrid**. Where a rule is checkable and the input is parseable HTML or JSX, the **server** grades it deterministically. Where it isn’t, the server returns `incomplete` plus the rule text (`pass_when` / `fail_when`) so the **client LLM** can finish. There is no server-side LLM.
 
-Use the hosted endpoint (register with email, get an API key) or self-host the same catalog and tools. Open source, MIT.
+Use the hosted endpoint (request an invite, redeem for an API key) or self-host the same catalog and tools. Open source, MIT.
 
 ## What it isn’t
 
@@ -62,7 +62,7 @@ Soft size ~50–100 KB. Hard ceiling ~256 KB.
 
 | | Hosted HTTP | Self-host stdio |
 | --- | --- | --- |
-| Auth | Register email → bearer `uxmcp_`. Tools **401** without a key. | No auth |
+| Auth | Waitlist → redeem invite → bearer `uxmcp_`. Tools **401** without a key. | No auth |
 | Limits | Soft ~60/min and ~1k/day per key | None |
 | Telemetry | Callers (key_hash), tool mix, verdicts, rule ids, target type | Off |
 
@@ -86,7 +86,7 @@ Package name: `@3dyonic/open-ux` (Claude plugin / npm scope). Python distributio
 
 ### Hosted
 
-1. Register with email on the hosted process (`POST /register`) → bearer API key (`uxmcp_…`).
+1. Request an invite on `/invite` (`POST /invite/request`). When approved, redeem the one-time `inv_…` token (`POST /invite/redeem`) → bearer API key (`uxmcp_…`).
 2. Point your client at the hosted `/mcp` URL (deploy your own; no public URL in this repo yet).
 3. Call `list_guidelines`, then `audit` a snippet.
 
@@ -98,7 +98,7 @@ Thin install from [`clients/claude`](clients/claude). Connect → list rules →
 
 ### Self-host / run locally
 
-Same tools from `packages/mcp` over stdio. No register step. Same catalog as hosted.
+Same tools from `packages/mcp` over stdio. No invite step. Same catalog as hosted.
 
 ```bash
 python -m venv .venv && source .venv/bin/activate

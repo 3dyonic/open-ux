@@ -1,4 +1,4 @@
-"""Public `/` HTML: Figma marketing chrome. Get a key CTA goes to `/register`."""
+"""Public `/` HTML: Figma marketing chrome. Get a key CTA goes to `/invite`."""
 
 from __future__ import annotations
 
@@ -202,7 +202,7 @@ LANDING_HTML = """<!DOCTYPE html>
     <p class="sub">Cited UX rules agents audit against</p>
     <p class="hero-body">Stop inventing UX rules from memory. Open UX is a shared, cited catalog agents list, fetch, and audit against.</p>
     <div class="ctas">
-      <a class="cta cta-primary" id="get-key" href="/register">Get a key</a>
+      <a class="cta cta-primary" id="get-key" href="/invite">Get a key</a>
       <a class="cta cta-secondary" href="https://github.com/3dyonic/open-ux">View on GitHub</a>
     </div>
   </section>
@@ -232,7 +232,7 @@ LANDING_HTML = """<!DOCTYPE html>
     <p>Privacy: no raw audit content in logs.</p>
   </footer>
   <script>
-    if (location.hash === '#register') location.replace('/register');
+    if (location.hash === '#register') location.replace('/invite');
   </script>
 </body>
 </html>

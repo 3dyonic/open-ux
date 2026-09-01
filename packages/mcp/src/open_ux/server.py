@@ -1,18 +1,26 @@
 from __future__ import annotations
 
+import secrets
 from typing import Any, Literal
 
 from fastmcp import FastMCP
 from fastmcp.server.dependencies import get_access_token
 from pydantic import BaseModel, Field
 from starlette.requests import Request
-from starlette.responses import HTMLResponse, JSONResponse, Response
+from starlette.responses import HTMLResponse, JSONResponse, RedirectResponse, Response
 
 from open_ux.audit import audit as run_audit
-from open_ux.auth import AuthError, HashedKeyVerifier, register, revoke_account
+from open_ux.auth import (
+    AuthError,
+    HashedKeyVerifier,
+    approve_invite,
+    hash_key,
+    redeem_invite,
+    request_invite,
+)
 from open_ux.catalog import EMPTY_NOTE, content_hash, get_by_id, list_index, load_catalog
+from open_ux.invite_page import REQUEST_HTML, REQUESTED_HTML, REDEEM_HTML
 from open_ux.landing import LANDING_HTML
-from open_ux.register_page import REGISTER_HTML
 from open_ux.settings import Settings
 from open_ux.store import get_store
 
@@ -54,6 +62,40 @@ def _maybe_telemetry(
         guideline_ids=guideline_ids,
         verdicts=verdicts,
     )
+
+
+def _admin_authorized(request: Request, settings: Settings) -> bool:
+    expected = settings.admin_token
+    if not expected:
+        return False
+    header = request.headers.get("authorization") or ""
+    if not header.lower().startswith("bearer "):
+        return False
+    got = header.split(" ", 1)[1].strip()
+    if not got:
+        return False
+    return secrets.compare_digest(
+        hash_key("admin:" + got, settings.pepper),
+        hash_key("admin:" + expected, settings.pepper),
+    )
+
+
+async def _waitlist_request(request: Request, *, settings: Settings, store) -> Response:
+    try:
+        body = await request.json()
+    except Exception:
+        body = {}
+    email = ""
+    if isinstance(body, dict):
+        email = str(body.get("email") or "")
+    try:
+        normalized = request_invite(email, settings=settings, store=store)
+    except AuthError:
+        return JSONResponse(
+            {"error": "Enter a valid email to request an invite."},
+            status_code=400,
+        )
+    return JSONResponse({"ok": True, "email": normalized, "status": "waitlisted"})
 
 
 def create_mcp(*, hosted: bool) -> FastMCP:
@@ -161,24 +203,41 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             }
         )
 
-    @mcp.custom_route("/register", methods=["GET", "POST"])
-    async def register_route(request: Request) -> Response:
-        if request.method == "GET":
-            return HTMLResponse(REGISTER_HTML)
+    @mcp.custom_route("/invite", methods=["GET"])
+    async def invite_request_page(_request: Request) -> Response:
+        return HTMLResponse(REQUEST_HTML)
+
+    @mcp.custom_route("/invite/request", methods=["POST"])
+    async def invite_request_route(request: Request) -> Response:
         if not hosted:
             return JSONResponse(
-                {"error": "Registration is hosted-only. Self-host stdio needs no key."},
+                {"error": "Invites are hosted-only. Self-host stdio needs no key."},
+                status_code=400,
+            )
+        return await _waitlist_request(request, settings=settings, store=store)
+
+    @mcp.custom_route("/invite/requested", methods=["GET"])
+    async def invite_requested_page(_request: Request) -> Response:
+        return HTMLResponse(REQUESTED_HTML)
+
+    @mcp.custom_route("/invite/redeem", methods=["GET", "POST"])
+    async def invite_redeem_route(request: Request) -> Response:
+        if request.method == "GET":
+            return HTMLResponse(REDEEM_HTML)
+        if not hosted:
+            return JSONResponse(
+                {"error": "Invites are hosted-only. Self-host stdio needs no key."},
                 status_code=400,
             )
         try:
             body = await request.json()
         except Exception:
             body = {}
-        email = ""
+        token = ""
         if isinstance(body, dict):
-            email = str(body.get("email") or "")
+            token = str(body.get("token") or "")
         try:
-            issued = register(email, settings=settings, store=store)
+            issued = redeem_invite(token, settings=settings, store=store)
         except AuthError as exc:
             return JSONResponse({"error": str(exc)}, status_code=400)
         return JSONResponse(
@@ -189,6 +248,44 @@ def create_mcp(*, hosted: bool) -> FastMCP:
                 "note": "Store this bearer in client settings. It is not shown again.",
             }
         )
+
+    @mcp.custom_route("/admin/invite/approve", methods=["POST"])
+    async def admin_invite_approve(request: Request) -> Response:
+        if not hosted:
+            return JSONResponse({"error": "Hosted-only."}, status_code=400)
+        if not _admin_authorized(request, settings):
+            return JSONResponse({"error": "Unauthorized."}, status_code=401)
+        try:
+            body = await request.json()
+        except Exception:
+            body = {}
+        email = ""
+        if isinstance(body, dict):
+            email = str(body.get("email") or "")
+        try:
+            issued = approve_invite(email, settings=settings, store=store)
+        except AuthError as exc:
+            return JSONResponse({"error": str(exc)}, status_code=400)
+        return JSONResponse(
+            {
+                "email": issued.email,
+                "token": issued.token,
+                "token_prefix": "inv_",
+                "redeem_url": issued.redeem_url,
+                "expires_at": issued.expires_at,
+            }
+        )
+
+    @mcp.custom_route("/register", methods=["GET", "POST"])
+    async def register_compat(request: Request) -> Response:
+        if request.method == "GET":
+            return RedirectResponse("/invite", status_code=302)
+        if not hosted:
+            return JSONResponse(
+                {"error": "Invites are hosted-only. Self-host stdio needs no key."},
+                status_code=400,
+            )
+        return await _waitlist_request(request, settings=settings, store=store)
 
     @mcp.custom_route("/account/delete", methods=["POST"])
     async def delete_account(request: Request) -> Response:
