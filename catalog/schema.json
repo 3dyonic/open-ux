@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/3dyonic/open-ux/catalog/schema.json",
+  "title": "Open UX catalog",
+  "description": "One shared, cited guideline catalog. Design ~50–100 KB; hard ceiling ~256 KB. Optional jobs[] and patterns[] may be empty. Do not invent house rules.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "guidelines"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Catalog document version, not a guideline id."
+    },
+    "guidelines": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/guideline" }
+    },
+    "jobs": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Optional inventory of LLM jobs. Empty is valid."
+    },
+    "patterns": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Optional pattern tags. Empty is valid."
+    }
+  },
+  "$defs": {
+    "guideline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "category",
+        "segment",
+        "title",
+        "rule",
+        "citation",
+        "check",
+        "pass_when",
+        "fail_when",
+        "severity"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[a-z0-9._-]+$"
+        },
+        "category": { "type": "string", "minLength": 1 },
+        "segment": { "type": "string", "minLength": 1 },
+        "title": { "type": "string", "minLength": 1 },
+        "rule": { "type": "string", "minLength": 1 },
+        "rationale": { "type": "string" },
+        "citation": { "$ref": "#/$defs/citation" },
+        "applies_to": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "check": {
+          "type": "string",
+          "enum": ["deterministic", "llm_judgment", "either"]
+        },
+        "pass_when": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1
+        },
+        "fail_when": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1
+        },
+        "examples": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/example" }
+        },
+        "severity": {
+          "type": "string",
+          "enum": ["blocker", "major", "minor", "info"]
+        },
+        "jobs": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "patterns": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "ux_dimensions": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "source_scheme": { "type": "string" }
+      }
+    },
+    "citation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source", "url"],
+      "properties": {
+        "source": { "type": "string", "minLength": 1 },
+        "url": { "type": "string", "minLength": 1, "format": "uri" }
+      }
+    },
+    "example": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "good": { "type": "string" },
+        "bad": { "type": "string" }
+      }
+    }
+  }
+}

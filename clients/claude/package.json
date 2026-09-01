@@ -1,0 +1,13 @@
+{
+  "name": "@3dyonic/open-ux",
+  "version": "0.1.0",
+  "private": true,
+  "description": "cited UX rules agents audit against / shared cited guidelines",
+  "license": "MIT",
+  "homepage": "https://github.com/3dyonic/open-ux",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/3dyonic/open-ux.git"
+  },
+  "keywords": ["open-ux", "ux", "guidelines", "audit"]
+}
