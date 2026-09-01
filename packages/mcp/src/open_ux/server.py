@@ -11,61 +11,13 @@ from starlette.responses import HTMLResponse, JSONResponse, Response
 from open_ux.audit import audit as run_audit
 from open_ux.auth import AuthError, HashedKeyVerifier, register, revoke_account
 from open_ux.catalog import EMPTY_NOTE, content_hash, get_by_id, list_index, load_catalog
+from open_ux.landing import LANDING_HTML
 from open_ux.settings import Settings
 from open_ux.store import get_store
 
 class AuditTarget(BaseModel):
     type: Literal["html", "jsx", "description"]
     content: str = Field(description="Snippet to audit. Never persisted raw.")
-
-
-LANDING_HTML = """<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Open UX</title>
-  <style>
-    :root { color-scheme: light dark; }
-    body { font-family: ui-sans-serif, system-ui, sans-serif; max-width: 42rem; margin: 2rem auto; padding: 0 1rem; line-height: 1.5; }
-    h1 { font-size: 1.75rem; margin-bottom: 0.25rem; }
-    .sub { color: #555; margin-top: 0; }
-    code, pre { font-family: ui-monospace, monospace; font-size: 0.9em; }
-    label { display: block; margin: 0.75rem 0 0.25rem; }
-    input { width: 100%; padding: 0.4rem; }
-    button { margin-top: 0.75rem; padding: 0.4rem 0.8rem; }
-    .out { white-space: pre-wrap; background: #1111; padding: 0.75rem; min-height: 2rem; }
-    .warn { font-size: 0.9rem; }
-  </style>
-</head>
-<body>
-  <h1>Open UX</h1>
-  <p class="sub">Cited UX rules agents audit against</p>
-  <p>Install path: <strong>connect → key → list → one audit</strong>.</p>
-  <p>Hosted calls need a bearer key. Register with email (issue / revoke only). Self-host stdio needs no key.</p>
-  <form id="reg">
-    <label for="email">Email</label>
-    <input id="email" name="email" type="email" required autocomplete="email">
-    <button type="submit">Register</button>
-  </form>
-  <p class="warn">The key is shown once. Put URL + key in client settings (Thursday path). Catalog is empty until cited seed rules land.</p>
-  <pre class="out" id="out"></pre>
-  <script>
-    document.getElementById('reg').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const email = document.getElementById('email').value;
-      const res = await fetch('/register', {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ email })
-      });
-      const data = await res.json();
-      document.getElementById('out').textContent = JSON.stringify(data, null, 2);
-    });
-  </script>
-</body>
-</html>
-"""
 
 
 def _key_hash_or_none() -> str | None:
