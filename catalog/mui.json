@@ -1,0 +1,197 @@
+{
+  "version": "0.1.0",
+  "guidelines": [
+    {
+      "id": "mui.button-variant-roles",
+      "category": "Actions",
+      "segment": "Buttons",
+      "title": "button variant roles",
+      "rule": "Text = less-pronounced (typical in dialogs and cards; on cards, text buttons keep emphasis on card content). Contained = high-emphasis (elevation + fill); primary to the app. Outlined = medium-emphasis: important but not the primary; lower than contained, higher than text.",
+      "citation": {
+        "source": "MUI — Button",
+        "url": "https://mui.com/material-ui/react-button/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Variant matches that role map (text / outlined / contained)."
+      ],
+      "fail_when": [
+        "Contained used for a low-emphasis card action, or text used as the app's primary."
+      ],
+      "severity": "major",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "do_not_claim": "One-primary page cap as this variant-map row; M3 max-two-actions (not on this MUI page)."
+    },
+    {
+      "id": "mui.dont-type-number",
+      "category": "Forms",
+      "segment": "Inputs",
+      "title": "dont type number",
+      "rule": "Do not use `type=\"number\"` on Text Field — allows `e`/`+`/`-`/`.` and silently discards others; scroll increment is accidental. MUI points at GOV.UK number inputs. Dual-cite; do not invent a winner vs Apple number formatter. Fail native `type=number`. Formatted numeric control is Apple's claim, not a house pick.",
+      "citation": {
+        "source": "MUI — Text Field",
+        "url": "https://mui.com/material-ui/react-text-field/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "The Text Field does not use native `type=\"number\"`. A formatted numeric control may exist as Apple's claim — not required or banned here."
+      ],
+      "fail_when": [
+        "Native `type=\"number\"` on the Text Field."
+      ],
+      "severity": "major",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "do_not_claim": "A house winner vs Apple number formatter; that formatted numeric entry is forbidden."
+    },
+    {
+      "id": "mui.helper-text-changes-field-height",
+      "category": "Forms",
+      "segment": "Layout",
+      "title": "helper text changes field height",
+      "rule": "Helper text changes field height — a field with helper text next to one without will misalign. Equalize by passing a space character as `helperText` on the sibling.",
+      "citation": {
+        "source": "MUI — Text Field",
+        "url": "https://mui.com/material-ui/react-text-field/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Adjacent fields with/without helper text stay aligned (sibling gets space `helperText` or equivalent)."
+      ],
+      "fail_when": [
+        "Adjacent fields misalign because only one has helper text."
+      ],
+      "severity": "major",
+      "jobs": [
+        "name_a_control"
+      ],
+      "do_not_claim": "Helper association `id` (next row) as this height row."
+    },
+    {
+      "id": "mui.explicit-id-for-label-helper",
+      "category": "Forms",
+      "segment": "Labels",
+      "title": "explicit id for label helper",
+      "rule": "Explicit `id` for label + helper association — input linked to label and helper (`for` / `aria-describedby`). Until hydration, a TextField without an explicit `id` will not have associated labels.",
+      "citation": {
+        "source": "MUI — Text Field",
+        "url": "https://mui.com/material-ui/react-text-field/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "TextField has an explicit `id`; label uses `for`; helper is `aria-describedby`."
+      ],
+      "fail_when": [
+        "No explicit `id`, so label/helper are not associated (including pre-hydration)."
+      ],
+      "severity": "major",
+      "jobs": [
+        "name_a_control"
+      ],
+      "do_not_claim": "Visible-label existence (`forms.field_labels.visible_label`) as this association row."
+    },
+    {
+      "id": "mui.most-alerts-dont-need-titles",
+      "category": "Dialogs",
+      "segment": "Alert",
+      "title": "most alerts dont need titles",
+      "rule": "Most alerts don't need titles — summarize in a sentence or two (question or statement tied to the buttons). Use `role=\"alertdialog\"`. Title-bar alerts only for high-risk (e.g. potential loss of connectivity). Users should understand the choices from title and button text alone.",
+      "citation": {
+        "source": "MUI — Dialog",
+        "url": "https://mui.com/material-ui/react-dialog/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Ordinary alerts have no title bar; copy is a sentence or two tied to the buttons; `role=\"alertdialog\"`. Title-bar only for high-risk. Choices are understandable from title (if any) and button text alone."
+      ],
+      "fail_when": [
+        "Title-bar on a non-high-risk alert; missing alertdialog role; choices that cannot be understood from title + buttons."
+      ],
+      "severity": "major",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "do_not_claim": "Banned-title list (next row) as this \"most don't need titles\" row."
+    },
+    {
+      "id": "mui.avoid-apologies-alarm-ambiguity-in-dialog-titles",
+      "category": "Dialogs",
+      "segment": "Copy",
+      "title": "avoid apologies alarm ambiguity in dialog titles",
+      "rule": "Avoid apologies, alarm, or ambiguity in dialog titles — not \"Sorry for the interruption\", \"Warning!\", or \"Are you sure?\". Dual-cite Atlassian error-title (3–4 words, not \"what to do\") — MUI is the banned-title list on the dialog itself.",
+      "citation": {
+        "source": "MUI — Dialog",
+        "url": "https://mui.com/material-ui/react-dialog/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Dialog title (when present) is not an apology, \"Warning!\", or \"Are you sure?\"."
+      ],
+      "fail_when": [
+        "Those banned titles."
+      ],
+      "severity": "major",
+      "jobs": [
+        "tone_of_voice_for_failure"
+      ],
+      "do_not_claim": "`actions.confirm.specific_consequences` as a delete of this banned-list row. Overlap with Actions 40: `actions.confirm.specific_consequences`."
+    },
+    {
+      "id": "mui.confirmation-cancel-discards",
+      "category": "Dialogs",
+      "segment": "Confirmation",
+      "title": "confirmation cancel discards",
+      "rule": "Confirmation Cancel discards — touching Cancel cancels the action, discards any changes, and closes. (Example: listen to ringtones; commit only on OK.)",
+      "citation": {
+        "source": "MUI — Dialog",
+        "url": "https://mui.com/material-ui/react-dialog/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Confirmation Cancel discards changes and closes; commit is only on the confirm control."
+      ],
+      "fail_when": [
+        "Confirmation Cancel keeps changes, or Cancel commits."
+      ],
+      "severity": "major",
+      "jobs": [
+        "disable_or_confirm_destructive"
+      ],
+      "do_not_claim": "`actions.close_saves_separate_cancel` (Close keeps) as a merge that deletes this Cancel-discards claim. Overlap with Actions 40: `actions.close_saves_separate_cancel`."
+    },
+    {
+      "id": "mui.non-modal-dialogs-allowed",
+      "category": "Dialogs",
+      "segment": "Modal vs nonmodal",
+      "title": "non modal dialogs allowed",
+      "rule": "Non-modal dialogs are allowed — they do not interrupt interaction behind them. MUI cites NN/g modal vs non-modal and demos a persistent cookie banner. Dual-cite extra-harvest NN/g 7 numbered modal rules; this row is MUI's explicit non-modal permission + cookie-banner pattern.",
+      "citation": {
+        "source": "MUI — Dialog",
+        "url": "https://mui.com/material-ui/react-dialog/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "A non-modal (e.g. persistent cookie banner) does not block interaction behind it when that pattern is used."
+      ],
+      "fail_when": [
+        "A cookie-banner/non-modal pattern implemented as a blocking modal; or treating \"non-modal allowed\" as permission to modal nonessential off-flow (NN/g 5–7 still apply)."
+      ],
+      "severity": "major",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "do_not_claim": "A winner that deletes `nng.modal-and-nonmodal-dialogs`. Overlap with extra 73: `nng.modal-and-nonmodal-dialogs`."
+    }
+  ],
+  "jobs": [
+    "pick_primary_action",
+    "use_familiar_control",
+    "name_a_control",
+    "tone_of_voice_for_failure",
+    "disable_or_confirm_destructive"
+  ],
+  "patterns": []
+}

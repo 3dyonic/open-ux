@@ -17,7 +17,9 @@ LIVE_SEED = (
 INDEX_KEYS = {"id", "title", "jobs", "lane"}
 BODY_KEYS = {"pass_when", "fail_when", "rule", "citation", "check"}
 EXTRA_SAMPLE = "govuk.date-input-only-memorable"
+HARVEST3_SAMPLE = "spectrum.quiet-vs-standard-background"
 EXTRA_PREFIXES = ("govuk.", "nng.", "fluent.", "polar.")
+HARVEST3_PREFIXES = ("spectrum.", "ant.", "mui.")
 
 
 @pytest.mark.asyncio
@@ -79,21 +81,27 @@ def _assert_index_rows(rows: list[dict]) -> None:
 async def test_list_index_has_no_rule_bodies(live_catalog: Path) -> None:
     mcp = create_mcp(hosted=False)
     async with Client(mcp) as client:
-        listed = await client.call_tool("list_guidelines", {"limit": 200, "offset": 0})
+        listed = await client.call_tool("list_guidelines", {"limit": 300, "offset": 0})
         data = listed.data
         assert data["catalog"]["status"] == "ok"
-        assert data["total"] == 167
+        assert data["total"] == 223
         _assert_index_rows(data["guidelines"])
         ids = {row["id"] for row in data["guidelines"]}
         for seed in LIVE_SEED:
             assert seed in ids
         extra = [row for row in data["guidelines"] if row["id"].startswith(EXTRA_PREFIXES)]
+        harvest3 = [
+            row for row in data["guidelines"] if row["id"].startswith(HARVEST3_PREFIXES)
+        ]
         assert len(extra) == 73
+        assert len(harvest3) == 56
         assert EXTRA_SAMPLE in ids
-        for row in extra:
+        assert HARVEST3_SAMPLE in ids
+        for row in extra + harvest3:
             dumped = json.dumps(row)
             assert "pass_when" not in dumped
             assert '"rule"' not in dumped
+            assert "do_not_claim" not in dumped
 
 
 @pytest.mark.asyncio
@@ -155,6 +163,26 @@ async def test_get_extra_harvest_guideline_returns_full_body(live_catalog: Path)
         assert body["found"] is True
         g = body["guideline"]
         assert g["id"] == EXTRA_SAMPLE
+        assert "lane" not in g
+        assert g["rule"]
+        assert g["pass_when"]
+        assert g["fail_when"]
+        assert g["do_not_claim"]
+        assert "when_to_use" not in g
+        assert "when_not" not in g
+        assert g["citation"]["url"].startswith("https://")
+        assert "](<" not in g["citation"]["url"]
+
+
+@pytest.mark.asyncio
+async def test_get_harvest3_guideline_returns_full_body(live_catalog: Path) -> None:
+    mcp = create_mcp(hosted=False)
+    async with Client(mcp) as client:
+        got = await client.call_tool("get_guideline", {"id": HARVEST3_SAMPLE})
+        body = got.data
+        assert body["found"] is True
+        g = body["guideline"]
+        assert g["id"] == HARVEST3_SAMPLE
         assert "lane" not in g
         assert g["rule"]
         assert g["pass_when"]

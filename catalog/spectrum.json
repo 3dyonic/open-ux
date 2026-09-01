@@ -1,0 +1,592 @@
+{
+  "version": "0.1.0",
+  "guidelines": [
+    {
+      "id": "spectrum.quiet-vs-standard-background",
+      "category": "Forms",
+      "segment": "Text field",
+      "title": "quiet vs standard background",
+      "rule": "Visible background for dense control arrays / isolated buttons; quiet (no fill) only when a clear stack/table/grid makes the field parseable. Too many quiet controls in a small space are hard to read.",
+      "citation": {
+        "source": "Spectrum — Text field",
+        "url": "https://spectrum.adobe.com/page/text-field/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Standard (visible background) is used for dense arrays or isolated buttons; quiet is used only where a clear stack/table/grid makes the field parseable."
+      ],
+      "fail_when": [
+        "Quiet (no fill) in a dense small space, or isolated buttons with no visible field background."
+      ],
+      "severity": "major",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "do_not_claim": "Hit-target px floors; quiet as a brand default."
+    },
+    {
+      "id": "spectrum.asterisk-is-icon-not-label-text",
+      "category": "Forms",
+      "segment": "Required marker",
+      "title": "asterisk is icon not label text",
+      "rule": "Required marker uses a spaced icon. If you use an asterisk, include hint text that explains what it means. Never use an asterisk to mark optional.",
+      "citation": {
+        "source": "Spectrum — Text field",
+        "url": "https://spectrum.adobe.com/page/text-field/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Required is a spaced icon (not asterisk characters inside the label string); hint text explains the marker; optional is not marked with an asterisk."
+      ],
+      "fail_when": [
+        "Asterisk is typed as label text; no explanation of the marker; or asterisk marks optional."
+      ],
+      "severity": "major",
+      "jobs": [
+        "name_a_control"
+      ],
+      "do_not_claim": "A winner vs NN/g mark-optional (`forms.fields.distinguish_optional_required`) or Fluent all-required-one-instruction. Overlap with Forms 54: `forms.fields.distinguish_optional_required`. Overlap with extra 73: `fluent.required-asterisk-or-one-instruction`."
+    },
+    {
+      "id": "spectrum.error-icon-overrides-validation-icon",
+      "category": "Forms",
+      "segment": "Validation",
+      "title": "error icon overrides validation icon",
+      "rule": "When both error and validation icons would apply, show error only.",
+      "citation": {
+        "source": "Spectrum — Text field",
+        "url": "https://spectrum.adobe.com/page/text-field/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Error state shows the error icon only; the valid/format icon is not shown at the same time."
+      ],
+      "fail_when": [
+        "Error and valid icons shown together."
+      ],
+      "severity": "major",
+      "jobs": [
+        "recover_from_invalid_input"
+      ],
+      "do_not_claim": "M3 swap supporting text for error as this row."
+    },
+    {
+      "id": "spectrum.readonly-vs-disabled",
+      "category": "Forms",
+      "segment": "Field state",
+      "title": "readonly vs disabled",
+      "rule": "Disabled = field exists but is unavailable. If the value must still be shown and copied, use read-only, not disabled.",
+      "citation": {
+        "source": "Spectrum — Text field",
+        "url": "https://spectrum.adobe.com/page/text-field/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Unavailable fields are disabled. Values that must remain visible and copyable are read-only."
+      ],
+      "fail_when": [
+        "A value that must be copied is in a disabled field."
+      ],
+      "severity": "major",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "do_not_claim": "Fluent disabled-label-stays-perceivable as a merge; picker read-only (see `spectrum.picker-readonly-only-if-selection`). Overlap with extra 73: `fluent.disabled-field-label-stays-perceivable`."
+    },
+    {
+      "id": "spectrum.mixed-values-en-dash",
+      "category": "Forms",
+      "segment": "Mixed values",
+      "title": "mixed values en dash",
+      "rule": "When the field represents multiple non-identical values, show an en dash (–), not a blank or a single value.",
+      "citation": {
+        "source": "Spectrum — Text field",
+        "url": "https://spectrum.adobe.com/page/text-field/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Mixed non-identical values display an en dash (–)."
+      ],
+      "fail_when": [
+        "Mixed values shown as blank or as one of the values."
+      ],
+      "severity": "major",
+      "jobs": [
+        "name_a_control"
+      ],
+      "do_not_claim": "A hyphen/minus as equivalent; bulk-edit architecture."
+    },
+    {
+      "id": "spectrum.min-width-1-5x-field-height",
+      "category": "Forms",
+      "segment": "Sizing",
+      "title": "min width 1 5x field height",
+      "rule": "Standard and quiet text fields: minimum width 1.5× field height.",
+      "citation": {
+        "source": "Spectrum — Text field",
+        "url": "https://spectrum.adobe.com/page/text-field/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Standard and quiet text-field width is at least 1.5× the field height."
+      ],
+      "fail_when": [
+        "Standard or quiet text field narrower than 1.5× height."
+      ],
+      "severity": "major",
+      "jobs": [
+        "keep_hit_target_usable"
+      ],
+      "do_not_claim": "Picker minimum (see `spectrum.picker-min-width-2x-height`); WCAG/hit-target numbers."
+    },
+    {
+      "id": "spectrum.tab-into-field-selects-text",
+      "category": "Forms",
+      "segment": "Keyboard",
+      "title": "tab into field selects text",
+      "rule": "Tab into a text field selects existing text.",
+      "citation": {
+        "source": "Spectrum — Text field",
+        "url": "https://spectrum.adobe.com/page/text-field/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Keyboard focus into a text field with existing text selects that text."
+      ],
+      "fail_when": [
+        "Tab-in places a caret without selecting existing text."
+      ],
+      "severity": "major",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "do_not_claim": "Click-to-edit caret placement."
+    },
+    {
+      "id": "spectrum.validation-icon-when-format-valid",
+      "category": "Forms",
+      "segment": "Validation",
+      "title": "validation icon when format valid",
+      "rule": "For email/card/password-rules fields, show the valid icon as soon as the typed value matches the format. Dual-cite NN/g success-for-complex; this is the format-as-you-type icon, not a spam-success on required-filled.",
+      "citation": {
+        "source": "Spectrum — Text field",
+        "url": "https://spectrum.adobe.com/page/text-field/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Format-constrained fields show the valid icon when the typed value matches, not merely because a required field has any characters."
+      ],
+      "fail_when": [
+        "Valid icon on any filled required, or no valid icon when the format already matches."
+      ],
+      "severity": "major",
+      "jobs": [
+        "recover_from_invalid_input"
+      ],
+      "do_not_claim": "Generic error identifies-and-fixes; success spam on every required. Overlap with Forms 54: `forms.errors.success_complex_fields`."
+    },
+    {
+      "id": "spectrum.toast-vs-dialog",
+      "category": "Feedback",
+      "segment": "Toast vs dialog",
+      "title": "toast vs dialog",
+      "rule": "Toast only for confirmations, simple notifications, and low-priority alerts that must not fully interrupt. Dialog when the situation needs attention or a response. Do not use a dialog for a simple upload-complete.",
+      "citation": {
+        "source": "Spectrum — Toast",
+        "url": "https://spectrum.adobe.com/page/toast/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Low-priority confirmations/notifications use toast; situations that need attention or a response use dialog."
+      ],
+      "fail_when": [
+        "Dialog for a simple upload-complete; or toast for a situation that needs attention/response."
+      ],
+      "severity": "major",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "do_not_claim": "A winner vs NN/g modal 7 (`nng.modal-and-nonmodal-dialogs`); Ant Message vs dialog (separate rows)."
+    },
+    {
+      "id": "spectrum.toast-placement-geometry",
+      "category": "Feedback",
+      "segment": "Toast",
+      "title": "toast placement geometry",
+      "rule": "Default bottom center. Desktop: 16 px from the bottom of the viewport. Mobile: 16 px above the bottom toolbar; never wider than the viewport (8 px left/right margins). If unnoticed or disruptive, may move to bottom end, top end, or top center.",
+      "citation": {
+        "source": "Spectrum — Toast",
+        "url": "https://spectrum.adobe.com/page/toast/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Default is bottom center with those desktop/mobile offsets and margins; alternate corners only if unnoticed or disruptive."
+      ],
+      "fail_when": [
+        "Default placement other than bottom center with no unnoticed/disruptive reason, or toast wider than the viewport / overlapping the cited margins."
+      ],
+      "severity": "major",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "do_not_claim": "Ant Message top-center as a house winner."
+    },
+    {
+      "id": "spectrum.dont-place-mobile-toasts-over-navigation",
+      "category": "Feedback",
+      "segment": "Toast",
+      "title": "dont place mobile toasts over navigation",
+      "rule": "Don't place mobile toasts over navigation.",
+      "citation": {
+        "source": "Spectrum — Toast",
+        "url": "https://spectrum.adobe.com/page/toast/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Mobile toast sits 16 px above the bottom toolbar / not over navigation."
+      ],
+      "fail_when": [
+        "Mobile toast covers navigation."
+      ],
+      "severity": "major",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "do_not_claim": "Desktop bottom-center geometry as this row."
+    },
+    {
+      "id": "spectrum.toast-at-most-one-action",
+      "category": "Feedback",
+      "segment": "Toast",
+      "title": "toast at most one action",
+      "rule": "At most one action — a static white, secondary, outline button; concise; only when the action is directly related to the toast text.",
+      "citation": {
+        "source": "Spectrum — Toast",
+        "url": "https://spectrum.adobe.com/page/toast/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Zero or one related concise action, styled as that secondary outline control."
+      ],
+      "fail_when": [
+        "Two or more toast actions, or an unrelated action on the toast."
+      ],
+      "severity": "major",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "do_not_claim": "Polar modal max two bottom actions as this toast row."
+    },
+    {
+      "id": "spectrum.toast-no-redundant-dismiss",
+      "category": "Feedback",
+      "segment": "Toast",
+      "title": "toast no redundant dismiss",
+      "rule": "No redundant Dismiss — every toast already has a close control.",
+      "citation": {
+        "source": "Spectrum — Toast",
+        "url": "https://spectrum.adobe.com/page/toast/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "No extra Dismiss action besides the toast close control."
+      ],
+      "fail_when": [
+        "A Dismiss button in addition to the close control."
+      ],
+      "severity": "major",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "do_not_claim": "That the close control may be omitted."
+    },
+    {
+      "id": "spectrum.one-toast-at-a-time",
+      "category": "Feedback",
+      "segment": "Toast",
+      "title": "one toast at a time",
+      "rule": "One toast at a time — consecutive/simultaneous toasts follow a priority queue; do not stack multiple visible toasts.",
+      "citation": {
+        "source": "Spectrum — Toast",
+        "url": "https://spectrum.adobe.com/page/toast/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Only one toast is visible; others wait in a priority queue."
+      ],
+      "fail_when": [
+        "Multiple toasts stacked/visible at once."
+      ],
+      "severity": "major",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "do_not_claim": "Bundle copy (see `spectrum.bundle-instead-of-spam-toasts`)."
+    },
+    {
+      "id": "spectrum.bundle-instead-of-spam-toasts",
+      "category": "Feedback",
+      "segment": "Toast",
+      "title": "bundle instead of spam toasts",
+      "rule": "Bundle instead of spam — e.g. four uploads → one toast, not four. Be mindful of frequency even though toasts are weaker than dialogs.",
+      "citation": {
+        "source": "Spectrum — Toast",
+        "url": "https://spectrum.adobe.com/page/toast/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Related events (e.g. four uploads) are one bundled toast."
+      ],
+      "fail_when": [
+        "One toast per related event in a burst."
+      ],
+      "severity": "major",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "do_not_claim": "Queueing (previous row) as the bundle rule."
+    },
+    {
+      "id": "spectrum.users-can-turn-off-alert-types",
+      "category": "Feedback",
+      "segment": "Toast",
+      "title": "users can turn off alert types",
+      "rule": "Users can turn off all alert types — products should allow this for people who need to focus.",
+      "citation": {
+        "source": "Spectrum — Toast",
+        "url": "https://spectrum.adobe.com/page/toast/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Alert types can be turned off."
+      ],
+      "fail_when": [
+        "No way to turn off alert types."
+      ],
+      "severity": "major",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "do_not_claim": "`actions.confirm.bypass_educational` as a merge."
+    },
+    {
+      "id": "spectrum.toast-auto-dismiss-min-5s",
+      "category": "Feedback",
+      "segment": "Toast",
+      "title": "toast auto dismiss min 5s",
+      "rule": "Auto-dismiss ≥ 5 seconds so the message can be read. If an actionable toast auto-dismisses, the action must remain available elsewhere. Pause the timer on focus or hover (including keyboard focus on toast buttons).",
+      "citation": {
+        "source": "Spectrum — Toast",
+        "url": "https://spectrum.adobe.com/page/toast/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Auto-dismiss is at least 5 seconds; timer pauses on focus/hover; an actionable toast's action remains available elsewhere after dismiss."
+      ],
+      "fail_when": [
+        "Auto-dismiss under 5 seconds; timer ignores focus/hover; or the only path to the action vanishes with the toast."
+      ],
+      "severity": "major",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "do_not_claim": "Ant Message default 3s as a house winner; snackbar-only undo (`nng.support-undo-discoverable`)."
+    },
+    {
+      "id": "spectrum.toast-writing-formulas",
+      "category": "Feedback",
+      "segment": "Toast copy",
+      "title": "toast writing formulas",
+      "rule": "Confirmation (neutral/positive): optional noun + past-participle -ed + optional prepositional phrase; UI element names in bold. Informational: complete sentence (subject + verb + optional extra). Error: short phrase + in-line action when possible. Keep under 2 lines in English (localization grows).",
+      "citation": {
+        "source": "Spectrum — Toast",
+        "url": "https://spectrum.adobe.com/page/toast/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Copy matches the confirmation / informational / error formula; under 2 lines in English; UI names bold on confirmation."
+      ],
+      "fail_when": [
+        "Wrong formula for the toast type, or more than 2 lines in English."
+      ],
+      "severity": "major",
+      "jobs": [
+        "tone_of_voice_for_failure"
+      ],
+      "do_not_claim": "Tone/generic-language (next row) as this formula."
+    },
+    {
+      "id": "spectrum.toast-sentence-case-generic-tone",
+      "category": "Feedback",
+      "segment": "Toast copy",
+      "title": "toast sentence case generic tone",
+      "rule": "Sentence case, no period on a single sentence; instructive/neutral tone (not playful, celebratory, or promotional/upsell); generic language (no filenames/usernames/folders unless necessary).",
+      "citation": {
+        "source": "Spectrum — Toast",
+        "url": "https://spectrum.adobe.com/page/toast/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Sentence case; single sentence has no period; tone is instructive/neutral; names/files omitted unless necessary."
+      ],
+      "fail_when": [
+        "Title Case; period on a single sentence; playful/celebratory/upsell; unnecessary filenames/usernames/folders."
+      ],
+      "severity": "major",
+      "jobs": [
+        "tone_of_voice_for_failure"
+      ],
+      "do_not_claim": "General UI sentence-case already filed (Actions/Forms) as a delete of this toast row."
+    },
+    {
+      "id": "spectrum.picker-ghost-text-placeholder",
+      "category": "Forms",
+      "segment": "Picker",
+      "title": "picker ghost text placeholder",
+      "rule": "Picker placeholder (\"ghost text\") is allowed — prompts selection and disappears once a value is chosen. CONFLICT with Spectrum text-field \"don't use placeholder\" and NN/g placeholders. Dual-cite; picker-only. Do not pick a winner.",
+      "citation": {
+        "source": "Spectrum — Picker ; Spectrum — Text field",
+        "url": "https://spectrum.adobe.com/page/picker/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "A picker may show ghost-text that disappears after a value is chosen, and text fields still have a visible label (in-field hint extra, never only label)."
+      ],
+      "fail_when": [
+        "A text field uses disappearing placeholder as the only label; or picker ghost-text is treated as a pass for text fields."
+      ],
+      "severity": "major",
+      "jobs": [
+        "avoid_placeholder_as_label"
+      ],
+      "do_not_claim": "A winner that bans picker ghost-text or legalizes placeholder-as-only-label on text fields. Overlap with Forms 54: `forms.field_labels.visible_label` / `forms.field_labels.placeholder_hint_conflict`. Extra 73 skipped Polar/Fluent placeholder-as-hint."
+    },
+    {
+      "id": "spectrum.picker-mobile-tray-when-overwhelming",
+      "category": "Forms",
+      "segment": "Picker",
+      "title": "picker mobile tray when overwhelming",
+      "rule": "Mobile menu container — popover or tray. Use a tray when the option count would overwhelm a popover.",
+      "citation": {
+        "source": "Spectrum — Picker",
+        "url": "https://spectrum.adobe.com/page/picker/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Mobile picker uses popover, or tray when the option count would overwhelm a popover."
+      ],
+      "fail_when": [
+        "A large option set is forced into a popover that the count would overwhelm, with no tray."
+      ],
+      "severity": "major",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "do_not_claim": "A house option-count cutoff."
+    },
+    {
+      "id": "spectrum.picker-readonly-only-if-selection",
+      "category": "Forms",
+      "segment": "Picker",
+      "title": "picker readonly only if selection",
+      "rule": "Read-only only if a selection exists — a picker with no selection has no read-only option.",
+      "citation": {
+        "source": "Spectrum — Picker",
+        "url": "https://spectrum.adobe.com/page/picker/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Read-only picker has a selection. Empty picker is not read-only."
+      ],
+      "fail_when": [
+        "Read-only picker with no selection."
+      ],
+      "severity": "major",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "do_not_claim": "Text-field read-only vs disabled as this row."
+    },
+    {
+      "id": "spectrum.picker-min-width-2x-height",
+      "category": "Forms",
+      "segment": "Picker",
+      "title": "picker min width 2x height",
+      "rule": "Minimum width 2× field-button height — quiet pickers have no minimum; width follows text.",
+      "citation": {
+        "source": "Spectrum — Picker",
+        "url": "https://spectrum.adobe.com/page/picker/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Non-quiet picker width is at least 2× field-button height. Quiet picker width follows text (no minimum)."
+      ],
+      "fail_when": [
+        "Non-quiet picker narrower than 2× height, or a quiet-picker minimum invented in-house."
+      ],
+      "severity": "major",
+      "jobs": [
+        "keep_hit_target_usable"
+      ],
+      "do_not_claim": "Text-field 1.5× minimum as this row."
+    },
+    {
+      "id": "spectrum.picker-no-max-menu-height",
+      "category": "Forms",
+      "segment": "Picker",
+      "title": "picker no max menu height",
+      "rule": "No maximum menu height — grow to show as many options as the available space allows. Field value truncates; menu (and label) wrap.",
+      "citation": {
+        "source": "Spectrum — Picker",
+        "url": "https://spectrum.adobe.com/page/picker/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Menu grows with available space (no artificial max); field value may truncate; menu and label wrap."
+      ],
+      "fail_when": [
+        "A capped menu that hides available-space options, or menu that truncates like the field."
+      ],
+      "severity": "major",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "do_not_claim": "Item wrapping discouraged (next row) as a max-height rule."
+    },
+    {
+      "id": "spectrum.picker-concise-items-full-value",
+      "category": "Forms",
+      "segment": "Picker",
+      "title": "picker concise items full value",
+      "rule": "Concise menu items; width shows the chosen value in full — wrapping items discouraged; if wrapping is frequent, revise copy or change pattern. Field button should be wide enough that selected items are not ellipsized.",
+      "citation": {
+        "source": "Spectrum — Picker",
+        "url": "https://spectrum.adobe.com/page/picker/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Menu items are concise; the field button is wide enough that the selected value is not ellipsized; frequent wrapping is treated as a copy/pattern problem."
+      ],
+      "fail_when": [
+        "Selected value ellipsized in the field button, or frequently wrapping items left as-is."
+      ],
+      "severity": "major",
+      "jobs": [
+        "name_a_control"
+      ],
+      "do_not_claim": "Ant dropdown \"option text fully displayed\" as a merge that drops picker field-button width."
+    }
+  ],
+  "jobs": [
+    "use_familiar_control",
+    "name_a_control",
+    "recover_from_invalid_input",
+    "keep_hit_target_usable",
+    "announce_system_status",
+    "pick_primary_action",
+    "tone_of_voice_for_failure",
+    "avoid_placeholder_as_label",
+    "choose_control_for_choice"
+  ],
+  "patterns": []
+}

@@ -1,0 +1,547 @@
+{
+  "version": "0.1.0",
+  "guidelines": [
+    {
+      "id": "ant.named-button-type-map",
+      "category": "Actions",
+      "segment": "Buttons",
+      "title": "named button type map",
+      "rule": "Named type map — Default = non-primary, safe if unsure. Primary = complete/recommend. Text = low emphasis (e.g. table actions). Icon-only must have a Tooltip. Text+icon = supplementary meaning. Dashed = add content in an area. Link = external links. Ghost = dark or colored background. (Primary ≤1 per button group is named here, not a second row — dual-cite Actions/Atlassian/Carbon by scope.)",
+      "citation": {
+        "source": "Ant Design — Button spec ; Ant Design — Button",
+        "url": "https://ant.design/docs/spec/buttons"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Button type matches that map; icon-only has a tooltip; at most one primary in a button group."
+      ],
+      "fail_when": [
+        "Type used off-map (e.g. link for an in-app action, dashed for a primary complete); icon-only with no tooltip; two primaries in one group."
+      ],
+      "severity": "major",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "do_not_claim": "One global primary cap for page/section (`actions.buttons.one_primary`); that a tooltip replaces always-visible text (`actions.icons.always_visible_text_label`). Overlap with Actions 40: `actions.buttons.one_primary` (page/view). Dual-cite by cited scope; do not invent one global cap."
+    },
+    {
+      "id": "ant.never-two-icons-in-one-button",
+      "category": "Actions",
+      "segment": "Buttons",
+      "title": "never two icons in one button",
+      "rule": "Never two icons in one button.",
+      "citation": {
+        "source": "Ant Design — Button spec",
+        "url": "https://ant.design/docs/spec/buttons"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "A button has zero or one icon."
+      ],
+      "fail_when": [
+        "Two icons in one button."
+      ],
+      "severity": "major",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "do_not_claim": "Icon+text supplementary meaning as this row."
+    },
+    {
+      "id": "ant.danger-cancel-primary-when-not-recommended",
+      "category": "Actions",
+      "segment": "Destructive",
+      "title": "danger cancel primary when not recommended",
+      "rule": "If the user's intention is delete, use danger to warn. If the system does not recommend the deletion, set Cancel as the primary action. Compatible with \"primary not destructive\"; dual-cite, don't collapse.",
+      "citation": {
+        "source": "Ant Design — Button spec",
+        "url": "https://ant.design/docs/spec/buttons"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Delete uses danger warning. When the system does not recommend deletion, Cancel is the primary; destructive is not the recommended/primary."
+      ],
+      "fail_when": [
+        "Delete is primary when the system does not recommend it; or danger/primary collapsed so destructive is the recommended path."
+      ],
+      "severity": "major",
+      "jobs": [
+        "disable_or_confirm_destructive"
+      ],
+      "do_not_claim": "A second invented rule beyond this cite + `actions.buttons.default_not_destructive`. Overlap with Actions 40: `actions.buttons.default_not_destructive`."
+    },
+    {
+      "id": "ant.one-cta-per-screen",
+      "category": "Actions",
+      "segment": "Buttons",
+      "title": "one cta per screen",
+      "rule": "One Call to Action per screen — CTA usually appears alone, command-like (landing/welcome); may be as wide as its parent. Distinct from one-primary-in-a-group.",
+      "citation": {
+        "source": "Ant Design — Button spec",
+        "url": "https://ant.design/docs/spec/buttons"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Landing/welcome (command-like) screen has one CTA, usually alone; may span its parent."
+      ],
+      "fail_when": [
+        "Multiple CTAs on that landing/welcome screen."
+      ],
+      "severity": "major",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "do_not_claim": "One invented global cap vs group / page / section; `actions.buttons.one_primary` as a delete of this named CTA-per-screen row."
+    },
+    {
+      "id": "ant.footer-buttons-when-body-cannot-carry",
+      "category": "Actions",
+      "segment": "Layout",
+      "title": "footer buttons when body cannot carry",
+      "rule": "Footer buttons when the body can't carry them — collapsed/hidden content (not one screen), or complex body with subgroup actions so Complete is not confused with local actions. Footer = separation from body.",
+      "citation": {
+        "source": "Ant Design — Button spec",
+        "url": "https://ant.design/docs/spec/buttons"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Complete/footer actions sit in the footer when content is collapsed/not one screen, or when a complex body has subgroup actions."
+      ],
+      "fail_when": [
+        "Complete sits among local subgroup actions so it is confused with them, on a body that cannot carry the page action."
+      ],
+      "severity": "major",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "do_not_claim": "Always-footer as a house default."
+    },
+    {
+      "id": "ant.conversation-vs-navigation-order",
+      "category": "Actions",
+      "segment": "Order",
+      "title": "conversation vs navigation order",
+      "rule": "Conversation: ask for the needed/desired action, then present risks. Navigation: Back on the left (previous step). Less important actions go right or bottom. Collapsed overflow content stays on the right.",
+      "citation": {
+        "source": "Ant Design — Button spec",
+        "url": "https://ant.design/docs/spec/buttons"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Conversation order is desired action then risks. Navigation has Back on the left. Less important / overflow sit right or bottom as cited."
+      ],
+      "fail_when": [
+        "Risks before the needed action in a conversation pattern; Back not on the left in navigation; overflow collapsed to the left."
+      ],
+      "severity": "major",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "do_not_claim": "A global web OK/Cancel order (`actions.buttons.follow_platform_ok_cancel_order`)."
+    },
+    {
+      "id": "ant.group-spacing-overflow-dropdown",
+      "category": "Actions",
+      "segment": "Button groups",
+      "title": "group spacing overflow dropdown",
+      "rule": "Flush groups look like a Toggle. Align in one line with spaces. Same group: no dividers. Different groups: space or a divider. If more than three operations: 1 primary + n secondary, extra into a Dropdown.",
+      "citation": {
+        "source": "Ant Design — Button spec",
+        "url": "https://ant.design/docs/spec/buttons"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Related actions are spaced (not flush-as-toggle); same group has no divider; different groups use space or a divider; more than three operations use 1 primary + secondaries, extras in a Dropdown."
+      ],
+      "fail_when": [
+        "Flush non-toggle groups; dividers inside one group; more than three operations left in one undifferentiated strip."
+      ],
+      "severity": "major",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "do_not_claim": "A house cap other than Ant's \"more than three\" / Tidwell \"three or four\". Overlap with Actions 40: `actions.button_groups`."
+    },
+    {
+      "id": "ant.ok-cancel-default-vs-explicit-verb",
+      "category": "Actions",
+      "segment": "Copy",
+      "title": "ok cancel default vs explicit verb",
+      "rule": "OK / Cancel as Ant default labels (CONFLICT). Spec still defaults to OK/Cancel but also: use a verb; describe the result (Publish, Login); if primary is negative, stress consequences (Delete / Cancel). Dual-cite vs NN/g `explicit_verb_not_ok`. Do not pick a winner. Prefer cited verb-names-the-outcome as pass when both apply; Ant default is a conflict flag, not a second invented rule.",
+      "citation": {
+        "source": "Ant Design — Button spec ; NN/g — UI Copy",
+        "url": "https://ant.design/docs/spec/buttons"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "When both cites apply, the primary names the outcome (Publish, Login, Delete); if primary is negative, the pair stresses consequences (Delete / Cancel)."
+      ],
+      "fail_when": [
+        "Generic OK where a specific verb is available and treated as satisfying the verb-names cite; or a house \"always OK/Cancel\" / \"never OK\" that deletes the other cite."
+      ],
+      "severity": "major",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "do_not_claim": "Collapsing Ant's named default into a second invented rule, or deleting `actions.copy.explicit_verb_not_ok`. Overlap with Actions 40: `actions.copy.explicit_verb_not_ok`."
+    },
+    {
+      "id": "ant.label-left-default-vs-top",
+      "category": "Forms",
+      "segment": "Field labels",
+      "title": "label left default vs top",
+      "rule": "Ant: label left of input by default; top when the text is too long or in English context; consistent within the system. Dual-cite Fluent/Spectrum top-default. Do not pick a winner.",
+      "citation": {
+        "source": "Ant Design — Data entry",
+        "url": "https://ant.design/docs/spec/data-entry"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Labels are consistently left or consistently top in-product (Ant left-default; Fluent/Spectrum top-default). Ant also allows top when label text is too long or in English context."
+      ],
+      "fail_when": [
+        "Mixed left/top in one form with no reason; or a house default that bans the other cite."
+      ],
+      "severity": "major",
+      "jobs": [
+        "name_a_control"
+      ],
+      "do_not_claim": "A house left-or-top winner; GOV.UK sentence-case/no-colons as this placement row. Overlap with extra 73: `fluent.labels-top-aligned-by-default`. Overlap with Forms 54: beyond LIVE `visible_label` / `label_stays_visible`."
+    },
+    {
+      "id": "ant.radio-count-2-to-5",
+      "category": "Forms",
+      "segment": "Choice",
+      "title": "radio count 2 to 5",
+      "rule": "Radio count — must be more than two, normally fewer than five (all options visible to compare). Dual-cite NN/g handful/dropdown cutoff; Ant names the 2–5 band.",
+      "citation": {
+        "source": "Ant Design — Data entry",
+        "url": "https://ant.design/docs/spec/data-entry"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Radios are used for more than two and normally fewer than five visible options."
+      ],
+      "fail_when": [
+        "Radios for two-or-fewer as this Ant band, or a long set as radios when Ant would use dropdown (>5)."
+      ],
+      "severity": "major",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "do_not_claim": "One house cutoff vs NN/g handful / Polar <4 / USWDS <7 / M3 6 / Carbon 3. Overlap with extra 73: `nng.too-few-options-radios-not-dropdown` / `polar.select-4plus-choice-list-under-4`. Overlap with Forms 54: `forms.inputs.match_control_and_size`, `dropdown_chooser`, `combo_box`, `offer_choices_not_only_text`."
+    },
+    {
+      "id": "ant.checkbox-vs-switch",
+      "category": "Forms",
+      "segment": "Choice",
+      "title": "checkbox vs switch",
+      "rule": "Checkbox often with a submit for state; a single checkbox can be two-state. Switch takes effect immediately and does not need a button. Dual-cite Lightning toggle-immediate; Ant names Switch vs checkbox pairing.",
+      "citation": {
+        "source": "Ant Design — Data entry",
+        "url": "https://ant.design/docs/spec/data-entry"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Switch applies immediately with no submit. Checkbox state waits for submit when it is part of a submitted form; a single checkbox may be two-state."
+      ],
+      "fail_when": [
+        "Switch that does nothing until a separate submit; or a form checkbox that applies immediately as if it were Switch."
+      ],
+      "severity": "major",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "do_not_claim": "A house \"all toggles immediate\" beyond the two cites."
+    },
+    {
+      "id": "ant.dropdown-when-over-5-no-truncate",
+      "category": "Forms",
+      "segment": "Choice",
+      "title": "dropdown when over 5 no truncate",
+      "rule": "Dropdown when >5 — logical sort; option text fully displayed. Dual-cite NN/g dropdown band; this is Ant's cutoff + no-truncate.",
+      "citation": {
+        "source": "Ant Design — Data entry",
+        "url": "https://ant.design/docs/spec/data-entry"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "A >5 set uses a dropdown (on this Ant surface), options logically sorted, text fully displayed."
+      ],
+      "fail_when": [
+        ">5 as a radio list on this Ant surface, truncated option text, or unsorted dump."
+      ],
+      "severity": "major",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "do_not_claim": "A house winner vs NN/g ~5–10 / combobox ~15+ / GOV.UK select-last-resort. Overlap with extra 73: `nng.dropdown-ok-narrow-middle` / `nng.too-many-combobox-not-long-dropdown` / `govuk.select-last-resort`."
+    },
+    {
+      "id": "ant.slider-intensity-grade",
+      "category": "Forms",
+      "segment": "Inputs",
+      "title": "slider intensity grade",
+      "rule": "Slider = intensity/grade (volume, brightness, saturation) when a precise number is not required; pair NumberInput with Slider when precision is required.",
+      "citation": {
+        "source": "Ant Design — Data entry",
+        "url": "https://ant.design/docs/spec/data-entry"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Slider is used for intensity/grade without a required precise number; precision uses Slider + NumberInput."
+      ],
+      "fail_when": [
+        "Slider as the only control when a precise number is required; or slider for a non-intensity discrete choice."
+      ],
+      "severity": "major",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "do_not_claim": "GOV.UK \"don't use range sliders\" on question pages as a winner; MUI/Apple number-entry dual-cite as this slider row."
+    },
+    {
+      "id": "ant.settings-mode-and-grouping-thresholds",
+      "category": "Forms",
+      "segment": "Settings",
+      "title": "settings mode and grouping thresholds",
+      "rule": "One mode per page: Instant Effect or Submission Effect (use submit when items interdepend). Item count: <7 no grouping; 7–15 group; >15 tab grouping.",
+      "citation": {
+        "source": "Ant Design — Data entry",
+        "url": "https://ant.design/docs/spec/data-entry"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "A settings page is one mode (instant or submission). Counts follow <7 / 7–15 / >15 tab grouping. Interdependent items use submission."
+      ],
+      "fail_when": [
+        "Instant and submission mixed on one page; or counts grouped against those bands."
+      ],
+      "severity": "major",
+      "jobs": [
+        "group_related_inputs"
+      ],
+      "do_not_claim": "A house number that replaces 7 / 15; Switch-immediate as this page-mode row."
+    },
+    {
+      "id": "ant.editable-list-pattern-by-field-count",
+      "category": "Forms",
+      "segment": "Structure",
+      "title": "editable list pattern by field count",
+      "rule": "Editable-list pattern by field count — dynamic add/remove when items ≤3 and inputs need no separate titles; editable table 2–5; collapsible panel 6–8; drawer when >8.",
+      "citation": {
+        "source": "Ant Design — Data entry ; Ant Design — Form research",
+        "url": "https://ant.design/docs/spec/data-entry"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Pattern matches the cited count band (≤3 add/remove; 2–5 table; 6–8 panel; >8 drawer)."
+      ],
+      "fail_when": [
+        "Drawer for ≤3, or add/remove-without-titles for >8, against those bands."
+      ],
+      "severity": "major",
+      "jobs": [
+        "group_related_inputs"
+      ],
+      "do_not_claim": "A house count that collapses the bands."
+    },
+    {
+      "id": "ant.no-multi-column-form-in-one-area",
+      "category": "Forms",
+      "segment": "Layout",
+      "title": "no multi column form in one area",
+      "rule": "No multi-column form inside one area — vertical single column is the efficient default; weak grouping may put short related fields on one line, not a second reading column. Card grouping when content is usually more than two screens, each card with a large title.",
+      "citation": {
+        "source": "Ant Design — Data entry ; Ant Design — Form research",
+        "url": "https://ant.design/docs/spec/data-entry"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "One area is a single reading column (short related fields may share a line). Content usually more than two screens uses titled cards."
+      ],
+      "fail_when": [
+        "Two reading columns of fields in one area; or >two-screens dump with no titled cards."
+      ],
+      "severity": "major",
+      "jobs": [
+        "group_related_inputs"
+      ],
+      "do_not_claim": "Forms keep-short / one-thing-per-page as a merge. Overlap with Forms 54: `forms.length.keep_short` / `forms.layout.single_column`."
+    },
+    {
+      "id": "ant.inline-input-feedback-does-not-auto-dismiss",
+      "category": "Forms",
+      "segment": "Errors",
+      "title": "inline input feedback does not auto dismiss",
+      "rule": "Inline input feedback does not auto-dismiss — text follows the block; stays until the user performs the corresponding interaction.",
+      "citation": {
+        "source": "Ant Design — Feedback spec",
+        "url": "https://ant.design/docs/spec/feedback"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Inline input feedback stays until the corresponding interaction."
+      ],
+      "fail_when": [
+        "Inline input feedback auto-dismisses."
+      ],
+      "severity": "major",
+      "jobs": [
+        "recover_from_invalid_input",
+        "explain_failure_next_to_cause"
+      ],
+      "do_not_claim": "Toast/Message auto-dismiss timings as this inline row."
+    },
+    {
+      "id": "ant.prefer-undo-or-popconfirm-over-modal",
+      "category": "Actions",
+      "segment": "Confirmation",
+      "title": "prefer undo or popconfirm over modal",
+      "rule": "Prefer undo (or Popconfirm) over Modal double-confirm — delete → success + Undo (message+undo gone after one minute or on Undo). If undo is invalid, use Popconfirm next to the control. Abusing Modal drops context and blocks undo. Dual-cite Primer \"never warning when you mean undo\" / NN/g undo; Ant names Popconfirm vs Modal.",
+      "citation": {
+        "source": "Ant Design — Feedback spec",
+        "url": "https://ant.design/docs/spec/feedback"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Delete uses success + Undo (gone after one minute or on Undo), or Popconfirm next to the control when undo is invalid — not a blocking Modal when undo would work."
+      ],
+      "fail_when": [
+        "Modal double-confirm used where undo is valid; or no undo/Popconfirm on that delete."
+      ],
+      "severity": "major",
+      "jobs": [
+        "disable_or_confirm_destructive"
+      ],
+      "do_not_claim": "Deleting `actions.confirm.serious_or_undo`; a house one-minute as law outside this cite. Overlap with Actions 40: `actions.confirm.serious_or_undo`. Overlap with extra 73: `nng.support-undo-discoverable`."
+    },
+    {
+      "id": "ant.message-not-for-important-failures",
+      "category": "Feedback",
+      "segment": "Message",
+      "title": "message not for important failures",
+      "rule": "Message is not for important failures — Ant Message = top-centered, auto-dismiss (default 3s), non-blocking. Important failure → dialog with the reason. Do not use a lightweight prompt for important failure.",
+      "citation": {
+        "source": "Ant Design — Feedback spec",
+        "url": "https://ant.design/docs/spec/feedback"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Important failure uses a dialog with the reason. Lightweight Message is not used for that failure."
+      ],
+      "fail_when": [
+        "Important failure only as a 3s top Message."
+      ],
+      "severity": "major",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "do_not_claim": "Spectrum toast ≥5s as a house winner over 3s; WCAG interruptions."
+    },
+    {
+      "id": "ant.dialog-feedback-only-important-actionable",
+      "category": "Feedback",
+      "segment": "Dialog",
+      "title": "dialog feedback only important actionable",
+      "rule": "Dialog feedback only for important, actionable information — centered, confirm/cancel to close, blocks other work. Avoid unnecessary reminders except failure. Dual-cite NN/g modal 7; Ant is the feedback-routing sentence.",
+      "citation": {
+        "source": "Ant Design — Feedback spec",
+        "url": "https://ant.design/docs/spec/feedback"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Blocking dialog is used for important actionable information / failure, not unnecessary reminders."
+      ],
+      "fail_when": [
+        "Blocking dialog for a non-important reminder, or important actionable failure with no dialog when this routing applies."
+      ],
+      "severity": "major",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "do_not_claim": "Deleting `nng.modal-and-nonmodal-dialogs`; Spectrum toast-vs-dialog as a merge."
+    },
+    {
+      "id": "ant.hover-detail-overlay-timing",
+      "category": "Feedback",
+      "segment": "Overlay",
+      "title": "hover detail overlay timing",
+      "rule": "Hover detail overlay timing — 0.5 s delay on mouseover; close immediately on mouse-out.",
+      "citation": {
+        "source": "Ant Design — Stay on the Page",
+        "url": "https://ant.design/docs/spec/stay"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Detail overlay appears after 0.5 s hover; closes immediately on mouse-out."
+      ],
+      "fail_when": [
+        "Instant open, delayed close, or no 0.5 s delay."
+      ],
+      "severity": "major",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "do_not_claim": "Click-outside input overlay (next row)."
+    },
+    {
+      "id": "ant.input-overlay-click-outside-preserves",
+      "category": "Forms",
+      "segment": "Overlay",
+      "title": "input overlay click outside preserves",
+      "rule": "Input overlay: click outside preserves and closes.",
+      "citation": {
+        "source": "Ant Design — Stay on the Page",
+        "url": "https://ant.design/docs/spec/stay"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Clicking outside an input overlay closes it and preserves the input."
+      ],
+      "fail_when": [
+        "Click outside discards the input, or does not close."
+      ],
+      "severity": "major",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "do_not_claim": "Modal confirm Cancel-discards (MUI) as this overlay row."
+    },
+    {
+      "id": "ant.form-in-modal-lifecycle",
+      "category": "Forms",
+      "segment": "Modal",
+      "title": "form in modal lifecycle",
+      "rule": "Form-in-Modal lifecycle — list-page \"create\" may popup a form in Modal. `destroyOnHidden` does not clear Form fields — call `resetFields`. `useForm` before open is disconnected unless `forceRender` (or equivalent). Prefer native submit; if the submit control is outside the Form (Modal footer), call `form.submit`.",
+      "citation": {
+        "source": "Ant Design — Form ; Ant Design — Modal",
+        "url": "https://ant.design/components/form"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Reopened create-modal form is reset (`resetFields`); form instance is connected when opened; footer submit still submits the Form (`form.submit` if outside)."
+      ],
+      "fail_when": [
+        "Stale fields after close (`destroyOnHidden` treated as reset); disconnected `useForm` without force-render; footer button that does not submit the Form."
+      ],
+      "severity": "major",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "do_not_claim": "API-table props beyond these named lifecycle facts; Polar \"don't use modals for complex forms\" as a winner."
+    }
+  ],
+  "jobs": [
+    "pick_primary_action",
+    "disable_or_confirm_destructive",
+    "name_a_control",
+    "choose_control_for_choice",
+    "group_related_inputs",
+    "recover_from_invalid_input",
+    "explain_failure_next_to_cause",
+    "announce_system_status",
+    "use_familiar_control"
+  ],
+  "patterns": []
+}
