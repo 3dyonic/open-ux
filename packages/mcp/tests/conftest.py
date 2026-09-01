@@ -31,6 +31,8 @@ def tmp_env(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
     monkeypatch.setenv("OPEN_UX_TELEMETRY", "1")
     monkeypatch.setenv("OPEN_UX_HOSTED", "1")
     monkeypatch.setenv("OPEN_UX_PEPPER", "test-pepper")
+    monkeypatch.setenv("OPEN_UX_ADMIN_TOKEN", "test-admin-token")
+    monkeypatch.setenv("OPEN_UX_PUBLIC_URL", "https://open-ux.test")
     reset_store_for_tests()
     yield tmp_path
     reset_store_for_tests()

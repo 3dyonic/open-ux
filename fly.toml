@@ -1,5 +1,5 @@
 # Open UX — Fly.io
-# Deploy: fly launch --no-deploy && fly volumes create open_ux_data --size 1 && fly secrets set OPEN_UX_PEPPER=... && fly deploy
+# Deploy: fly launch --no-deploy && fly volumes create open_ux_data --size 1 && fly secrets set OPEN_UX_PEPPER=... OPEN_UX_ADMIN_TOKEN=... && fly deploy
 # Then set OPEN_UX_PUBLIC_URL to the assigned https URL.
 
 app = "open-ux"

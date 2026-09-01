@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from pathlib import Path
 
-import pytest
 from starlette.testclient import TestClient
 
 from open_ux.auth import register
@@ -23,36 +22,29 @@ def test_mcp_unauthorized_without_key(tmp_env: Path) -> None:
         assert response.status_code == 401
 
 
-def test_register_issues_uxmcp_key(tmp_env: Path) -> None:
+def test_redeemed_key_authorizes_mcp(tmp_env: Path) -> None:
     with _hosted_client(tmp_env) as client:
-        page = client.get("/register")
-        assert page.status_code == 200
-        assert "text/html" in page.headers.get("content-type", "")
-        assert ">Get a key</p>" in page.text
-
-        response = client.post("/register", json={"email": "ada@example.com"})
-        assert response.status_code == 200
-        data = response.json()
-        assert data["key"].startswith("uxmcp_")
-        assert data["email"] == "ada@example.com"
-
-        denied = client.post("/mcp", json={})
-        assert denied.status_code == 401
-
+        client.post("/invite/request", json={"email": "ada@example.com"})
+        approved = client.post(
+            "/admin/invite/approve",
+            headers={"Authorization": "Bearer test-admin-token"},
+            json={"email": "ada@example.com"},
+        )
+        token = approved.json()["token"]
+        minted = client.post("/invite/redeem", json={"token": token})
+        key = minted.json()["key"]
         allowed = client.post(
             "/mcp",
-            headers={"Authorization": f"Bearer {data['key']}"},
+            headers={"Authorization": f"Bearer {key}"},
             json={},
         )
         assert allowed.status_code != 401
 
 
-def test_self_host_has_no_register(tmp_env: Path) -> None:
+def test_self_host_mcp_open_without_key(tmp_env: Path) -> None:
     mcp = create_mcp(hosted=False)
     app = mcp.http_app(path="/mcp", stateless_http=True, transport="http")
     with TestClient(app) as client:
-        response = client.post("/register", json={"email": "ada@example.com"})
-        assert response.status_code == 400
         open_mcp = client.post("/mcp", json={})
         assert open_mcp.status_code != 401
 

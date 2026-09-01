@@ -51,13 +51,16 @@ def test_landing_has_figma_sections_and_register_cta(tmp_env: Path) -> None:
 
     assert html.count('href="https://github.com/3dyonic/open-ux"') >= 2
     assert 'id="get-key"' in html
-    assert 'href="/register"' in html
+    assert 'href="/invite"' in html
+    assert 'href="/register"' not in html
     assert "location.hash === '#register'" in html
+    assert "location.replace('/invite')" in html
     assert 'id="reg"' not in html
     assert '<button type="submit">Register</button>' not in html
     assert "Install path:" not in html
     assert "The key is shown once." not in html
     assert "fetch('/register'" not in html
+    assert "fetch('/invite/request'" not in html
 
     assert "--bg: #f6f8fa" in html
     assert "--paper: #ffffff" in html
@@ -71,11 +74,11 @@ def test_landing_has_figma_sections_and_register_cta(tmp_env: Path) -> None:
     assert "--success-bg: #dafbe1" in html
 
 
-def test_register_page_matches_get_a_key_figma(tmp_env: Path) -> None:
+def test_invite_request_page_matches_figma(tmp_env: Path) -> None:
     mcp = create_mcp(hosted=True)
     app = mcp.http_app(path="/mcp", stateless_http=True, transport="http")
     with TestClient(app) as client:
-        html = client.get("/register").text
+        html = client.get("/invite").text
 
     assert "MCP" not in html.split("<title>", 1)[1].split("</title>", 1)[0]
     assert "@media" not in html
@@ -87,29 +90,19 @@ def test_register_page_matches_get_a_key_figma(tmp_env: Path) -> None:
     assert ">GitHub</a>" in html
     assert 'href="https://github.com/3dyonic/open-ux"' in html
 
-    assert ">Get a key</p>" in html
-    assert "Email in → API key out. One shared catalog; registration only gates who may call." in html
+    assert ">Request invite</p>" in html
+    assert "Join the waitlist. We’ll email a one-time invite when approved." in html
     assert '<label for="email">Email</label>' in html
     assert 'placeholder="you@company.com"' in html
-    assert '<button class="btn btn-primary" type="submit">Get a key</button>' in html
-    assert "No marketing mail — this only mints your uxmcp_ key." in html
-
-    assert ">Your key</p>" in html
-    assert "Save this key — we won’t show it again in full." in html
-    assert "uxmcp_••••••••••••••••" in html
-    assert ">Copy key</button>" in html
-    assert ">Back to home</a>" in html
-    assert 'href="/"' in html
-    assert "Point your client at /mcp with this bearer key." in html
-
-    assert 'id="register"' in html
-    assert 'id="reg"' in html
-    assert 'id="email"' in html
-    assert "Enter a valid email so we can mint your key." in html
+    assert '<button class="btn btn-primary" type="submit">Request invite</button>' in html
+    assert "No key yet — approval issues a one-time invite link." in html
+    assert "Enter a valid email to request an invite." in html
+    assert "We couldn’t add you to the waitlist. Check the email and try again." in html
     assert "input.is-invalid" in html
     assert "--danger: #cf222e" in html
-    assert "fetch('/register'" in html
-    assert "navigator.clipboard.writeText(issuedKey)" in html
+    assert 'fetch("/invite/request"' in html
+    assert "Get a key" not in html
+    assert "Email in → API key out" not in html
 
     assert "--bg: #f6f8fa" in html
     assert "--paper: #ffffff" in html
@@ -120,6 +113,44 @@ def test_register_page_matches_get_a_key_figma(tmp_env: Path) -> None:
     assert "--accent-bg: #ddf4ff" in html
     assert "--radius: 6px" in html
 
+
+def test_invite_requested_page_matches_figma(tmp_env: Path) -> None:
+    mcp = create_mcp(hosted=True)
+    app = mcp.http_app(path="/mcp", stateless_http=True, transport="http")
+    with TestClient(app) as client:
+        html = client.get("/invite/requested").text
+
+    assert ">You’re on the list</p>" in html
+    assert "Thanks — we’ll email a one-time invite when your request is approved." in html
+    assert "Already have an invite? Open the link from your email to redeem." in html
+    assert 'class="logo-mark"' in html
+
+
+def test_invite_redeem_page_matches_figma(tmp_env: Path) -> None:
+    mcp = create_mcp(hosted=True)
+    app = mcp.http_app(path="/mcp", stateless_http=True, transport="http")
+    with TestClient(app) as client:
+        html = client.get("/invite/redeem").text
+
+    assert ">Redeem invite</p>" in html
+    assert "Paste your invite token, or open the link from your email." in html
+    assert '<label for="token">Invite token</label>' in html
+    assert 'placeholder="inv_••••••••••••"' in html
+    assert '<button class="btn btn-primary" type="submit">Redeem</button>' in html
+    assert "Redeeming burns the invite and mints your uxmcp_ key once." in html
+    assert "Invite invalid or already used. Request a new one if needed." in html
+    assert "This invite isn’t valid. It may be used, expired, or mistyped." in html
+
+    assert ">Your key</p>" in html
+    assert "Invite redeemed. Copy your key — we won’t show it in full again." in html
+    assert "uxmcp_••••••••••••••••" in html
+    assert ">Copy</button>" in html
+    assert "Copy key" not in html
+    assert "Back to home" not in html
+    assert "Use as bearer on /mcp. Self-host stdio needs no auth." in html
+    assert 'fetch("/invite/redeem"' in html
+    assert "navigator.clipboard.writeText(issuedKey)" in html
+    assert "--accent-bg: #ddf4ff" in html
 
 
 def test_plugin_title_is_open_ux() -> None:
