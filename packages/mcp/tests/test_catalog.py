@@ -35,6 +35,7 @@ JOBS_15 = {
 }
 EXTRA_PREFIXES = ("govuk.", "nng.", "fluent.", "polar.")
 HARVEST3_PREFIXES = ("spectrum.", "ant.", "mui.")
+HARVEST4_PREFIXES = ("uswds.", "canada.", "nsw.")
 INVENTED_FIELDS = {"when_to_use", "when_not", "when-to-use", "when-not"}
 
 
@@ -62,7 +63,7 @@ def test_hard_size_ceiling(tmp_env: Path, catalog_dir: Path) -> None:
         load_catalog(Settings.load(hosted=True))
 
 
-def test_lanes_load_40_actions_54_forms_extra_73_and_harvest3_56(
+def test_lanes_load_40_actions_54_forms_extra_73_harvest3_56_harvest4_46(
     live_catalog: Path,
 ) -> None:
     catalog = load_catalog(Settings.load(hosted=True))
@@ -71,14 +72,16 @@ def test_lanes_load_40_actions_54_forms_extra_73_and_harvest3_56(
     form_ids = [i for i in ids if i.startswith("forms.")]
     extra_ids = [i for i in ids if i.startswith(EXTRA_PREFIXES)]
     harvest3_ids = [i for i in ids if i.startswith(HARVEST3_PREFIXES)]
+    harvest4_ids = [i for i in ids if i.startswith(HARVEST4_PREFIXES)]
     assert len(action_ids) == 40
     assert len(form_ids) == 54
     assert len(extra_ids) == 73
     assert len(harvest3_ids) == 56
-    assert len(ids) == 223
+    assert len(harvest4_ids) == 46
+    assert len(ids) == 269
     assert set(ids) == set(action_ids) | set(form_ids) | set(extra_ids) | set(
         harvest3_ids
-    )
+    ) | set(harvest4_ids)
     for seed in LIVE_SEED:
         assert seed in form_ids
     assert form_ids[:3] == list(LIVE_SEED)
@@ -91,7 +94,7 @@ def test_lanes_load_40_actions_54_forms_extra_73_and_harvest3_56(
         assert by_id[gid]["jobs"] == ["forms"]
         assert "do_not_claim" not in by_id[gid]
         assert INVENTED_FIELDS.isdisjoint(by_id[gid])
-    for gid in extra_ids + harvest3_ids:
+    for gid in extra_ids + harvest3_ids + harvest4_ids:
         jobs = by_id[gid]["jobs"]
         assert jobs
         assert set(jobs) <= JOBS_15
@@ -109,11 +112,13 @@ def test_lanes_load_40_actions_54_forms_extra_73_and_harvest3_56(
 def test_on_disk_index_has_no_rule_bodies(live_catalog: Path) -> None:
     data = json.loads((live_catalog / "index.json").read_text(encoding="utf-8"))
     rows = data["guidelines"]
-    assert len(rows) == 223
+    assert len(rows) == 269
     extra_ids = [row["id"] for row in rows if row["id"].startswith(EXTRA_PREFIXES)]
     harvest3_ids = [row["id"] for row in rows if row["id"].startswith(HARVEST3_PREFIXES)]
+    harvest4_ids = [row["id"] for row in rows if row["id"].startswith(HARVEST4_PREFIXES)]
     assert len(extra_ids) == 73
     assert len(harvest3_ids) == 56
+    assert len(harvest4_ids) == 46
     for row in rows:
         assert set(row) == INDEX_KEYS
         assert BODY_KEYS.isdisjoint(row)

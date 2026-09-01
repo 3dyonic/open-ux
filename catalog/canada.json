@@ -1,0 +1,427 @@
+{
+  "version": "0.1.0",
+  "guidelines": [
+    {
+      "id": "canada.equivalent-content-both-official-languages",
+      "category": "Content",
+      "segment": "Language",
+      "title": "equivalent content both official languages",
+      "rule": "Equivalent content in both official languages — professionally translated; Canadian EN/FR conventions; bilingual images, multimedia and transcripts (or equivalent information in both languages). Not a “summary in the other language.” Dual-cite USWDS language selector (full equivalent translations) vs Canada Official-Language keep-place toggle — two jobs; this row is content equivalence, not the toggle control.",
+      "citation": {
+        "source": "Canada.ca — Designing content; Designing content for Canada.ca",
+        "url": "https://design.canada.ca/specifications/design-content.html"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "EN and FR are equivalent professional translations, including media/transcripts or equivalent information."
+      ],
+      "fail_when": [
+        "Other language is only a summary, or media exists in one official language only with no equivalent."
+      ],
+      "severity": "major",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "do_not_claim": "Keep-place language toggle as this row; USWDS 2-vs-3+ selector as this row."
+    },
+    {
+      "id": "canada.four-writing-qualities",
+      "category": "Content",
+      "segment": "Voice",
+      "title": "four writing qualities",
+      "rule": "Four writing qualities: intuitive / comprehensive / targeted / consistent — just enough for a first-time user to finish alone; enough depth for specialists; most important first (don’t dump every option); standardized so people can scan with trust.",
+      "citation": {
+        "source": "Canada.ca — Designing content; Designing content for Canada.ca",
+        "url": "https://design.canada.ca/specifications/design-content.html"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Copy lets a first-time user finish, keeps specialist depth, leads with the important, and stays consistent for scanning."
+      ],
+      "fail_when": [
+        "Every option dumped up front; first-time user cannot finish alone; inconsistent patterns that block scanning."
+      ],
+      "severity": "major",
+      "jobs": [
+        "tone_of_voice_for_failure"
+      ],
+      "do_not_claim": "Inverted pyramid (next row) as this qualities list."
+    },
+    {
+      "id": "canada.inverted-pyramid-no-welcome-filler",
+      "category": "Content",
+      "segment": "Structure",
+      "title": "inverted pyramid no welcome filler",
+      "rule": "Inverted pyramid; no welcome-message filler. Most important idea/step first; then prioritized tasks; extra detail last and only if it supports the task. Stay on topic; no “welcome to our site” or background for its own sake.",
+      "citation": {
+        "source": "Canada.ca — Designing content; Content Style Guide",
+        "url": "https://design.canada.ca/specifications/design-content.html"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Lead is the main idea/step; extra detail is last and task-supporting; no welcome/background filler."
+      ],
+      "fail_when": [
+        "Welcome-to-our-site opener, or background before the task."
+      ],
+      "severity": "major",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "do_not_claim": "Four writing qualities as this structure row."
+    },
+    {
+      "id": "canada.you-your-never-i-my",
+      "category": "Content",
+      "segment": "Voice",
+      "title": "you your never i my",
+      "rule": "You/your; never I/my; we = Government of Canada. Second person in titles, links, nav (“Replace your card”). Don’t switch to speaking as the user. “My” only in proper names (My Service Canada Account). Name a specific institution only when that institution will contact / be contacted, or its role matters to the task.",
+      "citation": {
+        "source": "Canada.ca — Content Style Guide",
+        "url": "https://design.canada.ca/style-guide/index.html"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Titles/links/nav use you/your; we is GC; “My” only in proper names; institutions named only when they matter to the task."
+      ],
+      "fail_when": [
+        "I/my in UI chrome; speaking as the user; a specific institution named with no task reason."
+      ],
+      "severity": "major",
+      "jobs": [
+        "tone_of_voice_for_failure"
+      ],
+      "do_not_claim": "Contact patterns (banned lane)."
+    },
+    {
+      "id": "canada.must-need-may-might",
+      "category": "Content",
+      "segment": "Voice",
+      "title": "must need may might",
+      "rule": "must (law) vs need to (admin) vs may/might (permission) — not “legally required to.” Don’t use can/could for permission (those mean ability).",
+      "citation": {
+        "source": "Canada.ca — Content Style Guide",
+        "url": "https://design.canada.ca/style-guide/index.html"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Legal obligation = must; admin = need to; permission = may/might."
+      ],
+      "fail_when": [
+        "“Legally required to”; can/could used for permission."
+      ],
+      "severity": "major",
+      "jobs": [
+        "tone_of_voice_for_failure"
+      ],
+      "do_not_claim": "WCAG “must” as this wording row."
+    },
+    {
+      "id": "canada.no-eg-ie-spell-out-and",
+      "category": "Content",
+      "segment": "Style",
+      "title": "no eg ie spell out and",
+      "rule": "No e.g. / i.e.; spell out “and.” Use “for example” / “that is.” Ampersand only in proper names and set abbreviations (R&D, O&M). Latin abbreviations only when space is tight (tables).",
+      "citation": {
+        "source": "Canada.ca — Content Style Guide",
+        "url": "https://design.canada.ca/style-guide/index.html"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Prose uses “for example” / “that is” and “and”; & only in proper names/set abbreviations."
+      ],
+      "fail_when": [
+        "e.g. / i.e. in prose, or & used as “and” outside names/abbreviations."
+      ],
+      "severity": "major",
+      "jobs": [
+        "tone_of_voice_for_failure"
+      ],
+      "do_not_claim": "Underline/italics (next row)."
+    },
+    {
+      "id": "canada.underline-links-only-no-italics-emphasis",
+      "category": "Content",
+      "segment": "Typography",
+      "title": "underline links only no italics emphasis",
+      "rule": "Underline = links only; no italics for emphasis — italics are hard for dyslexia; use bold sparingly. Don’t combine underline+bold except the topic-page hyperlink style.",
+      "citation": {
+        "source": "Canada.ca — Content Style Guide; Typography",
+        "url": "https://design.canada.ca/style-guide/index.html"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Underline is only for links; emphasis is not italics; underline+bold only on the named topic-page hyperlink style."
+      ],
+      "fail_when": [
+        "Underlined non-links; italics used for emphasis; underline+bold on ordinary text."
+      ],
+      "severity": "major",
+      "jobs": [
+        "tone_of_voice_for_failure"
+      ],
+      "do_not_claim": "WCAG contrast; hit targets."
+    },
+    {
+      "id": "canada.unique-title-one-h1-heading-every-200-words",
+      "category": "Content",
+      "segment": "Headings",
+      "title": "unique title one h1 heading every 200 words",
+      "rule": "Unique page title; one H1; a heading about every 200 words. Title makes sense alone, keywords first, no trailing punctuation, no boast copy. Publication/program titles are usually bad web titles. Heading 1 once.",
+      "citation": {
+        "source": "Canada.ca — Content Style Guide",
+        "url": "https://design.canada.ca/style-guide/index.html"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Unique title (keywords first, no trailing punctuation/boast); exactly one H1; headings break long copy (~every 200 words)."
+      ],
+      "fail_when": [
+        "Duplicate/boast title; multiple H1s; long unheaded slabs."
+      ],
+      "severity": "major",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "do_not_claim": "Doormat heading character caps as this row."
+    },
+    {
+      "id": "canada.lists-max-7-or-split",
+      "category": "Content",
+      "segment": "Lists",
+      "title": "lists max 7 or split",
+      "rule": "Lists ≤7 items, or split by category. One idea per bullet; consistent grammar; numbered only for rank/order/steps. Lead-in must apply to every item (“all of” vs “one or more”).",
+      "citation": {
+        "source": "Canada.ca — Content Style Guide",
+        "url": "https://design.canada.ca/style-guide/index.html"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "A list is ≤7 or split by category; numbered only for rank/order/steps; lead-in applies to every item."
+      ],
+      "fail_when": [
+        "8+ undifferentiated items; numbered list with no order; lead-in that does not apply to every item."
+      ],
+      "severity": "major",
+      "jobs": [
+        "group_related_inputs"
+      ],
+      "do_not_claim": "A house choice-cutoff for radios/selects."
+    },
+    {
+      "id": "canada.tables-no-blank-cells",
+      "category": "Content",
+      "segment": "Tables",
+      "title": "tables no blank cells",
+      "rule": "Tables: no blank cells; split complex tables. Every column/row has a header; cell value relates to both. If empty: notes/legend or “no data” / “0” / “n/a” — never a silent blank. Convert simple data to a list; never nested subheads inside a column.",
+      "citation": {
+        "source": "Canada.ca — Content Style Guide",
+        "url": "https://design.canada.ca/style-guide/index.html"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Headers on rows/columns; empty values are named (“no data” / “0” / “n/a” / legend); simple data is a list; no nested subheads in a column."
+      ],
+      "fail_when": [
+        "Silent blank cells; missing headers; nested subheads in a column."
+      ],
+      "severity": "major",
+      "jobs": [
+        "group_related_inputs"
+      ],
+      "do_not_claim": "NSW chart data-table anatomy as this row."
+    },
+    {
+      "id": "canada.functional-alt-140-decorative-empty",
+      "category": "Content",
+      "segment": "Images",
+      "title": "functional alt 140 decorative empty",
+      "rule": "Functional alt ≈140 characters; decorative `alt=\"\"`; long description if more. Describe as if on the phone; don’t write “image of…”. If equivalent explanation already sits next to the figure, skip the long desc. Transcripts for pre-recorded audio/video (dialogue, on-screen text, important sound/action).",
+      "citation": {
+        "source": "Canada.ca — Content Style Guide",
+        "url": "https://design.canada.ca/style-guide/index.html"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Functional images have concise alt (about 140 characters, not “image of”); decorative `alt=\"\"`; longer meaning has a long desc unless equivalent text is already beside the figure; pre-recorded AV has a transcript."
+      ],
+      "fail_when": [
+        "Missing alt; “image of…” filler; decorative images with long alt; no transcript for pre-recorded AV that needs one."
+      ],
+      "severity": "major",
+      "jobs": [
+        "name_a_control"
+      ],
+      "do_not_claim": "WCAG SC numbers as this row."
+    },
+    {
+      "id": "canada.no-click-here-same-text-same-destination",
+      "category": "Content",
+      "segment": "Links",
+      "title": "no click here same text same destination",
+      "rule": "No “click here” / “read more”; same text → same destination. Unique descriptive text per distinct URL; same words when two links go to the same page. Don’t bury the task-critical link mid-paragraph. Downloads: file type + size in parentheses inside the link. Other-language / duration likewise in parentheses inside the link.",
+      "citation": {
+        "source": "Canada.ca — Content Style Guide",
+        "url": "https://design.canada.ca/style-guide/index.html"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Link text describes the destination; identical text shares a destination; file type/size (and other-language/duration) sit inside the link; task-critical links are not buried mid-paragraph."
+      ],
+      "fail_when": [
+        "“Click here” / “read more”; same text to different URLs; type/size only outside the link."
+      ],
+      "severity": "major",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "do_not_claim": "Intranet parenthetical (next row) as this."
+    },
+    {
+      "id": "canada.intranet-destinations-labelled",
+      "category": "Content",
+      "segment": "Links",
+      "title": "intranet destinations labelled",
+      "rule": "Intranet destinations: “(accessible only on the Government of Canada network)” — public pages must not silently link behind the GC network. (Not a contact pattern.)",
+      "citation": {
+        "source": "Canada.ca — Content Style Guide",
+        "url": "https://design.canada.ca/style-guide/index.html"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Public-page links to GC-network-only destinations include that parenthetical."
+      ],
+      "fail_when": [
+        "A public page silently links behind the GC network."
+      ],
+      "severity": "major",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "do_not_claim": "Contact-centre patterns."
+    },
+    {
+      "id": "canada.find-understand-use-nonpriority-must-not-block",
+      "category": "Content",
+      "segment": "IA",
+      "title": "find understand use nonpriority must not block",
+      "rule": "Find / understand / use; non-priority must not block findability. Every design decision is judged on those three. Group the same public topic across departments; remove duplicate content. Do not publish what GC is not the authoritative source for — link out instead.",
+      "citation": {
+        "source": "Canada.ca — Designing content; Designing content for Canada.ca",
+        "url": "https://design.canada.ca/specifications/design-content.html"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Non-priority content does not hide the findable task; duplicate public topics are grouped/removed; non-authoritative material is a link out."
+      ],
+      "fail_when": [
+        "Extra non-priority blocks findability; duplicate departmental pages for the same public topic; GC publishes what it is not the source for."
+      ],
+      "severity": "major",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "do_not_claim": "Doormat counts as this row."
+    },
+    {
+      "id": "canada.no-separate-mobile-site",
+      "category": "Wayfinding",
+      "segment": "Responsive",
+      "title": "no separate mobile site",
+      "rule": "No separate mobile site — same content on phone and desktop; IA as flat as possible; in-page navigation over menus; limit page weight. Dual-cite USWDS continuity / mobile-friendly without a second origin and Wayfinding Jump to Item (do not merge with USWDS tab-before-main / never-link-externally in-page row).",
+      "citation": {
+        "source": "Canada.ca — Designing content",
+        "url": "https://design.canada.ca/specifications/design-content.html"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Phone and desktop share the same content origin; IA is flat; in-page nav is preferred over extra menus."
+      ],
+      "fail_when": [
+        "A separate mobile origin/site, or a second menu instead of in-page nav on a long page."
+      ],
+      "severity": "major",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "do_not_claim": "USWDS in-page tab-before-main geometry as this row."
+    },
+    {
+      "id": "canada.doormats-max-9",
+      "category": "Wayfinding",
+      "segment": "Doormats",
+      "title": "doormats max 9",
+      "rule": "Doormats: ≤9; heading 45 (max 75); description 120 keywords. Linked heading, no end punctuation. Descriptions = comma-separated keywords, not full sentences; no “Includes… / Information on… / Learn more about…”; no nested links, promo, bold, or bullets; no decorative icons. Don’t repeat Most-requested links. Semantic h2 “Services and information” may be visually hidden. Single-column when sequential tasks or heights would gap.",
+      "citation": {
+        "source": "Canada.ca — Doormats (services and information)",
+        "url": "https://design.canada.ca/common-design-patterns/services-information"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "≤9 doormats; heading/description within those lengths; keyword descriptions; no nested links/promo/bold/bullets/decorative icons; no Most-requested repeats."
+      ],
+      "fail_when": [
+        "10+ doormats; sentence descriptions with “Learn more about…”; nested links or decorative icons; Most-requested duplicated."
+      ],
+      "severity": "major",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "do_not_claim": "Lists ≤7 as this doormat cap."
+    },
+    {
+      "id": "canada.interactive-questions-max-7-same-place",
+      "category": "Forms",
+      "segment": "Interactive questions",
+      "title": "interactive questions max 7 same place",
+      "rule": "Interactive questions: ≤7; one at a time in the same place. Written to “you”; choices immediately under the question as answers; Continue/context-specific button (not “Next” if the page already has Next in multi-page nav); always a way back (“change your selection”). Dual-cite GOV.UK one-question-per-page (Canada keeps subsequent questions on the same page in the same slot). Pre-select most-common vs GOV.UK do-not-preselect is not a NEW row.",
+      "citation": {
+        "source": "Canada.ca — Interactive questions",
+        "url": "https://design.canada.ca/common-design-patterns/interactive-questions"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "≤7 questions, one visible at a time in the same slot; you-voice; choices as answers under the question; Continue is not a conflicting “Next”; a way back exists."
+      ],
+      "fail_when": [
+        "Many questions shown at once; “Next” clashes with page Next; no way to change a selection."
+      ],
+      "severity": "major",
+      "jobs": [
+        "group_related_inputs"
+      ],
+      "do_not_claim": "A winner vs GOV.UK one-question-per-page; a NEW pre-select rule."
+    },
+    {
+      "id": "canada.supertask-once-never-promo",
+      "category": "Actions",
+      "segment": "Buttons",
+      "title": "supertask once never promo",
+      "rule": "Supertask button once; never for promo; link-style button for rare actions. Supertask launches the page’s main task (apply / calculator / wizard). Not for promotion (use feature patterns). Primary still ≤1 per page (dual-cite Actions). Link buttons = infrequent (restart calculator) with a larger hit area than a text link. Danger only when consequences are real.",
+      "citation": {
+        "source": "Canada.ca — Buttons",
+        "url": "https://design.canada.ca/common-design-patterns/buttons.html"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "At most one supertask; it starts the main task; not used for promo; ≤1 primary; link-style only for rare actions with a larger hit area; danger only for real consequences."
+      ],
+      "fail_when": [
+        "Two supertasks; supertask used as promo; two primaries; danger used without real consequences."
+      ],
+      "severity": "major",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "do_not_claim": "A second primary class that beats Actions one-primary."
+    }
+  ],
+  "jobs": [
+    "wayfind_after_nav",
+    "tone_of_voice_for_failure",
+    "group_related_inputs",
+    "name_a_control",
+    "pick_primary_action"
+  ],
+  "patterns": []
+}

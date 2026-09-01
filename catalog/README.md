@@ -6,6 +6,7 @@ One shared cited catalog, split by lane:
 - `forms.json` — 54 Forms guidelines (UNS-66 craft-pass; first three are the LIVE seed)
 - `govuk.json` / `nng.json` / `fluent.json` / `polar.json` — extra harvest 73 (GOV.UK 22 + NN/g 28 + Fluent 11 + Polar 12)
 - `spectrum.json` / `ant.json` / `mui.json` — extra harvest 3 (Spectrum 25 + Ant 23 + MUI 8)
+- `uswds.json` / `canada.json` / `nsw.json` — extra harvest 4 (USWDS 15 + Canada 18 + NSW 13)
 - `index.json` — all lanes, `{id,title,jobs,lane}` only (no rule bodies)
 - `schema.json` — guideline document shape
 

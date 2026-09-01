@@ -1,0 +1,360 @@
+{
+  "version": "0.1.0",
+  "guidelines": [
+    {
+      "id": "uswds.filled-next-outline-this-page",
+      "category": "Actions",
+      "segment": "Buttons",
+      "title": "filled next outline this page",
+      "rule": "Standard (filled) for actions that go to a next step. Outline for actions that happen on the current page. Unstyled only for less important actions that may look like links.",
+      "citation": {
+        "source": "USWDS — Button",
+        "url": "https://designsystem.digital.gov/components/button/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Next-step actions are filled; same-page actions are outline; unstyled is only for less important link-like actions."
+      ],
+      "fail_when": [
+        "Filled used for a same-page action, outline used as the next-step control, or unstyled used as the primary next step."
+      ],
+      "severity": "major",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "do_not_claim": "Actions one-primary / distinctive-primary as this row."
+    },
+    {
+      "id": "uswds.real-button-with-type-space-vs-enter",
+      "category": "Actions",
+      "segment": "Buttons",
+      "title": "real button with type space vs enter",
+      "rule": "Use a real `<button>` with `type` set (`submit` / `button` / `reset`; default is submit). Do not use `<a>` or `<div>` as the only control. Space triggers a button; Enter triggers a link — do not style links as buttons without that difference.",
+      "citation": {
+        "source": "USWDS — Button",
+        "url": "https://designsystem.digital.gov/components/button/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "The control is `<button>` with an explicit `type`. Links are not styled as the only button control."
+      ],
+      "fail_when": [
+        "`<a>` or `<div>` is the only control, or `type` is omitted on a non-submit button so it submits."
+      ],
+      "severity": "major",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "do_not_claim": "Hit-target size; one-primary."
+    },
+    {
+      "id": "uswds.dont-split-phone-ssn-card",
+      "category": "Forms",
+      "segment": "Text input",
+      "title": "dont split phone ssn card",
+      "rule": "Do not split phone, SSN, or credit-card numbers into separate fields. One input; segmented fields force meaningless labels for AT. Distinct from GOV.UK three-field dates.",
+      "citation": {
+        "source": "USWDS — Text input; Form templates",
+        "url": "https://designsystem.digital.gov/components/text-input/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Phone, SSN, and card number are each one field."
+      ],
+      "fail_when": [
+        "Those numbers are split across multiple fields."
+      ],
+      "severity": "major",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "do_not_claim": "Memorable date three fields as this row; input-mask (skipped as NN/g)."
+    },
+    {
+      "id": "uswds.forms-simple-vertical-stack",
+      "category": "Forms",
+      "segment": "Layout",
+      "title": "forms simple vertical stack",
+      "rule": "Forms stay a simple vertical stack. Do not rearrange controls with CSS (AT follows HTML order). Vertical is the layout for limited-vision left-to-right scanning.",
+      "citation": {
+        "source": "USWDS — Form templates; Text input",
+        "url": "https://designsystem.digital.gov/templates/form-templates/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Controls follow source order in a vertical stack."
+      ],
+      "fail_when": [
+        "CSS reorders fields away from HTML order, or a multi-column scramble that AT does not match."
+      ],
+      "severity": "major",
+      "jobs": [
+        "group_related_inputs"
+      ],
+      "do_not_claim": "Label left vs top (Ant/Fluent lock)."
+    },
+    {
+      "id": "uswds.character-count-brevity-or-legal",
+      "category": "Forms",
+      "segment": "Character count",
+      "title": "character count brevity or legal",
+      "rule": "Character count only for brevity or a legal cap — not to paper over backend field limits (raise the limit). Skip if length is implied (phone/zip) or if well over 99% of users will never hit the cap (e.g. address at 250). Provide a non-JS backup message. Dual-cite GOV.UK raise-backend + no-maxlength-truncate vs USWDS using `maxlength` for the component. No winner on truncate.",
+      "citation": {
+        "source": "USWDS — Character count",
+        "url": "https://designsystem.digital.gov/components/character-count/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Count is shown only for brevity or a legal cap; backend limit is raised rather than used as a fake cap; implied-length and never-hit caps omit the count; a non-JS backup message exists."
+      ],
+      "fail_when": [
+        "Count papers over a short backend limit; or count on phone/zip / an address field almost nobody will hit."
+      ],
+      "severity": "major",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "do_not_claim": "A winner that bans or requires `maxlength`."
+    },
+    {
+      "id": "uswds.search-min-27-chars-persist-query",
+      "category": "Wayfinding",
+      "segment": "Search",
+      "title": "search min 27 chars persist query",
+      "rule": "Search field as wide as possible, minimum 27 characters (Romance languages ~20% longer). Preload the original terms in the results search box. Magnifying glass is enough visually if “Search” remains for AT.",
+      "citation": {
+        "source": "USWDS — Search",
+        "url": "https://designsystem.digital.gov/components/search/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Field is ≥27 characters wide; results page still shows the query; accessible name remains “Search” if the visible label is icon-only."
+      ],
+      "fail_when": [
+        "Narrower than 27 characters; query not persisted on results; icon-only with no AT name."
+      ],
+      "severity": "major",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "do_not_claim": "Placeholder-as-label; advanced search as default (next row)."
+    },
+    {
+      "id": "uswds.homepage-search-box-not-link",
+      "category": "Wayfinding",
+      "segment": "Search",
+      "title": "homepage search box not link",
+      "rule": "Home page: search box, not a search link. Advanced search is not the default (most people use one or two terms; advanced as default increases mistakes). Tiny/single-page sites may omit search.",
+      "citation": {
+        "source": "USWDS — Search",
+        "url": "https://designsystem.digital.gov/components/search/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Home offers a search field (unless the site is tiny/single-page and omits search); default search is simple, not advanced."
+      ],
+      "fail_when": [
+        "Home search is only a link to another page, or advanced search is the default."
+      ],
+      "severity": "major",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "do_not_claim": "27-character width as this row."
+    },
+    {
+      "id": "uswds.alert-first-word-is-type",
+      "category": "Feedback",
+      "segment": "Alert",
+      "title": "alert first word is type",
+      "rule": "First word is the type: Informative / Warning / Success / Error / Emergency (or a more precise first word such as “Announcement”). Heading ≤1 line. Extra detail in the body, not a second heading line. Users must not rely on colour or icon alone.",
+      "citation": {
+        "source": "USWDS — Alert",
+        "url": "https://designsystem.digital.gov/components/alert/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Heading starts with the type (or a more precise first word), stays on one line, and meaning is not colour/icon-only."
+      ],
+      "fail_when": [
+        "Type is only an icon/colour; heading wraps to a second line of detail."
+      ],
+      "severity": "major",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "do_not_claim": "Site alert (separate row); form validation."
+    },
+    {
+      "id": "uswds.alerts-dont-blame-name-next-step",
+      "category": "Feedback",
+      "segment": "Alert",
+      "title": "alerts dont blame name next step",
+      "rule": "Don’t blame the user; name the next step. Polite; include how to recover. Educational material is allowed because people will read an error that unblocks them. Don’t notify off the current goal. Destructive work → confirmation modal, not an alert.",
+      "citation": {
+        "source": "USWDS — Alert",
+        "url": "https://designsystem.digital.gov/components/alert/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Copy is polite, names recovery, stays on the current goal; destructive actions use a confirmation modal."
+      ],
+      "fail_when": [
+        "Blame-the-user copy; no next step; alert used instead of a destructive confirmation; notification unrelated to the current goal."
+      ],
+      "severity": "major",
+      "jobs": [
+        "tone_of_voice_for_failure"
+      ],
+      "do_not_claim": "Site alert stacking; Spectrum toast-vs-dialog."
+    },
+    {
+      "id": "uswds.dont-hide-then-reveal-alerts",
+      "category": "Feedback",
+      "segment": "Alert",
+      "title": "dont hide then reveal alerts",
+      "rule": "Don’t hide-then-reveal alerts in the DOM — older AT can still perceive visually hidden messages that are not currently applicable.",
+      "citation": {
+        "source": "USWDS — Alert",
+        "url": "https://designsystem.digital.gov/components/alert/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Inapplicable alerts are not left visually hidden in the DOM."
+      ],
+      "fail_when": [
+        "Alerts stay in the DOM as visually hidden until “revealed.”"
+      ],
+      "severity": "major",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "do_not_claim": "Site-alert unused-remove (`display:none`) from the first-pass catalog as this row."
+    },
+    {
+      "id": "uswds.site-alert-dont-stack-dont-panic",
+      "category": "Feedback",
+      "segment": "Site alert",
+      "title": "site alert dont stack dont panic",
+      "rule": "One full-width site alert near the top. Do not stack. Multiple messages = a list of links inside a single site alert. Positioning already gives weight; do not use heavy red/orange panic colour. Dual-cite GOV.UK notification banner and System status: sitewide static, never form validation, never stacked.",
+      "citation": {
+        "source": "USWDS — Site alert",
+        "url": "https://designsystem.digital.gov/components/site-alert/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "At most one sitewide static site alert; extra messages are links inside it; not used for form/task validation; colour is not panic-red/orange as the only weight."
+      ],
+      "fail_when": [
+        "Stacked site alerts; site alert used as field/page form validation; or panic colour as the only signal."
+      ],
+      "severity": "major",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "do_not_claim": "Page alert type-word (`uswds.alert-first-word-is-type`); live system-status toasts."
+    },
+    {
+      "id": "uswds.date-picker-when-weekday-always-type",
+      "category": "Forms",
+      "segment": "Date",
+      "title": "date picker when weekday always type",
+      "rule": "Date picker only when weekday / scheduling context helps. Always allow typing. Birthdays and other well-known dates use memorable date fields. Hint `mm/dd/yyyy`. Do not auto-submit on picking a day. Dual-cite GOV.UK three-field memorable date (no auto-tab) and USWDS month=select vs three text fields — both pass if labeled, no auto-advance, not `type=number`. Do not pick a house month control.",
+      "citation": {
+        "source": "USWDS — Date picker",
+        "url": "https://designsystem.digital.gov/components/date-picker/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Well-known dates are memorable fields (typed); picker is optional for scheduling and typing still works; no auto-submit; no auto-advance; day/year not `type=number`."
+      ],
+      "fail_when": [
+        "Birthday-only calendar with no typing; auto-submit on pick; auto-advance; `type=number` day/year."
+      ],
+      "severity": "major",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "do_not_claim": "A winner between month-select and three text fields."
+    },
+    {
+      "id": "uswds.banner-gov-mil-https-every-page",
+      "category": "Wayfinding",
+      "segment": "Official banner",
+      "title": "banner gov mil https every page",
+      "rule": "Unaltered .gov/.mil + HTTPS copy on every page, after skipnav. Only on official .gov/.mil with HTTPS; never on .com/.org or test sites. Spanish copy on Spanish sites; `.mil` copy on `.mil`. Do not leave `aria-hidden=\"true\"` on banner content in markup (JS sets it).",
+      "citation": {
+        "source": "USWDS — Banner",
+        "url": "https://designsystem.digital.gov/components/banner/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Official .gov/.mil HTTPS sites show the unaltered TLD/HTTPS banner on every page after skipnav; language/TLD copy matches the site; banner content is not `aria-hidden` in the markup."
+      ],
+      "fail_when": [
+        "Banner on .com/.org or test; customized TLD text; missing on inner pages; or `aria-hidden=\"true\"` left on banner content in markup."
+      ],
+      "severity": "major",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "do_not_claim": "This as an Open UX rule for non-government products; Canada signature / NSW hero as the same rule."
+    },
+    {
+      "id": "uswds.identifier-required-links-not-footer-dup",
+      "category": "Wayfinding",
+      "segment": "Identifier",
+      "title": "identifier required links not footer dup",
+      "rule": "Identifier holds the required federal links — don’t duplicate them in the site footer. Parent agency (highest in the hierarchy), not the product logo. Multiple parents/logos in hierarchical order, highest first. Omit identifier logo if it duplicates the footer agency mark. Entire component; no deleted required links.",
+      "citation": {
+        "source": "USWDS — Identifier",
+        "url": "https://designsystem.digital.gov/components/identifier/"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Required links live in the identifier once (not also in the footer); parent agency is highest in hierarchy; product logo is not used as the identifier mark; required links are not deleted."
+      ],
+      "fail_when": [
+        "Required links duplicated in the footer; product logo in the identifier; required links omitted."
+      ],
+      "severity": "major",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "do_not_claim": "Identifier darker-than-footer (next row) as this links rule; Canada GC signature as a merge."
+    },
+    {
+      "id": "uswds.identifier-darker-than-footer",
+      "category": "Wayfinding",
+      "segment": "Identifier",
+      "title": "identifier darker than footer",
+      "rule": "Identifier darker than the footer (grade 80+ / black). Primary or base family, darker than the preceding section, anchored at the bottom so it is not another footer stripe.",
+      "citation": {
+        "source": "USWDS — Identifier",
+        "url": "https://designsystem.digital.gov/components/identifier/"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Identifier is darker than the preceding footer section (primary/base grade 80+ or black) and sits at the bottom."
+      ],
+      "fail_when": [
+        "Identifier matches the footer stripe or sits mid-page as another footer band."
+      ],
+      "severity": "major",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "do_not_claim": "Required-links placement as this colour row."
+    }
+  ],
+  "jobs": [
+    "pick_primary_action",
+    "use_familiar_control",
+    "group_related_inputs",
+    "wayfind_after_nav",
+    "announce_system_status",
+    "tone_of_voice_for_failure",
+    "choose_control_for_choice"
+  ],
+  "patterns": []
+}
