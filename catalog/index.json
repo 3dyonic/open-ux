@@ -506,6 +506,150 @@
       "lane": "ant"
     },
     {
+      "id": "canada.equivalent-content-both-official-languages",
+      "title": "equivalent content both official languages",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "lane": "canada"
+    },
+    {
+      "id": "canada.four-writing-qualities",
+      "title": "four writing qualities",
+      "jobs": [
+        "tone_of_voice_for_failure"
+      ],
+      "lane": "canada"
+    },
+    {
+      "id": "canada.inverted-pyramid-no-welcome-filler",
+      "title": "inverted pyramid no welcome filler",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "lane": "canada"
+    },
+    {
+      "id": "canada.you-your-never-i-my",
+      "title": "you your never i my",
+      "jobs": [
+        "tone_of_voice_for_failure"
+      ],
+      "lane": "canada"
+    },
+    {
+      "id": "canada.must-need-may-might",
+      "title": "must need may might",
+      "jobs": [
+        "tone_of_voice_for_failure"
+      ],
+      "lane": "canada"
+    },
+    {
+      "id": "canada.no-eg-ie-spell-out-and",
+      "title": "no eg ie spell out and",
+      "jobs": [
+        "tone_of_voice_for_failure"
+      ],
+      "lane": "canada"
+    },
+    {
+      "id": "canada.underline-links-only-no-italics-emphasis",
+      "title": "underline links only no italics emphasis",
+      "jobs": [
+        "tone_of_voice_for_failure"
+      ],
+      "lane": "canada"
+    },
+    {
+      "id": "canada.unique-title-one-h1-heading-every-200-words",
+      "title": "unique title one h1 heading every 200 words",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "lane": "canada"
+    },
+    {
+      "id": "canada.lists-max-7-or-split",
+      "title": "lists max 7 or split",
+      "jobs": [
+        "group_related_inputs"
+      ],
+      "lane": "canada"
+    },
+    {
+      "id": "canada.tables-no-blank-cells",
+      "title": "tables no blank cells",
+      "jobs": [
+        "group_related_inputs"
+      ],
+      "lane": "canada"
+    },
+    {
+      "id": "canada.functional-alt-140-decorative-empty",
+      "title": "functional alt 140 decorative empty",
+      "jobs": [
+        "name_a_control"
+      ],
+      "lane": "canada"
+    },
+    {
+      "id": "canada.no-click-here-same-text-same-destination",
+      "title": "no click here same text same destination",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "lane": "canada"
+    },
+    {
+      "id": "canada.intranet-destinations-labelled",
+      "title": "intranet destinations labelled",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "lane": "canada"
+    },
+    {
+      "id": "canada.find-understand-use-nonpriority-must-not-block",
+      "title": "find understand use nonpriority must not block",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "lane": "canada"
+    },
+    {
+      "id": "canada.no-separate-mobile-site",
+      "title": "no separate mobile site",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "lane": "canada"
+    },
+    {
+      "id": "canada.doormats-max-9",
+      "title": "doormats max 9",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "lane": "canada"
+    },
+    {
+      "id": "canada.interactive-questions-max-7-same-place",
+      "title": "interactive questions max 7 same place",
+      "jobs": [
+        "group_related_inputs"
+      ],
+      "lane": "canada"
+    },
+    {
+      "id": "canada.supertask-once-never-promo",
+      "title": "supertask once never promo",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "lane": "canada"
+    },
+    {
       "id": "fluent.labels-top-aligned-by-default",
       "title": "labels top aligned by default",
       "jobs": [
@@ -1492,6 +1636,110 @@
       "lane": "nng"
     },
     {
+      "id": "nsw.charts-start-with-story",
+      "title": "charts start with story",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "lane": "nsw"
+    },
+    {
+      "id": "nsw.honest-baseline-bars-zero-or-truncation",
+      "title": "honest baseline bars zero or truncation",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "lane": "nsw"
+    },
+    {
+      "id": "nsw.chart-anatomy-title-insight-table",
+      "title": "chart anatomy title insight table",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "lane": "nsw"
+    },
+    {
+      "id": "nsw.direct-labels-over-legends",
+      "title": "direct labels over legends",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "lane": "nsw"
+    },
+    {
+      "id": "nsw.no-tooltip-only-values",
+      "title": "no tooltip only values",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "lane": "nsw"
+    },
+    {
+      "id": "nsw.100pct-stacked-show-absolute-totals",
+      "title": "100pct stacked show absolute totals",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "lane": "nsw"
+    },
+    {
+      "id": "nsw.lines-dash-fills-patterns",
+      "title": "lines dash fills patterns",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "lane": "nsw"
+    },
+    {
+      "id": "nsw.chart-text-horizontal",
+      "title": "chart text horizontal",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "lane": "nsw"
+    },
+    {
+      "id": "nsw.white-canvas-single-colour-when-labelled",
+      "title": "white canvas single colour when labelled",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "lane": "nsw"
+    },
+    {
+      "id": "nsw.established-colour-conventions",
+      "title": "established colour conventions",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "lane": "nsw"
+    },
+    {
+      "id": "nsw.maps-never-only-channel",
+      "title": "maps never only channel",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "lane": "nsw"
+    },
+    {
+      "id": "nsw.map-pan-from-centre-select-jumps-listing",
+      "title": "map pan from centre select jumps listing",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "lane": "nsw"
+    },
+    {
+      "id": "nsw.privacy-by-design-pia-security-day-one",
+      "title": "privacy by design pia security day one",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "lane": "nsw"
+    },
+    {
       "id": "polar.match-shopify-admin-voice",
       "title": "match shopify admin voice",
       "jobs": [
@@ -1787,6 +2035,126 @@
         "name_a_control"
       ],
       "lane": "spectrum"
+    },
+    {
+      "id": "uswds.filled-next-outline-this-page",
+      "title": "filled next outline this page",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "lane": "uswds"
+    },
+    {
+      "id": "uswds.real-button-with-type-space-vs-enter",
+      "title": "real button with type space vs enter",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "lane": "uswds"
+    },
+    {
+      "id": "uswds.dont-split-phone-ssn-card",
+      "title": "dont split phone ssn card",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "lane": "uswds"
+    },
+    {
+      "id": "uswds.forms-simple-vertical-stack",
+      "title": "forms simple vertical stack",
+      "jobs": [
+        "group_related_inputs"
+      ],
+      "lane": "uswds"
+    },
+    {
+      "id": "uswds.character-count-brevity-or-legal",
+      "title": "character count brevity or legal",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "lane": "uswds"
+    },
+    {
+      "id": "uswds.search-min-27-chars-persist-query",
+      "title": "search min 27 chars persist query",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "lane": "uswds"
+    },
+    {
+      "id": "uswds.homepage-search-box-not-link",
+      "title": "homepage search box not link",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "lane": "uswds"
+    },
+    {
+      "id": "uswds.alert-first-word-is-type",
+      "title": "alert first word is type",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "lane": "uswds"
+    },
+    {
+      "id": "uswds.alerts-dont-blame-name-next-step",
+      "title": "alerts dont blame name next step",
+      "jobs": [
+        "tone_of_voice_for_failure"
+      ],
+      "lane": "uswds"
+    },
+    {
+      "id": "uswds.dont-hide-then-reveal-alerts",
+      "title": "dont hide then reveal alerts",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "lane": "uswds"
+    },
+    {
+      "id": "uswds.site-alert-dont-stack-dont-panic",
+      "title": "site alert dont stack dont panic",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "lane": "uswds"
+    },
+    {
+      "id": "uswds.date-picker-when-weekday-always-type",
+      "title": "date picker when weekday always type",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "uswds"
+    },
+    {
+      "id": "uswds.banner-gov-mil-https-every-page",
+      "title": "banner gov mil https every page",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "lane": "uswds"
+    },
+    {
+      "id": "uswds.identifier-required-links-not-footer-dup",
+      "title": "identifier required links not footer dup",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "lane": "uswds"
+    },
+    {
+      "id": "uswds.identifier-darker-than-footer",
+      "title": "identifier darker than footer",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "lane": "uswds"
     }
   ]
 }

@@ -1,0 +1,309 @@
+{
+  "version": "0.1.0",
+  "guidelines": [
+    {
+      "id": "nsw.charts-start-with-story",
+      "category": "Content",
+      "segment": "Charts",
+      "title": "charts start with story",
+      "rule": "Start with the story, not the chart. Pick the relationship (comparison, trend, proportion, distribution, correlation) first. No chart if a single callout number or a table is clearer, the set is too small, or the chart needs heavy explanation. Not for decoration.",
+      "citation": {
+        "source": "NSW — Charts and graphs",
+        "url": "https://designsystem.nsw.gov.au/docs/content/methods/charts-and-graphs.html"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Chart type matches the relationship; no chart when a callout or table is clearer, the set is too small, or it needs heavy explanation."
+      ],
+      "fail_when": [
+        "Decorative chart; chart for a single number that a callout would carry."
+      ],
+      "severity": "major",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "do_not_claim": "Anatomy (title/insight/table) as this story row."
+    },
+    {
+      "id": "nsw.honest-baseline-bars-zero-or-truncation",
+      "category": "Content",
+      "segment": "Charts",
+      "title": "honest baseline bars zero or truncation",
+      "rule": "Honest baseline: bars start at zero or show truncation. Meaningful scales, consistent time intervals, readable labels. Don’t rotate labels to hide a truncated axis.",
+      "citation": {
+        "source": "NSW — Charts and graphs",
+        "url": "https://designsystem.nsw.gov.au/docs/content/methods/charts-and-graphs.html"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Bars start at zero, or truncation is shown; scales/intervals are consistent; labels are not rotated to hide a truncated axis."
+      ],
+      "fail_when": [
+        "Truncated bar axis with no truncation mark; labels rotated to hide it."
+      ],
+      "severity": "major",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "do_not_claim": "Keep-text-horizontal min px as this baseline row."
+    },
+    {
+      "id": "nsw.chart-anatomy-title-insight-table",
+      "category": "Content",
+      "segment": "Charts",
+      "title": "chart anatomy title insight table",
+      "rule": "Required anatomy: title (timeframe + unit) + insight summary + data table. Subtitle or callout, not both. Summary states what the data means (“requests rose from 220 to 420”), not “the line goes up.” Small datasets: full semantic table visible, not behind a toggle. Medium: summarised table. Large: summary + download of source.",
+      "citation": {
+        "source": "NSW — Charts and graphs",
+        "url": "https://designsystem.nsw.gov.au/docs/content/methods/charts-and-graphs.html"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Title includes timeframe + unit; insight says what the data means; small sets show a visible semantic table; subtitle and callout are not both used."
+      ],
+      "fail_when": [
+        "No table for a small set (or table only behind a toggle); summary is “the line goes up”; title omits unit/timeframe."
+      ],
+      "severity": "major",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "do_not_claim": "Tooltip-only values as this anatomy row."
+    },
+    {
+      "id": "nsw.direct-labels-over-legends",
+      "category": "Content",
+      "segment": "Charts",
+      "title": "direct labels over legends",
+      "rule": "Direct labels over legends; pie/doughnut 2–4 slices; doughnut preferred in digital. Legend only when direct labels fail; keep it readable at 200% zoom. Stacked bar: 3–4 segments. Multi-line: 3–4 series. Horizontal bar when category labels are long.",
+      "citation": {
+        "source": "NSW — Charts and graphs",
+        "url": "https://designsystem.nsw.gov.au/docs/content/methods/charts-and-graphs.html"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Direct labels where they fit; pie/doughnut 2–4 slices (doughnut preferred on digital); stacked bar / multi-line 3–4; long categories use horizontal bar."
+      ],
+      "fail_when": [
+        "Legend as the only labels when direct labels would fit; pie with many slices; many stacked segments or lines."
+      ],
+      "severity": "major",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "do_not_claim": "A house choice-cutoff for form controls."
+    },
+    {
+      "id": "nsw.no-tooltip-only-values",
+      "category": "Content",
+      "segment": "Charts",
+      "title": "no tooltip only values",
+      "rule": "No tooltip-only values — hover is not the values channel (keyboard/touch/AT). Dual-cite empty/failure “don’t hide the only message in a dismissible overlay.”",
+      "citation": {
+        "source": "NSW — Charts and graphs",
+        "url": "https://designsystem.nsw.gov.au/docs/content/methods/charts-and-graphs.html"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "Values are available without hover (labels, table, or equivalent)."
+      ],
+      "fail_when": [
+        "The only values are in a hover tooltip."
+      ],
+      "severity": "major",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "do_not_claim": "Chart anatomy table as a substitute that drops this hover ban."
+    },
+    {
+      "id": "nsw.100pct-stacked-show-absolute-totals",
+      "category": "Content",
+      "segment": "Charts",
+      "title": "100pct stacked show absolute totals",
+      "rule": "100% stacked bars must show absolute totals — percentages hide count; give the total per category so scale is judgeable.",
+      "citation": {
+        "source": "NSW — Charts and graphs",
+        "url": "https://designsystem.nsw.gov.au/docs/content/methods/charts-and-graphs.html"
+      },
+      "check": "deterministic",
+      "pass_when": [
+        "100% stacked bars include the absolute total per category."
+      ],
+      "fail_when": [
+        "100% stacked bars show percentages only."
+      ],
+      "severity": "major",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "do_not_claim": "Honest zero baseline as this totals row."
+    },
+    {
+      "id": "nsw.lines-dash-fills-patterns",
+      "category": "Content",
+      "segment": "Charts",
+      "title": "lines dash fills patterns",
+      "rule": "Lines use dash styles; fills use patterns (max 4–5). Solid / dashed / dotted / dash-dot for series. Hatch/dot/grid for bars, area, pie — not for lines. Two colours per pattern (fill + stroke).",
+      "citation": {
+        "source": "NSW — Charts and graphs",
+        "url": "https://designsystem.nsw.gov.au/docs/content/methods/charts-and-graphs.html"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Line series use dash styles; area/bar/pie fills use patterns (≤4–5) with two colours per pattern; patterns are not used on lines."
+      ],
+      "fail_when": [
+        "Line series distinguished only by colour with no dash; patterns on lines; more than 5 fill patterns."
+      ],
+      "severity": "major",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "do_not_claim": "Established colour conventions as a merge that drops dash/pattern."
+    },
+    {
+      "id": "nsw.chart-text-horizontal",
+      "category": "Content",
+      "segment": "Charts",
+      "title": "chart text horizontal",
+      "rule": "Keep chart text horizontal; long categories → horizontal bar, don’t rotate. If a tool forces rotation, cap 45° and keep ≥12px at all viewports. Min sizes: title 16–18px, data labels 12px, notes 11–12px. Y-axis labels right-aligned; X centred. Commas in thousands; no digit spaces (AT).",
+      "citation": {
+        "source": "NSW — Charts and graphs",
+        "url": "https://designsystem.nsw.gov.au/docs/content/methods/charts-and-graphs.html"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Labels stay horizontal (or ≤45° if the tool forces rotation, ≥12px); long categories use a horizontal bar; thousands use commas not spaces."
+      ],
+      "fail_when": [
+        "Rotated labels to avoid a horizontal bar; digit spaces in thousands."
+      ],
+      "severity": "major",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "do_not_claim": "WCAG contrast SC; 44px hit targets."
+    },
+    {
+      "id": "nsw.white-canvas-single-colour-when-labelled",
+      "category": "Content",
+      "segment": "Charts",
+      "title": "white canvas single colour when labelled",
+      "rule": "White canvas; single colour when bars are already labelled. `#FFFFFF`. Multi-colour only for multiple series or a highlight. Approved NSW / Aboriginal chart-mark palettes only (pre-validated on white). Start with theme 01 then 02.",
+      "citation": {
+        "source": "NSW — Charts and graphs",
+        "url": "https://designsystem.nsw.gov.au/docs/content/methods/charts-and-graphs.html"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Chart sits on white; labelled single-series bars use one colour; extra colours only for series or highlight; NSW/Aboriginal palettes only."
+      ],
+      "fail_when": [
+        "Non-white canvas; rainbow single-series labelled bars; unapproved palette."
+      ],
+      "severity": "major",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "do_not_claim": "Established conventions (next row) as a free-for-all palette."
+    },
+    {
+      "id": "nsw.established-colour-conventions",
+      "category": "Content",
+      "segment": "Charts",
+      "title": "established colour conventions",
+      "rule": "Established colour conventions override the theme palette — traffic light risk, party colours, water/vegetation, finance red/black. Still label/pattern so colour is not the only channel. Do not generalize the exception.",
+      "citation": {
+        "source": "NSW — Charts and graphs",
+        "url": "https://designsystem.nsw.gov.au/docs/content/methods/charts-and-graphs.html"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Domain conventions (risk/party/land/finance) override theme; colour is not the only channel."
+      ],
+      "fail_when": [
+        "Theme palette used where a named convention applies, or colour is the only channel."
+      ],
+      "severity": "major",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "do_not_claim": "A general “always traffic-light” house rule."
+    },
+    {
+      "id": "nsw.maps-never-only-channel",
+      "category": "Content",
+      "segment": "Maps",
+      "title": "maps never only channel",
+      "rule": "Maps are never the only channel — text-based alternative always. Aspect ratio must differ from the viewport so mobile users can still scroll the page; leave space around the map and a close/minimise control.",
+      "citation": {
+        "source": "NSW — Maps",
+        "url": "https://designsystem.nsw.gov.au/docs/content/methods/maps.html"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "A text alternative exists; map aspect ratio is not the full viewport; close/minimise and space around the map exist."
+      ],
+      "fail_when": [
+        "Map is the only channel; map fills the viewport so the page cannot scroll."
+      ],
+      "severity": "major",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "do_not_claim": "44×44 marker size (already hit-targets)."
+    },
+    {
+      "id": "nsw.map-pan-from-centre-select-jumps-listing",
+      "category": "Content",
+      "segment": "Maps",
+      "title": "map pan from centre select jumps listing",
+      "rule": "Map pan updates from centre; select centres the marker and jumps the listing. Popup snapshot + further-info link; dismiss via close and when another point is selected. Overlapping points → cluster. Filter labels name the input (postcode / suburb / full address).",
+      "citation": {
+        "source": "NSW — Maps",
+        "url": "https://designsystem.nsw.gov.au/docs/content/methods/maps.html"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "Pan is from centre; selecting a point centres it and moves the listing; popup has a further-info link and dismisses on close or next select; overlaps cluster; filter labels name the input."
+      ],
+      "fail_when": [
+        "Select does not update the listing; overlapping points unclustered; unnamed filter inputs."
+      ],
+      "severity": "major",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "do_not_claim": "Maps-never-only-channel as this interaction row."
+    },
+    {
+      "id": "nsw.privacy-by-design-pia-security-day-one",
+      "category": "Trust",
+      "segment": "Privacy / security",
+      "title": "privacy by design pia security day one",
+      "rule": "Privacy by design + PIA; security from day one — named NSW Design Standards. Complete and maintain a Privacy Impact Assessment; consent and data-use are explicit; identifiable vs de-identified access is separated. Security is designed and tested from the first release, not bolted on. Dual-cite USWDS earn-trust / data stewardship without merging the PIA/security-from-day-one names.",
+      "citation": {
+        "source": "NSW Design Standards",
+        "url": "https://www.digital.nsw.gov.au/delivery/digital-service-toolkit/design-standards"
+      },
+      "check": "llm_judgment",
+      "pass_when": [
+        "A maintained PIA exists; consent/data-use are explicit; identifiable vs de-identified access is separated; security is in the first release."
+      ],
+      "fail_when": [
+        "No PIA; security bolted on after launch; identifiable and de-identified access mixed."
+      ],
+      "severity": "major",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "do_not_claim": "Generic “be accessible”; USWDS design-principle slogans as this PIA row."
+    }
+  ],
+  "jobs": [
+    "announce_system_status",
+    "wayfind_after_nav"
+  ],
+  "patterns": []
+}
