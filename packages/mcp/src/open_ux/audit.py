@@ -220,9 +220,144 @@ class _TreeParser(HTMLParser):
             self._cur.text.append(data)
 
 
+def _jsx_starts_tag(src: str, i: int) -> bool:
+    if i >= len(src) or src[i] != "<":
+        return False
+    nxt = src[i + 1] if i + 1 < len(src) else ""
+    return nxt.isalpha() or nxt in "/!"
+
+
+def _skip_quoted(src: str, i: int) -> tuple[int, str]:
+    quote = src[i]
+    j = i + 1
+    n = len(src)
+    while j < n:
+        if src[j] == "\\" and j + 1 < n:
+            j += 2
+            continue
+        if src[j] == quote:
+            return j + 1, src[i : j + 1]
+        j += 1
+    return n, src[i:]
+
+
+def _skip_line_comment(src: str, i: int) -> int:
+    j = i + 2
+    n = len(src)
+    while j < n and src[j] != "\n":
+        j += 1
+    return j
+
+
+def _skip_block_comment(src: str, i: int) -> int:
+    j = i + 2
+    n = len(src)
+    while j + 1 < n and not (src[j] == "*" and src[j + 1] == "/"):
+        j += 1
+    return min(n, j + 2)
+
+
+def _copy_jsx_tag(src: str, i: int) -> tuple[int, str, str, bool, bool]:
+    """Copy one JSX/HTML tag. Returns (next_i, raw, name, is_close, self_close)."""
+    start = i
+    n = len(src)
+    i += 1
+    is_close = False
+    if i < n and src[i] == "/":
+        is_close = True
+        i += 1
+    name_start = i
+    while i < n and (src[i].isalnum() or src[i] in "-_:"):
+        i += 1
+    name = src[name_start:i].lower()
+    self_close = False
+    quote: str | None = None
+    braces = 0
+    while i < n:
+        ch = src[i]
+        if quote:
+            if ch == "\\" and i + 1 < n:
+                i += 2
+                continue
+            if ch == quote:
+                quote = None
+            i += 1
+            continue
+        if ch in {"'", '"'}:
+            quote = ch
+            i += 1
+            continue
+        if ch == "{":
+            braces += 1
+            i += 1
+            continue
+        if ch == "}" and braces:
+            braces -= 1
+            i += 1
+            continue
+        if braces:
+            i += 1
+            continue
+        if ch == "/" and i + 1 < n and src[i + 1] == ">":
+            self_close = True
+            i += 2
+            break
+        if ch == ">":
+            i += 1
+            break
+        i += 1
+    return i, src[start:i], name, is_close, self_close
+
+
+def _strip_jsx_js_noise(src: str) -> str:
+    """Keep JSX tags and text; drop JS comments and JS string bodies.
+
+    html.parser has no JS lexer. Leftover `// <input …>` or a string of
+    markup must not become gradeable controls. `//` in JSX text or in an
+    attribute URL is kept. `{/* … */}` in children is dropped.
+    """
+    out: list[str] = []
+    i = 0
+    n = len(src)
+    depth = 0
+    expr = 0
+    while i < n:
+        in_js = depth == 0 or expr > 0
+        if in_js and i + 1 < n and src[i] == "/" and src[i + 1] == "/":
+            i = _skip_line_comment(src, i)
+            continue
+        if in_js and i + 1 < n and src[i] == "/" and src[i + 1] == "*":
+            i = _skip_block_comment(src, i)
+            continue
+        if in_js and src[i] in {"'", '"', "`"}:
+            i, _raw = _skip_quoted(src, i)
+            continue
+        if src[i] == "{" and depth > 0:
+            expr += 1
+            i += 1
+            continue
+        if src[i] == "}" and expr > 0:
+            expr -= 1
+            i += 1
+            continue
+        if expr == 0 and _jsx_starts_tag(src, i):
+            i, raw, name, is_close, self_close = _copy_jsx_tag(src, i)
+            out.append(raw)
+            if is_close:
+                depth = max(0, depth - 1)
+            elif not self_close and name not in _VOID:
+                depth += 1
+            continue
+        if depth > 0 and expr == 0:
+            out.append(src[i])
+        i += 1
+    return "".join(out)
+
+
 def _normalize_markup(content: str, target_type: str) -> str:
     text = content
     if target_type == "jsx":
+        text = _strip_jsx_js_noise(text)
         text = re.sub(r"\bhtmlFor=", "for=", text)
         text = re.sub(r"\bclassName=", "class=", text)
         text = re.sub(r"/>", ">", text)

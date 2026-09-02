@@ -126,6 +126,60 @@ def test_visible_label_jsx_unlabeled_fails(live_catalog: Path) -> None:
     assert _row(result, VISIBLE)["verdict"] == "fail"
 
 
+def test_visible_label_jsx_ignores_line_comment_markup(live_catalog: Path) -> None:
+    jsx = (
+        '// old markup, kept for reference: <input type="text" placeholder="Name" />\n'
+        '<label htmlFor="e">Email</label><input id="e" />\n'
+    )
+    result = audit(
+        _catalog(live_catalog),
+        target_type="jsx",
+        content=jsx,
+        guideline_ids=[VISIBLE],
+    )
+    assert _row(result, VISIBLE)["verdict"] == "pass"
+
+
+def test_visible_label_jsx_ignores_block_comment_and_string_markup(
+    live_catalog: Path,
+) -> None:
+    jsx = (
+        "const old = '<input type=\"text\" placeholder=\"Name\" />';\n"
+        "export function Form() {\n"
+        "  return (\n"
+        "    <form>\n"
+        "      {/* leftover: <input placeholder='Name' /> */}\n"
+        "      <label htmlFor='e'>Email</label>\n"
+        "      <input id='e' data-hint='https://example.com/x' />\n"
+        "    </form>\n"
+        "  );\n"
+        "}\n"
+    )
+    result = audit(
+        _catalog(live_catalog),
+        target_type="jsx",
+        content=jsx,
+        guideline_ids=[VISIBLE],
+    )
+    assert _row(result, VISIBLE)["verdict"] == "pass"
+
+
+def test_visible_label_jsx_url_in_text_is_not_a_comment(live_catalog: Path) -> None:
+    jsx = (
+        "<form>\n"
+        "  <p>See https://example.com/labels</p>\n"
+        "  <label htmlFor='e'>Email</label><input id='e' />\n"
+        "</form>\n"
+    )
+    result = audit(
+        _catalog(live_catalog),
+        target_type="jsx",
+        content=jsx,
+        guideline_ids=[VISIBLE],
+    )
+    assert _row(result, VISIBLE)["verdict"] == "pass"
+
+
 def test_label_stays_visible_same_association(live_catalog: Path) -> None:
     html = '<form><label for="q">Query</label><input id="q"></form>'
     result = audit(
