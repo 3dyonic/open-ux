@@ -92,9 +92,6 @@ def audit(
     if catalog.empty:
         for gid in requested:
             results.append(_unknown(gid))
-        if not requested:
-            # jobs-only on an empty catalog: nothing to grade.
-            pass
         payload = {
             "results": results,
             "summary": _summary(results),
