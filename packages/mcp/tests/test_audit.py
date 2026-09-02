@@ -180,6 +180,40 @@ def test_visible_label_jsx_url_in_text_is_not_a_comment(live_catalog: Path) -> N
     assert _row(result, VISIBLE)["verdict"] == "pass"
 
 
+def test_visible_label_jsx_expression_markup_is_live(live_catalog: Path) -> None:
+    jsx = (
+        "<form>\n"
+        "  {show && <input placeholder='Name' />}\n"
+        "  <label htmlFor='e'>Email</label><input id='e' />\n"
+        "</form>\n"
+    )
+    result = audit(
+        _catalog(live_catalog),
+        target_type="jsx",
+        content=jsx,
+        guideline_ids=[VISIBLE],
+    )
+    assert _row(result, VISIBLE)["verdict"] == "fail"
+
+
+def test_visible_label_html_ignores_inert_nested_markup(live_catalog: Path) -> None:
+    html = (
+        "<form>"
+        '<label for="e">Email</label><input id="e">'
+        '<template><input placeholder="x"></template>'
+        '<label for="t">Notes</label><textarea id="t"><input placeholder="x"></textarea>'
+        "<!-- <input placeholder='x'> -->"
+        "</form>"
+    )
+    result = audit(
+        _catalog(live_catalog),
+        target_type="html",
+        content=html,
+        guideline_ids=[VISIBLE],
+    )
+    assert _row(result, VISIBLE)["verdict"] == "pass"
+
+
 def test_label_stays_visible_same_association(live_catalog: Path) -> None:
     html = '<form><label for="q">Query</label><input id="q"></form>'
     result = audit(

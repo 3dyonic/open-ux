@@ -41,6 +41,8 @@ _VOID = frozenset(
 )
 _SKIP_INPUT_TYPES = frozenset({"hidden", "submit", "button", "reset", "image"})
 _CONTROL_TAGS = frozenset({"input", "textarea", "select"})
+# Markup inside these is not a live control (inert / not painted as a field).
+_IGNORE_CONTROL_ANCESTORS = frozenset({"script", "style", "template", "textarea"})
 
 
 def register_checker(guideline_id: str) -> Callable[[Checker], Checker]:
@@ -340,7 +342,7 @@ def _strip_jsx_js_noise(src: str) -> str:
             expr -= 1
             i += 1
             continue
-        if expr == 0 and _jsx_starts_tag(src, i):
+        if _jsx_starts_tag(src, i):
             i, raw, name, is_close, self_close = _copy_jsx_tag(src, i)
             out.append(raw)
             if is_close:
@@ -392,6 +394,11 @@ def _is_control(node: _Node) -> bool:
         return False
     if node.tag == "input" and (node.attrs.get("type") or "text").lower() in _SKIP_INPUT_TYPES:
         return False
+    cur = node.parent
+    while cur is not None:
+        if cur.tag in _IGNORE_CONTROL_ANCESTORS:
+            return False
+        cur = cur.parent
     return True
 
 
