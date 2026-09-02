@@ -1,10 +1,14 @@
 from __future__ import annotations
 
+import re
+from collections.abc import Callable
+from html.parser import HTMLParser
 from typing import Any, Literal
 
 from open_ux.catalog import EMPTY_NOTE, Catalog, get_by_id, select_by_jobs
 
 Verdict = Literal["pass", "fail", "incomplete"]
+Checker = Callable[[str, str], Verdict]
 
 INCOMPLETE_NO_CHECKER = (
     "No deterministic checker is registered for this rule. "
@@ -14,6 +18,39 @@ INCOMPLETE_DESCRIPTION = (
     "Target type is description; server does not grade prose. "
     "Client LLM may finish using pass_when / fail_when. No server LLM."
 )
+
+_CHECKERS: dict[str, Checker] = {}
+
+_VOID = frozenset(
+    {
+        "area",
+        "base",
+        "br",
+        "col",
+        "embed",
+        "hr",
+        "img",
+        "input",
+        "link",
+        "meta",
+        "param",
+        "source",
+        "track",
+        "wbr",
+    }
+)
+_SKIP_INPUT_TYPES = frozenset({"hidden", "submit", "button", "reset", "image"})
+_CONTROL_TAGS = frozenset({"input", "textarea", "select"})
+
+
+def register_checker(guideline_id: str) -> Callable[[Checker], Checker]:
+    """Register a fail-closed HTML/JSX grader. Missing id → incomplete."""
+
+    def deco(fn: Checker) -> Checker:
+        _CHECKERS[guideline_id] = fn
+        return fn
+
+    return deco
 
 
 def _reasons(guideline: dict[str, Any], *, kind: Literal["pass", "fail", "incomplete"]) -> list[str]:
@@ -106,29 +143,32 @@ def audit(
     }
 
 
-def _grade(guideline: dict[str, Any], *, target_type: str, content: str) -> dict[str, Any]:
-    del content  # Hybrid C: no server LLM; no invented HTML/JSX checkers in this scaffold.
-    check = guideline.get("check")
-    if target_type == "description" or check in {"llm_judgment", "either"}:
-        return {
-            "guideline_id": guideline["id"],
-            "verdict": "incomplete",
-            "reasons": _reasons(guideline, kind="incomplete")
-            + [f"{guideline['id']}: {INCOMPLETE_DESCRIPTION if target_type == 'description' else INCOMPLETE_NO_CHECKER}"],
-            "rule": guideline.get("rule"),
-            "pass_when": list(guideline.get("pass_when") or []),
-            "fail_when": list(guideline.get("fail_when") or []),
-        }
-    # deterministic + html/jsx — checkers land with the rules, not before.
+def _result(guideline: dict[str, Any], verdict: Verdict, extra: str | None = None) -> dict[str, Any]:
+    reasons = _reasons(guideline, kind=verdict)
+    if extra:
+        reasons = reasons + [f"{guideline['id']}: {extra}"]
     return {
         "guideline_id": guideline["id"],
-        "verdict": "incomplete",
-        "reasons": _reasons(guideline, kind="incomplete")
-        + [f"{guideline['id']}: {INCOMPLETE_NO_CHECKER}"],
+        "verdict": verdict,
+        "reasons": reasons,
         "rule": guideline.get("rule"),
         "pass_when": list(guideline.get("pass_when") or []),
         "fail_when": list(guideline.get("fail_when") or []),
     }
+
+
+def _grade(guideline: dict[str, Any], *, target_type: str, content: str) -> dict[str, Any]:
+    if target_type == "description":
+        return _result(guideline, "incomplete", INCOMPLETE_DESCRIPTION)
+
+    checker = _CHECKERS.get(guideline["id"])
+    if checker is None:
+        return _result(guideline, "incomplete", INCOMPLETE_NO_CHECKER)
+
+    verdict = checker(content, target_type)
+    if verdict == "incomplete":
+        return _result(guideline, "incomplete", INCOMPLETE_NO_CHECKER)
+    return _result(guideline, verdict)
 
 
 def _summary(results: list[dict[str, Any]]) -> dict[str, int]:
@@ -138,3 +178,142 @@ def _summary(results: list[dict[str, Any]]) -> dict[str, int]:
         if v in counts:
             counts[v] += 1
     return counts
+
+
+# --- HTML / JSX parse (no extra deps) ---------------------------------------
+
+
+class _Node:
+    __slots__ = ("tag", "attrs", "parent", "children", "text")
+
+    def __init__(self, tag: str, attrs: dict[str, str], parent: _Node | None) -> None:
+        self.tag = tag
+        self.attrs = attrs
+        self.parent = parent
+        self.children: list[_Node] = []
+        self.text: list[str] = []
+
+
+class _TreeParser(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.root = _Node("document", {}, None)
+        self._cur = self.root
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        node = _Node(tag.lower(), {k.lower(): (v or "") for k, v in attrs}, self._cur)
+        self._cur.children.append(node)
+        if tag.lower() not in _VOID:
+            self._cur = node
+
+    def handle_endtag(self, tag: str) -> None:
+        tag = tag.lower()
+        cur = self._cur
+        while cur.parent is not None:
+            if cur.tag == tag:
+                self._cur = cur.parent
+                return
+            cur = cur.parent
+
+    def handle_data(self, data: str) -> None:
+        if data:
+            self._cur.text.append(data)
+
+
+def _normalize_markup(content: str, target_type: str) -> str:
+    text = content
+    if target_type == "jsx":
+        text = re.sub(r"\bhtmlFor=", "for=", text)
+        text = re.sub(r"\bclassName=", "class=", text)
+        text = re.sub(r"/>", ">", text)
+    return f"<div>{text}</div>"
+
+
+def _parse(content: str, target_type: str) -> _Node:
+    parser = _TreeParser()
+    parser.feed(_normalize_markup(content, target_type))
+    parser.close()
+    return parser.root
+
+
+def _walk(node: _Node) -> list[_Node]:
+    out = [node]
+    for child in node.children:
+        out.extend(_walk(child))
+    return out
+
+
+def _visible_text(node: _Node, *, skip_controls: bool = False) -> str:
+    if skip_controls and node.tag in _CONTROL_TAGS:
+        return ""
+    parts = list(node.text)
+    for child in node.children:
+        parts.append(_visible_text(child, skip_controls=skip_controls))
+    return " ".join(p for p in parts if p and p.strip()).strip()
+
+
+def _is_control(node: _Node) -> bool:
+    if node.tag not in _CONTROL_TAGS:
+        return False
+    if node.tag == "input" and (node.attrs.get("type") or "text").lower() in _SKIP_INPUT_TYPES:
+        return False
+    return True
+
+
+def _controls(root: _Node) -> list[_Node]:
+    return [n for n in _walk(root) if _is_control(n)]
+
+
+def _by_id(root: _Node, eid: str) -> _Node | None:
+    if not eid:
+        return None
+    for n in _walk(root):
+        if n.attrs.get("id") == eid:
+            return n
+    return None
+
+
+def _has_outside_label(control: _Node, root: _Node) -> bool:
+    cid = control.attrs.get("id") or ""
+    if cid:
+        for n in _walk(root):
+            if n.tag == "label" and n.attrs.get("for") == cid:
+                if _visible_text(n, skip_controls=True):
+                    return True
+    cur = control.parent
+    while cur is not None:
+        if cur.tag == "label" and _visible_text(cur, skip_controls=True):
+            return True
+        cur = cur.parent
+    labelledby = (control.attrs.get("aria-labelledby") or "").split()
+    for ref in labelledby:
+        target = _by_id(root, ref)
+        if target is not None and _visible_text(target, skip_controls=True):
+            return True
+    return False
+
+
+def _outside_labels_for_controls(content: str, target_type: str) -> Verdict:
+    """Pass if every gradeable control has a visible outside label; fail if any do not.
+
+    No controls → pass (vacuous). Placeholder / aria-label alone do not count.
+    """
+    root = _parse(content, target_type)
+    found = _controls(root)
+    if not found:
+        return "pass"
+    if all(_has_outside_label(c, root) for c in found):
+        return "pass"
+    return "fail"
+
+
+@register_checker("forms.field_labels.visible_label")
+def _check_visible_label(content: str, target_type: str) -> Verdict:
+    return _outside_labels_for_controls(content, target_type)
+
+
+@register_checker("forms.field_labels.label_stays_visible")
+def _check_label_stays_visible(content: str, target_type: str) -> Verdict:
+    # Static markup: an outside <label> / labelledby text stays on screen while typing.
+    # Placeholder-only names disappear → fail (same association test).
+    return _outside_labels_for_controls(content, target_type)
