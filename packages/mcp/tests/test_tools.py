@@ -279,12 +279,17 @@ async def test_audit_schema_shows_jobs_enum_not_target(live_catalog: Path) -> No
     async with Client(mcp) as client:
         tools = await client.list_tools()
     audit_tool = next(t for t in tools if t.name == "audit")
-    schema = audit_tool.inputSchema
+    schema = audit_tool.input_schema
     props = schema["properties"]
     assert "target" not in props
     assert "content" not in props
-    assert "avoid_placeholder_as_label" in props["jobs"]["enum"]
-    assert "forms" in props["jobs"]["enum"]
+    jobs_enum = next(
+        branch["enum"]
+        for branch in props["jobs"]["anyOf"]
+        if "enum" in branch
+    )
+    assert "avoid_placeholder_as_label" in jobs_enum
+    assert "forms" in jobs_enum
     assert "Does not take a file" in (audit_tool.description or "")
     assert "Does not return pass or fail" in (audit_tool.description or "")
 

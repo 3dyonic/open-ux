@@ -6,7 +6,6 @@ from typing import Annotated, Any
 from fastmcp import FastMCP
 from fastmcp.server.dependencies import get_access_token
 from pydantic import Field
-from pydantic.json_schema import SkipJsonSchema
 from starlette.requests import Request
 from starlette.responses import HTMLResponse, JSONResponse, RedirectResponse, Response
 
@@ -219,7 +218,6 @@ def create_mcp(*, hosted: bool) -> FastMCP:
                 description="Max rules to return. Default 10. Never the whole catalog.",
             ),
         ] = DEFAULT_LIMIT,
-        target: SkipJsonSchema[Any | None] = None,
     ) -> dict[str, Any]:
         """Say the UX need as one jobs template. Returns cited rule criteria.
 
@@ -232,7 +230,6 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             query=query,
             guideline_ids=guideline_ids,
             limit=limit,
-            target=target,
         )
         _maybe_telemetry(
             settings,
