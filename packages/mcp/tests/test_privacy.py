@@ -20,8 +20,8 @@ async def test_audit_tool_does_not_write_raw_content(tmp_env: Path) -> None:
         await client.call_tool(
             "audit",
             {
-                "target": {"type": "html", "content": f"<form>{MARKER}</form>"},
                 "guideline_ids": ["forms.field_labels.visible_label"],
+                "query": MARKER,
             },
         )
     store = get_store(Settings.load(hosted=True))
@@ -74,8 +74,8 @@ async def test_stdio_has_no_hosted_telemetry(tmp_env: Path, monkeypatch: pytest.
         await client.call_tool(
             "audit",
             {
-                "target": {"type": "description", "content": MARKER},
                 "guideline_ids": ["forms.field_labels.visible_label"],
+                "query": MARKER,
             },
         )
     store = get_store(Settings.load(hosted=False))

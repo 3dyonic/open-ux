@@ -42,37 +42,27 @@ async def test_empty_catalog_tools_are_honest(tmp_env: Path) -> None:
         assert body["found"] is False
         assert "forms.field_labels.visible_label" in body["error"]
 
-        audited = await client.call_tool(
-            "audit",
-            {
-                "target": {
-                    "type": "html",
-                    "content": "<input placeholder='email only'>",
-                }
-            },
-        )
+        audited = await client.call_tool("audit", {})
         result = audited.data
-        assert result["results"] == []
+        assert result["guidelines"] == []
         assert "requires jobs or guideline_ids" in result["error"]
-        assert result["catalog"]["status"] == "empty"
         assert EMPTY_NOTE in result["note"]
+        assert "verdict" not in result
+        assert "summary" not in result
 
 
 @pytest.mark.asyncio
-async def test_unknown_id_is_incomplete_not_invented(tmp_env: Path) -> None:
+async def test_unknown_id_is_empty_not_invented(tmp_env: Path) -> None:
     mcp = create_mcp(hosted=False)
     async with Client(mcp) as client:
         audited = await client.call_tool(
             "audit",
-            {
-                "target": {"type": "jsx", "content": "<input />"},
-                "guideline_ids": ["not.a.real.rule"],
-            },
+            {"guideline_ids": ["not.a.real.rule"]},
         )
         result = audited.data
-        assert result["results"][0]["verdict"] == "incomplete"
-        assert result["results"][0]["guideline_id"] == "not.a.real.rule"
-        assert "Unknown guideline_id" in result["results"][0]["reasons"][0]
+        assert result["guidelines"] == []
+        assert result["count"] == 0
+        assert "verdict" not in result
 
 
 def _assert_index_rows(rows: list[dict]) -> None:
@@ -252,13 +242,10 @@ async def test_get_harvest5_guideline_returns_full_body(live_catalog: Path) -> N
 async def test_audit_without_scope_fails(live_catalog: Path) -> None:
     mcp = create_mcp(hosted=False)
     async with Client(mcp) as client:
-        audited = await client.call_tool(
-            "audit",
-            {"target": {"type": "html", "content": "<button>Save</button>"}},
-        )
+        audited = await client.call_tool("audit", {})
         result = audited.data
         assert "requires jobs or guideline_ids" in result["error"]
-        assert result["results"] == []
+        assert result["guidelines"] == []
 
 
 @pytest.mark.asyncio
@@ -268,7 +255,6 @@ async def test_audit_guideline_ids_only_those_rules(live_catalog: Path) -> None:
         audited = await client.call_tool(
             "audit",
             {
-                "target": {"type": "html", "content": "<form></form>"},
                 "guideline_ids": [
                     "forms.field_labels.visible_label",
                     "actions.button_groups",
@@ -276,9 +262,43 @@ async def test_audit_guideline_ids_only_those_rules(live_catalog: Path) -> None:
             },
         )
         result = audited.data
-        ids = [row["guideline_id"] for row in result["results"]]
+        ids = [row["id"] for row in result["guidelines"]]
         assert ids == [
             "forms.field_labels.visible_label",
             "actions.button_groups",
         ]
         assert "error" not in result
+        assert "verdict" not in result
+        for row in result["guidelines"]:
+            assert set(row) == {"id", "title", "rule", "pass_when", "fail_when"}
+
+
+@pytest.mark.asyncio
+async def test_audit_schema_shows_jobs_enum_not_target(live_catalog: Path) -> None:
+    mcp = create_mcp(hosted=False)
+    async with Client(mcp) as client:
+        tools = await client.list_tools()
+    audit_tool = next(t for t in tools if t.name == "audit")
+    schema = audit_tool.inputSchema
+    props = schema["properties"]
+    assert "target" not in props
+    assert "content" not in props
+    assert "avoid_placeholder_as_label" in props["jobs"]["enum"]
+    assert "forms" in props["jobs"]["enum"]
+    assert "Does not take a file" in (audit_tool.description or "")
+    assert "Does not return pass or fail" in (audit_tool.description or "")
+
+
+@pytest.mark.asyncio
+async def test_audit_jobs_returns_criteria(live_catalog: Path) -> None:
+    mcp = create_mcp(hosted=False)
+    async with Client(mcp) as client:
+        audited = await client.call_tool(
+            "audit", {"jobs": "avoid_placeholder_as_label"}
+        )
+        result = audited.data
+        assert result["count"] >= 1
+        assert "verdict" not in result
+        assert "summary" not in result
+        row = result["guidelines"][0]
+        assert set(row) == {"id", "title", "rule", "pass_when", "fail_when"}
