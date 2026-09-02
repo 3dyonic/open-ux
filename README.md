@@ -12,9 +12,9 @@ A curated, machine-readable store of UX guidelines plus tools so an agent can:
 
 1. **List** the current rules
 2. **Fetch** a full cited rule
-3. **Audit** a UI snippet and get structured `pass` / `fail` / `incomplete` with rule ids
+3. **Audit** — say the UX need; get the matching rules’ criteria (`rule` / `pass_when` / `fail_when`)
 
-Audits are **hybrid**. Where a rule is checkable and the input is parseable HTML or JSX, the **server** grades it deterministically. Where it isn’t, the server returns `incomplete` plus the rule text (`pass_when` / `fail_when`) so the **client LLM** can finish. There is no server-side LLM.
+The host does not take the file and does not return pass or fail. The client applies those criteria to the work it already has. There is no server-side LLM.
 
 Use the hosted endpoint (request an invite, redeem for an API key) or self-host the same catalog and tools. Open source, MIT.
 
@@ -47,11 +47,9 @@ Those ids are the Designer LIVE seed (UNS-44), kept as the first three rows in [
 | `list_guidelines` | `limit`, `offset` | Paged index: id, title, jobs, lane |
 | `search_guidelines` | `query` and/or `jobs` and/or `lane` | Same index shape |
 | `get_guideline` | `id` | Full rule body |
-| `audit` | `{ target: { type: "html" \| "jsx" \| "description", content }, jobs? , guideline_ids? }` | `{ results: [{ guideline_id, verdict, reasons }], summary }` |
+| `audit` | `jobs` (one template) or `guideline_ids`; optional `query`, `limit` | `{ guidelines: [{ id, title, rule, pass_when, fail_when }], count, total }` |
 
-Verdicts are `pass`, `fail`, or `incomplete`. `reasons[]` reuse catalog `pass_when` / `fail_when` plus the rule id. `audit` requires `jobs` or `guideline_ids` and never runs the whole catalog.
-
-There is no server-side grading model.
+`jobs` is a closed enum of 15 templates plus `forms` / `actions` / `feedback` aliases. Default `limit` 10, max 50. No `target`. No host `verdict`. If nothing matches: empty list + note.
 
 ## Catalog
 
@@ -65,7 +63,7 @@ Soft size ~50–100 KB. Hard ceiling ~384 KB.
 | --- | --- | --- |
 | Auth | Waitlist → redeem invite → bearer `uxmcp_`. Tools **401** without a key. | No auth |
 | Limits | Soft ~60/min and ~1k/day per key | None |
-| Telemetry | Callers (key_hash), tool mix, verdicts, rule ids, target type | Off |
+| Telemetry | Callers (key_hash), tool mix, rule ids | Off |
 
 See [docs/PRIVACY.md](docs/PRIVACY.md) and [docs/DEPLOY.md](docs/DEPLOY.md). Display name is **Open UX**. Do not put “MCP” in the H1 or marketplace title.
 
@@ -89,7 +87,7 @@ Package name: `@3dyonic/open-ux` (Claude plugin / npm scope). Python distributio
 
 1. Request an invite on `/invite` (`POST /invite/request`). When approved, redeem the one-time `inv_…` token (`POST /invite/redeem`) → bearer API key (`uxmcp_…`).
 2. Point your client at the hosted `/mcp` URL (deploy your own; no public URL in this repo yet).
-3. Call `list_guidelines`, then `audit` a snippet.
+3. Call `list_guidelines`, then `audit` with a `jobs` template (no file).
 
 Hosted tools return 401 without a key. One shared catalog for every caller.
 
@@ -119,8 +117,8 @@ cd packages/mcp && python -m pytest
 
 On the hosted service:
 
-- **Never stored:** `audit.content`, prompts, or other UI / PII bodies
-- **Telemetry:** callers, tool mix, verdicts, rule ids (and target type / size as needed)
+- **Never stored:** file contents, prompts, or other UI / PII bodies
+- **Telemetry:** callers, tool mix, rule ids
 
 Self-host: your process, your logs. Telemetry off.
 
