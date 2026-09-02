@@ -6,26 +6,17 @@ from open_ux.catalog import EMPTY_NOTE, Catalog, get_by_id, select_by_jobs
 
 Verdict = Literal["pass", "fail", "incomplete"]
 
-INCOMPLETE_NO_CHECKER = (
-    "No deterministic checker is registered for this rule. "
-    "Client LLM may finish using pass_when / fail_when. No server LLM."
-)
-INCOMPLETE_DESCRIPTION = (
-    "Target type is description; server does not grade prose. "
-    "Client LLM may finish using pass_when / fail_when. No server LLM."
+INCOMPLETE = (
+    "Server does not grade artifacts. "
+    "Client applies pass_when / fail_when. No server LLM."
 )
 
 
-def _reasons(guideline: dict[str, Any], *, kind: Literal["pass", "fail", "incomplete"]) -> list[str]:
+def _reasons(guideline: dict[str, Any]) -> list[str]:
     """Reuse catalog wording + rule id. No house soft-copy."""
     gid = guideline["id"]
-    if kind == "pass":
-        body = list(guideline.get("pass_when") or [])
-    elif kind == "fail":
-        body = list(guideline.get("fail_when") or [])
-    else:
-        body = list(guideline.get("pass_when") or []) + list(guideline.get("fail_when") or [])
-    return [f"{gid}: {line}" for line in body]
+    body = list(guideline.get("pass_when") or []) + list(guideline.get("fail_when") or [])
+    return [f"{gid}: {line}" for line in body] + [f"{gid}: {INCOMPLETE}"]
 
 
 def _unknown(guideline_id: str) -> dict[str, Any]:
@@ -56,6 +47,7 @@ def audit(
 ) -> dict[str, Any]:
     if target_type not in {"html", "jsx", "description"}:
         raise ValueError("target.type must be html, jsx, or description")
+    del content  # Host does not parse or grade the artifact.
 
     requested = [gid for gid in (guideline_ids or []) if gid]
     job_scope = jobs if isinstance(jobs, list) else ([jobs] if jobs else [])
@@ -77,16 +69,12 @@ def audit(
     if catalog.empty:
         for gid in requested:
             results.append(_unknown(gid))
-        if not requested:
-            # jobs-only on an empty catalog: nothing to grade.
-            pass
-        payload = {
+        return {
             "results": results,
             "summary": _summary(results),
             "catalog": _catalog_meta(catalog),
             "note": EMPTY_NOTE,
         }
-        return payload
 
     if requested:
         for gid in requested:
@@ -94,10 +82,10 @@ def audit(
             if g is None:
                 results.append(_unknown(gid))
             else:
-                results.append(_grade(g, target_type=target_type, content=content))
+                results.append(_pack(g))
     else:
         for g in select_by_jobs(catalog, job_scope):
-            results.append(_grade(g, target_type=target_type, content=content))
+            results.append(_pack(g))
 
     return {
         "results": results,
@@ -106,25 +94,11 @@ def audit(
     }
 
 
-def _grade(guideline: dict[str, Any], *, target_type: str, content: str) -> dict[str, Any]:
-    del content  # Hybrid C: no server LLM; no invented HTML/JSX checkers in this scaffold.
-    check = guideline.get("check")
-    if target_type == "description" or check in {"llm_judgment", "either"}:
-        return {
-            "guideline_id": guideline["id"],
-            "verdict": "incomplete",
-            "reasons": _reasons(guideline, kind="incomplete")
-            + [f"{guideline['id']}: {INCOMPLETE_DESCRIPTION if target_type == 'description' else INCOMPLETE_NO_CHECKER}"],
-            "rule": guideline.get("rule"),
-            "pass_when": list(guideline.get("pass_when") or []),
-            "fail_when": list(guideline.get("fail_when") or []),
-        }
-    # deterministic + html/jsx — checkers land with the rules, not before.
+def _pack(guideline: dict[str, Any]) -> dict[str, Any]:
     return {
         "guideline_id": guideline["id"],
         "verdict": "incomplete",
-        "reasons": _reasons(guideline, kind="incomplete")
-        + [f"{guideline['id']}: {INCOMPLETE_NO_CHECKER}"],
+        "reasons": _reasons(guideline),
         "rule": guideline.get("rule"),
         "pass_when": list(guideline.get("pass_when") or []),
         "fail_when": list(guideline.get("fail_when") or []),
