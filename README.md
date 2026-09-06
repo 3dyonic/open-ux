@@ -10,9 +10,9 @@ Stop inventing UX rules from memory. Open UX is a shared, cited catalog agents l
 
 A curated, machine-readable store of UX guidelines plus tools so an agent can:
 
-1. **List** the current rules
-2. **Fetch** a full cited rule
-3. **Audit** — say the UX need; get the matching rules’ criteria (`rule` / `pass_when` / `fail_when`)
+1. **Find** a Situation Card for the compose job
+2. **Fetch** cited rule criteria for that Card
+3. **Apply** those criteria (`rule` / `pass_when` / `fail_when`) to the work already in hand
 
 The host does not take the file and does not return pass or fail. The client applies those criteria to the work it already has. There is no server-side LLM.
 
@@ -44,12 +44,15 @@ Those ids are the Designer LIVE seed (UNS-44), kept as the first three rows in [
 
 | Tool | Input | Output |
 | --- | --- | --- |
+| `list_situations` | optional `container`, `limit`, `offset` | Paged Situation Cards (id, title, container) |
+| `get_situation` | Card `id` | Card + facets + leaf / rule pointers. Fails on a Leaf id |
+| `suggest_situations` | `task_text`, optional `surface` | Ranked Card ids from the allowlist. Fallback only |
 | `list_guidelines` | `limit`, `offset` | Paged index: id, title, jobs, lane |
 | `search_guidelines` | `query` and/or `jobs` and/or `lane` | Same index shape |
 | `get_guideline` | `id` | Full rule body |
-| `audit` | `jobs` (one template) or `guideline_ids`; optional `query`, `limit` | `{ guidelines: [{ id, title, rule, pass_when, fail_when }], count, total }` |
+| `audit` | `jobs` (one Card or container) or `guideline_ids`; optional `query`, `limit` | `{ guidelines: [{ id, title, rule, pass_when, fail_when }], count, total }` |
 
-`jobs` is a closed enum of 15 templates plus `forms` / `actions` / `feedback` aliases. Default `limit` 10, max 50. No `target`. No host `verdict`. If nothing matches: empty list + note.
+`jobs` is a Card id or container id (plus legacy `forms` / `actions` / `feedback` aliases). Leaf ids are not needs. Default `limit` 10, max 50. No `target`. No host `verdict`. If nothing matches: empty list + note. The tree lives in [`catalog/jobs.json`](catalog/jobs.json).
 
 ## Catalog
 

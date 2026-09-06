@@ -3,12 +3,7 @@ from __future__ import annotations
 from typing import Any
 
 from open_ux.catalog import EMPTY_NOTE, Catalog, get_by_id, select_by_jobs
-from open_ux.jobs import (
-    DEFAULT_LIMIT,
-    MAX_LIMIT,
-    MISS_NOTE,
-    TEMPLATE_FALLBACK_ALIAS,
-)
+from open_ux.jobs import DEFAULT_LIMIT, MAX_LIMIT, MISS_NOTE
 
 PACK_KEYS = ("id", "title", "rule", "pass_when", "fail_when")
 NEED_ERROR = "audit requires jobs or guideline_ids; the full catalog is never run."
@@ -49,13 +44,7 @@ def _matches_query(guideline: dict[str, Any], query: str | None) -> bool:
 
 
 def _select_by_need(catalog: Catalog, jobs: str) -> list[dict[str, Any]]:
-    matched = select_by_jobs(catalog, jobs)
-    if matched:
-        return matched
-    alias = TEMPLATE_FALLBACK_ALIAS.get(jobs)
-    if alias:
-        return select_by_jobs(catalog, alias)
-    return []
+    return select_by_jobs(catalog, jobs)
 
 
 def _payload(

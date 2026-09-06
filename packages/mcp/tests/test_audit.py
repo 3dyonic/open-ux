@@ -26,8 +26,8 @@ def _assert_pack_row(row: dict) -> None:
     assert "reasons" not in row
 
 
-def test_jobs_template_returns_criteria_without_content(live_catalog: Path) -> None:
-    result = audit(_catalog(live_catalog), jobs="avoid_placeholder_as_label")
+def test_jobs_card_returns_criteria_without_content(live_catalog: Path) -> None:
+    result = audit(_catalog(live_catalog), jobs="design_a_form")
     assert "error" not in result
     assert "verdict" not in result
     assert "summary" not in result
@@ -111,6 +111,25 @@ def test_limit_caps_pack(live_catalog: Path) -> None:
     result = audit(_catalog(live_catalog), jobs="forms", limit=3)
     assert result["count"] == 3
     assert result["total"] > 3
+
+
+def test_leaf_id_is_not_a_need(live_catalog: Path) -> None:
+    result = audit(_catalog(live_catalog), jobs="avoid_placeholder_as_label")
+    assert result["guidelines"] == []
+    assert result["count"] == 0
+    assert result["total"] == 0
+    assert result["note"] == MISS_NOTE
+
+
+def test_live_seeds_resolve_through_their_cards(live_catalog: Path) -> None:
+    form = audit(_catalog(live_catalog), jobs="design_a_form", limit=50)
+    errors = audit(_catalog(live_catalog), jobs="handle_form_errors", limit=50)
+    form_ids = {row["id"] for row in form["guidelines"]}
+    error_ids = {row["id"] for row in errors["guidelines"]}
+    assert VISIBLE in form_ids
+    assert "forms.field_labels.label_stays_visible" in form_ids
+    assert ERROR in error_ids
+    assert VISIBLE not in error_ids
 
 
 def test_empty_catalog_is_honest(tmp_env: Path) -> None:

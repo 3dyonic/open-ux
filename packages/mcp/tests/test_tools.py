@@ -288,8 +288,11 @@ async def test_audit_schema_shows_jobs_enum_not_target(live_catalog: Path) -> No
         for branch in props["jobs"]["anyOf"]
         if "enum" in branch
     )
-    assert "avoid_placeholder_as_label" in jobs_enum
+    assert "design_a_form" in jobs_enum
+    assert "forms_and_input" in jobs_enum
     assert "forms" in jobs_enum
+    assert "avoid_placeholder_as_label" not in jobs_enum
+    assert "checkout" not in jobs_enum
     assert "Does not take a file" in (audit_tool.description or "")
     assert "Does not return pass or fail" in (audit_tool.description or "")
 
@@ -299,7 +302,7 @@ async def test_audit_jobs_returns_criteria(live_catalog: Path) -> None:
     mcp = create_mcp(hosted=False)
     async with Client(mcp) as client:
         audited = await client.call_tool(
-            "audit", {"jobs": "avoid_placeholder_as_label"}
+            "audit", {"jobs": "design_a_form"}
         )
         result = audited.data
         assert result["count"] >= 1

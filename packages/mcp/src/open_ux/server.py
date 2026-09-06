@@ -25,8 +25,14 @@ from open_ux.jobs import (
     JOB_FIELD_DESCRIPTION,
     JobId,
     MAX_LIMIT,
+    load_job_tree,
 )
 from open_ux.landing import LANDING_HTML
+from open_ux.situations import (
+    get_situation as run_get_situation,
+    list_situations as run_list_situations,
+    suggest_situations as run_suggest_situations,
+)
 from open_ux.settings import Settings
 from open_ux.store import get_store
 
@@ -99,17 +105,19 @@ def create_mcp(*, hosted: bool) -> FastMCP:
     settings = Settings.load(hosted=hosted)
     store = get_store(settings)
     catalog = load_catalog(settings)
+    job_tree = load_job_tree(settings)
 
     auth = HashedKeyVerifier(settings, store) if hosted else None
     mcp = FastMCP(
         name="Open UX",
         instructions=(
             "Open UX: cited UX rules agents audit against. "
-            "Tools: list_guidelines, search_guidelines, get_guideline, audit. "
+            "Find a Situation Card with list_situations, get_situation, or "
+            "suggest_situations, then get_guideline or audit. "
             "No server LLM. "
-            "list/search return a paged index (id, title, jobs, lane) only. "
-            "audit: say the UX need as one jobs template; returns cited rule "
+            "audit: say one Card or container as jobs; returns cited rule "
             "criteria. Does not take a file. Does not return pass or fail. "
+            "Leaf ids and Surfaces are not needs. "
             "If the catalog is empty, return empty; do not invent rules."
         ),
         version="0.1.0",
@@ -194,6 +202,73 @@ def create_mcp(*, hosted: bool) -> FastMCP:
                 ),
             }
         return {"found": True, "guideline": found}
+
+    @mcp.tool
+    def list_situations(
+        container: Annotated[
+            str | None,
+            Field(
+                description=(
+                    "Optional container id or alias (forms_and_input / forms, "
+                    "actions_and_decisions / actions, feedback_and_status / "
+                    "feedback, navigation_and_wayfinding, layout_and_data_display, "
+                    "overlays_and_content_structure, multi_step_flows)."
+                )
+            ),
+        ] = None,
+        limit: int = 20,
+        offset: int = 0,
+    ) -> dict[str, Any]:
+        """List Situation Cards — the compose jobs you pick. No rule bodies."""
+        result = run_list_situations(
+            job_tree, container=container, limit=limit, offset=offset
+        )
+        _maybe_telemetry(settings, tool="list_situations")
+        return result
+
+    @mcp.tool
+    def get_situation(
+        id: Annotated[
+            str,
+            Field(description="A Situation Card id. A Leaf id fails."),
+        ],
+    ) -> dict[str, Any]:
+        """Fetch one Situation Card: when, reject, facets, leaf pointers.
+
+        Fails on a Leaf id. Does not invent a Card. No rule bodies.
+        """
+        result = run_get_situation(id, job_tree)
+        _maybe_telemetry(settings, tool="get_situation")
+        return result
+
+    @mcp.tool
+    def suggest_situations(
+        task_text: Annotated[
+            str,
+            Field(
+                description=(
+                    "What you are composing, in task language. "
+                    "Fallback when you cannot pick a Card from the skill table."
+                )
+            ),
+        ],
+        surface: Annotated[
+            str | None,
+            Field(
+                description=(
+                    "Optional page/flow context (home, cart, checkout). "
+                    "Ranking bias only. Never an id."
+                )
+            ),
+        ] = None,
+    ) -> dict[str, Any]:
+        """Rank Situation Cards from a vague task or pasted UI. Allowlist only.
+
+        Surface is ranking bias, never returned as an id. No server LLM.
+        """
+        result = run_suggest_situations(task_text, surface, job_tree)
+        _maybe_telemetry(settings, tool="suggest_situations")
+        return result
 
     @mcp.tool
     def audit(

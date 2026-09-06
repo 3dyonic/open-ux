@@ -1,0 +1,570 @@
+{
+  "version": "0.2.0",
+  "containers": [
+    {
+      "id": "forms_and_input",
+      "title": "Forms & input",
+      "aliases": ["forms"]
+    },
+    {
+      "id": "actions_and_decisions",
+      "title": "Actions & decisions",
+      "aliases": ["actions"]
+    },
+    {
+      "id": "feedback_and_status",
+      "title": "Feedback & status",
+      "aliases": ["feedback"]
+    },
+    {
+      "id": "navigation_and_wayfinding",
+      "title": "Navigation & wayfinding",
+      "aliases": []
+    },
+    {
+      "id": "layout_and_data_display",
+      "title": "Layout & data display",
+      "aliases": []
+    },
+    {
+      "id": "overlays_and_content_structure",
+      "title": "Overlays & content structure",
+      "aliases": []
+    },
+    {
+      "id": "multi_step_flows",
+      "title": "Multi-step flows",
+      "aliases": []
+    }
+  ],
+  "cards": [
+    {
+      "id": "design_a_form",
+      "title": "Design a form",
+      "container": "forms_and_input",
+      "problem": "Compose the fields: names, controls, grouping, helpers.",
+      "when": [
+        "design or build signup, settings, or checkout fields",
+        "label these fields",
+        "pick a control for a choice",
+        "group related inputs",
+        "mark required",
+        "helper text"
+      ],
+      "reject": [
+        {
+          "id": "handle_form_errors",
+          "why": "validation / inline errors after submit"
+        },
+        {
+          "id": "build_a_multi_step_flow",
+          "why": "wizard / step splitting"
+        },
+        {
+          "id": "design_actions_and_ctas",
+          "why": "button wording / primary vs secondary"
+        },
+        {
+          "id": "compose_a_data_display",
+          "why": "table or dashboard, not a form"
+        }
+      ],
+      "hints": [
+        "form",
+        "signup",
+        "settings",
+        "label",
+        "placeholder",
+        "required",
+        "dropdown",
+        "checkbox",
+        "radio",
+        "fieldset"
+      ],
+      "facets": [
+        {
+          "id": "field_has_no_lasting_name",
+          "title": "Field has no lasting name",
+          "leaves": [
+            {
+              "id": "avoid_placeholder_as_label",
+              "guideline_ids": ["forms.field_labels.visible_label"]
+            },
+            {
+              "id": "keep_field_purpose_visible_while_filled",
+              "guideline_ids": ["forms.field_labels.label_stays_visible"]
+            },
+            {
+              "id": "name_a_control",
+              "guideline_ids": []
+            }
+          ]
+        },
+        {
+          "id": "wrong_control_for_the_choice",
+          "title": "Wrong control for the choice",
+          "leaves": [
+            {
+              "id": "choose_control_for_choice",
+              "guideline_ids": []
+            },
+            {
+              "id": "use_familiar_control",
+              "guideline_ids": []
+            }
+          ]
+        },
+        {
+          "id": "related_inputs_feel_scattered",
+          "title": "Related inputs feel scattered",
+          "leaves": [
+            {
+              "id": "group_related_inputs",
+              "guideline_ids": []
+            }
+          ]
+        },
+        {
+          "id": "requirements_are_a_surprise",
+          "title": "Requirements are a surprise",
+          "leaves": [],
+          "guideline_ids": ["forms.inputs.helpful_constraints"]
+        },
+        {
+          "id": "field_and_helper_wording",
+          "title": "Field and helper wording",
+          "leaves": [],
+          "guideline_ids": []
+        }
+      ]
+    },
+    {
+      "id": "handle_form_errors",
+      "title": "Handle form errors",
+      "container": "forms_and_input",
+      "problem": "Compose validation and recover from a rejected form submit.",
+      "when": [
+        "composing validation",
+        "inline or summary errors",
+        "submit-failure messaging on a form"
+      ],
+      "reject": [
+        {
+          "id": "compose_feedback",
+          "why": "page-level empty / 404 / hard error, or silent save / toast"
+        },
+        {
+          "id": "design_a_form",
+          "why": "unmarked required before anyone submits"
+        }
+      ],
+      "hints": [
+        "validation",
+        "invalid",
+        "inline error",
+        "form error",
+        "fix this field"
+      ],
+      "facets": [
+        {
+          "id": "errors_dont_point_to_the_fix",
+          "title": "Errors don't point to the fix",
+          "leaves": [
+            {
+              "id": "explain_failure_next_to_cause",
+              "guideline_ids": ["forms.field_labels.error_identifies_and_fixes"]
+            }
+          ]
+        },
+        {
+          "id": "invalid_input_has_no_recovery",
+          "title": "Invalid input has no recovery",
+          "leaves": [
+            {
+              "id": "recover_from_invalid_input",
+              "guideline_ids": []
+            }
+          ]
+        },
+        {
+          "id": "error_wording",
+          "title": "Error wording",
+          "leaves": [],
+          "guideline_ids": []
+        }
+      ]
+    },
+    {
+      "id": "design_actions_and_ctas",
+      "title": "Design actions and CTAs",
+      "container": "actions_and_decisions",
+      "problem": "Make the next step obvious and hittable.",
+      "when": [
+        "primary vs secondary",
+        "label this submit or continue",
+        "toolbar actions",
+        "these buttons are too small on mobile"
+      ],
+      "reject": [
+        {
+          "id": "protect_destructive_and_leave",
+          "why": "delete / discard / confirm, or unsaved leave"
+        },
+        {
+          "id": "design_a_form",
+          "why": "field labels"
+        }
+      ],
+      "hints": [
+        "button",
+        "cta",
+        "submit",
+        "primary",
+        "secondary",
+        "hit target",
+        "tap"
+      ],
+      "facets": [
+        {
+          "id": "no_clear_primary",
+          "title": "No clear primary",
+          "leaves": [
+            {
+              "id": "pick_primary_action",
+              "guideline_ids": []
+            }
+          ]
+        },
+        {
+          "id": "action_wording_hides_the_outcome",
+          "title": "Action wording hides the outcome",
+          "leaves": [],
+          "guideline_ids": [
+            "actions.copy.verbs_for_actions",
+            "actions.copy.explicit_verb_not_ok",
+            "actions.copy.avoid_vague_names",
+            "actions.copy.consequent_state",
+            "actions.copy.ellipsis_needs_more_input"
+          ]
+        },
+        {
+          "id": "controls_are_hard_to_hit",
+          "title": "Controls are hard to hit",
+          "leaves": [
+            {
+              "id": "keep_hit_target_usable",
+              "guideline_ids": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "protect_destructive_and_leave",
+      "title": "Protect destructive and leave",
+      "container": "actions_and_decisions",
+      "problem": "Stop destroy or discard from being one easy click.",
+      "when": [
+        "add a delete confirmation",
+        "discard",
+        "navigate away from unsaved work",
+        "confirm or undo"
+      ],
+      "reject": [
+        {
+          "id": "design_actions_and_ctas",
+          "why": "unclear Continue / Submit label"
+        },
+        {
+          "id": "compose_feedback",
+          "why": "destructive copy tone after it already fired"
+        }
+      ],
+      "hints": [
+        "delete",
+        "destroy",
+        "discard",
+        "unsaved",
+        "confirm",
+        "undo",
+        "leave"
+      ],
+      "facets": [
+        {
+          "id": "destructive_is_too_easy",
+          "title": "Destructive is too easy",
+          "leaves": [
+            {
+              "id": "disable_or_confirm_destructive",
+              "guideline_ids": []
+            }
+          ]
+        },
+        {
+          "id": "leaving_discards_work",
+          "title": "Leaving discards work",
+          "leaves": [],
+          "guideline_ids": [
+            "actions.cancelability",
+            "actions.close_saves_separate_cancel",
+            "mui.confirmation-cancel-discards"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "compose_feedback",
+      "title": "Compose feedback",
+      "container": "feedback_and_status",
+      "problem": "Say what happened, what is happening, or that there is nothing here.",
+      "when": [
+        "toast after save",
+        "loading state",
+        "write the empty state",
+        "design a 404",
+        "error message for a failed payment or hard error",
+        "tone on failure"
+      ],
+      "reject": [
+        {
+          "id": "handle_form_errors",
+          "why": "inline field errors"
+        },
+        {
+          "id": "build_a_multi_step_flow",
+          "why": "progress inside a wizard"
+        }
+      ],
+      "hints": [
+        "toast",
+        "empty",
+        "404",
+        "loading",
+        "spinner",
+        "saved",
+        "status",
+        "alert"
+      ],
+      "facets": [
+        {
+          "id": "system_stayed_quiet_after_change",
+          "title": "System stayed quiet after change",
+          "leaves": [
+            {
+              "id": "announce_system_status",
+              "guideline_ids": []
+            }
+          ]
+        },
+        {
+          "id": "empty_or_dead_end_has_no_next_step",
+          "title": "Empty or dead-end has no next step",
+          "leaves": [
+            {
+              "id": "write_empty_state",
+              "guideline_ids": []
+            }
+          ]
+        },
+        {
+          "id": "tone_fights_the_moment",
+          "title": "Tone fights the moment",
+          "leaves": [
+            {
+              "id": "tone_of_voice_for_failure",
+              "guideline_ids": []
+            }
+          ]
+        },
+        {
+          "id": "status_empty_wording",
+          "title": "Status / empty wording",
+          "leaves": [],
+          "guideline_ids": []
+        }
+      ]
+    },
+    {
+      "id": "orient_in_the_place",
+      "title": "Orient in the place",
+      "container": "navigation_and_wayfinding",
+      "problem": "Know where you are and how to move between places.",
+      "when": [
+        "design the sidebar",
+        "add breadcrumbs",
+        "tabs or a menu",
+        "how does the user know which section they are in",
+        "structure the top nav"
+      ],
+      "reject": [
+        {
+          "id": "build_a_multi_step_flow",
+          "why": "step indicators inside a wizard"
+        }
+      ],
+      "hints": [
+        "sidebar",
+        "breadcrumb",
+        "tabs",
+        "nav",
+        "menu",
+        "wayfinding",
+        "section"
+      ],
+      "facets": [
+        {
+          "id": "user_cant_tell_where_they_are",
+          "title": "User can't tell where they are",
+          "leaves": [
+            {
+              "id": "wayfind_after_nav",
+              "guideline_ids": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "compose_a_data_display",
+      "title": "Compose a data display",
+      "container": "layout_and_data_display",
+      "problem": "Arrange data so it can be scanned — table, grid, chart.",
+      "provisional": true,
+      "when": [
+        "table or card grid for this data",
+        "compose a dashboard",
+        "make this table scannable",
+        "chart vs table"
+      ],
+      "reject": [
+        {
+          "id": "design_a_form",
+          "why": "controls inside a form, or density on a form"
+        },
+        {
+          "id": "choose_an_overlay",
+          "why": "overlays on top"
+        }
+      ],
+      "hints": [
+        "table",
+        "dashboard",
+        "chart",
+        "grid",
+        "scannable",
+        "density"
+      ],
+      "facets": [
+        {
+          "id": "data_is_unscannable",
+          "title": "Data is unscannable",
+          "leaves": [],
+          "guideline_ids": [
+            "canada.tables-no-blank-cells",
+            "nsw.charts-start-with-story",
+            "nsw.maps-never-only-channel"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "choose_an_overlay",
+      "title": "Choose an overlay",
+      "container": "overlays_and_content_structure",
+      "problem": "Pick the layer that holds the content.",
+      "provisional": true,
+      "when": [
+        "modal vs accordion",
+        "tooltip or inline help",
+        "hide advanced options",
+        "design this side panel"
+      ],
+      "reject": [
+        {
+          "id": "protect_destructive_and_leave",
+          "why": "the destructive decision inside a dialog"
+        },
+        {
+          "id": "design_a_form",
+          "why": "fields inside a modal"
+        },
+        {
+          "id": "compose_a_data_display",
+          "why": "page layout"
+        }
+      ],
+      "hints": [
+        "modal",
+        "dialog",
+        "accordion",
+        "tooltip",
+        "disclosure",
+        "side panel",
+        "drawer"
+      ],
+      "facets": [
+        {
+          "id": "wrong_layer_for_the_content",
+          "title": "Wrong layer for the content",
+          "leaves": [],
+          "guideline_ids": [
+            "nng.modal-and-nonmodal-dialogs",
+            "mui.non-modal-dialogs-allowed",
+            "gold.accordion-find-in-page-misses-collapsed",
+            "forms.structure.progressive_disclosure",
+            "spectrum.toast-vs-dialog"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "build_a_multi_step_flow",
+      "title": "Build a multi-step flow",
+      "container": "multi_step_flows",
+      "problem": "Split one task across steps and keep the user oriented.",
+      "when": [
+        "build a checkout flow",
+        "split this long form into steps",
+        "add a progress indicator",
+        "what happens if they leave mid-flow",
+        "design the onboarding sequence"
+      ],
+      "reject": [
+        {
+          "id": "design_a_form",
+          "why": "single form on one screen"
+        },
+        {
+          "id": "orient_in_the_place",
+          "why": "site-level nav chrome"
+        },
+        {
+          "id": "protect_destructive_and_leave",
+          "why": "leave-warn as the only ask"
+        }
+      ],
+      "hints": [
+        "wizard",
+        "steps",
+        "onboarding",
+        "checkout flow",
+        "progress",
+        "sequence"
+      ],
+      "facets": [
+        {
+          "id": "too_much_on_one_step",
+          "title": "Too much on one step / lost in steps",
+          "leaves": [],
+          "guideline_ids": [
+            "forms.transparency.progress_on_long_forms",
+            "nl.step-n-of-m-in-title-and-above-form",
+            "nl.last-step-is-send-not-volgende",
+            "gold.progress-indicator-out-of-order-returnable",
+            "fluent.multistep-next-not-continue"
+          ]
+        }
+      ]
+    }
+  ]
+}

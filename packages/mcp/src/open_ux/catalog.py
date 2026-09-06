@@ -8,6 +8,7 @@ from typing import Any
 
 import jsonschema
 
+from open_ux.jobs import resolve_job_tags
 from open_ux.settings import HARD_CATALOG_BYTES, SOFT_CATALOG_BYTES, Settings
 
 EMPTY_NOTE = (
@@ -16,7 +17,7 @@ EMPTY_NOTE = (
 )
 
 INDEX_KEYS = ("id", "title", "jobs", "lane")
-LANE_SKIP = frozenset({"schema.json", "index.json", "guidelines.json"})
+LANE_SKIP = frozenset({"schema.json", "index.json", "guidelines.json", "jobs.json"})
 BODY_KEYS = frozenset({"pass_when", "fail_when", "rule", "citation", "check", "severity"})
 
 
@@ -173,7 +174,9 @@ def list_index(
     limit: int = 50,
     offset: int = 0,
 ) -> tuple[list[dict[str, Any]], int]:
-    wanted_jobs = _as_job_list(jobs)
+    wanted_jobs = resolve_job_tags(jobs)
+    if jobs is not None and wanted_jobs is not None and not wanted_jobs:
+        return [], 0
     q = (query or "").strip().lower()
     out: list[dict[str, Any]] = []
     for row in catalog.index:
@@ -214,16 +217,11 @@ def select(catalog: Catalog, guideline_ids: list[str] | None) -> list[dict[str, 
 
 
 def select_by_jobs(catalog: Catalog, jobs: str | list[str]) -> list[dict[str, Any]]:
-    wanted = set(_as_job_list(jobs))
-    return [g for g in catalog.guidelines if wanted.intersection(g.get("jobs") or [])]
-
-
-def _as_job_list(jobs: str | list[str] | None) -> list[str]:
-    if jobs is None:
+    tags = resolve_job_tags(jobs)
+    if not tags:
         return []
-    if isinstance(jobs, str):
-        return [jobs] if jobs.strip() else []
-    return [j for j in jobs if j]
+    wanted = set(tags)
+    return [g for g in catalog.guidelines if wanted.intersection(g.get("jobs") or [])]
 
 
 def content_hash(content: str) -> str:
