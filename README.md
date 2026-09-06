@@ -56,7 +56,7 @@ Those ids are the Designer LIVE seed (UNS-44), kept first in the generated index
 
 ## Catalog
 
-One file per rule in [`catalog/rules/{category}/{source}/{id}.json`](catalog/rules/). Generated index: [`catalog/index.json`](catalog/index.json). Skill map: [`catalog/MANIFEST.md`](catalog/MANIFEST.md). Schema: [`catalog/schema.json`](catalog/schema.json). Tree: [`catalog/jobs.json`](catalog/jobs.json). Never forked per tenant.
+One file per rule in [`catalog/rules/{category}/{source}/`](catalog/rules/) (`id` on the rule; filename drops the harvest prefix). Generated index: [`catalog/index.json`](catalog/index.json). Skill map: [`catalog/MANIFEST.md`](catalog/MANIFEST.md). Schema: [`catalog/schema.json`](catalog/schema.json). Tree: [`catalog/jobs.json`](catalog/jobs.json). Never forked per tenant.
 
 Soft size ~50–100 KB. Hard ceiling ~384 KB.
 

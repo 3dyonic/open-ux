@@ -722,9 +722,10 @@ def main() -> int:
 
     removed = []
     for path in iter_rule_files(RULES):
-        if path.stem not in keep_ids:
+        gid = json.loads(path.read_text(encoding="utf-8")).get("id")
+        if gid not in keep_ids:
             path.unlink()
-            removed.append(path.stem)
+            removed.append(gid)
     leftover = [gid for gid in dropped if find_rule_file(RULES, gid) is not None]
     if leftover:
         raise SystemExit(f"failed to drop UNMAPPED files: {leftover}")

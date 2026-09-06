@@ -1,8 +1,8 @@
 # Catalog
 
-One shared cited catalog. **`catalog/rules/{category}/{source}/{id}.json` is the SoT** — one guideline object per file.
+One shared cited catalog. **`catalog/rules/{category}/{source}/{file}.json` is the SoT** — one guideline object per file.
 
-- `rules/` — 295 guideline files, grouped **category first, then source**. Filename = `id`. Actions is a category; Ant is a source. Seven leftovers with no honest Leaf were dropped. Same-claim rows fold onto one survivor. `citation` is always an array of one or many `{source, url}`.
+- `rules/` — 295 guideline files, grouped **category first, then source**. Filename drops the harvest prefix (`copy/polar/dont-duplicate-content.json`); `id` on the rule still holds `polar.dont-duplicate-content`. Actions is a category; Ant is a source. Seven leftovers with no honest Leaf were dropped. Same-claim rows fold onto one survivor. `citation` is always an array of one or many `{source, url}`.
 - `jobs.json` — 7 containers, 13 Cards, Facet → Leaf map. Pointers only; no rule bodies
 - `index.json` — generated `{id,title,name,jobs,lane,container,card,facet,leaf?}` (no rule bodies). `name` is the human-friendly label.
 - `manifest.json` / `MANIFEST.md` — generated category → source map for skill reference. No rule bodies. Agents load this, then fetch one id.

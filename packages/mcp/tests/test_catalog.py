@@ -12,6 +12,7 @@ from open_ux.catalog import (
     build_manifest,
     citations,
     load_catalog,
+    rule_file_stem,
     rule_relpath,
     source_house,
 )
@@ -212,7 +213,8 @@ def test_no_lane_blobs(live_catalog: Path) -> None:
     assert len(rules) == CATALOG_COUNT
     for path in rules:
         data = json.loads(path.read_text(encoding="utf-8"))
-        assert path.stem == data["id"]
+        assert path.stem == rule_file_stem(data["id"])
+        assert path.stem != data["id"]
         assert path == live_catalog / "rules" / rule_relpath(data)
 
 
@@ -370,17 +372,17 @@ def test_names_are_claim_then_source_and_folders_follow_category(
     visible = by_id["forms.field_labels.visible_label"]
     assert visible["name"] == "Visible field label — NN/g"
     assert visible["category"] == "Forms"
-    assert (live_catalog / "rules" / "forms" / "nng" / "forms.field_labels.visible_label.json").is_file()
+    assert (live_catalog / "rules" / "forms" / "nng" / "field_labels.visible_label.json").is_file()
 
     primary = by_id["actions.buttons.one_primary"]
     assert primary["name"] == "One primary action — NN/g"
     assert primary["category"] == "Actions"
-    assert (live_catalog / "rules" / "actions" / "nng" / "actions.buttons.one_primary.json").is_file()
+    assert (live_catalog / "rules" / "actions" / "nng" / "buttons.one_primary.json").is_file()
 
     ant = by_id["ant.one-cta-per-screen"]
     assert ant["name"] == "One CTA per screen — Ant"
     assert ant["category"] == "Actions"
-    assert (live_catalog / "rules" / "actions" / "ant" / "ant.one-cta-per-screen.json").is_file()
+    assert (live_catalog / "rules" / "actions" / "ant" / "one-cta-per-screen.json").is_file()
 
     for guideline in catalog.guidelines:
         _slug, label = source_house(guideline)
@@ -405,4 +407,4 @@ def test_manifest_is_category_then_source_without_bodies(live_catalog: Path) -> 
     assert "nng" in sources
     assert "actions" not in sources
     assert "One CTA per screen — Ant" in markdown
-    assert "catalog/rules/{category}/{source}/{id}.json" in markdown
+    assert "catalog/rules/{category}/{source}/{file}.json" in markdown

@@ -135,12 +135,19 @@ def source_house(guideline: dict[str, Any]) -> tuple[str, str]:
     raise CatalogError(f"{gid}: cannot derive a source house")
 
 
+def rule_file_stem(gid: str) -> str:
+    """Filename stem. Harvest prefix is already in the folder; id stays on the rule."""
+    if "." in gid:
+        return gid.split(".", 1)[1]
+    return gid
+
+
 def rule_relpath(guideline: dict[str, Any]) -> Path:
     slug, _label = source_house(guideline)
     return (
         Path(category_folder(str(guideline.get("category") or "")))
         / slug
-        / f"{guideline['id']}.json"
+        / f"{rule_file_stem(str(guideline['id']))}.json"
     )
 
 
@@ -155,7 +162,19 @@ def iter_rule_files(rules_dir: Path) -> list[Path]:
 
 
 def find_rule_file(rules_dir: Path, gid: str) -> Path | None:
-    hits = [path for path in iter_rule_files(rules_dir) if path.stem == gid]
+    want = rule_file_stem(gid)
+    hits = [
+        path
+        for path in iter_rule_files(rules_dir)
+        if path.stem in {gid, want}
+    ]
+    if len(hits) > 1:
+        matched = []
+        for path in hits:
+            data = json.loads(path.read_text(encoding="utf-8"))
+            if data.get("id") == gid:
+                matched.append(path)
+        hits = matched
     if len(hits) > 1:
         raise CatalogError(f"duplicate files for {gid}: {hits}")
     return hits[0] if hits else None
@@ -281,7 +300,8 @@ def render_manifest_markdown(manifest: dict[str, Any]) -> str:
         "",
         "Auto-generated. Do not edit by hand. No rule bodies.",
         "",
-        "Layout: `catalog/rules/{category}/{source}/{id}.json`.",
+        "Layout: `catalog/rules/{category}/{source}/{file}.json`. "
+        "The harvest prefix is in the folder; `id` stays on the rule.",
         "",
         "Read this map when you need to see what exists. Then call "
         "`Open-UX:get_guideline` or open that one file. "
@@ -365,8 +385,9 @@ def _load_one(path: Path, schema: dict[str, Any]) -> dict[str, Any]:
             raise CatalogError("Legacy guidelines.json must be empty; use catalog/rules/{id}.json.")
         return {"_empty_wrapper": True, "_bytes": len(raw)}
     jsonschema.validate(instance=data, schema=schema)
-    if path.stem != data.get("id"):
-        raise CatalogError(f"Filename {path.name!r} does not match id {data.get('id')!r}.")
+    gid = str(data.get("id") or "")
+    if path.stem not in {gid, rule_file_stem(gid)}:
+        raise CatalogError(f"Filename {path.name!r} does not match id {gid!r}.")
     _check_rule_path(path, data)
     data["_bytes"] = len(raw)
     return data

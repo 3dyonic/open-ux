@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Write a human-friendly name on every rule and place it on disk.
 
-Layout: catalog/rules/{category}/{source}/{id}.json
+Layout: catalog/rules/{category}/{source}/{file}.json
+The harvest prefix is in the folder; id stays on the rule.
 Name: claim first, source last. Actions is a category; Ant is a source.
 """
 
