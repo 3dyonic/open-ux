@@ -17,7 +17,7 @@ LIVE_SEED = (
 
 # Short display labels. Derived from the existing title/slug, not new claims.
 OVERRIDES = {
-    "forms.field_labels.visible_label": "Visible label",
+    "forms.field_labels.visible_label": "Visible field label",
     "forms.field_labels.label_stays_visible": "Label stays visible",
     "forms.field_labels.error_identifies_and_fixes": "Error identifies and fixes",
     "actions.buttons.follow_platform_ok_cancel_order": "Follow the platform OK/Cancel order",

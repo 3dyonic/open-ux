@@ -267,7 +267,7 @@ def test_live_seeds_keep_locked_homes_and_agent_fields(live_catalog: Path) -> No
     visible = by_id["forms.field_labels.visible_label"]
     assert visible["card"] == "design_a_form"
     assert visible["leaf"] == "avoid_placeholder_as_label"
-    assert visible["name"] == "Visible label"
+    assert visible["name"] == "Visible field label"
     assert visible["overview"].startswith("A lasting label")
     stays = by_id["forms.field_labels.label_stays_visible"]
     assert stays["card"] == "design_a_form"

@@ -4,7 +4,7 @@
     {
       "id": "forms.field_labels.visible_label",
       "title": "visible label",
-      "name": "Visible label",
+      "name": "Visible field label",
       "jobs": [
         "avoid_placeholder_as_label"
       ],
