@@ -4,10 +4,12 @@
   "segment": "Copy",
   "title": "helper text below",
   "rule": "Helper text below for format/accepted values; bullets if several sentences; skip the period on helper and placeholder.",
-  "citation": {
-    "source": "Fluent 2 — Field usage",
-    "url": "https://fluent2.microsoft.design/components/web/react/core/field/usage"
-  },
+  "citation": [
+    {
+      "source": "Fluent 2 — Field usage",
+      "url": "https://fluent2.microsoft.design/components/web/react/core/field/usage"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Format/accepted-values helper sits below; several sentences use bullets; helper/placeholder omit the period."

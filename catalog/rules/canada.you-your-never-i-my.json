@@ -4,10 +4,12 @@
   "segment": "Voice",
   "title": "you your never i my",
   "rule": "You/your; never I/my; we = Government of Canada. Second person in titles, links, nav (“Replace your card”). Don’t switch to speaking as the user. “My” only in proper names (My Service Canada Account). Name a specific institution only when that institution will contact / be contacted, or its role matters to the task.",
-  "citation": {
-    "source": "Canada.ca — Content Style Guide",
-    "url": "https://design.canada.ca/style-guide/index.html"
-  },
+  "citation": [
+    {
+      "source": "Canada.ca — Content Style Guide",
+      "url": "https://design.canada.ca/style-guide/index.html"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Titles/links/nav use you/your; we is GC; “My” only in proper names; institutions named only when they matter to the task."

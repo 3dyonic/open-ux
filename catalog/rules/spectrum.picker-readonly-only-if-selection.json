@@ -4,10 +4,12 @@
   "segment": "Picker",
   "title": "picker readonly only if selection",
   "rule": "Read-only only if a selection exists — a picker with no selection has no read-only option.",
-  "citation": {
-    "source": "Spectrum — Picker",
-    "url": "https://spectrum.adobe.com/page/picker/"
-  },
+  "citation": [
+    {
+      "source": "Spectrum — Picker",
+      "url": "https://spectrum.adobe.com/page/picker/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Read-only picker has a selection. Empty picker is not read-only."

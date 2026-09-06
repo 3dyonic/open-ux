@@ -4,10 +4,12 @@
   "segment": "Buttons",
   "title": "distinguishable states",
   "rule": "Button states (enabled, disabled, hover, focus, pressed) must be visually distinguishable from each other.",
-  "citation": {
-    "source": "NN/g — Button States: Communicate Interaction",
-    "url": "https://www.nngroup.com/articles/button-states-communicate-interaction/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — Button States: Communicate Interaction",
+      "url": "https://www.nngroup.com/articles/button-states-communicate-interaction/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Enabled, disabled, hover, focus, and pressed are visually distinguishable from each other."

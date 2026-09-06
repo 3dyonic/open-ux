@@ -4,10 +4,12 @@
   "segment": "Modal vs nonmodal",
   "title": "non modal dialogs allowed",
   "rule": "Non-modal dialogs are allowed — they do not interrupt interaction behind them. MUI cites NN/g modal vs non-modal and demos a persistent cookie banner. Dual-cite extra-harvest NN/g 7 numbered modal rules; this row is MUI's explicit non-modal permission + cookie-banner pattern.",
-  "citation": {
-    "source": "MUI — Dialog",
-    "url": "https://mui.com/material-ui/react-dialog/"
-  },
+  "citation": [
+    {
+      "source": "MUI — Dialog",
+      "url": "https://mui.com/material-ui/react-dialog/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "A non-modal (e.g. persistent cookie banner) does not block interaction behind it when that pattern is used."

@@ -4,10 +4,12 @@
   "segment": "Field state",
   "title": "readonly vs disabled",
   "rule": "Disabled = field exists but is unavailable. If the value must still be shown and copied, use read-only, not disabled.",
-  "citation": {
-    "source": "Spectrum — Text field",
-    "url": "https://spectrum.adobe.com/page/text-field/"
-  },
+  "citation": [
+    {
+      "source": "Spectrum — Text field",
+      "url": "https://spectrum.adobe.com/page/text-field/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Unavailable fields are disabled. Values that must remain visible and copyable are read-only."

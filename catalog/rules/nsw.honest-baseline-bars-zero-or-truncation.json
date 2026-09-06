@@ -4,10 +4,12 @@
   "segment": "Charts",
   "title": "honest baseline bars zero or truncation",
   "rule": "Honest baseline: bars start at zero or show truncation. Meaningful scales, consistent time intervals, readable labels. Don’t rotate labels to hide a truncated axis.",
-  "citation": {
-    "source": "NSW — Charts and graphs",
-    "url": "https://designsystem.nsw.gov.au/docs/content/methods/charts-and-graphs.html"
-  },
+  "citation": [
+    {
+      "source": "NSW — Charts and graphs",
+      "url": "https://designsystem.nsw.gov.au/docs/content/methods/charts-and-graphs.html"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Bars start at zero, or truncation is shown; scales/intervals are consistent; labels are not rotated to hide a truncated axis."

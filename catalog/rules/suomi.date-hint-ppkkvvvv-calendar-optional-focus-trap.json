@@ -4,10 +4,12 @@
   "segment": "Date",
   "title": "date hint ppkkvvvv calendar optional focus trap",
   "rule": "Date hint `PP.KK.VVVV` (or `p.k.vvvv`) always visible; calendar optional; focus is trapped while the calendar is open. Dual-cite USWDS typeable date / GOV.UK memorable date.",
-  "citation": {
-    "source": "Suomi.fi — DateInput",
-    "url": "https://designsystem.suomi.fi/components/dateinput/"
-  },
+  "citation": [
+    {
+      "source": "Suomi.fi — DateInput",
+      "url": "https://designsystem.suomi.fi/components/dateinput/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Date format hint is always visible; the field is typeable; calendar (if present) is optional and traps focus while open."

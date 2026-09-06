@@ -4,10 +4,12 @@
   "segment": "Inputs",
   "title": "clear button",
   "rule": "Display a trailing Clear control so people can erase the field without repeatedly tapping Delete.",
-  "citation": {
-    "source": "Apple HIG — Text fields",
-    "url": "https://developer.apple.com/design/human-interface-guidelines/text-fields"
-  },
+  "citation": [
+    {
+      "source": "Apple HIG — Text fields",
+      "url": "https://developer.apple.com/design/human-interface-guidelines/text-fields"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Filled text field shows a trailing Clear that empties that field."

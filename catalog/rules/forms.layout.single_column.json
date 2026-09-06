@@ -4,10 +4,12 @@
   "segment": "Layout",
   "title": "single column",
   "rule": "Present fields in a single column (short related fields such as city/state/zip may share a row).",
-  "citation": {
-    "source": "NN/g — Website Forms Usability",
-    "url": "https://www.nngroup.com/articles/web-form-design/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — Website Forms Usability",
+      "url": "https://www.nngroup.com/articles/web-form-design/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Independent fields stack in one column; only short related fields share a row."

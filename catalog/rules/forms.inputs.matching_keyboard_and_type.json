@@ -4,10 +4,12 @@
   "segment": "Inputs",
   "title": "matching keyboard and type",
   "rule": "Show the keyboard and input type that match the content (email, tel, URL, number, and equivalent platform keyboards).",
-  "citation": {
-    "source": "NN/g — A Checklist for Designing Mobile Input Fields; Apple HIG — Text fields; Vercel Web Interface Guidelines",
-    "url": "https://www.nngroup.com/articles/mobile-input-checklist/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — A Checklist for Designing Mobile Input Fields; Apple HIG — Text fields; Vercel Web Interface Guidelines",
+      "url": "https://www.nngroup.com/articles/mobile-input-checklist/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Email/tel/URL/number (and equivalents) use matching `type`/`inputmode`/platform keyboard."

@@ -4,10 +4,12 @@
   "segment": "Length",
   "title": "keep short",
   "rule": "Keep the form short: remove fields that can be derived, collected later, or omitted.",
-  "citation": {
-    "source": "NN/g — Website Forms Usability",
-    "url": "https://www.nngroup.com/articles/web-form-design/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — Website Forms Usability",
+      "url": "https://www.nngroup.com/articles/web-form-design/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Asked fields are needed now; derivable, deferrable, or omitable data is not on this form."

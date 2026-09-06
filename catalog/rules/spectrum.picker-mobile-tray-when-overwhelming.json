@@ -4,10 +4,12 @@
   "segment": "Picker",
   "title": "picker mobile tray when overwhelming",
   "rule": "Mobile menu container — popover or tray. Use a tray when the option count would overwhelm a popover.",
-  "citation": {
-    "source": "Spectrum — Picker",
-    "url": "https://spectrum.adobe.com/page/picker/"
-  },
+  "citation": [
+    {
+      "source": "Spectrum — Picker",
+      "url": "https://spectrum.adobe.com/page/picker/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Mobile picker uses popover, or tray when the option count would overwhelm a popover."

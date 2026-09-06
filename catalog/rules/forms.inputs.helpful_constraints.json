@@ -4,10 +4,12 @@
   "segment": "Inputs",
   "title": "helpful constraints",
   "rule": "Where acceptable values are known, constrain input so invalid data cannot be entered instead of failing later.",
-  "citation": {
-    "source": "NN/g — 4 Principles to Reduce Cognitive Load in Forms",
-    "url": "https://www.nngroup.com/articles/4-principles-reduce-cognitive-load/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — 4 Principles to Reduce Cognitive Load in Forms",
+      "url": "https://www.nngroup.com/articles/4-principles-reduce-cognitive-load/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Known-valid set is constrained (picker, allowed charset, max length, stepper) so invalid values cannot be entered."

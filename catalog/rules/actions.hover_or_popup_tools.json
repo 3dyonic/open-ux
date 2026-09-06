@@ -4,10 +4,12 @@
   "segment": "Tools",
   "title": "hover or popup tools",
   "rule": "Associate an object with tools that appear on hover or as a pop-up rather than crowding the main chrome.",
-  "citation": {
-    "source": "Designing Interfaces 3e ch. Doing Things — Hover or Pop-Up Tools (Tidwell, Brewer, Valencia)",
-    "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
-  },
+  "citation": [
+    {
+      "source": "Designing Interfaces 3e ch. Doing Things — Hover or Pop-Up Tools (Tidwell, Brewer, Valencia)",
+      "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Occasional object tools appear on hover or in a pop-up tied to the object; they are not stuffed into persistent chrome."

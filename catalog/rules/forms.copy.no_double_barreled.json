@@ -4,10 +4,12 @@
   "segment": "Copy",
   "title": "no double barreled",
   "rule": "Do not ask two things in one question; split double-barreled items.",
-  "citation": {
-    "source": "NN/g — 4 Principles to Reduce Cognitive Load in Forms",
-    "url": "https://www.nngroup.com/articles/4-principles-reduce-cognitive-load/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — 4 Principles to Reduce Cognitive Load in Forms",
+      "url": "https://www.nngroup.com/articles/4-principles-reduce-cognitive-load/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Each question/control asks one thing."

@@ -4,10 +4,12 @@
   "segment": "Copy",
   "title": "tooltips clarify outcomes",
   "rule": "When an icon or button initiates an action, include a tooltip that states the outcome without conflicting with the visible label.",
-  "citation": {
-    "source": "NN/g — UI Copy",
-    "url": "https://www.nngroup.com/articles/ui-copy/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — UI Copy",
+      "url": "https://www.nngroup.com/articles/ui-copy/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "An action-initiating icon or button has a tooltip that states the outcome and does not conflict with the visible label."

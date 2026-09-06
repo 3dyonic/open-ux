@@ -4,10 +4,12 @@
   "segment": "Checkout",
   "title": "order summary easy to find mobile",
   "rule": "Order summary easy to find on mobile (not only below the fold).",
-  "citation": {
-    "source": "NN/g — The Mobile Checkout Experience",
-    "url": "https://www.nngroup.com/articles/mobile-checkout-ux/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — The Mobile Checkout Experience",
+      "url": "https://www.nngroup.com/articles/mobile-checkout-ux/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "On mobile checkout, order summary is findable without only living below the fold."

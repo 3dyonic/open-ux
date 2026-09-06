@@ -4,10 +4,12 @@
   "segment": "Dates",
   "title": "never auto tab date fields",
   "rule": "Never auto-tab between day/month/year fields.",
-  "citation": {
-    "source": "GOV.UK Design System — Date input",
-    "url": "https://design-system.service.gov.uk/components/date-input/"
-  },
+  "citation": [
+    {
+      "source": "GOV.UK Design System — Date input",
+      "url": "https://design-system.service.gov.uk/components/date-input/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Focus stays in the current day, month, or year field until the user moves it."

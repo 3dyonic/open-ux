@@ -4,10 +4,12 @@
   "segment": "Search",
   "title": "search hide label only if name states context",
   "rule": "Search: visually hide the label only if the accessible name states the search context (“Hae sivustolta” / “Hae toimipisteitä”). Placeholder is visual extra. Clear control appears once there is a query. Skip search on tiny single-page tools. Placeholder/label lock: this is not a general placeholder-as-label pass.",
-  "citation": {
-    "source": "Suomi.fi — SearchInput",
-    "url": "https://designsystem.suomi.fi/components/searchinput/"
-  },
+  "citation": [
+    {
+      "source": "Suomi.fi — SearchInput",
+      "url": "https://designsystem.suomi.fi/components/searchinput/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "If the search label is visually hidden, the accessible name states context; placeholder is extra; clear appears once there is a query; tiny single-page tools may omit search."

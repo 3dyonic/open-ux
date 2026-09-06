@@ -4,10 +4,12 @@
   "segment": "Copy",
   "title": "positive wording",
   "rule": "Use positive wording; avoid negatives that force users to reverse the statement (especially opt-in checkboxes).",
-  "citation": {
-    "source": "NN/g — 4 Principles to Reduce Cognitive Load in Forms",
-    "url": "https://www.nngroup.com/articles/4-principles-reduce-cognitive-load/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — 4 Principles to Reduce Cognitive Load in Forms",
+      "url": "https://www.nngroup.com/articles/4-principles-reduce-cognitive-load/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Statements (esp. opt-in checkboxes) are positive; checking means agreement with a direct statement."

@@ -4,10 +4,12 @@
   "segment": "Search",
   "title": "header search placeholder visible search control",
   "rule": "Header search may use placeholder + visible Search control — the only named placeholder-as-visible-label exception: visually hidden `<label>`, placeholder “Zoek”, submit with text and/or magnifying-glass. Does not pass on ordinary fields. Dual-cite Forms no-placeholder-as-label. Placeholder/label lock unchanged.",
-  "citation": {
-    "source": "NL Design System — Placeholders zoekfunctie",
-    "url": "https://nldesignsystem.nl/richtlijnen/formulieren/placeholders/zoekfunctie/"
-  },
+  "citation": [
+    {
+      "source": "NL Design System — Placeholders zoekfunctie",
+      "url": "https://nldesignsystem.nl/richtlijnen/formulieren/placeholders/zoekfunctie/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Header search: hidden `<label>` + placeholder “Zoek” + visible Search control. Ordinary fields still have a visible label (lock)."

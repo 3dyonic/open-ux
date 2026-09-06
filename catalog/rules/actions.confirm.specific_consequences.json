@@ -4,10 +4,12 @@
   "segment": "Confirmation",
   "title": "specific consequences",
   "rule": "Restate the request with specific, user-centric consequences; do not ask only “Are you sure?”",
-  "citation": {
-    "source": "NN/g — Confirmation Dialogs (§3)",
-    "url": "https://www.nngroup.com/articles/confirmation-dialog/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — Confirmation Dialogs (§3)",
+      "url": "https://www.nngroup.com/articles/confirmation-dialog/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "The confirmation restates the request with specific, user-centric consequences."

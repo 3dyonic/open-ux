@@ -4,10 +4,12 @@
   "segment": "Links",
   "title": "no click here same text same destination",
   "rule": "No “click here” / “read more”; same text → same destination. Unique descriptive text per distinct URL; same words when two links go to the same page. Don’t bury the task-critical link mid-paragraph. Downloads: file type + size in parentheses inside the link. Other-language / duration likewise in parentheses inside the link.",
-  "citation": {
-    "source": "Canada.ca — Content Style Guide",
-    "url": "https://design.canada.ca/style-guide/index.html"
-  },
+  "citation": [
+    {
+      "source": "Canada.ca — Content Style Guide",
+      "url": "https://design.canada.ca/style-guide/index.html"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Link text describes the destination; identical text shares a destination; file type/size (and other-language/duration) sit inside the link; task-critical links are not buried mid-paragraph."

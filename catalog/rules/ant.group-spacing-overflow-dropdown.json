@@ -4,10 +4,12 @@
   "segment": "Button groups",
   "title": "group spacing overflow dropdown",
   "rule": "Flush groups look like a Toggle. Align in one line with spaces. Same group: no dividers. Different groups: space or a divider. If more than three operations: 1 primary + n secondary, extra into a Dropdown.",
-  "citation": {
-    "source": "Ant Design — Button spec",
-    "url": "https://ant.design/docs/spec/buttons"
-  },
+  "citation": [
+    {
+      "source": "Ant Design — Button spec",
+      "url": "https://ant.design/docs/spec/buttons"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Related actions are spaced (not flush-as-toggle); same group has no divider; different groups use space or a divider; more than three operations use 1 primary + secondaries, extras in a Dropdown."

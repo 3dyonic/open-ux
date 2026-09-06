@@ -4,10 +4,12 @@
   "segment": "Errors",
   "title": "long form errors banner plus inline",
   "rule": "Long/complex form errors: critical banner at top + move focus to it + inline field errors. Dual-cite with GOV.UK error summary.",
-  "citation": {
-    "source": "Polaris — Banner",
-    "url": "https://polaris.shopify.com/components/banner"
-  },
+  "citation": [
+    {
+      "source": "Polaris — Banner",
+      "url": "https://polaris.shopify.com/components/banner"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Long/complex form: critical banner at top, focus moves to it, plus inline field errors."

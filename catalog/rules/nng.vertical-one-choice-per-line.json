@@ -4,10 +4,12 @@
   "segment": "Choice",
   "title": "vertical one choice per line",
   "rule": "Vertical one-choice-per-line; space carefully if horizontal.",
-  "citation": {
-    "source": "NN/g — Checkboxes vs. Radio Buttons",
-    "url": "https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — Checkboxes vs. Radio Buttons",
+      "url": "https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Choices are stacked one per line, or a horizontal row is carefully spaced so each label maps to one control."

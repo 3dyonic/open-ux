@@ -4,10 +4,12 @@
   "segment": "Errors",
   "title": "validate after finished interacting",
   "rule": "Validate after the merchant finished interacting (not before). Overlap NN/g §7; Polar names it on the component.",
-  "citation": {
-    "source": "Polaris — Text field",
-    "url": "https://polaris.shopify.com/components/selection-and-input/text-field"
-  },
+  "citation": [
+    {
+      "source": "Polaris — Text field",
+      "url": "https://polaris.shopify.com/components/selection-and-input/text-field"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Validation runs after interaction with the field finishes, not while it is still being completed."

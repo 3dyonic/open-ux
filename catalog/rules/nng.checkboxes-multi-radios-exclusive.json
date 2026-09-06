@@ -4,10 +4,12 @@
   "segment": "Choice",
   "title": "checkboxes multi radios exclusive",
   "rule": "Checkboxes = independent multi; radios = mutually exclusive exactly-one.",
-  "citation": {
-    "source": "NN/g — Checkboxes vs. Radio Buttons",
-    "url": "https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — Checkboxes vs. Radio Buttons",
+      "url": "https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Independent multi uses checkboxes; exactly-one uses radios."

@@ -4,10 +4,12 @@
   "segment": "Inputs",
   "title": "fill in the blanks",
   "rule": "When a label/control pair is awkward, present the request as a short sentence with blanks to fill in.",
-  "citation": {
-    "source": "Designing Interfaces 3e ch. Getting Input — Fill-in-the-Blanks (Tidwell, Brewer, Valencia)",
-    "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
-  },
+  "citation": [
+    {
+      "source": "Designing Interfaces 3e ch. Getting Input — Fill-in-the-Blanks (Tidwell, Brewer, Valencia)",
+      "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Awkward label/control pairs are recast as a short sentence with blanks."

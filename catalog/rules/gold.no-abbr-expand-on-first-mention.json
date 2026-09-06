@@ -4,10 +4,12 @@
   "segment": "Abbreviations",
   "title": "no abbr expand on first mention",
   "rule": "Don’t use `<abbr>`; expand on first mention. Screen-reader support for `<abbr>` is limited. Write “Australian Football League (AFL)” then “AFL”. Dual-cite Canada abbreviations (widest-audience test); GOLD names the element ban + first-mention pattern.",
-  "citation": {
-    "source": "GOLD — Body abbreviations",
-    "url": "https://github.com/designsystemau/gold-design-system-site/blob/main/content/components/body/rationale/abbreviation.md"
-  },
+  "citation": [
+    {
+      "source": "GOLD — Body abbreviations",
+      "url": "https://github.com/designsystemau/gold-design-system-site/blob/main/content/components/body/rationale/abbreviation.md"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "First mention is expanded with the short form in parentheses; later mentions use the short form; no `<abbr>`."

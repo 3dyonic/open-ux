@@ -4,10 +4,12 @@
   "segment": "Copy",
   "title": "plain language",
   "rule": "Write labels and instructions in plain language that mirrors how users talk about the information.",
-  "citation": {
-    "source": "NN/g — 4 Principles to Reduce Cognitive Load in Forms",
-    "url": "https://www.nngroup.com/articles/4-principles-reduce-cognitive-load/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — 4 Principles to Reduce Cognitive Load in Forms",
+      "url": "https://www.nngroup.com/articles/4-principles-reduce-cognitive-load/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Labels/instructions use ordinary words for the asked data."

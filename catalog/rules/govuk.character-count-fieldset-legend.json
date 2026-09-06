@@ -4,10 +4,12 @@
   "segment": "Inputs",
   "title": "character count fieldset legend",
   "rule": "Character count when a limit is justified; consider word count if more helpful; fieldset+legend to group related controls. (Also named, merged here: break a hard open question into radios instead of one textarea.)",
-  "citation": {
-    "source": "GOV.UK Design System — Character count; GOV.UK Design System — Fieldset",
-    "url": "https://design-system.service.gov.uk/components/character-count/"
-  },
+  "citation": [
+    {
+      "source": "GOV.UK Design System — Character count; GOV.UK Design System — Fieldset",
+      "url": "https://design-system.service.gov.uk/components/character-count/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "A justified limit uses a character count (or word count if that is more helpful). Related controls are grouped with fieldset and legend. A hard open question is radios rather than one textarea when that split applies."

@@ -4,10 +4,12 @@
   "segment": "Identifier",
   "title": "identifier required links not footer dup",
   "rule": "Identifier holds the required federal links — don’t duplicate them in the site footer. Parent agency (highest in the hierarchy), not the product logo. Multiple parents/logos in hierarchical order, highest first. Omit identifier logo if it duplicates the footer agency mark. Entire component; no deleted required links.",
-  "citation": {
-    "source": "USWDS — Identifier",
-    "url": "https://designsystem.digital.gov/components/identifier/"
-  },
+  "citation": [
+    {
+      "source": "USWDS — Identifier",
+      "url": "https://designsystem.digital.gov/components/identifier/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Required links live in the identifier once (not also in the footer); parent agency is highest in hierarchy; product logo is not used as the identifier mark; required links are not deleted."

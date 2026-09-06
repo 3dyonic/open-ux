@@ -4,10 +4,12 @@
   "segment": "Validation",
   "title": "static validation on submit default",
   "rule": "Static validation on submit is the recommended default — errors appear together via ErrorSummary above the form; focus moves to the summary heading. Dual-cite NN/g prefer-inline and GCDS blur-validate; conflict flag, not a house winner. Unique claim: submit-time summary as the cognitive default.",
-  "citation": {
-    "source": "Suomi.fi — Static form",
-    "url": "https://designsystem.suomi.fi/patterns/static-form/"
-  },
+  "citation": [
+    {
+      "source": "Suomi.fi — Static form",
+      "url": "https://designsystem.suomi.fi/patterns/static-form/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Submit-time ErrorSummary above the form with focus to the summary heading or (dual-cite) inline/blur school applied consistently — not mixed as one house winner."

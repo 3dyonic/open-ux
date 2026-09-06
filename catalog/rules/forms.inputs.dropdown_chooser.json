@@ -4,10 +4,12 @@
   "segment": "Inputs",
   "title": "dropdown chooser",
   "rule": "For a bounded choice set, let the user pick from a drop-down chooser rather than typing the value from memory.",
-  "citation": {
-    "source": "Designing Interfaces 3e ch. Getting Input — Drop-down Chooser (Tidwell, Brewer, Valencia)",
-    "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
-  },
+  "citation": [
+    {
+      "source": "Designing Interfaces 3e ch. Getting Input — Drop-down Chooser (Tidwell, Brewer, Valencia)",
+      "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Bounded set is picked from a drop-down (or equivalent chooser), not typed from memory."

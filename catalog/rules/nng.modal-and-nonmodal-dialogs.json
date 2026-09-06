@@ -4,10 +4,12 @@
   "segment": "Modal vs nonmodal",
   "title": "modal and nonmodal dialogs",
   "rule": "Modal & Nonmodal Dialogs (7 numbered): (1) Important warnings / prevent or correct critical errors. (2) Request info critical to continuing the current process. (3) May fragment a complex workflow into simpler steps. (4) Ask for info that, if provided, significantly lessens work. (5) Do not use for nonessential, off-flow information. (6) Avoid interrupting high-stake processes such as checkout. (7) Avoid when the decision needs sources unavailable inside the modal.",
-  "citation": {
-    "source": "NN/g — Modal & Nonmodal Dialogs",
-    "url": "https://www.nngroup.com/articles/modal-nonmodal-dialog/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — Modal & Nonmodal Dialogs",
+      "url": "https://www.nngroup.com/articles/modal-nonmodal-dialog/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "A modal is used for 1–4; not used for 5–7 (nonessential off-flow; interrupting checkout; decision needs outside sources)."

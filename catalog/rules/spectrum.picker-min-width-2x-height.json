@@ -4,10 +4,12 @@
   "segment": "Picker",
   "title": "picker min width 2x height",
   "rule": "Minimum width 2× field-button height — quiet pickers have no minimum; width follows text.",
-  "citation": {
-    "source": "Spectrum — Picker",
-    "url": "https://spectrum.adobe.com/page/picker/"
-  },
+  "citation": [
+    {
+      "source": "Spectrum — Picker",
+      "url": "https://spectrum.adobe.com/page/picker/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Non-quiet picker width is at least 2× field-button height. Quiet picker width follows text (no minimum)."

@@ -4,10 +4,12 @@
   "segment": "Toast",
   "title": "dont place mobile toasts over navigation",
   "rule": "Don't place mobile toasts over navigation.",
-  "citation": {
-    "source": "Spectrum — Toast",
-    "url": "https://spectrum.adobe.com/page/toast/"
-  },
+  "citation": [
+    {
+      "source": "Spectrum — Toast",
+      "url": "https://spectrum.adobe.com/page/toast/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Mobile toast sits 16 px above the bottom toolbar / not over navigation."

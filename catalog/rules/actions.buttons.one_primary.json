@@ -4,10 +4,12 @@
   "segment": "Buttons",
   "title": "one primary",
   "rule": "Use one primary (filled) action in the view; other actions use weaker styles.",
-  "citation": {
-    "source": "NN/g — Button States: Communicate Interaction; Material 3 — Buttons (filled style ideally for only one action on a page)",
-    "url": "https://www.nngroup.com/articles/button-states-communicate-interaction/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — Button States: Communicate Interaction; Material 3 — Buttons (filled style ideally for only one action on a page)",
+      "url": "https://www.nngroup.com/articles/button-states-communicate-interaction/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "One primary/filled action in the view; others use weaker styles."

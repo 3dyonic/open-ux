@@ -4,10 +4,12 @@
   "segment": "Buttons",
   "title": "ios chrome back done cancel",
   "rule": "iOS chrome: Back top-left; Done/Save top-right; Cancel top-left when paired with Done/Save, else Cancel top-right.",
-  "citation": {
-    "source": "Fluent 2 — iOS Button usage",
-    "url": "https://fluent2.microsoft.design/components/ios/core/button/usage"
-  },
+  "citation": [
+    {
+      "source": "Fluent 2 — iOS Button usage",
+      "url": "https://fluent2.microsoft.design/components/ios/core/button/usage"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "iOS: Back top-left; Done/Save top-right; Cancel top-left when paired with Done/Save, otherwise Cancel top-right."

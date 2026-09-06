@@ -4,10 +4,12 @@
   "segment": "Identifier",
   "title": "identifier darker than footer",
   "rule": "Identifier darker than the footer (grade 80+ / black). Primary or base family, darker than the preceding section, anchored at the bottom so it is not another footer stripe.",
-  "citation": {
-    "source": "USWDS — Identifier",
-    "url": "https://designsystem.digital.gov/components/identifier/"
-  },
+  "citation": [
+    {
+      "source": "USWDS — Identifier",
+      "url": "https://designsystem.digital.gov/components/identifier/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Identifier is darker than the preceding footer section (primary/base grade 80+ or black) and sits at the bottom."

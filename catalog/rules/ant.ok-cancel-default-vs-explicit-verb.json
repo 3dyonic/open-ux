@@ -4,10 +4,12 @@
   "segment": "Copy",
   "title": "ok cancel default vs explicit verb",
   "rule": "OK / Cancel as Ant default labels (CONFLICT). Spec still defaults to OK/Cancel but also: use a verb; describe the result (Publish, Login); if primary is negative, stress consequences (Delete / Cancel). Dual-cite vs NN/g `explicit_verb_not_ok`. Do not pick a winner. Prefer cited verb-names-the-outcome as pass when both apply; Ant default is a conflict flag, not a second invented rule.",
-  "citation": {
-    "source": "Ant Design — Button spec ; NN/g — UI Copy",
-    "url": "https://ant.design/docs/spec/buttons"
-  },
+  "citation": [
+    {
+      "source": "Ant Design — Button spec ; NN/g — UI Copy",
+      "url": "https://ant.design/docs/spec/buttons"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "When both cites apply, the primary names the outcome (Publish, Login, Delete); if primary is negative, the pair stresses consequences (Delete / Cancel)."

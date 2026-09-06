@@ -4,10 +4,12 @@
   "segment": "Toast",
   "title": "one toast at a time",
   "rule": "One toast at a time — consecutive/simultaneous toasts follow a priority queue; do not stack multiple visible toasts.",
-  "citation": {
-    "source": "Spectrum — Toast",
-    "url": "https://spectrum.adobe.com/page/toast/"
-  },
+  "citation": [
+    {
+      "source": "Spectrum — Toast",
+      "url": "https://spectrum.adobe.com/page/toast/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Only one toast is visible; others wait in a priority queue."

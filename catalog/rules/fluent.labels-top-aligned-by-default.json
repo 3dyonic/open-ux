@@ -4,10 +4,12 @@
   "segment": "Field labels",
   "title": "labels top aligned by default",
   "rule": "Labels top-aligned by default; left-align only if space is tight and fields are consistent type/width.",
-  "citation": {
-    "source": "Fluent 2 — Field usage",
-    "url": "https://fluent2.microsoft.design/components/web/react/core/field/usage"
-  },
+  "citation": [
+    {
+      "source": "Fluent 2 — Field usage",
+      "url": "https://fluent2.microsoft.design/components/web/react/core/field/usage"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Labels sit above fields; left-aligned labels only when space is tight and fields share type/width."

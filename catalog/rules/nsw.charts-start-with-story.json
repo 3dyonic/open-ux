@@ -4,10 +4,12 @@
   "segment": "Charts",
   "title": "charts start with story",
   "rule": "Start with the story, not the chart. Pick the relationship (comparison, trend, proportion, distribution, correlation) first. No chart if a single callout number or a table is clearer, the set is too small, or the chart needs heavy explanation. Not for decoration.",
-  "citation": {
-    "source": "NSW — Charts and graphs",
-    "url": "https://designsystem.nsw.gov.au/docs/content/methods/charts-and-graphs.html"
-  },
+  "citation": [
+    {
+      "source": "NSW — Charts and graphs",
+      "url": "https://designsystem.nsw.gov.au/docs/content/methods/charts-and-graphs.html"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Chart type matches the relationship; no chart when a callout or table is clearer, the set is too small, or it needs heavy explanation."

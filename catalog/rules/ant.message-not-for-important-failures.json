@@ -4,10 +4,12 @@
   "segment": "Message",
   "title": "message not for important failures",
   "rule": "Message is not for important failures — Ant Message = top-centered, auto-dismiss (default 3s), non-blocking. Important failure → dialog with the reason. Do not use a lightweight prompt for important failure.",
-  "citation": {
-    "source": "Ant Design — Feedback spec",
-    "url": "https://ant.design/docs/spec/feedback"
-  },
+  "citation": [
+    {
+      "source": "Ant Design — Feedback spec",
+      "url": "https://ant.design/docs/spec/feedback"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Important failure uses a dialog with the reason. Lightweight Message is not used for that failure."

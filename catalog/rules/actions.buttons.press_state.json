@@ -4,10 +4,12 @@
   "segment": "Buttons",
   "title": "press state",
   "rule": "Always include a press state on a custom button so the control feels like it accepted input.",
-  "citation": {
-    "source": "Apple HIG — Buttons",
-    "url": "https://developer.apple.com/design/human-interface-guidelines/buttons"
-  },
+  "citation": [
+    {
+      "source": "Apple HIG — Buttons",
+      "url": "https://developer.apple.com/design/human-interface-guidelines/buttons"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Custom buttons have a press state that shows the control accepted input."

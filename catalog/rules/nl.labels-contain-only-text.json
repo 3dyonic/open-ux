@@ -4,10 +4,12 @@
   "segment": "Labels",
   "title": "labels contain only text",
   "rule": "Labels contain only text — no links, buttons, tooltips, or headings inside `<label>`. Voice control and screen readers break. Dual-cite clickable-label (Vercel) without stuffing interactive children into the label.",
-  "citation": {
-    "source": "NL Design System — Labels alleen tekst",
-    "url": "https://nldesignsystem.nl/richtlijnen/formulieren/labels/alleen-tekst/"
-  },
+  "citation": [
+    {
+      "source": "NL Design System — Labels alleen tekst",
+      "url": "https://nldesignsystem.nl/richtlijnen/formulieren/labels/alleen-tekst/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "`<label>` contains text only — no nested link, button, tooltip, or heading."

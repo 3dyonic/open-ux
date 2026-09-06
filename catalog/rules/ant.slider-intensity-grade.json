@@ -4,10 +4,12 @@
   "segment": "Inputs",
   "title": "slider intensity grade",
   "rule": "Slider = intensity/grade (volume, brightness, saturation) when a precise number is not required; pair NumberInput with Slider when precision is required.",
-  "citation": {
-    "source": "Ant Design — Data entry",
-    "url": "https://ant.design/docs/spec/data-entry"
-  },
+  "citation": [
+    {
+      "source": "Ant Design — Data entry",
+      "url": "https://ant.design/docs/spec/data-entry"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Slider is used for intensity/grade without a required precise number; precision uses Slider + NumberInput."

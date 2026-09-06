@@ -4,10 +4,12 @@
   "segment": "Required marker",
   "title": "asterisk is icon not label text",
   "rule": "Required marker uses a spaced icon. If you use an asterisk, include hint text that explains what it means. Never use an asterisk to mark optional.",
-  "citation": {
-    "source": "Spectrum — Text field",
-    "url": "https://spectrum.adobe.com/page/text-field/"
-  },
+  "citation": [
+    {
+      "source": "Spectrum — Text field",
+      "url": "https://spectrum.adobe.com/page/text-field/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Required is a spaced icon (not asterisk characters inside the label string); hint text explains the marker; optional is not marked with an asterisk."

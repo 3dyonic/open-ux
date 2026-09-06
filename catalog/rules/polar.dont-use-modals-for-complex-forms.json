@@ -4,10 +4,12 @@
   "segment": "Modal",
   "title": "dont use modals for complex forms",
   "rule": "Don’t use modals for complex forms or large information; max two bottom actions; tertiary never dismisses.",
-  "citation": {
-    "source": "Polaris — Modal",
-    "url": "https://polaris.shopify.com/components/overlays/modal"
-  },
+  "citation": [
+    {
+      "source": "Polaris — Modal",
+      "url": "https://polaris.shopify.com/components/overlays/modal"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Complex forms / large information are not in a modal; modal has at most two bottom actions; a tertiary action does not dismiss."

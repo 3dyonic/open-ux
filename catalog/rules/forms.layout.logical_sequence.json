@@ -4,10 +4,12 @@
   "segment": "Layout",
   "title": "logical sequence",
   "rule": "Sequence fields and choices in a logical, conventional order and make Tab order match that sequence.",
-  "citation": {
-    "source": "NN/g — Website Forms Usability",
-    "url": "https://www.nngroup.com/articles/web-form-design/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — Website Forms Usability",
+      "url": "https://www.nngroup.com/articles/web-form-design/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Visual order matches a conventional task order; Tab moves in that same order."

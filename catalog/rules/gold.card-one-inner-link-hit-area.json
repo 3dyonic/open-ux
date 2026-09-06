@@ -4,10 +4,12 @@
   "segment": "Card",
   "title": "card one inner link hit area",
   "rule": "Card: one inner link; hit-area wraps the card. Do not wrap the whole card in `<a>` (screen readers announce the entire contents; the links landmark becomes unusable). Keep a large click target via CSS hit-area on a single inner anchor. Dual-cite USWDS “card is an action, not a frame.”",
-  "citation": {
-    "source": "GOLD — Card as links",
-    "url": "https://github.com/designsystemau/gold-design-system-site/blob/main/content/components/card/rationale/card-link.md"
-  },
+  "citation": [
+    {
+      "source": "GOLD — Card as links",
+      "url": "https://github.com/designsystemau/gold-design-system-site/blob/main/content/components/card/rationale/card-link.md"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "One inner `<a>`; CSS hit-area makes the card clickable; the card itself is not the `<a>`."

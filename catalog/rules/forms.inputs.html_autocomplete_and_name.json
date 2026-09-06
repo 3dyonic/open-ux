@@ -4,10 +4,12 @@
   "segment": "Inputs",
   "title": "html autocomplete and name",
   "rule": "Give inputs `autocomplete` and a meaningful `name`.",
-  "citation": {
-    "source": "Vercel Web Interface Guidelines — Forms",
-    "url": "https://github.com/vercel-labs/web-interface-guidelines/blob/main/command.md"
-  },
+  "citation": [
+    {
+      "source": "Vercel Web Interface Guidelines — Forms",
+      "url": "https://github.com/vercel-labs/web-interface-guidelines/blob/main/command.md"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Inputs have `autocomplete` and a meaningful `name`."

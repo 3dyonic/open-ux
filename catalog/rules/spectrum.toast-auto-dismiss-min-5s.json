@@ -4,10 +4,12 @@
   "segment": "Toast",
   "title": "toast auto dismiss min 5s",
   "rule": "Auto-dismiss ≥ 5 seconds so the message can be read. If an actionable toast auto-dismisses, the action must remain available elsewhere. Pause the timer on focus or hover (including keyboard focus on toast buttons).",
-  "citation": {
-    "source": "Spectrum — Toast",
-    "url": "https://spectrum.adobe.com/page/toast/"
-  },
+  "citation": [
+    {
+      "source": "Spectrum — Toast",
+      "url": "https://spectrum.adobe.com/page/toast/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Auto-dismiss is at least 5 seconds; timer pauses on focus/hover; an actionable toast's action remains available elsewhere after dismiss."

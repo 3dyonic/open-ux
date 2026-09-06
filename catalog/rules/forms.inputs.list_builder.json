@@ -4,10 +4,12 @@
   "segment": "Inputs",
   "title": "list builder",
   "rule": "When the user must assemble a list of items, provide a list builder (available vs selected), not a single free-text dump.",
-  "citation": {
-    "source": "Designing Interfaces 3e ch. Getting Input — List Builder (Tidwell, Brewer, Valencia)",
-    "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
-  },
+  "citation": [
+    {
+      "source": "Designing Interfaces 3e ch. Getting Input — List Builder (Tidwell, Brewer, Valencia)",
+      "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Assembling a list uses available-vs-selected (add/remove) UI."

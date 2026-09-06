@@ -4,10 +4,12 @@
   "segment": "Success",
   "title": "name next organisational steps",
   "rule": "Name the next organisational steps — e.g. case number, who acts, how the person hears back. (Contact-channel pages not filed.)",
-  "citation": {
-    "source": "NL Design System — Vervolgstappen",
-    "url": "https://nldesignsystem.nl/richtlijnen/formulieren/bevestigingspagina/vervolgstappen/"
-  },
+  "citation": [
+    {
+      "source": "NL Design System — Vervolgstappen",
+      "url": "https://nldesignsystem.nl/richtlijnen/formulieren/bevestigingspagina/vervolgstappen/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Confirmation names what happens next: case number and/or who acts and/or how the person hears back."

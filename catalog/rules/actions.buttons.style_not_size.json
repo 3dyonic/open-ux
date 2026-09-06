@@ -4,10 +4,12 @@
   "segment": "Buttons",
   "title": "style not size",
   "rule": "Use style, not size, to distinguish the preferred choice among a set of same-role buttons.",
-  "citation": {
-    "source": "Apple HIG — Buttons",
-    "url": "https://developer.apple.com/design/human-interface-guidelines/buttons"
-  },
+  "citation": [
+    {
+      "source": "Apple HIG — Buttons",
+      "url": "https://developer.apple.com/design/human-interface-guidelines/buttons"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "The preferred same-role button is distinguished by style, not by making it larger."

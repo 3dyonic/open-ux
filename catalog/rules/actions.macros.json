@@ -4,10 +4,12 @@
   "segment": "Control",
   "title": "macros",
   "rule": "Let users compose a sequence of smaller actions into one reusable macro.",
-  "citation": {
-    "source": "Designing Interfaces 3e ch. Doing Things — Macros (Tidwell, Brewer, Valencia)",
-    "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
-  },
+  "citation": [
+    {
+      "source": "Designing Interfaces 3e ch. Doing Things — Macros (Tidwell, Brewer, Valencia)",
+      "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "A sequence of smaller actions can be composed into one reusable macro."

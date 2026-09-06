@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Fold same-claim rule files onto one survivor.
 
-Citation becomes an array when more than one URL supports the claim.
-Survivor rule / overview / description stay as written. Folded files are deleted.
+Citation is always an array of {source, url}. Extra URLs mean those pages
+support this one claim. Survivor rule / overview / description stay as written.
 """
 
 from __future__ import annotations
@@ -19,23 +19,10 @@ LIVE_SEED = (
     "forms.field_labels.error_identifies_and_fixes",
 )
 
-# Keep survivor body. Attach folded sources. Do not invent a blended rule.
-# Distinct claims stay as their own files (dropdown-ok middle, combobox-for-many,
-# picker-vs-type, asterisk-as-icon, login vs creation password, etc.).
+# Only families where every URL supports the survivor pass/fail.
+# Cutoff fights, date-type slices, and “preselect when possible” stay as
+# their own files — those are adjacent claims, not more sources.
 FOLDS: dict[str, list[str]] = {
-    "forms.inputs.match_control_and_size": [
-        "nng.too-few-options-radios-not-dropdown",
-        "nng.prefer-radios-over-dropdowns-when-visible",
-        "gold.avoid-select-except-long-lists",
-        "govuk.select-last-resort",
-        "polar.select-4plus-choice-list-under-4",
-        "ant.radio-count-2-to-5",
-    ],
-    "govuk.four-date-types": [
-        "govuk.calendar-control-when",
-        "govuk.date-input-only-memorable",
-        "uswds.date-picker-when-weekday-always-type",
-    ],
     "forms.inputs.forgiving_format_autoformat": [
         "nl.dont-reject-valid-variants",
         "nl.no-forced-input-patterns-or-masks",
@@ -48,9 +35,6 @@ FOLDS: dict[str, list[str]] = {
     ],
     "ant.checkbox-vs-switch": [
         "suomi.toggle-button-immediate-input-submit",
-    ],
-    "nng.users-rarely-change-defaults": [
-        "polar.default-option-selected-when-possible",
     ],
 }
 
@@ -112,9 +96,9 @@ def _as_cites(raw) -> list[dict]:
     return out
 
 
-def _citation_field(cites: list[dict]) -> dict | list[dict]:
-    if len(cites) == 1:
-        return cites[0]
+def _citation_field(cites: list[dict]) -> list[dict]:
+    if not cites:
+        raise SystemExit("citation array must have at least one {source, url}")
     return cites
 
 
@@ -207,8 +191,14 @@ def apply_folds(catalog: Path | None = None) -> dict:
     )
 
     remaining = []
-    for path in rules.glob("*.json"):
-        remaining.append(json.loads(path.read_text(encoding="utf-8")))
+    for path in sorted(rules.glob("*.json")):
+        data = json.loads(path.read_text(encoding="utf-8"))
+        data["citation"] = _citation_field(_as_cites(data.get("citation")))
+        path.write_text(
+            json.dumps(_ordered(data), indent=2, ensure_ascii=False) + "\n",
+            encoding="utf-8",
+        )
+        remaining.append(data)
     by_id = {item["id"]: item for item in remaining}
     leftover = [gid for gid in fold_to_keep if gid in by_id]
     if leftover:

@@ -4,10 +4,12 @@
   "segment": "Choice",
   "title": "radios left of labels",
   "rule": "Radios sit left of their labels.",
-  "citation": {
-    "source": "GOV.UK Design System — Radios",
-    "url": "https://design-system.service.gov.uk/components/radios/"
-  },
+  "citation": [
+    {
+      "source": "GOV.UK Design System — Radios",
+      "url": "https://design-system.service.gov.uk/components/radios/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Each radio control is to the left of its label."

@@ -4,10 +4,12 @@
   "segment": "Errors",
   "title": "errorsummary link text equals field error",
   "rule": "ErrorSummary link text = the field’s error text — same wording in both places so either context still reads.",
-  "citation": {
-    "source": "Suomi.fi — Static form",
-    "url": "https://designsystem.suomi.fi/patterns/static-form/"
-  },
+  "citation": [
+    {
+      "source": "Suomi.fi — Static form",
+      "url": "https://designsystem.suomi.fi/patterns/static-form/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Each ErrorSummary link uses the same wording as that field’s error text."

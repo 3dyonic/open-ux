@@ -4,10 +4,12 @@
   "segment": "Submit",
   "title": "stop accidental double submit",
   "rule": "Stop accidental double submit.",
-  "citation": {
-    "source": "GOV.UK Design System — Button",
-    "url": "https://design-system.service.gov.uk/components/button/"
-  },
+  "citation": [
+    {
+      "source": "GOV.UK Design System — Button",
+      "url": "https://design-system.service.gov.uk/components/button/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "A second press cannot send a duplicate submit (e.g. after the request has started)."

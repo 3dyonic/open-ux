@@ -4,10 +4,12 @@
   "segment": "Errors",
   "title": "not color only",
   "rule": "Differentiate error from normal field state with color plus non-color cues (outline, weight, icon); do not rely on color alone.",
-  "citation": {
-    "source": "NN/g — 10 Design Guidelines for Reporting Errors in Forms (§4, §5); NN/g — Website Forms Usability",
-    "url": "https://www.nngroup.com/articles/errors-forms-design-guidelines/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — 10 Design Guidelines for Reporting Errors in Forms (§4, §5); NN/g — Website Forms Usability",
+      "url": "https://www.nngroup.com/articles/errors-forms-design-guidelines/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Error state uses color and at least one non-color cue (outline, weight, icon, or error text)."

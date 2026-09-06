@@ -4,10 +4,12 @@
   "segment": "Toast",
   "title": "toast at most one action",
   "rule": "At most one action — a static white, secondary, outline button; concise; only when the action is directly related to the toast text.",
-  "citation": {
-    "source": "Spectrum — Toast",
-    "url": "https://spectrum.adobe.com/page/toast/"
-  },
+  "citation": [
+    {
+      "source": "Spectrum — Toast",
+      "url": "https://spectrum.adobe.com/page/toast/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Zero or one related concise action, styled as that secondary outline control."

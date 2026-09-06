@@ -4,10 +4,12 @@
   "segment": "Proximity",
   "title": "redundant visual signals",
   "rule": "Separate the consequential option with space and redundant visual signals (color, icon, size, alignment), not the label alone.",
-  "citation": {
-    "source": "NN/g — Dangerous UX: Consequential Options Close to Benign Options",
-    "url": "https://www.nngroup.com/articles/proximity-consequential-options/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — Dangerous UX: Consequential Options Close to Benign Options",
+      "url": "https://www.nngroup.com/articles/proximity-consequential-options/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "The consequential option is separated with space and more than one of color, icon, size, alignment — not the label alone."

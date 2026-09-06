@@ -4,10 +4,12 @@
   "segment": "Choice",
   "title": "radio set comprehensive other type in",
   "rule": "Radio set must be comprehensive; add Other + type-in if not.",
-  "citation": {
-    "source": "NN/g — Checkboxes vs. Radio Buttons",
-    "url": "https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — Checkboxes vs. Radio Buttons",
+      "url": "https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Every valid answer is in the set, or Other + type-in covers the rest."

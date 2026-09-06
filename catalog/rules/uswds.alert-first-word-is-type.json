@@ -4,10 +4,12 @@
   "segment": "Alert",
   "title": "alert first word is type",
   "rule": "First word is the type: Informative / Warning / Success / Error / Emergency (or a more precise first word such as “Announcement”). Heading ≤1 line. Extra detail in the body, not a second heading line. Users must not rely on colour or icon alone.",
-  "citation": {
-    "source": "USWDS — Alert",
-    "url": "https://designsystem.digital.gov/components/alert/"
-  },
+  "citation": [
+    {
+      "source": "USWDS — Alert",
+      "url": "https://designsystem.digital.gov/components/alert/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Heading starts with the type (or a more precise first word), stays on one line, and meaning is not colour/icon-only."

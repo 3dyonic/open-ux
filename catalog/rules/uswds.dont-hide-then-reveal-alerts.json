@@ -4,10 +4,12 @@
   "segment": "Alert",
   "title": "dont hide then reveal alerts",
   "rule": "Don’t hide-then-reveal alerts in the DOM — older AT can still perceive visually hidden messages that are not currently applicable.",
-  "citation": {
-    "source": "USWDS — Alert",
-    "url": "https://designsystem.digital.gov/components/alert/"
-  },
+  "citation": [
+    {
+      "source": "USWDS — Alert",
+      "url": "https://designsystem.digital.gov/components/alert/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Inapplicable alerts are not left visually hidden in the DOM."

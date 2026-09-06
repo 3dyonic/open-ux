@@ -4,10 +4,12 @@
   "segment": "Copy",
   "title": "avoid vague names",
   "rule": "Avoid vague, cutesy, or faddish command names; text should be straightforward, descriptive, and accurate.",
-  "citation": {
-    "source": "NN/g — UI Copy",
-    "url": "https://www.nngroup.com/articles/ui-copy/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — UI Copy",
+      "url": "https://www.nngroup.com/articles/ui-copy/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Names are straightforward, descriptive, and accurate."

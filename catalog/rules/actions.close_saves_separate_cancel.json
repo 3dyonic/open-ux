@@ -4,10 +4,12 @@
   "segment": "Close vs Cancel",
   "title": "close saves separate cancel",
   "rule": "Treat Close as dismiss-and-keep-work and provide a separate Cancel to abandon; when in doubt, save then out.",
-  "citation": {
-    "source": "NN/g — Cancel vs Close",
-    "url": "https://www.nngroup.com/articles/cancel-vs-close/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — Cancel vs Close",
+      "url": "https://www.nngroup.com/articles/cancel-vs-close/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Close (or X-as-close) dismisses and keeps work; a separate Cancel abandons; when in doubt, save then out."

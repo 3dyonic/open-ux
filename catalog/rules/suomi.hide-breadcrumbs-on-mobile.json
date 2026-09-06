@@ -4,10 +4,12 @@
   "segment": "Breadcrumb",
   "title": "hide breadcrumbs on mobile",
   "rule": "Hide breadcrumbs on mobile — content starts higher; mobile breadcrumb is hard motorically. Dual-cite USWDS omit-on-home; this is viewport hide, not home omit. Don’t use breadcrumbs on 2–3 level sites.",
-  "citation": {
-    "source": "Suomi.fi — Breadcrumb",
-    "url": "https://designsystem.suomi.fi/components/breadcrumb/"
-  },
+  "citation": [
+    {
+      "source": "Suomi.fi — Breadcrumb",
+      "url": "https://designsystem.suomi.fi/components/breadcrumb/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Breadcrumbs are hidden at mobile viewport; not used on 2–3 level sites."

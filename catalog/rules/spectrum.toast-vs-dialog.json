@@ -4,10 +4,12 @@
   "segment": "Toast vs dialog",
   "title": "toast vs dialog",
   "rule": "Toast only for confirmations, simple notifications, and low-priority alerts that must not fully interrupt. Dialog when the situation needs attention or a response. Do not use a dialog for a simple upload-complete.",
-  "citation": {
-    "source": "Spectrum — Toast",
-    "url": "https://spectrum.adobe.com/page/toast/"
-  },
+  "citation": [
+    {
+      "source": "Spectrum — Toast",
+      "url": "https://spectrum.adobe.com/page/toast/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Low-priority confirmations/notifications use toast; situations that need attention or a response use dialog."

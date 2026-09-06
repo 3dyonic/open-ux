@@ -4,10 +4,12 @@
   "segment": "Field labels",
   "title": "visible label",
   "rule": "Place a clear label outside the field so users always know what information belongs there.",
-  "citation": {
-    "source": "NN/g — Placeholders in Form Fields Are Harmful; Material 3 — Text fields",
-    "url": "https://www.nngroup.com/articles/form-design-placeholders/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — Placeholders in Form Fields Are Harmful; Material 3 — Text fields",
+      "url": "https://www.nngroup.com/articles/form-design-placeholders/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Each input has a clear label outside the field, visible before and during use."

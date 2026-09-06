@@ -4,10 +4,12 @@
   "segment": "Buttons",
   "title": "loading on button",
   "rule": "For a slow action, show loading on the button itself (spinner on the control that was pressed).",
-  "citation": {
-    "source": "NN/g — Button States: Communicate Interaction; Apple HIG — Buttons (activity indicator when the action does not complete instantly)",
-    "url": "https://www.nngroup.com/articles/button-states-communicate-interaction/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — Button States: Communicate Interaction; Apple HIG — Buttons (activity indicator when the action does not complete instantly)",
+      "url": "https://www.nngroup.com/articles/button-states-communicate-interaction/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "A slow action shows a spinner/activity indicator on the pressed button itself."

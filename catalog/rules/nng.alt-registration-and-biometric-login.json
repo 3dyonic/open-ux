@@ -4,10 +4,12 @@
   "segment": "Login",
   "title": "alt registration and biometric login",
   "rule": "Alt registration (social/federated) + biometric login where the platform has it.",
-  "citation": {
-    "source": "NN/g — A Checklist for Registration and Login Forms on Mobile",
-    "url": "https://www.nngroup.com/articles/checklist-registration-login/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — A Checklist for Registration and Login Forms on Mobile",
+      "url": "https://www.nngroup.com/articles/checklist-registration-login/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Federated/social registration is offered; biometric login is offered where the platform has it."

@@ -4,10 +4,12 @@
   "segment": "Labels",
   "title": "explicit id for label helper",
   "rule": "Explicit `id` for label + helper association — input linked to label and helper (`for` / `aria-describedby`). Until hydration, a TextField without an explicit `id` will not have associated labels.",
-  "citation": {
-    "source": "MUI — Text Field",
-    "url": "https://mui.com/material-ui/react-text-field/"
-  },
+  "citation": [
+    {
+      "source": "MUI — Text Field",
+      "url": "https://mui.com/material-ui/react-text-field/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "TextField has an explicit `id`; label uses `for`; helper is `aria-describedby`."

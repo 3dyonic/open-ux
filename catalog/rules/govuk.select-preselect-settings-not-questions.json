@@ -4,10 +4,12 @@
   "segment": "Choice",
   "title": "select preselect settings not questions",
   "rule": "Select: pre-select for settings; do not pre-select for questions (influence). Dual-cite with NN/g always-default-radio (via explicit None) and Polar default-when-possible — not a winner.",
-  "citation": {
-    "source": "GOV.UK Design System — Select",
-    "url": "https://design-system.service.gov.uk/components/select/"
-  },
+  "citation": [
+    {
+      "source": "GOV.UK Design System — Select",
+      "url": "https://design-system.service.gov.uk/components/select/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Question select/radio: no silent preselected answer; if “none” is valid, an explicit None is in the set. Settings: the current or safe value is selected."

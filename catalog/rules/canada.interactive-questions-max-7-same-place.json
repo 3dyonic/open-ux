@@ -4,10 +4,12 @@
   "segment": "Interactive questions",
   "title": "interactive questions max 7 same place",
   "rule": "Interactive questions: ≤7; one at a time in the same place. Written to “you”; choices immediately under the question as answers; Continue/context-specific button (not “Next” if the page already has Next in multi-page nav); always a way back (“change your selection”). Dual-cite GOV.UK one-question-per-page (Canada keeps subsequent questions on the same page in the same slot). Pre-select most-common vs GOV.UK do-not-preselect is not a NEW row.",
-  "citation": {
-    "source": "Canada.ca — Interactive questions",
-    "url": "https://design.canada.ca/common-design-patterns/interactive-questions"
-  },
+  "citation": [
+    {
+      "source": "Canada.ca — Interactive questions",
+      "url": "https://design.canada.ca/common-design-patterns/interactive-questions"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "≤7 questions, one visible at a time in the same slot; you-voice; choices as answers under the question; Continue is not a conflicting “Next”; a way back exists."

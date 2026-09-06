@@ -4,10 +4,12 @@
   "segment": "Control",
   "title": "cancelability",
   "rule": "Provide a way to instantly cancel a time-consuming operation with no side effects.",
-  "citation": {
-    "source": "Designing Interfaces 3e ch. Doing Things — Cancelability (Tidwell, Brewer, Valencia)",
-    "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
-  },
+  "citation": [
+    {
+      "source": "Designing Interfaces 3e ch. Doing Things — Cancelability (Tidwell, Brewer, Valencia)",
+      "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "A time-consuming operation can be cancelled at once, with no side effects from the cancelled work."

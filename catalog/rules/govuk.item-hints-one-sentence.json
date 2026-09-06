@@ -4,10 +4,12 @@
   "segment": "Copy",
   "title": "item hints one sentence",
   "rule": "Item hints: one short sentence, no full stops; no links in hint text.",
-  "citation": {
-    "source": "GOV.UK Design System — Radios; GOV.UK Design System — Select",
-    "url": "https://design-system.service.gov.uk/components/radios/"
-  },
+  "citation": [
+    {
+      "source": "GOV.UK Design System — Radios; GOV.UK Design System — Select",
+      "url": "https://design-system.service.gov.uk/components/radios/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Per-item hint is one short sentence without a full stop and without links."

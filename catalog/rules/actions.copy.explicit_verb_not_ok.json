@@ -4,10 +4,12 @@
   "segment": "Copy",
   "title": "explicit verb not ok",
   "rule": "Do not use generic OK; name the button with the action it commits (and prefer explicit Cancel/Close/Apply text over an unlabeled X).",
-  "citation": {
-    "source": "NN/g — UI Copy; NN/g — OK-Cancel or Cancel-OK; NN/g — Cancel vs Close",
-    "url": "https://www.nngroup.com/articles/ui-copy/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — UI Copy; NN/g — OK-Cancel or Cancel-OK; NN/g — Cancel vs Close",
+      "url": "https://www.nngroup.com/articles/ui-copy/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "The button names the action it commits; Cancel/Close/Apply are explicit text, not an unlabeled X as the name."

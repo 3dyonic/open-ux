@@ -4,10 +4,12 @@
   "segment": "Mobile",
   "title": "visible with keyboard",
   "rule": "Keep the field visible in both orientations when the keyboard is displayed.",
-  "citation": {
-    "source": "NN/g — A Checklist for Designing Mobile Input Fields",
-    "url": "https://www.nngroup.com/articles/mobile-input-checklist/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — A Checklist for Designing Mobile Input Fields",
+      "url": "https://www.nngroup.com/articles/mobile-input-checklist/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Focused field stays visible with the on-screen keyboard in portrait and landscape."

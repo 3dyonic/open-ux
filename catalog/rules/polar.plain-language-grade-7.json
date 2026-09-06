@@ -4,10 +4,12 @@
   "segment": "Language",
   "title": "plain language grade 7",
   "rule": "Plain language ~US grade 7; no jargon; no idioms; scannable headings/bullets/short sentences.",
-  "citation": {
-    "source": "Shopify — Product content principles",
-    "url": "https://shopify.dev/docs/apps/design/content"
-  },
+  "citation": [
+    {
+      "source": "Shopify — Product content principles",
+      "url": "https://shopify.dev/docs/apps/design/content"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Copy is ~grade 7, jargon- and idiom-free, with scannable headings/bullets/short sentences."

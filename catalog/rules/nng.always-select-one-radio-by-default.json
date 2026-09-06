@@ -4,10 +4,12 @@
   "segment": "Choice",
   "title": "always select one radio by default",
   "rule": "Always select one radio by default (users cannot return to “none”). Dual-cite with GOV.UK no-preselect-on-questions and Polar default-when-possible: satisfy “always one selected” with explicit None when none is valid — do not force a guessed answer.",
-  "citation": {
-    "source": "NN/g — Radio Buttons: Select One by Default",
-    "url": "https://www.nngroup.com/articles/radio-buttons-default-selection/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — Radio Buttons: Select One by Default",
+      "url": "https://www.nngroup.com/articles/radio-buttons-default-selection/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "The radio set has a selected value. If “none” is valid, that value is an explicit None. Settings: current/safe default."

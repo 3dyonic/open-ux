@@ -1,0 +1,31 @@
+{
+  "id": "polar.default-option-selected-when-possible",
+  "category": "Forms",
+  "segment": "Choice",
+  "title": "default option selected when possible",
+  "rule": "Default option selected whenever possible; “Select” placeholder only if no logical default. Dual-cite with GOV.UK settings vs questions and NN/g always-default-radio via explicit None — not a winner.",
+  "citation": [
+    {
+      "source": "Polaris — Select",
+      "url": "https://polaris.shopify.com/components/selection-and-input/select"
+    }
+  ],
+  "check": "deterministic",
+  "pass_when": [
+    "Settings / when a logical current-or-safe default exists, it is selected. If no logical default, a “Select” placeholder is allowed in addition to a visible label (placeholder is extra, never only label). Questions: do not use this row to force a guessed answer; use explicit None when none is valid."
+  ],
+  "fail_when": [
+    "Logical default exists on settings and is unused; or “Select” placeholder is the only label; or a guessed question answer is forced."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "overview": "Select a logical default when possible; Select placeholder only if none exists.",
+  "apply_when": "Settings or selects where a current or safe default can be chosen.",
+  "not_when": "Unused logical defaults, Select as only label, or guessed forced answers.",
+  "agent_hint": "Preselect logical defaults on settings; allow Select placeholder only when none exists.",
+  "description": "Default option selected whenever possible; “Select” placeholder only if no logical default. On settings, when a logical current-or-safe default exists, it is selected. If none, a “Select” placeholder is allowed in addition to a visible label—never as the only label. For questions, do not force a guessed answer; use explicit None when none is valid. Fail when a logical default exists unused, “Select” is the only label, or a guessed question answer is forced.",
+  "do_not_claim": "Placeholder-as-hint as a new Polar row (skipped). Overlap with Forms 54: `forms.inputs.good_defaults_smart_prefills`."
+}

@@ -4,10 +4,12 @@
   "segment": "Inputs",
   "title": "use device features",
   "rule": "Populate the field from phone features when they apply (camera, GPS, voice, contacts).",
-  "citation": {
-    "source": "NN/g — A Checklist for Designing Mobile Input Fields",
-    "url": "https://www.nngroup.com/articles/mobile-input-checklist/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — A Checklist for Designing Mobile Input Fields",
+      "url": "https://www.nngroup.com/articles/mobile-input-checklist/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Where camera, GPS, voice, or contacts can supply the value, that path is offered."

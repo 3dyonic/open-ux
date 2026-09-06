@@ -4,10 +4,12 @@
   "segment": "Buttons",
   "title": "follow platform ok cancel order",
   "rule": "Follow the platform convention for OK/Cancel order (Windows: OK first; Apple: OK last; web: the platform of most users).",
-  "citation": {
-    "source": "NN/g — OK-Cancel or Cancel-OK",
-    "url": "https://www.nngroup.com/articles/ok-cancel-or-cancel-ok/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — OK-Cancel or Cancel-OK",
+      "url": "https://www.nngroup.com/articles/ok-cancel-or-cancel-ok/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Commit/dismiss order matches the platform (Windows OK first; Apple OK last; web = platform of most users)."

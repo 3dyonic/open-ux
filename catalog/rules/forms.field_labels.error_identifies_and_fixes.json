@@ -4,10 +4,12 @@
   "segment": "Errors",
   "title": "error identifies and fixes",
   "rule": "Error messages identify the problem and give constructive advice so the user can fix it.",
-  "citation": {
-    "source": "NN/g — 10 Design Guidelines for Reporting Errors in Forms; NN/g — Website Forms Usability; Vercel Web Interface Guidelines",
-    "url": "https://www.nngroup.com/articles/errors-forms-design-guidelines/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — 10 Design Guidelines for Reporting Errors in Forms; NN/g — Website Forms Usability; Vercel Web Interface Guidelines",
+      "url": "https://www.nngroup.com/articles/errors-forms-design-guidelines/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "On error, visible text says what is wrong and how to fix it (or the next step)."

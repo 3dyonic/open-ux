@@ -4,10 +4,12 @@
   "segment": "Responsive",
   "title": "no separate mobile site",
   "rule": "No separate mobile site — same content on phone and desktop; IA as flat as possible; in-page navigation over menus; limit page weight. Dual-cite USWDS continuity / mobile-friendly without a second origin and Wayfinding Jump to Item (do not merge with USWDS tab-before-main / never-link-externally in-page row).",
-  "citation": {
-    "source": "Canada.ca — Designing content",
-    "url": "https://design.canada.ca/specifications/design-content.html"
-  },
+  "citation": [
+    {
+      "source": "Canada.ca — Designing content",
+      "url": "https://design.canada.ca/specifications/design-content.html"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Phone and desktop share the same content origin; IA is flat; in-page nav is preferred over extra menus."

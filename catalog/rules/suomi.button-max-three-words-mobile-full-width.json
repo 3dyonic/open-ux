@@ -4,10 +4,12 @@
   "segment": "Buttons",
   "title": "button max three words mobile full width",
   "rule": "Button label ≤3 words; verb; capital first letter; full-width on mobile, shrink-to-content on desktop. Inverted variant not on images unless contrast holds. Dual-cite Actions explicit verb; unique bits are the three-word cap and mobile full-width.",
-  "citation": {
-    "source": "Suomi.fi — Button",
-    "url": "https://designsystem.suomi.fi/components/button/"
-  },
+  "citation": [
+    {
+      "source": "Suomi.fi — Button",
+      "url": "https://designsystem.suomi.fi/components/button/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Action labels ≤3 words, verb-first, capital first letter; small screens span the viewport; desktop width follows the label; inverted not on images unless contrast holds."

@@ -4,10 +4,12 @@
   "segment": "Official banner",
   "title": "banner gov mil https every page",
   "rule": "Unaltered .gov/.mil + HTTPS copy on every page, after skipnav. Only on official .gov/.mil with HTTPS; never on .com/.org or test sites. Spanish copy on Spanish sites; `.mil` copy on `.mil`. Do not leave `aria-hidden=\"true\"` on banner content in markup (JS sets it).",
-  "citation": {
-    "source": "USWDS — Banner",
-    "url": "https://designsystem.digital.gov/components/banner/"
-  },
+  "citation": [
+    {
+      "source": "USWDS — Banner",
+      "url": "https://designsystem.digital.gov/components/banner/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Official .gov/.mil HTTPS sites show the unaltered TLD/HTTPS banner on every page after skipnav; language/TLD copy matches the site; banner content is not `aria-hidden` in the markup."

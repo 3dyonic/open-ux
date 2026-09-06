@@ -4,10 +4,12 @@
   "segment": "Question pages",
   "title": "question pages continue back no sliders",
   "rule": "Question pages: Continue (not “Submit” jargon); Back link; don’t use range sliders.",
-  "citation": {
-    "source": "GOV.UK Design System — Question pages",
-    "url": "https://design-system.service.gov.uk/patterns/question-pages/"
-  },
+  "citation": [
+    {
+      "source": "GOV.UK Design System — Question pages",
+      "url": "https://design-system.service.gov.uk/patterns/question-pages/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Question page primary is Continue (not Submit); a Back link is present; no range slider for the answer."

@@ -4,10 +4,12 @@
   "segment": "Search",
   "title": "search input attributes",
   "rule": "Search input attributes — `autocomplete` on search can leak sensitive queries on shared machines. `autocorrect` / `spellcheck` conflict with server-side search correction. Do not rely on `required` as the only “empty search” message.",
-  "citation": {
-    "source": "GOLD — Searchbox attributes",
-    "url": "https://github.com/designsystemau/gold-design-system-site/blob/main/content/components/searchbox/rationale/attributes.md"
-  },
+  "citation": [
+    {
+      "source": "GOLD — Searchbox attributes",
+      "url": "https://github.com/designsystemau/gold-design-system-site/blob/main/content/components/searchbox/rationale/attributes.md"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Search does not use `autocomplete` in a way that stores sensitive queries; `autocorrect`/`spellcheck` are not fighting server-side correction; empty search is not messaged by `required` alone."

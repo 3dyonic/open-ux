@@ -4,10 +4,12 @@
   "segment": "Errors",
   "title": "inline after complete",
   "rule": "Prefer inline validation after the user finishes a field; do not show an error before input is complete or on fields they have not reached.",
-  "citation": {
-    "source": "NN/g — 10 Design Guidelines for Reporting Errors in Forms (§1, §7)",
-    "url": "https://www.nngroup.com/articles/errors-forms-design-guidelines/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — 10 Design Guidelines for Reporting Errors in Forms (§1, §7)",
+      "url": "https://www.nngroup.com/articles/errors-forms-design-guidelines/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Field error can appear after the user finishes that field (blur/complete), without a full-form submit as the only path; no error while still typing that field; untouched later fields stay quiet."

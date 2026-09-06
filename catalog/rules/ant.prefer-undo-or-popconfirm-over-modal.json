@@ -4,10 +4,12 @@
   "segment": "Confirmation",
   "title": "prefer undo or popconfirm over modal",
   "rule": "Prefer undo (or Popconfirm) over Modal double-confirm — delete → success + Undo (message+undo gone after one minute or on Undo). If undo is invalid, use Popconfirm next to the control. Abusing Modal drops context and blocks undo. Dual-cite Primer \"never warning when you mean undo\" / NN/g undo; Ant names Popconfirm vs Modal.",
-  "citation": {
-    "source": "Ant Design — Feedback spec",
-    "url": "https://ant.design/docs/spec/feedback"
-  },
+  "citation": [
+    {
+      "source": "Ant Design — Feedback spec",
+      "url": "https://ant.design/docs/spec/feedback"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Delete uses success + Undo (gone after one minute or on Undo), or Popconfirm next to the control when undo is invalid — not a blocking Modal when undo would work."

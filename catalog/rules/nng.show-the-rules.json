@@ -4,10 +4,12 @@
   "segment": "Password",
   "title": "show the rules",
   "rule": "Show the Rules — requirements visible the whole time the field is selected (not a hidden link; not inside the placeholder).",
-  "citation": {
-    "source": "NN/g — Password Creation: 3 Ways To Make It Easier",
-    "url": "https://www.nngroup.com/articles/password-creation/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — Password Creation: 3 Ways To Make It Easier",
+      "url": "https://www.nngroup.com/articles/password-creation/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "While the password-creation field is selected, the requirements stay visible outside the placeholder."

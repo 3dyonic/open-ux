@@ -4,10 +4,12 @@
   "segment": "Errors",
   "title": "validation messages brief no end punctuation",
   "rule": "Validation messages brief; no end punctuation unless multiple sentences.",
-  "citation": {
-    "source": "Fluent 2 — Field usage",
-    "url": "https://fluent2.microsoft.design/components/web/react/core/field/usage"
-  },
+  "citation": [
+    {
+      "source": "Fluent 2 — Field usage",
+      "url": "https://fluent2.microsoft.design/components/web/react/core/field/usage"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Brief validation; no end punctuation on a single sentence; punctuation only if multiple sentences."

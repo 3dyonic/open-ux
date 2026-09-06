@@ -320,7 +320,7 @@ def list_index(
 
 
 def citations(guideline: dict[str, Any]) -> list[dict[str, Any]]:
-    """Normalize citation to a list of {source, url}. One object or an array."""
+    """Return citation as a list of {source, url}. Catalog files always store an array."""
     raw = guideline.get("citation")
     if raw is None:
         return []

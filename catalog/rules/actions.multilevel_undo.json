@@ -4,10 +4,12 @@
   "segment": "Control",
   "title": "multilevel undo",
   "rule": "Let the user reverse a series of actions, not only the last one.",
-  "citation": {
-    "source": "Designing Interfaces 3e ch. Doing Things — Multilevel Undo (Tidwell, Brewer, Valencia)",
-    "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
-  },
+  "citation": [
+    {
+      "source": "Designing Interfaces 3e ch. Doing Things — Multilevel Undo (Tidwell, Brewer, Valencia)",
+      "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "More than the last action can be reversed."

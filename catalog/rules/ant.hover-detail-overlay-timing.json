@@ -4,10 +4,12 @@
   "segment": "Overlay",
   "title": "hover detail overlay timing",
   "rule": "Hover detail overlay timing — 0.5 s delay on mouseover; close immediately on mouse-out.",
-  "citation": {
-    "source": "Ant Design — Stay on the Page",
-    "url": "https://ant.design/docs/spec/stay"
-  },
+  "citation": [
+    {
+      "source": "Ant Design — Stay on the Page",
+      "url": "https://ant.design/docs/spec/stay"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Detail overlay appears after 0.5 s hover; closes immediately on mouse-out."

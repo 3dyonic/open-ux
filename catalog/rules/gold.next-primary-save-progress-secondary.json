@@ -4,10 +4,12 @@
   "segment": "Multi-page form",
   "title": "next primary save progress secondary",
   "rule": "Multi-page pairing: Next page is primary; Save progress is secondary.",
-  "citation": {
-    "source": "GOLD — Form template tips",
-    "url": "https://github.com/designsystemau/gold-design-system-site/blob/main/content/templates/form/tips.md"
-  },
+  "citation": [
+    {
+      "source": "GOLD — Form template tips",
+      "url": "https://github.com/designsystemau/gold-design-system-site/blob/main/content/templates/form/tips.md"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "On a multi-page form, Next page is the primary control and Save progress is secondary."

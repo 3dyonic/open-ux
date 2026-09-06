@@ -4,10 +4,12 @@
   "segment": "Checkout",
   "title": "mobile friendly payment options",
   "rule": "Mobile-friendly payment options without overwhelming; photo-to-fill card; cross-device cart.",
-  "citation": {
-    "source": "NN/g — The Mobile Checkout Experience",
-    "url": "https://www.nngroup.com/articles/mobile-checkout-ux/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — The Mobile Checkout Experience",
+      "url": "https://www.nngroup.com/articles/mobile-checkout-ux/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Payment options stay usable on mobile without an overwhelming list; card can be filled from a photo; cart works across devices."

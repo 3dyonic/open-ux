@@ -4,10 +4,12 @@
   "segment": "Destructive",
   "title": "danger cancel primary when not recommended",
   "rule": "If the user's intention is delete, use danger to warn. If the system does not recommend the deletion, set Cancel as the primary action. Compatible with \"primary not destructive\"; dual-cite, don't collapse.",
-  "citation": {
-    "source": "Ant Design — Button spec",
-    "url": "https://ant.design/docs/spec/buttons"
-  },
+  "citation": [
+    {
+      "source": "Ant Design — Button spec",
+      "url": "https://ant.design/docs/spec/buttons"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Delete uses danger warning. When the system does not recommend deletion, Cancel is the primary; destructive is not the recommended/primary."

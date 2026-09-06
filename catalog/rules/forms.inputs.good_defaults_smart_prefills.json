@@ -4,10 +4,12 @@
   "segment": "Inputs",
   "title": "good defaults smart prefills",
   "rule": "Prefill with good defaults and smart values the user can accept or edit.",
-  "citation": {
-    "source": "Designing Interfaces 3e ch. Getting Input — Good Defaults and Smart Prefills (Tidwell, Brewer, Valencia); NN/g — A Checklist for Designing Mobile Input Fields",
-    "url": "https://www.nngroup.com/articles/mobile-input-checklist/"
-  },
+  "citation": [
+    {
+      "source": "Designing Interfaces 3e ch. Getting Input — Good Defaults and Smart Prefills (Tidwell, Brewer, Valencia); NN/g — A Checklist for Designing Mobile Input Fields",
+      "url": "https://www.nngroup.com/articles/mobile-input-checklist/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Known defaults, history, or frequent values are prefilled and editable."

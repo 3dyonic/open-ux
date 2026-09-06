@@ -4,10 +4,12 @@
   "segment": "Inputs",
   "title": "no autocorrect identity fields",
   "rule": "Do not autocorrect names, addresses, or emails; turn spellcheck off on emails, codes, and usernames.",
-  "citation": {
-    "source": "NN/g — A Checklist for Designing Mobile Input Fields; Vercel Web Interface Guidelines",
-    "url": "https://www.nngroup.com/articles/mobile-input-checklist/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — A Checklist for Designing Mobile Input Fields; Vercel Web Interface Guidelines",
+      "url": "https://www.nngroup.com/articles/mobile-input-checklist/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Name, address, email: autocorrect off. Email, code, username: spellcheck off."

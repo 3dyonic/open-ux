@@ -4,10 +4,12 @@
   "segment": "Icons",
   "title": "always visible text label",
   "rule": "Put a text label next to the icon and keep it visible at all times; do not reveal the label only on hover.",
-  "citation": {
-    "source": "NN/g — Icon Usability",
-    "url": "https://www.nngroup.com/articles/icon-usability/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — Icon Usability",
+      "url": "https://www.nngroup.com/articles/icon-usability/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Command icons have an always-visible text label next to the icon."

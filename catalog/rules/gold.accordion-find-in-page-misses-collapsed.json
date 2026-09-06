@@ -4,10 +4,12 @@
   "segment": "Accordion",
   "title": "accordion find in page misses collapsed",
   "rule": "Accordion: hidden copy is invisible to Find in page — browsers’ find does not match collapsed accordion text. Dual-cite USWDS “use only if users need a few pieces”; this names the find-in-page failure.",
-  "citation": {
-    "source": "GOLD — Accordion usage",
-    "url": "https://github.com/designsystemau/gold-design-system-site/blob/main/content/components/accordion/rationale/usage.md"
-  },
+  "citation": [
+    {
+      "source": "GOLD — Accordion usage",
+      "url": "https://github.com/designsystemau/gold-design-system-site/blob/main/content/components/accordion/rationale/usage.md"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Content people must find with Find in page is not only inside a collapsed accordion."

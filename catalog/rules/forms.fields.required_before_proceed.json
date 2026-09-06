@@ -4,10 +4,12 @@
   "segment": "Fields",
   "title": "required before proceed",
   "rule": "Make people understand they must provide required data before they can proceed (for example enable Next only after required fields are filled).",
-  "citation": {
-    "source": "Apple HIG — Entering data",
-    "url": "https://developer.apple.com/design/human-interface-guidelines/entering-data"
-  },
+  "citation": [
+    {
+      "source": "Apple HIG — Entering data",
+      "url": "https://developer.apple.com/design/human-interface-guidelines/entering-data"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "User can tell required data blocks proceed (disabled Next/Submit until required filled, or equivalent explicit gate)."

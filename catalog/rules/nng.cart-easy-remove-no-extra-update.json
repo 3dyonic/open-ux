@@ -4,10 +4,12 @@
   "segment": "Checkout",
   "title": "cart easy remove no extra update",
   "rule": "Cart: easy Remove per line; no extra Update button to commit quantity.",
-  "citation": {
-    "source": "NN/g — The Mobile Checkout Experience",
-    "url": "https://www.nngroup.com/articles/mobile-checkout-ux/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — The Mobile Checkout Experience",
+      "url": "https://www.nngroup.com/articles/mobile-checkout-ux/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Each line has easy Remove; quantity commits without a separate Update button."

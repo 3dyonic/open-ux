@@ -4,10 +4,12 @@
   "segment": "Field labels",
   "title": "labels sentence case no colons above",
   "rule": "Labels: sentence case, no trailing colons, above the control.",
-  "citation": {
-    "source": "GOV.UK Design System — Text input",
-    "url": "https://design-system.service.gov.uk/components/text-input/"
-  },
+  "citation": [
+    {
+      "source": "GOV.UK Design System — Text input",
+      "url": "https://design-system.service.gov.uk/components/text-input/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Visible label is sentence case, has no trailing colon, and sits above the control."

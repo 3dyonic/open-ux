@@ -4,10 +4,12 @@
   "segment": "Choice",
   "title": "avoid cascading dropdowns",
   "rule": "Avoid cascading/interdependent dropdowns (options that appear/disappear from another widget).",
-  "citation": {
-    "source": "NN/g — Dropdowns: Design Guidelines",
-    "url": "https://www.nngroup.com/articles/drop-down-menus/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — Dropdowns: Design Guidelines",
+      "url": "https://www.nngroup.com/articles/drop-down-menus/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Choice sets are not chained so that a second dropdown’s options appear/disappear from the first."

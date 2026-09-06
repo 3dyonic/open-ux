@@ -4,10 +4,12 @@
   "segment": "Toast",
   "title": "bundle instead of spam toasts",
   "rule": "Bundle instead of spam — e.g. four uploads → one toast, not four. Be mindful of frequency even though toasts are weaker than dialogs.",
-  "citation": {
-    "source": "Spectrum — Toast",
-    "url": "https://spectrum.adobe.com/page/toast/"
-  },
+  "citation": [
+    {
+      "source": "Spectrum — Toast",
+      "url": "https://spectrum.adobe.com/page/toast/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Related events (e.g. four uploads) are one bundled toast."

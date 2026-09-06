@@ -4,10 +4,12 @@
   "segment": "Site alert",
   "title": "site alert dont stack dont panic",
   "rule": "One full-width site alert near the top. Do not stack. Multiple messages = a list of links inside a single site alert. Positioning already gives weight; do not use heavy red/orange panic colour. Dual-cite GOV.UK notification banner and System status: sitewide static, never form validation, never stacked.",
-  "citation": {
-    "source": "USWDS — Site alert",
-    "url": "https://designsystem.digital.gov/components/site-alert/"
-  },
+  "citation": [
+    {
+      "source": "USWDS — Site alert",
+      "url": "https://designsystem.digital.gov/components/site-alert/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "At most one sitewide static site alert; extra messages are links inside it; not used for form/task validation; colour is not panic-red/orange as the only weight."

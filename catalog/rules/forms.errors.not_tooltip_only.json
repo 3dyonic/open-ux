@@ -4,10 +4,12 @@
   "segment": "Errors",
   "title": "not tooltip only",
   "rule": "Do not require hover or an extra click on an icon to read the error message.",
-  "citation": {
-    "source": "NN/g — 10 Design Guidelines for Reporting Errors in Forms (§9)",
-    "url": "https://www.nngroup.com/articles/errors-forms-design-guidelines/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — 10 Design Guidelines for Reporting Errors in Forms (§9)",
+      "url": "https://www.nngroup.com/articles/errors-forms-design-guidelines/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Error message is readable without hover and without clicking an extra icon."

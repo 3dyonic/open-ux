@@ -4,10 +4,12 @@
   "segment": "Dates",
   "title": "dob autocomplete tokens",
   "rule": "Date of birth fields use autocomplete tokens `bday-day` / `bday-month` / `bday-year`.",
-  "citation": {
-    "source": "GOV.UK Design System — Date input",
-    "url": "https://design-system.service.gov.uk/components/date-input/"
-  },
+  "citation": [
+    {
+      "source": "GOV.UK Design System — Date input",
+      "url": "https://design-system.service.gov.uk/components/date-input/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "DOB day/month/year inputs have those autocomplete tokens."

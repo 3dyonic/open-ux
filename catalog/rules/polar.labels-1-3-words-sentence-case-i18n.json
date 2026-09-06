@@ -4,10 +4,12 @@
   "segment": "Field labels",
   "title": "labels 1 3 words sentence case i18n",
   "rule": "Labels 1–3 words, sentence case, no articles/punctuation; independent sentences (not the first half of a sentence finished by the options) — i18n.",
-  "citation": {
-    "source": "Polaris — Select",
-    "url": "https://polaris.shopify.com/components/selection-and-input/select"
-  },
+  "citation": [
+    {
+      "source": "Polaris — Select",
+      "url": "https://polaris.shopify.com/components/selection-and-input/select"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Label is 1–3 words, sentence case, no articles/punctuation, and a full independent sentence (options don’t complete the label)."

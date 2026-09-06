@@ -4,10 +4,12 @@
   "segment": "Errors",
   "title": "focus first error",
   "rule": "On submit, move focus to the first field in error.",
-  "citation": {
-    "source": "Vercel Web Interface Guidelines — Forms",
-    "url": "https://github.com/vercel-labs/web-interface-guidelines/blob/main/command.md"
-  },
+  "citation": [
+    {
+      "source": "Vercel Web Interface Guidelines — Forms",
+      "url": "https://github.com/vercel-labs/web-interface-guidelines/blob/main/command.md"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "After a failed submit, focus is on the first field in error."

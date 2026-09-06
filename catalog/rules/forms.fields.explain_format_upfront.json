@@ -4,10 +4,12 @@
   "segment": "Fields",
   "title": "explain format upfront",
   "rule": "If a field requires a specific format or type of input, state those instructions before the user fails.",
-  "citation": {
-    "source": "NN/g — Website Forms Usability",
-    "url": "https://www.nngroup.com/articles/web-form-design/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — Website Forms Usability",
+      "url": "https://www.nngroup.com/articles/web-form-design/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Format/type instructions are visible next to the field before submit failure."

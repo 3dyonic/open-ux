@@ -4,10 +4,12 @@
   "segment": "Layout",
   "title": "group related labels fields",
   "rule": "Visually group related labels and fields; put each label close to its field (not equidistant from several).",
-  "citation": {
-    "source": "NN/g — Website Forms Usability",
-    "url": "https://www.nngroup.com/articles/web-form-design/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — Website Forms Usability",
+      "url": "https://www.nngroup.com/articles/web-form-design/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Related fields share a visual group; each label is closer to its own field than to neighbors."

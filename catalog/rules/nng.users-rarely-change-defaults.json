@@ -8,10 +8,6 @@
     {
       "source": "NN/g — The Power of Defaults",
       "url": "https://www.nngroup.com/articles/the-power-of-defaults/"
-    },
-    {
-      "source": "Polaris — Select",
-      "url": "https://polaris.shopify.com/components/selection-and-input/select"
     }
   ],
   "check": "llm_judgment",
@@ -31,5 +27,5 @@
   "not_when": "First-alphabetical or most-expensive defaults without a common or safe basis.",
   "agent_hint": "Default to the common or safe value; avoid first-alpha and auto most-expensive.",
   "description": "Users rarely change defaults, so pick the most common or safe value—not first-alphabetical and not automatically the most expensive. Pass when the default is the common or safe value on that basis. Fail when the default is first-alpha or most-expensive with no common or safe basis for the choice, biasing people toward a poor selection.",
-  "do_not_claim": "Question silent-preselect (locked dual-cite); Tidwell Good Defaults as a merge. Placeholder-as-hint as a new Polar row (skipped). Overlap with Forms 54: `forms.inputs.good_defaults_smart_prefills`."
+  "do_not_claim": "Question silent-preselect (locked dual-cite); Tidwell Good Defaults as a merge."
 }

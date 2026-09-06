@@ -4,10 +4,12 @@
   "segment": "Choice",
   "title": "standard visuals checkbox square radio circle",
   "rule": "Standard visuals: checkbox square; radio circle with solid inner.",
-  "citation": {
-    "source": "NN/g — Checkboxes vs. Radio Buttons",
-    "url": "https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — Checkboxes vs. Radio Buttons",
+      "url": "https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Checkboxes are squares; radios are circles with a solid inner when selected."

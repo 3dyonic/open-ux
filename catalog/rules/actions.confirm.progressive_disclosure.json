@@ -4,10 +4,12 @@
   "segment": "Confirmation",
   "title": "progressive disclosure",
   "rule": "Keep confirmation copy short and offer a way to learn more before commit.",
-  "citation": {
-    "source": "NN/g — Confirmation Dialogs (§5)",
-    "url": "https://www.nngroup.com/articles/confirmation-dialog/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — Confirmation Dialogs (§5)",
+      "url": "https://www.nngroup.com/articles/confirmation-dialog/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Confirmation copy is short; extra detail is available before commit."

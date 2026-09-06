@@ -4,10 +4,12 @@
   "segment": "Structure",
   "title": "dont duplicate content",
   "rule": "Don’t duplicate content (no second page title under the title bar; no extra nav that copies App nav).",
-  "citation": {
-    "source": "Shopify — Product content principles",
-    "url": "https://shopify.dev/docs/apps/design/content"
-  },
+  "citation": [
+    {
+      "source": "Shopify — Product content principles",
+      "url": "https://shopify.dev/docs/apps/design/content"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "One page title; no extra nav that copies App nav."

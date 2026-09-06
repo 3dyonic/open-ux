@@ -4,10 +4,12 @@
   "segment": "Menus",
   "title": "unavailable state",
   "rule": "Show when a menu item is unavailable (typically dimmed); if every item is unavailable, keep the menu itself openable.",
-  "citation": {
-    "source": "Apple HIG — Menus",
-    "url": "https://developer.apple.com/design/human-interface-guidelines/menus"
-  },
+  "citation": [
+    {
+      "source": "Apple HIG — Menus",
+      "url": "https://developer.apple.com/design/human-interface-guidelines/menus"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Unavailable items are shown as unavailable (typically dimmed); if all items are unavailable, the menu still opens."

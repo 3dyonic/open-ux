@@ -4,10 +4,12 @@
   "segment": "Field labels",
   "title": "label stays visible",
   "rule": "Keep the label visible while the user types and checks the value; do not rely on text that disappears inside the field.",
-  "citation": {
-    "source": "NN/g — Placeholders in Form Fields Are Harmful; Material 3 — Text fields",
-    "url": "https://www.nngroup.com/articles/form-design-placeholders/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — Placeholders in Form Fields Are Harmful; Material 3 — Text fields",
+      "url": "https://www.nngroup.com/articles/form-design-placeholders/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "While the field has focus or a value, the label remains on screen."

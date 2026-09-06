@@ -4,10 +4,12 @@
   "segment": "Actions",
   "title": "avoid reset clear",
   "rule": "Avoid Reset and Clear on web forms; if Cancel is needed for sensitive data, give it much less prominence than Submit.",
-  "citation": {
-    "source": "NN/g — Website Forms Usability",
-    "url": "https://www.nngroup.com/articles/web-form-design/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — Website Forms Usability",
+      "url": "https://www.nngroup.com/articles/web-form-design/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "No form-wide Reset/Clear; if Cancel exists for sensitive data, it is visually weaker than Submit."

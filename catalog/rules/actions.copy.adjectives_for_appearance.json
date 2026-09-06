@@ -4,10 +4,12 @@
   "segment": "Copy",
   "title": "adjectives for appearance",
   "rule": "Use adjectives that name the resulting appearance for commands that change an element’s look or system state (for example Bold, Italic).",
-  "citation": {
-    "source": "NN/g — UI Copy",
-    "url": "https://www.nngroup.com/articles/ui-copy/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — UI Copy",
+      "url": "https://www.nngroup.com/articles/ui-copy/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Look/state-change commands use adjectives that name the resulting appearance (e.g. Bold, Italic)."

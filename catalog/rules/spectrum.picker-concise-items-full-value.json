@@ -4,10 +4,12 @@
   "segment": "Picker",
   "title": "picker concise items full value",
   "rule": "Concise menu items; width shows the chosen value in full — wrapping items discouraged; if wrapping is frequent, revise copy or change pattern. Field button should be wide enough that selected items are not ellipsized.",
-  "citation": {
-    "source": "Spectrum — Picker",
-    "url": "https://spectrum.adobe.com/page/picker/"
-  },
+  "citation": [
+    {
+      "source": "Spectrum — Picker",
+      "url": "https://spectrum.adobe.com/page/picker/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Menu items are concise; the field button is wide enough that the selected value is not ellipsized; frequent wrapping is treated as a copy/pattern problem."

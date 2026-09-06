@@ -4,10 +4,12 @@
   "segment": "Layout",
   "title": "helper text changes field height",
   "rule": "Helper text changes field height — a field with helper text next to one without will misalign. Equalize by passing a space character as `helperText` on the sibling.",
-  "citation": {
-    "source": "MUI — Text Field",
-    "url": "https://mui.com/material-ui/react-text-field/"
-  },
+  "citation": [
+    {
+      "source": "MUI — Text Field",
+      "url": "https://mui.com/material-ui/react-text-field/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Adjacent fields with/without helper text stay aligned (sibling gets space `helperText` or equivalent)."

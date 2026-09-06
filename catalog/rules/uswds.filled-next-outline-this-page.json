@@ -4,10 +4,12 @@
   "segment": "Buttons",
   "title": "filled next outline this page",
   "rule": "Standard (filled) for actions that go to a next step. Outline for actions that happen on the current page. Unstyled only for less important actions that may look like links.",
-  "citation": {
-    "source": "USWDS — Button",
-    "url": "https://designsystem.digital.gov/components/button/"
-  },
+  "citation": [
+    {
+      "source": "USWDS — Button",
+      "url": "https://designsystem.digital.gov/components/button/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Next-step actions are filled; same-page actions are outline; unstyled is only for less important link-like actions."

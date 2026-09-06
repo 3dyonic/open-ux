@@ -4,10 +4,12 @@
   "segment": "Inputs",
   "title": "allow paste and drag",
   "rule": "Allow copy/paste (never block paste) and, where the platform supports it, drag-and-drop into the field.",
-  "citation": {
-    "source": "NN/g — A Checklist for Designing Mobile Input Fields; Vercel Web Interface Guidelines; Apple HIG — Entering data",
-    "url": "https://www.nngroup.com/articles/mobile-input-checklist/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — A Checklist for Designing Mobile Input Fields; Vercel Web Interface Guidelines; Apple HIG — Entering data",
+      "url": "https://www.nngroup.com/articles/mobile-input-checklist/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Paste into the field works; copy out works; drag-and-drop works where the platform supports it."

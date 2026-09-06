@@ -4,10 +4,12 @@
   "segment": "Navigation",
   "title": "warn unsaved",
   "rule": "Warn before navigation that would lose unsaved changes.",
-  "citation": {
-    "source": "Vercel Web Interface Guidelines — Forms",
-    "url": "https://github.com/vercel-labs/web-interface-guidelines/blob/main/command.md"
-  },
+  "citation": [
+    {
+      "source": "Vercel Web Interface Guidelines — Forms",
+      "url": "https://github.com/vercel-labs/web-interface-guidelines/blob/main/command.md"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Leaving with unsaved changes prompts a warning."

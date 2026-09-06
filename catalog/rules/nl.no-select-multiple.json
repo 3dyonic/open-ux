@@ -4,10 +4,12 @@
   "segment": "Choice",
   "title": "no select multiple",
   "rule": "Don’t use `<select multiple>` — keyboard/VoiceOver (Safari) cannot operate it. Use checkboxes for multi-pick.",
-  "citation": {
-    "source": "NL Design System — Iedereen kan invullen",
-    "url": "https://nldesignsystem.nl/richtlijnen/formulieren/wanneer-welk-form-element/iedereen-kan-invullen/"
-  },
+  "citation": [
+    {
+      "source": "NL Design System — Iedereen kan invullen",
+      "url": "https://nldesignsystem.nl/richtlijnen/formulieren/wanneer-welk-form-element/iedereen-kan-invullen/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Multi-choice uses checkboxes, not native `<select multiple>`."

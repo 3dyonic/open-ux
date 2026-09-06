@@ -4,10 +4,12 @@
   "segment": "Buttons",
   "title": "button types named",
   "rule": "Button types named: default; Start; secondary; warning (destructive).",
-  "citation": {
-    "source": "GOV.UK Design System — Button",
-    "url": "https://design-system.service.gov.uk/components/button/"
-  },
+  "citation": [
+    {
+      "source": "GOV.UK Design System — Button",
+      "url": "https://design-system.service.gov.uk/components/button/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "The button’s type matches its role (default / Start / secondary / warning for destructive)."

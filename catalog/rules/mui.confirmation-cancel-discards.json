@@ -4,10 +4,12 @@
   "segment": "Confirmation",
   "title": "confirmation cancel discards",
   "rule": "Confirmation Cancel discards — touching Cancel cancels the action, discards any changes, and closes. (Example: listen to ringtones; commit only on OK.)",
-  "citation": {
-    "source": "MUI — Dialog",
-    "url": "https://mui.com/material-ui/react-dialog/"
-  },
+  "citation": [
+    {
+      "source": "MUI — Dialog",
+      "url": "https://mui.com/material-ui/react-dialog/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Confirmation Cancel discards changes and closes; commit is only on the confirm control."

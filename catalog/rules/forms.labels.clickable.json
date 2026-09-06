@@ -4,10 +4,12 @@
   "segment": "Field labels",
   "title": "clickable",
   "rule": "Labels are clickable (`htmlFor` or wrapping the control).",
-  "citation": {
-    "source": "Vercel Web Interface Guidelines — Forms",
-    "url": "https://github.com/vercel-labs/web-interface-guidelines/blob/main/command.md"
-  },
+  "citation": [
+    {
+      "source": "Vercel Web Interface Guidelines — Forms",
+      "url": "https://github.com/vercel-labs/web-interface-guidelines/blob/main/command.md"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Activating the label focuses or toggles the associated control via `htmlFor` or wrapping."

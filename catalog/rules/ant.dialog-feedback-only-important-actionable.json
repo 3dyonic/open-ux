@@ -4,10 +4,12 @@
   "segment": "Dialog",
   "title": "dialog feedback only important actionable",
   "rule": "Dialog feedback only for important, actionable information — centered, confirm/cancel to close, blocks other work. Avoid unnecessary reminders except failure. Dual-cite NN/g modal 7; Ant is the feedback-routing sentence.",
-  "citation": {
-    "source": "Ant Design — Feedback spec",
-    "url": "https://ant.design/docs/spec/feedback"
-  },
+  "citation": [
+    {
+      "source": "Ant Design — Feedback spec",
+      "url": "https://ant.design/docs/spec/feedback"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Blocking dialog is used for important actionable information / failure, not unnecessary reminders."

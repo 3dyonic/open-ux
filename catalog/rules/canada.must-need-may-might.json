@@ -4,10 +4,12 @@
   "segment": "Voice",
   "title": "must need may might",
   "rule": "must (law) vs need to (admin) vs may/might (permission) — not “legally required to.” Don’t use can/could for permission (those mean ability).",
-  "citation": {
-    "source": "Canada.ca — Content Style Guide",
-    "url": "https://design.canada.ca/style-guide/index.html"
-  },
+  "citation": [
+    {
+      "source": "Canada.ca — Content Style Guide",
+      "url": "https://design.canada.ca/style-guide/index.html"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Legal obligation = must; admin = need to; permission = may/might."

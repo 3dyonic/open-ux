@@ -4,10 +4,12 @@
   "segment": "Choice",
   "title": "keyboard typeahead in dropdowns",
   "rule": "Keyboard typeahead in dropdowns; avoid dropdown when typing is faster (state/country).",
-  "citation": {
-    "source": "NN/g — Dropdowns: Design Guidelines",
-    "url": "https://www.nngroup.com/articles/drop-down-menus/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — Dropdowns: Design Guidelines",
+      "url": "https://www.nngroup.com/articles/drop-down-menus/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Dropdowns support typeahead; state/country (typing faster) is not a dropdown."

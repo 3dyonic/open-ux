@@ -4,10 +4,12 @@
   "segment": "Text input",
   "title": "dont split phone ssn card",
   "rule": "Do not split phone, SSN, or credit-card numbers into separate fields. One input; segmented fields force meaningless labels for AT. Distinct from GOV.UK three-field dates.",
-  "citation": {
-    "source": "USWDS — Text input; Form templates",
-    "url": "https://designsystem.digital.gov/components/text-input/"
-  },
+  "citation": [
+    {
+      "source": "USWDS — Text input; Form templates",
+      "url": "https://designsystem.digital.gov/components/text-input/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Phone, SSN, and card number are each one field."

@@ -4,10 +4,12 @@
   "segment": "Copy",
   "title": "verbs for actions",
   "rule": "Lead with a verb (or a specific verb phrase) for commands that initiate an action or submit information; prefer a specific verb over a generic Next.",
-  "citation": {
-    "source": "NN/g — UI Copy",
-    "url": "https://www.nngroup.com/articles/ui-copy/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — UI Copy",
+      "url": "https://www.nngroup.com/articles/ui-copy/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Action/submit commands lead with a verb or specific verb phrase, not a generic Next."

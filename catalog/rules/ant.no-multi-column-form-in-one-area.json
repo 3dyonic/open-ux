@@ -4,10 +4,12 @@
   "segment": "Layout",
   "title": "no multi column form in one area",
   "rule": "No multi-column form inside one area — vertical single column is the efficient default; weak grouping may put short related fields on one line, not a second reading column. Card grouping when content is usually more than two screens, each card with a large title.",
-  "citation": {
-    "source": "Ant Design — Data entry ; Ant Design — Form research",
-    "url": "https://ant.design/docs/spec/data-entry"
-  },
+  "citation": [
+    {
+      "source": "Ant Design — Data entry ; Ant Design — Form research",
+      "url": "https://ant.design/docs/spec/data-entry"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "One area is a single reading column (short related fields may share a line). Content usually more than two screens uses titled cards."

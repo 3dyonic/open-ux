@@ -4,10 +4,12 @@
   "segment": "Layout",
   "title": "footer buttons when body cannot carry",
   "rule": "Footer buttons when the body can't carry them — collapsed/hidden content (not one screen), or complex body with subgroup actions so Complete is not confused with local actions. Footer = separation from body.",
-  "citation": {
-    "source": "Ant Design — Button spec",
-    "url": "https://ant.design/docs/spec/buttons"
-  },
+  "citation": [
+    {
+      "source": "Ant Design — Button spec",
+      "url": "https://ant.design/docs/spec/buttons"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Complete/footer actions sit in the footer when content is collapsed/not one screen, or when a complex body has subgroup actions."

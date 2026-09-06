@@ -4,10 +4,12 @@
   "segment": "Constraints",
   "title": "no min max length names places",
   "rule": "No min/max length on names and places — one-character given names and 50-character place names exist. Dual-cite USWDS “raise the DB limit” / character-count not as a cap.",
-  "citation": {
-    "source": "NL Design System — Geen min/max lengte",
-    "url": "https://nldesignsystem.nl/richtlijnen/formulieren/vragen/geen-min-max-lengte/"
-  },
+  "citation": [
+    {
+      "source": "NL Design System — Geen min/max lengte",
+      "url": "https://nldesignsystem.nl/richtlijnen/formulieren/vragen/geen-min-max-lengte/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Unconstrained name and place fields have no rejecting `minLength`/`maxLength`."

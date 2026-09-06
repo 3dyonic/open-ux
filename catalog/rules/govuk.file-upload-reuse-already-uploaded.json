@@ -4,10 +4,12 @@
   "segment": "File upload",
   "title": "file upload reuse already uploaded",
   "rule": "File upload: let users reuse a file already uploaded.",
-  "citation": {
-    "source": "GOV.UK Design System — File upload",
-    "url": "https://design-system.service.gov.uk/components/file-upload/"
-  },
+  "citation": [
+    {
+      "source": "GOV.UK Design System — File upload",
+      "url": "https://design-system.service.gov.uk/components/file-upload/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "A file already uploaded in the journey can be reused without re-picking from disk."

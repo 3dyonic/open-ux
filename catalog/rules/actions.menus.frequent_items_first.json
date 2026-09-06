@@ -4,10 +4,12 @@
   "segment": "Menus",
   "title": "frequent items first",
   "rule": "List important or frequently used menu items first (still grouping related commands).",
-  "citation": {
-    "source": "Apple HIG — Menus",
-    "url": "https://developer.apple.com/design/human-interface-guidelines/menus"
-  },
+  "citation": [
+    {
+      "source": "Apple HIG — Menus",
+      "url": "https://developer.apple.com/design/human-interface-guidelines/menus"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Important or frequently used items are listed first, with related commands still grouped."

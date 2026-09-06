@@ -4,10 +4,12 @@
   "segment": "Choice",
   "title": "dropdown ok narrow middle",
   "rule": "Dropdown OK in a narrow middle (~5–10) when the field is secondary or compactness matters.",
-  "citation": {
-    "source": "NN/g — Does Your Form Really Need a Dropdown List?",
-    "url": "https://www.nngroup.com/articles/dropdown-list/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — Does Your Form Really Need a Dropdown List?",
+      "url": "https://www.nngroup.com/articles/dropdown-list/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "A ~5–10 secondary/compact field may use a dropdown."

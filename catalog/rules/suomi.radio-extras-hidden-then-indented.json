@@ -4,10 +4,12 @@
   "segment": "Radios",
   "title": "radio extras hidden then indented",
   "rule": "Radio extras: additional fields stay hidden, then show indented under the selected radio — not a second “radios vs checkboxes” row.",
-  "citation": {
-    "source": "Suomi.fi — RadioButton",
-    "url": "https://designsystem.suomi.fi/components/radiobutton/"
-  },
+  "citation": [
+    {
+      "source": "Suomi.fi — RadioButton",
+      "url": "https://designsystem.suomi.fi/components/radiobutton/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Extra fields for a radio are hidden until that radio is selected, then appear indented under it."

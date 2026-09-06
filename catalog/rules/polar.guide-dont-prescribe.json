@@ -4,10 +4,12 @@
   "segment": "Voice",
   "title": "guide dont prescribe",
   "rule": "Guide, don’t prescribe — merchant in control; enough info to decide.",
-  "citation": {
-    "source": "Shopify — Product content principles",
-    "url": "https://shopify.dev/docs/apps/design/content"
-  },
+  "citation": [
+    {
+      "source": "Shopify — Product content principles",
+      "url": "https://shopify.dev/docs/apps/design/content"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Copy guides with enough to decide; merchant stays in control."

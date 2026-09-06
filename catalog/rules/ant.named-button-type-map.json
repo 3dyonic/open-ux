@@ -4,10 +4,12 @@
   "segment": "Buttons",
   "title": "named button type map",
   "rule": "Named type map — Default = non-primary, safe if unsure. Primary = complete/recommend. Text = low emphasis (e.g. table actions). Icon-only must have a Tooltip. Text+icon = supplementary meaning. Dashed = add content in an area. Link = external links. Ghost = dark or colored background. (Primary ≤1 per button group is named here, not a second row — dual-cite Actions/Atlassian/Carbon by scope.)",
-  "citation": {
-    "source": "Ant Design — Button spec ; Ant Design — Button",
-    "url": "https://ant.design/docs/spec/buttons"
-  },
+  "citation": [
+    {
+      "source": "Ant Design — Button spec ; Ant Design — Button",
+      "url": "https://ant.design/docs/spec/buttons"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Button type matches that map; icon-only has a tooltip; at most one primary in a button group."

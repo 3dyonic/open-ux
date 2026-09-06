@@ -4,10 +4,12 @@
   "segment": "Errors",
   "title": "next to field not summary only",
   "rule": "Put the error next to the field in error; a top validation summary must not be the only indication.",
-  "citation": {
-    "source": "NN/g — 10 Design Guidelines for Reporting Errors in Forms (§3, §8); Designing Interfaces 3e ch. Getting Input — Error Messages (Tidwell, Brewer, Valencia); Vercel Web Interface Guidelines",
-    "url": "https://www.nngroup.com/articles/errors-forms-design-guidelines/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — 10 Design Guidelines for Reporting Errors in Forms (§3, §8); Designing Interfaces 3e ch. Getting Input — Error Messages (Tidwell, Brewer, Valencia); Vercel Web Interface Guidelines",
+      "url": "https://www.nngroup.com/articles/errors-forms-design-guidelines/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Error text sits next to the field; if a summary exists, field-level indication is also present."

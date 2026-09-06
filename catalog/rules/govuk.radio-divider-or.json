@@ -4,10 +4,12 @@
   "segment": "Choice",
   "title": "radio divider or",
   "rule": "Use a radio divider (usually “or”) for an unlike option.",
-  "citation": {
-    "source": "GOV.UK Design System — Radios",
-    "url": "https://design-system.service.gov.uk/components/radios/"
-  },
+  "citation": [
+    {
+      "source": "GOV.UK Design System — Radios",
+      "url": "https://design-system.service.gov.uk/components/radios/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "An unlike option (e.g. “None of these”, “I don’t know”) is separated with a divider, usually “or”."

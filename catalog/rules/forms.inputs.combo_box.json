@@ -4,10 +4,12 @@
   "segment": "Inputs",
   "title": "combo box",
   "rule": "When text input must be paired with a list of choices, use a combo box.",
-  "citation": {
-    "source": "Apple HIG — Text fields",
-    "url": "https://developer.apple.com/design/human-interface-guidelines/text-fields"
-  },
+  "citation": [
+    {
+      "source": "Apple HIG — Text fields",
+      "url": "https://developer.apple.com/design/human-interface-guidelines/text-fields"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Type-plus-list task uses a combo box (text field + choice list)."

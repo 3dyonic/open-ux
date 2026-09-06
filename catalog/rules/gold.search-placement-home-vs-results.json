@@ -4,10 +4,12 @@
   "segment": "Search",
   "title": "search placement home vs results",
   "rule": "Search placement — landing/home: top-right (where people expect it). Results page: search box closer to the results so query and hits read as related. Dual-cite USWDS persist-query / homepage-is-a-box.",
-  "citation": {
-    "source": "GOLD — Searchbox placement",
-    "url": "https://github.com/designsystemau/gold-design-system-site/blob/main/content/components/searchbox/rationale/placement.md"
-  },
+  "citation": [
+    {
+      "source": "GOLD — Searchbox placement",
+      "url": "https://github.com/designsystemau/gold-design-system-site/blob/main/content/components/searchbox/rationale/placement.md"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Home search is top-right; results-page search sits close to the hits."

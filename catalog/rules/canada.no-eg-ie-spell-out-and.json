@@ -4,10 +4,12 @@
   "segment": "Style",
   "title": "no eg ie spell out and",
   "rule": "No e.g. / i.e.; spell out “and.” Use “for example” / “that is.” Ampersand only in proper names and set abbreviations (R&D, O&M). Latin abbreviations only when space is tight (tables).",
-  "citation": {
-    "source": "Canada.ca — Content Style Guide",
-    "url": "https://design.canada.ca/style-guide/index.html"
-  },
+  "citation": [
+    {
+      "source": "Canada.ca — Content Style Guide",
+      "url": "https://design.canada.ca/style-guide/index.html"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Prose uses “for example” / “that is” and “and”; & only in proper names/set abbreviations."

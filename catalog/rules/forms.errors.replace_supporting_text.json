@@ -4,10 +4,12 @@
   "segment": "Errors",
   "title": "replace supporting text",
   "rule": "Swap supporting text for error text; do not stack error text on top of supporting text (layout shift).",
-  "citation": {
-    "source": "Material 3 — Text fields",
-    "url": "https://m3.material.io/components/text-fields/guidelines"
-  },
+  "citation": [
+    {
+      "source": "Material 3 — Text fields",
+      "url": "https://m3.material.io/components/text-fields/guidelines"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "In error, supporting text is replaced by error text in the same slot; layout does not grow a second line under the hint."

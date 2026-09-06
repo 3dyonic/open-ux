@@ -4,10 +4,12 @@
   "segment": "Inputs",
   "title": "shared hit target choice",
   "rule": "Checkbox and radio label and control share a single hit target (no dead zones).",
-  "citation": {
-    "source": "Vercel Web Interface Guidelines — Forms",
-    "url": "https://github.com/vercel-labs/web-interface-guidelines/blob/main/command.md"
-  },
+  "citation": [
+    {
+      "source": "Vercel Web Interface Guidelines — Forms",
+      "url": "https://github.com/vercel-labs/web-interface-guidelines/blob/main/command.md"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Click/tap on label, control, or the space between toggles the same choice."

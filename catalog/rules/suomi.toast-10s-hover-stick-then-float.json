@@ -4,10 +4,12 @@
   "segment": "Toast",
   "title": "toast 10s hover stick then float",
   "rule": "Toast: 10 seconds or while hovered; slide out the top; stick then float top-right on scroll — success that needs no action. Dual-cite Spectrum ≥5s vs Ant Message 3s; no house seconds.",
-  "citation": {
-    "source": "Suomi.fi — Toast",
-    "url": "https://designsystem.suomi.fi/components/toast/"
-  },
+  "citation": [
+    {
+      "source": "Suomi.fi — Toast",
+      "url": "https://designsystem.suomi.fi/components/toast/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Duration is one named school applied consistently (Suomi.fi 10s or while hovered; Spectrum ≥5s; Ant 3s). Suomi.fi geometry when that school is used: stick-top then float top-right after scroll; slide-out dismiss; success with no required response."

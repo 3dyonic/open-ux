@@ -4,10 +4,12 @@
   "segment": "Time",
   "title": "time field 60px hint tmm always visible",
   "rule": "Time field is fixed ~60px; hint `t.mm` always visible; component normalises to Finnish time — not placeholder-only format. Dual-cite USWDS time picker increments. Placeholder/label lock: format is not only in a placeholder.",
-  "citation": {
-    "source": "Suomi.fi — TimeInput",
-    "url": "https://designsystem.suomi.fi/components/timeinput/"
-  },
+  "citation": [
+    {
+      "source": "Suomi.fi — TimeInput",
+      "url": "https://designsystem.suomi.fi/components/timeinput/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Time input is ~60px wide; `t.mm` hint is always visible; value is normalised to Finnish time."

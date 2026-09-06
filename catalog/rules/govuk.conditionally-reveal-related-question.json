@@ -4,10 +4,12 @@
   "segment": "Structure",
   "title": "conditionally reveal related question",
   "rule": "Conditionally reveal a related question on the chosen radio/checkbox.",
-  "citation": {
-    "source": "GOV.UK Design System — Radios; GOV.UK Design System — Checkboxes",
-    "url": "https://design-system.service.gov.uk/components/radios/"
-  },
+  "citation": [
+    {
+      "source": "GOV.UK Design System — Radios; GOV.UK Design System — Checkboxes",
+      "url": "https://design-system.service.gov.uk/components/radios/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "A follow-up that applies only to one choice is revealed when that radio/checkbox is chosen."

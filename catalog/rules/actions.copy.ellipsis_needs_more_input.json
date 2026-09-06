@@ -4,10 +4,12 @@
   "segment": "Copy",
   "title": "ellipsis needs more input",
   "rule": "Append an ellipsis when the command needs more information or opens another window, view, or app.",
-  "citation": {
-    "source": "NN/g — UI Copy; Apple HIG — Buttons",
-    "url": "https://www.nngroup.com/articles/ui-copy/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — UI Copy; Apple HIG — Buttons",
+      "url": "https://www.nngroup.com/articles/ui-copy/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Ellipsis is present when more input is required or another window/view/app opens; absent when the action completes immediately."

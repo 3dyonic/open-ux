@@ -50,6 +50,15 @@ UNMAPPED_DROPPED = {
     "uswds.search-min-27-chars-persist-query",
 }
 FOLDED_IDS = {
+    "nl.dont-reject-valid-variants",
+    "nl.no-forced-input-patterns-or-masks",
+    "forms.inputs.allow_typos_abbreviations",
+    "fluent.required-asterisk-or-one-instruction",
+    "suomi.default-required-optional-in-parentheses",
+    "nl.mark-optional-niet-verplicht-above-form",
+    "suomi.toggle-button-immediate-input-submit",
+}
+UNWOUND_IDS = {
     "nng.too-few-options-radios-not-dropdown",
     "nng.prefer-radios-over-dropdowns-when-visible",
     "gold.avoid-select-except-long-lists",
@@ -59,30 +68,20 @@ FOLDED_IDS = {
     "govuk.calendar-control-when",
     "govuk.date-input-only-memorable",
     "uswds.date-picker-when-weekday-always-type",
-    "nl.dont-reject-valid-variants",
-    "nl.no-forced-input-patterns-or-masks",
-    "forms.inputs.allow_typos_abbreviations",
-    "fluent.required-asterisk-or-one-instruction",
-    "suomi.default-required-optional-in-parentheses",
-    "nl.mark-optional-niet-verplicht-above-form",
-    "suomi.toggle-button-immediate-input-submit",
     "polar.default-option-selected-when-possible",
 }
 MULTI_CITE_KEEPS = {
-    "forms.inputs.match_control_and_size",
-    "govuk.four-date-types",
     "forms.inputs.forgiving_format_autoformat",
     "forms.fields.distinguish_optional_required",
     "ant.checkbox-vs-switch",
-    "nng.users-rarely-change-defaults",
 }
-CATALOG_COUNT = 285
+CATALOG_COUNT = 295
 ACTION_COUNT = 40
 FORM_COUNT = 53
-EXTRA_COUNT = 62
-HARVEST3_COUNT = 55
-HARVEST4_COUNT = 42
-HARVEST5_COUNT = 33
+EXTRA_COUNT = 69
+HARVEST3_COUNT = 56
+HARVEST4_COUNT = 43
+HARVEST5_COUNT = 34
 
 
 def _huge_rule() -> dict:
@@ -90,7 +89,7 @@ def _huge_rule() -> dict:
         "id": "pad.huge",
         "title": "pad",
         "rule": "x" * (HARD_CATALOG_BYTES + 32),
-        "citation": {"source": "test", "url": "https://example.com/pad"},
+        "citation": [{"source": "test", "url": "https://example.com/pad"}],
         "check": "deterministic",
         "pass_when": ["ok"],
         "fail_when": ["bad"],
@@ -163,6 +162,7 @@ def test_rules_load_harvest_counts_after_same_claim_fold(live_catalog: Path) -> 
     assert len(ids) == CATALOG_COUNT
     assert UNMAPPED_DROPPED.isdisjoint(ids)
     assert FOLDED_IDS.isdisjoint(ids)
+    assert UNWOUND_IDS <= set(ids)
     assert set(ids) == set(action_ids) | set(form_ids) | set(extra_ids) | set(
         harvest3_ids
     ) | set(harvest4_ids) | set(harvest5_ids)
@@ -180,6 +180,7 @@ def test_rules_load_harvest_counts_after_same_claim_fold(live_catalog: Path) -> 
         assert isinstance(by_id[gid]["citation"], list)
     for g in catalog.guidelines:
         assert "lane" not in g
+        assert isinstance(g["citation"], list)
         _assert_citations(g)
         assert g["severity"] == "major"
         assert g["container"] in CONTAINER_IDS
@@ -293,6 +294,7 @@ def test_citation_is_object_or_array_of_sources() -> None:
 def test_distinct_claims_are_not_folded(live_catalog: Path) -> None:
     catalog = load_catalog(Settings.load(hosted=True))
     ids = {g["id"] for g in catalog.guidelines}
+    by_id = {g["id"]: g for g in catalog.guidelines}
     assert "nng.dropdown-ok-narrow-middle" in ids
     assert "nng.too-many-combobox-not-long-dropdown" in ids
     assert "forms.inputs.dropdown_chooser" in ids
@@ -300,6 +302,13 @@ def test_distinct_claims_are_not_folded(live_catalog: Path) -> None:
     assert "spectrum.asterisk-is-icon-not-label-text" in ids
     assert "nng.always-select-one-radio-by-default" in ids
     assert "govuk.select-preselect-settings-not-questions" in ids
+    assert UNWOUND_IDS <= ids
+    for gid in (
+        "forms.inputs.match_control_and_size",
+        "govuk.four-date-types",
+        "nng.users-rarely-change-defaults",
+    ):
+        assert len(citations(by_id[gid])) == 1
 
 
 def test_jobs_json_is_not_a_lane(live_catalog: Path) -> None:

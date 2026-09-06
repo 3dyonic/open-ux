@@ -4,10 +4,12 @@
   "segment": "Errors",
   "title": "repeated extra help",
   "rule": "When the same error repeats (three or more times in one attempt), provide extra help: review error patterns, refine the design, and make messages more actionable.",
-  "citation": {
-    "source": "NN/g — 10 Design Guidelines for Reporting Errors in Forms (§10)",
-    "url": "https://www.nngroup.com/articles/errors-forms-design-guidelines/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — 10 Design Guidelines for Reporting Errors in Forms (§10)",
+      "url": "https://www.nngroup.com/articles/errors-forms-design-guidelines/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "On the third-or-more same error in one attempt, the UI offers extra help and more actionable copy than the first showing."

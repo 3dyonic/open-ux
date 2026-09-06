@@ -4,10 +4,12 @@
   "segment": "Order",
   "title": "conversation vs navigation order",
   "rule": "Conversation: ask for the needed/desired action, then present risks. Navigation: Back on the left (previous step). Less important actions go right or bottom. Collapsed overflow content stays on the right.",
-  "citation": {
-    "source": "Ant Design — Button spec",
-    "url": "https://ant.design/docs/spec/buttons"
-  },
+  "citation": [
+    {
+      "source": "Ant Design — Button spec",
+      "url": "https://ant.design/docs/spec/buttons"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Conversation order is desired action then risks. Navigation has Back on the left. Less important / overflow sit right or bottom as cited."

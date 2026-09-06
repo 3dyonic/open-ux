@@ -4,10 +4,12 @@
   "segment": "Field labels",
   "title": "label left default vs top",
   "rule": "Ant: label left of input by default; top when the text is too long or in English context; consistent within the system. Dual-cite Fluent/Spectrum top-default. Do not pick a winner.",
-  "citation": {
-    "source": "Ant Design — Data entry",
-    "url": "https://ant.design/docs/spec/data-entry"
-  },
+  "citation": [
+    {
+      "source": "Ant Design — Data entry",
+      "url": "https://ant.design/docs/spec/data-entry"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Labels are consistently left or consistently top in-product (Ant left-default; Fluent/Spectrum top-default). Ant also allows top when label text is too long or in English context."

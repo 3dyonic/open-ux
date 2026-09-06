@@ -4,10 +4,12 @@
   "segment": "Typography",
   "title": "underline links only no italics emphasis",
   "rule": "Underline = links only; no italics for emphasis — italics are hard for dyslexia; use bold sparingly. Don’t combine underline+bold except the topic-page hyperlink style.",
-  "citation": {
-    "source": "Canada.ca — Content Style Guide; Typography",
-    "url": "https://design.canada.ca/style-guide/index.html"
-  },
+  "citation": [
+    {
+      "source": "Canada.ca — Content Style Guide; Typography",
+      "url": "https://design.canada.ca/style-guide/index.html"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Underline is only for links; emphasis is not italics; underline+bold only on the named topic-page hyperlink style."

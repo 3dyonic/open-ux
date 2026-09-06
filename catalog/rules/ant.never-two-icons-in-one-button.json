@@ -4,10 +4,12 @@
   "segment": "Buttons",
   "title": "never two icons in one button",
   "rule": "Never two icons in one button.",
-  "citation": {
-    "source": "Ant Design — Button spec",
-    "url": "https://ant.design/docs/spec/buttons"
-  },
+  "citation": [
+    {
+      "source": "Ant Design — Button spec",
+      "url": "https://ant.design/docs/spec/buttons"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "A button has zero or one icon."

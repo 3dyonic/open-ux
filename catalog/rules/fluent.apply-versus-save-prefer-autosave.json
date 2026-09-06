@@ -4,10 +4,12 @@
   "segment": "Copy",
   "title": "apply versus save prefer autosave",
   "rule": "Apply versus Save; prefer autosave; if not, Save + success/error via message bar or confirmation toast.",
-  "citation": {
-    "source": "Fluent 2 — Button usage",
-    "url": "https://fluent2.microsoft.design/components/web/react/core/button/usage"
-  },
+  "citation": [
+    {
+      "source": "Fluent 2 — Button usage",
+      "url": "https://fluent2.microsoft.design/components/web/react/core/button/usage"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Apply vs Save is used for the right scope; autosave is preferred; without autosave, Save reports success/error via message bar or confirmation toast."

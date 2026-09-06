@@ -4,10 +4,12 @@
   "segment": "Errors",
   "title": "native required bubbles not error ui",
   "rule": "Native HTML `required` / browser bubbles are not the error UI — insufficient explanation, especially with `pattern`. Prefer custom client errors; `novalidate` once JS loads if `required` was a no-JS fallback. Server-side validation is the guideline. Dual-cite GOLD server-side + error list (not a separate GOLD unique in this 40).",
-  "citation": {
-    "source": "NL Design System — HTML formuliervalidatie",
-    "url": "https://nldesignsystem.nl/richtlijnen/formulieren/foutmeldingen/html-formuliervalidatie/"
-  },
+  "citation": [
+    {
+      "source": "NL Design System — HTML formuliervalidatie",
+      "url": "https://nldesignsystem.nl/richtlijnen/formulieren/foutmeldingen/html-formuliervalidatie/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "With JS, native bubbles are not the error UI (`novalidate` if `required` is a no-JS fallback); errors are custom; server-side validation remains."

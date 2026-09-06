@@ -4,10 +4,12 @@
   "segment": "Buttons",
   "title": "visual loudness primary secondary tertiary",
   "rule": "Visual loudness is a named three-level scale: primary / secondary / tertiary so designers can balance visual priority. Dual-cite Actions one-primary; this row is the three-loudness scale, not a second “one primary” rule.",
-  "citation": {
-    "source": "GOLD — Buttons wayfinding",
-    "url": "https://github.com/designsystemau/gold-design-system-site/blob/main/content/components/buttons/rationale/wayfinding.md"
-  },
+  "citation": [
+    {
+      "source": "GOLD — Buttons wayfinding",
+      "url": "https://github.com/designsystemau/gold-design-system-site/blob/main/content/components/buttons/rationale/wayfinding.md"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Button variants on a view map to primary / secondary / tertiary loudness; one primary remains the dual-cite cap."

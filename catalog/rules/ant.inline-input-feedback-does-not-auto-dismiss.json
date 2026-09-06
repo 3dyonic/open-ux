@@ -4,10 +4,12 @@
   "segment": "Errors",
   "title": "inline input feedback does not auto dismiss",
   "rule": "Inline input feedback does not auto-dismiss — text follows the block; stays until the user performs the corresponding interaction.",
-  "citation": {
-    "source": "Ant Design — Feedback spec",
-    "url": "https://ant.design/docs/spec/feedback"
-  },
+  "citation": [
+    {
+      "source": "Ant Design — Feedback spec",
+      "url": "https://ant.design/docs/spec/feedback"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Inline input feedback stays until the corresponding interaction."

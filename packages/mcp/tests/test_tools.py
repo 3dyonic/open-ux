@@ -16,13 +16,13 @@ LIVE_SEED = (
 )
 INDEX_KEYS = {"id", "title", "jobs", "lane", "container", "card", "facet", "leaf"}
 BODY_KEYS = {"pass_when", "fail_when", "rule", "citation", "check"}
-EXTRA_SAMPLE = "govuk.four-date-types"
-CATALOG_COUNT = 285
+EXTRA_SAMPLE = "govuk.date-input-only-memorable"
+CATALOG_COUNT = 295
 FORM_COUNT = 53
-EXTRA_COUNT = 62
-HARVEST3_COUNT = 55
-HARVEST4_COUNT = 42
-HARVEST5_COUNT = 33
+EXTRA_COUNT = 69
+HARVEST3_COUNT = 56
+HARVEST4_COUNT = 43
+HARVEST5_COUNT = 34
 HARVEST3_SAMPLE = "spectrum.quiet-vs-standard-background"
 HARVEST4_SAMPLE = "uswds.filled-next-outline-this-page"
 HARVEST5_SAMPLE = "gold.consistent-not-uniform"
@@ -184,7 +184,7 @@ async def test_get_extra_harvest_guideline_returns_full_body(live_catalog: Path)
         assert "when_to_use" not in g
         assert "when_not" not in g
         cites = citations(g)
-        assert len(cites) >= 2
+        assert cites
         assert isinstance(g["citation"], list)
         for cite in cites:
             assert cite["url"].startswith("https://")

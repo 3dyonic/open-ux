@@ -8,14 +8,6 @@
     {
       "source": "GOV.UK Design System — Dates (pattern)",
       "url": "https://design-system.service.gov.uk/patterns/dates/"
-    },
-    {
-      "source": "GOV.UK Design System — Date input",
-      "url": "https://design-system.service.gov.uk/components/date-input/"
-    },
-    {
-      "source": "USWDS — Date picker",
-      "url": "https://designsystem.digital.gov/components/date-picker/"
     }
   ],
   "check": "llm_judgment",
@@ -35,5 +27,5 @@
   "not_when": "Not for non-date values, or times without a date component.",
   "agent_hint": "Pick the control for the date type; do not use one widget for every date kind.",
   "description": "Distinguish four date types—memorable, from documents or cards, approximate, and relative—and match the control to that type rather than forcing one date widget for all. Memorable and document dates may suit day/month/year; approximate and relative dates need different patterns. One date-input or calendar for every kind of date fails the pattern. Fail when a single widget is used regardless of whether the date is memorable, documented, approximate, or relative. Choose the control from the date type first.",
-  "do_not_claim": "A house fifth type. Date-input-for-memorable as the calendar rule. Calendar vs approximate/relative (see `govuk.four-date-types` / `govuk.calendar-control-when`). A winner between month-select and three text fields."
+  "do_not_claim": "A house fifth type."
 }

@@ -4,10 +4,12 @@
   "segment": "Privacy / security",
   "title": "privacy by design pia security day one",
   "rule": "Privacy by design + PIA; security from day one — named NSW Design Standards. Complete and maintain a Privacy Impact Assessment; consent and data-use are explicit; identifiable vs de-identified access is separated. Security is designed and tested from the first release, not bolted on. Dual-cite USWDS earn-trust / data stewardship without merging the PIA/security-from-day-one names.",
-  "citation": {
-    "source": "NSW Design Standards",
-    "url": "https://www.digital.nsw.gov.au/delivery/digital-service-toolkit/design-standards"
-  },
+  "citation": [
+    {
+      "source": "NSW Design Standards",
+      "url": "https://www.digital.nsw.gov.au/delivery/digital-service-toolkit/design-standards"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "A maintained PIA exists; consent/data-use are explicit; identifiable vs de-identified access is separated; security is in the first release."

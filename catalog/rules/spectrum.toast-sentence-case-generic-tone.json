@@ -4,10 +4,12 @@
   "segment": "Toast copy",
   "title": "toast sentence case generic tone",
   "rule": "Sentence case, no period on a single sentence; instructive/neutral tone (not playful, celebratory, or promotional/upsell); generic language (no filenames/usernames/folders unless necessary).",
-  "citation": {
-    "source": "Spectrum — Toast",
-    "url": "https://spectrum.adobe.com/page/toast/"
-  },
+  "citation": [
+    {
+      "source": "Spectrum — Toast",
+      "url": "https://spectrum.adobe.com/page/toast/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Sentence case; single sentence has no period; tone is instructive/neutral; names/files omitted unless necessary."

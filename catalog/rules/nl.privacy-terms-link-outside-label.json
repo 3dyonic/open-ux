@@ -4,10 +4,12 @@
   "segment": "Labels",
   "title": "privacy terms link outside label",
   "rule": "Privacy / terms link sits outside the label — not “I agree to the [privacy policy]” as a nested `<a>`. Put the link above, or in a fieldset description via `aria-describedby`.",
-  "citation": {
-    "source": "NL Design System — Niet in label",
-    "url": "https://nldesignsystem.nl/richtlijnen/formulieren/links/niet-in-label/"
-  },
+  "citation": [
+    {
+      "source": "NL Design System — Niet in label",
+      "url": "https://nldesignsystem.nl/richtlijnen/formulieren/links/niet-in-label/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Policy/terms link is above the control or in a fieldset description (`aria-describedby`), not nested in the `<label>`."

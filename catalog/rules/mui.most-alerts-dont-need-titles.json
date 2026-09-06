@@ -4,10 +4,12 @@
   "segment": "Alert",
   "title": "most alerts dont need titles",
   "rule": "Most alerts don't need titles — summarize in a sentence or two (question or statement tied to the buttons). Use `role=\"alertdialog\"`. Title-bar alerts only for high-risk (e.g. potential loss of connectivity). Users should understand the choices from title and button text alone.",
-  "citation": {
-    "source": "MUI — Dialog",
-    "url": "https://mui.com/material-ui/react-dialog/"
-  },
+  "citation": [
+    {
+      "source": "MUI — Dialog",
+      "url": "https://mui.com/material-ui/react-dialog/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Ordinary alerts have no title bar; copy is a sentence or two tied to the buttons; `role=\"alertdialog\"`. Title-bar only for high-risk. Choices are understandable from title (if any) and button text alone."

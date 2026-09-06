@@ -4,10 +4,12 @@
   "segment": "Completion",
   "title": "prominent done or assumed next",
   "rule": "Place the control that finishes the transaction (or the assumed next step) at the end of the visual flow; make it prominent and well labeled.",
-  "citation": {
-    "source": "Designing Interfaces 3e ch. Doing Things — Prominent Done or Assumed Next Step (Tidwell, Brewer, Valencia)",
-    "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
-  },
+  "citation": [
+    {
+      "source": "Designing Interfaces 3e ch. Doing Things — Prominent Done or Assumed Next Step (Tidwell, Brewer, Valencia)",
+      "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Finish / assumed-next sits at the end of the visual flow, is prominent, and is well labeled."

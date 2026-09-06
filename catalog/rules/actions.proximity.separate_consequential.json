@@ -4,10 +4,12 @@
   "segment": "Proximity",
   "title": "separate consequential",
   "rule": "Do not place highly consequential or destructive actions directly next to benign confirmatory options.",
-  "citation": {
-    "source": "NN/g — Dangerous UX: Consequential Options Close to Benign Options",
-    "url": "https://www.nngroup.com/articles/proximity-consequential-options/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — Dangerous UX: Consequential Options Close to Benign Options",
+      "url": "https://www.nngroup.com/articles/proximity-consequential-options/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Highly consequential or destructive actions are not directly next to benign confirmatory options."

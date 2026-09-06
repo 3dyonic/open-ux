@@ -4,10 +4,12 @@
   "segment": "Structure",
   "title": "editable list pattern by field count",
   "rule": "Editable-list pattern by field count — dynamic add/remove when items ≤3 and inputs need no separate titles; editable table 2–5; collapsible panel 6–8; drawer when >8.",
-  "citation": {
-    "source": "Ant Design — Data entry ; Ant Design — Form research",
-    "url": "https://ant.design/docs/spec/data-entry"
-  },
+  "citation": [
+    {
+      "source": "Ant Design — Data entry ; Ant Design — Form research",
+      "url": "https://ant.design/docs/spec/data-entry"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Pattern matches the cited count band (≤3 add/remove; 2–5 table; 6–8 panel; >8 drawer)."

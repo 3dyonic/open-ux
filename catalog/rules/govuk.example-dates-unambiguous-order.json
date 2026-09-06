@@ -4,10 +4,12 @@
   "segment": "Dates",
   "title": "example dates unambiguous order",
   "rule": "Example dates: day ≥13, month ≤9 (e.g. 27 3 2007) so order is unambiguous and leading zeros aren’t required.",
-  "citation": {
-    "source": "GOV.UK Design System — Dates (pattern)",
-    "url": "https://design-system.service.gov.uk/patterns/dates/"
-  },
+  "citation": [
+    {
+      "source": "GOV.UK Design System — Dates (pattern)",
+      "url": "https://design-system.service.gov.uk/patterns/dates/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Hint/example uses a day of 13 or more and a month of 9 or less, without requiring leading zeros."

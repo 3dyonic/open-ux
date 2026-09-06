@@ -4,10 +4,12 @@
   "segment": "Menus",
   "title": "smart menu items",
   "rule": "Change menu labels dynamically so they state precisely what the command will do when invoked.",
-  "citation": {
-    "source": "Designing Interfaces 3e ch. Doing Things — Smart Menu Items (Tidwell, Brewer, Valencia)",
-    "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
-  },
+  "citation": [
+    {
+      "source": "Designing Interfaces 3e ch. Doing Things — Smart Menu Items (Tidwell, Brewer, Valencia)",
+      "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Menu labels reword with context to state the actual command."

@@ -4,10 +4,12 @@
   "segment": "Charts",
   "title": "lines dash fills patterns",
   "rule": "Lines use dash styles; fills use patterns (max 4–5). Solid / dashed / dotted / dash-dot for series. Hatch/dot/grid for bars, area, pie — not for lines. Two colours per pattern (fill + stroke).",
-  "citation": {
-    "source": "NSW — Charts and graphs",
-    "url": "https://designsystem.nsw.gov.au/docs/content/methods/charts-and-graphs.html"
-  },
+  "citation": [
+    {
+      "source": "NSW — Charts and graphs",
+      "url": "https://designsystem.nsw.gov.au/docs/content/methods/charts-and-graphs.html"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Line series use dash styles; area/bar/pie fills use patterns (≤4–5) with two colours per pattern; patterns are not used on lines."

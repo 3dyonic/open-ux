@@ -4,10 +4,12 @@
   "segment": "Confirmation",
   "title": "bypass educational",
   "rule": "If an educational confirmation is shown for a new non-serious side effect, let the user turn off future repeats.",
-  "citation": {
-    "source": "NN/g — Confirmation Dialogs (§8)",
-    "url": "https://www.nngroup.com/articles/confirmation-dialog/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — Confirmation Dialogs (§8)",
+      "url": "https://www.nngroup.com/articles/confirmation-dialog/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Educational confirmation for a new non-serious side effect offers a way to turn off future repeats."

@@ -4,10 +4,12 @@
   "segment": "Choice",
   "title": "listbox vs dropdown",
   "rule": "Dropdown to downplay alternatives / keep a default; listbox to expose options and encourage change.",
-  "citation": {
-    "source": "NN/g — Listboxes vs. Dropdown Lists",
-    "url": "https://www.nngroup.com/articles/listbox-dropdown/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — Listboxes vs. Dropdown Lists",
+      "url": "https://www.nngroup.com/articles/listbox-dropdown/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Dropdown is used to keep a default / downplay alternatives; listbox is used when options should stay visible and change is encouraged."

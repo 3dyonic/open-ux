@@ -4,10 +4,12 @@
   "segment": "Lists",
   "title": "lists max 7 or split",
   "rule": "Lists ≤7 items, or split by category. One idea per bullet; consistent grammar; numbered only for rank/order/steps. Lead-in must apply to every item (“all of” vs “one or more”).",
-  "citation": {
-    "source": "Canada.ca — Content Style Guide",
-    "url": "https://design.canada.ca/style-guide/index.html"
-  },
+  "citation": [
+    {
+      "source": "Canada.ca — Content Style Guide",
+      "url": "https://design.canada.ca/style-guide/index.html"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "A list is ≤7 or split by category; numbered only for rank/order/steps; lead-in applies to every item."

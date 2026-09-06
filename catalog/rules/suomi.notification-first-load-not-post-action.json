@@ -4,10 +4,12 @@
   "segment": "Notification",
   "title": "notification first load not post action",
   "rule": "Notification is first-load page content, not a post-action pop-in — `role=\"region\"`. Dynamic after interaction → InlineAlert. Dual-cite NSW in-page vs global alert.",
-  "citation": {
-    "source": "Suomi.fi — Notification",
-    "url": "https://designsystem.suomi.fi/components/notification/"
-  },
+  "citation": [
+    {
+      "source": "Suomi.fi — Notification",
+      "url": "https://designsystem.suomi.fi/components/notification/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "`Notification` is on the initial page load; post-action dynamic feedback uses InlineAlert."

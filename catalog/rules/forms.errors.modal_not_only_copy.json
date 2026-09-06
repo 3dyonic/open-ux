@@ -4,10 +4,12 @@
   "segment": "Errors",
   "title": "modal not only copy",
   "rule": "Use modals for form errors sparingly; do not put the only copy of a field error in a dialog that must be dismissed before the field can be fixed.",
-  "citation": {
-    "source": "NN/g — 10 Design Guidelines for Reporting Errors in Forms (§6)",
-    "url": "https://www.nngroup.com/articles/errors-forms-design-guidelines/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — 10 Design Guidelines for Reporting Errors in Forms (§6)",
+      "url": "https://www.nngroup.com/articles/errors-forms-design-guidelines/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "The field can be corrected with its error copy still available outside a must-dismiss dialog (or with no modal)."

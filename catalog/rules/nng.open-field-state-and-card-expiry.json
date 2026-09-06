@@ -4,10 +4,12 @@
   "segment": "Checkout",
   "title": "open field state and card expiry",
   "rule": "Open field, not iOS picker/dropdown, for state and card expiry.",
-  "citation": {
-    "source": "NN/g — The Mobile Checkout Experience",
-    "url": "https://www.nngroup.com/articles/mobile-checkout-ux/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — The Mobile Checkout Experience",
+      "url": "https://www.nngroup.com/articles/mobile-checkout-ux/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "State and card expiry are open fields (typeable), not iOS pickers/dropdowns."

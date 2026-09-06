@@ -4,10 +4,12 @@
   "segment": "Toast",
   "title": "toast no redundant dismiss",
   "rule": "No redundant Dismiss — every toast already has a close control.",
-  "citation": {
-    "source": "Spectrum — Toast",
-    "url": "https://spectrum.adobe.com/page/toast/"
-  },
+  "citation": [
+    {
+      "source": "Spectrum — Toast",
+      "url": "https://spectrum.adobe.com/page/toast/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "No extra Dismiss action besides the toast close control."

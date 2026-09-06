@@ -4,10 +4,12 @@
   "segment": "Toast",
   "title": "users can turn off alert types",
   "rule": "Users can turn off all alert types — products should allow this for people who need to focus.",
-  "citation": {
-    "source": "Spectrum — Toast",
-    "url": "https://spectrum.adobe.com/page/toast/"
-  },
+  "citation": [
+    {
+      "source": "Spectrum — Toast",
+      "url": "https://spectrum.adobe.com/page/toast/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Alert types can be turned off."

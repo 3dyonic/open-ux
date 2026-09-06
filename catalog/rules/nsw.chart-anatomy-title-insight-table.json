@@ -4,10 +4,12 @@
   "segment": "Charts",
   "title": "chart anatomy title insight table",
   "rule": "Required anatomy: title (timeframe + unit) + insight summary + data table. Subtitle or callout, not both. Summary states what the data means (“requests rose from 220 to 420”), not “the line goes up.” Small datasets: full semantic table visible, not behind a toggle. Medium: summarised table. Large: summary + download of source.",
-  "citation": {
-    "source": "NSW — Charts and graphs",
-    "url": "https://designsystem.nsw.gov.au/docs/content/methods/charts-and-graphs.html"
-  },
+  "citation": [
+    {
+      "source": "NSW — Charts and graphs",
+      "url": "https://designsystem.nsw.gov.au/docs/content/methods/charts-and-graphs.html"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Title includes timeframe + unit; insight says what the data means; small sets show a visible semantic table; subtitle and callout are not both used."

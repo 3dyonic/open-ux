@@ -4,10 +4,12 @@
   "segment": "Copy",
   "title": "consequent state",
   "rule": "Command labels describe the state the system will move into, not the current state.",
-  "citation": {
-    "source": "NN/g — UI Copy",
-    "url": "https://www.nngroup.com/articles/ui-copy/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — UI Copy",
+      "url": "https://www.nngroup.com/articles/ui-copy/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "The label names the consequent state."

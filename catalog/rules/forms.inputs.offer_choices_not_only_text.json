@@ -4,10 +4,12 @@
   "segment": "Inputs",
   "title": "offer choices not only text",
   "rule": "When possible, offer choices (picker, menu, or other selection) instead of requiring text entry.",
-  "citation": {
-    "source": "Apple HIG — Entering data",
-    "url": "https://developer.apple.com/design/human-interface-guidelines/entering-data"
-  },
+  "citation": [
+    {
+      "source": "Apple HIG — Entering data",
+      "url": "https://developer.apple.com/design/human-interface-guidelines/entering-data"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Where a known choice set exists, user picks (picker/menu/selection) instead of typing."

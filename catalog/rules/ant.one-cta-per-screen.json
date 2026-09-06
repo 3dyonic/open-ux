@@ -4,10 +4,12 @@
   "segment": "Buttons",
   "title": "one cta per screen",
   "rule": "One Call to Action per screen — CTA usually appears alone, command-like (landing/welcome); may be as wide as its parent. Distinct from one-primary-in-a-group.",
-  "citation": {
-    "source": "Ant Design — Button spec",
-    "url": "https://ant.design/docs/spec/buttons"
-  },
+  "citation": [
+    {
+      "source": "Ant Design — Button spec",
+      "url": "https://ant.design/docs/spec/buttons"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Landing/welcome (command-like) screen has one CTA, usually alone; may span its parent."

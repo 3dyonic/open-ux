@@ -4,10 +4,12 @@
   "segment": "Transparency",
   "title": "progress on long forms",
   "rule": "On long forms, show a clear progress indicator of how much is done and how much remains.",
-  "citation": {
-    "source": "NN/g — 4 Principles to Reduce Cognitive Load in Forms",
-    "url": "https://www.nngroup.com/articles/4-principles-reduce-cognitive-load/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — 4 Principles to Reduce Cognitive Load in Forms",
+      "url": "https://www.nngroup.com/articles/4-principles-reduce-cognitive-load/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Long form shows done vs remaining progress."

@@ -4,10 +4,12 @@
   "segment": "Confirmation",
   "title": "nonstandard for extreme",
   "rule": "For particularly dangerous rare operations, require a nonstandard confirm (for example typing a word), reserved so it does not become a new habit.",
-  "citation": {
-    "source": "NN/g — Confirmation Dialogs (§7)",
-    "url": "https://www.nngroup.com/articles/confirmation-dialog/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — Confirmation Dialogs (§7)",
+      "url": "https://www.nngroup.com/articles/confirmation-dialog/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Particularly dangerous rare operations require a nonstandard confirm (e.g. typing a word), used rarely enough that it is not habitual."

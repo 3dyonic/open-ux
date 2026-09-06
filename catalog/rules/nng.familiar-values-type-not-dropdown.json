@@ -4,10 +4,12 @@
   "segment": "Choice",
   "title": "familiar values type not dropdown",
   "rule": "Highly familiar/predictable values → type, not dropdown.",
-  "citation": {
-    "source": "NN/g — Does Your Form Really Need a Dropdown List?",
-    "url": "https://www.nngroup.com/articles/dropdown-list/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — Does Your Form Really Need a Dropdown List?",
+      "url": "https://www.nngroup.com/articles/dropdown-list/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Familiar/predictable values (e.g. name-like known strings) are typed."

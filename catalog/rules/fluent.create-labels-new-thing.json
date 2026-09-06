@@ -4,10 +4,12 @@
   "segment": "Copy",
   "title": "create labels new thing",
   "rule": "Create labels: “New {thing}”; menu trigger “New”; menu items drop the word New.",
-  "citation": {
-    "source": "Fluent 2 — Button usage",
-    "url": "https://fluent2.microsoft.design/components/web/react/core/button/usage"
-  },
+  "citation": [
+    {
+      "source": "Fluent 2 — Button usage",
+      "url": "https://fluent2.microsoft.design/components/web/react/core/button/usage"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Create action is “New {thing}”; the menu trigger is “New”; items inside drop New."

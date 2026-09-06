@@ -4,10 +4,12 @@
   "segment": "Doormats",
   "title": "doormats max 9",
   "rule": "Doormats: ≤9; heading 45 (max 75); description 120 keywords. Linked heading, no end punctuation. Descriptions = comma-separated keywords, not full sentences; no “Includes… / Information on… / Learn more about…”; no nested links, promo, bold, or bullets; no decorative icons. Don’t repeat Most-requested links. Semantic h2 “Services and information” may be visually hidden. Single-column when sequential tasks or heights would gap.",
-  "citation": {
-    "source": "Canada.ca — Doormats (services and information)",
-    "url": "https://design.canada.ca/common-design-patterns/services-information"
-  },
+  "citation": [
+    {
+      "source": "Canada.ca — Doormats (services and information)",
+      "url": "https://design.canada.ca/common-design-patterns/services-information"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "≤9 doormats; heading/description within those lengths; keyword descriptions; no nested links/promo/bold/bullets/decorative icons; no Most-requested repeats."

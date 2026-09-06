@@ -4,10 +4,12 @@
   "segment": "Confirmation",
   "title": "response summarizes outcome",
   "rule": "Label responses with what will happen (Delete file / Keep file), not Yes/No.",
-  "citation": {
-    "source": "NN/g — Confirmation Dialogs (§4)",
-    "url": "https://www.nngroup.com/articles/confirmation-dialog/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — Confirmation Dialogs (§4)",
+      "url": "https://www.nngroup.com/articles/confirmation-dialog/"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Confirmation actions are labeled with the outcome (e.g. Delete file / Keep file)."

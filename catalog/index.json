@@ -758,6 +758,18 @@
       "leaf": "disable_or_confirm_destructive"
     },
     {
+      "id": "ant.radio-count-2-to-5",
+      "title": "radio count 2 to 5",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "ant",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
+    },
+    {
       "id": "ant.settings-mode-and-grouping-thresholds",
       "title": "settings mode and grouping thresholds",
       "jobs": [
@@ -1706,6 +1718,18 @@
       "leaf": "disclose_instead_of_dump"
     },
     {
+      "id": "gold.avoid-select-except-long-lists",
+      "title": "avoid select except long lists",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "gold",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
+    },
+    {
       "id": "gold.card-one-inner-link-hit-area",
       "title": "card one inner link hit area",
       "jobs": [
@@ -1814,6 +1838,18 @@
       "leaf": "pick_primary_action"
     },
     {
+      "id": "govuk.calendar-control-when",
+      "title": "calendar control when",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "govuk",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
+    },
+    {
       "id": "govuk.character-count-fieldset-legend",
       "title": "character count fieldset legend",
       "jobs": [
@@ -1836,6 +1872,18 @@
       "card": "choose_an_overlay",
       "facet": "wrong_layer_for_the_content",
       "leaf": "disclose_instead_of_dump"
+    },
+    {
+      "id": "govuk.date-input-only-memorable",
+      "title": "date input only memorable",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "govuk",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
     },
     {
       "id": "govuk.dob-autocomplete-tokens",
@@ -1992,6 +2040,18 @@
       "card": "design_actions_and_ctas",
       "facet": "controls_are_hard_to_hit",
       "leaf": "keep_hit_target_usable"
+    },
+    {
+      "id": "govuk.select-last-resort",
+      "title": "select last resort",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "govuk",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
     },
     {
       "id": "govuk.select-preselect-settings-not-questions",
@@ -2462,6 +2522,18 @@
       "leaf": "show_step_progress"
     },
     {
+      "id": "nng.prefer-radios-over-dropdowns-when-visible",
+      "title": "prefer radios over dropdowns when visible",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "nng",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
+    },
+    {
       "id": "nng.radio-set-comprehensive-other-type-in",
       "title": "radio set comprehensive other type in",
       "jobs": [
@@ -2520,6 +2592,18 @@
       "card": "protect_destructive_and_leave",
       "facet": "destructive_is_too_easy",
       "leaf": "disable_or_confirm_destructive"
+    },
+    {
+      "id": "nng.too-few-options-radios-not-dropdown",
+      "title": "too few options radios not dropdown",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "nng",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
     },
     {
       "id": "nng.too-many-combobox-not-long-dropdown",
@@ -2714,6 +2798,18 @@
       "leaf": "chart_has_a_story"
     },
     {
+      "id": "polar.default-option-selected-when-possible",
+      "title": "default option selected when possible",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "polar",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
+    },
+    {
       "id": "polar.dont-duplicate-content",
       "title": "dont duplicate content",
       "jobs": [
@@ -2808,6 +2904,18 @@
       "card": "compose_feedback",
       "facet": "tone_fights_the_moment",
       "leaf": "tone_of_voice_for_failure"
+    },
+    {
+      "id": "polar.select-4plus-choice-list-under-4",
+      "title": "select 4plus choice list under 4",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "polar",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
     },
     {
       "id": "polar.validate-after-finished-interacting",
@@ -3312,6 +3420,18 @@
       "card": "design_a_form",
       "facet": "related_inputs_feel_scattered",
       "leaf": "group_related_inputs"
+    },
+    {
+      "id": "uswds.date-picker-when-weekday-always-type",
+      "title": "date picker when weekday always type",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "uswds",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
     },
     {
       "id": "uswds.dont-hide-then-reveal-alerts",

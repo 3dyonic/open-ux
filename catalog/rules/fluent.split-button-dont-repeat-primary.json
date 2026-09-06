@@ -4,10 +4,12 @@
   "segment": "Buttons",
   "title": "split button dont repeat primary",
   "rule": "Split button: full phrase on the rest-state primary; don’t repeat that primary in the secondary list.",
-  "citation": {
-    "source": "Fluent 2 — Button usage",
-    "url": "https://fluent2.microsoft.design/components/web/react/core/button/usage"
-  },
+  "citation": [
+    {
+      "source": "Fluent 2 — Button usage",
+      "url": "https://fluent2.microsoft.design/components/web/react/core/button/usage"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Rest-state primary has the full phrase; the secondary list does not repeat that primary."

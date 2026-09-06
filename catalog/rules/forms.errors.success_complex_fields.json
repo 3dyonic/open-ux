@@ -4,10 +4,12 @@
   "segment": "Errors",
   "title": "success complex fields",
   "rule": "For complex fields, show successful entry (and instant rules as the user types) without spamming success on merely-required empty-to-filled fields.",
-  "citation": {
-    "source": "NN/g — 10 Design Guidelines for Reporting Errors in Forms (§2)",
-    "url": "https://www.nngroup.com/articles/errors-forms-design-guidelines/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — 10 Design Guidelines for Reporting Errors in Forms (§2)",
+      "url": "https://www.nngroup.com/articles/errors-forms-design-guidelines/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "A complex field (multiple rules, e.g. password) shows success and/or live rule checks; simple required fields do not get a success state for merely becoming non-empty."

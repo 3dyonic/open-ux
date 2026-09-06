@@ -4,10 +4,12 @@
   "segment": "Picker",
   "title": "picker no max menu height",
   "rule": "No maximum menu height — grow to show as many options as the available space allows. Field value truncates; menu (and label) wrap.",
-  "citation": {
-    "source": "Spectrum — Picker",
-    "url": "https://spectrum.adobe.com/page/picker/"
-  },
+  "citation": [
+    {
+      "source": "Spectrum — Picker",
+      "url": "https://spectrum.adobe.com/page/picker/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Menu grows with available space (no artificial max); field value may truncate; menu and label wrap."

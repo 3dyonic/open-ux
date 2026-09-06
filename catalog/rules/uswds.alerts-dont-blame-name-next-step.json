@@ -4,10 +4,12 @@
   "segment": "Alert",
   "title": "alerts dont blame name next step",
   "rule": "Don’t blame the user; name the next step. Polite; include how to recover. Educational material is allowed because people will read an error that unblocks them. Don’t notify off the current goal. Destructive work → confirmation modal, not an alert.",
-  "citation": {
-    "source": "USWDS — Alert",
-    "url": "https://designsystem.digital.gov/components/alert/"
-  },
+  "citation": [
+    {
+      "source": "USWDS — Alert",
+      "url": "https://designsystem.digital.gov/components/alert/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Copy is polite, names recovery, stays on the current goal; destructive actions use a confirmation modal."

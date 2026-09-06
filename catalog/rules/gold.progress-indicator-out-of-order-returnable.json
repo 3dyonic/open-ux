@@ -4,10 +4,12 @@
   "segment": "Progress",
   "title": "progress indicator out of order returnable",
   "rule": "Progress indicator is for out-of-order, returnable tasks (tax return / driver’s licence). Named states: `todo` / `doing` / `done`. Dual-cite USWDS linear step indicator and GOV.UK “test without a progress indicator”; do not collapse into one progress widget.",
-  "citation": {
-    "source": "GOLD — Progress indicator",
-    "url": "https://github.com/designsystemau/gold-design-system-site/blob/main/content/components/progress-indicator/default.md"
-  },
+  "citation": [
+    {
+      "source": "GOLD — Progress indicator",
+      "url": "https://github.com/designsystemau/gold-design-system-site/blob/main/content/components/progress-indicator/default.md"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Non-linear returnable tasks use the GOLD indicator with todo/doing/done; linear wizards are not forced into this widget (USWDS linear / GOV.UK test-without remain dual-cites)."

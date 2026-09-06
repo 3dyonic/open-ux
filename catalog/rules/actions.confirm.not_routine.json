@@ -4,10 +4,12 @@
   "segment": "Confirmation",
   "title": "not routine",
   "rule": "Do not use confirmation dialogs for routine actions, or people will stop reading them.",
-  "citation": {
-    "source": "NN/g — Confirmation Dialogs (§2)",
-    "url": "https://www.nngroup.com/articles/confirmation-dialog/"
-  },
+  "citation": [
+    {
+      "source": "NN/g — Confirmation Dialogs (§2)",
+      "url": "https://www.nngroup.com/articles/confirmation-dialog/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Routine actions proceed with no confirmation dialog."

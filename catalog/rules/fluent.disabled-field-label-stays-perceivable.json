@@ -4,10 +4,12 @@
   "segment": "Fields",
   "title": "disabled field label stays perceivable",
   "rule": "Disabled field: control disabled; label (and helper/validation) stay enabled so AT can still perceive them. Settings Save MAY disable until requireds are complete only with visible reason + this perceivable label (dual-cite with GOV.UK don’t-disable on public/question).",
-  "citation": {
-    "source": "Fluent 2 — Field usage",
-    "url": "https://fluent2.microsoft.design/components/web/react/core/field/usage"
-  },
+  "citation": [
+    {
+      "source": "Fluent 2 — Field usage",
+      "url": "https://fluent2.microsoft.design/components/web/react/core/field/usage"
+    }
+  ],
   "check": "deterministic",
   "pass_when": [
     "Disabled control still has a perceivable (not disabled-away) label and helper/validation. If Settings Save is disabled, the reason is visible and the label stays perceivable."
