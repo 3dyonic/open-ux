@@ -5,7 +5,7 @@ from pathlib import Path
 import pytest
 from fastmcp import Client
 
-from open_ux.jobs import CARD_IDS, LEAF_IDS, expand_need, load_job_tree
+from open_ux.jobs import CARD_IDS, LEAF_IDS, expand_need, load_job_tree, resolve_need
 from open_ux.server import create_mcp
 from open_ux.settings import Settings
 from open_ux.situations import (
@@ -65,6 +65,14 @@ def test_expand_need_cards_not_leaves(live_catalog: Path) -> None:
     assert expand_need("forms", tree) == ["forms"]
     assert "avoid_placeholder_as_label" in expand_need("forms_and_input", tree)
     assert expand_need("compose_a_data_display", tree) == []
+    display = resolve_need("compose_a_data_display", tree)
+    assert display.tags == ()
+    assert "canada.tables-no-blank-cells" in display.guideline_ids
+    overlay = resolve_need("choose_an_overlay", tree)
+    assert "nng.modal-and-nonmodal-dialogs" in overlay.guideline_ids
+    steps = resolve_need("build_a_multi_step_flow", tree)
+    assert "nl.step-n-of-m-in-title-and-above-form" in steps.guideline_ids
+    assert resolve_need("avoid_placeholder_as_label", tree).empty
 
 
 def test_list_situations_returns_allowlist_only(live_catalog: Path) -> None:

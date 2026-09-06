@@ -8,7 +8,7 @@ from typing import Any
 
 import jsonschema
 
-from open_ux.jobs import resolve_job_tags
+from open_ux.jobs import NeedScope, resolve_need_scope
 from open_ux.settings import HARD_CATALOG_BYTES, SOFT_CATALOG_BYTES, Settings
 
 EMPTY_NOTE = (
@@ -174,15 +174,14 @@ def list_index(
     limit: int = 50,
     offset: int = 0,
 ) -> tuple[list[dict[str, Any]], int]:
-    wanted_jobs = resolve_job_tags(jobs)
-    if jobs is not None and wanted_jobs is not None and not wanted_jobs:
+    scope = resolve_need_scope(jobs)
+    if jobs is not None and scope is not None and scope.empty:
         return [], 0
     q = (query or "").strip().lower()
     out: list[dict[str, Any]] = []
     for row in catalog.index:
         entry = {k: row.get(k) for k in INDEX_KEYS}
-        row_jobs = entry.get("jobs") or []
-        if wanted_jobs and not any(j in row_jobs for j in wanted_jobs):
+        if scope is not None and not _in_scope(entry.get("id"), entry.get("jobs") or [], scope):
             continue
         if lane and entry.get("lane") != lane:
             continue
@@ -216,12 +215,23 @@ def select(catalog: Catalog, guideline_ids: list[str] | None) -> list[dict[str, 
     return found
 
 
+def _in_scope(guideline_id: Any, jobs: list[Any], scope: NeedScope) -> bool:
+    if scope.guideline_ids and guideline_id in scope.guideline_ids:
+        return True
+    if scope.tags and any(tag in jobs for tag in scope.tags):
+        return True
+    return False
+
+
 def select_by_jobs(catalog: Catalog, jobs: str | list[str]) -> list[dict[str, Any]]:
-    tags = resolve_job_tags(jobs)
-    if not tags:
+    scope = resolve_need_scope(jobs)
+    if scope is None or scope.empty:
         return []
-    wanted = set(tags)
-    return [g for g in catalog.guidelines if wanted.intersection(g.get("jobs") or [])]
+    return [
+        g
+        for g in catalog.guidelines
+        if _in_scope(g.get("id"), g.get("jobs") or [], scope)
+    ]
 
 
 def content_hash(content: str) -> str:

@@ -3,7 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from open_ux.audit import NEED_ERROR, PACK_KEYS, audit
-from open_ux.catalog import EMPTY_NOTE, load_catalog
+from open_ux.catalog import EMPTY_NOTE, load_catalog, select_by_jobs
 from open_ux.jobs import DEFAULT_LIMIT, MISS_NOTE
 from open_ux.settings import Settings
 
@@ -130,6 +130,36 @@ def test_live_seeds_resolve_through_their_cards(live_catalog: Path) -> None:
     assert "forms.field_labels.label_stays_visible" in form_ids
     assert ERROR in error_ids
     assert VISIBLE not in error_ids
+
+
+def test_cluster_only_cards_return_pointer_criteria(live_catalog: Path) -> None:
+    display = audit(_catalog(live_catalog), jobs="compose_a_data_display", limit=50)
+    overlay = audit(_catalog(live_catalog), jobs="choose_an_overlay", limit=50)
+    steps = audit(_catalog(live_catalog), jobs="build_a_multi_step_flow", limit=50)
+    display_ids = {row["id"] for row in display["guidelines"]}
+    overlay_ids = {row["id"] for row in overlay["guidelines"]}
+    step_ids = {row["id"] for row in steps["guidelines"]}
+    assert "canada.tables-no-blank-cells" in display_ids
+    assert "nsw.charts-start-with-story" in display_ids
+    assert "nng.modal-and-nonmodal-dialogs" in overlay_ids
+    assert "nl.step-n-of-m-in-title-and-above-form" in step_ids
+    assert display["count"] >= 1
+    assert "verdict" not in display
+    for row in display["guidelines"]:
+        _assert_pack_row(row)
+
+
+def test_container_without_leaves_uses_card_pointers(live_catalog: Path) -> None:
+    result = audit(_catalog(live_catalog), jobs="layout_and_data_display", limit=50)
+    ids = {row["id"] for row in result["guidelines"]}
+    assert "canada.tables-no-blank-cells" in ids
+
+
+def test_dense_card_includes_cluster_pointers(live_catalog: Path) -> None:
+    selected = select_by_jobs(_catalog(live_catalog), "design_a_form")
+    ids = {row["id"] for row in selected}
+    assert VISIBLE in ids
+    assert "forms.inputs.helpful_constraints" in ids
 
 
 def test_empty_catalog_is_honest(tmp_env: Path) -> None:

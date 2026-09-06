@@ -27,7 +27,7 @@ This skill does **not** contain rule bodies or guideline ids. Route to a Card, t
 
 1. Pick a **Situation Card** from the table below. That is the need.
 2. Call `Open-UX:get_situation` with that Card id. You get when / reject / facets / leaf pointers. Not rule bodies.
-3. Call `Open-UX:audit` with `jobs=<card_id>` (or `Open-UX:get_guideline` once you have an id). Apply the cited criteria the tools return to the work you already have.
+3. Call `Open-UX:audit` with `jobs=<card_id>` (or `Open-UX:get_guideline` once you have an id). That returns the Card's cited criteria — leaf-tagged rules and cluster pointers. Apply them to the work you already have.
 4. Fall back to `Open-UX:suggest_situations` only when the task is vague or the artifact is pasted UI. Do not start there.
 
 Do not pass a file. The host does not return pass or fail. Surfaces (`home`, `cart`, `checkout`) are context, not catalog ids. Decompose them into a Card. Leaf ids (`avoid_placeholder_as_label`) are not needs — do not put them on `jobs=`.

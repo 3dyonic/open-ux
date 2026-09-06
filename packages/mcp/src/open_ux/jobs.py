@@ -312,6 +312,35 @@ def leaves_for_card(card: Card) -> tuple[str, ...]:
     return tuple(out)
 
 
+def pointers_for_card(card: Card) -> tuple[str, ...]:
+    """Cluster and leaf guideline_id pointers. Not rule bodies."""
+    out: list[str] = []
+    seen: set[str] = set()
+    for facet in card.facets:
+        for gid in facet.guideline_ids:
+            if gid not in seen:
+                seen.add(gid)
+                out.append(gid)
+        for leaf in facet.leaves:
+            for gid in leaf.guideline_ids:
+                if gid not in seen:
+                    seen.add(gid)
+                    out.append(gid)
+    return tuple(out)
+
+
+@dataclass(frozen=True)
+class NeedScope:
+    """How a need reaches rules: leaf tags and/or explicit guideline pointers."""
+
+    tags: tuple[str, ...] = ()
+    guideline_ids: tuple[str, ...] = ()
+
+    @property
+    def empty(self) -> bool:
+        return not self.tags and not self.guideline_ids
+
+
 def _alias_for_container(tree: JobTree, container_id: str) -> str | None:
     container = container_by_id_or_alias(tree, container_id)
     if container is None:
@@ -352,11 +381,51 @@ def expand_need(need: str, tree: JobTree | None = None) -> list[str]:
     return []
 
 
-def resolve_job_tags(
+def resolve_need(need: str, tree: JobTree | None = None) -> NeedScope:
+    """Card/container → leaf tags plus cluster pointers. Leaf ids are empty."""
+    job = (need or "").strip()
+    if not job:
+        return NeedScope()
+    tree = tree or load_job_tree()
+    if job in JOB_ALIASES:
+        return NeedScope(tags=(job,))
+    container = container_by_id_or_alias(tree, job)
+    if container is not None:
+        tags: list[str] = []
+        ids: list[str] = []
+        tag_seen: set[str] = set()
+        id_seen: set[str] = set()
+        for card in tree.cards:
+            if card.container != container.id:
+                continue
+            for leaf_id in leaves_for_card(card):
+                if leaf_id not in tag_seen:
+                    tag_seen.add(leaf_id)
+                    tags.append(leaf_id)
+            for gid in pointers_for_card(card):
+                if gid not in id_seen:
+                    id_seen.add(gid)
+                    ids.append(gid)
+        if tags or ids:
+            return NeedScope(tags=tuple(tags), guideline_ids=tuple(ids))
+        alias = _alias_for_container(tree, container.id)
+        return NeedScope(tags=(alias,) if alias else ())
+    card = card_by_id(tree, job)
+    if card is not None:
+        tags = list(leaves_for_card(card))
+        ids = list(pointers_for_card(card))
+        if tags or ids:
+            return NeedScope(tags=tuple(tags), guideline_ids=tuple(ids))
+        alias = _alias_for_container(tree, card.container)
+        return NeedScope(tags=(alias,) if alias else ())
+    return NeedScope()
+
+
+def resolve_need_scope(
     jobs: str | list[str] | None,
     tree: JobTree | None = None,
-) -> list[str] | None:
-    """None = no filter. [] = provided need that matches nothing."""
+) -> NeedScope | None:
+    """None = no filter. Empty scope = provided need that matches nothing."""
     if jobs is None:
         return None
     raw = [jobs] if isinstance(jobs, str) else list(jobs)
@@ -365,10 +434,28 @@ def resolve_job_tags(
         return None
     tree = tree or load_job_tree()
     tags: list[str] = []
-    seen: set[str] = set()
+    ids: list[str] = []
+    tag_seen: set[str] = set()
+    id_seen: set[str] = set()
     for item in raw:
-        for tag in expand_need(item, tree):
-            if tag not in seen:
-                seen.add(tag)
+        scope = resolve_need(item, tree)
+        for tag in scope.tags:
+            if tag not in tag_seen:
+                tag_seen.add(tag)
                 tags.append(tag)
-    return tags
+        for gid in scope.guideline_ids:
+            if gid not in id_seen:
+                id_seen.add(gid)
+                ids.append(gid)
+    return NeedScope(tags=tuple(tags), guideline_ids=tuple(ids))
+
+
+def resolve_job_tags(
+    jobs: str | list[str] | None,
+    tree: JobTree | None = None,
+) -> list[str] | None:
+    """None = no filter. [] = provided need that matches nothing."""
+    scope = resolve_need_scope(jobs, tree)
+    if scope is None:
+        return None
+    return list(scope.tags)
