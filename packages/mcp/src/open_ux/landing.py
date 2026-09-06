@@ -486,7 +486,7 @@ LANDING_HTML = """<!DOCTYPE html>
         <div class="clay-step clay-step-3" aria-hidden="true"><span></span><span></span></div>
         <p class="how-num">03</p>
         <h3>Audit</h3>
-        <p>Send UI (html / jsx / description); get pass, fail, or incomplete with the rule id.</p>
+        <p>Say the compose job; get cited criteria. The host does not take a file or return pass or fail.</p>
       </article>
     </div>
   </section>

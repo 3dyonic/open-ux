@@ -48,7 +48,9 @@ def test_landing_has_figma_sections_and_register_cta(tmp_env: Path) -> None:
     assert "List · get" in html
     assert "Browse the shared catalog; every rule carries a citation." in html
     assert ">Audit</h3>" in html
-    assert "Send UI (html / jsx / description); get pass, fail, or incomplete with the rule id." in html
+    assert "Say the compose job; get cited criteria. The host does not take a file or return pass or fail." in html
+    assert "Send UI (html / jsx / description)" not in html
+    assert "incomplete" not in html
     assert "invented rule · no source" in html
     assert "cited rule · source attached" in html
     assert "Join the waitlist. One key after approve and redeem — no vibes." in html
@@ -238,5 +240,7 @@ def test_readme_hero_svg_is_parseable_and_complete() -> None:
     assert root.get("height") == "420"
     assert "Catalog" in text
     assert "Agent tools" in text
-    assert "Verdict" in text
+    assert "Criteria" in text
+    assert "Verdict" not in text
+    assert "Pass / fail" not in text
     assert "Cited UX rules agents audit against" in text
