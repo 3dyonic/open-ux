@@ -6,8 +6,14 @@ from html import escape
 from urllib.parse import quote
 from typing import Any
 
-from open_ux.catalog import Catalog, citations, get_by_id, list_index
+from open_ux.catalog import SOURCE_HOUSES, Catalog, citations, get_by_id, list_index
 from open_ux.jobs import JobTree, card_by_id, empty_job_tree
+
+# Longest house label first so "Suomi.fi" wins over a shorter tail.
+_SOURCE_SUFFIXES = tuple(
+    f" — {label}"
+    for label in sorted(SOURCE_HOUSES.values(), key=len, reverse=True)
+)
 
 # Figma 36:22 chip labels for the locked seven containers.
 CONTAINER_CHIPS: tuple[tuple[str, str], ...] = (
@@ -434,8 +440,22 @@ def _row_path(row: dict[str, Any], tree: JobTree) -> str:
     return left or right
 
 
-def _display_name(row: dict[str, Any]) -> str:
+def _raw_name(row: dict[str, Any]) -> str:
     return str(row.get("name") or row.get("title") or row.get("id") or "")
+
+
+def _strip_source_suffix(name: str) -> str:
+    """Drop a trailing ` — {house}` so HTML titles stay name-only."""
+    text = name.strip()
+    for suffix in _SOURCE_SUFFIXES:
+        if text.endswith(suffix):
+            return text[: -len(suffix)].rstrip()
+    return text
+
+
+def _display_name(row: dict[str, Any]) -> str:
+    """Claim title for list rows and the rule H1 — no citation-source suffix."""
+    return _strip_source_suffix(_raw_name(row))
 
 
 def _nav() -> str:
@@ -511,7 +531,7 @@ def _rows_html(rows: list[dict[str, Any]], tree: JobTree) -> str:
         gid = str(row.get("id") or "")
         name = _display_name(row)
         path = _row_path(row, tree)
-        search = f"{gid} {row.get('title') or ''} {name}".lower()
+        search = f"{gid} {row.get('title') or ''} {_raw_name(row)}".lower()
         container = str(row.get("container") or "")
         path_html = ""
         if path:
