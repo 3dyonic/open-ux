@@ -20,5 +20,9 @@
   "card": "protect_destructive_and_leave",
   "facet": "destructive_is_too_easy",
   "leaf": "disable_or_confirm_destructive",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+  "overview": "Confirmations restate the request with specific, user-centric consequences.",
+  "apply_when": "Copying confirmation dialogs for destructive or high-impact actions.",
+  "not_when": "Low-stakes prompts where consequences are already obvious in context.",
+  "agent_hint": "Restate the action and its specific consequences; avoid bare Are you sure?",
+  "description": "A confirmation should restate the request with concrete, user-centric consequences—not a bare “Are you sure?” Vague prompts invite blind acceptance because they add friction without adding information. Name what will change for the person in specific terms so the decision is informed. Reserve detailed consequence copy for material risk; do not pad trivial prompts with fake gravity."
 }

@@ -20,6 +20,10 @@
   "card": "design_a_form",
   "facet": "wrong_control_for_the_choice",
   "leaf": "choose_control_for_choice",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "A radio set always has one selected value; use explicit None when none is valid.",
+  "apply_when": "Initializing radio groups on questions or settings forms.",
+  "not_when": "Not for checkbox groups that correctly allow zero selected items.",
+  "agent_hint": "Keep one radio selected; use explicit None when none/unknown is valid on questions.",
+  "description": "Always have one radio selected because users cannot return to “none” once cleared. If none is valid, that value is an explicit None—do not force a guessed answer. Settings use the current or safe default. Fail for no selected radio, a guessed answer preselected where none/unknown is valid, or a global always/never with no question-versus-settings split.",
   "do_not_claim": "A winner over GOV.UK questions or Polar “Select” placeholder when no logical default. Overlap with Forms 54: `forms.inputs.good_defaults_smart_prefills`."
 }

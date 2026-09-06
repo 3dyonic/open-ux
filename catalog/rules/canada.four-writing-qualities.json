@@ -20,6 +20,10 @@
   "card": "compose_feedback",
   "facet": "tone_fights_the_moment",
   "leaf": "tone_of_voice_for_failure",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "Canada.ca copy should be intuitive, comprehensive, targeted, and consistent.",
+  "apply_when": "Writing task copy so first-time and specialist users can finish.",
+  "not_when": "Purely visual layout choices with no wording or scanning impact.",
+  "agent_hint": "Lead with what matters; enough for first-timers and specialists; stay scannably consistent.",
+  "description": "Canada.ca’s four writing qualities are intuitive, comprehensive, targeted, and consistent: just enough for a first-time user to finish alone, enough depth for specialists, most important first without dumping every option, and standardized so people can scan with trust. Fail dumping every option up front, copy a first-time user cannot finish alone, or inconsistent patterns that block scanning.",
   "do_not_claim": "Inverted pyramid (next row) as this qualities list."
 }

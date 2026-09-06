@@ -20,6 +20,10 @@
   "card": "compose_feedback",
   "facet": "system_stayed_quiet_after_change",
   "leaf": "announce_system_status",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "Auto-dismiss lasts at least five seconds and pauses on focus or hover.",
+  "apply_when": "Timed toasts that confirm or notify without requiring a blocking response.",
+  "not_when": "Dialogs that need attention, or sticky alerts users must dismiss themselves.",
+  "agent_hint": "Keep auto-dismiss ≥5s, pause on focus/hover, and preserve actionable paths elsewhere.",
+  "description": "Spectrum auto-dismiss toasts stay up at least five seconds so the message can be read, pause the timer on focus or hover (including keyboard focus on toast buttons), and keep any actionable path available elsewhere if the toast dismisses. Shorter timers, timers that ignore focus, or actions that vanish with the toast fail the bar. Use this for low-priority timed feedback; escalate harder decisions to dialogs.",
   "do_not_claim": "Ant Message default 3s as a house winner; snackbar-only undo (`nng.support-undo-discoverable`)."
 }

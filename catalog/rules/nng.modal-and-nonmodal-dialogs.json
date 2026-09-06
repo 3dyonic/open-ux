@@ -19,10 +19,11 @@
   "container": "overlays_and_content_structure",
   "card": "choose_an_overlay",
   "facet": "wrong_layer_for_the_content",
-  "overview": "A modal is only for a required finish-or-cancel; other layers stay nonmodal.",
-  "apply_when": "Choosing modal vs accordion, tooltip, or side panel.",
-  "not_when": "The destructive decision inside a dialog — that is protect_destructive_and_leave.",
-  "agent_hint": "Pick the layer for the content. Do not treat every dialog as modal.",
-  "description": "Use a modal only when the user must finish or cancel before continuing. The overlay type should match whether they may keep working in the background. A modal that blocks the page for content that is not a required decision fails. This is about the layer, not the destructive copy inside it.",
+  "leaf": "pick_modal_only_when_blocking",
+  "overview": "Use modals for critical warnings and process-critical info; avoid off-flow interrupts.",
+  "apply_when": "Choosing a modal for warnings, critical requests, or workflow steps.",
+  "not_when": "Nonessential off-flow info, checkout interrupts, or decisions needing outside sources.",
+  "agent_hint": "Reserve modals for critical warnings and continue-critical info; skip checkout interrupts.",
+  "description": "Modals fit important warnings, info critical to continuing, simpler workflow steps, or info that significantly lessens work. Do not use them for nonessential off-flow information, interrupting high-stake processes such as checkout, or decisions needing sources unavailable inside the modal. Pass for those critical uses. Fail for nonessential or off-flow modals, checkout interrupts, outside-source decisions, or when no modal appears for a critical warning or continue-critical request.",
   "do_not_claim": "Confirmation-dialog copy (`actions.confirm.*`); form-error-only-in-modal (`forms.errors.modal_not_only_copy`); Polar complex-form modal (dual-cite, keep both named)."
 }

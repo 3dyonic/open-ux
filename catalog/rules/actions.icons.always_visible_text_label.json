@@ -16,9 +16,13 @@
     "Icon-only command, or label only on hover/tooltip."
   ],
   "severity": "major",
-  "container": "forms_and_input",
-  "card": "design_a_form",
-  "facet": "field_has_no_lasting_name",
-  "leaf": "name_a_control",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "action_wording_hides_the_outcome",
+  "leaf": "word_the_action",
+  "overview": "Command icons keep a text label visible beside them at all times.",
+  "apply_when": "Using icons for commands people must recognize without hovering.",
+  "not_when": "Extremely space-constrained toolbars with established universal icons only.",
+  "agent_hint": "Place lasting text beside command icons; do not rely on hover-only labels.",
+  "description": "Command icons need a text label next to them that stays visible at all times. Icon-only commands, or labels revealed only on hover or tooltip, fail recognition for many people and contexts. Pair icon and lasting text for actionable controls so meaning does not depend on pointer hover. Ultra-dense expert chrome with truly universal icons is a narrow exception, not the default pattern."
 }

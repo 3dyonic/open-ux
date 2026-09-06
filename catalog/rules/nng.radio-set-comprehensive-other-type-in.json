@@ -20,6 +20,10 @@
   "card": "design_a_form",
   "facet": "wrong_control_for_the_choice",
   "leaf": "choose_control_for_choice",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "Radio sets must cover every valid answer or offer Other with type-in.",
+  "apply_when": "Building exclusive radio choices that may not cover every answer.",
+  "not_when": "Incomplete radio sets without Other plus a type-in field.",
+  "agent_hint": "Make radio sets comprehensive, or add Other with type-in for the rest.",
+  "description": "A radio set must be comprehensive. If it cannot cover every valid answer, add Other plus a type-in field for the remainder. Pass when every valid answer is in the set, or Other plus type-in covers the rest. Fail when the set is incomplete and there is no Other plus type-in, leaving some valid answers unreachable.",
   "do_not_claim": "Silent preselect of a guessed Other."
 }

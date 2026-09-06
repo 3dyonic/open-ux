@@ -20,6 +20,10 @@
   "card": "compose_feedback",
   "facet": "system_stayed_quiet_after_change",
   "leaf": "announce_system_status",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "Suomi toasts last 10s or while hovered, stick then float top-right, for action-free success.",
+  "apply_when": "Success toasts that need no response when following the Suomi.fi toast school.",
+  "not_when": "Inventing a house timer outside 10s+hover, Spectrum ≥5s, or Ant 3s.",
+  "agent_hint": "Apply one named duration school; for Suomi use 10s/hover, stick-then-float, no required response.",
+  "description": "Suomi.fi toasts show for 10 seconds or while hovered, slide out the top, stick then float top-right on scroll, and cover success that needs no action. Dual-cite Spectrum ≥5s and Ant Message 3s without inventing a house seconds value. Collapse those schools into one unmarked timer, or require a response on a success toast, and the pattern fails. Pick one named school and apply it consistently.",
   "do_not_claim": "A house toast duration; Notification first-load split as this row."
 }

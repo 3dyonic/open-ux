@@ -20,5 +20,9 @@
   "card": "design_a_form",
   "facet": "related_inputs_feel_scattered",
   "leaf": "group_related_inputs",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+  "overview": "Stack independent fields in one column; only short related fields share a row.",
+  "apply_when": "Laying out multi-field forms on web or similar viewports.",
+  "not_when": "Short related clusters like city/state/zip that intentionally share a row.",
+  "agent_hint": "Use one column for independent fields; row-share only short related ones.",
+  "description": "Present fields in a single column; short related fields such as city/state/zip may share a row. Pass when independent fields stack in one column and only short related fields share a row; fail when unrelated fields sit in multiple columns that force a zigzag fill path. Single-column reading beats zigzag scanning across the form for independent asks."
 }

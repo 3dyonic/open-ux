@@ -20,6 +20,10 @@
   "card": "design_actions_and_ctas",
   "facet": "controls_are_hard_to_hit",
   "leaf": "keep_hit_target_usable",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "Cards use one inner link with a CSS hit-area; do not wrap the whole card in an anchor.",
+  "apply_when": "Cards act as links or primary navigation targets.",
+  "not_when": "Non-linked informational cards with no click-through action.",
+  "agent_hint": "Use one inner anchor plus CSS hit-area; never wrap the whole card in <a>.",
+  "description": "A card should have one inner link; the hit-area wraps the card via CSS. Do not wrap the whole card in `<a>` — screen readers announce the entire contents and the links landmark becomes unusable. Dual-cite USWDS “card is an action, not a frame.” Pass when one inner `<a>` plus CSS hit-area makes the card clickable without the card itself being the `<a>`; fail when the whole card is wrapped in `<a>` or multiple competing links break the single inner-anchor pattern.",
   "do_not_claim": "USWDS “card is an action” as a merge that drops the inner-anchor + landmark fail."
 }

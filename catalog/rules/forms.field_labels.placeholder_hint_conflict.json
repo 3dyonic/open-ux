@@ -20,5 +20,9 @@
   "card": "design_a_form",
   "facet": "field_has_no_lasting_name",
   "leaf": "avoid_placeholder_as_label",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+  "overview": "Separate label required; in-field hint is extra, never the only name.",
+  "apply_when": "Fields use placeholder or in-field prompt plus or instead of a label.",
+  "not_when": "Apple-style extra in-field hint with a real outside label present.",
+  "agent_hint": "Require an outside label; treat placeholder as optional extra, not the name.",
+  "description": "NN/g and Tidwell reject placeholder-as-label and put essential hints outside so they stay readable; Apple allows an in-field hint for purpose but still requires a separate label because that text disappears. Pass when a separate label is present and any in-field hint is extra, with essential format/help also outside if it must stay readable. Fail only when placeholder or in-field prompt is the sole name — the agreed fail across cites. Dual-cite; not two winners."
 }

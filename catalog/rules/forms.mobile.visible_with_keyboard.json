@@ -18,7 +18,11 @@
   "severity": "major",
   "container": "forms_and_input",
   "card": "design_a_form",
-  "facet": "field_has_no_lasting_name",
-  "leaf": "keep_field_purpose_visible_while_filled",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "use_familiar_control",
+  "overview": "Keep the focused field visible with the keyboard in both orientations.",
+  "apply_when": "Mobile text entry with on-screen keyboard in portrait or landscape.",
+  "not_when": "Hard-keyboard or desktop contexts without an on-screen keyboard.",
+  "agent_hint": "Scroll or layout so the focused field stays visible above the keyboard.",
+  "description": "Keep the field visible in both orientations when the keyboard is displayed. Pass when the focused field stays visible with the on-screen keyboard in portrait and landscape; fail when the keyboard covers the field in an orientation so the value cannot be seen. Users must see what they type while the soft keyboard is up."
 }

@@ -19,10 +19,11 @@
   "container": "overlays_and_content_structure",
   "card": "choose_an_overlay",
   "facet": "wrong_layer_for_the_content",
-  "overview": "Low-priority confirmations/notifications use toast.",
-  "apply_when": "Modal vs accordion",
-  "not_when": "Not for the destructive decision inside a dialog.",
-  "agent_hint": "Toast only for confirmations, simple notifications, and low-priority alerts that must not fully interrupt.",
-  "description": "Toast only for confirmations, simple notifications, and low-priority alerts that must not fully interrupt. Low-priority confirmations/notifications use toast. It fails when Dialog for a simple upload-complete.",
+  "leaf": "pick_modal_only_when_blocking",
+  "overview": "Toasts cover low-priority confirmations; dialogs cover situations that need attention or response.",
+  "apply_when": "Choosing between toast and dialog after saves, uploads, or status changes.",
+  "not_when": "Simple upload-complete moments that only need a toast, not a blocking dialog.",
+  "agent_hint": "Use toast for low-priority notices; use dialog when attention or a response is required.",
+  "description": "Spectrum reserves toasts for confirmations, simple notifications, and low-priority alerts that must not fully interrupt. Situations that need attention or a response belong in a dialog. A dialog for a simple upload-complete overblocks; a toast for a decision that needs a response underblocks. Match the layer to the urgency: toast for lightweight status, dialog when the user must engage.",
   "do_not_claim": "A winner vs NN/g modal 7 (`nng.modal-and-nonmodal-dialogs`); Ant Message vs dialog (separate rows)."
 }

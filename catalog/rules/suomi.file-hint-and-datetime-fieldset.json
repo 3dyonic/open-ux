@@ -18,8 +18,12 @@
   "severity": "major",
   "container": "forms_and_input",
   "card": "design_a_form",
-  "facet": "related_inputs_feel_scattered",
-  "leaf": "group_related_inputs",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "use_familiar_control",
+  "overview": "File inputs name size, types, and count; date-plus-time share a fieldset legend.",
+  "apply_when": "Building file upload fields or combined date-and-time entry patterns.",
+  "not_when": "Single text fields, or date-only / time-only controls that are not a combo.",
+  "agent_hint": "State file size/types/count hints; wrap date+time in a fieldset with the cited describedby pattern.",
+  "description": "Suomi.fi file inputs expose hint text for max size, types, and count, name drag-and-drop and remove strings, and place added-file screen-reader text before the filename (dual-cite USWDS prefer-one-file). Date-plus-time combos wrap both controls in a fieldset with a legend; desktop wires external HintText/StatusText ids through `aria-describedby`, while mobile uses built-in hint/status on stacked fields. Missing file constraints or unrelated date/time fields without a shared legend fail the pattern.",
   "do_not_claim": "USWDS prefer-one-file / file types+size as a merge that drops the named string props; date-hint `PP.KK.VVVV` as this fieldset row."
 }

@@ -16,9 +16,13 @@
     "No visible history of what / to what / when."
   ],
   "severity": "major",
-  "container": "feedback_and_status",
-  "card": "compose_feedback",
-  "facet": "system_stayed_quiet_after_change",
-  "leaf": "announce_system_status",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "command_surface_is_opaque",
+  "leaf": "compose_the_command_surface",
+  "overview": "A visible record of what was done, to what, and when.",
+  "apply_when": "People need to review or audit recent actions in the product.",
+  "not_when": "Trivial one-off taps that never need a recoverable history trail.",
+  "agent_hint": "Keep a visible history of what, to what, and when for user actions.",
+  "description": "A command history makes past work inspectable: what ran, on which target, and when. Without a visible record, people cannot verify, audit, or reconstruct what happened after a busy session. Provide that trail as actions accumulate so the sequence stays reviewable. Reserve history for meaningful operations; do not invent history UI for fleeting chrome taps that never matter later."
 }

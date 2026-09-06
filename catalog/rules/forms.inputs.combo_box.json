@@ -20,5 +20,9 @@
   "card": "design_a_form",
   "facet": "wrong_control_for_the_choice",
   "leaf": "choose_control_for_choice",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+  "overview": "Pair typing with a choice list via a combo box when both are required.",
+  "apply_when": "Tasks need both free typing and picking from a list.",
+  "not_when": "List-only or type-only tasks that do not need both modes.",
+  "agent_hint": "Use a combo box when the task needs typing plus a choice list.",
+  "description": "When text input must be paired with a list of choices, use a combo box — a text field plus choice list — rather than disconnected controls. Pass when the type-plus-list task uses that pattern; fail when typing and list are split with no combo, or a list-only control is used when typing is required. Match the control to the dual need, not to habit."
 }

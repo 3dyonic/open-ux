@@ -16,10 +16,14 @@
     "Blocking dialog for a non-important reminder, or important actionable failure with no dialog when this routing applies."
   ],
   "severity": "major",
-  "container": "forms_and_input",
-  "card": "design_a_form",
-  "facet": "wrong_control_for_the_choice",
-  "leaf": "use_familiar_control",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "container": "overlays_and_content_structure",
+  "card": "choose_an_overlay",
+  "facet": "wrong_layer_for_the_content",
+  "leaf": "pick_modal_only_when_blocking",
+  "overview": "Blocking dialogs are reserved for important, actionable information or failure.",
+  "apply_when": "Choosing whether Ant feedback should block in a centered dialog.",
+  "not_when": "Lightweight toasts or inline messages for non-blocking status updates.",
+  "agent_hint": "Use blocking dialogs only for important actionable info or failure—not reminders.",
+  "description": "Ant routes dialog feedback to important, actionable information—centered, confirm or cancel to close, blocking other work. Avoid unnecessary reminder dialogs except for failure cases that require acknowledgment. Blocking people for trivial reminders, or skipping a dialog when important actionable failure needs one, mis-routes feedback. Prefer quieter channels such as inline messages or toasts for ordinary non-blocking status.",
   "do_not_claim": "Deleting `nng.modal-and-nonmodal-dialogs`; Spectrum toast-vs-dialog as a merge."
 }

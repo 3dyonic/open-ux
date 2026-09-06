@@ -18,8 +18,12 @@
   "severity": "major",
   "container": "forms_and_input",
   "card": "design_a_form",
-  "facet": "wrong_control_for_the_choice",
-  "leaf": "use_familiar_control",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "facet": "related_inputs_feel_scattered",
+  "leaf": "group_related_inputs",
+  "overview": "Show character count only for brevity or a legal cap, not to paper over a short backend limit.",
+  "apply_when": "Textareas with a real brevity need or legal maximum users might hit.",
+  "not_when": "Phone/zip implied lengths, or caps almost nobody will hit such as address at 250.",
+  "agent_hint": "Use character count only for brevity or legal caps; raise backend limits instead of faking them.",
+  "description": "USWDS character count is for brevity or a legal cap—not to paper over backend field limits (raise the limit instead). Skip when length is implied (phone/zip) or when well over 99% of users will never hit the cap. Provide a non-JS backup message. Dual-cite GOV.UK raise-backend and no-maxlength-truncate versus USWDS `maxlength` usage without picking a truncate winner. Counting to hide a short backend limit, or counting phone/zip/rarely-hit address fields, fails.",
   "do_not_claim": "A winner that bans or requires `maxlength`."
 }

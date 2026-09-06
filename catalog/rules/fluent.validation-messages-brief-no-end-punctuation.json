@@ -18,8 +18,12 @@
   "severity": "major",
   "container": "forms_and_input",
   "card": "handle_form_errors",
-  "facet": "errors_dont_point_to_the_fix",
-  "leaf": "explain_failure_next_to_cause",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil; MULTI_HOME picked explain_failure_next_to_cause; leftover harvest tag recover_from_invalid_input",
+  "facet": "invalid_input_has_no_recovery",
+  "leaf": "recover_from_invalid_input",
+  "overview": "Fluent validation copy stays brief and omits end punctuation on one sentence.",
+  "apply_when": "Writing Fluent field validation messages after input fails checks.",
+  "not_when": "Multi-sentence help text under the field — that is helper-text guidance.",
+  "agent_hint": "Keep validation brief; no trailing period on a single sentence.",
+  "description": "Fluent validation messages stay brief so the fix is scannable beside the field. A single sentence takes no end punctuation; add punctuation only when the message needs multiple sentences. Apply when writing Fluent field validation after input fails checks, not multi-sentence helper text. Fail single-sentence validation with a trailing period, or long un-brief validation copy.",
   "do_not_claim": "Error identifies-and-fixes (`forms.field_labels.error_identifies_and_fixes`)."
 }

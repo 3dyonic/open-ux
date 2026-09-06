@@ -20,5 +20,9 @@
   "card": "protect_destructive_and_leave",
   "facet": "destructive_is_too_easy",
   "leaf": "disable_or_confirm_destructive",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+  "overview": "Rare extreme danger requires a nonstandard confirm reserved for rarity.",
+  "apply_when": "Especially dangerous rare operations such as permanent account wipe.",
+  "not_when": "Ordinary deletes that a standard confirm or undo already covers.",
+  "agent_hint": "Require typing or similar nonstandard confirm only for rare extreme danger.",
+  "description": "Particularly dangerous rare operations need more than a single OK. Require a nonstandard confirm—such as typing a word—and reserve that pattern so it does not become a new habit. Using it constantly, or letting extreme danger commit with one click, both fail. Keep standard confirms for ordinary risk; escalate only when rarity and severity justify it."
 }

@@ -17,9 +17,13 @@
   ],
   "severity": "major",
   "container": "forms_and_input",
-  "card": "design_a_form",
-  "facet": "field_has_no_lasting_name",
-  "leaf": "name_a_control",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "card": "handle_form_errors",
+  "facet": "invalid_input_has_no_recovery",
+  "leaf": "recover_from_invalid_input",
+  "overview": "Helper text changes field height; equalize siblings with a space helperText when needed.",
+  "apply_when": "Aligning adjacent Text Fields where only some have helper text.",
+  "not_when": "Not for isolated single fields with no adjacent sibling to align.",
+  "agent_hint": "Equalize adjacent field heights with space helperText on siblings lacking help.",
+  "description": "Helper text changes field height, so a field with helper text beside one without will misalign. Equalize by passing a space character as `helperText` on the sibling, or an equivalent spacer, so adjacent fields stay aligned. Misalignment makes forms look broken and harder to scan. Fail when adjacent fields misalign because only one has helper text. Apply when aligning neighboring Text Fields with uneven helper text.",
   "do_not_claim": "Helper association `id` (next row) as this height row."
 }

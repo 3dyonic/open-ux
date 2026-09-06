@@ -17,9 +17,13 @@
   ],
   "severity": "major",
   "container": "forms_and_input",
-  "card": "design_a_form",
-  "facet": "wrong_control_for_the_choice",
-  "leaf": "use_familiar_control",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "card": "compose_sign_in",
+  "facet": "credentials_are_hard_to_enter",
+  "leaf": "show_the_password",
+  "overview": "Offer federated or social registration and biometric login where the platform supports it.",
+  "apply_when": "Designing mobile registration and login when federated or biometric options exist.",
+  "not_when": "Not on platforms without biometric or federated capability for this checklist.",
+  "agent_hint": "Offer social/federated registration and biometric login when the platform has them.",
+  "description": "Offer alternative registration via social or federated identity, and biometric login where the platform has it. Those options reduce typing on mobile registration and login when the checklist applies. Fail when the platform has the capability and neither alt registration nor biometric is offered. Do not invent capability that is absent on the platform. Apply when designing mobile registration and login with federated or biometric support available.",
   "do_not_claim": "That every product must ship every social provider."
 }

@@ -17,9 +17,13 @@
   ],
   "severity": "major",
   "container": "navigation_and_wayfinding",
-  "card": "orient_in_the_place",
-  "facet": "user_cant_tell_where_they_are",
-  "leaf": "wayfind_after_nav",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "card": "compose_search",
+  "facet": "search_is_hard_to_find",
+  "leaf": "place_the_search_control",
+  "overview": "Home search sits top-right; results-page search sits close to the hits.",
+  "apply_when": "Placing search on landing/home versus results pages.",
+  "not_when": "Non-search navigation or filters that are not the search box.",
+  "agent_hint": "Put home search top-right; keep results-page search near the hits.",
+  "description": "On landing/home, place search top-right where people expect it. On results pages, place the search box closer to the results so query and hits read as related. Dual-cite USWDS persist-query / homepage-is-a-box. Pass when home search is top-right and results-page search sits close to the hits; fail when home search is not where people expect or results-page search is far from the hits.",
   "do_not_claim": "Search input attributes (autocomplete/spellcheck) as this placement row; USWDS persist-query as a merge."
 }

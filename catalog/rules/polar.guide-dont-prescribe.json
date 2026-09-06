@@ -16,10 +16,14 @@
     "Prescriptive copy that removes the decision, or too little to decide."
   ],
   "severity": "major",
-  "container": "actions_and_decisions",
-  "card": "design_actions_and_ctas",
-  "facet": "no_clear_primary",
-  "leaf": "pick_primary_action",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "tone_fights_the_moment",
+  "leaf": "tone_of_voice_for_failure",
+  "overview": "Guide merchants with enough information; keep them in control of decisions.",
+  "apply_when": "Writing guidance that helps merchants decide without removing control.",
+  "not_when": "Prescriptive copy that removes the decision or too little to decide.",
+  "agent_hint": "Guide with enough to decide; keep the merchant in control—do not prescribe.",
+  "description": "Guide, do not prescribe: the merchant stays in control and gets enough information to decide. Copy should orient the choice without taking the decision away. Pass when copy guides with enough detail to decide and the merchant stays in control of the outcome. Fail when prescriptive copy removes the decision from them, or when there is too little information left to decide responsibly.",
   "do_not_claim": "NN/g UI-copy / confirmation already-filed verb+noun / no “you can”."
 }

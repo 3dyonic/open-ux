@@ -20,6 +20,10 @@
   "card": "orient_in_the_place",
   "facet": "user_cant_tell_where_they_are",
   "leaf": "wayfind_after_nav",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "Required federal links live once in the identifier with the parent agency mark, not duplicated in the footer.",
+  "apply_when": "Placing required agency links and logos in the USWDS identifier.",
+  "not_when": "Product logos as the identifier mark, or required links omitted or footer-duplicated.",
+  "agent_hint": "Put required links only in the identifier; use the highest parent agency, not the product logo.",
+  "description": "USWDS puts required federal links in the identifier once—do not duplicate them in the site footer. Use the parent agency highest in the hierarchy, not the product logo; multiple parents appear in hierarchical order, highest first. Omit the identifier logo if it duplicates the footer agency mark. Keep the entire component; do not delete required links. Footer duplicates, product logos in the identifier, or omitted required links fail.",
   "do_not_claim": "Identifier darker-than-footer (next row) as this links rule; Canada GC signature as a merge."
 }

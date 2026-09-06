@@ -19,7 +19,11 @@
   "container": "forms_and_input",
   "card": "design_a_form",
   "facet": "wrong_control_for_the_choice",
-  "leaf": "choose_control_for_choice",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "leaf": "use_familiar_control",
+  "overview": "Date format hints stay always visible; the calendar is optional and traps focus while open.",
+  "apply_when": "Building typeable date inputs with an optional calendar overlay.",
+  "not_when": "Calendar-only entry with no typing path, or format living only in a placeholder.",
+  "agent_hint": "Keep PP.KK.VVVV hint visible, allow typing, and trap focus while the calendar is open.",
+  "description": "Suomi.fi date inputs keep a `PP.KK.VVVV` (or `p.k.vvvv`) hint always visible, remain typeable, and treat the calendar as optional with focus trapped while it is open. Dual-cite USWDS typeable date and GOV.UK memorable date. Hiding the format in a placeholder, making the calendar the only entry path, or opening the calendar without a focus trap fails the pattern.",
   "do_not_claim": "Time `t.mm` row; USWDS typeable / GOV.UK memorable as a merge that drops the Finnish hint + trap."
 }

@@ -20,6 +20,10 @@
   "card": "orient_in_the_place",
   "facet": "user_cant_tell_where_they_are",
   "leaf": "wayfind_after_nav",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "Design for find, understand, use; non-priority content must not block findability.",
+  "apply_when": "Prioritizing Canada.ca topics, duplicates, and what GC should publish.",
+  "not_when": "Visual polish tasks that do not change findability or authority of content.",
+  "agent_hint": "Keep non-priority from hiding tasks; group duplicates; link out non-authoritative material.",
+  "description": "Every Canada.ca design decision is judged on find, understand, and use. Non-priority material must not block findability of the task. Group the same public topic across departments and remove duplicate content. Do not publish what GC is not the authoritative source for — link out instead. Fail extra non-priority that hides the task, duplicate departmental pages for one public topic, or GC publishing material it does not own.",
   "do_not_claim": "Doormat counts as this row."
 }

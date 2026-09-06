@@ -17,8 +17,12 @@
   ],
   "severity": "major",
   "container": "actions_and_decisions",
-  "card": "protect_destructive_and_leave",
-  "facet": "destructive_is_too_easy",
-  "leaf": "disable_or_confirm_destructive",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+  "card": "design_actions_and_ctas",
+  "facet": "no_clear_primary",
+  "leaf": "pick_primary_action",
+  "overview": "Avoid Reset and Clear on web forms; demote Cancel beside Submit.",
+  "apply_when": "Placing destructive or dismissive actions on a web form footer.",
+  "not_when": "Scoped clear of one filter chip, not a whole-form wipe.",
+  "agent_hint": "Omit form-wide Reset/Clear; if Cancel is needed, keep it weaker than Submit.",
+  "description": "Web forms should avoid Reset and Clear actions that wipe the whole form and throw away work. If Cancel is needed for sensitive data, give it much less visual prominence than Submit so it does not compete as a primary. Apply when placing dismissive actions on a form footer. Fail a Reset or Clear that wipes the form, or Cancel that equals or competes with Submit."
 }

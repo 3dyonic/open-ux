@@ -16,10 +16,14 @@
     "No table for a small set (or table only behind a toggle); summary is “the line goes up”; title omits unit/timeframe."
   ],
   "severity": "major",
-  "container": "feedback_and_status",
-  "card": "compose_feedback",
-  "facet": "system_stayed_quiet_after_change",
-  "leaf": "announce_system_status",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "container": "layout_and_data_display",
+  "card": "compose_a_data_display",
+  "facet": "data_is_unscannable",
+  "leaf": "chart_has_a_story",
+  "overview": "Charts need title with timeframe and unit, insight summary, and data table.",
+  "apply_when": "Publishing charts that need scannable anatomy and accessible data.",
+  "not_when": "Missing tables for small sets, vague summaries, or titles without unit or timeframe.",
+  "agent_hint": "Require timeframe-plus-unit title, meaningful insight, and a visible table for small sets.",
+  "description": "Required anatomy: title with timeframe and unit, insight summary stating what the data means, and a data table. Use subtitle or callout, not both. Small datasets show a full semantic table visible, not behind a toggle. Pass when those hold. Fail when there is no table for a small set (or only behind a toggle), the summary is “the line goes up,” or the title omits unit or timeframe.",
   "do_not_claim": "Tooltip-only values as this anatomy row."
 }

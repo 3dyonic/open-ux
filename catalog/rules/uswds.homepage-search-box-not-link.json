@@ -17,9 +17,13 @@
   ],
   "severity": "major",
   "container": "navigation_and_wayfinding",
-  "card": "orient_in_the_place",
-  "facet": "user_cant_tell_where_they_are",
-  "leaf": "wayfind_after_nav",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "card": "compose_search",
+  "facet": "search_is_hard_to_find",
+  "leaf": "place_the_search_control",
+  "overview": "Homepages offer a search box by default, not a link out to search, unless the site is tiny.",
+  "apply_when": "Placing search on a site home where people expect an immediate query field.",
+  "not_when": "Tiny single-page sites that omit search, or advanced search forced as the default.",
+  "agent_hint": "Put a simple search field on the home page; do not default to advanced search.",
+  "description": "USWDS home pages provide a search box, not a search link that sends people elsewhere before they can type. Advanced search is not the default because most people use one or two terms and advanced-as-default increases mistakes. Tiny or single-page sites may omit search. A home that only links away to search, or that opens on advanced search, fails the pattern.",
   "do_not_claim": "27-character width as this row."
 }

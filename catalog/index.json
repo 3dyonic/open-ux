@@ -17,13 +17,13 @@
       "id": "forms.field_labels.label_stays_visible",
       "title": "label stays visible",
       "jobs": [
-        "keep_field_purpose_visible_while_filled"
+        "avoid_placeholder_as_label"
       ],
       "lane": "forms",
       "container": "forms_and_input",
       "card": "design_a_form",
       "facet": "field_has_no_lasting_name",
-      "leaf": "keep_field_purpose_visible_while_filled"
+      "leaf": "avoid_placeholder_as_label"
     },
     {
       "id": "forms.field_labels.error_identifies_and_fixes",
@@ -41,13 +41,13 @@
       "id": "actions.action_panel",
       "title": "action panel",
       "jobs": [
-        "use_familiar_control"
+        "compose_the_command_surface"
       ],
       "lane": "actions",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "wrong_control_for_the_choice",
-      "leaf": "use_familiar_control"
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "command_surface_is_opaque",
+      "leaf": "compose_the_command_surface"
     },
     {
       "id": "actions.button_groups",
@@ -77,37 +77,37 @@
       "id": "actions.buttons.distinguishable_states",
       "title": "distinguishable states",
       "jobs": [
-        "announce_system_status"
+        "show_action_state"
       ],
       "lane": "actions",
-      "container": "feedback_and_status",
-      "card": "compose_feedback",
-      "facet": "system_stayed_quiet_after_change",
-      "leaf": "announce_system_status"
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "action_state_is_silent",
+      "leaf": "show_action_state"
     },
     {
       "id": "actions.buttons.follow_platform_ok_cancel_order",
       "title": "follow platform ok cancel order",
       "jobs": [
-        "use_familiar_control"
+        "pick_primary_action"
       ],
       "lane": "actions",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "wrong_control_for_the_choice",
-      "leaf": "use_familiar_control"
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "no_clear_primary",
+      "leaf": "pick_primary_action"
     },
     {
       "id": "actions.buttons.loading_on_button",
       "title": "loading on button",
       "jobs": [
-        "announce_system_status"
+        "show_action_state"
       ],
       "lane": "actions",
-      "container": "feedback_and_status",
-      "card": "compose_feedback",
-      "facet": "system_stayed_quiet_after_change",
-      "leaf": "announce_system_status"
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "action_state_is_silent",
+      "leaf": "show_action_state"
     },
     {
       "id": "actions.buttons.one_primary",
@@ -125,13 +125,13 @@
       "id": "actions.buttons.press_state",
       "title": "press state",
       "jobs": [
-        "announce_system_status"
+        "show_action_state"
       ],
       "lane": "actions",
-      "container": "feedback_and_status",
-      "card": "compose_feedback",
-      "facet": "system_stayed_quiet_after_change",
-      "leaf": "announce_system_status"
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "action_state_is_silent",
+      "leaf": "show_action_state"
     },
     {
       "id": "actions.buttons.style_not_size",
@@ -148,32 +148,38 @@
     {
       "id": "actions.cancelability",
       "title": "cancelability",
-      "jobs": [],
+      "jobs": [
+        "warn_before_leave"
+      ],
       "lane": "actions",
       "container": "actions_and_decisions",
       "card": "protect_destructive_and_leave",
-      "facet": "leaving_discards_work"
+      "facet": "leaving_discards_work",
+      "leaf": "warn_before_leave"
     },
     {
       "id": "actions.close_saves_separate_cancel",
       "title": "close saves separate cancel",
-      "jobs": [],
+      "jobs": [
+        "warn_before_leave"
+      ],
       "lane": "actions",
       "container": "actions_and_decisions",
       "card": "protect_destructive_and_leave",
-      "facet": "leaving_discards_work"
+      "facet": "leaving_discards_work",
+      "leaf": "warn_before_leave"
     },
     {
       "id": "actions.command_history",
       "title": "command history",
       "jobs": [
-        "announce_system_status"
+        "compose_the_command_surface"
       ],
       "lane": "actions",
-      "container": "feedback_and_status",
-      "card": "compose_feedback",
-      "facet": "system_stayed_quiet_after_change",
-      "leaf": "announce_system_status"
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "command_surface_is_opaque",
+      "leaf": "compose_the_command_surface"
     },
     {
       "id": "actions.confirm.bypass_educational",
@@ -263,190 +269,205 @@
       "id": "actions.copy.adjectives_for_appearance",
       "title": "adjectives for appearance",
       "jobs": [
-        "name_a_control"
+        "word_the_action"
       ],
       "lane": "actions",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "field_has_no_lasting_name",
-      "leaf": "name_a_control"
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "action_wording_hides_the_outcome",
+      "leaf": "word_the_action"
     },
     {
       "id": "actions.copy.avoid_vague_names",
       "title": "avoid vague names",
-      "jobs": [],
+      "jobs": [
+        "word_the_action"
+      ],
       "lane": "actions",
       "container": "actions_and_decisions",
       "card": "design_actions_and_ctas",
-      "facet": "action_wording_hides_the_outcome"
+      "facet": "action_wording_hides_the_outcome",
+      "leaf": "word_the_action"
     },
     {
       "id": "actions.copy.consequent_state",
       "title": "consequent state",
-      "jobs": [],
+      "jobs": [
+        "word_the_action"
+      ],
       "lane": "actions",
       "container": "actions_and_decisions",
       "card": "design_actions_and_ctas",
-      "facet": "action_wording_hides_the_outcome"
+      "facet": "action_wording_hides_the_outcome",
+      "leaf": "word_the_action"
     },
     {
       "id": "actions.copy.consistent_words",
       "title": "consistent words",
       "jobs": [
-        "name_a_control"
+        "word_the_action"
       ],
       "lane": "actions",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "field_has_no_lasting_name",
-      "leaf": "name_a_control"
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "action_wording_hides_the_outcome",
+      "leaf": "word_the_action"
     },
     {
       "id": "actions.copy.ellipsis_needs_more_input",
       "title": "ellipsis needs more input",
-      "jobs": [],
+      "jobs": [
+        "word_the_action"
+      ],
       "lane": "actions",
       "container": "actions_and_decisions",
       "card": "design_actions_and_ctas",
-      "facet": "action_wording_hides_the_outcome"
+      "facet": "action_wording_hides_the_outcome",
+      "leaf": "word_the_action"
     },
     {
       "id": "actions.copy.explicit_verb_not_ok",
       "title": "explicit verb not ok",
-      "jobs": [],
+      "jobs": [
+        "word_the_action"
+      ],
       "lane": "actions",
       "container": "actions_and_decisions",
       "card": "design_actions_and_ctas",
-      "facet": "action_wording_hides_the_outcome"
+      "facet": "action_wording_hides_the_outcome",
+      "leaf": "word_the_action"
     },
     {
       "id": "actions.copy.limit_branded_terms",
       "title": "limit branded terms",
       "jobs": [
-        "name_a_control"
+        "word_the_action"
       ],
       "lane": "actions",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "field_has_no_lasting_name",
-      "leaf": "name_a_control"
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "action_wording_hides_the_outcome",
+      "leaf": "word_the_action"
     },
     {
       "id": "actions.copy.short_clear_sentence_case",
       "title": "short clear sentence case",
       "jobs": [
-        "name_a_control"
+        "word_the_action"
       ],
       "lane": "actions",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "field_has_no_lasting_name",
-      "leaf": "name_a_control"
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "action_wording_hides_the_outcome",
+      "leaf": "word_the_action"
     },
     {
       "id": "actions.copy.tooltips_clarify_outcomes",
       "title": "tooltips clarify outcomes",
       "jobs": [
-        "name_a_control"
+        "word_the_action"
       ],
       "lane": "actions",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "field_has_no_lasting_name",
-      "leaf": "name_a_control"
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "action_wording_hides_the_outcome",
+      "leaf": "word_the_action"
     },
     {
       "id": "actions.copy.verbs_for_actions",
       "title": "verbs for actions",
-      "jobs": [],
+      "jobs": [
+        "word_the_action"
+      ],
       "lane": "actions",
       "container": "actions_and_decisions",
       "card": "design_actions_and_ctas",
-      "facet": "action_wording_hides_the_outcome"
+      "facet": "action_wording_hides_the_outcome",
+      "leaf": "word_the_action"
     },
     {
       "id": "actions.hover_or_popup_tools",
       "title": "hover or popup tools",
       "jobs": [
-        "use_familiar_control"
+        "disclose_instead_of_dump"
       ],
       "lane": "actions",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "wrong_control_for_the_choice",
-      "leaf": "use_familiar_control"
+      "container": "overlays_and_content_structure",
+      "card": "choose_an_overlay",
+      "facet": "wrong_layer_for_the_content",
+      "leaf": "disclose_instead_of_dump"
     },
     {
       "id": "actions.icons.always_visible_text_label",
       "title": "always visible text label",
       "jobs": [
-        "name_a_control"
+        "word_the_action"
       ],
       "lane": "actions",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "field_has_no_lasting_name",
-      "leaf": "name_a_control"
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "action_wording_hides_the_outcome",
+      "leaf": "word_the_action"
     },
     {
       "id": "actions.macros",
       "title": "macros",
       "jobs": [
-        "use_familiar_control"
+        "compose_the_command_surface"
       ],
       "lane": "actions",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "wrong_control_for_the_choice",
-      "leaf": "use_familiar_control"
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "command_surface_is_opaque",
+      "leaf": "compose_the_command_surface"
     },
     {
       "id": "actions.menus.frequent_items_first",
       "title": "frequent items first",
       "jobs": [
-        "pick_primary_action"
+        "compose_the_command_surface"
       ],
       "lane": "actions",
       "container": "actions_and_decisions",
       "card": "design_actions_and_ctas",
-      "facet": "no_clear_primary",
-      "leaf": "pick_primary_action"
+      "facet": "command_surface_is_opaque",
+      "leaf": "compose_the_command_surface"
     },
     {
       "id": "actions.menus.unavailable_state",
       "title": "unavailable state",
       "jobs": [
-        "announce_system_status"
+        "compose_the_command_surface"
       ],
       "lane": "actions",
-      "container": "feedback_and_status",
-      "card": "compose_feedback",
-      "facet": "system_stayed_quiet_after_change",
-      "leaf": "announce_system_status"
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "command_surface_is_opaque",
+      "leaf": "compose_the_command_surface"
     },
     {
       "id": "actions.multilevel_undo",
       "title": "multilevel undo",
       "jobs": [
-        "recover_from_invalid_input"
+        "disable_or_confirm_destructive"
       ],
       "lane": "actions",
-      "container": "forms_and_input",
-      "card": "handle_form_errors",
-      "facet": "invalid_input_has_no_recovery",
-      "leaf": "recover_from_invalid_input"
+      "container": "actions_and_decisions",
+      "card": "protect_destructive_and_leave",
+      "facet": "destructive_is_too_easy",
+      "leaf": "disable_or_confirm_destructive"
     },
     {
       "id": "actions.preview",
       "title": "preview",
       "jobs": [
-        "announce_system_status"
+        "compose_the_command_surface"
       ],
       "lane": "actions",
-      "container": "feedback_and_status",
-      "card": "compose_feedback",
-      "facet": "system_stayed_quiet_after_change",
-      "leaf": "announce_system_status"
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "command_surface_is_opaque",
+      "leaf": "compose_the_command_surface"
     },
     {
       "id": "actions.prominent_done_or_assumed_next",
@@ -488,13 +509,13 @@
       "id": "actions.smart_menu_items",
       "title": "smart menu items",
       "jobs": [
-        "name_a_control"
+        "compose_the_command_surface"
       ],
       "lane": "actions",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "field_has_no_lasting_name",
-      "leaf": "name_a_control"
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "command_surface_is_opaque",
+      "leaf": "compose_the_command_surface"
     },
     {
       "id": "ant.checkbox-vs-switch",
@@ -536,13 +557,13 @@
       "id": "ant.dialog-feedback-only-important-actionable",
       "title": "dialog feedback only important actionable",
       "jobs": [
-        "use_familiar_control"
+        "pick_modal_only_when_blocking"
       ],
       "lane": "ant",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "wrong_control_for_the_choice",
-      "leaf": "use_familiar_control"
+      "container": "overlays_and_content_structure",
+      "card": "choose_an_overlay",
+      "facet": "wrong_layer_for_the_content",
+      "leaf": "pick_modal_only_when_blocking"
     },
     {
       "id": "ant.dropdown-when-over-5-no-truncate",
@@ -584,13 +605,13 @@
       "id": "ant.form-in-modal-lifecycle",
       "title": "form in modal lifecycle",
       "jobs": [
-        "use_familiar_control"
+        "pick_modal_only_when_blocking"
       ],
       "lane": "ant",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "wrong_control_for_the_choice",
-      "leaf": "use_familiar_control"
+      "container": "overlays_and_content_structure",
+      "card": "choose_an_overlay",
+      "facet": "wrong_layer_for_the_content",
+      "leaf": "pick_modal_only_when_blocking"
     },
     {
       "id": "ant.group-spacing-overflow-dropdown",
@@ -608,37 +629,37 @@
       "id": "ant.hover-detail-overlay-timing",
       "title": "hover detail overlay timing",
       "jobs": [
-        "use_familiar_control"
+        "disclose_instead_of_dump"
       ],
       "lane": "ant",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "wrong_control_for_the_choice",
-      "leaf": "use_familiar_control"
+      "container": "overlays_and_content_structure",
+      "card": "choose_an_overlay",
+      "facet": "wrong_layer_for_the_content",
+      "leaf": "disclose_instead_of_dump"
     },
     {
       "id": "ant.inline-input-feedback-does-not-auto-dismiss",
       "title": "inline input feedback does not auto dismiss",
       "jobs": [
-        "explain_failure_next_to_cause"
+        "recover_from_invalid_input"
       ],
       "lane": "ant",
       "container": "forms_and_input",
       "card": "handle_form_errors",
-      "facet": "errors_dont_point_to_the_fix",
-      "leaf": "explain_failure_next_to_cause"
+      "facet": "invalid_input_has_no_recovery",
+      "leaf": "recover_from_invalid_input"
     },
     {
       "id": "ant.input-overlay-click-outside-preserves",
       "title": "input overlay click outside preserves",
       "jobs": [
-        "use_familiar_control"
+        "disclose_instead_of_dump"
       ],
       "lane": "ant",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "wrong_control_for_the_choice",
-      "leaf": "use_familiar_control"
+      "container": "overlays_and_content_structure",
+      "card": "choose_an_overlay",
+      "facet": "wrong_layer_for_the_content",
+      "leaf": "disclose_instead_of_dump"
     },
     {
       "id": "ant.label-left-default-vs-top",
@@ -704,13 +725,13 @@
       "id": "ant.ok-cancel-default-vs-explicit-verb",
       "title": "ok cancel default vs explicit verb",
       "jobs": [
-        "pick_primary_action"
+        "word_the_action"
       ],
       "lane": "ant",
       "container": "actions_and_decisions",
       "card": "design_actions_and_ctas",
-      "facet": "no_clear_primary",
-      "leaf": "pick_primary_action"
+      "facet": "action_wording_hides_the_outcome",
+      "leaf": "word_the_action"
     },
     {
       "id": "ant.one-cta-per-screen",
@@ -735,18 +756,6 @@
       "card": "protect_destructive_and_leave",
       "facet": "destructive_is_too_easy",
       "leaf": "disable_or_confirm_destructive"
-    },
-    {
-      "id": "ant.radio-count-2-to-5",
-      "title": "radio count 2 to 5",
-      "jobs": [
-        "choose_control_for_choice"
-      ],
-      "lane": "ant",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "wrong_control_for_the_choice",
-      "leaf": "choose_control_for_choice"
     },
     {
       "id": "ant.settings-mode-and-grouping-thresholds",
@@ -788,13 +797,13 @@
       "id": "canada.equivalent-content-both-official-languages",
       "title": "equivalent content both official languages",
       "jobs": [
-        "wayfind_after_nav"
+        "name_the_link_by_destination"
       ],
       "lane": "canada",
-      "container": "navigation_and_wayfinding",
-      "card": "orient_in_the_place",
-      "facet": "user_cant_tell_where_they_are",
-      "leaf": "wayfind_after_nav"
+      "container": "layout_and_data_display",
+      "card": "write_the_interface",
+      "facet": "link_text_hides_destination",
+      "leaf": "name_the_link_by_destination"
     },
     {
       "id": "canada.find-understand-use-nonpriority-must-not-block",
@@ -819,18 +828,6 @@
       "card": "compose_feedback",
       "facet": "tone_fights_the_moment",
       "leaf": "tone_of_voice_for_failure"
-    },
-    {
-      "id": "canada.functional-alt-140-decorative-empty",
-      "title": "functional alt 140 decorative empty",
-      "jobs": [
-        "name_a_control"
-      ],
-      "lane": "canada",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "field_has_no_lasting_name",
-      "leaf": "name_a_control"
     },
     {
       "id": "canada.interactive-questions-max-7-same-place",
@@ -860,13 +857,13 @@
       "id": "canada.inverted-pyramid-no-welcome-filler",
       "title": "inverted pyramid no welcome filler",
       "jobs": [
-        "wayfind_after_nav"
+        "keep_the_page_scannable"
       ],
       "lane": "canada",
-      "container": "navigation_and_wayfinding",
-      "card": "orient_in_the_place",
-      "facet": "user_cant_tell_where_they_are",
-      "leaf": "wayfind_after_nav"
+      "container": "layout_and_data_display",
+      "card": "compose_the_layout",
+      "facet": "page_has_no_scan_path",
+      "leaf": "keep_the_page_scannable"
     },
     {
       "id": "canada.lists-max-7-or-split",
@@ -896,13 +893,13 @@
       "id": "canada.no-click-here-same-text-same-destination",
       "title": "no click here same text same destination",
       "jobs": [
-        "wayfind_after_nav"
+        "name_the_link_by_destination"
       ],
       "lane": "canada",
-      "container": "navigation_and_wayfinding",
-      "card": "orient_in_the_place",
-      "facet": "user_cant_tell_where_they_are",
-      "leaf": "wayfind_after_nav"
+      "container": "layout_and_data_display",
+      "card": "write_the_interface",
+      "facet": "link_text_hides_destination",
+      "leaf": "name_the_link_by_destination"
     },
     {
       "id": "canada.no-eg-ie-spell-out-and",
@@ -932,94 +929,85 @@
       "id": "canada.supertask-once-never-promo",
       "title": "supertask once never promo",
       "jobs": [
-        "pick_primary_action"
+        "keep_the_page_scannable"
       ],
       "lane": "canada",
-      "container": "actions_and_decisions",
-      "card": "design_actions_and_ctas",
-      "facet": "no_clear_primary",
-      "leaf": "pick_primary_action"
-    },
-    {
-      "id": "canada.tables-no-blank-cells",
-      "title": "tables no blank cells",
-      "jobs": [],
-      "lane": "canada",
       "container": "layout_and_data_display",
-      "card": "compose_a_data_display",
-      "facet": "data_is_unscannable"
+      "card": "compose_the_layout",
+      "facet": "page_has_no_scan_path",
+      "leaf": "keep_the_page_scannable"
     },
     {
       "id": "canada.underline-links-only-no-italics-emphasis",
       "title": "underline links only no italics emphasis",
       "jobs": [
-        "tone_of_voice_for_failure"
+        "name_the_link_by_destination"
       ],
       "lane": "canada",
-      "container": "feedback_and_status",
-      "card": "compose_feedback",
-      "facet": "tone_fights_the_moment",
-      "leaf": "tone_of_voice_for_failure"
+      "container": "layout_and_data_display",
+      "card": "write_the_interface",
+      "facet": "link_text_hides_destination",
+      "leaf": "name_the_link_by_destination"
     },
     {
       "id": "canada.unique-title-one-h1-heading-every-200-words",
       "title": "unique title one h1 heading every 200 words",
       "jobs": [
-        "wayfind_after_nav"
+        "keep_the_page_scannable"
       ],
       "lane": "canada",
-      "container": "navigation_and_wayfinding",
-      "card": "orient_in_the_place",
-      "facet": "user_cant_tell_where_they_are",
-      "leaf": "wayfind_after_nav"
+      "container": "layout_and_data_display",
+      "card": "compose_the_layout",
+      "facet": "page_has_no_scan_path",
+      "leaf": "keep_the_page_scannable"
     },
     {
       "id": "canada.you-your-never-i-my",
       "title": "you your never i my",
       "jobs": [
-        "tone_of_voice_for_failure"
+        "write_to_you"
       ],
       "lane": "canada",
-      "container": "feedback_and_status",
-      "card": "compose_feedback",
-      "facet": "tone_fights_the_moment",
-      "leaf": "tone_of_voice_for_failure"
+      "container": "layout_and_data_display",
+      "card": "write_the_interface",
+      "facet": "voice_talks_about_the_system",
+      "leaf": "write_to_you"
     },
     {
       "id": "fluent.apply-versus-save-prefer-autosave",
       "title": "apply versus save prefer autosave",
       "jobs": [
-        "pick_primary_action"
+        "word_the_action"
       ],
       "lane": "fluent",
       "container": "actions_and_decisions",
       "card": "design_actions_and_ctas",
-      "facet": "no_clear_primary",
-      "leaf": "pick_primary_action"
+      "facet": "action_wording_hides_the_outcome",
+      "leaf": "word_the_action"
     },
     {
       "id": "fluent.create-labels-new-thing",
       "title": "create labels new thing",
       "jobs": [
-        "pick_primary_action"
+        "word_the_action"
       ],
       "lane": "fluent",
       "container": "actions_and_decisions",
       "card": "design_actions_and_ctas",
-      "facet": "no_clear_primary",
-      "leaf": "pick_primary_action"
+      "facet": "action_wording_hides_the_outcome",
+      "leaf": "word_the_action"
     },
     {
       "id": "fluent.disabled-field-label-stays-perceivable",
       "title": "disabled field label stays perceivable",
       "jobs": [
-        "name_a_control"
+        "avoid_placeholder_as_label"
       ],
       "lane": "fluent",
       "container": "forms_and_input",
       "card": "design_a_form",
       "facet": "field_has_no_lasting_name",
-      "leaf": "name_a_control"
+      "leaf": "avoid_placeholder_as_label"
     },
     {
       "id": "fluent.end-of-task-labels-named",
@@ -1037,13 +1025,13 @@
       "id": "fluent.helper-text-below",
       "title": "helper text below",
       "jobs": [
-        "name_a_control"
+        "mark_requirements_up_front"
       ],
       "lane": "fluent",
       "container": "forms_and_input",
       "card": "design_a_form",
-      "facet": "field_has_no_lasting_name",
-      "leaf": "name_a_control"
+      "facet": "requirements_are_a_surprise",
+      "leaf": "mark_requirements_up_front"
     },
     {
       "id": "fluent.ios-chrome-back-done-cancel",
@@ -1072,23 +1060,14 @@
     {
       "id": "fluent.multistep-next-not-continue",
       "title": "multistep next not continue",
-      "jobs": [],
+      "jobs": [
+        "show_step_progress"
+      ],
       "lane": "fluent",
       "container": "multi_step_flows",
       "card": "build_a_multi_step_flow",
-      "facet": "too_much_on_one_step"
-    },
-    {
-      "id": "fluent.required-asterisk-or-one-instruction",
-      "title": "required asterisk or one instruction",
-      "jobs": [
-        "name_a_control"
-      ],
-      "lane": "fluent",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "field_has_no_lasting_name",
-      "leaf": "name_a_control"
+      "facet": "too_much_on_one_step",
+      "leaf": "show_step_progress"
     },
     {
       "id": "fluent.split-button-dont-repeat-primary",
@@ -1106,61 +1085,61 @@
       "id": "fluent.validation-messages-brief-no-end-punctuation",
       "title": "validation messages brief no end punctuation",
       "jobs": [
-        "explain_failure_next_to_cause"
+        "recover_from_invalid_input"
       ],
       "lane": "fluent",
       "container": "forms_and_input",
       "card": "handle_form_errors",
-      "facet": "errors_dont_point_to_the_fix",
-      "leaf": "explain_failure_next_to_cause"
+      "facet": "invalid_input_has_no_recovery",
+      "leaf": "recover_from_invalid_input"
     },
     {
       "id": "forms.actions.avoid_reset_clear",
       "title": "avoid reset clear",
       "jobs": [
-        "disable_or_confirm_destructive"
+        "pick_primary_action"
       ],
       "lane": "forms",
       "container": "actions_and_decisions",
-      "card": "protect_destructive_and_leave",
-      "facet": "destructive_is_too_easy",
-      "leaf": "disable_or_confirm_destructive"
+      "card": "design_actions_and_ctas",
+      "facet": "no_clear_primary",
+      "leaf": "pick_primary_action"
     },
     {
       "id": "forms.copy.no_double_barreled",
       "title": "no double barreled",
       "jobs": [
-        "name_a_control"
+        "write_to_you"
       ],
       "lane": "forms",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "field_has_no_lasting_name",
-      "leaf": "name_a_control"
+      "container": "layout_and_data_display",
+      "card": "write_the_interface",
+      "facet": "voice_talks_about_the_system",
+      "leaf": "write_to_you"
     },
     {
       "id": "forms.copy.plain_language",
       "title": "plain language",
       "jobs": [
-        "name_a_control"
+        "write_to_you"
       ],
       "lane": "forms",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "field_has_no_lasting_name",
-      "leaf": "name_a_control"
+      "container": "layout_and_data_display",
+      "card": "write_the_interface",
+      "facet": "voice_talks_about_the_system",
+      "leaf": "write_to_you"
     },
     {
       "id": "forms.copy.positive_wording",
       "title": "positive wording",
       "jobs": [
-        "name_a_control"
+        "write_to_you"
       ],
       "lane": "forms",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "field_has_no_lasting_name",
-      "leaf": "name_a_control"
+      "container": "layout_and_data_display",
+      "card": "write_the_interface",
+      "facet": "voice_talks_about_the_system",
+      "leaf": "write_to_you"
     },
     {
       "id": "forms.errors.focus_first_error",
@@ -1250,25 +1229,25 @@
       "id": "forms.errors.replace_supporting_text",
       "title": "replace supporting text",
       "jobs": [
-        "explain_failure_next_to_cause"
+        "recover_from_invalid_input"
       ],
       "lane": "forms",
       "container": "forms_and_input",
       "card": "handle_form_errors",
-      "facet": "errors_dont_point_to_the_fix",
-      "leaf": "explain_failure_next_to_cause"
+      "facet": "invalid_input_has_no_recovery",
+      "leaf": "recover_from_invalid_input"
     },
     {
       "id": "forms.errors.success_complex_fields",
       "title": "success complex fields",
       "jobs": [
-        "announce_system_status"
+        "recover_from_invalid_input"
       ],
       "lane": "forms",
-      "container": "feedback_and_status",
-      "card": "compose_feedback",
-      "facet": "system_stayed_quiet_after_change",
-      "leaf": "announce_system_status"
+      "container": "forms_and_input",
+      "card": "handle_form_errors",
+      "facet": "invalid_input_has_no_recovery",
+      "leaf": "recover_from_invalid_input"
     },
     {
       "id": "forms.field_labels.placeholder_hint_conflict",
@@ -1286,85 +1265,73 @@
       "id": "forms.fields.distinguish_optional_required",
       "title": "distinguish optional required",
       "jobs": [
-        "name_a_control"
+        "mark_requirements_up_front"
       ],
       "lane": "forms",
       "container": "forms_and_input",
       "card": "design_a_form",
-      "facet": "field_has_no_lasting_name",
-      "leaf": "name_a_control"
+      "facet": "requirements_are_a_surprise",
+      "leaf": "mark_requirements_up_front"
     },
     {
       "id": "forms.fields.explain_format_upfront",
       "title": "explain format upfront",
       "jobs": [
-        "name_a_control"
+        "mark_requirements_up_front"
       ],
       "lane": "forms",
       "container": "forms_and_input",
       "card": "design_a_form",
-      "facet": "field_has_no_lasting_name",
-      "leaf": "name_a_control"
+      "facet": "requirements_are_a_surprise",
+      "leaf": "mark_requirements_up_front"
     },
     {
       "id": "forms.fields.required_before_proceed",
       "title": "required before proceed",
       "jobs": [
-        "recover_from_invalid_input"
+        "mark_requirements_up_front"
       ],
       "lane": "forms",
       "container": "forms_and_input",
-      "card": "handle_form_errors",
-      "facet": "invalid_input_has_no_recovery",
-      "leaf": "recover_from_invalid_input"
+      "card": "design_a_form",
+      "facet": "requirements_are_a_surprise",
+      "leaf": "mark_requirements_up_front"
     },
     {
       "id": "forms.inputs.allow_paste_and_drag",
       "title": "allow paste and drag",
       "jobs": [
-        "recover_from_invalid_input"
+        "use_familiar_control"
       ],
       "lane": "forms",
       "container": "forms_and_input",
-      "card": "handle_form_errors",
-      "facet": "invalid_input_has_no_recovery",
-      "leaf": "recover_from_invalid_input"
-    },
-    {
-      "id": "forms.inputs.allow_typos_abbreviations",
-      "title": "allow typos abbreviations",
-      "jobs": [
-        "recover_from_invalid_input"
-      ],
-      "lane": "forms",
-      "container": "forms_and_input",
-      "card": "handle_form_errors",
-      "facet": "invalid_input_has_no_recovery",
-      "leaf": "recover_from_invalid_input"
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
     },
     {
       "id": "forms.inputs.autocompletion",
       "title": "autocompletion",
       "jobs": [
-        "recover_from_invalid_input"
+        "use_familiar_control"
       ],
       "lane": "forms",
       "container": "forms_and_input",
-      "card": "handle_form_errors",
-      "facet": "invalid_input_has_no_recovery",
-      "leaf": "recover_from_invalid_input"
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
     },
     {
       "id": "forms.inputs.clear_button",
       "title": "clear button",
       "jobs": [
-        "recover_from_invalid_input"
+        "use_familiar_control"
       ],
       "lane": "forms",
       "container": "forms_and_input",
-      "card": "handle_form_errors",
-      "facet": "invalid_input_has_no_recovery",
-      "leaf": "recover_from_invalid_input"
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
     },
     {
       "id": "forms.inputs.combo_box",
@@ -1382,13 +1349,13 @@
       "id": "forms.inputs.compute_from_other_info",
       "title": "compute from other info",
       "jobs": [
-        "recover_from_invalid_input"
+        "use_familiar_control"
       ],
       "lane": "forms",
       "container": "forms_and_input",
-      "card": "handle_form_errors",
-      "facet": "invalid_input_has_no_recovery",
-      "leaf": "recover_from_invalid_input"
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
     },
     {
       "id": "forms.inputs.dropdown_chooser",
@@ -1406,70 +1373,73 @@
       "id": "forms.inputs.fill_in_the_blanks",
       "title": "fill in the blanks",
       "jobs": [
-        "name_a_control"
+        "use_familiar_control"
       ],
       "lane": "forms",
       "container": "forms_and_input",
       "card": "design_a_form",
-      "facet": "field_has_no_lasting_name",
-      "leaf": "name_a_control"
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
     },
     {
       "id": "forms.inputs.forgiving_format_autoformat",
       "title": "forgiving format autoformat",
       "jobs": [
-        "recover_from_invalid_input"
+        "use_familiar_control"
       ],
       "lane": "forms",
       "container": "forms_and_input",
-      "card": "handle_form_errors",
-      "facet": "invalid_input_has_no_recovery",
-      "leaf": "recover_from_invalid_input"
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
     },
     {
       "id": "forms.inputs.get_from_system",
       "title": "get from system",
       "jobs": [
-        "recover_from_invalid_input"
+        "use_familiar_control"
       ],
       "lane": "forms",
       "container": "forms_and_input",
-      "card": "handle_form_errors",
-      "facet": "invalid_input_has_no_recovery",
-      "leaf": "recover_from_invalid_input"
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
     },
     {
       "id": "forms.inputs.good_defaults_smart_prefills",
       "title": "good defaults smart prefills",
       "jobs": [
-        "recover_from_invalid_input"
+        "use_familiar_control"
       ],
       "lane": "forms",
       "container": "forms_and_input",
-      "card": "handle_form_errors",
-      "facet": "invalid_input_has_no_recovery",
-      "leaf": "recover_from_invalid_input"
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
     },
     {
       "id": "forms.inputs.helpful_constraints",
       "title": "helpful constraints",
-      "jobs": [],
+      "jobs": [
+        "mark_requirements_up_front"
+      ],
       "lane": "forms",
       "container": "forms_and_input",
       "card": "design_a_form",
-      "facet": "requirements_are_a_surprise"
+      "facet": "requirements_are_a_surprise",
+      "leaf": "mark_requirements_up_front"
     },
     {
       "id": "forms.inputs.html_autocomplete_and_name",
       "title": "html autocomplete and name",
       "jobs": [
-        "name_a_control"
+        "use_familiar_control"
       ],
       "lane": "forms",
       "container": "forms_and_input",
       "card": "design_a_form",
-      "facet": "field_has_no_lasting_name",
-      "leaf": "name_a_control"
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
     },
     {
       "id": "forms.inputs.list_builder",
@@ -1499,37 +1469,37 @@
       "id": "forms.inputs.matching_keyboard_and_type",
       "title": "matching keyboard and type",
       "jobs": [
-        "choose_control_for_choice"
+        "use_familiar_control"
       ],
       "lane": "forms",
       "container": "forms_and_input",
       "card": "design_a_form",
       "facet": "wrong_control_for_the_choice",
-      "leaf": "choose_control_for_choice"
+      "leaf": "use_familiar_control"
     },
     {
       "id": "forms.inputs.never_prepopulate_password",
       "title": "never prepopulate password",
       "jobs": [
-        "disable_or_confirm_destructive"
+        "show_the_password"
       ],
       "lane": "forms",
-      "container": "actions_and_decisions",
-      "card": "protect_destructive_and_leave",
-      "facet": "destructive_is_too_easy",
-      "leaf": "disable_or_confirm_destructive"
+      "container": "forms_and_input",
+      "card": "compose_sign_in",
+      "facet": "credentials_are_hard_to_enter",
+      "leaf": "show_the_password"
     },
     {
       "id": "forms.inputs.no_autocorrect_identity_fields",
       "title": "no autocorrect identity fields",
       "jobs": [
-        "recover_from_invalid_input"
+        "use_familiar_control"
       ],
       "lane": "forms",
       "container": "forms_and_input",
-      "card": "handle_form_errors",
-      "facet": "invalid_input_has_no_recovery",
-      "leaf": "recover_from_invalid_input"
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
     },
     {
       "id": "forms.inputs.offer_choices_not_only_text",
@@ -1547,13 +1517,13 @@
       "id": "forms.inputs.password_strength_meter",
       "title": "password strength meter",
       "jobs": [
-        "announce_system_status"
+        "recover_from_invalid_input"
       ],
       "lane": "forms",
-      "container": "feedback_and_status",
-      "card": "compose_feedback",
-      "facet": "system_stayed_quiet_after_change",
-      "leaf": "announce_system_status"
+      "container": "forms_and_input",
+      "card": "handle_form_errors",
+      "facet": "invalid_input_has_no_recovery",
+      "leaf": "recover_from_invalid_input"
     },
     {
       "id": "forms.inputs.shared_hit_target_choice",
@@ -1571,13 +1541,13 @@
       "id": "forms.inputs.structured_format",
       "title": "structured format",
       "jobs": [
-        "choose_control_for_choice"
+        "use_familiar_control"
       ],
       "lane": "forms",
       "container": "forms_and_input",
       "card": "design_a_form",
       "facet": "wrong_control_for_the_choice",
-      "leaf": "choose_control_for_choice"
+      "leaf": "use_familiar_control"
     },
     {
       "id": "forms.inputs.use_device_features",
@@ -1655,88 +1625,85 @@
       "id": "forms.mobile.visible_with_keyboard",
       "title": "visible with keyboard",
       "jobs": [
-        "keep_field_purpose_visible_while_filled"
+        "use_familiar_control"
       ],
       "lane": "forms",
       "container": "forms_and_input",
       "card": "design_a_form",
-      "facet": "field_has_no_lasting_name",
-      "leaf": "keep_field_purpose_visible_while_filled"
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
     },
     {
       "id": "forms.navigation.warn_unsaved",
       "title": "warn unsaved",
       "jobs": [
-        "disable_or_confirm_destructive"
+        "warn_before_leave"
       ],
       "lane": "forms",
       "container": "actions_and_decisions",
       "card": "protect_destructive_and_leave",
-      "facet": "destructive_is_too_easy",
-      "leaf": "disable_or_confirm_destructive"
+      "facet": "leaving_discards_work",
+      "leaf": "warn_before_leave"
     },
     {
       "id": "forms.structure.progressive_disclosure",
       "title": "progressive disclosure",
-      "jobs": [],
+      "jobs": [
+        "disclose_instead_of_dump"
+      ],
       "lane": "forms",
       "container": "overlays_and_content_structure",
       "card": "choose_an_overlay",
-      "facet": "wrong_layer_for_the_content"
+      "facet": "wrong_layer_for_the_content",
+      "leaf": "disclose_instead_of_dump"
     },
     {
       "id": "forms.submit.enabled_until_request",
       "title": "enabled until request",
       "jobs": [
-        "announce_system_status"
+        "pick_primary_action"
       ],
       "lane": "forms",
-      "container": "feedback_and_status",
-      "card": "compose_feedback",
-      "facet": "system_stayed_quiet_after_change",
-      "leaf": "announce_system_status"
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "no_clear_primary",
+      "leaf": "pick_primary_action"
     },
     {
       "id": "forms.transparency.progress_on_long_forms",
       "title": "progress on long forms",
-      "jobs": [],
+      "jobs": [
+        "show_step_progress"
+      ],
       "lane": "forms",
       "container": "multi_step_flows",
       "card": "build_a_multi_step_flow",
-      "facet": "too_much_on_one_step"
+      "facet": "too_much_on_one_step",
+      "leaf": "show_step_progress"
     },
     {
       "id": "forms.transparency.requirements_before_start",
       "title": "requirements before start",
       "jobs": [
-        "announce_system_status"
+        "mark_requirements_up_front"
       ],
       "lane": "forms",
-      "container": "feedback_and_status",
-      "card": "compose_feedback",
-      "facet": "system_stayed_quiet_after_change",
-      "leaf": "announce_system_status"
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "requirements_are_a_surprise",
+      "leaf": "mark_requirements_up_front"
     },
     {
       "id": "gold.accordion-find-in-page-misses-collapsed",
       "title": "accordion find in page misses collapsed",
-      "jobs": [],
+      "jobs": [
+        "disclose_instead_of_dump"
+      ],
       "lane": "gold",
       "container": "overlays_and_content_structure",
       "card": "choose_an_overlay",
-      "facet": "wrong_layer_for_the_content"
-    },
-    {
-      "id": "gold.avoid-select-except-long-lists",
-      "title": "avoid select except long lists",
-      "jobs": [
-        "choose_control_for_choice"
-      ],
-      "lane": "gold",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "wrong_control_for_the_choice",
-      "leaf": "choose_control_for_choice"
+      "facet": "wrong_layer_for_the_content",
+      "leaf": "disclose_instead_of_dump"
     },
     {
       "id": "gold.card-one-inner-link-hit-area",
@@ -1754,13 +1721,13 @@
       "id": "gold.consistent-not-uniform",
       "title": "consistent not uniform",
       "jobs": [
-        "use_familiar_control"
+        "tone_of_voice_for_failure"
       ],
       "lane": "gold",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "wrong_control_for_the_choice",
-      "leaf": "use_familiar_control"
+      "container": "feedback_and_status",
+      "card": "compose_feedback",
+      "facet": "tone_fights_the_moment",
+      "leaf": "tone_of_voice_for_failure"
     },
     {
       "id": "gold.next-primary-save-progress-secondary",
@@ -1778,46 +1745,49 @@
       "id": "gold.no-abbr-expand-on-first-mention",
       "title": "no abbr expand on first mention",
       "jobs": [
-        "name_a_control"
+        "tone_of_voice_for_failure"
       ],
       "lane": "gold",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "field_has_no_lasting_name",
-      "leaf": "name_a_control"
+      "container": "feedback_and_status",
+      "card": "compose_feedback",
+      "facet": "tone_fights_the_moment",
+      "leaf": "tone_of_voice_for_failure"
     },
     {
       "id": "gold.progress-indicator-out-of-order-returnable",
       "title": "progress indicator out of order returnable",
-      "jobs": [],
+      "jobs": [
+        "show_step_progress"
+      ],
       "lane": "gold",
       "container": "multi_step_flows",
       "card": "build_a_multi_step_flow",
-      "facet": "too_much_on_one_step"
+      "facet": "too_much_on_one_step",
+      "leaf": "show_step_progress"
     },
     {
       "id": "gold.search-input-attributes",
       "title": "search input attributes",
       "jobs": [
-        "use_familiar_control"
+        "place_the_search_control"
       ],
       "lane": "gold",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "wrong_control_for_the_choice",
-      "leaf": "use_familiar_control"
+      "container": "navigation_and_wayfinding",
+      "card": "compose_search",
+      "facet": "search_is_hard_to_find",
+      "leaf": "place_the_search_control"
     },
     {
       "id": "gold.search-placement-home-vs-results",
       "title": "search placement home vs results",
       "jobs": [
-        "wayfind_after_nav"
+        "place_the_search_control"
       ],
       "lane": "gold",
       "container": "navigation_and_wayfinding",
-      "card": "orient_in_the_place",
-      "facet": "user_cant_tell_where_they_are",
-      "leaf": "wayfind_after_nav"
+      "card": "compose_search",
+      "facet": "search_is_hard_to_find",
+      "leaf": "place_the_search_control"
     },
     {
       "id": "gold.visual-loudness-primary-secondary-tertiary",
@@ -1844,18 +1814,6 @@
       "leaf": "pick_primary_action"
     },
     {
-      "id": "govuk.calendar-control-when",
-      "title": "calendar control when",
-      "jobs": [
-        "choose_control_for_choice"
-      ],
-      "lane": "govuk",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "wrong_control_for_the_choice",
-      "leaf": "choose_control_for_choice"
-    },
-    {
       "id": "govuk.character-count-fieldset-legend",
       "title": "character count fieldset legend",
       "jobs": [
@@ -1871,25 +1829,13 @@
       "id": "govuk.conditionally-reveal-related-question",
       "title": "conditionally reveal related question",
       "jobs": [
-        "group_related_inputs"
+        "disclose_instead_of_dump"
       ],
       "lane": "govuk",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "related_inputs_feel_scattered",
-      "leaf": "group_related_inputs"
-    },
-    {
-      "id": "govuk.date-input-only-memorable",
-      "title": "date input only memorable",
-      "jobs": [
-        "choose_control_for_choice"
-      ],
-      "lane": "govuk",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "wrong_control_for_the_choice",
-      "leaf": "choose_control_for_choice"
+      "container": "overlays_and_content_structure",
+      "card": "choose_an_overlay",
+      "facet": "wrong_layer_for_the_content",
+      "leaf": "disclose_instead_of_dump"
     },
     {
       "id": "govuk.dob-autocomplete-tokens",
@@ -1919,13 +1865,13 @@
       "id": "govuk.dont-use-disabled-buttons",
       "title": "dont use disabled buttons",
       "jobs": [
-        "disable_or_confirm_destructive"
+        "pick_primary_action"
       ],
       "lane": "govuk",
       "container": "actions_and_decisions",
-      "card": "protect_destructive_and_leave",
-      "facet": "destructive_is_too_easy",
-      "leaf": "disable_or_confirm_destructive"
+      "card": "design_actions_and_ctas",
+      "facet": "no_clear_primary",
+      "leaf": "pick_primary_action"
     },
     {
       "id": "govuk.error-summary-plus-per-field",
@@ -1955,13 +1901,13 @@
       "id": "govuk.file-upload-reuse-already-uploaded",
       "title": "file upload reuse already uploaded",
       "jobs": [
-        "use_familiar_control"
+        "word_the_field_help"
       ],
       "lane": "govuk",
       "container": "forms_and_input",
       "card": "design_a_form",
-      "facet": "wrong_control_for_the_choice",
-      "leaf": "use_familiar_control"
+      "facet": "field_and_helper_wording",
+      "leaf": "word_the_field_help"
     },
     {
       "id": "govuk.four-date-types",
@@ -1979,13 +1925,13 @@
       "id": "govuk.item-hints-one-sentence",
       "title": "item hints one sentence",
       "jobs": [
-        "name_a_control"
+        "word_the_field_help"
       ],
       "lane": "govuk",
       "container": "forms_and_input",
       "card": "design_a_form",
-      "facet": "field_has_no_lasting_name",
-      "leaf": "name_a_control"
+      "facet": "field_and_helper_wording",
+      "leaf": "word_the_field_help"
     },
     {
       "id": "govuk.labels-sentence-case-no-colons-above",
@@ -2015,13 +1961,13 @@
       "id": "govuk.question-pages-continue-back-no-sliders",
       "title": "question pages continue back no sliders",
       "jobs": [
-        "pick_primary_action"
+        "show_step_progress"
       ],
       "lane": "govuk",
-      "container": "actions_and_decisions",
-      "card": "design_actions_and_ctas",
-      "facet": "no_clear_primary",
-      "leaf": "pick_primary_action"
+      "container": "multi_step_flows",
+      "card": "build_a_multi_step_flow",
+      "facet": "too_much_on_one_step",
+      "leaf": "show_step_progress"
     },
     {
       "id": "govuk.radio-divider-or",
@@ -2039,25 +1985,13 @@
       "id": "govuk.radios-left-of-labels",
       "title": "radios left of labels",
       "jobs": [
-        "name_a_control"
+        "keep_hit_target_usable"
       ],
       "lane": "govuk",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "field_has_no_lasting_name",
-      "leaf": "name_a_control"
-    },
-    {
-      "id": "govuk.select-last-resort",
-      "title": "select last resort",
-      "jobs": [
-        "choose_control_for_choice"
-      ],
-      "lane": "govuk",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "wrong_control_for_the_choice",
-      "leaf": "choose_control_for_choice"
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "controls_are_hard_to_hit",
+      "leaf": "keep_hit_target_usable"
     },
     {
       "id": "govuk.select-preselect-settings-not-questions",
@@ -2099,13 +2033,13 @@
       "id": "mui.avoid-apologies-alarm-ambiguity-in-dialog-titles",
       "title": "avoid apologies alarm ambiguity in dialog titles",
       "jobs": [
-        "tone_of_voice_for_failure"
+        "disable_or_confirm_destructive"
       ],
       "lane": "mui",
-      "container": "feedback_and_status",
-      "card": "compose_feedback",
-      "facet": "tone_fights_the_moment",
-      "leaf": "tone_of_voice_for_failure"
+      "container": "actions_and_decisions",
+      "card": "protect_destructive_and_leave",
+      "facet": "destructive_is_too_easy",
+      "leaf": "disable_or_confirm_destructive"
     },
     {
       "id": "mui.button-variant-roles",
@@ -2122,23 +2056,26 @@
     {
       "id": "mui.confirmation-cancel-discards",
       "title": "confirmation cancel discards",
-      "jobs": [],
+      "jobs": [
+        "warn_before_leave"
+      ],
       "lane": "mui",
       "container": "actions_and_decisions",
       "card": "protect_destructive_and_leave",
-      "facet": "leaving_discards_work"
+      "facet": "leaving_discards_work",
+      "leaf": "warn_before_leave"
     },
     {
       "id": "mui.dont-type-number",
       "title": "dont type number",
       "jobs": [
-        "use_familiar_control"
+        "choose_control_for_choice"
       ],
       "lane": "mui",
       "container": "forms_and_input",
       "card": "design_a_form",
       "facet": "wrong_control_for_the_choice",
-      "leaf": "use_familiar_control"
+      "leaf": "choose_control_for_choice"
     },
     {
       "id": "mui.explicit-id-for-label-helper",
@@ -2156,34 +2093,37 @@
       "id": "mui.helper-text-changes-field-height",
       "title": "helper text changes field height",
       "jobs": [
-        "name_a_control"
+        "recover_from_invalid_input"
       ],
       "lane": "mui",
       "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "field_has_no_lasting_name",
-      "leaf": "name_a_control"
+      "card": "handle_form_errors",
+      "facet": "invalid_input_has_no_recovery",
+      "leaf": "recover_from_invalid_input"
     },
     {
       "id": "mui.most-alerts-dont-need-titles",
       "title": "most alerts dont need titles",
       "jobs": [
-        "use_familiar_control"
+        "announce_system_status"
       ],
       "lane": "mui",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "wrong_control_for_the_choice",
-      "leaf": "use_familiar_control"
+      "container": "feedback_and_status",
+      "card": "compose_feedback",
+      "facet": "system_stayed_quiet_after_change",
+      "leaf": "announce_system_status"
     },
     {
       "id": "mui.non-modal-dialogs-allowed",
       "title": "non modal dialogs allowed",
-      "jobs": [],
+      "jobs": [
+        "pick_modal_only_when_blocking"
+      ],
       "lane": "mui",
       "container": "overlays_and_content_structure",
       "card": "choose_an_overlay",
-      "facet": "wrong_layer_for_the_content"
+      "facet": "wrong_layer_for_the_content",
+      "leaf": "pick_modal_only_when_blocking"
     },
     {
       "id": "nl.dont-auto-dismiss-status-announce-complete",
@@ -2198,40 +2138,28 @@
       "leaf": "announce_system_status"
     },
     {
-      "id": "nl.dont-reject-valid-variants",
-      "title": "dont reject valid variants",
-      "jobs": [
-        "recover_from_invalid_input"
-      ],
-      "lane": "nl",
-      "container": "forms_and_input",
-      "card": "handle_form_errors",
-      "facet": "invalid_input_has_no_recovery",
-      "leaf": "recover_from_invalid_input"
-    },
-    {
       "id": "nl.form-draft-links-new-tab-named-in-link",
       "title": "form draft links new tab named in link",
       "jobs": [
-        "name_a_control"
+        "name_the_link_by_destination"
       ],
       "lane": "nl",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "field_has_no_lasting_name",
-      "leaf": "name_a_control"
+      "container": "layout_and_data_display",
+      "card": "write_the_interface",
+      "facet": "link_text_hides_destination",
+      "leaf": "name_the_link_by_destination"
     },
     {
       "id": "nl.header-search-placeholder-visible-search-control",
       "title": "header search placeholder visible search control",
       "jobs": [
-        "avoid_placeholder_as_label"
+        "place_the_search_control"
       ],
       "lane": "nl",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "field_has_no_lasting_name",
-      "leaf": "avoid_placeholder_as_label"
+      "container": "navigation_and_wayfinding",
+      "card": "compose_search",
+      "facet": "search_is_hard_to_find",
+      "leaf": "place_the_search_control"
     },
     {
       "id": "nl.labels-contain-only-text",
@@ -2246,65 +2174,32 @@
       "leaf": "name_a_control"
     },
     {
-      "id": "nl.last-step-is-send-not-volgende",
-      "title": "last step is send not volgende",
-      "jobs": [],
-      "lane": "nl",
-      "container": "multi_step_flows",
-      "card": "build_a_multi_step_flow",
-      "facet": "too_much_on_one_step"
-    },
-    {
       "id": "nl.long-legal-jargon-before-form-not-tooltip",
       "title": "long legal jargon before form not tooltip",
       "jobs": [
-        "keep_field_purpose_visible_while_filled"
+        "word_the_field_help"
       ],
       "lane": "nl",
       "container": "forms_and_input",
       "card": "design_a_form",
-      "facet": "field_has_no_lasting_name",
-      "leaf": "keep_field_purpose_visible_while_filled"
-    },
-    {
-      "id": "nl.mark-optional-niet-verplicht-above-form",
-      "title": "mark optional niet verplicht above form",
-      "jobs": [
-        "name_a_control"
-      ],
-      "lane": "nl",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "field_has_no_lasting_name",
-      "leaf": "name_a_control"
+      "facet": "field_and_helper_wording",
+      "leaf": "word_the_field_help"
     },
     {
       "id": "nl.name-next-organisational-steps",
       "title": "name next organisational steps",
       "jobs": [
-        "write_empty_state"
+        "name_the_link_by_destination"
       ],
       "lane": "nl",
-      "container": "feedback_and_status",
-      "card": "compose_feedback",
-      "facet": "empty_or_dead_end_has_no_next_step",
-      "leaf": "write_empty_state"
+      "container": "layout_and_data_display",
+      "card": "write_the_interface",
+      "facet": "link_text_hides_destination",
+      "leaf": "name_the_link_by_destination"
     },
     {
       "id": "nl.native-required-bubbles-not-error-ui",
       "title": "native required bubbles not error ui",
-      "jobs": [
-        "explain_failure_next_to_cause"
-      ],
-      "lane": "nl",
-      "container": "forms_and_input",
-      "card": "handle_form_errors",
-      "facet": "errors_dont_point_to_the_fix",
-      "leaf": "explain_failure_next_to_cause"
-    },
-    {
-      "id": "nl.no-forced-input-patterns-or-masks",
-      "title": "no forced input patterns or masks",
       "jobs": [
         "recover_from_invalid_input"
       ],
@@ -2318,13 +2213,13 @@
       "id": "nl.no-min-max-length-names-places",
       "title": "no min max length names places",
       "jobs": [
-        "recover_from_invalid_input"
+        "use_familiar_control"
       ],
       "lane": "nl",
       "container": "forms_and_input",
-      "card": "handle_form_errors",
-      "facet": "invalid_input_has_no_recovery",
-      "leaf": "recover_from_invalid_input"
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
     },
     {
       "id": "nl.no-select-multiple",
@@ -2342,46 +2237,49 @@
       "id": "nl.privacy-terms-link-outside-label",
       "title": "privacy terms link outside label",
       "jobs": [
-        "name_a_control"
+        "name_the_link_by_destination"
       ],
       "lane": "nl",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "field_has_no_lasting_name",
-      "leaf": "name_a_control"
+      "container": "layout_and_data_display",
+      "card": "write_the_interface",
+      "facet": "link_text_hides_destination",
+      "leaf": "name_the_link_by_destination"
     },
     {
       "id": "nl.step-n-of-m-in-title-and-above-form",
       "title": "step n of m in title and above form",
-      "jobs": [],
+      "jobs": [
+        "show_step_progress"
+      ],
       "lane": "nl",
       "container": "multi_step_flows",
       "card": "build_a_multi_step_flow",
-      "facet": "too_much_on_one_step"
+      "facet": "too_much_on_one_step",
+      "leaf": "show_step_progress"
     },
     {
       "id": "nl.success-confirms-what-not-bounce-home",
       "title": "success confirms what not bounce home",
       "jobs": [
-        "write_empty_state"
+        "announce_system_status"
       ],
       "lane": "nl",
       "container": "feedback_and_status",
       "card": "compose_feedback",
-      "facet": "empty_or_dead_end_has_no_next_step",
-      "leaf": "write_empty_state"
+      "facet": "system_stayed_quiet_after_change",
+      "leaf": "announce_system_status"
     },
     {
       "id": "nng.alt-registration-and-biometric-login",
       "title": "alt registration and biometric login",
       "jobs": [
-        "use_familiar_control"
+        "show_the_password"
       ],
       "lane": "nng",
       "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "wrong_control_for_the_choice",
-      "leaf": "use_familiar_control"
+      "card": "compose_sign_in",
+      "facet": "credentials_are_hard_to_enter",
+      "leaf": "show_the_password"
     },
     {
       "id": "nng.always-select-one-radio-by-default",
@@ -2411,13 +2309,13 @@
       "id": "nng.cart-easy-remove-no-extra-update",
       "title": "cart easy remove no extra update",
       "jobs": [
-        "pick_primary_action"
+        "show_step_progress"
       ],
       "lane": "nng",
-      "container": "actions_and_decisions",
-      "card": "design_actions_and_ctas",
-      "facet": "no_clear_primary",
-      "leaf": "pick_primary_action"
+      "container": "multi_step_flows",
+      "card": "build_a_multi_step_flow",
+      "facet": "too_much_on_one_step",
+      "leaf": "show_step_progress"
     },
     {
       "id": "nng.checkboxes-multi-radios-exclusive",
@@ -2435,13 +2333,13 @@
       "id": "nng.dont-repeat-password-email-fields",
       "title": "dont repeat password email fields",
       "jobs": [
-        "group_related_inputs"
+        "show_the_password"
       ],
       "lane": "nng",
       "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "related_inputs_feel_scattered",
-      "leaf": "group_related_inputs"
+      "card": "compose_sign_in",
+      "facet": "credentials_are_hard_to_enter",
+      "leaf": "show_the_password"
     },
     {
       "id": "nng.dropdown-ok-narrow-middle",
@@ -2454,18 +2352,6 @@
       "card": "design_a_form",
       "facet": "wrong_control_for_the_choice",
       "leaf": "choose_control_for_choice"
-    },
-    {
-      "id": "nng.eas-framework",
-      "title": "eas framework",
-      "jobs": [
-        "use_familiar_control"
-      ],
-      "lane": "nng",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "wrong_control_for_the_choice",
-      "leaf": "use_familiar_control"
     },
     {
       "id": "nng.familiar-values-type-not-dropdown",
@@ -2483,25 +2369,13 @@
       "id": "nng.forgot-password-link",
       "title": "forgot password link",
       "jobs": [
-        "recover_from_invalid_input"
+        "show_the_password"
       ],
       "lane": "nng",
       "container": "forms_and_input",
-      "card": "handle_form_errors",
-      "facet": "invalid_input_has_no_recovery",
-      "leaf": "recover_from_invalid_input"
-    },
-    {
-      "id": "nng.guest-checkout-prominent",
-      "title": "guest checkout prominent",
-      "jobs": [
-        "pick_primary_action"
-      ],
-      "lane": "nng",
-      "container": "actions_and_decisions",
-      "card": "design_actions_and_ctas",
-      "facet": "no_clear_primary",
-      "leaf": "pick_primary_action"
+      "card": "compose_sign_in",
+      "facet": "credentials_are_hard_to_enter",
+      "leaf": "show_the_password"
     },
     {
       "id": "nng.keyboard-typeahead-in-dropdowns",
@@ -2531,70 +2405,61 @@
       "id": "nng.login-mask-plus-show-password",
       "title": "login mask plus show password",
       "jobs": [
-        "use_familiar_control"
+        "show_the_password"
       ],
       "lane": "nng",
       "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "wrong_control_for_the_choice",
-      "leaf": "use_familiar_control"
+      "card": "compose_sign_in",
+      "facet": "credentials_are_hard_to_enter",
+      "leaf": "show_the_password"
     },
     {
       "id": "nng.mobile-friendly-payment-options",
       "title": "mobile friendly payment options",
       "jobs": [
-        "choose_control_for_choice"
+        "show_step_progress"
       ],
       "lane": "nng",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "wrong_control_for_the_choice",
-      "leaf": "choose_control_for_choice"
+      "container": "multi_step_flows",
+      "card": "build_a_multi_step_flow",
+      "facet": "too_much_on_one_step",
+      "leaf": "show_step_progress"
     },
     {
       "id": "nng.modal-and-nonmodal-dialogs",
       "title": "modal and nonmodal dialogs",
-      "jobs": [],
+      "jobs": [
+        "pick_modal_only_when_blocking"
+      ],
       "lane": "nng",
       "container": "overlays_and_content_structure",
       "card": "choose_an_overlay",
-      "facet": "wrong_layer_for_the_content"
+      "facet": "wrong_layer_for_the_content",
+      "leaf": "pick_modal_only_when_blocking"
     },
     {
       "id": "nng.open-field-state-and-card-expiry",
       "title": "open field state and card expiry",
       "jobs": [
-        "choose_control_for_choice"
+        "show_step_progress"
       ],
       "lane": "nng",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "wrong_control_for_the_choice",
-      "leaf": "choose_control_for_choice"
+      "container": "multi_step_flows",
+      "card": "build_a_multi_step_flow",
+      "facet": "too_much_on_one_step",
+      "leaf": "show_step_progress"
     },
     {
       "id": "nng.order-summary-easy-to-find-mobile",
       "title": "order summary easy to find mobile",
       "jobs": [
-        "wayfind_after_nav"
+        "show_step_progress"
       ],
       "lane": "nng",
-      "container": "navigation_and_wayfinding",
-      "card": "orient_in_the_place",
-      "facet": "user_cant_tell_where_they_are",
-      "leaf": "wayfind_after_nav"
-    },
-    {
-      "id": "nng.prefer-radios-over-dropdowns-when-visible",
-      "title": "prefer radios over dropdowns when visible",
-      "jobs": [
-        "choose_control_for_choice"
-      ],
-      "lane": "nng",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "wrong_control_for_the_choice",
-      "leaf": "choose_control_for_choice"
+      "container": "multi_step_flows",
+      "card": "build_a_multi_step_flow",
+      "facet": "too_much_on_one_step",
+      "leaf": "show_step_progress"
     },
     {
       "id": "nng.radio-set-comprehensive-other-type-in",
@@ -2612,13 +2477,13 @@
       "id": "nng.show-the-input-password-creation",
       "title": "show the input password creation",
       "jobs": [
-        "use_familiar_control"
+        "show_the_password"
       ],
       "lane": "nng",
       "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "wrong_control_for_the_choice",
-      "leaf": "use_familiar_control"
+      "card": "compose_sign_in",
+      "facet": "credentials_are_hard_to_enter",
+      "leaf": "show_the_password"
     },
     {
       "id": "nng.show-the-rules",
@@ -2636,30 +2501,6 @@
       "id": "nng.standard-visuals-checkbox-square-radio-circle",
       "title": "standard visuals checkbox square radio circle",
       "jobs": [
-        "use_familiar_control"
-      ],
-      "lane": "nng",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "wrong_control_for_the_choice",
-      "leaf": "use_familiar_control"
-    },
-    {
-      "id": "nng.support-undo-discoverable",
-      "title": "support undo discoverable",
-      "jobs": [
-        "wayfind_after_nav"
-      ],
-      "lane": "nng",
-      "container": "navigation_and_wayfinding",
-      "card": "orient_in_the_place",
-      "facet": "user_cant_tell_where_they_are",
-      "leaf": "wayfind_after_nav"
-    },
-    {
-      "id": "nng.too-few-options-radios-not-dropdown",
-      "title": "too few options radios not dropdown",
-      "jobs": [
         "choose_control_for_choice"
       ],
       "lane": "nng",
@@ -2667,6 +2508,18 @@
       "card": "design_a_form",
       "facet": "wrong_control_for_the_choice",
       "leaf": "choose_control_for_choice"
+    },
+    {
+      "id": "nng.support-undo-discoverable",
+      "title": "support undo discoverable",
+      "jobs": [
+        "disable_or_confirm_destructive"
+      ],
+      "lane": "nng",
+      "container": "actions_and_decisions",
+      "card": "protect_destructive_and_leave",
+      "facet": "destructive_is_too_easy",
+      "leaf": "disable_or_confirm_destructive"
     },
     {
       "id": "nng.too-many-combobox-not-long-dropdown",
@@ -2684,199 +2537,181 @@
       "id": "nng.users-rarely-change-defaults",
       "title": "users rarely change defaults",
       "jobs": [
-        "use_familiar_control"
+        "choose_control_for_choice"
       ],
       "lane": "nng",
       "container": "forms_and_input",
       "card": "design_a_form",
       "facet": "wrong_control_for_the_choice",
-      "leaf": "use_familiar_control"
+      "leaf": "choose_control_for_choice"
     },
     {
       "id": "nng.vertical-one-choice-per-line",
       "title": "vertical one choice per line",
       "jobs": [
-        "use_familiar_control"
+        "choose_control_for_choice"
       ],
       "lane": "nng",
       "container": "forms_and_input",
       "card": "design_a_form",
       "facet": "wrong_control_for_the_choice",
-      "leaf": "use_familiar_control"
+      "leaf": "choose_control_for_choice"
     },
     {
       "id": "nsw.100pct-stacked-show-absolute-totals",
       "title": "100pct stacked show absolute totals",
       "jobs": [
-        "announce_system_status"
+        "chart_has_a_story"
       ],
       "lane": "nsw",
-      "container": "feedback_and_status",
-      "card": "compose_feedback",
-      "facet": "system_stayed_quiet_after_change",
-      "leaf": "announce_system_status"
+      "container": "layout_and_data_display",
+      "card": "compose_a_data_display",
+      "facet": "data_is_unscannable",
+      "leaf": "chart_has_a_story"
     },
     {
       "id": "nsw.chart-anatomy-title-insight-table",
       "title": "chart anatomy title insight table",
       "jobs": [
-        "announce_system_status"
+        "chart_has_a_story"
       ],
       "lane": "nsw",
-      "container": "feedback_and_status",
-      "card": "compose_feedback",
-      "facet": "system_stayed_quiet_after_change",
-      "leaf": "announce_system_status"
+      "container": "layout_and_data_display",
+      "card": "compose_a_data_display",
+      "facet": "data_is_unscannable",
+      "leaf": "chart_has_a_story"
     },
     {
       "id": "nsw.chart-text-horizontal",
       "title": "chart text horizontal",
       "jobs": [
-        "announce_system_status"
+        "chart_has_a_story"
       ],
       "lane": "nsw",
-      "container": "feedback_and_status",
-      "card": "compose_feedback",
-      "facet": "system_stayed_quiet_after_change",
-      "leaf": "announce_system_status"
+      "container": "layout_and_data_display",
+      "card": "compose_a_data_display",
+      "facet": "data_is_unscannable",
+      "leaf": "chart_has_a_story"
     },
     {
       "id": "nsw.charts-start-with-story",
       "title": "charts start with story",
-      "jobs": [],
+      "jobs": [
+        "chart_has_a_story"
+      ],
       "lane": "nsw",
       "container": "layout_and_data_display",
       "card": "compose_a_data_display",
-      "facet": "data_is_unscannable"
+      "facet": "data_is_unscannable",
+      "leaf": "chart_has_a_story"
     },
     {
       "id": "nsw.direct-labels-over-legends",
       "title": "direct labels over legends",
       "jobs": [
-        "announce_system_status"
+        "chart_has_a_story"
       ],
       "lane": "nsw",
-      "container": "feedback_and_status",
-      "card": "compose_feedback",
-      "facet": "system_stayed_quiet_after_change",
-      "leaf": "announce_system_status"
+      "container": "layout_and_data_display",
+      "card": "compose_a_data_display",
+      "facet": "data_is_unscannable",
+      "leaf": "chart_has_a_story"
     },
     {
       "id": "nsw.established-colour-conventions",
       "title": "established colour conventions",
       "jobs": [
-        "announce_system_status"
+        "chart_has_a_story"
       ],
       "lane": "nsw",
-      "container": "feedback_and_status",
-      "card": "compose_feedback",
-      "facet": "system_stayed_quiet_after_change",
-      "leaf": "announce_system_status"
+      "container": "layout_and_data_display",
+      "card": "compose_a_data_display",
+      "facet": "data_is_unscannable",
+      "leaf": "chart_has_a_story"
     },
     {
       "id": "nsw.honest-baseline-bars-zero-or-truncation",
       "title": "honest baseline bars zero or truncation",
       "jobs": [
-        "announce_system_status"
+        "chart_has_a_story"
       ],
       "lane": "nsw",
-      "container": "feedback_and_status",
-      "card": "compose_feedback",
-      "facet": "system_stayed_quiet_after_change",
-      "leaf": "announce_system_status"
+      "container": "layout_and_data_display",
+      "card": "compose_a_data_display",
+      "facet": "data_is_unscannable",
+      "leaf": "chart_has_a_story"
     },
     {
       "id": "nsw.lines-dash-fills-patterns",
       "title": "lines dash fills patterns",
       "jobs": [
-        "announce_system_status"
+        "chart_has_a_story"
       ],
       "lane": "nsw",
-      "container": "feedback_and_status",
-      "card": "compose_feedback",
-      "facet": "system_stayed_quiet_after_change",
-      "leaf": "announce_system_status"
+      "container": "layout_and_data_display",
+      "card": "compose_a_data_display",
+      "facet": "data_is_unscannable",
+      "leaf": "chart_has_a_story"
     },
     {
       "id": "nsw.map-pan-from-centre-select-jumps-listing",
       "title": "map pan from centre select jumps listing",
       "jobs": [
-        "wayfind_after_nav"
+        "map_is_not_the_only_channel"
       ],
       "lane": "nsw",
-      "container": "navigation_and_wayfinding",
-      "card": "orient_in_the_place",
-      "facet": "user_cant_tell_where_they_are",
-      "leaf": "wayfind_after_nav"
+      "container": "layout_and_data_display",
+      "card": "compose_a_data_display",
+      "facet": "data_is_unscannable",
+      "leaf": "map_is_not_the_only_channel"
     },
     {
       "id": "nsw.maps-never-only-channel",
       "title": "maps never only channel",
-      "jobs": [],
+      "jobs": [
+        "map_is_not_the_only_channel"
+      ],
       "lane": "nsw",
       "container": "layout_and_data_display",
       "card": "compose_a_data_display",
-      "facet": "data_is_unscannable"
+      "facet": "data_is_unscannable",
+      "leaf": "map_is_not_the_only_channel"
     },
     {
       "id": "nsw.no-tooltip-only-values",
       "title": "no tooltip only values",
       "jobs": [
-        "announce_system_status"
+        "chart_has_a_story"
       ],
       "lane": "nsw",
-      "container": "feedback_and_status",
-      "card": "compose_feedback",
-      "facet": "system_stayed_quiet_after_change",
-      "leaf": "announce_system_status"
+      "container": "layout_and_data_display",
+      "card": "compose_a_data_display",
+      "facet": "data_is_unscannable",
+      "leaf": "chart_has_a_story"
     },
     {
       "id": "nsw.privacy-by-design-pia-security-day-one",
       "title": "privacy by design pia security day one",
       "jobs": [
-        "announce_system_status"
+        "map_is_not_the_only_channel"
       ],
       "lane": "nsw",
-      "container": "feedback_and_status",
-      "card": "compose_feedback",
-      "facet": "system_stayed_quiet_after_change",
-      "leaf": "announce_system_status"
+      "container": "layout_and_data_display",
+      "card": "compose_a_data_display",
+      "facet": "data_is_unscannable",
+      "leaf": "map_is_not_the_only_channel"
     },
     {
       "id": "nsw.white-canvas-single-colour-when-labelled",
       "title": "white canvas single colour when labelled",
       "jobs": [
-        "announce_system_status"
+        "chart_has_a_story"
       ],
       "lane": "nsw",
-      "container": "feedback_and_status",
-      "card": "compose_feedback",
-      "facet": "system_stayed_quiet_after_change",
-      "leaf": "announce_system_status"
-    },
-    {
-      "id": "polar.be-consistent-no-synonyms",
-      "title": "be consistent no synonyms",
-      "jobs": [
-        "pick_primary_action"
-      ],
-      "lane": "polar",
-      "container": "actions_and_decisions",
-      "card": "design_actions_and_ctas",
-      "facet": "no_clear_primary",
-      "leaf": "pick_primary_action"
-    },
-    {
-      "id": "polar.default-option-selected-when-possible",
-      "title": "default option selected when possible",
-      "jobs": [
-        "choose_control_for_choice"
-      ],
-      "lane": "polar",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "wrong_control_for_the_choice",
-      "leaf": "choose_control_for_choice"
+      "container": "layout_and_data_display",
+      "card": "compose_a_data_display",
+      "facet": "data_is_unscannable",
+      "leaf": "chart_has_a_story"
     },
     {
       "id": "polar.dont-duplicate-content",
@@ -2894,13 +2729,13 @@
       "id": "polar.dont-use-modals-for-complex-forms",
       "title": "dont use modals for complex forms",
       "jobs": [
-        "use_familiar_control"
+        "pick_modal_only_when_blocking"
       ],
       "lane": "polar",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "wrong_control_for_the_choice",
-      "leaf": "use_familiar_control"
+      "container": "overlays_and_content_structure",
+      "card": "choose_an_overlay",
+      "facet": "wrong_layer_for_the_content",
+      "leaf": "pick_modal_only_when_blocking"
     },
     {
       "id": "polar.encourage-action-cta-verb",
@@ -2918,13 +2753,13 @@
       "id": "polar.guide-dont-prescribe",
       "title": "guide dont prescribe",
       "jobs": [
-        "pick_primary_action"
+        "tone_of_voice_for_failure"
       ],
       "lane": "polar",
-      "container": "actions_and_decisions",
-      "card": "design_actions_and_ctas",
-      "facet": "no_clear_primary",
-      "leaf": "pick_primary_action"
+      "container": "feedback_and_status",
+      "card": "compose_feedback",
+      "facet": "tone_fights_the_moment",
+      "leaf": "tone_of_voice_for_failure"
     },
     {
       "id": "polar.labels-1-3-words-sentence-case-i18n",
@@ -2975,18 +2810,6 @@
       "leaf": "tone_of_voice_for_failure"
     },
     {
-      "id": "polar.select-4plus-choice-list-under-4",
-      "title": "select 4plus choice list under 4",
-      "jobs": [
-        "choose_control_for_choice"
-      ],
-      "lane": "polar",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "wrong_control_for_the_choice",
-      "leaf": "choose_control_for_choice"
-    },
-    {
       "id": "polar.validate-after-finished-interacting",
       "title": "validate after finished interacting",
       "jobs": [
@@ -3002,13 +2825,13 @@
       "id": "spectrum.asterisk-is-icon-not-label-text",
       "title": "asterisk is icon not label text",
       "jobs": [
-        "name_a_control"
+        "mark_requirements_up_front"
       ],
       "lane": "spectrum",
       "container": "forms_and_input",
       "card": "design_a_form",
-      "facet": "field_has_no_lasting_name",
-      "leaf": "name_a_control"
+      "facet": "requirements_are_a_surprise",
+      "leaf": "mark_requirements_up_front"
     },
     {
       "id": "spectrum.bundle-instead-of-spam-toasts",
@@ -3038,37 +2861,37 @@
       "id": "spectrum.error-icon-overrides-validation-icon",
       "title": "error icon overrides validation icon",
       "jobs": [
-        "recover_from_invalid_input"
+        "explain_failure_next_to_cause"
       ],
       "lane": "spectrum",
       "container": "forms_and_input",
       "card": "handle_form_errors",
-      "facet": "invalid_input_has_no_recovery",
-      "leaf": "recover_from_invalid_input"
+      "facet": "errors_dont_point_to_the_fix",
+      "leaf": "explain_failure_next_to_cause"
     },
     {
       "id": "spectrum.min-width-1-5x-field-height",
       "title": "min width 1 5x field height",
       "jobs": [
-        "keep_hit_target_usable"
+        "use_familiar_control"
       ],
       "lane": "spectrum",
-      "container": "actions_and_decisions",
-      "card": "design_actions_and_ctas",
-      "facet": "controls_are_hard_to_hit",
-      "leaf": "keep_hit_target_usable"
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
     },
     {
       "id": "spectrum.mixed-values-en-dash",
       "title": "mixed values en dash",
       "jobs": [
-        "name_a_control"
+        "use_familiar_control"
       ],
       "lane": "spectrum",
       "container": "forms_and_input",
       "card": "design_a_form",
-      "facet": "field_has_no_lasting_name",
-      "leaf": "name_a_control"
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
     },
     {
       "id": "spectrum.one-toast-at-a-time",
@@ -3086,13 +2909,13 @@
       "id": "spectrum.picker-concise-items-full-value",
       "title": "picker concise items full value",
       "jobs": [
-        "name_a_control"
+        "use_familiar_control"
       ],
       "lane": "spectrum",
       "container": "forms_and_input",
       "card": "design_a_form",
-      "facet": "field_has_no_lasting_name",
-      "leaf": "name_a_control"
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
     },
     {
       "id": "spectrum.picker-ghost-text-placeholder",
@@ -3110,37 +2933,37 @@
       "id": "spectrum.picker-min-width-2x-height",
       "title": "picker min width 2x height",
       "jobs": [
-        "keep_hit_target_usable"
+        "use_familiar_control"
       ],
       "lane": "spectrum",
-      "container": "actions_and_decisions",
-      "card": "design_actions_and_ctas",
-      "facet": "controls_are_hard_to_hit",
-      "leaf": "keep_hit_target_usable"
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
     },
     {
       "id": "spectrum.picker-mobile-tray-when-overwhelming",
       "title": "picker mobile tray when overwhelming",
       "jobs": [
-        "choose_control_for_choice"
+        "use_familiar_control"
       ],
       "lane": "spectrum",
       "container": "forms_and_input",
       "card": "design_a_form",
       "facet": "wrong_control_for_the_choice",
-      "leaf": "choose_control_for_choice"
+      "leaf": "use_familiar_control"
     },
     {
       "id": "spectrum.picker-no-max-menu-height",
       "title": "picker no max menu height",
       "jobs": [
-        "choose_control_for_choice"
+        "use_familiar_control"
       ],
       "lane": "spectrum",
       "container": "forms_and_input",
       "card": "design_a_form",
       "facet": "wrong_control_for_the_choice",
-      "leaf": "choose_control_for_choice"
+      "leaf": "use_familiar_control"
     },
     {
       "id": "spectrum.picker-readonly-only-if-selection",
@@ -3194,13 +3017,13 @@
       "id": "spectrum.toast-at-most-one-action",
       "title": "toast at most one action",
       "jobs": [
-        "pick_primary_action"
+        "announce_system_status"
       ],
       "lane": "spectrum",
-      "container": "actions_and_decisions",
-      "card": "design_actions_and_ctas",
-      "facet": "no_clear_primary",
-      "leaf": "pick_primary_action"
+      "container": "feedback_and_status",
+      "card": "compose_feedback",
+      "facet": "system_stayed_quiet_after_change",
+      "leaf": "announce_system_status"
     },
     {
       "id": "spectrum.toast-auto-dismiss-min-5s",
@@ -3242,34 +3065,37 @@
       "id": "spectrum.toast-sentence-case-generic-tone",
       "title": "toast sentence case generic tone",
       "jobs": [
-        "tone_of_voice_for_failure"
+        "announce_system_status"
       ],
       "lane": "spectrum",
       "container": "feedback_and_status",
       "card": "compose_feedback",
-      "facet": "tone_fights_the_moment",
-      "leaf": "tone_of_voice_for_failure"
+      "facet": "system_stayed_quiet_after_change",
+      "leaf": "announce_system_status"
     },
     {
       "id": "spectrum.toast-vs-dialog",
       "title": "toast vs dialog",
-      "jobs": [],
+      "jobs": [
+        "pick_modal_only_when_blocking"
+      ],
       "lane": "spectrum",
       "container": "overlays_and_content_structure",
       "card": "choose_an_overlay",
-      "facet": "wrong_layer_for_the_content"
+      "facet": "wrong_layer_for_the_content",
+      "leaf": "pick_modal_only_when_blocking"
     },
     {
       "id": "spectrum.toast-writing-formulas",
       "title": "toast writing formulas",
       "jobs": [
-        "tone_of_voice_for_failure"
+        "announce_system_status"
       ],
       "lane": "spectrum",
       "container": "feedback_and_status",
       "card": "compose_feedback",
-      "facet": "tone_fights_the_moment",
-      "leaf": "tone_of_voice_for_failure"
+      "facet": "system_stayed_quiet_after_change",
+      "leaf": "announce_system_status"
     },
     {
       "id": "spectrum.users-can-turn-off-alert-types",
@@ -3287,13 +3113,13 @@
       "id": "spectrum.validation-icon-when-format-valid",
       "title": "validation icon when format valid",
       "jobs": [
-        "recover_from_invalid_input"
+        "use_familiar_control"
       ],
       "lane": "spectrum",
       "container": "forms_and_input",
-      "card": "handle_form_errors",
-      "facet": "invalid_input_has_no_recovery",
-      "leaf": "recover_from_invalid_input"
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
     },
     {
       "id": "suomi.button-max-three-words-mobile-full-width",
@@ -3311,25 +3137,13 @@
       "id": "suomi.date-hint-ppkkvvvv-calendar-optional-focus-trap",
       "title": "date hint ppkkvvvv calendar optional focus trap",
       "jobs": [
-        "choose_control_for_choice"
+        "use_familiar_control"
       ],
       "lane": "suomi",
       "container": "forms_and_input",
       "card": "design_a_form",
       "facet": "wrong_control_for_the_choice",
-      "leaf": "choose_control_for_choice"
-    },
-    {
-      "id": "suomi.default-required-optional-in-parentheses",
-      "title": "default required optional in parentheses",
-      "jobs": [
-        "name_a_control"
-      ],
-      "lane": "suomi",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "field_has_no_lasting_name",
-      "leaf": "name_a_control"
+      "leaf": "use_familiar_control"
     },
     {
       "id": "suomi.errorsummary-link-text-equals-field-error",
@@ -3347,13 +3161,13 @@
       "id": "suomi.file-hint-and-datetime-fieldset",
       "title": "file hint and datetime fieldset",
       "jobs": [
-        "group_related_inputs"
+        "use_familiar_control"
       ],
       "lane": "suomi",
       "container": "forms_and_input",
       "card": "design_a_form",
-      "facet": "related_inputs_feel_scattered",
-      "leaf": "group_related_inputs"
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
     },
     {
       "id": "suomi.hide-breadcrumbs-on-mobile",
@@ -3407,13 +3221,13 @@
       "id": "suomi.search-hide-label-only-if-name-states-context",
       "title": "search hide label only if name states context",
       "jobs": [
-        "avoid_placeholder_as_label"
+        "place_the_search_control"
       ],
       "lane": "suomi",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "field_has_no_lasting_name",
-      "leaf": "avoid_placeholder_as_label"
+      "container": "navigation_and_wayfinding",
+      "card": "compose_search",
+      "facet": "search_is_hard_to_find",
+      "leaf": "place_the_search_control"
     },
     {
       "id": "suomi.static-validation-on-submit-default",
@@ -3431,13 +3245,13 @@
       "id": "suomi.time-field-60px-hint-tmm-always-visible",
       "title": "time field 60px hint tmm always visible",
       "jobs": [
-        "keep_field_purpose_visible_while_filled"
+        "use_familiar_control"
       ],
       "lane": "suomi",
       "container": "forms_and_input",
       "card": "design_a_form",
-      "facet": "field_has_no_lasting_name",
-      "leaf": "keep_field_purpose_visible_while_filled"
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
     },
     {
       "id": "suomi.toast-10s-hover-stick-then-float",
@@ -3450,18 +3264,6 @@
       "card": "compose_feedback",
       "facet": "system_stayed_quiet_after_change",
       "leaf": "announce_system_status"
-    },
-    {
-      "id": "suomi.toggle-button-immediate-input-submit",
-      "title": "toggle button immediate input submit",
-      "jobs": [
-        "choose_control_for_choice"
-      ],
-      "lane": "suomi",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "wrong_control_for_the_choice",
-      "leaf": "choose_control_for_choice"
     },
     {
       "id": "uswds.alert-first-word-is-type",
@@ -3479,13 +3281,13 @@
       "id": "uswds.alerts-dont-blame-name-next-step",
       "title": "alerts dont blame name next step",
       "jobs": [
-        "tone_of_voice_for_failure"
+        "announce_system_status"
       ],
       "lane": "uswds",
       "container": "feedback_and_status",
       "card": "compose_feedback",
-      "facet": "tone_fights_the_moment",
-      "leaf": "tone_of_voice_for_failure"
+      "facet": "system_stayed_quiet_after_change",
+      "leaf": "announce_system_status"
     },
     {
       "id": "uswds.banner-gov-mil-https-every-page",
@@ -3503,25 +3305,13 @@
       "id": "uswds.character-count-brevity-or-legal",
       "title": "character count brevity or legal",
       "jobs": [
-        "use_familiar_control"
+        "group_related_inputs"
       ],
       "lane": "uswds",
       "container": "forms_and_input",
       "card": "design_a_form",
-      "facet": "wrong_control_for_the_choice",
-      "leaf": "use_familiar_control"
-    },
-    {
-      "id": "uswds.date-picker-when-weekday-always-type",
-      "title": "date picker when weekday always type",
-      "jobs": [
-        "choose_control_for_choice"
-      ],
-      "lane": "uswds",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "wrong_control_for_the_choice",
-      "leaf": "choose_control_for_choice"
+      "facet": "related_inputs_feel_scattered",
+      "leaf": "group_related_inputs"
     },
     {
       "id": "uswds.dont-hide-then-reveal-alerts",
@@ -3575,13 +3365,13 @@
       "id": "uswds.homepage-search-box-not-link",
       "title": "homepage search box not link",
       "jobs": [
-        "wayfind_after_nav"
+        "place_the_search_control"
       ],
       "lane": "uswds",
       "container": "navigation_and_wayfinding",
-      "card": "orient_in_the_place",
-      "facet": "user_cant_tell_where_they_are",
-      "leaf": "wayfind_after_nav"
+      "card": "compose_search",
+      "facet": "search_is_hard_to_find",
+      "leaf": "place_the_search_control"
     },
     {
       "id": "uswds.identifier-darker-than-footer",
@@ -3611,25 +3401,13 @@
       "id": "uswds.real-button-with-type-space-vs-enter",
       "title": "real button with type space vs enter",
       "jobs": [
-        "use_familiar_control"
+        "pick_primary_action"
       ],
       "lane": "uswds",
-      "container": "forms_and_input",
-      "card": "design_a_form",
-      "facet": "wrong_control_for_the_choice",
-      "leaf": "use_familiar_control"
-    },
-    {
-      "id": "uswds.search-min-27-chars-persist-query",
-      "title": "search min 27 chars persist query",
-      "jobs": [
-        "wayfind_after_nav"
-      ],
-      "lane": "uswds",
-      "container": "navigation_and_wayfinding",
-      "card": "orient_in_the_place",
-      "facet": "user_cant_tell_where_they_are",
-      "leaf": "wayfind_after_nav"
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "no_clear_primary",
+      "leaf": "pick_primary_action"
     },
     {
       "id": "uswds.site-alert-dont-stack-dont-panic",

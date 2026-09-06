@@ -20,6 +20,10 @@
   "card": "design_a_form",
   "facet": "related_inputs_feel_scattered",
   "leaf": "group_related_inputs",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "Forms stay a simple vertical stack that matches HTML source order for assistive tech.",
+  "apply_when": "Laying out form controls for predictable left-to-right limited-vision scanning.",
+  "not_when": "CSS reorders or multi-column scrambles that diverge from HTML order.",
+  "agent_hint": "Keep form controls in a vertical source-order stack; do not CSS-reorder fields.",
+  "description": "USWDS forms stay a simple vertical stack that matches HTML source order. Do not rearrange controls with CSS, because assistive technology follows HTML order, and vertical layout supports limited-vision left-to-right scanning. CSS reorders or multi-column scrambles that AT does not match fail the template and confuse keyboard order. Keep visual order aligned with source order in one vertical flow.",
   "do_not_claim": "Label left vs top (Ant/Fluent lock)."
 }

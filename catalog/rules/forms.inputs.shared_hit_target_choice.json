@@ -20,5 +20,9 @@
   "card": "design_actions_and_ctas",
   "facet": "controls_are_hard_to_hit",
   "leaf": "keep_hit_target_usable",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+  "overview": "Checkbox and radio label and control share one hit target with no dead zones.",
+  "apply_when": "Checkbox or radio rows with visible labels beside the control.",
+  "not_when": "Icon-only toggles without a separate text label to associate.",
+  "agent_hint": "Make label, control, and space between one shared hit target.",
+  "description": "Checkbox and radio label and control must share a single hit target with no dead zones. Pass when click or tap on label, control, or the space between toggles the same choice; fail when a dead zone sits between control and label and only the small control hits. Shared targets keep choices usable on touch and pointer alike."
 }

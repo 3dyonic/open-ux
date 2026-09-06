@@ -20,5 +20,9 @@
   "card": "design_actions_and_ctas",
   "facet": "no_clear_primary",
   "leaf": "pick_primary_action",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+  "overview": "Preferred same-role buttons are marked by style, not by larger size.",
+  "apply_when": "Distinguishing the preferred choice among peer same-role buttons.",
+  "not_when": "Touch targets sized for accessibility rather than preference hierarchy.",
+  "agent_hint": "Mark the preferred button with style emphasis, not by enlarging it.",
+  "description": "Among buttons that share a role, preference should come from style—fill, weight, or color—not from making one control physically larger. Oversizing the preferred choice warps layout and confuses hierarchy with hit-area sizing. Keep peer buttons comparable in size and restyle the preferred one so emphasis is visual, not geometric. Enlarge only when meeting touch-target requirements, not to signal which choice is preferred."
 }

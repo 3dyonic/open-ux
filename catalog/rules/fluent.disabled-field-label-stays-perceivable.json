@@ -19,7 +19,11 @@
   "container": "forms_and_input",
   "card": "design_a_form",
   "facet": "field_has_no_lasting_name",
-  "leaf": "name_a_control",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "leaf": "avoid_placeholder_as_label",
+  "overview": "A disabled field keeps its label and helper perceivable to assistive tech.",
+  "apply_when": "Disabling Fluent fields or Settings Save until requireds are complete.",
+  "not_when": "GOV.UK public question pages that generally avoid disabling submit.",
+  "agent_hint": "Disable the control, not the label/helper; show why if Save stays disabled.",
+  "description": "When a Fluent field is disabled, the control is disabled but the label (and helper/validation) stay enabled so assistive technology can still perceive them. Settings Save may disable until requireds are complete only with a visible reason and this perceivable label (dual-cite GOV.UK don’t-disable on public/question). Fail a disabled control whose label/helper cannot be perceived, or disabled Save with no visible reason.",
   "do_not_claim": "Global never-disable on public/question flows (see `govuk.dont-use-disabled-buttons`)."
 }

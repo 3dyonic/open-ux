@@ -17,9 +17,13 @@
   ],
   "severity": "major",
   "container": "forms_and_input",
-  "card": "handle_form_errors",
-  "facet": "invalid_input_has_no_recovery",
-  "leaf": "recover_from_invalid_input",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "use_familiar_control",
+  "overview": "Format-constrained fields show a valid icon once the typed value matches the format.",
+  "apply_when": "Email, card, or password-rule fields that validate format as the user types.",
+  "not_when": "Plain required fields that only need any non-empty value, not format success.",
+  "agent_hint": "Show the valid icon when format matches; never for merely filling a required field.",
+  "description": "For email, card, and password-rule fields, Spectrum shows the valid icon as soon as the typed value matches the format. This is format-as-you-type feedback, dual-cited with NN/g success-for-complex guidance, not a spam success state on any filled required field. Showing valid for any characters, or omitting it when the format already matches, misses the intent. Reserve the icon for real format match.",
   "do_not_claim": "Generic error identifies-and-fixes; success spam on every required. Overlap with Forms 54: `forms.errors.success_complex_fields`."
 }

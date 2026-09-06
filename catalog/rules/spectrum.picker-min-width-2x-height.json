@@ -16,10 +16,14 @@
     "Non-quiet picker narrower than 2× height, or a quiet-picker minimum invented in-house."
   ],
   "severity": "major",
-  "container": "actions_and_decisions",
-  "card": "design_actions_and_ctas",
-  "facet": "controls_are_hard_to_hit",
-  "leaf": "keep_hit_target_usable",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "use_familiar_control",
+  "overview": "Non-quiet pickers stay at least twice as wide as the field-button height.",
+  "apply_when": "Sizing standard Spectrum pickers for usable hit targets and readable values.",
+  "not_when": "Quiet pickers, whose width follows text with no minimum.",
+  "agent_hint": "Keep non-quiet pickers ≥2× field-button height; let quiet width follow text.",
+  "description": "Spectrum sets a minimum width of twice the field-button height for non-quiet pickers so the control remains hittable and the value stays readable. Quiet pickers have no minimum and let width follow the text. Do not invent an in-house minimum for quiet variants, and do not shrink a standard picker below that 2× height ratio. Use this when sizing pickers in forms and action rows; skip it for quiet text-following layouts.",
   "do_not_claim": "Text-field 1.5× minimum as this row."
 }

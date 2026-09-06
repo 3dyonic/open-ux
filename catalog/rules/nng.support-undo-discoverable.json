@@ -16,10 +16,14 @@
     "Undo only as a seconds-long snackbar; no Back; no cancel in-progress."
   ],
   "severity": "major",
-  "container": "navigation_and_wayfinding",
-  "card": "orient_in_the_place",
-  "facet": "user_cant_tell_where_they_are",
-  "leaf": "wayfind_after_nav",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "container": "actions_and_decisions",
+  "card": "protect_destructive_and_leave",
+  "facet": "destructive_is_too_easy",
+  "leaf": "disable_or_confirm_destructive",
+  "overview": "Undo stays discoverable; always allow Back and cancel in-progress work.",
+  "apply_when": "Destructive or reversible actions needing undo, Back, or cancel.",
+  "not_when": "Undo only as a vanishing snackbar, or no Back or cancel in-progress.",
+  "agent_hint": "Provide discoverable visible Undo, always allow Back, and let users cancel in-progress work.",
+  "description": "Support Undo that stays discoverable as a visible control; snackbar-only undo that vanishes in seconds is a miss. Always allow Back; cancel in-progress. Pass when Undo is a discoverable visible control, Back is available, and in-progress work can be cancelled. Fail when Undo is only a seconds-long snackbar, there is no Back, or no cancel in-progress.",
   "do_not_claim": "Heuristic #3 as a row; `actions.multilevel_undo` / `actions.cancelability` as merges. Overlap with Actions 40: `multilevel_undo` / `cancelability`."
 }

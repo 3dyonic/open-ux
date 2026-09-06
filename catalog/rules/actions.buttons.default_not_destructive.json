@@ -20,5 +20,9 @@
   "card": "protect_destructive_and_leave",
   "facet": "destructive_is_too_easy",
   "leaf": "disable_or_confirm_destructive",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+  "overview": "The highlighted default is the common safe choice, never a destructive one.",
+  "apply_when": "Choosing which button is primary on dialogs or confirmations.",
+  "not_when": "Non-destructive flows where primary simply marks the main next step.",
+  "agent_hint": "Make the common safe choice primary; never default destructive or Yes.",
+  "description": "People often accept the highlighted default without fully reading. Put default or primary emphasis on the common safe choice, and never assign that emphasis to a destructive action. On confirmations, do not default Yes. This protects irreversible commits; it does not ban a filled primary on ordinary save or continue when the action is not destructive."
 }

@@ -20,6 +20,10 @@
   "card": "compose_feedback",
   "facet": "system_stayed_quiet_after_change",
   "leaf": "announce_system_status",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "Bundle related events into one toast instead of spamming one per event.",
+  "apply_when": "Announcing bursts of related events such as multiple uploads.",
+  "not_when": "One toast per related event in a rapid burst.",
+  "agent_hint": "Bundle related events into one toast; avoid one toast per event in a burst.",
+  "description": "Bundle related events into one toast instead of spamming—for example four uploads become one toast, not four. Stay mindful of frequency even though toasts are weaker than dialogs. Pass when related events share one bundled toast. Fail when each related event in a burst fires its own toast and floods the surface with stacked notifications.",
   "do_not_claim": "Queueing (previous row) as the bundle rule."
 }

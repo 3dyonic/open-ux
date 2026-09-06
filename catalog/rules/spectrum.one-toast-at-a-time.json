@@ -20,6 +20,10 @@
   "card": "compose_feedback",
   "facet": "system_stayed_quiet_after_change",
   "leaf": "announce_system_status",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "Only one toast is visible; further toasts wait in a priority queue.",
+  "apply_when": "System confirmations and low-priority alerts after saves or uploads.",
+  "not_when": "Dialogs that need a response, or sitewide static banners and alerts.",
+  "agent_hint": "Show one toast at a time; queue the rest by priority instead of stacking.",
+  "description": "Toast feedback must stay readable: Spectrum allows only one toast on screen while consecutive or simultaneous messages wait in a priority queue. Stacking several visible toasts crowds the viewport and makes status hard to parse. Keep confirmations and simple notifications in that single-toast lane; escalate situations that need attention or a response to a dialog instead of piling more toasts.",
   "do_not_claim": "Bundle copy (see `spectrum.bundle-instead-of-spam-toasts`)."
 }

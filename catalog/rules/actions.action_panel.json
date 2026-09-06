@@ -16,9 +16,13 @@
     "That set exists only buried in menus, with no staying-visible panel."
   ],
   "severity": "major",
-  "container": "forms_and_input",
-  "card": "design_a_form",
-  "facet": "wrong_control_for_the_choice",
-  "leaf": "use_familiar_control",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "command_surface_is_opaque",
+  "leaf": "compose_the_command_surface",
+  "overview": "A lasting, organized panel that keeps a large related command set visible.",
+  "apply_when": "Many related commands would otherwise hide in menus.",
+  "not_when": "A few actions fit a button group or single toolbar.",
+  "agent_hint": "Surface the related command set on a visible organized panel, not buried menus.",
+  "description": "When a product has a large set of related commands, burying them in cascading menus slows discovery and forces people to hunt. An action panel keeps that set on a richly organized surface that stays in view while they work, so related tools stay findable without opening menus. Use it for dense tool suites; skip it when only a handful of actions belong in a compact button group or chrome."
 }

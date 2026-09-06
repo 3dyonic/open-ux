@@ -20,6 +20,10 @@
   "card": "compose_feedback",
   "facet": "system_stayed_quiet_after_change",
   "leaf": "announce_system_status",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "Task lists show Not started, Cannot start yet, In progress, and Completed, with related tasks grouped.",
+  "apply_when": "Building a multi-task journey list with progress statuses.",
+  "not_when": "Not for single-page forms with no task breakdown.",
+  "agent_hint": "Use the four task statuses and group related tasks for completing multiple tasks.",
+  "description": "Task lists should show statuses as they apply—Not started, Cannot start yet, In progress, Completed—and group related tasks so people can complete multiple tasks coherently. Those statuses communicate readiness and progress without inventing new labels. An ungrouped dump of tasks or missing Cannot-start-yet / In-progress leaves people unsure what to do next. Fail for missing statuses, invented labels that drop those states, or ungrouped tasks. Use this on multi-task journeys with progress.",
   "do_not_claim": "Long-form progress bar (`forms.transparency.progress_on_long_forms`)."
 }

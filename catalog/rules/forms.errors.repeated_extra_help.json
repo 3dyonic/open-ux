@@ -20,5 +20,9 @@
   "card": "handle_form_errors",
   "facet": "invalid_input_has_no_recovery",
   "leaf": "recover_from_invalid_input",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+  "overview": "The same error repeating three or more times in one attempt gets extra help.",
+  "apply_when": "Users hit the same validation failure repeatedly in one submit attempt.",
+  "not_when": "The first showing of an error that has not yet repeated.",
+  "agent_hint": "On the third same error, add actionable help beyond the first message.",
+  "description": "When the same error repeats three or more times in one attempt, provide extra help beyond the first showing: review error patterns, refine the design, and make messages more actionable. Apply after users hit the same validation failure repeatedly in one try. Fail the same error copy repeating three or more times with no added help."
 }

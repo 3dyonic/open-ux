@@ -20,5 +20,9 @@
   "card": "handle_form_errors",
   "facet": "errors_dont_point_to_the_fix",
   "leaf": "explain_failure_next_to_cause",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+  "overview": "Error messages stay readable without hover or an extra icon click.",
+  "apply_when": "Surfacing field-error text after validation fails on an input.",
+  "not_when": "Supplementary tooltips that add detail beside already-visible error text.",
+  "agent_hint": "Show error text in the clear; do not hide it in a hover or icon-only overlay.",
+  "description": "Do not require hover or an extra click on an icon to read the error message. The message must stay readable in the clear beside the field without those gestures so everyone can see the fix. Apply when surfacing field-error text after validation fails. Fail error text that lives only in a tooltip, title attribute, or icon-click overlay."
 }

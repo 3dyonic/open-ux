@@ -19,10 +19,11 @@
   "container": "overlays_and_content_structure",
   "card": "choose_an_overlay",
   "facet": "wrong_layer_for_the_content",
-  "overview": "A non-modal (e.g.",
-  "apply_when": "Modal vs accordion",
-  "not_when": "Not for the destructive decision inside a dialog.",
-  "agent_hint": "Non-modal dialogs are allowed — they do not interrupt interaction behind them.",
-  "description": "Non-modal dialogs are allowed — they do not interrupt interaction behind them. A non-modal (e.g. It fails when A cookie-banner/non-modal pattern implemented as a blocking modal.",
+  "leaf": "pick_modal_only_when_blocking",
+  "overview": "Non-modal dialogs are allowed when they must not block interaction behind them.",
+  "apply_when": "Using a persistent non-blocking pattern such as a cookie banner.",
+  "not_when": "Not as permission to modal nonessential off-flow content that should stay in-page.",
+  "agent_hint": "Allow non-modal patterns that leave the page usable; do not force a blocking modal.",
+  "description": "Non-modal dialogs are allowed: they do not interrupt interaction behind them. A persistent cookie banner is the named pattern for staying visible without blocking the page. Implementing that pattern as a blocking modal breaks the permission. Fail if a cookie-banner or non-modal pattern is implemented as a blocking modal, or if “non-modal allowed” is treated as permission to modal nonessential off-flow content. Use non-modal when the page behind must stay usable.",
   "do_not_claim": "A winner that deletes `nng.modal-and-nonmodal-dialogs`. Overlap with extra 73: `nng.modal-and-nonmodal-dialogs`."
 }

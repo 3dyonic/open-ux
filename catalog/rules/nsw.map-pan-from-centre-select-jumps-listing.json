@@ -16,10 +16,14 @@
     "Select does not update the listing; overlapping points unclustered; unnamed filter inputs."
   ],
   "severity": "major",
-  "container": "navigation_and_wayfinding",
-  "card": "orient_in_the_place",
-  "facet": "user_cant_tell_where_they_are",
-  "leaf": "wayfind_after_nav",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "container": "layout_and_data_display",
+  "card": "compose_a_data_display",
+  "facet": "data_is_unscannable",
+  "leaf": "map_is_not_the_only_channel",
+  "overview": "Map pan centres; select centres the marker, updates listing, and clusters overlaps.",
+  "apply_when": "Interactive maps with listings, popups, clusters, and named filters.",
+  "not_when": "Select that does not update listing, unclustered overlaps, or unnamed filters.",
+  "agent_hint": "Pan from centre; on select centre marker and jump listing; cluster overlaps; name filters.",
+  "description": "Map pan updates from centre; select centres the marker and jumps the listing. Popup includes a snapshot plus further-info link; dismiss via close and when another point is selected. Overlapping points cluster. Filter labels name the input (postcode, suburb, full address). Pass when those behaviours hold. Fail when select does not update the listing, overlapping points are unclustered, or filter inputs are unnamed.",
   "do_not_claim": "Maps-never-only-channel as this interaction row."
 }

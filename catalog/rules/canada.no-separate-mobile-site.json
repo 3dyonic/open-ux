@@ -20,6 +20,10 @@
   "card": "orient_in_the_place",
   "facet": "user_cant_tell_where_they_are",
   "leaf": "wayfind_after_nav",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "Phone and desktop share one content origin; prefer flat IA and in-page nav.",
+  "apply_when": "Planning Canada.ca information architecture for phone and desktop.",
+  "not_when": "USWDS tab-before-main or never-link-externally in-page rows — keep separate.",
+  "agent_hint": "Ship one responsive origin; flatten IA; prefer in-page nav over extra menus.",
+  "description": "Canada.ca rejects a separate mobile site: same content on phone and desktop, IA as flat as possible, in-page navigation over extra menus, and limited page weight. Dual-cite USWDS continuity and Wayfinding Jump to Item without merging those rows. Fail a separate mobile origin/site, or a second menu instead of in-page nav on a long page.",
   "do_not_claim": "USWDS in-page tab-before-main geometry as this row."
 }

@@ -20,6 +20,10 @@
   "card": "design_actions_and_ctas",
   "facet": "no_clear_primary",
   "leaf": "pick_primary_action",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "Filled buttons go to a next step; outline buttons act on the current page.",
+  "apply_when": "Choosing filled versus outline button styles for navigation and page actions.",
+  "not_when": "Using unstyled controls as the primary next-step action.",
+  "agent_hint": "Use filled for next-step actions, outline for same-page actions, unstyled only for lesser link-like actions.",
+  "description": "USWDS uses standard filled buttons for actions that go to a next step, outline for actions that happen on the current page, and unstyled only for less important actions that may look like links. Filled same-page actions, outline next-step controls, or unstyled primary next steps invert that hierarchy. Match style to whether the action leaves the page or stays.",
   "do_not_claim": "Actions one-primary / distinctive-primary as this row."
 }

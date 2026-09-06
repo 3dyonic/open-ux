@@ -16,9 +16,13 @@
     "No undo, or only last-action undo."
   ],
   "severity": "major",
-  "container": "forms_and_input",
-  "card": "handle_form_errors",
-  "facet": "invalid_input_has_no_recovery",
-  "leaf": "recover_from_invalid_input",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+  "container": "actions_and_decisions",
+  "card": "protect_destructive_and_leave",
+  "facet": "destructive_is_too_easy",
+  "leaf": "disable_or_confirm_destructive",
+  "overview": "People can reverse a series of actions, not only the last one.",
+  "apply_when": "Editing flows where mistakes stack across multiple steps.",
+  "not_when": "Single-step views where last-action undo already covers all risk.",
+  "agent_hint": "Support multilevel undo so more than the last action can be reversed.",
+  "description": "Undo should reverse a series of actions, not only the last one, so stacked mistakes remain recoverable. Last-action-only undo, or no undo at all, leaves earlier mistakes stuck after a longer editing session. Provide multilevel undo in multi-step editing where history accumulates. A single atomic action may only need one undo step; depth matters when several changes stack."
 }

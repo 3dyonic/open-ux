@@ -20,6 +20,10 @@
   "card": "compose_feedback",
   "facet": "tone_fights_the_moment",
   "leaf": "tone_of_voice_for_failure",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "Write ~US grade 7 plain language without jargon or idioms.",
+  "apply_when": "Product content that must stay scannable and easy to read.",
+  "not_when": "Jargon, idioms, or dense unscannable blocks.",
+  "agent_hint": "Write ~grade 7 plain language with short sentences; ban jargon and idioms.",
+  "description": "Write plain language around US grade 7 with no jargon and no idioms. Prefer scannable headings, bullets, and short sentences so content is easy to skim. Pass when copy stays about grade 7, jargon-free and idiom-free, with those scannable structures throughout. Fail for jargon, idioms, or dense unscannable blocks that bury the meaning and slow merchants down while reading.",
   "do_not_claim": "`forms.copy.plain_language` as a merge that drops the Polar grade-7 name. Overlap with Forms 54: `forms.copy.plain_language`."
 }

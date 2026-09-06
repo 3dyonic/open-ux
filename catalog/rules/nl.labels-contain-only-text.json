@@ -20,6 +20,10 @@
   "card": "design_a_form",
   "facet": "field_has_no_lasting_name",
   "leaf": "name_a_control",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "Labels contain only text—no nested links, buttons, tooltips, or headings.",
+  "apply_when": "Authoring label markup for form controls.",
+  "not_when": "Not for help that sits beside the field outside the label element.",
+  "agent_hint": "Keep label children text-only; move links and controls outside the label.",
+  "description": "A `<label>` must contain text only—no nested link, button, tooltip, or heading—because voice control and screen readers break on interactive children inside the label. Keep help and links outside the label element so the name stays operable. Fail when interactive or heading content is nested inside `<label>`. Apply when authoring label markup for form controls that need a clean accessible name.",
   "do_not_claim": "Privacy-link-outside-label as a duplicate of this general ban; visible-label lock as this row."
 }

@@ -17,8 +17,12 @@
   ],
   "severity": "major",
   "container": "forms_and_input",
-  "card": "handle_form_errors",
-  "facet": "invalid_input_has_no_recovery",
-  "leaf": "recover_from_invalid_input",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+  "card": "design_a_form",
+  "facet": "requirements_are_a_surprise",
+  "leaf": "mark_requirements_up_front",
+  "overview": "Make required data an explicit gate before Next or Submit proceeds.",
+  "apply_when": "Multi-step or submit flows that need required fields filled first.",
+  "not_when": "Optional-only steps where empty fields may still proceed.",
+  "agent_hint": "Gate Next/Submit until required fields are filled, or show an explicit block.",
+  "description": "People must understand they have to provide required data before they can proceed — for example enabling Next only after required fields are filled. Pass when the user can tell required data blocks proceed via a disabled control or equivalent explicit gate; fail when they can advance with required fields empty and only learn on a later error with no prior indication. The gate must be visible before the failure, not only after."
 }

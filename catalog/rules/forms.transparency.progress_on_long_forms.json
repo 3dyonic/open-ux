@@ -19,9 +19,10 @@
   "container": "multi_step_flows",
   "card": "build_a_multi_step_flow",
   "facet": "too_much_on_one_step",
-  "overview": "Long form shows done vs remaining progress.",
-  "apply_when": "Build a checkout flow",
-  "not_when": "Not for single form on one screen.",
-  "agent_hint": "On long forms, show a clear progress indicator of how much is done and how much remains.",
-  "description": "On long forms, show a clear progress indicator of how much is done and how much remains. Long form shows done vs remaining progress. It fails when Long form has no progress indication."
+  "leaf": "show_step_progress",
+  "overview": "On long forms, show clear progress for how much is done versus remaining.",
+  "apply_when": "Long multi-section or multi-page forms users must finish.",
+  "not_when": "Short single-screen forms with no meaningful remaining work.",
+  "agent_hint": "Show done-versus-remaining progress on long forms.",
+  "description": "On long forms, show a clear progress indicator of how much is done and how much remains. Pass when the long form shows done versus remaining progress; fail when a long form has no progress indication. Progress orientation reduces uncertainty about remaining effort without inventing a specific widget brand or forcing a progress UI on short forms."
 }

@@ -20,5 +20,9 @@
   "card": "handle_form_errors",
   "facet": "invalid_input_has_no_recovery",
   "leaf": "recover_from_invalid_input",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+  "overview": "Show field errors after the user finishes a field, not while typing or untouched.",
+  "apply_when": "Timing inline validation on blur or complete before or with submit.",
+  "not_when": "Submit-time summary that also pairs with finished-field inline errors.",
+  "agent_hint": "Validate after the field is finished; stay quiet mid-keystroke and on untouched fields.",
+  "description": "Prefer inline validation after the user finishes a field. Do not show an error before input is complete, mid-keystroke on the active field, or on fields they have not reached. A full-form submit should not be the only path to see a field error. Fail errors only after full submit with no finished-field path, mid-keystroke errors on the active field, or untouched fields marked invalid."
 }

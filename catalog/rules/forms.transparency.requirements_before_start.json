@@ -16,9 +16,13 @@
     "Those requirements appear only mid-form or after failure — or not at all on a long form."
   ],
   "severity": "major",
-  "container": "feedback_and_status",
-  "card": "compose_feedback",
-  "facet": "system_stayed_quiet_after_change",
-  "leaf": "announce_system_status",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "requirements_are_a_surprise",
+  "leaf": "mark_requirements_up_front",
+  "overview": "State time, materials, deadlines, attempt limits, and save behavior before a long form.",
+  "apply_when": "Starting long forms that impose time, materials, or attempt constraints.",
+  "not_when": "Short forms with no special requirements to announce up front.",
+  "agent_hint": "Announce applicable time, materials, deadlines, limits, and save behavior first.",
+  "description": "Before a long form, communicate requirements up front — time, materials, deadlines, attempt limits, whether progress is saved. Pass when those that apply are stated before the first field; fail when they appear only mid-form or after failure, or not at all on a long form. Up-front requirements prevent mid-flow surprises that waste the user’s effort."
 }

@@ -16,10 +16,14 @@
     "No PIA; security bolted on after launch; identifiable and de-identified access mixed."
   ],
   "severity": "major",
-  "container": "feedback_and_status",
-  "card": "compose_feedback",
-  "facet": "system_stayed_quiet_after_change",
-  "leaf": "announce_system_status",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "container": "layout_and_data_display",
+  "card": "compose_a_data_display",
+  "facet": "data_is_unscannable",
+  "leaf": "map_is_not_the_only_channel",
+  "overview": "Maintain a PIA; explicit consent; separate access; security from first release.",
+  "apply_when": "Products handling personal data under NSW privacy and security standards.",
+  "not_when": "No PIA, security bolted on after launch, or mixed identifiable access.",
+  "agent_hint": "Complete a maintained PIA, separate identifiable access, and ship security day one.",
+  "description": "Privacy by design plus PIA; security from day one—named NSW Design Standards. Complete and maintain a Privacy Impact Assessment; consent and data-use are explicit; identifiable vs de-identified access is separated. Security is designed and tested from the first release, not bolted on. Pass when a maintained PIA exists, consent and data-use are explicit, access is separated, and security is in the first release. Fail when there is no PIA, security is bolted on after launch, or identifiable and de-identified access are mixed.",
   "do_not_claim": "Generic “be accessible”; USWDS design-principle slogans as this PIA row."
 }

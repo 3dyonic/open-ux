@@ -19,9 +19,10 @@
   "container": "actions_and_decisions",
   "card": "protect_destructive_and_leave",
   "facet": "leaving_discards_work",
-  "overview": "A time-consuming operation can be cancelled at once, with no side effects from the cancelled work.",
-  "apply_when": "Add a delete confirmation",
-  "not_when": "Not for unclear Continue / Submit label.",
-  "agent_hint": "Provide a way to instantly cancel a time-consuming operation with no side effects.",
-  "description": "Provide a way to instantly cancel a time-consuming operation with no side effects. A time-consuming operation can be cancelled at once, with no side effects from the cancelled work. It fails when No cancel, cancel is not instant, or cancel still applies side effects."
+  "leaf": "warn_before_leave",
+  "overview": "A time-consuming operation can be cancelled instantly with no side effects.",
+  "apply_when": "Long-running work such as uploads, exports, or batch jobs.",
+  "not_when": "Instant actions that finish before a cancel control would help.",
+  "agent_hint": "Offer instant cancel on long work and roll back cancelled side effects.",
+  "description": "Long operations need an escape hatch. Provide a way to cancel at once, and ensure cancelled work leaves no lingering side effects on data or state. Missing cancel, a cancel that is not instant, or a cancel that still applies changes traps people in unwanted work they cannot stop. Use this for multi-second jobs such as uploads, exports, or batch processing; skip it for actions that complete immediately where a cancel control would never be usable in time."
 }

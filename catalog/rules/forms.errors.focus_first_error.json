@@ -20,5 +20,9 @@
   "card": "handle_form_errors",
   "facet": "invalid_input_has_no_recovery",
   "leaf": "recover_from_invalid_input",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+  "overview": "After a failed submit, move focus to the first field in error.",
+  "apply_when": "Handling submit validation when one or more fields failed checks.",
+  "not_when": "Inline blur validation that never involved a full-form submit.",
+  "agent_hint": "On failed submit, move focus to the first invalid field, not Submit.",
+  "description": "On submit, move focus to the first field in error so keyboard and screen-reader users land where repair starts instead of hunting. The submit control should not keep focus after a failed attempt. Apply when handling submit validation with one or more failing fields. Fail focus that stays on Submit or elsewhere instead of the first error field."
 }

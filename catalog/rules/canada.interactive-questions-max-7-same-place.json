@@ -20,6 +20,10 @@
   "card": "design_a_form",
   "facet": "related_inputs_feel_scattered",
   "leaf": "group_related_inputs",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "Interactive questions stay at seven or fewer, one at a time in the same slot.",
+  "apply_when": "Building a Canada.ca interactive-questions flow on one page slot.",
+  "not_when": "GOV.UK one-question-per-page flows that advance to a new page each time.",
+  "agent_hint": "Show one question per slot; you-voice; Continue not conflicting Next; allow back.",
+  "description": "Canada.ca interactive questions: at most seven, one visible at a time in the same place, written to “you”, with choices as answers immediately under the question. Use Continue or a context-specific button — not “Next” if the page already has Next in multi-page nav — and always offer a way back to change the selection. Dual-cite GOV.UK one-question-per-page; Canada keeps later questions in the same slot. Fail many questions at once, Next that clashes with page Next, or no way to change a selection.",
   "do_not_claim": "A winner vs GOV.UK one-question-per-page; a NEW pre-select rule."
 }

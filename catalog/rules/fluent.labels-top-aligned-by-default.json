@@ -20,6 +20,10 @@
   "card": "design_a_form",
   "facet": "field_has_no_lasting_name",
   "leaf": "name_a_control",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "Fluent labels sit above fields; left-align only when space and widths allow.",
+  "apply_when": "Aligning Fluent field labels in forms with mixed or tight layouts.",
+  "not_when": "Ant left-default label placement — dual-cite, do not force one winner.",
+  "agent_hint": "Default labels above fields; left-align only if space is tight and widths match.",
+  "description": "Fluent labels are top-aligned by default so each field keeps a lasting name above the control. Left-align labels only if space is tight and fields share consistent type and width. Dual-cite Ant’s left-default without forcing a house winner. Apply when aligning Fluent field labels in forms. Fail left-aligned labels on mixed-type or mixed-width fields, or left as the default when space is not tight.",
   "do_not_claim": "GOV.UK above-the-control as a merge of sentence-case/colons. Overlap with Forms 54: beyond LIVE `visible_label` / `label_stays_visible`."
 }

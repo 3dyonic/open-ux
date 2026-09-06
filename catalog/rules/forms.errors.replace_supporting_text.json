@@ -18,7 +18,11 @@
   "severity": "major",
   "container": "forms_and_input",
   "card": "handle_form_errors",
-  "facet": "errors_dont_point_to_the_fix",
-  "leaf": "explain_failure_next_to_cause",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+  "facet": "invalid_input_has_no_recovery",
+  "leaf": "recover_from_invalid_input",
+  "overview": "In error, replace supporting text with error text in the same slot.",
+  "apply_when": "Showing Material-style field errors under inputs that already have helper text.",
+  "not_when": "Persistent instructions that must remain visible alongside a short error.",
+  "agent_hint": "Swap helper for error in-place; do not stack both and shift the layout.",
+  "description": "Swap supporting text for error text; do not stack error text on top of supporting text and cause layout shift. In error, supporting text is replaced by error text in the same slot so the layout does not grow a second line under the hint. Fail error stacked on supporting text that shifts the layout."
 }

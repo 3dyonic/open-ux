@@ -19,9 +19,10 @@
   "container": "actions_and_decisions",
   "card": "design_actions_and_ctas",
   "facet": "action_wording_hides_the_outcome",
-  "overview": "The label names the consequent state.",
-  "apply_when": "Primary vs secondary",
-  "not_when": "Not for delete / discard / confirm, or unsaved leave.",
-  "agent_hint": "Command labels describe the state the system will move into, not the current state.",
-  "description": "Command labels describe the state the system will move into, not the current state. The label names the consequent state. It fails when The label names the current state instead of the state after the command."
+  "leaf": "word_the_action",
+  "overview": "Command labels name the state after the action, not the current state.",
+  "apply_when": "Labeling toggles or commands that move the system into a new state.",
+  "not_when": "Status readouts that intentionally report the current state only.",
+  "agent_hint": "Label the consequent state the command will enter, not the current one.",
+  "description": "A command label should describe the state the system will move into, not the state it is in now. Naming the current state makes people unsure what clicking will do. Point the words at the consequent state. Status text that only reports current condition is a different pattern and should not be rewritten as a command."
 }

@@ -18,8 +18,12 @@
   "severity": "major",
   "container": "forms_and_input",
   "card": "handle_form_errors",
-  "facet": "invalid_input_has_no_recovery",
-  "leaf": "recover_from_invalid_input",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "facet": "errors_dont_point_to_the_fix",
+  "leaf": "explain_failure_next_to_cause",
+  "overview": "When error and validation icons both apply, show the error icon only.",
+  "apply_when": "Text fields that can show both error and valid/format icons.",
+  "not_when": "Showing error and valid icons together on the same field.",
+  "agent_hint": "In error state show only the error icon; suppress the valid or format icon.",
+  "description": "When both error and validation icons would apply on a field, show the error icon only. Pass when error state shows the error icon alone and the valid or format icon is not shown at the same time. Fail when error and valid icons appear together, sending mixed status signals on one field during the error state.",
   "do_not_claim": "M3 swap supporting text for error as this row."
 }

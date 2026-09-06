@@ -1,20 +1,26 @@
 {
-  "version": "0.2.0",
+  "version": "0.3.0",
   "containers": [
     {
       "id": "forms_and_input",
       "title": "Forms & input",
-      "aliases": ["forms"]
+      "aliases": [
+        "forms"
+      ]
     },
     {
       "id": "actions_and_decisions",
       "title": "Actions & decisions",
-      "aliases": ["actions"]
+      "aliases": [
+        "actions"
+      ]
     },
     {
       "id": "feedback_and_status",
       "title": "Feedback & status",
-      "aliases": ["feedback"]
+      "aliases": [
+        "feedback"
+      ]
     },
     {
       "id": "navigation_and_wayfinding",
@@ -57,6 +63,10 @@
           "why": "validation / inline errors after submit"
         },
         {
+          "id": "compose_sign_in",
+          "why": "password / login / forgot-password"
+        },
+        {
           "id": "build_a_multi_step_flow",
           "why": "wizard / step splitting"
         },
@@ -88,15 +98,25 @@
           "leaves": [
             {
               "id": "avoid_placeholder_as_label",
-              "guideline_ids": ["forms.field_labels.visible_label"]
-            },
-            {
-              "id": "keep_field_purpose_visible_while_filled",
-              "guideline_ids": ["forms.field_labels.label_stays_visible"]
+              "guideline_ids": [
+                "fluent.disabled-field-label-stays-perceivable",
+                "forms.field_labels.label_stays_visible",
+                "forms.field_labels.placeholder_hint_conflict",
+                "forms.field_labels.visible_label",
+                "spectrum.picker-ghost-text-placeholder"
+              ]
             },
             {
               "id": "name_a_control",
-              "guideline_ids": []
+              "guideline_ids": [
+                "ant.label-left-default-vs-top",
+                "fluent.labels-top-aligned-by-default",
+                "forms.labels.clickable",
+                "govuk.labels-sentence-case-no-colons-above",
+                "mui.explicit-id-for-label-helper",
+                "nl.labels-contain-only-text",
+                "polar.labels-1-3-words-sentence-case-i18n"
+              ]
             }
           ]
         },
@@ -106,11 +126,73 @@
           "leaves": [
             {
               "id": "choose_control_for_choice",
-              "guideline_ids": []
+              "guideline_ids": [
+                "ant.checkbox-vs-switch",
+                "ant.dropdown-when-over-5-no-truncate",
+                "forms.inputs.match_control_and_size",
+                "ant.slider-intensity-grade",
+                "forms.inputs.combo_box",
+                "forms.inputs.dropdown_chooser",
+                "forms.inputs.list_builder",
+                "forms.inputs.offer_choices_not_only_text",
+                "govuk.four-date-types",
+                "govuk.dont-assume-single-vs-multi-from-visuals",
+                "govuk.radio-divider-or",
+                "govuk.select-preselect-settings-not-questions",
+                "mui.dont-type-number",
+                "nl.no-select-multiple",
+                "nng.always-select-one-radio-by-default",
+                "nng.avoid-cascading-dropdowns",
+                "nng.checkboxes-multi-radios-exclusive",
+                "nng.dropdown-ok-narrow-middle",
+                "nng.familiar-values-type-not-dropdown",
+                "nng.keyboard-typeahead-in-dropdowns",
+                "nng.listbox-vs-dropdown",
+                "nng.radio-set-comprehensive-other-type-in",
+                "nng.standard-visuals-checkbox-square-radio-circle",
+                "nng.too-many-combobox-not-long-dropdown",
+                "nng.users-rarely-change-defaults",
+                "nng.vertical-one-choice-per-line",
+                "suomi.radio-extras-hidden-then-indented"
+              ]
             },
             {
               "id": "use_familiar_control",
-              "guideline_ids": []
+              "guideline_ids": [
+                "forms.inputs.allow_paste_and_drag",
+                "forms.inputs.forgiving_format_autoformat",
+                "forms.inputs.autocompletion",
+                "forms.inputs.clear_button",
+                "forms.inputs.compute_from_other_info",
+                "forms.inputs.fill_in_the_blanks",
+                "forms.inputs.get_from_system",
+                "forms.inputs.good_defaults_smart_prefills",
+                "forms.inputs.html_autocomplete_and_name",
+                "forms.inputs.matching_keyboard_and_type",
+                "forms.inputs.no_autocorrect_identity_fields",
+                "forms.inputs.structured_format",
+                "forms.inputs.use_device_features",
+                "forms.mobile.visible_with_keyboard",
+                "govuk.dob-autocomplete-tokens",
+                "govuk.example-dates-unambiguous-order",
+                "govuk.never-auto-tab-date-fields",
+                "nl.no-min-max-length-names-places",
+                "spectrum.min-width-1-5x-field-height",
+                "spectrum.mixed-values-en-dash",
+                "spectrum.picker-concise-items-full-value",
+                "spectrum.picker-min-width-2x-height",
+                "spectrum.picker-mobile-tray-when-overwhelming",
+                "spectrum.picker-no-max-menu-height",
+                "spectrum.picker-readonly-only-if-selection",
+                "spectrum.quiet-vs-standard-background",
+                "spectrum.readonly-vs-disabled",
+                "spectrum.tab-into-field-selects-text",
+                "spectrum.validation-icon-when-format-valid",
+                "suomi.date-hint-ppkkvvvv-calendar-optional-focus-trap",
+                "suomi.file-hint-and-datetime-fieldset",
+                "suomi.time-field-60px-hint-tmm-always-visible",
+                "uswds.dont-split-phone-ssn-card"
+              ]
             }
           ]
         },
@@ -120,21 +202,54 @@
           "leaves": [
             {
               "id": "group_related_inputs",
-              "guideline_ids": []
+              "guideline_ids": [
+                "ant.editable-list-pattern-by-field-count",
+                "ant.no-multi-column-form-in-one-area",
+                "ant.settings-mode-and-grouping-thresholds",
+                "canada.interactive-questions-max-7-same-place",
+                "canada.lists-max-7-or-split",
+                "forms.layout.group_related_labels_fields",
+                "forms.layout.logical_sequence",
+                "forms.layout.single_column",
+                "forms.length.keep_short",
+                "govuk.character-count-fieldset-legend",
+                "uswds.character-count-brevity-or-legal",
+                "uswds.forms-simple-vertical-stack"
+              ]
             }
           ]
         },
         {
           "id": "requirements_are_a_surprise",
           "title": "Requirements are a surprise",
-          "leaves": [],
-          "guideline_ids": ["forms.inputs.helpful_constraints"]
+          "leaves": [
+            {
+              "id": "mark_requirements_up_front",
+              "guideline_ids": [
+                "fluent.helper-text-below",
+                "forms.fields.distinguish_optional_required",
+                "forms.fields.explain_format_upfront",
+                "forms.fields.required_before_proceed",
+                "forms.inputs.helpful_constraints",
+                "forms.transparency.requirements_before_start",
+                "spectrum.asterisk-is-icon-not-label-text"
+              ]
+            }
+          ]
         },
         {
           "id": "field_and_helper_wording",
           "title": "Field and helper wording",
-          "leaves": [],
-          "guideline_ids": []
+          "leaves": [
+            {
+              "id": "word_the_field_help",
+              "guideline_ids": [
+                "govuk.file-upload-reuse-already-uploaded",
+                "govuk.item-hints-one-sentence",
+                "nl.long-legal-jargon-before-form-not-tooltip"
+              ]
+            }
+          ]
         }
       ]
     },
@@ -172,7 +287,17 @@
           "leaves": [
             {
               "id": "explain_failure_next_to_cause",
-              "guideline_ids": ["forms.field_labels.error_identifies_and_fixes"]
+              "guideline_ids": [
+                "forms.errors.modal_not_only_copy",
+                "forms.errors.next_to_field_not_summary_only",
+                "forms.errors.not_color_only",
+                "forms.errors.not_tooltip_only",
+                "forms.field_labels.error_identifies_and_fixes",
+                "govuk.error-summary-plus-per-field",
+                "polar.long-form-errors-banner-plus-inline",
+                "spectrum.error-icon-overrides-validation-icon",
+                "suomi.errorsummary-link-text-equals-field-error"
+              ]
             }
           ]
         },
@@ -182,15 +307,71 @@
           "leaves": [
             {
               "id": "recover_from_invalid_input",
-              "guideline_ids": []
+              "guideline_ids": [
+                "ant.inline-input-feedback-does-not-auto-dismiss",
+                "fluent.validation-messages-brief-no-end-punctuation",
+                "forms.errors.focus_first_error",
+                "forms.errors.inline_after_complete",
+                "forms.errors.repeated_extra_help",
+                "forms.errors.replace_supporting_text",
+                "forms.errors.success_complex_fields",
+                "forms.inputs.password_strength_meter",
+                "mui.helper-text-changes-field-height",
+                "nl.native-required-bubbles-not-error-ui",
+                "nng.show-the-rules",
+                "polar.validate-after-finished-interacting",
+                "suomi.static-validation-on-submit-default"
+              ]
             }
           ]
+        }
+      ]
+    },
+    {
+      "id": "compose_sign_in",
+      "title": "Compose sign-in",
+      "container": "forms_and_input",
+      "problem": "Compose credential entry so people can get in.",
+      "when": [
+        "login or sign-in fields",
+        "show password",
+        "forgot-password link",
+        "password creation"
+      ],
+      "reject": [
+        {
+          "id": "design_a_form",
+          "why": "ordinary non-credential fields"
         },
         {
-          "id": "error_wording",
-          "title": "Error wording",
-          "leaves": [],
-          "guideline_ids": []
+          "id": "handle_form_errors",
+          "why": "inline validation after submit"
+        }
+      ],
+      "hints": [
+        "login",
+        "sign in",
+        "password",
+        "credentials",
+        "forgot"
+      ],
+      "facets": [
+        {
+          "id": "credentials_are_hard_to_enter",
+          "title": "Credentials are hard to enter",
+          "leaves": [
+            {
+              "id": "show_the_password",
+              "guideline_ids": [
+                "forms.inputs.never_prepopulate_password",
+                "nng.alt-registration-and-biometric-login",
+                "nng.dont-repeat-password-email-fields",
+                "nng.forgot-password-link",
+                "nng.login-mask-plus-show-password",
+                "nng.show-the-input-password-creation"
+              ]
+            }
+          ]
         }
       ]
     },
@@ -203,7 +384,8 @@
         "primary vs secondary",
         "label this submit or continue",
         "toolbar actions",
-        "these buttons are too small on mobile"
+        "these buttons are too small on mobile",
+        "command panel or menus"
       ],
       "reject": [
         {
@@ -213,6 +395,10 @@
         {
           "id": "design_a_form",
           "why": "field labels"
+        },
+        {
+          "id": "write_the_interface",
+          "why": "page voice or link destination text"
         }
       ],
       "hints": [
@@ -222,7 +408,9 @@
         "primary",
         "secondary",
         "hit target",
-        "tap"
+        "tap",
+        "menu",
+        "toolbar"
       ],
       "facets": [
         {
@@ -231,20 +419,92 @@
           "leaves": [
             {
               "id": "pick_primary_action",
-              "guideline_ids": []
+              "guideline_ids": [
+                "actions.button_groups",
+                "actions.buttons.follow_platform_ok_cancel_order",
+                "actions.buttons.one_primary",
+                "actions.buttons.style_not_size",
+                "actions.prominent_done_or_assumed_next",
+                "ant.conversation-vs-navigation-order",
+                "ant.footer-buttons-when-body-cannot-carry",
+                "ant.group-spacing-overflow-dropdown",
+                "ant.named-button-type-map",
+                "ant.never-two-icons-in-one-button",
+                "ant.one-cta-per-screen",
+                "fluent.end-of-task-labels-named",
+                "fluent.ios-chrome-back-done-cancel",
+                "fluent.split-button-dont-repeat-primary",
+                "forms.actions.avoid_reset_clear",
+                "forms.submit.enabled_until_request",
+                "gold.next-primary-save-progress-secondary",
+                "gold.visual-loudness-primary-secondary-tertiary",
+                "govuk.button-types-named",
+                "govuk.dont-use-disabled-buttons",
+                "govuk.stop-accidental-double-submit",
+                "mui.button-variant-roles",
+                "polar.encourage-action-cta-verb",
+                "suomi.button-max-three-words-mobile-full-width",
+                "uswds.filled-next-outline-this-page",
+                "uswds.real-button-with-type-space-vs-enter"
+              ]
             }
           ]
         },
         {
           "id": "action_wording_hides_the_outcome",
           "title": "Action wording hides the outcome",
-          "leaves": [],
-          "guideline_ids": [
-            "actions.copy.verbs_for_actions",
-            "actions.copy.explicit_verb_not_ok",
-            "actions.copy.avoid_vague_names",
-            "actions.copy.consequent_state",
-            "actions.copy.ellipsis_needs_more_input"
+          "leaves": [
+            {
+              "id": "word_the_action",
+              "guideline_ids": [
+                "actions.copy.adjectives_for_appearance",
+                "actions.copy.avoid_vague_names",
+                "actions.copy.consequent_state",
+                "actions.copy.consistent_words",
+                "actions.copy.ellipsis_needs_more_input",
+                "actions.copy.explicit_verb_not_ok",
+                "actions.copy.limit_branded_terms",
+                "actions.copy.short_clear_sentence_case",
+                "actions.copy.tooltips_clarify_outcomes",
+                "actions.copy.verbs_for_actions",
+                "actions.icons.always_visible_text_label",
+                "ant.ok-cancel-default-vs-explicit-verb",
+                "fluent.apply-versus-save-prefer-autosave",
+                "fluent.create-labels-new-thing"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "command_surface_is_opaque",
+          "title": "Command surface is opaque",
+          "leaves": [
+            {
+              "id": "compose_the_command_surface",
+              "guideline_ids": [
+                "actions.action_panel",
+                "actions.command_history",
+                "actions.macros",
+                "actions.menus.frequent_items_first",
+                "actions.menus.unavailable_state",
+                "actions.preview",
+                "actions.smart_menu_items"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "action_state_is_silent",
+          "title": "Action state is silent",
+          "leaves": [
+            {
+              "id": "show_action_state",
+              "guideline_ids": [
+                "actions.buttons.distinguishable_states",
+                "actions.buttons.loading_on_button",
+                "actions.buttons.press_state"
+              ]
+            }
           ]
         },
         {
@@ -253,7 +513,11 @@
           "leaves": [
             {
               "id": "keep_hit_target_usable",
-              "guideline_ids": []
+              "guideline_ids": [
+                "forms.inputs.shared_hit_target_choice",
+                "gold.card-one-inner-link-hit-area",
+                "govuk.radios-left-of-labels"
+              ]
             }
           ]
         }
@@ -296,18 +560,39 @@
           "leaves": [
             {
               "id": "disable_or_confirm_destructive",
-              "guideline_ids": []
+              "guideline_ids": [
+                "actions.buttons.default_not_destructive",
+                "actions.confirm.bypass_educational",
+                "actions.confirm.nonstandard_for_extreme",
+                "actions.confirm.not_routine",
+                "actions.confirm.progressive_disclosure",
+                "actions.confirm.response_summarizes_outcome",
+                "actions.confirm.serious_or_undo",
+                "actions.confirm.specific_consequences",
+                "actions.multilevel_undo",
+                "actions.proximity.redundant_visual_signals",
+                "actions.proximity.separate_consequential",
+                "ant.danger-cancel-primary-when-not-recommended",
+                "ant.prefer-undo-or-popconfirm-over-modal",
+                "mui.avoid-apologies-alarm-ambiguity-in-dialog-titles",
+                "nng.support-undo-discoverable"
+              ]
             }
           ]
         },
         {
           "id": "leaving_discards_work",
           "title": "Leaving discards work",
-          "leaves": [],
-          "guideline_ids": [
-            "actions.cancelability",
-            "actions.close_saves_separate_cancel",
-            "mui.confirmation-cancel-discards"
+          "leaves": [
+            {
+              "id": "warn_before_leave",
+              "guideline_ids": [
+                "actions.cancelability",
+                "actions.close_saves_separate_cancel",
+                "forms.navigation.warn_unsaved",
+                "mui.confirmation-cancel-discards"
+              ]
+            }
           ]
         }
       ]
@@ -333,6 +618,10 @@
         {
           "id": "build_a_multi_step_flow",
           "why": "progress inside a wizard"
+        },
+        {
+          "id": "design_actions_and_ctas",
+          "why": "button press / loading state on the control itself"
         }
       ],
       "hints": [
@@ -352,7 +641,29 @@
           "leaves": [
             {
               "id": "announce_system_status",
-              "guideline_ids": []
+              "guideline_ids": [
+                "ant.message-not-for-important-failures",
+                "govuk.task-list-statuses",
+                "mui.most-alerts-dont-need-titles",
+                "nl.dont-auto-dismiss-status-announce-complete",
+                "nl.success-confirms-what-not-bounce-home",
+                "spectrum.bundle-instead-of-spam-toasts",
+                "spectrum.dont-place-mobile-toasts-over-navigation",
+                "spectrum.one-toast-at-a-time",
+                "spectrum.toast-at-most-one-action",
+                "spectrum.toast-auto-dismiss-min-5s",
+                "spectrum.toast-no-redundant-dismiss",
+                "spectrum.toast-placement-geometry",
+                "spectrum.toast-sentence-case-generic-tone",
+                "spectrum.toast-writing-formulas",
+                "spectrum.users-can-turn-off-alert-types",
+                "suomi.notification-first-load-not-post-action",
+                "suomi.toast-10s-hover-stick-then-float",
+                "uswds.alert-first-word-is-type",
+                "uswds.alerts-dont-blame-name-next-step",
+                "uswds.dont-hide-then-reveal-alerts",
+                "uswds.site-alert-dont-stack-dont-panic"
+              ]
             }
           ]
         },
@@ -372,15 +683,18 @@
           "leaves": [
             {
               "id": "tone_of_voice_for_failure",
-              "guideline_ids": []
+              "guideline_ids": [
+                "canada.four-writing-qualities",
+                "canada.must-need-may-might",
+                "canada.no-eg-ie-spell-out-and",
+                "gold.consistent-not-uniform",
+                "gold.no-abbr-expand-on-first-mention",
+                "polar.guide-dont-prescribe",
+                "polar.match-shopify-admin-voice",
+                "polar.plain-language-grade-7"
+              ]
             }
           ]
-        },
-        {
-          "id": "status_empty_wording",
-          "title": "Status / empty wording",
-          "leaves": [],
-          "guideline_ids": []
         }
       ]
     },
@@ -400,6 +714,10 @@
         {
           "id": "build_a_multi_step_flow",
           "why": "step indicators inside a wizard"
+        },
+        {
+          "id": "compose_search",
+          "why": "search control placement"
         }
       ],
       "hints": [
@@ -418,7 +736,63 @@
           "leaves": [
             {
               "id": "wayfind_after_nav",
-              "guideline_ids": []
+              "guideline_ids": [
+                "canada.doormats-max-9",
+                "canada.find-understand-use-nonpriority-must-not-block",
+                "canada.intranet-destinations-labelled",
+                "canada.no-separate-mobile-site",
+                "polar.dont-duplicate-content",
+                "suomi.hide-breadcrumbs-on-mobile",
+                "suomi.pagination-skip-link-to-listing",
+                "uswds.banner-gov-mil-https-every-page",
+                "uswds.identifier-darker-than-footer",
+                "uswds.identifier-required-links-not-footer-dup"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "compose_search",
+      "title": "Compose search",
+      "container": "navigation_and_wayfinding",
+      "problem": "Place and compose search so people can find it and use it.",
+      "when": [
+        "header or homepage search",
+        "search box vs search link",
+        "place the search control"
+      ],
+      "reject": [
+        {
+          "id": "orient_in_the_place",
+          "why": "site chrome / which section you are in"
+        },
+        {
+          "id": "write_the_interface",
+          "why": "link destination wording"
+        }
+      ],
+      "hints": [
+        "search",
+        "find",
+        "query",
+        "magnifying"
+      ],
+      "facets": [
+        {
+          "id": "search_is_hard_to_find",
+          "title": "Search is hard to find",
+          "leaves": [
+            {
+              "id": "place_the_search_control",
+              "guideline_ids": [
+                "gold.search-input-attributes",
+                "gold.search-placement-home-vs-results",
+                "nl.header-search-placeholder-visible-search-control",
+                "suomi.search-hide-label-only-if-name-states-context",
+                "uswds.homepage-search-box-not-link"
+              ]
             }
           ]
         }
@@ -429,7 +803,6 @@
       "title": "Compose a data display",
       "container": "layout_and_data_display",
       "problem": "Arrange data so it can be scanned — table, grid, chart.",
-      "provisional": true,
       "when": [
         "table or card grid for this data",
         "compose a dashboard",
@@ -440,6 +813,10 @@
         {
           "id": "design_a_form",
           "why": "controls inside a form, or density on a form"
+        },
+        {
+          "id": "compose_the_layout",
+          "why": "page scan path, not a data widget"
         },
         {
           "id": "choose_an_overlay",
@@ -458,11 +835,140 @@
         {
           "id": "data_is_unscannable",
           "title": "Data is unscannable",
-          "leaves": [],
-          "guideline_ids": [
-            "canada.tables-no-blank-cells",
-            "nsw.charts-start-with-story",
-            "nsw.maps-never-only-channel"
+          "leaves": [
+            {
+              "id": "chart_has_a_story",
+              "guideline_ids": [
+                "nsw.100pct-stacked-show-absolute-totals",
+                "nsw.chart-anatomy-title-insight-table",
+                "nsw.chart-text-horizontal",
+                "nsw.charts-start-with-story",
+                "nsw.direct-labels-over-legends",
+                "nsw.established-colour-conventions",
+                "nsw.honest-baseline-bars-zero-or-truncation",
+                "nsw.lines-dash-fills-patterns",
+                "nsw.no-tooltip-only-values",
+                "nsw.white-canvas-single-colour-when-labelled"
+              ]
+            },
+            {
+              "id": "map_is_not_the_only_channel",
+              "guideline_ids": [
+                "nsw.map-pan-from-centre-select-jumps-listing",
+                "nsw.maps-never-only-channel",
+                "nsw.privacy-by-design-pia-security-day-one"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "compose_the_layout",
+      "title": "Compose the layout",
+      "container": "layout_and_data_display",
+      "problem": "Give the page a scan path.",
+      "when": [
+        "page structure and headings",
+        "inverted pyramid",
+        "keep the page scannable"
+      ],
+      "reject": [
+        {
+          "id": "compose_a_data_display",
+          "why": "table, chart, or map"
+        },
+        {
+          "id": "write_the_interface",
+          "why": "voice or link wording"
+        }
+      ],
+      "hints": [
+        "layout",
+        "scan",
+        "heading",
+        "h1",
+        "pyramid"
+      ],
+      "facets": [
+        {
+          "id": "page_has_no_scan_path",
+          "title": "Page has no scan path",
+          "leaves": [
+            {
+              "id": "keep_the_page_scannable",
+              "guideline_ids": [
+                "canada.inverted-pyramid-no-welcome-filler",
+                "canada.supertask-once-never-promo",
+                "canada.unique-title-one-h1-heading-every-200-words"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "write_the_interface",
+      "title": "Write the interface",
+      "container": "layout_and_data_display",
+      "problem": "Word the interface so it talks to the person and names destinations.",
+      "when": [
+        "link text",
+        "you / your voice",
+        "page copy that is not a button or field label"
+      ],
+      "reject": [
+        {
+          "id": "design_actions_and_ctas",
+          "why": "button / command verbs"
+        },
+        {
+          "id": "design_a_form",
+          "why": "field labels"
+        },
+        {
+          "id": "orient_in_the_place",
+          "why": "section chrome"
+        }
+      ],
+      "hints": [
+        "link text",
+        "click here",
+        "you",
+        "your",
+        "plain language"
+      ],
+      "facets": [
+        {
+          "id": "link_text_hides_destination",
+          "title": "Link text hides destination",
+          "leaves": [
+            {
+              "id": "name_the_link_by_destination",
+              "guideline_ids": [
+                "canada.equivalent-content-both-official-languages",
+                "canada.no-click-here-same-text-same-destination",
+                "canada.underline-links-only-no-italics-emphasis",
+                "nl.form-draft-links-new-tab-named-in-link",
+                "nl.name-next-organisational-steps",
+                "nl.privacy-terms-link-outside-label"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "voice_talks_about_the_system",
+          "title": "Voice talks about the system",
+          "leaves": [
+            {
+              "id": "write_to_you",
+              "guideline_ids": [
+                "canada.you-your-never-i-my",
+                "forms.copy.no_double_barreled",
+                "forms.copy.plain_language",
+                "forms.copy.positive_wording"
+              ]
+            }
           ]
         }
       ]
@@ -472,7 +978,6 @@
       "title": "Choose an overlay",
       "container": "overlays_and_content_structure",
       "problem": "Pick the layer that holds the content.",
-      "provisional": true,
       "when": [
         "modal vs accordion",
         "tooltip or inline help",
@@ -489,7 +994,7 @@
           "why": "fields inside a modal"
         },
         {
-          "id": "compose_a_data_display",
+          "id": "compose_the_layout",
           "why": "page layout"
         }
       ],
@@ -506,13 +1011,29 @@
         {
           "id": "wrong_layer_for_the_content",
           "title": "Wrong layer for the content",
-          "leaves": [],
-          "guideline_ids": [
-            "nng.modal-and-nonmodal-dialogs",
-            "mui.non-modal-dialogs-allowed",
-            "gold.accordion-find-in-page-misses-collapsed",
-            "forms.structure.progressive_disclosure",
-            "spectrum.toast-vs-dialog"
+          "leaves": [
+            {
+              "id": "pick_modal_only_when_blocking",
+              "guideline_ids": [
+                "ant.dialog-feedback-only-important-actionable",
+                "ant.form-in-modal-lifecycle",
+                "mui.non-modal-dialogs-allowed",
+                "nng.modal-and-nonmodal-dialogs",
+                "polar.dont-use-modals-for-complex-forms",
+                "spectrum.toast-vs-dialog"
+              ]
+            },
+            {
+              "id": "disclose_instead_of_dump",
+              "guideline_ids": [
+                "actions.hover_or_popup_tools",
+                "ant.hover-detail-overlay-timing",
+                "ant.input-overlay-click-outside-preserves",
+                "forms.structure.progressive_disclosure",
+                "gold.accordion-find-in-page-misses-collapsed",
+                "govuk.conditionally-reveal-related-question"
+              ]
+            }
           ]
         }
       ]
@@ -555,13 +1076,21 @@
         {
           "id": "too_much_on_one_step",
           "title": "Too much on one step / lost in steps",
-          "leaves": [],
-          "guideline_ids": [
-            "forms.transparency.progress_on_long_forms",
-            "nl.step-n-of-m-in-title-and-above-form",
-            "nl.last-step-is-send-not-volgende",
-            "gold.progress-indicator-out-of-order-returnable",
-            "fluent.multistep-next-not-continue"
+          "leaves": [
+            {
+              "id": "show_step_progress",
+              "guideline_ids": [
+                "fluent.multistep-next-not-continue",
+                "forms.transparency.progress_on_long_forms",
+                "gold.progress-indicator-out-of-order-returnable",
+                "govuk.question-pages-continue-back-no-sliders",
+                "nl.step-n-of-m-in-title-and-above-form",
+                "nng.cart-easy-remove-no-extra-update",
+                "nng.mobile-friendly-payment-options",
+                "nng.open-field-state-and-card-expiry",
+                "nng.order-summary-easy-to-find-mobile"
+              ]
+            }
           ]
         }
       ]

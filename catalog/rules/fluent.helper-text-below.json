@@ -18,8 +18,12 @@
   "severity": "major",
   "container": "forms_and_input",
   "card": "design_a_form",
-  "facet": "field_has_no_lasting_name",
-  "leaf": "name_a_control",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "facet": "requirements_are_a_surprise",
+  "leaf": "mark_requirements_up_front",
+  "overview": "Format and accepted-value help sits below the field without a trailing period.",
+  "apply_when": "Adding Fluent helper or placeholder copy for format and accepted values.",
+  "not_when": "Error validation copy after submit — that uses validation-message rules.",
+  "agent_hint": "Place helper below; bullet multi-sentence help; omit the period on helper/placeholder.",
+  "description": "Fluent helper text for format or accepted values sits below the field so the label stays the lasting name. When help needs several sentences, use bullets. Skip the period on helper and placeholder copy. Apply when adding format guidance under Fluent fields, not for post-submit validation messages. Fail helper above or missing when format help is needed, or several sentences as one block with end periods.",
   "do_not_claim": "Placeholder as the only label (skipped; Forms lock). GOV.UK item-hint no full stops is a sibling, not a merge."
 }

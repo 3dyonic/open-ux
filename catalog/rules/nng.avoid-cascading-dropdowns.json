@@ -20,6 +20,10 @@
   "card": "design_a_form",
   "facet": "wrong_control_for_the_choice",
   "leaf": "choose_control_for_choice",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "Avoid cascading dropdowns whose options appear or disappear from another widget.",
+  "apply_when": "Designing dependent choice sets that might chain one dropdown from another.",
+  "not_when": "Not for independent filters that do not populate each other’s option lists.",
+  "agent_hint": "Do not chain dropdowns so the next list is populated only by the previous widget.",
+  "description": "Avoid cascading or interdependent dropdowns where options appear or disappear from another widget. Chained lists force people to re-open and re-scan as each prior choice rewrites the next. Choice sets should not be populated only by a previous dropdown. Fail when interdependent dropdowns populate the next list only from the previous widget. Prefer independent choices or other patterns that do not cascade option lists.",
   "do_not_claim": "GOV.UK conditional reveal of a related question (different pattern)."
 }

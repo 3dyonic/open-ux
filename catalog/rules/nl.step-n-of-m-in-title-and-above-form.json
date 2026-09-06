@@ -19,10 +19,11 @@
   "container": "multi_step_flows",
   "card": "build_a_multi_step_flow",
   "facet": "too_much_on_one_step",
-  "overview": "`document.title` and the heading above the form both include step n of m (text, not only a bar).",
-  "apply_when": "Build a checkout flow",
-  "not_when": "Not for single form on one screen.",
-  "agent_hint": "Step n of m in `document.title` and above the form — e.g.",
-  "description": "Step n of m in `document.title` and above the form — e.g. `document.title` and the heading above the form both include step n of m (text, not only a bar). It fails when Step n of m is missing from the title or from above the form.",
+  "leaf": "show_step_progress",
+  "overview": "Show step n of m in document.title and above the form as text, updating on SPA swaps.",
+  "apply_when": "Building multi-step forms that need clear progress for the current step.",
+  "not_when": "Not for inventing rules about conditional step counts when evidence is insufficient.",
+  "agent_hint": "Put step n of m in the title and heading; update the title on SPA step changes.",
+  "description": "`document.title` and the heading above the form both include step n of m as text—for example `Stap 2 van 6`—not only a progress bar. Prefer text over a bar because it scales under zoom. If a SPA swaps steps on one URL, still update the title. Fail if step n of m is missing from the title or heading, the SPA keeps a stale title, or a house rule for conditional step counts is invented.",
   "do_not_claim": "GOLD out-of-order progress indicator; GOV.UK test-without as a merge that drops title+heading; a house conditional-count rule."
 }

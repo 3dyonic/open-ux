@@ -18,8 +18,12 @@
   "severity": "major",
   "container": "actions_and_decisions",
   "card": "design_actions_and_ctas",
-  "facet": "no_clear_primary",
-  "leaf": "pick_primary_action",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "facet": "action_wording_hides_the_outcome",
+  "leaf": "word_the_action",
+  "overview": "Create actions read New {thing}; menu trigger New; items drop the word New.",
+  "apply_when": "Labeling Fluent create actions and New menus that spawn items.",
+  "not_when": "Add-to-collection actions that are not the Fluent New create pattern.",
+  "agent_hint": "Label create as New {thing}; menu trigger New; omit New on menu items.",
+  "description": "Fluent create labels use “New {thing}.” The menu trigger that opens create options is simply “New”; items inside the menu drop the word New so the list stays scannable. Apply when labeling Fluent create actions and New menus that spawn items. Fail menu items that repeat New, or a create control that is unlabeled or a generic Add where this New pattern applies.",
   "do_not_claim": "NN/g verb-leading as a merge. Overlap with Actions 40: `actions.copy.verbs_for_actions`."
 }

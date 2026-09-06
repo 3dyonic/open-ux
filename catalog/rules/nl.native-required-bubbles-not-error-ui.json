@@ -18,8 +18,12 @@
   "severity": "major",
   "container": "forms_and_input",
   "card": "handle_form_errors",
-  "facet": "errors_dont_point_to_the_fix",
-  "leaf": "explain_failure_next_to_cause",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil; MULTI_HOME picked explain_failure_next_to_cause; leftover harvest tag recover_from_invalid_input",
+  "facet": "invalid_input_has_no_recovery",
+  "leaf": "recover_from_invalid_input",
+  "overview": "Native required and browser bubbles are not the error UI once JS has loaded.",
+  "apply_when": "Implementing client validation on forms that may also use required as a no-JS fallback.",
+  "not_when": "Not as an excuse to drop server-side validation, which remains required.",
+  "agent_hint": "Prefer custom errors; use novalidate once JS loads if required was a no-JS fallback.",
+  "description": "Native HTML `required` and browser bubbles are insufficient error UI, especially with `pattern`. Prefer custom client errors; use `novalidate` once JS loads if `required` was only a no-JS fallback. Server-side validation remains the guideline. Fail when browser required/pattern bubbles are the only error UI after JS has loaded. Apply when implementing client validation on forms that may keep required as a no-JS fallback.",
   "do_not_claim": "GOV.UK error-summary as this native-bubble ban; an invented GOLD “server-side” unique; WCAG numbers."
 }

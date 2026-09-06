@@ -16,9 +16,13 @@
     "One item asks two things (and/or) that could disagree."
   ],
   "severity": "major",
-  "container": "forms_and_input",
-  "card": "design_a_form",
-  "facet": "field_has_no_lasting_name",
-  "leaf": "name_a_control",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+  "container": "layout_and_data_display",
+  "card": "write_the_interface",
+  "facet": "voice_talks_about_the_system",
+  "leaf": "write_to_you",
+  "overview": "Each question or control asks one thing; split double-barreled items.",
+  "apply_when": "Writing form questions that might combine two judgments in one item.",
+  "not_when": "Multi-part addresses intentionally collected as one structured control.",
+  "agent_hint": "Split any item that asks two things users could answer differently.",
+  "description": "Do not ask two things in one question. Split double-barreled items so each question or control asks one thing users can answer without conflict. Keep and/or combinations out of a single item when the answers could disagree. Apply when drafting form items that might combine two judgments. Fail one item that asks two things that could disagree, forcing a single answer for separate concerns."
 }

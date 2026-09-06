@@ -19,7 +19,7 @@
   "container": "forms_and_input",
   "card": "design_a_form",
   "facet": "field_has_no_lasting_name",
-  "leaf": "keep_field_purpose_visible_while_filled",
+  "leaf": "avoid_placeholder_as_label",
   "overview": "The field name stays on screen while the user types and checks the value.",
   "apply_when": "Labeling signup, settings, or checkout fields.",
   "not_when": "Button/CTA wording. Inline validation after submit — that is handle_form_errors.",

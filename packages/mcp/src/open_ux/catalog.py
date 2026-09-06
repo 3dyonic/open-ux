@@ -52,7 +52,7 @@ class Catalog:
 def _validate_size(n: int) -> None:
     if n > HARD_CATALOG_BYTES:
         raise CatalogError(
-            f"Catalog is {n} bytes; hard ceiling is {HARD_CATALOG_BYTES} (~384 KB)."
+            f"Catalog is {n} bytes; hard ceiling is {HARD_CATALOG_BYTES} (~768 KB)."
         )
 
 
@@ -317,6 +317,18 @@ def list_index(
     if offset < 0:
         raise CatalogError("offset must be >= 0")
     return out[offset : offset + limit], len(out)
+
+
+def citations(guideline: dict[str, Any]) -> list[dict[str, Any]]:
+    """Normalize citation to a list of {source, url}. One object or an array."""
+    raw = guideline.get("citation")
+    if raw is None:
+        return []
+    if isinstance(raw, list):
+        return [item for item in raw if isinstance(item, dict)]
+    if isinstance(raw, dict):
+        return [raw]
+    return []
 
 
 def get_by_id(catalog: Catalog, guideline_id: str) -> dict[str, Any] | None:

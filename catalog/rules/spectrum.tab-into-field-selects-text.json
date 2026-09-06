@@ -20,6 +20,10 @@
   "card": "design_a_form",
   "facet": "wrong_control_for_the_choice",
   "leaf": "use_familiar_control",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "Tabbing into a text field selects the existing text for immediate replacement.",
+  "apply_when": "Keyboard focus into filled text fields during form editing.",
+  "not_when": "Empty fields, mouse click-to-caret placement, or non-text controls.",
+  "agent_hint": "On keyboard focus into a filled text field, select the existing text.",
+  "description": "When someone tabs into a Spectrum text field that already has content, the existing text should be selected so typing replaces it immediately. Placing a caret without selection forces extra keystrokes to clear or overwrite the value. Apply on keyboard focus into filled text inputs during form editing; do not change empty fields, mouse click-to-caret placement inside the value, or non-text controls that use different focus behavior.",
   "do_not_claim": "Click-to-edit caret placement."
 }

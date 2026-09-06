@@ -20,5 +20,9 @@
   "card": "handle_form_errors",
   "facet": "errors_dont_point_to_the_fix",
   "leaf": "explain_failure_next_to_cause",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+  "overview": "Error text sits next to the field; a summary alone is not enough.",
+  "apply_when": "Showing validation failures on fields after submit or completed input.",
+  "not_when": "Page-level system outages that are not tied to a specific input.",
+  "agent_hint": "Place error copy beside the field; never rely on a distant summary alone.",
+  "description": "Put the error next to the field in error so the fix is visible at the cause. A top validation summary must not be the only indication — if a summary exists, field-level indication is also present. Apply when showing validation failures on fields after submit or completed input. Fail only a distant banner, dialog, or summary list when the field itself has no error copy."
 }

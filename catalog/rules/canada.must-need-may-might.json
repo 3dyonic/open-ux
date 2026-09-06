@@ -20,6 +20,10 @@
   "card": "compose_feedback",
   "facet": "tone_fights_the_moment",
   "leaf": "tone_of_voice_for_failure",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "Use must for law, need to for admin, may or might for permission.",
+  "apply_when": "Wording obligations and permissions in Canada.ca instructional copy.",
+  "not_when": "Ability statements where can or could correctly means capability.",
+  "agent_hint": "Write must / need to / may-might; avoid “legally required to” and can-for-permission.",
+  "description": "Canada.ca distinguishes obligation language carefully: must for law, need to for administrative requirements, and may or might for permission. Do not write “legally required to.” Do not use can or could for permission — those words mean ability, not leave to act. Apply when wording instructional obligations and permissions in Canada.ca copy. Fail “legally required to,” or can/could used where permission is meant.",
   "do_not_claim": "WCAG “must” as this wording row."
 }

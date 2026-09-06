@@ -16,11 +16,15 @@ MISS_NOTE = "No rules match this need."
 CARD_IDS = (
     "design_a_form",
     "handle_form_errors",
+    "compose_sign_in",
     "design_actions_and_ctas",
     "protect_destructive_and_leave",
     "compose_feedback",
     "orient_in_the_place",
+    "compose_search",
     "compose_a_data_display",
+    "compose_the_layout",
+    "write_the_interface",
     "choose_an_overlay",
     "build_a_multi_step_flow",
 )
@@ -39,30 +43,49 @@ JOB_ALIASES = ("forms", "actions", "feedback")
 
 LEAF_IDS = (
     "avoid_placeholder_as_label",
-    "keep_field_purpose_visible_while_filled",
     "name_a_control",
     "choose_control_for_choice",
     "use_familiar_control",
     "group_related_inputs",
+    "mark_requirements_up_front",
+    "word_the_field_help",
     "explain_failure_next_to_cause",
     "recover_from_invalid_input",
+    "show_the_password",
     "pick_primary_action",
+    "word_the_action",
+    "compose_the_command_surface",
+    "show_action_state",
     "keep_hit_target_usable",
     "disable_or_confirm_destructive",
+    "warn_before_leave",
     "announce_system_status",
     "write_empty_state",
     "tone_of_voice_for_failure",
     "wayfind_after_nav",
+    "place_the_search_control",
+    "chart_has_a_story",
+    "map_is_not_the_only_channel",
+    "keep_the_page_scannable",
+    "name_the_link_by_destination",
+    "write_to_you",
+    "pick_modal_only_when_blocking",
+    "disclose_instead_of_dump",
+    "show_step_progress",
 )
 
 JobId = Literal[
     "design_a_form",
     "handle_form_errors",
+    "compose_sign_in",
     "design_actions_and_ctas",
     "protect_destructive_and_leave",
     "compose_feedback",
     "orient_in_the_place",
+    "compose_search",
     "compose_a_data_display",
+    "compose_the_layout",
+    "write_the_interface",
     "choose_an_overlay",
     "build_a_multi_step_flow",
     "forms_and_input",
@@ -82,11 +105,15 @@ JOB_FIELD_DESCRIPTION = (
     "Prefer a Card over guideline_ids. Leaf ids are not needs. "
     "design_a_form — Signup, settings, or field labeling. "
     "handle_form_errors — Validation and inline form errors. "
+    "compose_sign_in — Login, password, forgot-password. "
     "design_actions_and_ctas — Primary/secondary actions and hit targets. "
     "protect_destructive_and_leave — Delete, discard, unsaved leave. "
     "compose_feedback — Toast, empty, 404, loading, failure tone. "
     "orient_in_the_place — Nav, breadcrumbs, where you are. "
+    "compose_search — Place and compose search. "
     "compose_a_data_display — Table, dashboard, chart vs grid. "
+    "compose_the_layout — Page scan path. "
+    "write_the_interface — Link text and page voice. "
     "choose_an_overlay — Modal, accordion, tooltip, side panel. "
     "build_a_multi_step_flow — Wizard, checkout sequence, steps. "
     "A container id browses every Card in that kind of work. "
@@ -237,7 +264,7 @@ def parse_job_tree(data: dict[str, Any]) -> JobTree:
             "jobs.json containers must be the locked seven, in lock order."
         )
     if card_ids != list(CARD_IDS):
-        raise JobTreeError("jobs.json cards must be the locked nine, in lock order.")
+        raise JobTreeError("jobs.json cards must be the locked thirteen, in lock order.")
     known_containers = set(CONTAINER_IDS)
     for card in cards:
         if card.container not in known_containers:

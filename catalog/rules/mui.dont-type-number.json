@@ -19,7 +19,11 @@
   "container": "forms_and_input",
   "card": "design_a_form",
   "facet": "wrong_control_for_the_choice",
-  "leaf": "use_familiar_control",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "leaf": "choose_control_for_choice",
+  "overview": "Do not use native type=number on Text Field; it allows e/+/-/. and accidental scroll increment.",
+  "apply_when": "Collecting numeric values in an MUI Text Field.",
+  "not_when": "Not for non-numeric text, or separate formatted numeric controls claimed elsewhere.",
+  "agent_hint": "Avoid native type=number on Text Field; do not rely on its silent filtering.",
+  "description": "Do not put native `type=\"number\"` on a Text Field: it allows `e`, `+`, `-`, and `.`, silently drops other characters, and makes scroll increment accidental. Those behaviors create surprising invalid or discarded input. Fail whenever the Text Field uses native `type=\"number\"`. A formatted numeric control may exist as another claim—it is neither required nor banned here. Apply when collecting numeric values in an MUI Text Field.",
   "do_not_claim": "A house winner vs Apple number formatter; that formatted numeric entry is forbidden."
 }

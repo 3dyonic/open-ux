@@ -16,10 +16,14 @@
     "Other language is only a summary, or media exists in one official language only with no equivalent."
   ],
   "severity": "major",
-  "container": "navigation_and_wayfinding",
-  "card": "orient_in_the_place",
-  "facet": "user_cant_tell_where_they_are",
-  "leaf": "wayfind_after_nav",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "container": "layout_and_data_display",
+  "card": "write_the_interface",
+  "facet": "link_text_hides_destination",
+  "leaf": "name_the_link_by_destination",
+  "overview": "EN and FR content must be equivalent professional translations, including media.",
+  "apply_when": "Publishing Canada.ca pages or media that exist in both official languages.",
+  "not_when": "Choosing the language-toggle control pattern — that is a separate job.",
+  "agent_hint": "Ship equivalent EN/FR translations, including media or transcripts — not summaries.",
+  "description": "Canada.ca requires equivalent content in both official languages: professionally translated with Canadian EN/FR conventions, including bilingual images, multimedia, and transcripts (or equivalent information). A summary in the other language is not enough. Dual-cite USWDS full-equivalent translations versus Canada’s keep-place toggle — this row is content equivalence, not the toggle control. Fail one-language-only media with no equivalent, or other-language summary standing in for a full translation.",
   "do_not_claim": "Keep-place language toggle as this row; USWDS 2-vs-3+ selector as this row."
 }

@@ -20,6 +20,10 @@
   "card": "compose_feedback",
   "facet": "system_stayed_quiet_after_change",
   "leaf": "announce_system_status",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "Alert headings start with the type word and stay on one line without color-only meaning.",
+  "apply_when": "Writing USWDS alert headings for informative, warning, success, error, or emergency.",
+  "not_when": "Toasts or inline field errors that use different heading patterns.",
+  "agent_hint": "Start the alert heading with the type; keep one line; never rely on color or icon alone.",
+  "description": "USWDS alert headings begin with the type—Informative, Warning, Success, Error, Emergency, or a more precise first word such as “Announcement”—and stay on one line. Extra detail goes in the body, not a second heading line. Users must not rely on colour or icon alone. Type shown only as icon/colour, or a heading that wraps into detail, fails the pattern.",
   "do_not_claim": "Site alert (separate row); form validation."
 }

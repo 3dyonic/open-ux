@@ -17,8 +17,12 @@
   ],
   "severity": "major",
   "container": "forms_and_input",
-  "card": "handle_form_errors",
-  "facet": "invalid_input_has_no_recovery",
-  "leaf": "recover_from_invalid_input",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "use_familiar_control",
+  "overview": "Show a trailing Clear control so filled text can be erased in one action.",
+  "apply_when": "Filled text fields where users may want to wipe the value quickly.",
+  "not_when": "Empty fields or controls that are not text entry.",
+  "agent_hint": "Add a trailing Clear that empties the filled text field in one tap.",
+  "description": "A trailing Clear control lets people erase the field without repeatedly tapping Delete. Pass when a filled text field shows that Clear and it empties that field; fail when the only erase path is repeated Delete with no trailing Clear. Keep Clear tied to the single field it clears, not a whole-form reset. Use on filled text entry where one-tap wipe is useful; omit on empty fields."
 }

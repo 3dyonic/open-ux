@@ -16,9 +16,13 @@
     "Labels stay generic/static and do not state what will happen."
   ],
   "severity": "major",
-  "container": "forms_and_input",
-  "card": "design_a_form",
-  "facet": "field_has_no_lasting_name",
-  "leaf": "name_a_control",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "command_surface_is_opaque",
+  "leaf": "compose_the_command_surface",
+  "overview": "Menu labels rewrite with context to state exactly what the command will do.",
+  "apply_when": "Menu commands act on a selection or context that can be named.",
+  "not_when": "Global commands whose target never changes and stay correctly static.",
+  "agent_hint": "Reword menu labels with context so they state the actual upcoming command.",
+  "description": "Smart menu items change wording with context so the label states precisely what will happen—for example naming the selected object. Static generic labels leave people unsure of the target until after they invoke the command. Dynamic labels help when the object or selection varies and can be named in the menu text. Leave truly global commands static when the meaning never changes and rewriting would add noise."
 }

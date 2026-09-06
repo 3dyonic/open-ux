@@ -20,5 +20,9 @@
   "card": "design_a_form",
   "facet": "wrong_control_for_the_choice",
   "leaf": "use_familiar_control",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+  "overview": "Offer camera, GPS, voice, or contacts to populate fields when they apply.",
+  "apply_when": "Mobile fields whose value can come from device capture features.",
+  "not_when": "Desktop contexts without those device capture capabilities.",
+  "agent_hint": "Offer camera, GPS, voice, or contacts paths when they can supply the value.",
+  "description": "Populate the field from phone features when they apply — camera, GPS, voice, contacts. Pass where those features can supply the value and that path is offered; fail when applicable device capture is typing-only. Device paths reduce typing burden on mobile without inventing features the platform lacks or forcing capture where it does not apply."
 }

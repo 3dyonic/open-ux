@@ -18,8 +18,12 @@
   "severity": "major",
   "container": "feedback_and_status",
   "card": "compose_feedback",
-  "facet": "tone_fights_the_moment",
-  "leaf": "tone_of_voice_for_failure",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "facet": "system_stayed_quiet_after_change",
+  "leaf": "announce_system_status",
+  "overview": "Toast copy follows confirmation, informational, or error formulas and stays under two English lines.",
+  "apply_when": "Drafting Spectrum toast strings for confirmations, info, or errors.",
+  "not_when": "Long help articles, multi-step wizards, or dialog body copy.",
+  "agent_hint": "Match toast type formulas; keep under two English lines and bold UI names on confirmations.",
+  "description": "Spectrum toast formulas differ by type: confirmations use optional noun plus past-participle -ed plus optional prepositional phrase with UI names in bold; informational toasts are complete sentences; errors are short phrases with an in-line action when possible. Keep English copy under two lines because localization grows. Wrong formulas or multi-line walls of toast text fail the writing pattern.",
   "do_not_claim": "Tone/generic-language (next row) as this formula."
 }

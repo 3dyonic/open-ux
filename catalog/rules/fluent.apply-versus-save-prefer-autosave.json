@@ -18,8 +18,12 @@
   "severity": "major",
   "container": "actions_and_decisions",
   "card": "design_actions_and_ctas",
-  "facet": "no_clear_primary",
-  "leaf": "pick_primary_action",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "facet": "action_wording_hides_the_outcome",
+  "leaf": "word_the_action",
+  "overview": "Prefer autosave; otherwise Save reports success or error after the commit.",
+  "apply_when": "Choosing Apply versus Save and feedback after edits in Fluent settings.",
+  "not_when": "Transient Message-only important failures — use dialog guidance instead.",
+  "agent_hint": "Prefer autosave; if Save, confirm success or error via message bar or toast.",
+  "description": "Fluent distinguishes Apply versus Save by scope and prefers autosave so users are not left wondering whether edits stuck. Without autosave, Save must report success or error through a message bar or confirmation toast after the commit. Apply when choosing save patterns in Fluent settings and editors. Fail mixing Apply and Save scopes, or a Save path with neither autosave nor success/error feedback after the action.",
   "do_not_claim": "Disabled-until-complete as this row (that lock lives on `govuk.dont-use-disabled-buttons` + `fluent.disabled-field-label-stays-perceivable`); `actions.close_saves_separate_cancel` as a merge."
 }

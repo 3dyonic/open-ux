@@ -16,9 +16,13 @@
     "Copy requires unexplained jargon to know what to enter."
   ],
   "severity": "major",
-  "container": "forms_and_input",
-  "card": "design_a_form",
-  "facet": "field_has_no_lasting_name",
-  "leaf": "name_a_control",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+  "container": "layout_and_data_display",
+  "card": "write_the_interface",
+  "facet": "voice_talks_about_the_system",
+  "leaf": "write_to_you",
+  "overview": "Labels and instructions use ordinary words that match how users talk.",
+  "apply_when": "Naming fields and writing instructions for data people must enter.",
+  "not_when": "Domain terms users already use daily in that specialist product.",
+  "agent_hint": "Mirror user language in labels; avoid unexplained jargon for the asked data.",
+  "description": "Write labels and instructions in plain language that mirrors how users talk about the information they must provide. Ordinary words should be enough to know what belongs in the field without a glossary. Apply when naming fields and writing entry instructions for everyday data. Fail copy that requires unexplained jargon before someone can tell what to enter."
 }

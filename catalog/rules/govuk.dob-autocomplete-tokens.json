@@ -20,6 +20,10 @@
   "card": "design_a_form",
   "facet": "wrong_control_for_the_choice",
   "leaf": "use_familiar_control",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "Date-of-birth segments use bday-day, bday-month, and bday-year autocomplete tokens.",
+  "apply_when": "Building day, month, and year inputs for date of birth.",
+  "not_when": "Not for non-DOB dates, or single free-text date fields without segments.",
+  "agent_hint": "Set autocomplete to bday-day, bday-month, and bday-year on DOB segments.",
+  "description": "Date-of-birth day, month, and year fields need the matching autocomplete tokens `bday-day`, `bday-month`, and `bday-year` so browsers and password managers can fill them correctly. Those tokens are specific to DOB segments, not a generic autocomplete value. Missing or wrong tokens force retyping and break familiar autofill. Fail if DOB segments omit those tokens or use a generic autocomplete instead. Apply whenever you build segmented day/month/year inputs for date of birth.",
   "do_not_claim": "Generic HTML autocomplete+name (`forms.inputs.html_autocomplete_and_name`); typeahead suggestions. Overlap with Forms 54: tokens are the new claim."
 }

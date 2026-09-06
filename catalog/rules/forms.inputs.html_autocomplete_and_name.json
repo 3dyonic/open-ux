@@ -18,7 +18,11 @@
   "severity": "major",
   "container": "forms_and_input",
   "card": "design_a_form",
-  "facet": "field_has_no_lasting_name",
-  "leaf": "name_a_control",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "use_familiar_control",
+  "overview": "Give inputs autocomplete and a meaningful name for assistive and browser fill.",
+  "apply_when": "HTML form controls that browsers or password managers may autofill.",
+  "not_when": "Non-HTML or custom controls without name/autocomplete attributes.",
+  "agent_hint": "Set autocomplete and a meaningful name on every relevant input.",
+  "description": "Inputs need both `autocomplete` and a meaningful `name`. Pass when those attributes are present and the name is meaningful; fail when `autocomplete` is missing or `name` is missing or meaningless. This supports browser autofill and assistive tooling without inventing extra attributes beyond the cited forms guidance. Apply to HTML controls browsers or password managers may fill."
 }

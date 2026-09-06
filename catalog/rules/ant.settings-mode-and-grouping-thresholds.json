@@ -20,6 +20,10 @@
   "card": "design_a_form",
   "facet": "related_inputs_feel_scattered",
   "leaf": "group_related_inputs",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "A settings page is one mode; group items by Ant’s count thresholds.",
+  "apply_when": "Structuring an Ant settings page with many interdependent items.",
+  "not_when": "Short one-off forms that are not settings inventory pages.",
+  "agent_hint": "Pick instant or submission mode once; group by <7, 7–15, or tabs >15.",
+  "description": "Ant settings pages use one mode end to end: Instant Effect or Submission Effect, and submission when items interdepend. Item count drives grouping: under seven needs no grouping, seven to fifteen group together, and over fifteen use tab grouping. Apply when structuring a settings inventory page, not a short one-off form. Fail mixing instant and submission on one page, or grouping that ignores those count bands.",
   "do_not_claim": "A house number that replaces 7 / 15; Switch-immediate as this page-mode row."
 }

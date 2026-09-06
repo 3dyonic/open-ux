@@ -19,10 +19,11 @@
   "container": "layout_and_data_display",
   "card": "compose_a_data_display",
   "facet": "data_is_unscannable",
-  "overview": "A text alternative exists.",
-  "apply_when": "Table or card grid for this data",
-  "not_when": "Not for controls inside a form, or density on a form.",
-  "agent_hint": "Maps are never the only channel — text-based alternative always.",
-  "description": "Maps are never the only channel — text-based alternative always. A text alternative exists. It fails when Map is the only channel.",
+  "leaf": "map_is_not_the_only_channel",
+  "overview": "Maps always need a text alternative and must not trap the page viewport.",
+  "apply_when": "Embedding maps as a primary or supporting information channel.",
+  "not_when": "Map-only content or maps that fill the viewport so the page cannot scroll.",
+  "agent_hint": "Always provide a text alternative; leave space and close or minimise so the page scrolls.",
+  "description": "Maps are never the only channel—a text-based alternative always exists. Aspect ratio must differ from the viewport so mobile users can still scroll; leave space around the map and a close or minimise control. Pass when a text alternative exists, aspect ratio is not the full viewport, and close/minimise plus space around the map exist. Fail when the map is the only channel or fills the viewport so the page cannot scroll.",
   "do_not_claim": "44×44 marker size (already hit-targets)."
 }

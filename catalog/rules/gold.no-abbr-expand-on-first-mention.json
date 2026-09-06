@@ -16,10 +16,14 @@
     "`<abbr>` is used, or the short form appears first with no expansion."
   ],
   "severity": "major",
-  "container": "forms_and_input",
-  "card": "design_a_form",
-  "facet": "field_has_no_lasting_name",
-  "leaf": "name_a_control",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "tone_fights_the_moment",
+  "leaf": "tone_of_voice_for_failure",
+  "overview": "Do not use abbr; expand the term on first mention, then use the short form.",
+  "apply_when": "Body copy introduces abbreviations or acronyms for users.",
+  "not_when": "Already-expanded short forms used after a proper first mention.",
+  "agent_hint": "Expand on first mention with short form in parentheses; never use <abbr>.",
+  "description": "Don’t use `<abbr>`; expand on first mention. Screen-reader support for `<abbr>` is limited. Write the full phrase with the short form in parentheses, then use the short form later — for example “Australian Football League (AFL)” then “AFL”. Dual-cite Canada abbreviations (widest-audience test); GOLD names the element ban plus first-mention pattern. Pass when first mention is expanded, later uses short form, and there is no `<abbr>`; fail when `<abbr>` is used or the short form appears first with no expansion.",
   "do_not_claim": "Canada widest-audience abbreviations as a merge that drops the `<abbr>` ban."
 }

@@ -16,10 +16,14 @@
     "Two or more toast actions, or an unrelated action on the toast."
   ],
   "severity": "major",
-  "container": "actions_and_decisions",
-  "card": "design_actions_and_ctas",
-  "facet": "no_clear_primary",
-  "leaf": "pick_primary_action",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "system_stayed_quiet_after_change",
+  "leaf": "announce_system_status",
+  "overview": "A toast may carry at most one related concise secondary outline action.",
+  "apply_when": "Adding an optional action on a confirmation or status toast.",
+  "not_when": "Multi-step recovery flows or unrelated actions that belong in the page.",
+  "agent_hint": "Limit toast actions to zero or one related concise secondary outline button.",
+  "description": "Spectrum toasts allow at most one action: a static white secondary outline button, concise, and only when it relates directly to the toast text. Two or more actions, or an unrelated control on the toast, overloads a low-priority surface. Prefer zero or one related action; move broader recovery or navigation into the page or a dialog.",
   "do_not_claim": "Polar modal max two bottom actions as this toast row."
 }

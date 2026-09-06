@@ -20,5 +20,9 @@
   "card": "protect_destructive_and_leave",
   "facet": "destructive_is_too_easy",
   "leaf": "disable_or_confirm_destructive",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+  "overview": "Destructive or highly consequential actions stay apart from benign confirms.",
+  "apply_when": "Destructive and safe confirmatory actions appear in the same region.",
+  "not_when": "Isolated destructive actions with no adjacent benign confirm control.",
+  "agent_hint": "Keep destructive actions out of the tight cluster with benign save/confirm.",
+  "description": "Do not place highly consequential or destructive actions directly next to benign confirmatory options. A tight cluster invites slip taps—save beside delete is a classic trap that turns muscle memory into loss. Separate them spatially so the dangerous path is not adjacent to the safe confirm. An isolated destructive control with no benign neighbor already satisfies the proximity concern."
 }

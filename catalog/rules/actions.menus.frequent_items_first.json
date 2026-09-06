@@ -18,7 +18,11 @@
   "severity": "major",
   "container": "actions_and_decisions",
   "card": "design_actions_and_ctas",
-  "facet": "no_clear_primary",
-  "leaf": "pick_primary_action",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+  "facet": "command_surface_is_opaque",
+  "leaf": "compose_the_command_surface",
+  "overview": "Important or frequent menu items lead the list while related items stay grouped.",
+  "apply_when": "Ordering items inside menus that mix frequent and rare commands.",
+  "not_when": "Strict alphabetical system menus where platform convention forbids reordering.",
+  "agent_hint": "List frequent items first without breaking related-command grouping.",
+  "description": "Put important or frequently used menu items first, while still grouping related commands together. Burying frequent items slows everyday work; sorting only by frequency until related items scatter also hurts scanning. Balance frequency with grouping so the top of the menu stays useful without breaking families of commands. Honor platform menus that mandate a fixed alphabetical or system order."
 }

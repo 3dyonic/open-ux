@@ -20,5 +20,9 @@
   "card": "handle_form_errors",
   "facet": "errors_dont_point_to_the_fix",
   "leaf": "explain_failure_next_to_cause",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+  "overview": "Error state uses color plus a non-color cue such as outline, weight, or icon.",
+  "apply_when": "Styling invalid fields so errors remain clear without color vision alone.",
+  "not_when": "Success or neutral highlights that are not communicating validation failure.",
+  "agent_hint": "Pair error color with outline, weight, icon, or error text — never color alone.",
+  "description": "Differentiate error from normal field state with color plus at least one non-color cue such as outline, weight, icon, or error text. Color alone fails for users who cannot rely on hue. Apply when styling invalid fields after validation. Fail an error that is only a color change — for example a red border or red text with no other cue."
 }

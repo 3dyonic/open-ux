@@ -16,9 +16,13 @@
     "Repeated sequences cannot be recorded or reused as a macro."
   ],
   "severity": "major",
-  "container": "forms_and_input",
-  "card": "design_a_form",
-  "facet": "wrong_control_for_the_choice",
-  "leaf": "use_familiar_control",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "command_surface_is_opaque",
+  "leaf": "compose_the_command_surface",
+  "overview": "Users can compose smaller actions into one reusable macro sequence.",
+  "apply_when": "People repeat the same multi-step action sequence often.",
+  "not_when": "One-off flows that will not be replayed as a saved sequence.",
+  "agent_hint": "Let users record or compose repeated steps into a reusable macro.",
+  "description": "Macros let people compose a sequence of smaller actions into one reusable command. When repeated sequences cannot be recorded or reused, experts waste time redoing the same multi-step work. Offer composition where repetition is common so one invocation replaces the chain. Skip macro machinery for paths that are never replayed and would only add complexity."
 }

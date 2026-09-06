@@ -19,9 +19,10 @@
   "container": "actions_and_decisions",
   "card": "design_actions_and_ctas",
   "facet": "action_wording_hides_the_outcome",
-  "overview": "Names are straightforward, descriptive, and accurate.",
-  "apply_when": "Primary vs secondary",
-  "not_when": "Not for delete / discard / confirm, or unsaved leave.",
-  "agent_hint": "Avoid vague, cutesy, or faddish command names.",
-  "description": "Avoid vague, cutesy, or faddish command names. Names are straightforward, descriptive, and accurate. It fails when Vague, cutesy, or faddish command names."
+  "leaf": "word_the_action",
+  "overview": "Command names stay straightforward, descriptive, and accurate—not cutesy.",
+  "apply_when": "Writing labels for menus, buttons, and other command entry points.",
+  "not_when": "Playful marketing headlines outside the command/control label itself.",
+  "agent_hint": "Use plain descriptive command names; drop vague, cutesy, or faddish wording.",
+  "description": "Command text should be straightforward, descriptive, and accurate so the outcome is guessable before click. Vague, cutesy, or faddish names force people to experiment to learn what will happen. Prefer clear wording on every menu item and button that initiates work. Brand voice can live in marketing copy; the control that commits an action still needs a plain name."
 }

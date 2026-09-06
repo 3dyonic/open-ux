@@ -20,6 +20,10 @@
   "card": "design_a_form",
   "facet": "wrong_control_for_the_choice",
   "leaf": "choose_control_for_choice",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "Checkboxes are independent multi-select; radios are mutually exclusive exactly-one.",
+  "apply_when": "Choosing between checkbox and radio controls for a choice set.",
+  "not_when": "Not for switches or selects used outside this checkbox-versus-radio decision.",
+  "agent_hint": "Use checkboxes for independent multi; use radios for mutually exclusive exactly-one.",
+  "description": "Checkboxes mean independent multi-select; radios mean mutually exclusive exactly-one. Match the control to that semantics so people do not think they can pick many when only one is allowed, or vice versa. Fail if checkboxes are used for mutually exclusive exactly-one, or radios for independent multi. Choose the control from the exclusivity requirement first. Apply when deciding between checkbox and radio for a choice set.",
   "do_not_claim": "Visuals (next row); GOV.UK “don’t assume from visuals alone”."
 }

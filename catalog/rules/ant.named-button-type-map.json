@@ -20,6 +20,10 @@
   "card": "design_actions_and_ctas",
   "facet": "no_clear_primary",
   "leaf": "pick_primary_action",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "Ant maps button types to roles: Default, Primary, Text, Dashed, Link, Ghost.",
+  "apply_when": "Choosing Ant button types for actions in a group or table.",
+  "not_when": "Landing one-CTA screens — that is one-cta-per-screen, not type map.",
+  "agent_hint": "Match Ant type map; tooltip icon-only; at most one Primary per group.",
+  "description": "Ant’s named types carry meaning: Default for safe non-primary, Primary to complete or recommend, Text for low emphasis (for example table actions), Dashed to add content in an area, Link for external links, Ghost on dark or colored backgrounds. Icon-only needs a Tooltip; text-plus-icon is supplementary. Keep at most one Primary in a button group. Fail off-map uses (Link for in-app actions, Dashed as primary complete), icon-only without tooltip, or two Primaries in one group.",
   "do_not_claim": "One global primary cap for page/section (`actions.buttons.one_primary`); that a tooltip replaces always-visible text (`actions.icons.always_visible_text_label`). Overlap with Actions 40: `actions.buttons.one_primary` (page/view). Dual-cite by cited scope; do not invent one global cap."
 }

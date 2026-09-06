@@ -20,6 +20,10 @@
   "card": "design_a_form",
   "facet": "wrong_control_for_the_choice",
   "leaf": "choose_control_for_choice",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "Sets of ~15+ options need a combobox, not a long dropdown alone.",
+  "apply_when": "Large option sets of roughly fifteen or more choices.",
+  "not_when": "Long ~15+ dropdowns with no type-to-find combobox pattern.",
+  "agent_hint": "For ~15+ options use a combobox with type-plus-list, not a long dropdown.",
+  "description": "Too many options (about fifteen or more) need a combobox with type plus list, not a long dropdown alone. Users should be able to type to find within the set rather than scroll a lengthy closed list. Pass when a roughly fifteen-plus option set is a combobox rather than a long dropdown. Fail when a long dropdown of about fifteen-plus options offers no type-to-find.",
   "do_not_claim": "Apple combo-box pairing (`forms.inputs.combo_box`) as a duplicate; a house “15” as law."
 }

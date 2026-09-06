@@ -16,10 +16,14 @@
     "Non-white canvas; rainbow single-series labelled bars; unapproved palette."
   ],
   "severity": "major",
-  "container": "feedback_and_status",
-  "card": "compose_feedback",
-  "facet": "system_stayed_quiet_after_change",
-  "leaf": "announce_system_status",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "container": "layout_and_data_display",
+  "card": "compose_a_data_display",
+  "facet": "data_is_unscannable",
+  "leaf": "chart_has_a_story",
+  "overview": "Charts sit on white; labelled single-series bars use one approved colour.",
+  "apply_when": "Styling single- or multi-series charts on NSW white canvas.",
+  "not_when": "Non-white canvas, rainbow labelled single-series bars, or unapproved palettes.",
+  "agent_hint": "Use white canvas and one colour for labelled single-series; NSW palettes only.",
+  "description": "White canvas (#FFFFFF); single colour when bars are already labelled. Multi-colour only for multiple series or a highlight. Approved NSW / Aboriginal chart-mark palettes only (pre-validated on white). Start with theme 01 then 02. Pass when the chart sits on white, labelled single-series bars use one colour, extra colours only for series or highlight, and only NSW/Aboriginal palettes are used. Fail for non-white canvas, rainbow single-series labelled bars, or an unapproved palette.",
   "do_not_claim": "Established conventions (next row) as a free-for-all palette."
 }

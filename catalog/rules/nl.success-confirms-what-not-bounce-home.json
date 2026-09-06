@@ -18,8 +18,12 @@
   "severity": "major",
   "container": "feedback_and_status",
   "card": "compose_feedback",
-  "facet": "empty_or_dead_end_has_no_next_step",
-  "leaf": "write_empty_state",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "facet": "system_stayed_quiet_after_change",
+  "leaf": "announce_system_status",
+  "overview": "Success confirms what was submitted; do not only say sent or bounce home.",
+  "apply_when": "Designing the post-submit success state after a form send.",
+  "not_when": "Not for mid-flow saves that are not the final success confirmation.",
+  "agent_hint": "Show what went through on-page or in mail; avoid sent-only or bounce-home success.",
+  "description": "Success is not only “form sent” and not a bounce to home. Show visible confirmation of what went through—on-page and/or in mail or “Mijn omgeving”—so the person can trust the outcome. A send-only message or home bounce leaves them unsure what was submitted. Fail if success is only “form sent”, or the person is bounced home with no confirmation of what went through. Apply to the post-submit success state after a form send.",
   "do_not_claim": "Next organisational steps as this “what went through” row; empty/failure success-copy as a merge that drops bounce-home."
 }

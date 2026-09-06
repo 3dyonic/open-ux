@@ -16,10 +16,14 @@
     "Standard or quiet text field narrower than 1.5× height."
   ],
   "severity": "major",
-  "container": "actions_and_decisions",
-  "card": "design_actions_and_ctas",
-  "facet": "controls_are_hard_to_hit",
-  "leaf": "keep_hit_target_usable",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "use_familiar_control",
+  "overview": "Standard and quiet text fields need minimum width of 1.5× field height.",
+  "apply_when": "Sizing Spectrum standard or quiet text fields.",
+  "not_when": "Standard or quiet text fields narrower than 1.5× their height.",
+  "agent_hint": "Set standard and quiet text-field width to at least 1.5× field height.",
+  "description": "For Spectrum standard and quiet text fields, minimum width is 1.5× the field height so the control stays usable to hit and to read. Pass when standard and quiet text-field width is at least 1.5× height. Fail when a standard or quiet text field is narrower than 1.5× its height and becomes hard to use.",
   "do_not_claim": "Picker minimum (see `spectrum.picker-min-width-2x-height`); WCAG/hit-target numbers."
 }

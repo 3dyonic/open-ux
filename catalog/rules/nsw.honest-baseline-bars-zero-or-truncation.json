@@ -16,10 +16,14 @@
     "Truncated bar axis with no truncation mark; labels rotated to hide it."
   ],
   "severity": "major",
-  "container": "feedback_and_status",
-  "card": "compose_feedback",
-  "facet": "system_stayed_quiet_after_change",
-  "leaf": "announce_system_status",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "container": "layout_and_data_display",
+  "card": "compose_a_data_display",
+  "facet": "data_is_unscannable",
+  "leaf": "chart_has_a_story",
+  "overview": "Bars start at zero or show truncation; keep scales honest and consistent.",
+  "apply_when": "Bar charts where baseline and scale honesty matter.",
+  "not_when": "Truncated bar axes without a mark, or labels rotated to hide truncation.",
+  "agent_hint": "Start bars at zero or mark truncation; never rotate labels to hide a truncated axis.",
+  "description": "Honest baseline: bars start at zero or show truncation. Use meaningful scales, consistent time intervals, and readable labels. Don’t rotate labels to hide a truncated axis. Pass when bars start at zero or truncation is shown, scales and intervals are consistent, and labels are not rotated to hide truncation. Fail when a truncated bar axis has no truncation mark or labels are rotated to hide it.",
   "do_not_claim": "Keep-text-horizontal min px as this baseline row."
 }

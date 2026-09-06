@@ -20,5 +20,9 @@
   "card": "protect_destructive_and_leave",
   "facet": "destructive_is_too_easy",
   "leaf": "disable_or_confirm_destructive",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+  "overview": "Serious or irreversible actions get a confirm dialog or an undo window.",
+  "apply_when": "Destructive or hard-to-reverse actions are about to commit.",
+  "not_when": "Easily reversible routine edits that need neither confirm nor undo.",
+  "agent_hint": "Block immediate destruction; require confirm or provide an undo window.",
+  "description": "Actions with serious consequences—ones that cannot be undone—must not commit immediately. Show a confirmation dialog or offer an undo window so people can back out after a slip or second thought. Immediate irreversible destruction with neither confirm nor undo is a failure of protection. Soft, easily reversible edits can proceed without this gate; reserve it for real lasting harm."
 }

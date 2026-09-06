@@ -20,6 +20,10 @@
   "card": "design_a_form",
   "facet": "wrong_control_for_the_choice",
   "leaf": "use_familiar_control",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "Disabled means unavailable; read-only keeps a value visible and copyable.",
+  "apply_when": "Deciding whether a shown value must stay copyable or the field is unavailable.",
+  "not_when": "Truly unavailable fields with no value users need to read or copy.",
+  "agent_hint": "Use read-only when the value must stay visible and copyable; disable only if unavailable.",
+  "description": "Spectrum separates disabled from read-only: disabled means the field exists but is unavailable, while read-only keeps a value on screen so users can still read and copy it. Putting a must-copy value in a disabled field blocks selection and fails the split. Use disabled for unavailable inputs; switch to read-only whenever the content still matters after interaction is locked.",
   "do_not_claim": "Fluent disabled-label-stays-perceivable as a merge; picker read-only (see `spectrum.picker-readonly-only-if-selection`). Overlap with extra 73: `fluent.disabled-field-label-stays-perceivable`."
 }

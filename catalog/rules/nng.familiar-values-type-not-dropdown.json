@@ -20,6 +20,10 @@
   "card": "design_a_form",
   "facet": "wrong_control_for_the_choice",
   "leaf": "choose_control_for_choice",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "Highly familiar or predictable values should be typed, not dropdown-only.",
+  "apply_when": "Collecting familiar predictable values like known name-like strings.",
+  "not_when": "Familiar predictable values offered only inside a dropdown.",
+  "agent_hint": "Prefer typing for familiar predictable values; do not lock them in dropdowns.",
+  "description": "Highly familiar or predictable values belong in a type-in field, not a dropdown-only control. Users already know strings such as their own name-like values and can enter them faster by typing. Pass when familiar or predictable values are typed. Fail when those values appear only in a dropdown, forcing list hunting for content the person already knows.",
   "do_not_claim": "Autocompletion suggestions as this row."
 }

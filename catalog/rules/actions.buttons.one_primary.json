@@ -20,5 +20,9 @@
   "card": "design_actions_and_ctas",
   "facet": "no_clear_primary",
   "leaf": "pick_primary_action",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+  "overview": "One filled primary action per view; other actions use weaker styles.",
+  "apply_when": "Choosing emphasis among several actions on the same screen.",
+  "not_when": "Equal-weight secondary tools that intentionally share one quieter style.",
+  "agent_hint": "Allow one filled primary in the view; demote the rest visually.",
+  "description": "A single filled or high-emphasis primary tells people where the main commit sits. Other actions should use weaker styles so the hierarchy stays readable. Multiple filled primaries, or no primary distinction at all, flatten the view. Use this when ranking actions on one screen; a set of peer secondaries that share one quieter style is fine."
 }

@@ -20,6 +20,10 @@
   "card": "design_a_form",
   "facet": "related_inputs_feel_scattered",
   "leaf": "group_related_inputs",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "Editable-list UI scales by field count from add/remove through drawer.",
+  "apply_when": "Building Ant editable lists or multi-field item editors by size.",
+  "not_when": "Single-field forms that are not an editable list of items.",
+  "agent_hint": "Match pattern to count: ≤3 add/remove, 2–5 table, 6–8 panel, >8 drawer.",
+  "description": "Ant maps editable-list patterns to field count: dynamic add/remove when items are ≤3 and inputs need no separate titles; editable table for about 2–5; collapsible panel for 6–8; drawer when more than eight. Using a drawer for tiny sets, or title-free add/remove for huge ones, breaks those bands. Choose the shell that matches the count.",
   "do_not_claim": "A house count that collapses the bands."
 }

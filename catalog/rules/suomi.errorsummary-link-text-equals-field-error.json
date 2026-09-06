@@ -20,6 +20,10 @@
   "card": "handle_form_errors",
   "facet": "errors_dont_point_to_the_fix",
   "leaf": "explain_failure_next_to_cause",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil; MULTI_HOME picked explain_failure_next_to_cause; leftover harvest tag recover_from_invalid_input",
+  "overview": "Each ErrorSummary link repeats that field’s error text with the same wording.",
+  "apply_when": "Wiring submit-time ErrorSummary links back to invalid fields.",
+  "not_when": "Success summaries, toast confirmations, or summaries that only repeat field labels.",
+  "agent_hint": "Match ErrorSummary link text to each field’s error wording exactly.",
+  "description": "Suomi.fi ErrorSummary links must use the same wording as the field’s error text so either context still reads clearly. Replacing the error with only the field label, or rewriting the summary in different words, breaks that parallel recognition. Keep the strings identical so users spot the same problem at the summary and beside the field without translating between two phrasings.",
   "do_not_claim": "Submit-time default as this wording row; GOV.UK error summary as a merge that drops same-wording."
 }

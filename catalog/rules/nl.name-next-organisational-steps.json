@@ -16,10 +16,14 @@
     "Confirmation has no next organisational step (no case number, actor, or how they hear back)."
   ],
   "severity": "major",
-  "container": "feedback_and_status",
-  "card": "compose_feedback",
-  "facet": "empty_or_dead_end_has_no_next_step",
-  "leaf": "write_empty_state",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "container": "layout_and_data_display",
+  "card": "write_the_interface",
+  "facet": "link_text_hides_destination",
+  "leaf": "name_the_link_by_destination",
+  "overview": "Confirmation names next organisational steps such as case number, who acts, and how they hear back.",
+  "apply_when": "Writing post-submit confirmation after a request or case is created.",
+  "not_when": "Not for mid-form progress text that is not a final confirmation.",
+  "agent_hint": "On confirmation, name case number, actor, and how the person hears back.",
+  "description": "After submit, confirmation should name what happens next: case number and/or who acts and/or how the person hears back. Organisational next steps turn a dead-end success into a usable handoff. Fail if confirmation has no next organisational step—no case number, actor, or hearing-back path. Apply when writing post-submit confirmation after a request or case is created.",
   "do_not_claim": "Contact-channel pages; success-what-went-through as this next-steps row."
 }

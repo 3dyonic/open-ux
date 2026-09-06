@@ -2,8 +2,8 @@
 
 One shared cited catalog. **`catalog/rules/{id}.json` is the SoT** — one guideline object per file.
 
-- `rules/` — 309 guideline files (filename = `id`)
-- `jobs.json` — 7 containers, 9 Cards, 21 Facets, 15 Leaves. Pointers only; no rule bodies
+- `rules/` — 285 guideline files (filename = `id`). Seven leftovers with no honest Leaf were dropped. Same-claim harvest rows fold onto one survivor; extra sources sit on `citation` as an array.
+- `jobs.json` — 7 containers, 13 Cards, Facet → Leaf map. Pointers only; no rule bodies
 - `index.json` — generated `{id,title,jobs,lane,container,card,facet,leaf?}` (no rule bodies)
 - `schema.json` — one guideline object
 
@@ -13,4 +13,4 @@ Agent-facing fields (`overview`, `apply_when`, `not_when`, `agent_hint`, `descri
 
 `lane` is a harvest prefix on the index only (UNS-88). It is not a placement key.
 
-The loader walks `catalog/rules/*.json`. Soft size: ~50–100 KB. Hard ceiling: ~384 KB (`open_ux.catalog` enforces both).
+The loader walks `catalog/rules/*.json`. Soft size: ~256 KB. Hard ceiling: ~768 KB (`open_ux.catalog` enforces both). Agent-facing copy on every rule is why the catalog is larger than the old waived pack.

@@ -20,6 +20,10 @@
   "card": "orient_in_the_place",
   "facet": "user_cant_tell_where_they_are",
   "leaf": "wayfind_after_nav",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "Pagination includes a skip or in-page link back to the listing start.",
+  "apply_when": "Paginating long listings where users return to the top of results.",
+  "not_when": "Single-page lists with no pagination controls.",
+  "agent_hint": "Add a skip/in-page link back to the listing; keep SR page copy free of odd punctuation.",
+  "description": "Suomi.fi pagination provides a skip-link or in-page link back to the listing, may include an optional page-number field when there are many pages, and keeps screen-reader copy free of odd punctuation (for example “Sivu 1 kautta 20”). Dual-cite USWDS/NSW pagination. Pagination with no return to the listing start, or SR text that uses odd punctuation instead of the named pattern, fails.",
   "do_not_claim": "USWDS/NSW pagination as a merge that drops skip-back-to-listing."
 }

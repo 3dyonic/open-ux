@@ -20,6 +20,10 @@
   "card": "orient_in_the_place",
   "facet": "user_cant_tell_where_they_are",
   "leaf": "wayfind_after_nav",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "Official .gov/.mil HTTPS sites show the unaltered TLD and HTTPS banner on every page after skipnav.",
+  "apply_when": "Official .gov or .mil HTTPS sites that must show the federal identity banner.",
+  "not_when": ".com/.org or test sites, or customized TLD banner wording.",
+  "agent_hint": "Place the unaltered .gov/.mil HTTPS banner after skipnav on every official page.",
+  "description": "USWDS requires the unaltered .gov/.mil plus HTTPS banner on every page after skipnav, only on official .gov/.mil sites with HTTPS—never on .com/.org or test sites. Spanish sites use Spanish copy; `.mil` sites use `.mil` copy. Do not leave `aria-hidden=\"true\"` on banner content in markup (JS sets it). Customized TLD text, missing inner-page banners, or markup-locked aria-hidden fail.",
   "do_not_claim": "This as an Open UX rule for non-government products; Canada signature / NSW hero as the same rule."
 }

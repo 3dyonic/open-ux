@@ -20,5 +20,9 @@
   "card": "handle_form_errors",
   "facet": "errors_dont_point_to_the_fix",
   "leaf": "explain_failure_next_to_cause",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+  "overview": "Field-error copy must remain available outside a must-dismiss error dialog.",
+  "apply_when": "Deciding whether a form error belongs in a modal versus beside the field.",
+  "not_when": "Blocking confirmations for destructive actions that are not field validation.",
+  "agent_hint": "Keep field-error text available while editing; do not trap it in a must-dismiss modal.",
+  "description": "Use modals for form errors sparingly. Do not put the only copy of a field error in a dialog that must be dismissed before the field can be fixed. The field should be correctable with its error copy still available outside that dialog, or with no modal at all. Fail when the only field-error copy lives in a must-dismiss modal."
 }

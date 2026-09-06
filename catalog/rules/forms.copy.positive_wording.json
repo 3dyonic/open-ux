@@ -16,9 +16,13 @@
     "User must reverse a negative (e.g. “don’t not email me”) to opt in or out."
   ],
   "severity": "major",
-  "container": "forms_and_input",
-  "card": "design_a_form",
-  "facet": "field_has_no_lasting_name",
-  "leaf": "name_a_control",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+  "container": "layout_and_data_display",
+  "card": "write_the_interface",
+  "facet": "voice_talks_about_the_system",
+  "leaf": "write_to_you",
+  "overview": "Phrase statements positively so checking means agreement, not a double negative.",
+  "apply_when": "Writing opt-in checkboxes and other agree/disagree form statements.",
+  "not_when": "Legal prohibitions that must stay negative to stay accurate.",
+  "agent_hint": "Word opt-ins positively; avoid negatives that force users to reverse the statement.",
+  "description": "Use positive wording and avoid negatives that force users to reverse the statement, especially on opt-in checkboxes. Checking should mean agreement with a direct statement, not decoding a double negative. Apply when writing agree/disagree and opt-in copy. Fail patterns where the user must reverse a negative — for example “don’t not email me” — to opt in or out."
 }

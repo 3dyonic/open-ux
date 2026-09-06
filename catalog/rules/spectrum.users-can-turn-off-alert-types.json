@@ -20,6 +20,10 @@
   "card": "compose_feedback",
   "facet": "system_stayed_quiet_after_change",
   "leaf": "announce_system_status",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "Products let users turn off alert types so people who need focus can silence them.",
+  "apply_when": "Shipping toast or alert systems with configurable notification types.",
+  "not_when": "Critical blocking errors or legal notices that must remain mandatory.",
+  "agent_hint": "Provide a way for users to turn off alert types when they need to focus.",
+  "description": "Spectrum expects products to let users turn off alert types so people who need to focus can silence non-essential noise. A system with no off switch traps users in constant interruptions. Offer per-type or equivalent controls for discretionary alerts; do not treat this as permission to hide critical blocking failures that the user must resolve.",
   "do_not_claim": "`actions.confirm.bypass_educational` as a merge."
 }

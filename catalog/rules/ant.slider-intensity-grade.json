@@ -20,6 +20,10 @@
   "card": "design_a_form",
   "facet": "wrong_control_for_the_choice",
   "leaf": "choose_control_for_choice",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "Sliders express intensity or grade when a precise number is not required.",
+  "apply_when": "Picking a control for volume, brightness, saturation, or similar grade.",
+  "not_when": "Discrete non-intensity choices better served by radios or select.",
+  "agent_hint": "Use Slider for intensity; pair NumberInput when a precise value is required.",
+  "description": "Ant reserves Slider for intensity or grade — volume, brightness, saturation — when users need not enter a precise number. When precision is required, pair NumberInput with the Slider so the grade and the exact value stay in sync. Use this when choosing a control for continuous intensity, not for discrete non-intensity choices better served by radios or select. Fail Slider alone when a precise number is required, or a slider used for a non-intensity discrete choice.",
   "do_not_claim": "GOV.UK \"don't use range sliders\" on question pages as a winner; MUI/Apple number-entry dual-cite as this slider row."
 }

@@ -20,6 +20,10 @@
   "card": "compose_feedback",
   "facet": "system_stayed_quiet_after_change",
   "leaf": "announce_system_status",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "Do not auto-dismiss relevant status; announce completion in a live region when time-bound status vanishes.",
+  "apply_when": "Showing progress or status messages that may expire when work finishes.",
+  "not_when": "Not for static help text that is not a status announcement.",
+  "agent_hint": "Keep relevant status; if it vanishes, announce completion in a live region.",
+  "description": "Do not auto-dismiss status that is still relevant. If a time-bound message such as “uploading…” vanishes when done, a live region must announce completion—for example “upload complete.” Silent disappearance leaves people unsure whether the work finished. Fail when status auto-dismisses with no completion announcement. Apply to progress and status messages that may expire when work finishes.",
   "do_not_claim": "A house toast duration; Suomi toast geometry as this live-region row."
 }

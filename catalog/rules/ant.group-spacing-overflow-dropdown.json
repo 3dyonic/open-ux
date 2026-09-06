@@ -20,6 +20,10 @@
   "card": "design_actions_and_ctas",
   "facet": "no_clear_primary",
   "leaf": "pick_primary_action",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "Spaced button groups, dividers between groups, overflow past three into Dropdown.",
+  "apply_when": "Arranging multiple Ant operations in toolbars or action strips.",
+  "not_when": "A true Toggle group that intentionally uses flush joined segments.",
+  "agent_hint": "Space related actions; divide groups; keep 1 primary and overflow extras.",
+  "description": "Flush groups can look like a Toggle—align related actions in one line with spaces. Same group: no dividers. Different groups: space or a divider. With more than three operations, keep one primary plus secondaries and move extras into a Dropdown. Flush non-toggle groups, dividers inside one group, or an undifferentiated strip of many operations all fail this Ant button guidance.",
   "do_not_claim": "A house cap other than Ant's \"more than three\" / Tidwell \"three or four\". Overlap with Actions 40: `actions.button_groups`."
 }

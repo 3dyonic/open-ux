@@ -20,6 +20,10 @@
   "card": "design_a_form",
   "facet": "wrong_control_for_the_choice",
   "leaf": "choose_control_for_choice",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "Dropdowns need keyboard typeahead; skip dropdown when typing is faster.",
+  "apply_when": "Using dropdowns, especially long lists like state or country.",
+  "not_when": "State or country forced through a dropdown with no typeahead.",
+  "agent_hint": "Add typeahead to dropdowns; avoid dropdown when typing state or country is faster.",
+  "description": "Dropdowns should support keyboard typeahead so people can jump by typing. Avoid a dropdown when typing is faster, especially for state or country. Pass when dropdowns support typeahead and state or country is not forced through a dropdown. Fail when a dropdown has no typeahead, or state or country is forced through a dropdown despite typing being faster.",
   "do_not_claim": "Mobile checkout “open field not iOS picker” as this row (see `nng.open-field-state-and-card-expiry`)."
 }

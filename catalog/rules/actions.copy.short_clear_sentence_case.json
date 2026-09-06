@@ -16,9 +16,13 @@
     "Wrapping, padded articles, or a long unclear command name."
   ],
   "severity": "major",
-  "container": "forms_and_input",
-  "card": "design_a_form",
-  "facet": "field_has_no_lasting_name",
-  "leaf": "name_a_control",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "action_wording_hides_the_outcome",
+  "leaf": "word_the_action",
+  "overview": "Command labels are short, clear, sentence case, and usually a few words.",
+  "apply_when": "Writing button and menu command labels people must scan quickly.",
+  "not_when": "Long-form instructional copy outside the command control itself.",
+  "agent_hint": "Keep labels short (about 1–4 words), sentence case, no wrap or padding.",
+  "description": "Command labels should stay short and clear—typically a few words, articles dropped, ideally sentence case without wrapping. Long, padded, or wrapping names slow scanning and hide the action inside filler. Aim for roughly two to four words (or one to three per Material guidance) so the control stays readable at a glance. Put longer explanation in adjacent help text if needed; the control label itself stays compact."
 }

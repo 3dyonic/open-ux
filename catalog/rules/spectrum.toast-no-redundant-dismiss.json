@@ -20,6 +20,10 @@
   "card": "compose_feedback",
   "facet": "system_stayed_quiet_after_change",
   "leaf": "announce_system_status",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "Toasts already have a close control; do not add a redundant Dismiss action.",
+  "apply_when": "Authoring toast actions alongside the built-in close control.",
+  "not_when": "Dialogs or banners whose primary recovery action is a labeled dismiss.",
+  "agent_hint": "Omit extra Dismiss buttons; the toast close control is enough.",
+  "description": "Every Spectrum toast already includes a close control, so an extra Dismiss action is redundant noise. A second dismiss control clutters the toast and competes with any single related action the pattern allows. Keep the built-in close for dismissal; reserve the optional action slot for a task related to the toast text, not another way to hide the message.",
   "do_not_claim": "That the close control may be omitted."
 }

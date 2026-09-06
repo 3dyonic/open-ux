@@ -19,10 +19,11 @@
   "container": "multi_step_flows",
   "card": "build_a_multi_step_flow",
   "facet": "too_much_on_one_step",
-  "overview": "Non-linear returnable tasks use the GOLD indicator with todo/doing/done.",
-  "apply_when": "Build a checkout flow",
-  "not_when": "Not for single form on one screen.",
-  "agent_hint": "Progress indicator is for out-of-order, returnable tasks (tax return / driver’s licence).",
-  "description": "Progress indicator is for out-of-order, returnable tasks (tax return / driver’s licence). Non-linear returnable tasks use the GOLD indicator with todo/doing/done. It fails when A linear one-way wizard is this GOLD out-of-order indicator, or todo/doing/done is collapsed with USWDS linear / GOV.UK no-indicator into one house widget.",
+  "leaf": "show_step_progress",
+  "overview": "GOLD progress indicator suits out-of-order returnable tasks with todo/doing/done.",
+  "apply_when": "Non-linear returnable tasks like tax return or driver’s licence flows.",
+  "not_when": "Forcing linear one-way wizards into this GOLD out-of-order widget.",
+  "agent_hint": "Use todo/doing/done for returnable non-linear tasks; keep linear cites separate.",
+  "description": "Progress indicator is for out-of-order, returnable tasks (tax return / driver’s licence) with named states todo / doing / done. Dual-cite USWDS linear step indicator and GOV.UK “test without a progress indicator”; do not collapse into one progress widget. Pass when non-linear returnable tasks use the GOLD indicator with those states and linear wizards are not forced into it; fail when a linear one-way wizard uses this GOLD indicator, or todo/doing/done is collapsed with USWDS linear / GOV.UK no-indicator into one house widget.",
   "do_not_claim": "USWDS linear step indicator or GOV.UK test-without as this GOLD row; NL step n of m in `document.title`."
 }

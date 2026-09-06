@@ -20,6 +20,10 @@
   "card": "handle_form_errors",
   "facet": "invalid_input_has_no_recovery",
   "leaf": "recover_from_invalid_input",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "Validate a field only after the merchant finishes interacting with it.",
+  "apply_when": "Inline validation on text fields and similar merchant inputs.",
+  "not_when": "Showing errors before the merchant finished interacting with the field.",
+  "agent_hint": "Run validation after interaction finishes; do not error mid-entry.",
+  "description": "Validate after the merchant finished interacting with the field, not while entry is still in progress. Polar names this on the component; it overlaps NN/g timing guidance for when to show field errors. Pass when validation runs after interaction finishes. Fail when an error is shown before the merchant finished interacting, interrupting mid-entry with premature feedback.",
   "do_not_claim": "Deleting `forms.errors.inline_after_complete`; this is the Polar-named component row. Overlap with Forms 54: `forms.errors.inline_after_complete` (NN/g §7). Keep the named row; do not re-dump §7."
 }

@@ -16,10 +16,14 @@
     "I/my in UI chrome; speaking as the user; a specific institution named with no task reason."
   ],
   "severity": "major",
-  "container": "feedback_and_status",
-  "card": "compose_feedback",
-  "facet": "tone_fights_the_moment",
-  "leaf": "tone_of_voice_for_failure",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "container": "layout_and_data_display",
+  "card": "write_the_interface",
+  "facet": "voice_talks_about_the_system",
+  "leaf": "write_to_you",
+  "overview": "Address the public as you; we means Government of Canada, never I/my in chrome.",
+  "apply_when": "Writing Canada.ca titles, links, nav, and instructional voice.",
+  "not_when": "Proper names that legally include My, such as My Service Canada Account.",
+  "agent_hint": "Use you/your in chrome; we is GC; name institutions only when the task needs them.",
+  "description": "Canada.ca speaks in second person (you/your) in titles, links, and nav (“Replace your card”). We means the Government of Canada. Never switch to speaking as the user with I/my in UI chrome; “My” appears only in proper names (My Service Canada Account). Name a specific institution only when that institution will contact or be contacted, or its role matters to the task. Fail I/my in chrome, speaking as the user, or naming an institution with no task reason.",
   "do_not_claim": "Contact patterns (banned lane)."
 }

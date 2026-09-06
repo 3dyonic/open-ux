@@ -16,9 +16,13 @@
     "Complex field shows only errors, or every required field flashes success when filled."
   ],
   "severity": "major",
-  "container": "feedback_and_status",
-  "card": "compose_feedback",
-  "facet": "system_stayed_quiet_after_change",
-  "leaf": "announce_system_status",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+  "container": "forms_and_input",
+  "card": "handle_form_errors",
+  "facet": "invalid_input_has_no_recovery",
+  "leaf": "recover_from_invalid_input",
+  "overview": "Show success and live rules on complex fields; skip success spam on simple fills.",
+  "apply_when": "Validating passwords or multi-rule fields during typing.",
+  "not_when": "Simple required fields that only need non-empty checks.",
+  "agent_hint": "Surface live success on complex rules; never flash success on every fill.",
+  "description": "Complex fields with several rules (for example a password) should show successful entry and live rule checks as the user types. Simple required fields must not get a success state merely for becoming non-empty — that floods the form with noise. Pass when the complex field shows success and/or live checks while plain required fields stay quiet until a real rule is met; fail when the complex field shows only errors, or every required field flashes success when filled."
 }

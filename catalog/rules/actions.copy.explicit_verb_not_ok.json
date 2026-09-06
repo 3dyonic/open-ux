@@ -19,9 +19,10 @@
   "container": "actions_and_decisions",
   "card": "design_actions_and_ctas",
   "facet": "action_wording_hides_the_outcome",
-  "overview": "The button names the action it commits.",
-  "apply_when": "Primary vs secondary",
-  "not_when": "Not for delete / discard / confirm, or unsaved leave.",
-  "agent_hint": "Do not use generic OK.",
-  "description": "Do not use generic OK. The button names the action it commits. It fails when Generic OK, or an unlabeled X as the only name for cancel/close/apply."
+  "leaf": "word_the_action",
+  "overview": "Buttons name the committed action; avoid generic OK and unlabeled X.",
+  "apply_when": "Labeling commit, cancel, close, or apply controls on dialogs.",
+  "not_when": "Platform window chrome where a standard close affordance is required.",
+  "agent_hint": "Name the commit action explicitly; prefer labeled Cancel/Close over OK/X.",
+  "description": "Generic OK hides what will commit. Name the button with the action it performs, and prefer explicit Cancel, Close, or Apply text over an unlabeled X as the only name for those roles. Clear verbs reduce mis-taps. Native window chrome may still expose a standard close control; the dialog’s own action buttons should still speak plainly."
 }

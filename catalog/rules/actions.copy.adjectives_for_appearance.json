@@ -16,9 +16,13 @@
     "Those commands use unrelated verbs or vague names instead of the appearance adjective."
   ],
   "severity": "major",
-  "container": "forms_and_input",
-  "card": "design_a_form",
-  "facet": "field_has_no_lasting_name",
-  "leaf": "name_a_control",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "action_wording_hides_the_outcome",
+  "leaf": "word_the_action",
+  "overview": "Look-changing commands use adjectives that name the resulting appearance.",
+  "apply_when": "Naming commands that change an element’s look or system state.",
+  "not_when": "Action verbs that submit or navigate rather than set appearance.",
+  "agent_hint": "Name look/state commands with appearance adjectives like Bold or Italic.",
+  "description": "Commands that change how something looks should use adjectives that name the resulting appearance—Bold, Italic—so the label matches the outcome people see. Unrelated verbs or vague names hide what the control does and force trial and error. Use appearance adjectives for look or system-state toggles that describe the result. Keep verbs for actions that submit, navigate, or start work rather than set appearance."
 }

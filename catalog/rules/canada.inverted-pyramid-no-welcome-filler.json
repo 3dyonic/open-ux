@@ -16,10 +16,14 @@
     "Welcome-to-our-site opener, or background before the task."
   ],
   "severity": "major",
-  "container": "navigation_and_wayfinding",
-  "card": "orient_in_the_place",
-  "facet": "user_cant_tell_where_they_are",
-  "leaf": "wayfind_after_nav",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "container": "layout_and_data_display",
+  "card": "compose_the_layout",
+  "facet": "page_has_no_scan_path",
+  "leaf": "keep_the_page_scannable",
+  "overview": "Lead with the main idea or step; skip welcome and background filler.",
+  "apply_when": "Opening Canada.ca page copy for a task people need to complete.",
+  "not_when": "Required legal notices that must appear before a regulated action.",
+  "agent_hint": "Put the main idea first; park extra detail last; drop welcome-to-our-site openers.",
+  "description": "Canada.ca uses an inverted pyramid: most important idea or step first, then prioritized tasks, with extra detail last and only if it supports the task. Stay on topic; skip “welcome to our site” and background written for its own sake. Apply when opening page copy for a task people need to complete. Fail a welcome-to-our-site opener, or background that appears before the task they came to do.",
   "do_not_claim": "Four writing qualities as this structure row."
 }

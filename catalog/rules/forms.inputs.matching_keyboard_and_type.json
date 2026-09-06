@@ -19,6 +19,10 @@
   "container": "forms_and_input",
   "card": "design_a_form",
   "facet": "wrong_control_for_the_choice",
-  "leaf": "choose_control_for_choice",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+  "leaf": "use_familiar_control",
+  "overview": "Show the keyboard and input type that match email, tel, URL, or number content.",
+  "apply_when": "Mobile or soft-keyboard entry for email, phone, URL, or numeric values.",
+  "not_when": "Desktop hard-keyboard contexts with no soft keyboard to swap.",
+  "agent_hint": "Set type/inputmode so email, tel, URL, and number get matching keyboards.",
+  "description": "Show the keyboard and input type that match the content — email, tel, URL, number, and equivalent platform keyboards. Pass when those contents use matching `type`/`inputmode`/platform keyboard; fail when they use a generic text keyboard. Matching keyboards reduce typos and wrong character sets on soft-keyboard devices without changing the underlying field purpose or inventing new content types."
 }

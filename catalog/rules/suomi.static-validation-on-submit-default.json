@@ -20,6 +20,10 @@
   "card": "handle_form_errors",
   "facet": "invalid_input_has_no_recovery",
   "leaf": "recover_from_invalid_input",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "Static validation on submit with an ErrorSummary above the form is the recommended default.",
+  "apply_when": "Choosing when to surface form errors for a Suomi.fi-style static form.",
+  "not_when": "Mixing submit-summary and blur-inline schools as one house default on the same form.",
+  "agent_hint": "Prefer submit-time ErrorSummary with focus to the heading, or one dual-cited school consistently.",
+  "description": "Suomi.fi recommends static validation on submit: errors appear together in an ErrorSummary above the form, and focus moves to the summary heading. Dual-cite NN/g prefer-inline and GCDS blur-validate as a conflict flag, not a house winner; the unique claim is submit-time summary as the cognitive default. Apply one school consistently—do not mix submit-summary and blur-inline as a single unmarked default.",
   "do_not_claim": "A house winner vs NN/g inline / GCDS blur; ErrorSummary link-text row as this timing row."
 }

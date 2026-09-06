@@ -20,6 +20,10 @@
   "card": "design_actions_and_ctas",
   "facet": "no_clear_primary",
   "leaf": "pick_primary_action",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "Landing and welcome screens carry one command-like Call to Action.",
+  "apply_when": "Composing a landing or welcome screen with a main command CTA.",
+  "not_when": "In-app button groups — that is one-primary-per-group, not screen CTA.",
+  "agent_hint": "Give landing/welcome screens one CTA alone; do not stack several CTAs.",
+  "description": "Ant’s one Call to Action per screen is for command-like landing or welcome surfaces: the CTA usually appears alone and may span its parent width. It is distinct from limiting Primary inside a button group elsewhere in the product. Use it when composing that landing or welcome command, not ordinary multi-action toolbars. Fail multiple competing CTAs on that landing or welcome screen.",
   "do_not_claim": "One invented global cap vs group / page / section; `actions.buttons.one_primary` as a delete of this named CTA-per-screen row."
 }

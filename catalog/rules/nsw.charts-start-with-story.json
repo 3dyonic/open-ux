@@ -19,10 +19,11 @@
   "container": "layout_and_data_display",
   "card": "compose_a_data_display",
   "facet": "data_is_unscannable",
-  "overview": "Chart type matches the relationship.",
-  "apply_when": "Table or card grid for this data",
-  "not_when": "Not for controls inside a form, or density on a form.",
-  "agent_hint": "Start with the story, not the chart.",
-  "description": "Start with the story, not the chart. Chart type matches the relationship. It fails when Decorative chart.",
+  "leaf": "chart_has_a_story",
+  "overview": "Choose the data relationship first; skip charts that only decorate or confuse.",
+  "apply_when": "Deciding whether and which chart to use for a relationship.",
+  "not_when": "Decorative charts or charting a single number a callout would carry.",
+  "agent_hint": "Pick comparison, trend, proportion, distribution, or correlation first; skip decorative charts.",
+  "description": "Start with the story, not the chart. Pick the relationship—comparison, trend, proportion, distribution, correlation—first. No chart if a single callout number or a table is clearer, the set is too small, or the chart needs heavy explanation. Not for decoration. Pass when chart type matches the relationship and no chart appears when a callout or table is clearer. Fail for decorative charts or charting a single number a callout would carry.",
   "do_not_claim": "Anatomy (title/insight/table) as this story row."
 }

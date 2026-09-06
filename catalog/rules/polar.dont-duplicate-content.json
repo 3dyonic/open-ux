@@ -20,6 +20,10 @@
   "card": "orient_in_the_place",
   "facet": "user_cant_tell_where_they_are",
   "leaf": "wayfind_after_nav",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "One page title; do not duplicate App nav under the title bar.",
+  "apply_when": "Structuring page chrome, titles, and navigation in admin UI.",
+  "not_when": "A second title under the title bar or duplicate App nav.",
+  "agent_hint": "Keep one page title and avoid extra nav that copies App navigation.",
+  "description": "Don’t duplicate content: there should be one page title and no extra navigation that copies App nav. Pass when the page has a single title and does not add a second nav that mirrors App navigation. Fail when a second title sits under the title bar, or when duplicate App nav appears and competes with the primary navigation.",
   "do_not_claim": "Wayfinding cluster breadcrumbs."
 }

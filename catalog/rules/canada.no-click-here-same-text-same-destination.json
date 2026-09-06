@@ -16,10 +16,14 @@
     "“Click here” / “read more”; same text to different URLs; type/size only outside the link."
   ],
   "severity": "major",
-  "container": "navigation_and_wayfinding",
-  "card": "orient_in_the_place",
-  "facet": "user_cant_tell_where_they_are",
-  "leaf": "wayfind_after_nav",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "container": "layout_and_data_display",
+  "card": "write_the_interface",
+  "facet": "link_text_hides_destination",
+  "leaf": "name_the_link_by_destination",
+  "overview": "Link text describes the destination; same words share the same URL.",
+  "apply_when": "Writing Canada.ca in-content links, downloads, or other-language links.",
+  "not_when": "Button or CTA labels governed by action-label patterns instead.",
+  "agent_hint": "Describe the destination in the link; put type/size inside; avoid click here.",
+  "description": "Canada.ca bans “click here” and “read more.” Unique descriptive text per distinct URL; identical wording when two links go to the same page. Do not bury the task-critical link mid-paragraph. Downloads put file type and size in parentheses inside the link; other-language or duration likewise sit inside the link. Fail vague click-here copy, same text to different URLs, or type/size only outside the link.",
   "do_not_claim": "Intranet parenthetical (next row) as this."
 }

@@ -4,10 +4,16 @@
   "segment": "Choice",
   "title": "checkbox vs switch",
   "rule": "Checkbox often with a submit for state; a single checkbox can be two-state. Switch takes effect immediately and does not need a button. Dual-cite Lightning toggle-immediate; Ant names Switch vs checkbox pairing.",
-  "citation": {
-    "source": "Ant Design — Data entry",
-    "url": "https://ant.design/docs/spec/data-entry"
-  },
+  "citation": [
+    {
+      "source": "Ant Design — Data entry",
+      "url": "https://ant.design/docs/spec/data-entry"
+    },
+    {
+      "source": "Suomi.fi — Toggle",
+      "url": "https://designsystem.suomi.fi/components/toggle/"
+    }
+  ],
   "check": "llm_judgment",
   "pass_when": [
     "Switch applies immediately with no submit. Checkbox state waits for submit when it is part of a submitted form; a single checkbox may be two-state."
@@ -20,6 +26,10 @@
   "card": "design_a_form",
   "facet": "wrong_control_for_the_choice",
   "leaf": "choose_control_for_choice",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
-  "do_not_claim": "A house \"all toggles immediate\" beyond the two cites."
+  "overview": "Switches apply immediately; checkboxes in forms wait for submit.",
+  "apply_when": "Choosing between Switch and checkbox for a boolean on Ant surfaces.",
+  "not_when": "Non-boolean inputs or controls outside Switch/checkbox pairing.",
+  "agent_hint": "Use Switch for immediate toggles; keep form checkboxes until submit.",
+  "description": "On Ant-style data entry, a Switch takes effect immediately and needs no submit button. A checkbox that is part of a submitted form waits for submit; a single checkbox may still be two-state. A Switch that does nothing until submit, or a form checkbox that applies instantly like a Switch, mixes the patterns. Pick based on whether change is immediate or form-bound.",
+  "do_not_claim": "A house \"all toggles immediate\" beyond the two cites. A global immediate-vs-submit winner."
 }

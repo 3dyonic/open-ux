@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 from fastmcp import Client
 
-from open_ux.catalog import EMPTY_NOTE
+from open_ux.catalog import EMPTY_NOTE, citations
 from open_ux.server import create_mcp
 
 LIVE_SEED = (
@@ -16,7 +16,13 @@ LIVE_SEED = (
 )
 INDEX_KEYS = {"id", "title", "jobs", "lane", "container", "card", "facet", "leaf"}
 BODY_KEYS = {"pass_when", "fail_when", "rule", "citation", "check"}
-EXTRA_SAMPLE = "govuk.date-input-only-memorable"
+EXTRA_SAMPLE = "govuk.four-date-types"
+CATALOG_COUNT = 285
+FORM_COUNT = 53
+EXTRA_COUNT = 62
+HARVEST3_COUNT = 55
+HARVEST4_COUNT = 42
+HARVEST5_COUNT = 33
 HARVEST3_SAMPLE = "spectrum.quiet-vs-standard-background"
 HARVEST4_SAMPLE = "uswds.filled-next-outline-this-page"
 HARVEST5_SAMPLE = "gold.consistent-not-uniform"
@@ -78,7 +84,7 @@ async def test_list_index_has_no_rule_bodies(live_catalog: Path) -> None:
         listed = await client.call_tool("list_guidelines", {"limit": 400, "offset": 0})
         data = listed.data
         assert data["catalog"]["status"] == "ok"
-        assert data["total"] == 309
+        assert data["total"] == CATALOG_COUNT
         _assert_index_rows(data["guidelines"])
         ids = {row["id"] for row in data["guidelines"]}
         for seed in LIVE_SEED:
@@ -93,10 +99,10 @@ async def test_list_index_has_no_rule_bodies(live_catalog: Path) -> None:
         harvest5 = [
             row for row in data["guidelines"] if row["id"].startswith(HARVEST5_PREFIXES)
         ]
-        assert len(extra) == 73
-        assert len(harvest3) == 56
-        assert len(harvest4) == 46
-        assert len(harvest5) == 40
+        assert len(extra) == EXTRA_COUNT
+        assert len(harvest3) == HARVEST3_COUNT
+        assert len(harvest4) == HARVEST4_COUNT
+        assert len(harvest5) == HARVEST5_COUNT
         assert EXTRA_SAMPLE in ids
         assert HARVEST3_SAMPLE in ids
         assert HARVEST4_SAMPLE in ids
@@ -123,8 +129,11 @@ async def test_get_guideline_returns_full_body(live_catalog: Path) -> None:
         assert g["rule"]
         assert g["pass_when"]
         assert g["fail_when"]
-        assert g["citation"]["url"].startswith("https://")
-        assert "](<" not in g["citation"]["url"]
+        cites = citations(g)
+        assert cites
+        for cite in cites:
+            assert cite["url"].startswith("https://")
+            assert "](<" not in cite["url"]
 
 
 @pytest.mark.asyncio
@@ -150,7 +159,7 @@ async def test_search_lane_forms_only(live_catalog: Path) -> None:
             "search_guidelines", {"lane": "forms", "limit": 200}
         )
         data = found.data
-        assert data["total"] == 54
+        assert data["total"] == FORM_COUNT
         _assert_index_rows(data["guidelines"])
         assert all(row["lane"] == "forms" for row in data["guidelines"])
         assert all(row["id"].startswith("forms.") for row in data["guidelines"])
@@ -174,8 +183,12 @@ async def test_get_extra_harvest_guideline_returns_full_body(live_catalog: Path)
         assert g["do_not_claim"]
         assert "when_to_use" not in g
         assert "when_not" not in g
-        assert g["citation"]["url"].startswith("https://")
-        assert "](<" not in g["citation"]["url"]
+        cites = citations(g)
+        assert len(cites) >= 2
+        assert isinstance(g["citation"], list)
+        for cite in cites:
+            assert cite["url"].startswith("https://")
+            assert "](<" not in cite["url"]
 
 
 @pytest.mark.asyncio
@@ -194,8 +207,11 @@ async def test_get_harvest3_guideline_returns_full_body(live_catalog: Path) -> N
         assert g["do_not_claim"]
         assert "when_to_use" not in g
         assert "when_not" not in g
-        assert g["citation"]["url"].startswith("https://")
-        assert "](<" not in g["citation"]["url"]
+        cites = citations(g)
+        assert cites
+        for cite in cites:
+            assert cite["url"].startswith("https://")
+            assert "](<" not in cite["url"]
 
 
 @pytest.mark.asyncio
@@ -214,8 +230,11 @@ async def test_get_harvest4_guideline_returns_full_body(live_catalog: Path) -> N
         assert g["do_not_claim"]
         assert "when_to_use" not in g
         assert "when_not" not in g
-        assert g["citation"]["url"].startswith("https://")
-        assert "](<" not in g["citation"]["url"]
+        cites = citations(g)
+        assert cites
+        for cite in cites:
+            assert cite["url"].startswith("https://")
+            assert "](<" not in cite["url"]
 
 
 @pytest.mark.asyncio
@@ -234,8 +253,11 @@ async def test_get_harvest5_guideline_returns_full_body(live_catalog: Path) -> N
         assert g["do_not_claim"]
         assert "when_to_use" not in g
         assert "when_not" not in g
-        assert g["citation"]["url"].startswith("https://")
-        assert "](<" not in g["citation"]["url"]
+        cites = citations(g)
+        assert cites
+        for cite in cites:
+            assert cite["url"].startswith("https://")
+            assert "](<" not in cite["url"]
 
 
 @pytest.mark.asyncio

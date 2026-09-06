@@ -20,6 +20,10 @@
   "card": "design_a_form",
   "facet": "wrong_control_for_the_choice",
   "leaf": "choose_control_for_choice",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "Dropdown is acceptable for a secondary ~5–10 option compact field.",
+  "apply_when": "Secondary or compact field with roughly five to ten options.",
+  "not_when": "Treating dropdown as never or always for this middle band.",
+  "agent_hint": "Allow dropdown for secondary ~5–10 options; reject absolute never/always rules.",
+  "description": "In the narrow middle band of about five to ten choices, a dropdown can be fine when the field is secondary or compactness matters. Pass when that secondary or compact field uses a dropdown. Fail when the design treats “dropdown never” or “dropdown always” as the rule for this band instead of judging secondary use and compactness.",
   "do_not_claim": "GOV.UK select-last-resort as a winner over this band."
 }

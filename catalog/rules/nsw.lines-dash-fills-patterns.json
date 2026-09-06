@@ -16,10 +16,14 @@
     "Line series distinguished only by colour with no dash; patterns on lines; more than 5 fill patterns."
   ],
   "severity": "major",
-  "container": "feedback_and_status",
-  "card": "compose_feedback",
-  "facet": "system_stayed_quiet_after_change",
-  "leaf": "announce_system_status",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "container": "layout_and_data_display",
+  "card": "compose_a_data_display",
+  "facet": "data_is_unscannable",
+  "leaf": "chart_has_a_story",
+  "overview": "Distinguish line series with dashes; use fill patterns on area, bar, and pie.",
+  "apply_when": "Encoding multiple series with lines or patterned fills.",
+  "not_when": "Colour-only line series, patterns on lines, or more than five fill patterns.",
+  "agent_hint": "Use dash styles on lines and patterns on fills; cap patterns at four to five.",
+  "description": "Lines use dash styles; fills use patterns (max 4–5). Solid, dashed, dotted, dash-dot for series. Hatch, dot, grid for bars, area, pie—not for lines. Two colours per pattern (fill plus stroke). Pass when line series use dash styles, area/bar/pie fills use ≤4–5 patterns with two colours each, and patterns are not used on lines. Fail when lines are colour-only with no dash, patterns sit on lines, or more than five fill patterns appear.",
   "do_not_claim": "Established colour conventions as a merge that drops dash/pattern."
 }

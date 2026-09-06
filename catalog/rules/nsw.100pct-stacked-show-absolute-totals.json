@@ -16,10 +16,14 @@
     "100% stacked bars show percentages only."
   ],
   "severity": "major",
-  "container": "feedback_and_status",
-  "card": "compose_feedback",
-  "facet": "system_stayed_quiet_after_change",
-  "leaf": "announce_system_status",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "container": "layout_and_data_display",
+  "card": "compose_a_data_display",
+  "facet": "data_is_unscannable",
+  "leaf": "chart_has_a_story",
+  "overview": "100% stacked bars must show absolute totals per category, not percentages alone.",
+  "apply_when": "Rendering 100% stacked bar charts by category.",
+  "not_when": "100% stacked bars that show percentages only with no absolute totals.",
+  "agent_hint": "Add absolute totals per category on 100% stacked bars; percentages alone hide scale.",
+  "description": "100% stacked bars must show absolute totals per category. Percentages alone hide count, so the total is needed for scale to be judgeable. Pass when 100% stacked bars include the absolute total per category alongside the percentage stack. Fail when they show percentages only, leaving readers unable to judge real magnitudes behind the 100% bars.",
   "do_not_claim": "Honest zero baseline as this totals row."
 }

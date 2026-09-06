@@ -20,6 +20,10 @@
   "card": "design_a_form",
   "facet": "field_has_no_lasting_name",
   "leaf": "name_a_control",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "Give Text Field an explicit id so label and helper associate via for and aria-describedby.",
+  "apply_when": "Wiring MUI Text Field label and helper text associations.",
+  "not_when": "Not for unlabeled decorative inputs that are not meant to be named fields.",
+  "agent_hint": "Set an explicit id; link label with for and helper with aria-describedby.",
+  "description": "A Text Field needs an explicit `id` so the label can use `for` and the helper can use `aria-describedby`. Until hydration, a TextField without an explicit id will not have associated labels, so name and help stay disconnected for assistive tech. Fail when missing id leaves label and helper unassociated, including pre-hydration. Always set the id when wiring label and helper associations on MUI Text Field.",
   "do_not_claim": "Visible-label existence (`forms.field_labels.visible_label`) as this association row."
 }

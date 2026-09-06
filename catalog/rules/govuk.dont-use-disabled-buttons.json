@@ -17,9 +17,13 @@
   ],
   "severity": "major",
   "container": "actions_and_decisions",
-  "card": "protect_destructive_and_leave",
-  "facet": "destructive_is_too_easy",
-  "leaf": "disable_or_confirm_destructive",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "card": "design_actions_and_ctas",
+  "facet": "no_clear_primary",
+  "leaf": "pick_primary_action",
+  "overview": "Public question flows keep submit enabled and explain on press; settings Save may disable with a visible reason.",
+  "apply_when": "Deciding whether submit or Save stays enabled on incomplete public or settings forms.",
+  "not_when": "Not for unrelated non-submit controls outside question and settings Save patterns.",
+  "agent_hint": "Keep public submit enabled and explain on press; disable settings Save only with a visible reason.",
+  "description": "On public question flows, keep the button enabled and explain why the press failed when input is incomplete or invalid. Settings Save may disable until required fields are complete only if the disabled reason is visible and the label stays perceivable. There is no global never-disable or always-disable rule across both contexts. Fail for a disabled control with no explanation, or a single policy that ignores the question-versus-settings split.",
   "do_not_claim": "A house winner vs `forms.submit.enabled_until_request` / `forms.fields.required_before_proceed`. Overlap with Forms 54 disabled-submit conflict and Actions 40 `actions.buttons.distinguishable_states` / `actions.buttons.loading_on_button` / `govuk.stop-accidental-double-submit`. Same lock — not a new winner."
 }

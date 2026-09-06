@@ -20,6 +20,10 @@
   "card": "design_a_form",
   "facet": "related_inputs_feel_scattered",
   "leaf": "group_related_inputs",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "overview": "Lists stay at seven items or split by category with a fitting lead-in.",
+  "apply_when": "Writing Canada.ca bullet or numbered lists in task content.",
+  "not_when": "Data tables — use table rules, not list length caps.",
+  "agent_hint": "Cap lists at seven or split by category; number only for order; lead-in fits all.",
+  "description": "Canada.ca lists stay at seven items or split by category. One idea per bullet, consistent grammar, and numbers only for rank, order, or steps. The lead-in must apply to every item (“all of” versus “one or more”). Fail eight or more undifferentiated items, a numbered list with no order, or a lead-in that does not cover every item.",
   "do_not_claim": "A house choice-cutoff for radios/selects."
 }

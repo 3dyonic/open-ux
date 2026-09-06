@@ -18,7 +18,11 @@
   "severity": "major",
   "container": "forms_and_input",
   "card": "design_a_form",
-  "facet": "field_has_no_lasting_name",
-  "leaf": "name_a_control",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "use_familiar_control",
+  "overview": "Recast awkward label/control pairs as a short sentence with blanks.",
+  "apply_when": "Label-plus-blank pairs read awkwardly as disconnected controls.",
+  "not_when": "Simple named fields where a plain label already fits.",
+  "agent_hint": "Rewrite awkward label/control pairs as a short sentence with blanks.",
+  "description": "When a label/control pair feels awkward, present the request as a short sentence with blanks to fill in. Pass when those awkward pairs are recast that way; fail when the request stays a disconnected label-plus-blank where a sentence-blank pattern would fit. Use the sentence form to make the ask readable without inventing new requirements beyond the cited pattern."
 }

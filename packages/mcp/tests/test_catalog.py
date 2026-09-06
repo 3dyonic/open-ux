@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 from jsonschema import ValidationError
 
-from open_ux.catalog import AGENT_KEYS, CatalogError, load_catalog
+from open_ux.catalog import AGENT_KEYS, CatalogError, citations, load_catalog
 from open_ux.jobs import CARD_IDS, CONTAINER_IDS, LEAF_IDS, load_job_tree
 from open_ux.settings import HARD_CATALOG_BYTES, Settings
 
@@ -40,11 +40,49 @@ LANE_BLOBS = (
     "nl.json",
     "suomi.json",
 )
-CLUSTER_ONLY = {
-    "compose_a_data_display",
-    "choose_an_overlay",
-    "build_a_multi_step_flow",
+UNMAPPED_DROPPED = {
+    "canada.functional-alt-140-decorative-empty",
+    "canada.tables-no-blank-cells",
+    "nl.last-step-is-send-not-volgende",
+    "nng.eas-framework",
+    "nng.guest-checkout-prominent",
+    "polar.be-consistent-no-synonyms",
+    "uswds.search-min-27-chars-persist-query",
 }
+FOLDED_IDS = {
+    "nng.too-few-options-radios-not-dropdown",
+    "nng.prefer-radios-over-dropdowns-when-visible",
+    "gold.avoid-select-except-long-lists",
+    "govuk.select-last-resort",
+    "polar.select-4plus-choice-list-under-4",
+    "ant.radio-count-2-to-5",
+    "govuk.calendar-control-when",
+    "govuk.date-input-only-memorable",
+    "uswds.date-picker-when-weekday-always-type",
+    "nl.dont-reject-valid-variants",
+    "nl.no-forced-input-patterns-or-masks",
+    "forms.inputs.allow_typos_abbreviations",
+    "fluent.required-asterisk-or-one-instruction",
+    "suomi.default-required-optional-in-parentheses",
+    "nl.mark-optional-niet-verplicht-above-form",
+    "suomi.toggle-button-immediate-input-submit",
+    "polar.default-option-selected-when-possible",
+}
+MULTI_CITE_KEEPS = {
+    "forms.inputs.match_control_and_size",
+    "govuk.four-date-types",
+    "forms.inputs.forgiving_format_autoformat",
+    "forms.fields.distinguish_optional_required",
+    "ant.checkbox-vs-switch",
+    "nng.users-rarely-change-defaults",
+}
+CATALOG_COUNT = 285
+ACTION_COUNT = 40
+FORM_COUNT = 53
+EXTRA_COUNT = 62
+HARVEST3_COUNT = 55
+HARVEST4_COUNT = 42
+HARVEST5_COUNT = 33
 
 
 def _huge_rule() -> dict:
@@ -95,7 +133,19 @@ def test_hard_size_ceiling(tmp_env: Path, catalog_dir: Path) -> None:
         load_catalog(Settings.load(hosted=True))
 
 
-def test_rules_load_309_and_keep_harvest_counts(live_catalog: Path) -> None:
+def _assert_citations(guideline: dict) -> None:
+    cites = citations(guideline)
+    assert cites
+    seen_urls: set[str] = set()
+    for cite in cites:
+        assert cite["source"]
+        assert cite["url"].startswith("https://")
+        assert "](<" not in cite["url"]
+        assert cite["url"] not in seen_urls
+        seen_urls.add(cite["url"])
+
+
+def test_rules_load_harvest_counts_after_same_claim_fold(live_catalog: Path) -> None:
     catalog = load_catalog(Settings.load(hosted=True))
     ids = [g["id"] for g in catalog.guidelines]
     action_ids = [i for i in ids if i.startswith("actions.")]
@@ -104,13 +154,15 @@ def test_rules_load_309_and_keep_harvest_counts(live_catalog: Path) -> None:
     harvest3_ids = [i for i in ids if i.startswith(HARVEST3_PREFIXES)]
     harvest4_ids = [i for i in ids if i.startswith(HARVEST4_PREFIXES)]
     harvest5_ids = [i for i in ids if i.startswith(HARVEST5_PREFIXES)]
-    assert len(action_ids) == 40
-    assert len(form_ids) == 54
-    assert len(extra_ids) == 73
-    assert len(harvest3_ids) == 56
-    assert len(harvest4_ids) == 46
-    assert len(harvest5_ids) == 40
-    assert len(ids) == 309
+    assert len(action_ids) == ACTION_COUNT
+    assert len(form_ids) == FORM_COUNT
+    assert len(extra_ids) == EXTRA_COUNT
+    assert len(harvest3_ids) == HARVEST3_COUNT
+    assert len(harvest4_ids) == HARVEST4_COUNT
+    assert len(harvest5_ids) == HARVEST5_COUNT
+    assert len(ids) == CATALOG_COUNT
+    assert UNMAPPED_DROPPED.isdisjoint(ids)
+    assert FOLDED_IDS.isdisjoint(ids)
     assert set(ids) == set(action_ids) | set(form_ids) | set(extra_ids) | set(
         harvest3_ids
     ) | set(harvest4_ids) | set(harvest5_ids)
@@ -122,20 +174,20 @@ def test_rules_load_309_and_keep_harvest_counts(live_catalog: Path) -> None:
         assert INVENTED_FIELDS.isdisjoint(by_id[gid])
         assert "do_not_claim" in by_id[gid]
         assert by_id[gid]["do_not_claim"]
+    for gid in MULTI_CITE_KEEPS:
+        cites = citations(by_id[gid])
+        assert len(cites) >= 2
+        assert isinstance(by_id[gid]["citation"], list)
     for g in catalog.guidelines:
         assert "lane" not in g
-        assert g["citation"]["url"].startswith("https://")
-        assert "](<" not in g["citation"]["url"]
+        _assert_citations(g)
         assert g["severity"] == "major"
         assert g["container"] in CONTAINER_IDS
         assert g["card"] in CARD_IDS
-        assert g.get("leaf") in LEAF_IDS or g.get("leaf") is None
-        if g.get("overview"):
-            for key in AGENT_KEYS:
-                assert g[key]
-            assert "waive_reason" not in g
-        else:
-            assert g.get("waive_reason")
+        assert g.get("leaf") in LEAF_IDS
+        for key in AGENT_KEYS:
+            assert g[key]
+        assert "waive_reason" not in g
         assert INVENTED_FIELDS.isdisjoint(g)
     assert catalog.size_bytes <= HARD_CATALOG_BYTES
 
@@ -144,7 +196,7 @@ def test_no_lane_blobs(live_catalog: Path) -> None:
     for name in LANE_BLOBS:
         assert not (live_catalog / name).exists()
     rules = list((live_catalog / "rules").glob("*.json"))
-    assert len(rules) == 309
+    assert len(rules) == CATALOG_COUNT
     for path in rules:
         data = json.loads(path.read_text(encoding="utf-8"))
         assert path.stem == data["id"]
@@ -153,15 +205,16 @@ def test_no_lane_blobs(live_catalog: Path) -> None:
 def test_on_disk_index_has_no_rule_bodies(live_catalog: Path) -> None:
     data = json.loads((live_catalog / "index.json").read_text(encoding="utf-8"))
     rows = data["guidelines"]
-    assert len(rows) == 309
+    assert len(rows) == CATALOG_COUNT
     extra_ids = [row["id"] for row in rows if row["id"].startswith(EXTRA_PREFIXES)]
     harvest3_ids = [row["id"] for row in rows if row["id"].startswith(HARVEST3_PREFIXES)]
     harvest4_ids = [row["id"] for row in rows if row["id"].startswith(HARVEST4_PREFIXES)]
     harvest5_ids = [row["id"] for row in rows if row["id"].startswith(HARVEST5_PREFIXES)]
-    assert len(extra_ids) == 73
-    assert len(harvest3_ids) == 56
-    assert len(harvest4_ids) == 46
-    assert len(harvest5_ids) == 40
+    assert len(extra_ids) == EXTRA_COUNT
+    assert len(harvest3_ids) == HARVEST3_COUNT
+    assert len(harvest4_ids) == HARVEST4_COUNT
+    assert len(harvest5_ids) == HARVEST5_COUNT
+    assert FOLDED_IDS.isdisjoint({row["id"] for row in rows})
     for row in rows:
         assert INDEX_REQUIRED <= set(row) <= (INDEX_REQUIRED | INDEX_OPTIONAL)
         assert BODY_KEYS.isdisjoint(row)
@@ -196,14 +249,12 @@ def test_every_rule_has_one_home(live_catalog: Path) -> None:
         if not home[2] and guideline.get("leaf"):
             unmapped.append(guideline["id"])
     assert unmapped == []
-    for gid in (
-        "canada.tables-no-blank-cells",
-        "nng.modal-and-nonmodal-dialogs",
-        "nl.step-n-of-m-in-title-and-above-form",
-    ):
-        row = next(g for g in catalog.guidelines if g["id"] == gid)
-        assert "leaf" not in row
-        assert row["card"] in CLUSTER_ONLY or gid == "nng.modal-and-nonmodal-dialogs"
+    by_id = {g["id"]: g for g in catalog.guidelines}
+    assert by_id["nng.modal-and-nonmodal-dialogs"]["leaf"] == "pick_modal_only_when_blocking"
+    assert by_id["nl.step-n-of-m-in-title-and-above-form"]["leaf"] == "show_step_progress"
+    assert by_id["nsw.charts-start-with-story"]["leaf"] == "chart_has_a_story"
+    assert UNMAPPED_DROPPED.isdisjoint(by_id)
+    assert FOLDED_IDS.isdisjoint(by_id)
 
 
 def test_live_seeds_keep_locked_homes_and_agent_fields(live_catalog: Path) -> None:
@@ -215,14 +266,44 @@ def test_live_seeds_keep_locked_homes_and_agent_fields(live_catalog: Path) -> No
     assert visible["overview"].startswith("A lasting label")
     stays = by_id["forms.field_labels.label_stays_visible"]
     assert stays["card"] == "design_a_form"
-    assert stays["leaf"] == "keep_field_purpose_visible_while_filled"
+    assert stays["leaf"] == "avoid_placeholder_as_label"
     error = by_id["forms.field_labels.error_identifies_and_fixes"]
     assert error["card"] == "handle_form_errors"
     assert error["leaf"] == "explain_failure_next_to_cause"
 
 
+def test_citation_is_object_or_array_of_sources() -> None:
+    assert citations({"citation": {"source": "A", "url": "https://a.example"}}) == [
+        {"source": "A", "url": "https://a.example"}
+    ]
+    assert citations(
+        {
+            "citation": [
+                {"source": "A", "url": "https://a.example"},
+                {"source": "B", "url": "https://b.example"},
+            ]
+        }
+    ) == [
+        {"source": "A", "url": "https://a.example"},
+        {"source": "B", "url": "https://b.example"},
+    ]
+    assert citations({}) == []
+
+
+def test_distinct_claims_are_not_folded(live_catalog: Path) -> None:
+    catalog = load_catalog(Settings.load(hosted=True))
+    ids = {g["id"] for g in catalog.guidelines}
+    assert "nng.dropdown-ok-narrow-middle" in ids
+    assert "nng.too-many-combobox-not-long-dropdown" in ids
+    assert "forms.inputs.dropdown_chooser" in ids
+    assert "forms.inputs.offer_choices_not_only_text" in ids
+    assert "spectrum.asterisk-is-icon-not-label-text" in ids
+    assert "nng.always-select-one-radio-by-default" in ids
+    assert "govuk.select-preselect-settings-not-questions" in ids
+
+
 def test_jobs_json_is_not_a_lane(live_catalog: Path) -> None:
     catalog = load_catalog(Settings.load(hosted=True))
-    assert len(catalog.guidelines) == 309
+    assert len(catalog.guidelines) == CATALOG_COUNT
     tree = load_job_tree(Settings.load())
     assert [card.id for card in tree.cards] == list(CARD_IDS)

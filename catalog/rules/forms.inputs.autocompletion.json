@@ -17,8 +17,12 @@
   ],
   "severity": "major",
   "container": "forms_and_input",
-  "card": "handle_form_errors",
-  "facet": "invalid_input_has_no_recovery",
-  "leaf": "recover_from_invalid_input",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "use_familiar_control",
+  "overview": "Suggest and complete matches from a known set as the user types.",
+  "apply_when": "Fields with a known completion set and typed prefixes.",
+  "not_when": "Open free-text with no known completion vocabulary.",
+  "agent_hint": "Offer prefix suggestions from the known set and let them complete the value.",
+  "description": "When the user types a value that has a known set of completions, the UI should suggest matches from the typed prefix and allow completing the value. Pass when suggestions appear and can finish the entry; fail when the known set must be typed entirely from memory with no suggestions. Use for closed or catalogued values, not open prose."
 }

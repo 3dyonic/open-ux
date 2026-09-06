@@ -18,8 +18,12 @@
   "severity": "major",
   "container": "forms_and_input",
   "card": "design_a_form",
-  "facet": "field_has_no_lasting_name",
-  "leaf": "keep_field_purpose_visible_while_filled",
-  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "use_familiar_control",
+  "overview": "Time fields stay about 60px wide with an always-visible t.mm format hint.",
+  "apply_when": "Building Suomi.fi time inputs that normalize to Finnish time.",
+  "not_when": "Format living only in a placeholder, or oversized time fields with no lasting hint.",
+  "agent_hint": "Keep the time field ~60px with a lasting t.mm hint; do not rely on placeholder-only format.",
+  "description": "Suomi.fi time fields are fixed around 60px wide, keep a `t.mm` hint always visible, and normalize values to Finnish time. Format must not live only in a placeholder (placeholder/label lock). Dual-cite USWDS time picker increments for related timing patterns. A placeholder-only format or a much wider field without the lasting hint fails the pattern and hides the expected shape while typing.",
   "do_not_claim": "Date `PP.KK.VVVV` hint as this time row; USWDS increments as a merge."
 }
