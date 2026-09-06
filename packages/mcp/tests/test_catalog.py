@@ -368,17 +368,17 @@ def test_jobs_json_is_not_a_lane(live_catalog: Path) -> None:
     assert "content" not in CONTAINER_IDS
 
 
-def test_fourteen_drops_are_listed_and_absent(live_catalog: Path) -> None:
-    locks = (live_catalog / "locks.md").read_text(encoding="utf-8")
+def test_unpublished_harvest_ids_are_listed_in_readme(live_catalog: Path) -> None:
+    readme = (live_catalog / "README.md").read_text(encoding="utf-8")
     catalog = load_catalog(Settings.load(hosted=True))
     ids = {g["id"] for g in catalog.guidelines}
-    dropped = UNMAPPED_DROPPED | FOLDED_IDS
-    assert len(dropped) == 14
-    assert dropped.isdisjoint(ids)
-    for gid in sorted(dropped):
-        assert f"`{gid}`" in locks
-    assert "content/" in locks
-    assert "not an 8th container" in locks
+    unpublished = UNMAPPED_DROPPED | FOLDED_IDS
+    assert not (live_catalog / "locks.md").exists()
+    assert len(unpublished) == 14
+    assert unpublished.isdisjoint(ids)
+    for gid in sorted(unpublished):
+        assert f"`{gid}`" in readme
+    assert "content/" in readme
 
 
 def test_names_are_claim_then_source_and_folders_follow_category(

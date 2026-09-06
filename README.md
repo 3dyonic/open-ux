@@ -36,7 +36,7 @@ Use the hosted endpoint (request an invite, redeem for an API key) or self-host 
 | `forms.field_labels.label_stays_visible` | The field label remains visible while the field has a value (floating or persistent — not replaced by the value alone). | [Material 3 — Text fields](https://m3.material.io/components/text-fields/guidelines) |
 | `forms.field_labels.error_identifies_and_fixes` | Error text identifies the field and tells the user how to fix it. | [NN/g — Error-Message Guidelines](https://www.nngroup.com/articles/error-message-guidelines/) |
 
-Those ids are the Designer LIVE seed (UNS-44), kept first in the generated index. Files live under [`catalog/rules/{category}/{source}/`](catalog/rules/). The generated index is [`catalog/index.json`](catalog/index.json). The skill-facing map is [`catalog/MANIFEST.md`](catalog/MANIFEST.md). The tree is [`catalog/jobs.json`](catalog/jobs.json).
+Those ids are the Designer LIVE seed (UNS-44), kept first in the generated index. Files live under [`catalog/rules/{category}/{source}/`](catalog/rules/). How the catalog is laid out, and which harvest rows are not files, is in [`catalog/README.md`](catalog/README.md). The generated index is [`catalog/index.json`](catalog/index.json). The skill-facing map is [`catalog/MANIFEST.md`](catalog/MANIFEST.md). The tree is [`catalog/jobs.json`](catalog/jobs.json).
 
 **Out of v1:** other form segments, screenshots, search, suggest-fixes, bulk ingest, inventing look, a server LLM grader.
 
