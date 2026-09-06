@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Copy",
   "title": "no double barreled",
+  "name": "No double-barreled questions",
   "rule": "Do not ask two things in one question; split double-barreled items.",
   "citation": [
     {

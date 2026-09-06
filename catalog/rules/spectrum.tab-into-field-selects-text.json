@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Keyboard",
   "title": "tab into field selects text",
+  "name": "Tab into field selects text",
   "rule": "Tab into a text field selects existing text.",
   "citation": [
     {

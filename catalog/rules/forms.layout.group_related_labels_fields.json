@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Layout",
   "title": "group related labels fields",
+  "name": "Group related labels fields",
   "rule": "Visually group related labels and fields; put each label close to its field (not equidistant from several).",
   "citation": [
     {

@@ -3,6 +3,7 @@
   "category": "Dialogs",
   "segment": "Alert",
   "title": "most alerts dont need titles",
+  "name": "Most alerts don't need titles",
   "rule": "Most alerts don't need titles — summarize in a sentence or two (question or statement tied to the buttons). Use `role=\"alertdialog\"`. Title-bar alerts only for high-risk (e.g. potential loss of connectivity). Users should understand the choices from title and button text alone.",
   "citation": [
     {

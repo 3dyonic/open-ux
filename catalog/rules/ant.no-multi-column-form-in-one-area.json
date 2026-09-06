@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Layout",
   "title": "no multi column form in one area",
+  "name": "No multi column form in one area",
   "rule": "No multi-column form inside one area — vertical single column is the efficient default; weak grouping may put short related fields on one line, not a second reading column. Card grouping when content is usually more than two screens, each card with a large title.",
   "citation": [
     {

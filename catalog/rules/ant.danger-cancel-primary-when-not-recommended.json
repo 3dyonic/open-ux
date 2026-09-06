@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Destructive",
   "title": "danger cancel primary when not recommended",
+  "name": "Danger cancel primary when not recommended",
   "rule": "If the user's intention is delete, use danger to warn. If the system does not recommend the deletion, set Cancel as the primary action. Compatible with \"primary not destructive\"; dual-cite, don't collapse.",
   "citation": [
     {

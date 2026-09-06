@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Sizing",
   "title": "min width 1 5x field height",
+  "name": "Minimum width 1.5× field height",
   "rule": "Standard and quiet text fields: minimum width 1.5× field height.",
   "citation": [
     {

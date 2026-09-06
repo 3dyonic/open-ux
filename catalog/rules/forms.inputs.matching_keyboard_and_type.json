@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Inputs",
   "title": "matching keyboard and type",
+  "name": "Matching keyboard and type",
   "rule": "Show the keyboard and input type that match the content (email, tel, URL, number, and equivalent platform keyboards).",
   "citation": [
     {

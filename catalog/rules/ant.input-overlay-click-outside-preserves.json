@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Overlay",
   "title": "input overlay click outside preserves",
+  "name": "Input overlay click outside preserves",
   "rule": "Input overlay: click outside preserves and closes.",
   "citation": [
     {

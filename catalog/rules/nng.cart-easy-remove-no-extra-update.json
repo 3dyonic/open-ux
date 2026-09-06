@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Checkout",
   "title": "cart easy remove no extra update",
+  "name": "Cart easy remove no extra update",
   "rule": "Cart: easy Remove per line; no extra Update button to commit quantity.",
   "citation": [
     {

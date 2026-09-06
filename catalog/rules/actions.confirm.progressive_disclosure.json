@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Confirmation",
   "title": "progressive disclosure",
+  "name": "Progressive disclosure",
   "rule": "Keep confirmation copy short and offer a way to learn more before commit.",
   "citation": [
     {

@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Inputs",
   "title": "clear button",
+  "name": "Clear button",
   "rule": "Display a trailing Clear control so people can erase the field without repeatedly tapping Delete.",
   "citation": [
     {

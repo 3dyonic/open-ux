@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Structure",
   "title": "editable list pattern by field count",
+  "name": "Editable list pattern by field count",
   "rule": "Editable-list pattern by field count — dynamic add/remove when items ≤3 and inputs need no separate titles; editable table 2–5; collapsible panel 6–8; drawer when >8.",
   "citation": [
     {

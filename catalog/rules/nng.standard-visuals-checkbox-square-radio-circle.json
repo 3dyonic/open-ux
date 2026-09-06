@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Choice",
   "title": "standard visuals checkbox square radio circle",
+  "name": "Standard visuals checkbox square radio circle",
   "rule": "Standard visuals: checkbox square; radio circle with solid inner.",
   "citation": [
     {

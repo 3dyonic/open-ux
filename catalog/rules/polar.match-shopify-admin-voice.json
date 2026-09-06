@@ -3,6 +3,7 @@
   "category": "Copy",
   "segment": "Voice",
   "title": "match shopify admin voice",
+  "name": "Match shopify admin voice",
   "rule": "Match Shopify admin voice; tone shifts (errors more direct than onboarding tips).",
   "citation": [
     {

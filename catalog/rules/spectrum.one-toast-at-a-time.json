@@ -3,6 +3,7 @@
   "category": "Feedback",
   "segment": "Toast",
   "title": "one toast at a time",
+  "name": "One toast at a time",
   "rule": "One toast at a time — consecutive/simultaneous toasts follow a priority queue; do not stack multiple visible toasts.",
   "citation": [
     {

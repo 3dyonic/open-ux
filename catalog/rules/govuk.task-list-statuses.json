@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Structure",
   "title": "task list statuses",
+  "name": "Task list statuses",
   "rule": "Task list statuses (Not started / Cannot start yet / In progress / Completed) plus complete-multiple-tasks grouping.",
   "citation": [
     {

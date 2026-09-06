@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Buttons",
   "title": "split button dont repeat primary",
+  "name": "Split button: don't repeat primary",
   "rule": "Split button: full phrase on the rest-state primary; don’t repeat that primary in the secondary list.",
   "citation": [
     {

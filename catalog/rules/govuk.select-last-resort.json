@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Choice",
   "title": "select last resort",
+  "name": "Select last resort",
   "rule": "Select is last resort on public services; ask questions that shrink the list first.",
   "citation": [
     {

@@ -3,6 +3,7 @@
   "category": "Trust",
   "segment": "Privacy / security",
   "title": "privacy by design pia security day one",
+  "name": "Privacy by design: PIA and security from day one",
   "rule": "Privacy by design + PIA; security from day one — named NSW Design Standards. Complete and maintain a Privacy Impact Assessment; consent and data-use are explicit; identifiable vs de-identified access is separated. Security is designed and tested from the first release, not bolted on. Dual-cite USWDS earn-trust / data stewardship without merging the PIA/security-from-day-one names.",
   "citation": [
     {

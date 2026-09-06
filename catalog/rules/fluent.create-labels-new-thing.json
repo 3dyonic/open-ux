@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Copy",
   "title": "create labels new thing",
+  "name": "Create labels: New {thing}",
   "rule": "Create labels: “New {thing}”; menu trigger “New”; menu items drop the word New.",
   "citation": [
     {

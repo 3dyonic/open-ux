@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Errors",
   "title": "long form errors banner plus inline",
+  "name": "Long form errors banner plus inline",
   "rule": "Long/complex form errors: critical banner at top + move focus to it + inline field errors. Dual-cite with GOV.UK error summary.",
   "citation": [
     {

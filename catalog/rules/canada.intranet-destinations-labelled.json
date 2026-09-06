@@ -3,6 +3,7 @@
   "category": "Content",
   "segment": "Links",
   "title": "intranet destinations labelled",
+  "name": "Intranet destinations labelled",
   "rule": "Intranet destinations: “(accessible only on the Government of Canada network)” — public pages must not silently link behind the GC network. (Not a contact pattern.)",
   "citation": [
     {

@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Buttons",
   "title": "ios chrome back done cancel",
+  "name": "iOS chrome: Back, Done, Cancel",
   "rule": "iOS chrome: Back top-left; Done/Save top-right; Cancel top-left when paired with Done/Save, else Cancel top-right.",
   "citation": [
     {

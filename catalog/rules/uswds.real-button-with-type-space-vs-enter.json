@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Buttons",
   "title": "real button with type space vs enter",
+  "name": "Real button with type; Space vs Enter",
   "rule": "Use a real `<button>` with `type` set (`submit` / `button` / `reset`; default is submit). Do not use `<a>` or `<div>` as the only control. Space triggers a button; Enter triggers a link — do not style links as buttons without that difference.",
   "citation": [
     {

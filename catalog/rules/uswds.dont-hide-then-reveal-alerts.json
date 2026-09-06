@@ -3,6 +3,7 @@
   "category": "Feedback",
   "segment": "Alert",
   "title": "dont hide then reveal alerts",
+  "name": "Don't hide then reveal alerts",
   "rule": "Don’t hide-then-reveal alerts in the DOM — older AT can still perceive visually hidden messages that are not currently applicable.",
   "citation": [
     {

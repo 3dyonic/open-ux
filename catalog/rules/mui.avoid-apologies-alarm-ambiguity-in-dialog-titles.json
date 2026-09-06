@@ -3,6 +3,7 @@
   "category": "Dialogs",
   "segment": "Copy",
   "title": "avoid apologies alarm ambiguity in dialog titles",
+  "name": "Avoid apologies alarm ambiguity in dialog titles",
   "rule": "Avoid apologies, alarm, or ambiguity in dialog titles — not \"Sorry for the interruption\", \"Warning!\", or \"Are you sure?\". Dual-cite Atlassian error-title (3–4 words, not \"what to do\") — MUI is the banned-title list on the dialog itself.",
   "citation": [
     {

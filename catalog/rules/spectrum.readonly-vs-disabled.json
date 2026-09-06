@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Field state",
   "title": "readonly vs disabled",
+  "name": "Readonly vs disabled",
   "rule": "Disabled = field exists but is unavailable. If the value must still be shown and copied, use read-only, not disabled.",
   "citation": [
     {

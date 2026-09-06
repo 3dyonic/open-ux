@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Submit",
   "title": "enabled until request",
+  "name": "Enabled until request",
   "rule": "Keep Submit enabled until the request starts; then show a spinner on the request.",
   "citation": [
     {

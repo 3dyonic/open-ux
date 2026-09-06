@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Buttons",
   "title": "follow platform ok cancel order",
+  "name": "Follow the platform OK/Cancel order",
   "rule": "Follow the platform convention for OK/Cancel order (Windows: OK first; Apple: OK last; web: the platform of most users).",
   "citation": [
     {

@@ -3,6 +3,7 @@
   "category": "Feedback",
   "segment": "Toast",
   "title": "toast 10s hover stick then float",
+  "name": "Toast 10s; hover sticks, then floats",
   "rule": "Toast: 10 seconds or while hovered; slide out the top; stick then float top-right on scroll — success that needs no action. Dual-cite Spectrum ≥5s vs Ant Message 3s; no house seconds.",
   "citation": [
     {

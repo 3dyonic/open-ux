@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Text input",
   "title": "dont split phone ssn card",
+  "name": "Don't split phone, SSN, or card",
   "rule": "Do not split phone, SSN, or credit-card numbers into separate fields. One input; segmented fields force meaningless labels for AT. Distinct from GOV.UK three-field dates.",
   "citation": [
     {

@@ -3,6 +3,7 @@
   "category": "Content",
   "segment": "Links",
   "title": "no click here same text same destination",
+  "name": "No “click here”; same text, same destination",
   "rule": "No “click here” / “read more”; same text → same destination. Unique descriptive text per distinct URL; same words when two links go to the same page. Don’t bury the task-critical link mid-paragraph. Downloads: file type + size in parentheses inside the link. Other-language / duration likewise in parentheses inside the link.",
   "citation": [
     {

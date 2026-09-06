@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Interactive questions",
   "title": "interactive questions max 7 same place",
+  "name": "Interactive questions max 7 same place",
   "rule": "Interactive questions: ≤7; one at a time in the same place. Written to “you”; choices immediately under the question as answers; Continue/context-specific button (not “Next” if the page already has Next in multi-page nav); always a way back (“change your selection”). Dual-cite GOV.UK one-question-per-page (Canada keeps subsequent questions on the same page in the same slot). Pre-select most-common vs GOV.UK do-not-preselect is not a NEW row.",
   "citation": [
     {

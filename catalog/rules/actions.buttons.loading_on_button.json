@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Buttons",
   "title": "loading on button",
+  "name": "Loading on button",
   "rule": "For a slow action, show loading on the button itself (spinner on the control that was pressed).",
   "citation": [
     {

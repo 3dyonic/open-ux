@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Order",
   "title": "conversation vs navigation order",
+  "name": "Conversation vs navigation order",
   "rule": "Conversation: ask for the needed/desired action, then present risks. Navigation: Back on the left (previous step). Less important actions go right or bottom. Collapsed overflow content stays on the right.",
   "citation": [
     {

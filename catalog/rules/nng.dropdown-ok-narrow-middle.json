@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Choice",
   "title": "dropdown ok narrow middle",
+  "name": "Dropdown OK narrow middle",
   "rule": "Dropdown OK in a narrow middle (~5–10) when the field is secondary or compactness matters.",
   "citation": [
     {

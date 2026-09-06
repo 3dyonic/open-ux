@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Choice",
   "title": "vertical one choice per line",
+  "name": "Vertical one choice per line",
   "rule": "Vertical one-choice-per-line; space carefully if horizontal.",
   "citation": [
     {

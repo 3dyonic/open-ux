@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Question pages",
   "title": "question pages continue back no sliders",
+  "name": "Question pages continue back no sliders",
   "rule": "Question pages: Continue (not “Submit” jargon); Back link; don’t use range sliders.",
   "citation": [
     {

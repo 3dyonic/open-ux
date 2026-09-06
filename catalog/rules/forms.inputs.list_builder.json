@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Inputs",
   "title": "list builder",
+  "name": "List builder",
   "rule": "When the user must assemble a list of items, provide a list builder (available vs selected), not a single free-text dump.",
   "citation": [
     {

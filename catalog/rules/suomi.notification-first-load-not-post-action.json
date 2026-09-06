@@ -3,6 +3,7 @@
   "category": "Feedback",
   "segment": "Notification",
   "title": "notification first load not post action",
+  "name": "Notification first load not post action",
   "rule": "Notification is first-load page content, not a post-action pop-in — `role=\"region\"`. Dynamic after interaction → InlineAlert. Dual-cite NSW in-page vs global alert.",
   "citation": [
     {

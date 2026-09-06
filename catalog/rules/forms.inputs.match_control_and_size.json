@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Inputs",
   "title": "match control and size",
+  "name": "Match control and size",
   "rule": "Match the control and field size to the type and expected length of input (avoid dropdowns for two or three options that can be radios; size the text field to the expected value).",
   "citation": [
     {

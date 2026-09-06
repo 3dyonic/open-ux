@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Actions",
   "title": "avoid reset clear",
+  "name": "Avoid reset clear",
   "rule": "Avoid Reset and Clear on web forms; if Cancel is needed for sensitive data, give it much less prominence than Submit.",
   "citation": [
     {

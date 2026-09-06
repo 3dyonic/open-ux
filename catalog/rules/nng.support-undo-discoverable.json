@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Control",
   "title": "support undo discoverable",
+  "name": "Support undo discoverable",
   "rule": "Support Undo that stays discoverable — visible control; snackbar-only undo that vanishes in seconds is a miss. Always allow Back; cancel in-progress. (Heuristic #3 not filed as a catalog row.)",
   "citation": [
     {

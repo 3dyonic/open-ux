@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Picker",
   "title": "picker concise items full value",
+  "name": "Picker concise items full value",
   "rule": "Concise menu items; width shows the chosen value in full — wrapping items discouraged; if wrapping is frequent, revise copy or change pattern. Field button should be wide enough that selected items are not ellipsized.",
   "citation": [
     {

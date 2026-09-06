@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Confirmation",
   "title": "serious or undo",
+  "name": "Serious or undo",
   "rule": "Before actions with serious consequences (especially those that cannot be undone), use a confirmation dialog, or offer an undo window; never make destruction immediate.",
   "citation": [
     {

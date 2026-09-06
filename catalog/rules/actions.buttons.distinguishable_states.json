@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Buttons",
   "title": "distinguishable states",
+  "name": "Distinguishable states",
   "rule": "Button states (enabled, disabled, hover, focus, pressed) must be visually distinguishable from each other.",
   "citation": [
     {

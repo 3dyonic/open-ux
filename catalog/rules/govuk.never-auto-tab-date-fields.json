@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Dates",
   "title": "never auto tab date fields",
+  "name": "Never auto tab date fields",
   "rule": "Never auto-tab between day/month/year fields.",
   "citation": [
     {

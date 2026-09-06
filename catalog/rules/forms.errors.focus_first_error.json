@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Errors",
   "title": "focus first error",
+  "name": "Focus first error",
   "rule": "On submit, move focus to the first field in error.",
   "citation": [
     {

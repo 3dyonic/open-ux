@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Mixed values",
   "title": "mixed values en dash",
+  "name": "Mixed values EN dash",
   "rule": "When the field represents multiple non-identical values, show an en dash (–), not a blank or a single value.",
   "citation": [
     {

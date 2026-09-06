@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Buttons",
   "title": "style not size",
+  "name": "Style, not size",
   "rule": "Use style, not size, to distinguish the preferred choice among a set of same-role buttons.",
   "citation": [
     {

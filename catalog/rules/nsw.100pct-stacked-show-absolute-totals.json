@@ -3,6 +3,7 @@
   "category": "Content",
   "segment": "Charts",
   "title": "100pct stacked show absolute totals",
+  "name": "100% stacked: show absolute totals",
   "rule": "100% stacked bars must show absolute totals — percentages hide count; give the total per category so scale is judgeable.",
   "citation": [
     {

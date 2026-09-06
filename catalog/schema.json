@@ -8,6 +8,7 @@
   "required": [
     "id",
     "title",
+    "name",
     "rule",
     "citation",
     "check",
@@ -27,6 +28,11 @@
     "category": { "type": "string", "minLength": 1 },
     "segment": { "type": "string", "minLength": 1 },
     "title": { "type": "string", "minLength": 1 },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Human-friendly display name. Id stays the key; title stays the slug."
+    },
     "rule": { "type": "string", "minLength": 1 },
     "rationale": { "type": "string" },
     "citation": {

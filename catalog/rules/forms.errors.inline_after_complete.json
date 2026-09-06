@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Errors",
   "title": "inline after complete",
+  "name": "Inline after complete",
   "rule": "Prefer inline validation after the user finishes a field; do not show an error before input is complete or on fields they have not reached.",
   "citation": [
     {

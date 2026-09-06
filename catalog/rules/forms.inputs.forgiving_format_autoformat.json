@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Inputs",
   "title": "forgiving format autoformat",
+  "name": "Forgiving format, autoformat",
   "rule": "Accept the value in whatever recognizable format the user types and autoformat it; do not force a single syntax.",
   "citation": [
     {

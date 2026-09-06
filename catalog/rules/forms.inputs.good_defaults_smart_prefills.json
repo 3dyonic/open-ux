@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Inputs",
   "title": "good defaults smart prefills",
+  "name": "Good defaults smart prefills",
   "rule": "Prefill with good defaults and smart values the user can accept or edit.",
   "citation": [
     {

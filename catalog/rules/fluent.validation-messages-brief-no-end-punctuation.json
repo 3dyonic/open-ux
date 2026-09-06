@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Errors",
   "title": "validation messages brief no end punctuation",
+  "name": "Validation messages brief no end punctuation",
   "rule": "Validation messages brief; no end punctuation unless multiple sentences.",
   "citation": [
     {

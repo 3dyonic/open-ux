@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Copy",
   "title": "tooltips clarify outcomes",
+  "name": "Tooltips clarify outcomes",
   "rule": "When an icon or button initiates an action, include a tooltip that states the outcome without conflicting with the visible label.",
   "citation": [
     {

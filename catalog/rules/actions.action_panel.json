@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Tools",
   "title": "action panel",
+  "name": "Action panel",
   "rule": "Instead of burying a large set of related commands in menus, present them on a richly organized panel that stays visible.",
   "citation": [
     {

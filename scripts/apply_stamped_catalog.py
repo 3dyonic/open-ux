@@ -70,6 +70,7 @@ ORDER = [
     "category",
     "segment",
     "title",
+    "name",
     "rule",
     "rationale",
     "citation",
@@ -109,6 +110,7 @@ def _index_row(guideline: dict) -> dict:
     row = {
         "id": guideline["id"],
         "title": guideline.get("title") or "",
+        "name": guideline.get("name") or guideline.get("title") or "",
         "jobs": [leaf] if leaf else [],
         "lane": str(guideline["id"]).split(".", 1)[0],
         "container": guideline["container"],
@@ -728,6 +730,9 @@ def main() -> int:
     from fold_same_claim_rules import apply_folds
 
     apply_folds(CATALOG)
+    from apply_rule_names import main as apply_names
+
+    apply_names()
     return 0
 
 

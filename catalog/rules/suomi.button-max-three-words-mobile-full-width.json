@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Buttons",
   "title": "button max three words mobile full width",
+  "name": "Button: max three words; full width on mobile",
   "rule": "Button label ≤3 words; verb; capital first letter; full-width on mobile, shrink-to-content on desktop. Inverted variant not on images unless contrast holds. Dual-cite Actions explicit verb; unique bits are the three-word cap and mobile full-width.",
   "citation": [
     {

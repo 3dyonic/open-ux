@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Confirmation",
   "title": "response summarizes outcome",
+  "name": "Response summarizes outcome",
   "rule": "Label responses with what will happen (Delete file / Keep file), not Yes/No.",
   "citation": [
     {

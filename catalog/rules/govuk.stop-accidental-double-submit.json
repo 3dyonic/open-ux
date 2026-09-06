@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Submit",
   "title": "stop accidental double submit",
+  "name": "Stop accidental double submit",
   "rule": "Stop accidental double submit.",
   "citation": [
     {

@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Choice",
   "title": "familiar values type not dropdown",
+  "name": "Familiar values type not dropdown",
   "rule": "Highly familiar/predictable values → type, not dropdown.",
   "citation": [
     {

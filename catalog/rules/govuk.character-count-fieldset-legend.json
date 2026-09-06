@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Inputs",
   "title": "character count fieldset legend",
+  "name": "Character count fieldset legend",
   "rule": "Character count when a limit is justified; consider word count if more helpful; fieldset+legend to group related controls. (Also named, merged here: break a hard open question into radios instead of one textarea.)",
   "citation": [
     {

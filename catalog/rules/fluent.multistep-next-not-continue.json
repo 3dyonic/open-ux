@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Copy",
   "title": "multistep next not continue",
+  "name": "Multistep: Next, not Continue",
   "rule": "Multistep: Next not Continue; Previous not Back. Dual-cite with GOV.UK question-page Continue / Back — by surface, not a winner.",
   "citation": [
     {

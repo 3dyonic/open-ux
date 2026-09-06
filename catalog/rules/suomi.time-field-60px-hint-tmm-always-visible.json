@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Time",
   "title": "time field 60px hint tmm always visible",
+  "name": "Time field ~60px with a visible t.mm hint",
   "rule": "Time field is fixed ~60px; hint `t.mm` always visible; component normalises to Finnish time — not placeholder-only format. Dual-cite USWDS time picker increments. Placeholder/label lock: format is not only in a placeholder.",
   "citation": [
     {

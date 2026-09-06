@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Copy",
   "title": "positive wording",
+  "name": "Positive wording",
   "rule": "Use positive wording; avoid negatives that force users to reverse the statement (especially opt-in checkboxes).",
   "citation": [
     {

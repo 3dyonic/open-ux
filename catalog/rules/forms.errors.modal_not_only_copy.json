@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Errors",
   "title": "modal not only copy",
+  "name": "Modal is not the only copy",
   "rule": "Use modals for form errors sparingly; do not put the only copy of a field error in a dialog that must be dismissed before the field can be fixed.",
   "citation": [
     {

@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Copy",
   "title": "ok cancel default vs explicit verb",
+  "name": "OK/Cancel default vs explicit verb",
   "rule": "OK / Cancel as Ant default labels (CONFLICT). Spec still defaults to OK/Cancel but also: use a verb; describe the result (Publish, Login); if primary is negative, stress consequences (Delete / Cancel). Dual-cite vs NN/g `explicit_verb_not_ok`. Do not pick a winner. Prefer cited verb-names-the-outcome as pass when both apply; Ant default is a conflict flag, not a second invented rule.",
   "citation": [
     {

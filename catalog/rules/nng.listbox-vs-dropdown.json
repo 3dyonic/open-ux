@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Choice",
   "title": "listbox vs dropdown",
+  "name": "Listbox vs dropdown",
   "rule": "Dropdown to downplay alternatives / keep a default; listbox to expose options and encourage change.",
   "citation": [
     {

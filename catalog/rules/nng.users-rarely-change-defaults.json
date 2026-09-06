@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Defaults",
   "title": "users rarely change defaults",
+  "name": "Users rarely change defaults",
   "rule": "Users rarely change defaults — pick most common/safe, not first-alpha; don’t always default the most expensive.",
   "citation": [
     {

@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Settings",
   "title": "settings mode and grouping thresholds",
+  "name": "Settings mode and grouping thresholds",
   "rule": "One mode per page: Instant Effect or Submission Effect (use submit when items interdepend). Item count: <7 no grouping; 7–15 group; >15 tab grouping.",
   "citation": [
     {

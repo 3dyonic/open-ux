@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Errors",
   "title": "next to field not summary only",
+  "name": "Next to the field, not summary only",
   "rule": "Put the error next to the field in error; a top validation summary must not be the only indication.",
   "citation": [
     {

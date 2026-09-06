@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Choice",
   "title": "radio set comprehensive other type in",
+  "name": "Radio set comprehensive other type in",
   "rule": "Radio set must be comprehensive; add Other + type-in if not.",
   "citation": [
     {

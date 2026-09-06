@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Character count",
   "title": "character count brevity or legal",
+  "name": "Character count brevity or legal",
   "rule": "Character count only for brevity or a legal cap — not to paper over backend field limits (raise the limit). Skip if length is implied (phone/zip) or if well over 99% of users will never hit the cap (e.g. address at 250). Provide a non-JS backup message. Dual-cite GOV.UK raise-backend + no-maxlength-truncate vs USWDS using `maxlength` for the component. No winner on truncate.",
   "citation": [
     {

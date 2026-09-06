@@ -3,6 +3,7 @@
   "category": "Content",
   "segment": "Typography",
   "title": "underline links only no italics emphasis",
+  "name": "Underline links only no italics emphasis",
   "rule": "Underline = links only; no italics for emphasis — italics are hard for dyslexia; use bold sparingly. Don’t combine underline+bold except the topic-page hyperlink style.",
   "citation": [
     {

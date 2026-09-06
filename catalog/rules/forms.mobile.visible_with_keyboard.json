@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Mobile",
   "title": "visible with keyboard",
+  "name": "Visible with keyboard",
   "rule": "Keep the field visible in both orientations when the keyboard is displayed.",
   "citation": [
     {

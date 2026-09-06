@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Field labels",
   "title": "clickable",
+  "name": "Clickable",
   "rule": "Labels are clickable (`htmlFor` or wrapping the control).",
   "citation": [
     {

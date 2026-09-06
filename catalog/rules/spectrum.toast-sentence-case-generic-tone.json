@@ -3,6 +3,7 @@
   "category": "Feedback",
   "segment": "Toast copy",
   "title": "toast sentence case generic tone",
+  "name": "Toast sentence case generic tone",
   "rule": "Sentence case, no period on a single sentence; instructive/neutral tone (not playful, celebratory, or promotional/upsell); generic language (no filenames/usernames/folders unless necessary).",
   "citation": [
     {

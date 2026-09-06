@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Layout",
   "title": "forms simple vertical stack",
+  "name": "Forms simple vertical stack",
   "rule": "Forms stay a simple vertical stack. Do not rearrange controls with CSS (AT follows HTML order). Vertical is the layout for limited-vision left-to-right scanning.",
   "citation": [
     {

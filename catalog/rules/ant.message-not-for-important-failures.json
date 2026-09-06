@@ -3,6 +3,7 @@
   "category": "Feedback",
   "segment": "Message",
   "title": "message not for important failures",
+  "name": "Message not for important failures",
   "rule": "Message is not for important failures — Ant Message = top-centered, auto-dismiss (default 3s), non-blocking. Important failure → dialog with the reason. Do not use a lightweight prompt for important failure.",
   "citation": [
     {

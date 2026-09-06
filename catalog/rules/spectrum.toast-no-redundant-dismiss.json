@@ -3,6 +3,7 @@
   "category": "Feedback",
   "segment": "Toast",
   "title": "toast no redundant dismiss",
+  "name": "Toast no redundant dismiss",
   "rule": "No redundant Dismiss — every toast already has a close control.",
   "citation": [
     {

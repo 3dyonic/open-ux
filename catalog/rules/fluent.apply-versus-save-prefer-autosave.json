@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Copy",
   "title": "apply versus save prefer autosave",
+  "name": "Apply versus save prefer autosave",
   "rule": "Apply versus Save; prefer autosave; if not, Save + success/error via message bar or confirmation toast.",
   "citation": [
     {

@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Dates",
   "title": "example dates unambiguous order",
+  "name": "Example dates unambiguous order",
   "rule": "Example dates: day ≥13, month ≤9 (e.g. 27 3 2007) so order is unambiguous and leading zeros aren’t required.",
   "citation": [
     {

@@ -14,7 +14,7 @@ LIVE_SEED = (
     "forms.field_labels.label_stays_visible",
     "forms.field_labels.error_identifies_and_fixes",
 )
-INDEX_KEYS = {"id", "title", "jobs", "lane", "container", "card", "facet", "leaf"}
+INDEX_KEYS = {"id", "title", "name", "jobs", "lane", "container", "card", "facet", "leaf"}
 BODY_KEYS = {"pass_when", "fail_when", "rule", "citation", "check"}
 EXTRA_SAMPLE = "govuk.date-input-only-memorable"
 CATALOG_COUNT = 295
@@ -125,6 +125,7 @@ async def test_get_guideline_returns_full_body(live_catalog: Path) -> None:
         assert body["found"] is True
         g = body["guideline"]
         assert g["id"] == "forms.field_labels.visible_label"
+        assert g["name"] == "Visible label"
         assert "lane" not in g
         assert g["rule"]
         assert g["pass_when"]
@@ -292,7 +293,7 @@ async def test_audit_guideline_ids_only_those_rules(live_catalog: Path) -> None:
         assert "error" not in result
         assert "verdict" not in result
         for row in result["guidelines"]:
-            assert set(row) == {"id", "title", "rule", "pass_when", "fail_when"}
+            assert set(row) == {"id", "title", "name", "rule", "pass_when", "fail_when"}
 
 
 @pytest.mark.asyncio
@@ -331,4 +332,4 @@ async def test_audit_jobs_returns_criteria(live_catalog: Path) -> None:
         assert "verdict" not in result
         assert "summary" not in result
         row = result["guidelines"][0]
-        assert set(row) == {"id", "title", "rule", "pass_when", "fail_when"}
+        assert set(row) == {"id", "title", "name", "rule", "pass_when", "fail_when"}

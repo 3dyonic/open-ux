@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Copy",
   "title": "end of task labels named",
+  "name": "End of task labels named",
   "rule": "End-of-task labels named: Done, Finish, Close, Got it, Dismiss (pick the one that matches the outcome).",
   "citation": [
     {

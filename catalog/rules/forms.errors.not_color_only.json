@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Errors",
   "title": "not color only",
+  "name": "Not color only",
   "rule": "Differentiate error from normal field state with color plus non-color cues (outline, weight, icon); do not rely on color alone.",
   "citation": [
     {

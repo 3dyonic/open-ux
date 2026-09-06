@@ -3,6 +3,7 @@
   "category": "Content",
   "segment": "Charts",
   "title": "no tooltip only values",
+  "name": "No tooltip only values",
   "rule": "No tooltip-only values — hover is not the values channel (keyboard/touch/AT). Dual-cite empty/failure “don’t hide the only message in a dismissible overlay.”",
   "citation": [
     {

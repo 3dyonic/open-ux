@@ -3,6 +3,7 @@
   "category": "Wayfinding",
   "segment": "Breadcrumb",
   "title": "hide breadcrumbs on mobile",
+  "name": "Hide breadcrumbs on mobile",
   "rule": "Hide breadcrumbs on mobile — content starts higher; mobile breadcrumb is hard motorically. Dual-cite USWDS omit-on-home; this is viewport hide, not home omit. Don’t use breadcrumbs on 2–3 level sites.",
   "citation": [
     {

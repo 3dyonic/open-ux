@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Layout",
   "title": "single column",
+  "name": "Single column",
   "rule": "Present fields in a single column (short related fields such as city/state/zip may share a row).",
   "citation": [
     {

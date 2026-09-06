@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Dates",
   "title": "calendar control when",
+  "name": "Calendar control when",
   "rule": "Calendar control only if the date is near future or recent past and weekday/week-of-month matters; never JS-only — always also a text entry.",
   "citation": [
     {

@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Choice",
   "title": "prefer radios over dropdowns when visible",
+  "name": "Prefer radios over dropdowns when visible",
   "rule": "Prefer radios over dropdowns when options can stay visible.",
   "citation": [
     {

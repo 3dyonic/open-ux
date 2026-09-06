@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Copy",
   "title": "avoid vague names",
+  "name": "Avoid vague names",
   "rule": "Avoid vague, cutesy, or faddish command names; text should be straightforward, descriptive, and accurate.",
   "citation": [
     {

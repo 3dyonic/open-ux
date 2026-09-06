@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Inputs",
   "title": "dont type number",
+  "name": "Don't use type=number",
   "rule": "Do not use `type=\"number\"` on Text Field — allows `e`/`+`/`-`/`.` and silently discards others; scroll increment is accidental. MUI points at GOV.UK number inputs. Dual-cite; do not invent a winner vs Apple number formatter. Fail native `type=number`. Formatted numeric control is Apple's claim, not a house pick.",
   "citation": [
     {

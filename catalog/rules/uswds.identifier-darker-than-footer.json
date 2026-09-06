@@ -3,6 +3,7 @@
   "category": "Wayfinding",
   "segment": "Identifier",
   "title": "identifier darker than footer",
+  "name": "Identifier darker than footer",
   "rule": "Identifier darker than the footer (grade 80+ / black). Primary or base family, darker than the preceding section, anchored at the bottom so it is not another footer stripe.",
   "citation": [
     {

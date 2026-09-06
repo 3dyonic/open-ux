@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Choice",
   "title": "radio count 2 to 5",
+  "name": "Radio count 2 to 5",
   "rule": "Radio count — must be more than two, normally fewer than five (all options visible to compare). Dual-cite NN/g handful/dropdown cutoff; Ant names the 2–5 band.",
   "citation": [
     {

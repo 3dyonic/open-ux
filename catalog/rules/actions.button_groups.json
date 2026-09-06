@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Layout",
   "title": "button groups",
+  "name": "Button groups",
   "rule": "Present related actions as a small cluster of buttons, aligned horizontally or vertically; split into more groups if there are more than three or four actions.",
   "citation": [
     {

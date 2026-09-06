@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Date",
   "title": "date picker when weekday always type",
+  "name": "Date picker when weekday always type",
   "rule": "Date picker only when weekday / scheduling context helps. Always allow typing. Birthdays and other well-known dates use memorable date fields. Hint `mm/dd/yyyy`. Do not auto-submit on picking a day. Dual-cite GOV.UK three-field memorable date (no auto-tab) and USWDS month=select vs three text fields — both pass if labeled, no auto-advance, not `type=number`. Do not pick a house month control.",
   "citation": [
     {

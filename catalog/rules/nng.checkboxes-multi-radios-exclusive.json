@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Choice",
   "title": "checkboxes multi radios exclusive",
+  "name": "Checkboxes multi radios exclusive",
   "rule": "Checkboxes = independent multi; radios = mutually exclusive exactly-one.",
   "citation": [
     {

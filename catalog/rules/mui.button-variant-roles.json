@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Buttons",
   "title": "button variant roles",
+  "name": "Button variant roles",
   "rule": "Text = less-pronounced (typical in dialogs and cards; on cards, text buttons keep emphasis on card content). Contained = high-emphasis (elevation + fill); primary to the app. Outlined = medium-emphasis: important but not the primary; lower than contained, higher than text.",
   "citation": [
     {

@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Dates",
   "title": "date input only memorable",
+  "name": "Date input only memorable",
   "rule": "Use date input only for memorable or look-up dates — not for dates users won’t know exactly.",
   "citation": [
     {

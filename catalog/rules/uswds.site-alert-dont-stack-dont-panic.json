@@ -3,6 +3,7 @@
   "category": "Feedback",
   "segment": "Site alert",
   "title": "site alert dont stack dont panic",
+  "name": "Site alert: don't stack, don't panic",
   "rule": "One full-width site alert near the top. Do not stack. Multiple messages = a list of links inside a single site alert. Positioning already gives weight; do not use heavy red/orange panic colour. Dual-cite GOV.UK notification banner and System status: sitewide static, never form validation, never stacked.",
   "citation": [
     {

@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Feedback",
   "title": "preview",
+  "name": "Preview",
   "rule": "Show a preview or summary of what will happen when the user performs the action.",
   "citation": [
     {

@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Inputs",
   "title": "get from system",
+  "name": "Get from system",
   "rule": "Get information from the system whenever possible; do not ask people to type data you can gather automatically or with permission.",
   "citation": [
     {

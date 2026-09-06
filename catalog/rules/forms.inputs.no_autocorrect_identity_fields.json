@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Inputs",
   "title": "no autocorrect identity fields",
+  "name": "No autocorrect identity fields",
   "rule": "Do not autocorrect names, addresses, or emails; turn spellcheck off on emails, codes, and usernames.",
   "citation": [
     {

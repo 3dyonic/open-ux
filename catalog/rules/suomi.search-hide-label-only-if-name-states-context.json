@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Search",
   "title": "search hide label only if name states context",
+  "name": "Search hide label only if name states context",
   "rule": "Search: visually hide the label only if the accessible name states the search context (“Hae sivustolta” / “Hae toimipisteitä”). Placeholder is visual extra. Clear control appears once there is a query. Skip search on tiny single-page tools. Placeholder/label lock: this is not a general placeholder-as-label pass.",
   "citation": [
     {

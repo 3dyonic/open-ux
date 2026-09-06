@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Links",
   "title": "form draft links new tab named in link",
+  "name": "Form draft links new tab named in link",
   "rule": "In-form links that must not lose the draft open in a new tab, and say so in the link text — `target=\"_blank\"` plus visible “(opent in een nieuwe tab)” (or icon + equivalent SR text inside the link). Dual-cite USWDS identify-destination; this is draft-preservation + in-link announcement.",
   "citation": [
     {

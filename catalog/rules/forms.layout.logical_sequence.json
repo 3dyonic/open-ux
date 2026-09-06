@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Layout",
   "title": "logical sequence",
+  "name": "Logical sequence",
   "rule": "Sequence fields and choices in a logical, conventional order and make Tab order match that sequence.",
   "citation": [
     {

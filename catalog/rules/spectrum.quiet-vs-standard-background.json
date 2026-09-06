@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Text field",
   "title": "quiet vs standard background",
+  "name": "Quiet vs standard background",
   "rule": "Visible background for dense control arrays / isolated buttons; quiet (no fill) only when a clear stack/table/grid makes the field parseable. Too many quiet controls in a small space are hard to read.",
   "citation": [
     {

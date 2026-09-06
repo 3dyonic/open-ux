@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Errors",
   "title": "errorsummary link text equals field error",
+  "name": "Errorsummary link text equals field error",
   "rule": "ErrorSummary link text = the field’s error text — same wording in both places so either context still reads.",
   "citation": [
     {

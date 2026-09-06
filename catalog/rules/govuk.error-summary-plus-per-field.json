@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Errors",
   "title": "error summary plus per field",
+  "name": "Error summary plus per field",
   "rule": "Error summary + per-field errors + focus the summary + link each item to the answer. Compatible with NN/g “not summary-only”; GOV.UK requires the summary as well.",
   "citation": [
     {

@@ -3,6 +3,7 @@
   "category": "Feedback",
   "segment": "Toast",
   "title": "dont place mobile toasts over navigation",
+  "name": "Don't place mobile toasts over navigation",
   "rule": "Don't place mobile toasts over navigation.",
   "citation": [
     {

@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Structure",
   "title": "conditionally reveal related question",
+  "name": "Conditionally reveal related question",
   "rule": "Conditionally reveal a related question on the chosen radio/checkbox.",
   "citation": [
     {

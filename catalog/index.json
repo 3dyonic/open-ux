@@ -4,6 +4,7 @@
     {
       "id": "forms.field_labels.visible_label",
       "title": "visible label",
+      "name": "Visible label",
       "jobs": [
         "avoid_placeholder_as_label"
       ],
@@ -16,6 +17,7 @@
     {
       "id": "forms.field_labels.label_stays_visible",
       "title": "label stays visible",
+      "name": "Label stays visible",
       "jobs": [
         "avoid_placeholder_as_label"
       ],
@@ -28,6 +30,7 @@
     {
       "id": "forms.field_labels.error_identifies_and_fixes",
       "title": "error identifies and fixes",
+      "name": "Error identifies and fixes",
       "jobs": [
         "explain_failure_next_to_cause"
       ],
@@ -40,6 +43,7 @@
     {
       "id": "actions.action_panel",
       "title": "action panel",
+      "name": "Action panel",
       "jobs": [
         "compose_the_command_surface"
       ],
@@ -52,6 +56,7 @@
     {
       "id": "actions.button_groups",
       "title": "button groups",
+      "name": "Button groups",
       "jobs": [
         "pick_primary_action"
       ],
@@ -64,6 +69,7 @@
     {
       "id": "actions.buttons.default_not_destructive",
       "title": "default not destructive",
+      "name": "Default is not destructive",
       "jobs": [
         "disable_or_confirm_destructive"
       ],
@@ -76,6 +82,7 @@
     {
       "id": "actions.buttons.distinguishable_states",
       "title": "distinguishable states",
+      "name": "Distinguishable states",
       "jobs": [
         "show_action_state"
       ],
@@ -88,6 +95,7 @@
     {
       "id": "actions.buttons.follow_platform_ok_cancel_order",
       "title": "follow platform ok cancel order",
+      "name": "Follow the platform OK/Cancel order",
       "jobs": [
         "pick_primary_action"
       ],
@@ -100,6 +108,7 @@
     {
       "id": "actions.buttons.loading_on_button",
       "title": "loading on button",
+      "name": "Loading on button",
       "jobs": [
         "show_action_state"
       ],
@@ -112,6 +121,7 @@
     {
       "id": "actions.buttons.one_primary",
       "title": "one primary",
+      "name": "One primary action",
       "jobs": [
         "pick_primary_action"
       ],
@@ -124,6 +134,7 @@
     {
       "id": "actions.buttons.press_state",
       "title": "press state",
+      "name": "Press state",
       "jobs": [
         "show_action_state"
       ],
@@ -136,6 +147,7 @@
     {
       "id": "actions.buttons.style_not_size",
       "title": "style not size",
+      "name": "Style, not size",
       "jobs": [
         "pick_primary_action"
       ],
@@ -148,6 +160,7 @@
     {
       "id": "actions.cancelability",
       "title": "cancelability",
+      "name": "Cancelability",
       "jobs": [
         "warn_before_leave"
       ],
@@ -160,6 +173,7 @@
     {
       "id": "actions.close_saves_separate_cancel",
       "title": "close saves separate cancel",
+      "name": "Close saves; Cancel is separate",
       "jobs": [
         "warn_before_leave"
       ],
@@ -172,6 +186,7 @@
     {
       "id": "actions.command_history",
       "title": "command history",
+      "name": "Command history",
       "jobs": [
         "compose_the_command_surface"
       ],
@@ -184,6 +199,7 @@
     {
       "id": "actions.confirm.bypass_educational",
       "title": "bypass educational",
+      "name": "Bypass educational",
       "jobs": [
         "disable_or_confirm_destructive"
       ],
@@ -196,6 +212,7 @@
     {
       "id": "actions.confirm.nonstandard_for_extreme",
       "title": "nonstandard for extreme",
+      "name": "Nonstandard for extreme",
       "jobs": [
         "disable_or_confirm_destructive"
       ],
@@ -208,6 +225,7 @@
     {
       "id": "actions.confirm.not_routine",
       "title": "not routine",
+      "name": "Not routine",
       "jobs": [
         "disable_or_confirm_destructive"
       ],
@@ -220,6 +238,7 @@
     {
       "id": "actions.confirm.progressive_disclosure",
       "title": "progressive disclosure",
+      "name": "Progressive disclosure",
       "jobs": [
         "disable_or_confirm_destructive"
       ],
@@ -232,6 +251,7 @@
     {
       "id": "actions.confirm.response_summarizes_outcome",
       "title": "response summarizes outcome",
+      "name": "Response summarizes outcome",
       "jobs": [
         "disable_or_confirm_destructive"
       ],
@@ -244,6 +264,7 @@
     {
       "id": "actions.confirm.serious_or_undo",
       "title": "serious or undo",
+      "name": "Serious or undo",
       "jobs": [
         "disable_or_confirm_destructive"
       ],
@@ -256,6 +277,7 @@
     {
       "id": "actions.confirm.specific_consequences",
       "title": "specific consequences",
+      "name": "Specific consequences",
       "jobs": [
         "disable_or_confirm_destructive"
       ],
@@ -268,6 +290,7 @@
     {
       "id": "actions.copy.adjectives_for_appearance",
       "title": "adjectives for appearance",
+      "name": "Adjectives for appearance",
       "jobs": [
         "word_the_action"
       ],
@@ -280,6 +303,7 @@
     {
       "id": "actions.copy.avoid_vague_names",
       "title": "avoid vague names",
+      "name": "Avoid vague names",
       "jobs": [
         "word_the_action"
       ],
@@ -292,6 +316,7 @@
     {
       "id": "actions.copy.consequent_state",
       "title": "consequent state",
+      "name": "Consequent state",
       "jobs": [
         "word_the_action"
       ],
@@ -304,6 +329,7 @@
     {
       "id": "actions.copy.consistent_words",
       "title": "consistent words",
+      "name": "Consistent words",
       "jobs": [
         "word_the_action"
       ],
@@ -316,6 +342,7 @@
     {
       "id": "actions.copy.ellipsis_needs_more_input",
       "title": "ellipsis needs more input",
+      "name": "Ellipsis means more input",
       "jobs": [
         "word_the_action"
       ],
@@ -328,6 +355,7 @@
     {
       "id": "actions.copy.explicit_verb_not_ok",
       "title": "explicit verb not ok",
+      "name": "Explicit verb, not OK",
       "jobs": [
         "word_the_action"
       ],
@@ -340,6 +368,7 @@
     {
       "id": "actions.copy.limit_branded_terms",
       "title": "limit branded terms",
+      "name": "Limit branded terms",
       "jobs": [
         "word_the_action"
       ],
@@ -352,6 +381,7 @@
     {
       "id": "actions.copy.short_clear_sentence_case",
       "title": "short clear sentence case",
+      "name": "Short clear sentence case",
       "jobs": [
         "word_the_action"
       ],
@@ -364,6 +394,7 @@
     {
       "id": "actions.copy.tooltips_clarify_outcomes",
       "title": "tooltips clarify outcomes",
+      "name": "Tooltips clarify outcomes",
       "jobs": [
         "word_the_action"
       ],
@@ -376,6 +407,7 @@
     {
       "id": "actions.copy.verbs_for_actions",
       "title": "verbs for actions",
+      "name": "Verbs for actions",
       "jobs": [
         "word_the_action"
       ],
@@ -388,6 +420,7 @@
     {
       "id": "actions.hover_or_popup_tools",
       "title": "hover or popup tools",
+      "name": "Hover or popup tools",
       "jobs": [
         "disclose_instead_of_dump"
       ],
@@ -400,6 +433,7 @@
     {
       "id": "actions.icons.always_visible_text_label",
       "title": "always visible text label",
+      "name": "Always-visible text label",
       "jobs": [
         "word_the_action"
       ],
@@ -412,6 +446,7 @@
     {
       "id": "actions.macros",
       "title": "macros",
+      "name": "Macros",
       "jobs": [
         "compose_the_command_surface"
       ],
@@ -424,6 +459,7 @@
     {
       "id": "actions.menus.frequent_items_first",
       "title": "frequent items first",
+      "name": "Frequent items first",
       "jobs": [
         "compose_the_command_surface"
       ],
@@ -436,6 +472,7 @@
     {
       "id": "actions.menus.unavailable_state",
       "title": "unavailable state",
+      "name": "Unavailable state",
       "jobs": [
         "compose_the_command_surface"
       ],
@@ -448,6 +485,7 @@
     {
       "id": "actions.multilevel_undo",
       "title": "multilevel undo",
+      "name": "Multilevel undo",
       "jobs": [
         "disable_or_confirm_destructive"
       ],
@@ -460,6 +498,7 @@
     {
       "id": "actions.preview",
       "title": "preview",
+      "name": "Preview",
       "jobs": [
         "compose_the_command_surface"
       ],
@@ -472,6 +511,7 @@
     {
       "id": "actions.prominent_done_or_assumed_next",
       "title": "prominent done or assumed next",
+      "name": "Prominent Done or assumed next",
       "jobs": [
         "pick_primary_action"
       ],
@@ -484,6 +524,7 @@
     {
       "id": "actions.proximity.redundant_visual_signals",
       "title": "redundant visual signals",
+      "name": "Redundant visual signals",
       "jobs": [
         "disable_or_confirm_destructive"
       ],
@@ -496,6 +537,7 @@
     {
       "id": "actions.proximity.separate_consequential",
       "title": "separate consequential",
+      "name": "Separate consequential",
       "jobs": [
         "disable_or_confirm_destructive"
       ],
@@ -508,6 +550,7 @@
     {
       "id": "actions.smart_menu_items",
       "title": "smart menu items",
+      "name": "Smart menu items",
       "jobs": [
         "compose_the_command_surface"
       ],
@@ -520,6 +563,7 @@
     {
       "id": "ant.checkbox-vs-switch",
       "title": "checkbox vs switch",
+      "name": "Checkbox vs switch",
       "jobs": [
         "choose_control_for_choice"
       ],
@@ -532,6 +576,7 @@
     {
       "id": "ant.conversation-vs-navigation-order",
       "title": "conversation vs navigation order",
+      "name": "Conversation vs navigation order",
       "jobs": [
         "pick_primary_action"
       ],
@@ -544,6 +589,7 @@
     {
       "id": "ant.danger-cancel-primary-when-not-recommended",
       "title": "danger cancel primary when not recommended",
+      "name": "Danger cancel primary when not recommended",
       "jobs": [
         "disable_or_confirm_destructive"
       ],
@@ -556,6 +602,7 @@
     {
       "id": "ant.dialog-feedback-only-important-actionable",
       "title": "dialog feedback only important actionable",
+      "name": "Dialog feedback only important actionable",
       "jobs": [
         "pick_modal_only_when_blocking"
       ],
@@ -568,6 +615,7 @@
     {
       "id": "ant.dropdown-when-over-5-no-truncate",
       "title": "dropdown when over 5 no truncate",
+      "name": "Dropdown over 5, no truncate",
       "jobs": [
         "choose_control_for_choice"
       ],
@@ -580,6 +628,7 @@
     {
       "id": "ant.editable-list-pattern-by-field-count",
       "title": "editable list pattern by field count",
+      "name": "Editable list pattern by field count",
       "jobs": [
         "group_related_inputs"
       ],
@@ -592,6 +641,7 @@
     {
       "id": "ant.footer-buttons-when-body-cannot-carry",
       "title": "footer buttons when body cannot carry",
+      "name": "Footer buttons when body cannot carry",
       "jobs": [
         "pick_primary_action"
       ],
@@ -604,6 +654,7 @@
     {
       "id": "ant.form-in-modal-lifecycle",
       "title": "form in modal lifecycle",
+      "name": "Form in modal lifecycle",
       "jobs": [
         "pick_modal_only_when_blocking"
       ],
@@ -616,6 +667,7 @@
     {
       "id": "ant.group-spacing-overflow-dropdown",
       "title": "group spacing overflow dropdown",
+      "name": "Group spacing overflow dropdown",
       "jobs": [
         "pick_primary_action"
       ],
@@ -628,6 +680,7 @@
     {
       "id": "ant.hover-detail-overlay-timing",
       "title": "hover detail overlay timing",
+      "name": "Hover detail overlay timing",
       "jobs": [
         "disclose_instead_of_dump"
       ],
@@ -640,6 +693,7 @@
     {
       "id": "ant.inline-input-feedback-does-not-auto-dismiss",
       "title": "inline input feedback does not auto dismiss",
+      "name": "Inline input feedback does not auto dismiss",
       "jobs": [
         "recover_from_invalid_input"
       ],
@@ -652,6 +706,7 @@
     {
       "id": "ant.input-overlay-click-outside-preserves",
       "title": "input overlay click outside preserves",
+      "name": "Input overlay click outside preserves",
       "jobs": [
         "disclose_instead_of_dump"
       ],
@@ -664,6 +719,7 @@
     {
       "id": "ant.label-left-default-vs-top",
       "title": "label left default vs top",
+      "name": "Label left default vs top",
       "jobs": [
         "name_a_control"
       ],
@@ -676,6 +732,7 @@
     {
       "id": "ant.message-not-for-important-failures",
       "title": "message not for important failures",
+      "name": "Message not for important failures",
       "jobs": [
         "announce_system_status"
       ],
@@ -688,6 +745,7 @@
     {
       "id": "ant.named-button-type-map",
       "title": "named button type map",
+      "name": "Named button type map",
       "jobs": [
         "pick_primary_action"
       ],
@@ -700,6 +758,7 @@
     {
       "id": "ant.never-two-icons-in-one-button",
       "title": "never two icons in one button",
+      "name": "Never two icons in one button",
       "jobs": [
         "pick_primary_action"
       ],
@@ -712,6 +771,7 @@
     {
       "id": "ant.no-multi-column-form-in-one-area",
       "title": "no multi column form in one area",
+      "name": "No multi column form in one area",
       "jobs": [
         "group_related_inputs"
       ],
@@ -724,6 +784,7 @@
     {
       "id": "ant.ok-cancel-default-vs-explicit-verb",
       "title": "ok cancel default vs explicit verb",
+      "name": "OK/Cancel default vs explicit verb",
       "jobs": [
         "word_the_action"
       ],
@@ -736,6 +797,7 @@
     {
       "id": "ant.one-cta-per-screen",
       "title": "one cta per screen",
+      "name": "One CTA per screen",
       "jobs": [
         "pick_primary_action"
       ],
@@ -748,6 +810,7 @@
     {
       "id": "ant.prefer-undo-or-popconfirm-over-modal",
       "title": "prefer undo or popconfirm over modal",
+      "name": "Prefer undo or popconfirm over modal",
       "jobs": [
         "disable_or_confirm_destructive"
       ],
@@ -760,6 +823,7 @@
     {
       "id": "ant.radio-count-2-to-5",
       "title": "radio count 2 to 5",
+      "name": "Radio count 2 to 5",
       "jobs": [
         "choose_control_for_choice"
       ],
@@ -772,6 +836,7 @@
     {
       "id": "ant.settings-mode-and-grouping-thresholds",
       "title": "settings mode and grouping thresholds",
+      "name": "Settings mode and grouping thresholds",
       "jobs": [
         "group_related_inputs"
       ],
@@ -784,6 +849,7 @@
     {
       "id": "ant.slider-intensity-grade",
       "title": "slider intensity grade",
+      "name": "Slider intensity grade",
       "jobs": [
         "choose_control_for_choice"
       ],
@@ -796,6 +862,7 @@
     {
       "id": "canada.doormats-max-9",
       "title": "doormats max 9",
+      "name": "Doormats max 9",
       "jobs": [
         "wayfind_after_nav"
       ],
@@ -808,6 +875,7 @@
     {
       "id": "canada.equivalent-content-both-official-languages",
       "title": "equivalent content both official languages",
+      "name": "Equivalent content both official languages",
       "jobs": [
         "name_the_link_by_destination"
       ],
@@ -820,6 +888,7 @@
     {
       "id": "canada.find-understand-use-nonpriority-must-not-block",
       "title": "find understand use nonpriority must not block",
+      "name": "Find understand use nonpriority must not block",
       "jobs": [
         "wayfind_after_nav"
       ],
@@ -832,6 +901,7 @@
     {
       "id": "canada.four-writing-qualities",
       "title": "four writing qualities",
+      "name": "Four writing qualities",
       "jobs": [
         "tone_of_voice_for_failure"
       ],
@@ -844,6 +914,7 @@
     {
       "id": "canada.interactive-questions-max-7-same-place",
       "title": "interactive questions max 7 same place",
+      "name": "Interactive questions max 7 same place",
       "jobs": [
         "group_related_inputs"
       ],
@@ -856,6 +927,7 @@
     {
       "id": "canada.intranet-destinations-labelled",
       "title": "intranet destinations labelled",
+      "name": "Intranet destinations labelled",
       "jobs": [
         "wayfind_after_nav"
       ],
@@ -868,6 +940,7 @@
     {
       "id": "canada.inverted-pyramid-no-welcome-filler",
       "title": "inverted pyramid no welcome filler",
+      "name": "Inverted pyramid no welcome filler",
       "jobs": [
         "keep_the_page_scannable"
       ],
@@ -880,6 +953,7 @@
     {
       "id": "canada.lists-max-7-or-split",
       "title": "lists max 7 or split",
+      "name": "Lists max 7 or split",
       "jobs": [
         "group_related_inputs"
       ],
@@ -892,6 +966,7 @@
     {
       "id": "canada.must-need-may-might",
       "title": "must need may might",
+      "name": "Must, need to, may, might",
       "jobs": [
         "tone_of_voice_for_failure"
       ],
@@ -904,6 +979,7 @@
     {
       "id": "canada.no-click-here-same-text-same-destination",
       "title": "no click here same text same destination",
+      "name": "No “click here”; same text, same destination",
       "jobs": [
         "name_the_link_by_destination"
       ],
@@ -916,6 +992,7 @@
     {
       "id": "canada.no-eg-ie-spell-out-and",
       "title": "no eg ie spell out and",
+      "name": "No e.g. or i.e.; spell out and",
       "jobs": [
         "tone_of_voice_for_failure"
       ],
@@ -928,6 +1005,7 @@
     {
       "id": "canada.no-separate-mobile-site",
       "title": "no separate mobile site",
+      "name": "No separate mobile site",
       "jobs": [
         "wayfind_after_nav"
       ],
@@ -940,6 +1018,7 @@
     {
       "id": "canada.supertask-once-never-promo",
       "title": "supertask once never promo",
+      "name": "Supertask once never promo",
       "jobs": [
         "keep_the_page_scannable"
       ],
@@ -952,6 +1031,7 @@
     {
       "id": "canada.underline-links-only-no-italics-emphasis",
       "title": "underline links only no italics emphasis",
+      "name": "Underline links only no italics emphasis",
       "jobs": [
         "name_the_link_by_destination"
       ],
@@ -964,6 +1044,7 @@
     {
       "id": "canada.unique-title-one-h1-heading-every-200-words",
       "title": "unique title one h1 heading every 200 words",
+      "name": "Unique title, one H1, heading every 200 words",
       "jobs": [
         "keep_the_page_scannable"
       ],
@@ -976,6 +1057,7 @@
     {
       "id": "canada.you-your-never-i-my",
       "title": "you your never i my",
+      "name": "You/your, never I/my",
       "jobs": [
         "write_to_you"
       ],
@@ -988,6 +1070,7 @@
     {
       "id": "fluent.apply-versus-save-prefer-autosave",
       "title": "apply versus save prefer autosave",
+      "name": "Apply versus save prefer autosave",
       "jobs": [
         "word_the_action"
       ],
@@ -1000,6 +1083,7 @@
     {
       "id": "fluent.create-labels-new-thing",
       "title": "create labels new thing",
+      "name": "Create labels: New {thing}",
       "jobs": [
         "word_the_action"
       ],
@@ -1012,6 +1096,7 @@
     {
       "id": "fluent.disabled-field-label-stays-perceivable",
       "title": "disabled field label stays perceivable",
+      "name": "Disabled field label stays perceivable",
       "jobs": [
         "avoid_placeholder_as_label"
       ],
@@ -1024,6 +1109,7 @@
     {
       "id": "fluent.end-of-task-labels-named",
       "title": "end of task labels named",
+      "name": "End of task labels named",
       "jobs": [
         "pick_primary_action"
       ],
@@ -1036,6 +1122,7 @@
     {
       "id": "fluent.helper-text-below",
       "title": "helper text below",
+      "name": "Helper text below",
       "jobs": [
         "mark_requirements_up_front"
       ],
@@ -1048,6 +1135,7 @@
     {
       "id": "fluent.ios-chrome-back-done-cancel",
       "title": "ios chrome back done cancel",
+      "name": "iOS chrome: Back, Done, Cancel",
       "jobs": [
         "pick_primary_action"
       ],
@@ -1060,6 +1148,7 @@
     {
       "id": "fluent.labels-top-aligned-by-default",
       "title": "labels top aligned by default",
+      "name": "Labels top aligned by default",
       "jobs": [
         "name_a_control"
       ],
@@ -1072,6 +1161,7 @@
     {
       "id": "fluent.multistep-next-not-continue",
       "title": "multistep next not continue",
+      "name": "Multistep: Next, not Continue",
       "jobs": [
         "show_step_progress"
       ],
@@ -1084,6 +1174,7 @@
     {
       "id": "fluent.split-button-dont-repeat-primary",
       "title": "split button dont repeat primary",
+      "name": "Split button: don't repeat primary",
       "jobs": [
         "pick_primary_action"
       ],
@@ -1096,6 +1187,7 @@
     {
       "id": "fluent.validation-messages-brief-no-end-punctuation",
       "title": "validation messages brief no end punctuation",
+      "name": "Validation messages brief no end punctuation",
       "jobs": [
         "recover_from_invalid_input"
       ],
@@ -1108,6 +1200,7 @@
     {
       "id": "forms.actions.avoid_reset_clear",
       "title": "avoid reset clear",
+      "name": "Avoid reset clear",
       "jobs": [
         "pick_primary_action"
       ],
@@ -1120,6 +1213,7 @@
     {
       "id": "forms.copy.no_double_barreled",
       "title": "no double barreled",
+      "name": "No double-barreled questions",
       "jobs": [
         "write_to_you"
       ],
@@ -1132,6 +1226,7 @@
     {
       "id": "forms.copy.plain_language",
       "title": "plain language",
+      "name": "Plain language",
       "jobs": [
         "write_to_you"
       ],
@@ -1144,6 +1239,7 @@
     {
       "id": "forms.copy.positive_wording",
       "title": "positive wording",
+      "name": "Positive wording",
       "jobs": [
         "write_to_you"
       ],
@@ -1156,6 +1252,7 @@
     {
       "id": "forms.errors.focus_first_error",
       "title": "focus first error",
+      "name": "Focus first error",
       "jobs": [
         "recover_from_invalid_input"
       ],
@@ -1168,6 +1265,7 @@
     {
       "id": "forms.errors.inline_after_complete",
       "title": "inline after complete",
+      "name": "Inline after complete",
       "jobs": [
         "recover_from_invalid_input"
       ],
@@ -1180,6 +1278,7 @@
     {
       "id": "forms.errors.modal_not_only_copy",
       "title": "modal not only copy",
+      "name": "Modal is not the only copy",
       "jobs": [
         "explain_failure_next_to_cause"
       ],
@@ -1192,6 +1291,7 @@
     {
       "id": "forms.errors.next_to_field_not_summary_only",
       "title": "next to field not summary only",
+      "name": "Next to the field, not summary only",
       "jobs": [
         "explain_failure_next_to_cause"
       ],
@@ -1204,6 +1304,7 @@
     {
       "id": "forms.errors.not_color_only",
       "title": "not color only",
+      "name": "Not color only",
       "jobs": [
         "explain_failure_next_to_cause"
       ],
@@ -1216,6 +1317,7 @@
     {
       "id": "forms.errors.not_tooltip_only",
       "title": "not tooltip only",
+      "name": "Not tooltip only",
       "jobs": [
         "explain_failure_next_to_cause"
       ],
@@ -1228,6 +1330,7 @@
     {
       "id": "forms.errors.repeated_extra_help",
       "title": "repeated extra help",
+      "name": "Repeated extra help",
       "jobs": [
         "recover_from_invalid_input"
       ],
@@ -1240,6 +1343,7 @@
     {
       "id": "forms.errors.replace_supporting_text",
       "title": "replace supporting text",
+      "name": "Replace supporting text",
       "jobs": [
         "recover_from_invalid_input"
       ],
@@ -1252,6 +1356,7 @@
     {
       "id": "forms.errors.success_complex_fields",
       "title": "success complex fields",
+      "name": "Success complex fields",
       "jobs": [
         "recover_from_invalid_input"
       ],
@@ -1264,6 +1369,7 @@
     {
       "id": "forms.field_labels.placeholder_hint_conflict",
       "title": "placeholder hint conflict",
+      "name": "Placeholder hint conflict",
       "jobs": [
         "avoid_placeholder_as_label"
       ],
@@ -1276,6 +1382,7 @@
     {
       "id": "forms.fields.distinguish_optional_required",
       "title": "distinguish optional required",
+      "name": "Distinguish optional required",
       "jobs": [
         "mark_requirements_up_front"
       ],
@@ -1288,6 +1395,7 @@
     {
       "id": "forms.fields.explain_format_upfront",
       "title": "explain format upfront",
+      "name": "Explain format upfront",
       "jobs": [
         "mark_requirements_up_front"
       ],
@@ -1300,6 +1408,7 @@
     {
       "id": "forms.fields.required_before_proceed",
       "title": "required before proceed",
+      "name": "Required before proceed",
       "jobs": [
         "mark_requirements_up_front"
       ],
@@ -1312,6 +1421,7 @@
     {
       "id": "forms.inputs.allow_paste_and_drag",
       "title": "allow paste and drag",
+      "name": "Allow paste and drag",
       "jobs": [
         "use_familiar_control"
       ],
@@ -1324,6 +1434,7 @@
     {
       "id": "forms.inputs.autocompletion",
       "title": "autocompletion",
+      "name": "Autocompletion",
       "jobs": [
         "use_familiar_control"
       ],
@@ -1336,6 +1447,7 @@
     {
       "id": "forms.inputs.clear_button",
       "title": "clear button",
+      "name": "Clear button",
       "jobs": [
         "use_familiar_control"
       ],
@@ -1348,6 +1460,7 @@
     {
       "id": "forms.inputs.combo_box",
       "title": "combo box",
+      "name": "Combo box",
       "jobs": [
         "choose_control_for_choice"
       ],
@@ -1360,6 +1473,7 @@
     {
       "id": "forms.inputs.compute_from_other_info",
       "title": "compute from other info",
+      "name": "Compute from other info",
       "jobs": [
         "use_familiar_control"
       ],
@@ -1372,6 +1486,7 @@
     {
       "id": "forms.inputs.dropdown_chooser",
       "title": "dropdown chooser",
+      "name": "Dropdown chooser",
       "jobs": [
         "choose_control_for_choice"
       ],
@@ -1384,6 +1499,7 @@
     {
       "id": "forms.inputs.fill_in_the_blanks",
       "title": "fill in the blanks",
+      "name": "Fill in the blanks",
       "jobs": [
         "use_familiar_control"
       ],
@@ -1396,6 +1512,7 @@
     {
       "id": "forms.inputs.forgiving_format_autoformat",
       "title": "forgiving format autoformat",
+      "name": "Forgiving format, autoformat",
       "jobs": [
         "use_familiar_control"
       ],
@@ -1408,6 +1525,7 @@
     {
       "id": "forms.inputs.get_from_system",
       "title": "get from system",
+      "name": "Get from system",
       "jobs": [
         "use_familiar_control"
       ],
@@ -1420,6 +1538,7 @@
     {
       "id": "forms.inputs.good_defaults_smart_prefills",
       "title": "good defaults smart prefills",
+      "name": "Good defaults smart prefills",
       "jobs": [
         "use_familiar_control"
       ],
@@ -1432,6 +1551,7 @@
     {
       "id": "forms.inputs.helpful_constraints",
       "title": "helpful constraints",
+      "name": "Helpful constraints",
       "jobs": [
         "mark_requirements_up_front"
       ],
@@ -1444,6 +1564,7 @@
     {
       "id": "forms.inputs.html_autocomplete_and_name",
       "title": "html autocomplete and name",
+      "name": "HTML autocomplete and name",
       "jobs": [
         "use_familiar_control"
       ],
@@ -1456,6 +1577,7 @@
     {
       "id": "forms.inputs.list_builder",
       "title": "list builder",
+      "name": "List builder",
       "jobs": [
         "choose_control_for_choice"
       ],
@@ -1468,6 +1590,7 @@
     {
       "id": "forms.inputs.match_control_and_size",
       "title": "match control and size",
+      "name": "Match control and size",
       "jobs": [
         "choose_control_for_choice"
       ],
@@ -1480,6 +1603,7 @@
     {
       "id": "forms.inputs.matching_keyboard_and_type",
       "title": "matching keyboard and type",
+      "name": "Matching keyboard and type",
       "jobs": [
         "use_familiar_control"
       ],
@@ -1492,6 +1616,7 @@
     {
       "id": "forms.inputs.never_prepopulate_password",
       "title": "never prepopulate password",
+      "name": "Never prepopulate password",
       "jobs": [
         "show_the_password"
       ],
@@ -1504,6 +1629,7 @@
     {
       "id": "forms.inputs.no_autocorrect_identity_fields",
       "title": "no autocorrect identity fields",
+      "name": "No autocorrect identity fields",
       "jobs": [
         "use_familiar_control"
       ],
@@ -1516,6 +1642,7 @@
     {
       "id": "forms.inputs.offer_choices_not_only_text",
       "title": "offer choices not only text",
+      "name": "Offer choices not only text",
       "jobs": [
         "choose_control_for_choice"
       ],
@@ -1528,6 +1655,7 @@
     {
       "id": "forms.inputs.password_strength_meter",
       "title": "password strength meter",
+      "name": "Password strength meter",
       "jobs": [
         "recover_from_invalid_input"
       ],
@@ -1540,6 +1668,7 @@
     {
       "id": "forms.inputs.shared_hit_target_choice",
       "title": "shared hit target choice",
+      "name": "Shared hit target choice",
       "jobs": [
         "keep_hit_target_usable"
       ],
@@ -1552,6 +1681,7 @@
     {
       "id": "forms.inputs.structured_format",
       "title": "structured format",
+      "name": "Structured format",
       "jobs": [
         "use_familiar_control"
       ],
@@ -1564,6 +1694,7 @@
     {
       "id": "forms.inputs.use_device_features",
       "title": "use device features",
+      "name": "Use device features",
       "jobs": [
         "use_familiar_control"
       ],
@@ -1576,6 +1707,7 @@
     {
       "id": "forms.labels.clickable",
       "title": "clickable",
+      "name": "Clickable",
       "jobs": [
         "name_a_control"
       ],
@@ -1588,6 +1720,7 @@
     {
       "id": "forms.layout.group_related_labels_fields",
       "title": "group related labels fields",
+      "name": "Group related labels fields",
       "jobs": [
         "group_related_inputs"
       ],
@@ -1600,6 +1733,7 @@
     {
       "id": "forms.layout.logical_sequence",
       "title": "logical sequence",
+      "name": "Logical sequence",
       "jobs": [
         "group_related_inputs"
       ],
@@ -1612,6 +1746,7 @@
     {
       "id": "forms.layout.single_column",
       "title": "single column",
+      "name": "Single column",
       "jobs": [
         "group_related_inputs"
       ],
@@ -1624,6 +1759,7 @@
     {
       "id": "forms.length.keep_short",
       "title": "keep short",
+      "name": "Keep short",
       "jobs": [
         "group_related_inputs"
       ],
@@ -1636,6 +1772,7 @@
     {
       "id": "forms.mobile.visible_with_keyboard",
       "title": "visible with keyboard",
+      "name": "Visible with keyboard",
       "jobs": [
         "use_familiar_control"
       ],
@@ -1648,6 +1785,7 @@
     {
       "id": "forms.navigation.warn_unsaved",
       "title": "warn unsaved",
+      "name": "Warn unsaved",
       "jobs": [
         "warn_before_leave"
       ],
@@ -1660,6 +1798,7 @@
     {
       "id": "forms.structure.progressive_disclosure",
       "title": "progressive disclosure",
+      "name": "Progressive disclosure",
       "jobs": [
         "disclose_instead_of_dump"
       ],
@@ -1672,6 +1811,7 @@
     {
       "id": "forms.submit.enabled_until_request",
       "title": "enabled until request",
+      "name": "Enabled until request",
       "jobs": [
         "pick_primary_action"
       ],
@@ -1684,6 +1824,7 @@
     {
       "id": "forms.transparency.progress_on_long_forms",
       "title": "progress on long forms",
+      "name": "Progress on long forms",
       "jobs": [
         "show_step_progress"
       ],
@@ -1696,6 +1837,7 @@
     {
       "id": "forms.transparency.requirements_before_start",
       "title": "requirements before start",
+      "name": "Requirements before start",
       "jobs": [
         "mark_requirements_up_front"
       ],
@@ -1708,6 +1850,7 @@
     {
       "id": "gold.accordion-find-in-page-misses-collapsed",
       "title": "accordion find in page misses collapsed",
+      "name": "Accordion find in page misses collapsed",
       "jobs": [
         "disclose_instead_of_dump"
       ],
@@ -1720,6 +1863,7 @@
     {
       "id": "gold.avoid-select-except-long-lists",
       "title": "avoid select except long lists",
+      "name": "Avoid select except long lists",
       "jobs": [
         "choose_control_for_choice"
       ],
@@ -1732,6 +1876,7 @@
     {
       "id": "gold.card-one-inner-link-hit-area",
       "title": "card one inner link hit area",
+      "name": "Card one inner link hit area",
       "jobs": [
         "keep_hit_target_usable"
       ],
@@ -1744,6 +1889,7 @@
     {
       "id": "gold.consistent-not-uniform",
       "title": "consistent not uniform",
+      "name": "Consistent not uniform",
       "jobs": [
         "tone_of_voice_for_failure"
       ],
@@ -1756,6 +1902,7 @@
     {
       "id": "gold.next-primary-save-progress-secondary",
       "title": "next primary save progress secondary",
+      "name": "Next primary save progress secondary",
       "jobs": [
         "pick_primary_action"
       ],
@@ -1768,6 +1915,7 @@
     {
       "id": "gold.no-abbr-expand-on-first-mention",
       "title": "no abbr expand on first mention",
+      "name": "No abbr; expand on first mention",
       "jobs": [
         "tone_of_voice_for_failure"
       ],
@@ -1780,6 +1928,7 @@
     {
       "id": "gold.progress-indicator-out-of-order-returnable",
       "title": "progress indicator out of order returnable",
+      "name": "Progress indicator out of order returnable",
       "jobs": [
         "show_step_progress"
       ],
@@ -1792,6 +1941,7 @@
     {
       "id": "gold.search-input-attributes",
       "title": "search input attributes",
+      "name": "Search input attributes",
       "jobs": [
         "place_the_search_control"
       ],
@@ -1804,6 +1954,7 @@
     {
       "id": "gold.search-placement-home-vs-results",
       "title": "search placement home vs results",
+      "name": "Search placement home vs results",
       "jobs": [
         "place_the_search_control"
       ],
@@ -1816,6 +1967,7 @@
     {
       "id": "gold.visual-loudness-primary-secondary-tertiary",
       "title": "visual loudness primary secondary tertiary",
+      "name": "Visual loudness primary secondary tertiary",
       "jobs": [
         "pick_primary_action"
       ],
@@ -1828,6 +1980,7 @@
     {
       "id": "govuk.button-types-named",
       "title": "button types named",
+      "name": "Button types named",
       "jobs": [
         "pick_primary_action"
       ],
@@ -1840,6 +1993,7 @@
     {
       "id": "govuk.calendar-control-when",
       "title": "calendar control when",
+      "name": "Calendar control when",
       "jobs": [
         "choose_control_for_choice"
       ],
@@ -1852,6 +2006,7 @@
     {
       "id": "govuk.character-count-fieldset-legend",
       "title": "character count fieldset legend",
+      "name": "Character count fieldset legend",
       "jobs": [
         "group_related_inputs"
       ],
@@ -1864,6 +2019,7 @@
     {
       "id": "govuk.conditionally-reveal-related-question",
       "title": "conditionally reveal related question",
+      "name": "Conditionally reveal related question",
       "jobs": [
         "disclose_instead_of_dump"
       ],
@@ -1876,6 +2032,7 @@
     {
       "id": "govuk.date-input-only-memorable",
       "title": "date input only memorable",
+      "name": "Date input only memorable",
       "jobs": [
         "choose_control_for_choice"
       ],
@@ -1888,6 +2045,7 @@
     {
       "id": "govuk.dob-autocomplete-tokens",
       "title": "dob autocomplete tokens",
+      "name": "Date-of-birth autocomplete tokens",
       "jobs": [
         "use_familiar_control"
       ],
@@ -1900,6 +2058,7 @@
     {
       "id": "govuk.dont-assume-single-vs-multi-from-visuals",
       "title": "dont assume single vs multi from visuals",
+      "name": "Don't assume single vs multi from visuals",
       "jobs": [
         "choose_control_for_choice"
       ],
@@ -1912,6 +2071,7 @@
     {
       "id": "govuk.dont-use-disabled-buttons",
       "title": "dont use disabled buttons",
+      "name": "Don't use disabled buttons",
       "jobs": [
         "pick_primary_action"
       ],
@@ -1924,6 +2084,7 @@
     {
       "id": "govuk.error-summary-plus-per-field",
       "title": "error summary plus per field",
+      "name": "Error summary plus per field",
       "jobs": [
         "explain_failure_next_to_cause"
       ],
@@ -1936,6 +2097,7 @@
     {
       "id": "govuk.example-dates-unambiguous-order",
       "title": "example dates unambiguous order",
+      "name": "Example dates unambiguous order",
       "jobs": [
         "use_familiar_control"
       ],
@@ -1948,6 +2110,7 @@
     {
       "id": "govuk.file-upload-reuse-already-uploaded",
       "title": "file upload reuse already uploaded",
+      "name": "File upload reuse already uploaded",
       "jobs": [
         "word_the_field_help"
       ],
@@ -1960,6 +2123,7 @@
     {
       "id": "govuk.four-date-types",
       "title": "four date types",
+      "name": "Four date types",
       "jobs": [
         "choose_control_for_choice"
       ],
@@ -1972,6 +2136,7 @@
     {
       "id": "govuk.item-hints-one-sentence",
       "title": "item hints one sentence",
+      "name": "Item hints one sentence",
       "jobs": [
         "word_the_field_help"
       ],
@@ -1984,6 +2149,7 @@
     {
       "id": "govuk.labels-sentence-case-no-colons-above",
       "title": "labels sentence case no colons above",
+      "name": "Labels sentence case no colons above",
       "jobs": [
         "name_a_control"
       ],
@@ -1996,6 +2162,7 @@
     {
       "id": "govuk.never-auto-tab-date-fields",
       "title": "never auto tab date fields",
+      "name": "Never auto tab date fields",
       "jobs": [
         "use_familiar_control"
       ],
@@ -2008,6 +2175,7 @@
     {
       "id": "govuk.question-pages-continue-back-no-sliders",
       "title": "question pages continue back no sliders",
+      "name": "Question pages continue back no sliders",
       "jobs": [
         "show_step_progress"
       ],
@@ -2020,6 +2188,7 @@
     {
       "id": "govuk.radio-divider-or",
       "title": "radio divider or",
+      "name": "Radio divider “or”",
       "jobs": [
         "choose_control_for_choice"
       ],
@@ -2032,6 +2201,7 @@
     {
       "id": "govuk.radios-left-of-labels",
       "title": "radios left of labels",
+      "name": "Radios left of labels",
       "jobs": [
         "keep_hit_target_usable"
       ],
@@ -2044,6 +2214,7 @@
     {
       "id": "govuk.select-last-resort",
       "title": "select last resort",
+      "name": "Select last resort",
       "jobs": [
         "choose_control_for_choice"
       ],
@@ -2056,6 +2227,7 @@
     {
       "id": "govuk.select-preselect-settings-not-questions",
       "title": "select preselect settings not questions",
+      "name": "Select preselect settings not questions",
       "jobs": [
         "choose_control_for_choice"
       ],
@@ -2068,6 +2240,7 @@
     {
       "id": "govuk.stop-accidental-double-submit",
       "title": "stop accidental double submit",
+      "name": "Stop accidental double submit",
       "jobs": [
         "pick_primary_action"
       ],
@@ -2080,6 +2253,7 @@
     {
       "id": "govuk.task-list-statuses",
       "title": "task list statuses",
+      "name": "Task list statuses",
       "jobs": [
         "announce_system_status"
       ],
@@ -2092,6 +2266,7 @@
     {
       "id": "mui.avoid-apologies-alarm-ambiguity-in-dialog-titles",
       "title": "avoid apologies alarm ambiguity in dialog titles",
+      "name": "Avoid apologies alarm ambiguity in dialog titles",
       "jobs": [
         "disable_or_confirm_destructive"
       ],
@@ -2104,6 +2279,7 @@
     {
       "id": "mui.button-variant-roles",
       "title": "button variant roles",
+      "name": "Button variant roles",
       "jobs": [
         "pick_primary_action"
       ],
@@ -2116,6 +2292,7 @@
     {
       "id": "mui.confirmation-cancel-discards",
       "title": "confirmation cancel discards",
+      "name": "Confirmation cancel discards",
       "jobs": [
         "warn_before_leave"
       ],
@@ -2128,6 +2305,7 @@
     {
       "id": "mui.dont-type-number",
       "title": "dont type number",
+      "name": "Don't use type=number",
       "jobs": [
         "choose_control_for_choice"
       ],
@@ -2140,6 +2318,7 @@
     {
       "id": "mui.explicit-id-for-label-helper",
       "title": "explicit id for label helper",
+      "name": "Explicit id for label helper",
       "jobs": [
         "name_a_control"
       ],
@@ -2152,6 +2331,7 @@
     {
       "id": "mui.helper-text-changes-field-height",
       "title": "helper text changes field height",
+      "name": "Helper text changes field height",
       "jobs": [
         "recover_from_invalid_input"
       ],
@@ -2164,6 +2344,7 @@
     {
       "id": "mui.most-alerts-dont-need-titles",
       "title": "most alerts dont need titles",
+      "name": "Most alerts don't need titles",
       "jobs": [
         "announce_system_status"
       ],
@@ -2176,6 +2357,7 @@
     {
       "id": "mui.non-modal-dialogs-allowed",
       "title": "non modal dialogs allowed",
+      "name": "Non modal dialogs allowed",
       "jobs": [
         "pick_modal_only_when_blocking"
       ],
@@ -2188,6 +2370,7 @@
     {
       "id": "nl.dont-auto-dismiss-status-announce-complete",
       "title": "dont auto dismiss status announce complete",
+      "name": "Don't auto-dismiss status; announce complete",
       "jobs": [
         "announce_system_status"
       ],
@@ -2200,6 +2383,7 @@
     {
       "id": "nl.form-draft-links-new-tab-named-in-link",
       "title": "form draft links new tab named in link",
+      "name": "Form draft links new tab named in link",
       "jobs": [
         "name_the_link_by_destination"
       ],
@@ -2212,6 +2396,7 @@
     {
       "id": "nl.header-search-placeholder-visible-search-control",
       "title": "header search placeholder visible search control",
+      "name": "Header search placeholder visible search control",
       "jobs": [
         "place_the_search_control"
       ],
@@ -2224,6 +2409,7 @@
     {
       "id": "nl.labels-contain-only-text",
       "title": "labels contain only text",
+      "name": "Labels contain only text",
       "jobs": [
         "name_a_control"
       ],
@@ -2236,6 +2422,7 @@
     {
       "id": "nl.long-legal-jargon-before-form-not-tooltip",
       "title": "long legal jargon before form not tooltip",
+      "name": "Long legal jargon before form not tooltip",
       "jobs": [
         "word_the_field_help"
       ],
@@ -2248,6 +2435,7 @@
     {
       "id": "nl.name-next-organisational-steps",
       "title": "name next organisational steps",
+      "name": "Name next organisational steps",
       "jobs": [
         "name_the_link_by_destination"
       ],
@@ -2260,6 +2448,7 @@
     {
       "id": "nl.native-required-bubbles-not-error-ui",
       "title": "native required bubbles not error ui",
+      "name": "Native required bubbles not error UI",
       "jobs": [
         "recover_from_invalid_input"
       ],
@@ -2272,6 +2461,7 @@
     {
       "id": "nl.no-min-max-length-names-places",
       "title": "no min max length names places",
+      "name": "No min max length names places",
       "jobs": [
         "use_familiar_control"
       ],
@@ -2284,6 +2474,7 @@
     {
       "id": "nl.no-select-multiple",
       "title": "no select multiple",
+      "name": "No select multiple",
       "jobs": [
         "choose_control_for_choice"
       ],
@@ -2296,6 +2487,7 @@
     {
       "id": "nl.privacy-terms-link-outside-label",
       "title": "privacy terms link outside label",
+      "name": "Privacy terms link outside label",
       "jobs": [
         "name_the_link_by_destination"
       ],
@@ -2308,6 +2500,7 @@
     {
       "id": "nl.step-n-of-m-in-title-and-above-form",
       "title": "step n of m in title and above form",
+      "name": "Step n of m in the title and above the form",
       "jobs": [
         "show_step_progress"
       ],
@@ -2320,6 +2513,7 @@
     {
       "id": "nl.success-confirms-what-not-bounce-home",
       "title": "success confirms what not bounce home",
+      "name": "Success confirms what not bounce home",
       "jobs": [
         "announce_system_status"
       ],
@@ -2332,6 +2526,7 @@
     {
       "id": "nng.alt-registration-and-biometric-login",
       "title": "alt registration and biometric login",
+      "name": "Alt registration and biometric login",
       "jobs": [
         "show_the_password"
       ],
@@ -2344,6 +2539,7 @@
     {
       "id": "nng.always-select-one-radio-by-default",
       "title": "always select one radio by default",
+      "name": "Always select one radio by default",
       "jobs": [
         "choose_control_for_choice"
       ],
@@ -2356,6 +2552,7 @@
     {
       "id": "nng.avoid-cascading-dropdowns",
       "title": "avoid cascading dropdowns",
+      "name": "Avoid cascading dropdowns",
       "jobs": [
         "choose_control_for_choice"
       ],
@@ -2368,6 +2565,7 @@
     {
       "id": "nng.cart-easy-remove-no-extra-update",
       "title": "cart easy remove no extra update",
+      "name": "Cart easy remove no extra update",
       "jobs": [
         "show_step_progress"
       ],
@@ -2380,6 +2578,7 @@
     {
       "id": "nng.checkboxes-multi-radios-exclusive",
       "title": "checkboxes multi radios exclusive",
+      "name": "Checkboxes multi radios exclusive",
       "jobs": [
         "choose_control_for_choice"
       ],
@@ -2392,6 +2591,7 @@
     {
       "id": "nng.dont-repeat-password-email-fields",
       "title": "dont repeat password email fields",
+      "name": "Don't repeat password or email fields",
       "jobs": [
         "show_the_password"
       ],
@@ -2404,6 +2604,7 @@
     {
       "id": "nng.dropdown-ok-narrow-middle",
       "title": "dropdown ok narrow middle",
+      "name": "Dropdown OK narrow middle",
       "jobs": [
         "choose_control_for_choice"
       ],
@@ -2416,6 +2617,7 @@
     {
       "id": "nng.familiar-values-type-not-dropdown",
       "title": "familiar values type not dropdown",
+      "name": "Familiar values type not dropdown",
       "jobs": [
         "choose_control_for_choice"
       ],
@@ -2428,6 +2630,7 @@
     {
       "id": "nng.forgot-password-link",
       "title": "forgot password link",
+      "name": "Forgot password link",
       "jobs": [
         "show_the_password"
       ],
@@ -2440,6 +2643,7 @@
     {
       "id": "nng.keyboard-typeahead-in-dropdowns",
       "title": "keyboard typeahead in dropdowns",
+      "name": "Keyboard typeahead in dropdowns",
       "jobs": [
         "choose_control_for_choice"
       ],
@@ -2452,6 +2656,7 @@
     {
       "id": "nng.listbox-vs-dropdown",
       "title": "listbox vs dropdown",
+      "name": "Listbox vs dropdown",
       "jobs": [
         "choose_control_for_choice"
       ],
@@ -2464,6 +2669,7 @@
     {
       "id": "nng.login-mask-plus-show-password",
       "title": "login mask plus show password",
+      "name": "Login mask plus show password",
       "jobs": [
         "show_the_password"
       ],
@@ -2476,6 +2682,7 @@
     {
       "id": "nng.mobile-friendly-payment-options",
       "title": "mobile friendly payment options",
+      "name": "Mobile friendly payment options",
       "jobs": [
         "show_step_progress"
       ],
@@ -2488,6 +2695,7 @@
     {
       "id": "nng.modal-and-nonmodal-dialogs",
       "title": "modal and nonmodal dialogs",
+      "name": "Modal and nonmodal dialogs",
       "jobs": [
         "pick_modal_only_when_blocking"
       ],
@@ -2500,6 +2708,7 @@
     {
       "id": "nng.open-field-state-and-card-expiry",
       "title": "open field state and card expiry",
+      "name": "Open field state and card expiry",
       "jobs": [
         "show_step_progress"
       ],
@@ -2512,6 +2721,7 @@
     {
       "id": "nng.order-summary-easy-to-find-mobile",
       "title": "order summary easy to find mobile",
+      "name": "Order summary easy to find mobile",
       "jobs": [
         "show_step_progress"
       ],
@@ -2524,6 +2734,7 @@
     {
       "id": "nng.prefer-radios-over-dropdowns-when-visible",
       "title": "prefer radios over dropdowns when visible",
+      "name": "Prefer radios over dropdowns when visible",
       "jobs": [
         "choose_control_for_choice"
       ],
@@ -2536,6 +2747,7 @@
     {
       "id": "nng.radio-set-comprehensive-other-type-in",
       "title": "radio set comprehensive other type in",
+      "name": "Radio set comprehensive other type in",
       "jobs": [
         "choose_control_for_choice"
       ],
@@ -2548,6 +2760,7 @@
     {
       "id": "nng.show-the-input-password-creation",
       "title": "show the input password creation",
+      "name": "Show the input password creation",
       "jobs": [
         "show_the_password"
       ],
@@ -2560,6 +2773,7 @@
     {
       "id": "nng.show-the-rules",
       "title": "show the rules",
+      "name": "Show the rules",
       "jobs": [
         "recover_from_invalid_input"
       ],
@@ -2572,6 +2786,7 @@
     {
       "id": "nng.standard-visuals-checkbox-square-radio-circle",
       "title": "standard visuals checkbox square radio circle",
+      "name": "Standard visuals checkbox square radio circle",
       "jobs": [
         "choose_control_for_choice"
       ],
@@ -2584,6 +2799,7 @@
     {
       "id": "nng.support-undo-discoverable",
       "title": "support undo discoverable",
+      "name": "Support undo discoverable",
       "jobs": [
         "disable_or_confirm_destructive"
       ],
@@ -2596,6 +2812,7 @@
     {
       "id": "nng.too-few-options-radios-not-dropdown",
       "title": "too few options radios not dropdown",
+      "name": "Too few options: radios, not dropdown",
       "jobs": [
         "choose_control_for_choice"
       ],
@@ -2608,6 +2825,7 @@
     {
       "id": "nng.too-many-combobox-not-long-dropdown",
       "title": "too many combobox not long dropdown",
+      "name": "Too many: combobox, not a long dropdown",
       "jobs": [
         "choose_control_for_choice"
       ],
@@ -2620,6 +2838,7 @@
     {
       "id": "nng.users-rarely-change-defaults",
       "title": "users rarely change defaults",
+      "name": "Users rarely change defaults",
       "jobs": [
         "choose_control_for_choice"
       ],
@@ -2632,6 +2851,7 @@
     {
       "id": "nng.vertical-one-choice-per-line",
       "title": "vertical one choice per line",
+      "name": "Vertical one choice per line",
       "jobs": [
         "choose_control_for_choice"
       ],
@@ -2644,6 +2864,7 @@
     {
       "id": "nsw.100pct-stacked-show-absolute-totals",
       "title": "100pct stacked show absolute totals",
+      "name": "100% stacked: show absolute totals",
       "jobs": [
         "chart_has_a_story"
       ],
@@ -2656,6 +2877,7 @@
     {
       "id": "nsw.chart-anatomy-title-insight-table",
       "title": "chart anatomy title insight table",
+      "name": "Chart anatomy title insight table",
       "jobs": [
         "chart_has_a_story"
       ],
@@ -2668,6 +2890,7 @@
     {
       "id": "nsw.chart-text-horizontal",
       "title": "chart text horizontal",
+      "name": "Chart text horizontal",
       "jobs": [
         "chart_has_a_story"
       ],
@@ -2680,6 +2903,7 @@
     {
       "id": "nsw.charts-start-with-story",
       "title": "charts start with story",
+      "name": "Charts start with story",
       "jobs": [
         "chart_has_a_story"
       ],
@@ -2692,6 +2916,7 @@
     {
       "id": "nsw.direct-labels-over-legends",
       "title": "direct labels over legends",
+      "name": "Direct labels over legends",
       "jobs": [
         "chart_has_a_story"
       ],
@@ -2704,6 +2929,7 @@
     {
       "id": "nsw.established-colour-conventions",
       "title": "established colour conventions",
+      "name": "Established colour conventions",
       "jobs": [
         "chart_has_a_story"
       ],
@@ -2716,6 +2942,7 @@
     {
       "id": "nsw.honest-baseline-bars-zero-or-truncation",
       "title": "honest baseline bars zero or truncation",
+      "name": "Honest baseline bars zero or truncation",
       "jobs": [
         "chart_has_a_story"
       ],
@@ -2728,6 +2955,7 @@
     {
       "id": "nsw.lines-dash-fills-patterns",
       "title": "lines dash fills patterns",
+      "name": "Lines dash fills patterns",
       "jobs": [
         "chart_has_a_story"
       ],
@@ -2740,6 +2968,7 @@
     {
       "id": "nsw.map-pan-from-centre-select-jumps-listing",
       "title": "map pan from centre select jumps listing",
+      "name": "Map pan from centre select jumps listing",
       "jobs": [
         "map_is_not_the_only_channel"
       ],
@@ -2752,6 +2981,7 @@
     {
       "id": "nsw.maps-never-only-channel",
       "title": "maps never only channel",
+      "name": "Maps never only channel",
       "jobs": [
         "map_is_not_the_only_channel"
       ],
@@ -2764,6 +2994,7 @@
     {
       "id": "nsw.no-tooltip-only-values",
       "title": "no tooltip only values",
+      "name": "No tooltip only values",
       "jobs": [
         "chart_has_a_story"
       ],
@@ -2776,6 +3007,7 @@
     {
       "id": "nsw.privacy-by-design-pia-security-day-one",
       "title": "privacy by design pia security day one",
+      "name": "Privacy by design: PIA and security from day one",
       "jobs": [
         "map_is_not_the_only_channel"
       ],
@@ -2788,6 +3020,7 @@
     {
       "id": "nsw.white-canvas-single-colour-when-labelled",
       "title": "white canvas single colour when labelled",
+      "name": "White canvas single colour when labelled",
       "jobs": [
         "chart_has_a_story"
       ],
@@ -2800,6 +3033,7 @@
     {
       "id": "polar.default-option-selected-when-possible",
       "title": "default option selected when possible",
+      "name": "Default option selected when possible",
       "jobs": [
         "choose_control_for_choice"
       ],
@@ -2812,6 +3046,7 @@
     {
       "id": "polar.dont-duplicate-content",
       "title": "dont duplicate content",
+      "name": "Don't duplicate content",
       "jobs": [
         "wayfind_after_nav"
       ],
@@ -2824,6 +3059,7 @@
     {
       "id": "polar.dont-use-modals-for-complex-forms",
       "title": "dont use modals for complex forms",
+      "name": "Don't use modals for complex forms",
       "jobs": [
         "pick_modal_only_when_blocking"
       ],
@@ -2836,6 +3072,7 @@
     {
       "id": "polar.encourage-action-cta-verb",
       "title": "encourage action cta verb",
+      "name": "Encourage action: CTA verb",
       "jobs": [
         "pick_primary_action"
       ],
@@ -2848,6 +3085,7 @@
     {
       "id": "polar.guide-dont-prescribe",
       "title": "guide dont prescribe",
+      "name": "Guide, don't prescribe",
       "jobs": [
         "tone_of_voice_for_failure"
       ],
@@ -2860,6 +3098,7 @@
     {
       "id": "polar.labels-1-3-words-sentence-case-i18n",
       "title": "labels 1 3 words sentence case i18n",
+      "name": "Labels: 1–3 words, sentence case",
       "jobs": [
         "name_a_control"
       ],
@@ -2872,6 +3111,7 @@
     {
       "id": "polar.long-form-errors-banner-plus-inline",
       "title": "long form errors banner plus inline",
+      "name": "Long form errors banner plus inline",
       "jobs": [
         "explain_failure_next_to_cause"
       ],
@@ -2884,6 +3124,7 @@
     {
       "id": "polar.match-shopify-admin-voice",
       "title": "match shopify admin voice",
+      "name": "Match shopify admin voice",
       "jobs": [
         "tone_of_voice_for_failure"
       ],
@@ -2896,6 +3137,7 @@
     {
       "id": "polar.plain-language-grade-7",
       "title": "plain language grade 7",
+      "name": "Plain language, grade 7",
       "jobs": [
         "tone_of_voice_for_failure"
       ],
@@ -2908,6 +3150,7 @@
     {
       "id": "polar.select-4plus-choice-list-under-4",
       "title": "select 4plus choice list under 4",
+      "name": "Select for 4+; choice list under 4",
       "jobs": [
         "choose_control_for_choice"
       ],
@@ -2920,6 +3163,7 @@
     {
       "id": "polar.validate-after-finished-interacting",
       "title": "validate after finished interacting",
+      "name": "Validate after finished interacting",
       "jobs": [
         "recover_from_invalid_input"
       ],
@@ -2932,6 +3176,7 @@
     {
       "id": "spectrum.asterisk-is-icon-not-label-text",
       "title": "asterisk is icon not label text",
+      "name": "Asterisk is an icon, not label text",
       "jobs": [
         "mark_requirements_up_front"
       ],
@@ -2944,6 +3189,7 @@
     {
       "id": "spectrum.bundle-instead-of-spam-toasts",
       "title": "bundle instead of spam toasts",
+      "name": "Bundle instead of spam toasts",
       "jobs": [
         "announce_system_status"
       ],
@@ -2956,6 +3202,7 @@
     {
       "id": "spectrum.dont-place-mobile-toasts-over-navigation",
       "title": "dont place mobile toasts over navigation",
+      "name": "Don't place mobile toasts over navigation",
       "jobs": [
         "announce_system_status"
       ],
@@ -2968,6 +3215,7 @@
     {
       "id": "spectrum.error-icon-overrides-validation-icon",
       "title": "error icon overrides validation icon",
+      "name": "Error icon overrides validation icon",
       "jobs": [
         "explain_failure_next_to_cause"
       ],
@@ -2980,6 +3228,7 @@
     {
       "id": "spectrum.min-width-1-5x-field-height",
       "title": "min width 1 5x field height",
+      "name": "Minimum width 1.5× field height",
       "jobs": [
         "use_familiar_control"
       ],
@@ -2992,6 +3241,7 @@
     {
       "id": "spectrum.mixed-values-en-dash",
       "title": "mixed values en dash",
+      "name": "Mixed values EN dash",
       "jobs": [
         "use_familiar_control"
       ],
@@ -3004,6 +3254,7 @@
     {
       "id": "spectrum.one-toast-at-a-time",
       "title": "one toast at a time",
+      "name": "One toast at a time",
       "jobs": [
         "announce_system_status"
       ],
@@ -3016,6 +3267,7 @@
     {
       "id": "spectrum.picker-concise-items-full-value",
       "title": "picker concise items full value",
+      "name": "Picker concise items full value",
       "jobs": [
         "use_familiar_control"
       ],
@@ -3028,6 +3280,7 @@
     {
       "id": "spectrum.picker-ghost-text-placeholder",
       "title": "picker ghost text placeholder",
+      "name": "Picker ghost text placeholder",
       "jobs": [
         "avoid_placeholder_as_label"
       ],
@@ -3040,6 +3293,7 @@
     {
       "id": "spectrum.picker-min-width-2x-height",
       "title": "picker min width 2x height",
+      "name": "Picker minimum width 2× height",
       "jobs": [
         "use_familiar_control"
       ],
@@ -3052,6 +3306,7 @@
     {
       "id": "spectrum.picker-mobile-tray-when-overwhelming",
       "title": "picker mobile tray when overwhelming",
+      "name": "Picker mobile tray when overwhelming",
       "jobs": [
         "use_familiar_control"
       ],
@@ -3064,6 +3319,7 @@
     {
       "id": "spectrum.picker-no-max-menu-height",
       "title": "picker no max menu height",
+      "name": "Picker no max menu height",
       "jobs": [
         "use_familiar_control"
       ],
@@ -3076,6 +3332,7 @@
     {
       "id": "spectrum.picker-readonly-only-if-selection",
       "title": "picker readonly only if selection",
+      "name": "Picker readonly only if selection",
       "jobs": [
         "use_familiar_control"
       ],
@@ -3088,6 +3345,7 @@
     {
       "id": "spectrum.quiet-vs-standard-background",
       "title": "quiet vs standard background",
+      "name": "Quiet vs standard background",
       "jobs": [
         "use_familiar_control"
       ],
@@ -3100,6 +3358,7 @@
     {
       "id": "spectrum.readonly-vs-disabled",
       "title": "readonly vs disabled",
+      "name": "Readonly vs disabled",
       "jobs": [
         "use_familiar_control"
       ],
@@ -3112,6 +3371,7 @@
     {
       "id": "spectrum.tab-into-field-selects-text",
       "title": "tab into field selects text",
+      "name": "Tab into field selects text",
       "jobs": [
         "use_familiar_control"
       ],
@@ -3124,6 +3384,7 @@
     {
       "id": "spectrum.toast-at-most-one-action",
       "title": "toast at most one action",
+      "name": "Toast at most one action",
       "jobs": [
         "announce_system_status"
       ],
@@ -3136,6 +3397,7 @@
     {
       "id": "spectrum.toast-auto-dismiss-min-5s",
       "title": "toast auto dismiss min 5s",
+      "name": "Toast auto-dismiss at least 5s",
       "jobs": [
         "announce_system_status"
       ],
@@ -3148,6 +3410,7 @@
     {
       "id": "spectrum.toast-no-redundant-dismiss",
       "title": "toast no redundant dismiss",
+      "name": "Toast no redundant dismiss",
       "jobs": [
         "announce_system_status"
       ],
@@ -3160,6 +3423,7 @@
     {
       "id": "spectrum.toast-placement-geometry",
       "title": "toast placement geometry",
+      "name": "Toast placement geometry",
       "jobs": [
         "announce_system_status"
       ],
@@ -3172,6 +3436,7 @@
     {
       "id": "spectrum.toast-sentence-case-generic-tone",
       "title": "toast sentence case generic tone",
+      "name": "Toast sentence case generic tone",
       "jobs": [
         "announce_system_status"
       ],
@@ -3184,6 +3449,7 @@
     {
       "id": "spectrum.toast-vs-dialog",
       "title": "toast vs dialog",
+      "name": "Toast vs dialog",
       "jobs": [
         "pick_modal_only_when_blocking"
       ],
@@ -3196,6 +3462,7 @@
     {
       "id": "spectrum.toast-writing-formulas",
       "title": "toast writing formulas",
+      "name": "Toast writing formulas",
       "jobs": [
         "announce_system_status"
       ],
@@ -3208,6 +3475,7 @@
     {
       "id": "spectrum.users-can-turn-off-alert-types",
       "title": "users can turn off alert types",
+      "name": "Users can turn off alert types",
       "jobs": [
         "announce_system_status"
       ],
@@ -3220,6 +3488,7 @@
     {
       "id": "spectrum.validation-icon-when-format-valid",
       "title": "validation icon when format valid",
+      "name": "Validation icon when format valid",
       "jobs": [
         "use_familiar_control"
       ],
@@ -3232,6 +3501,7 @@
     {
       "id": "suomi.button-max-three-words-mobile-full-width",
       "title": "button max three words mobile full width",
+      "name": "Button: max three words; full width on mobile",
       "jobs": [
         "pick_primary_action"
       ],
@@ -3244,6 +3514,7 @@
     {
       "id": "suomi.date-hint-ppkkvvvv-calendar-optional-focus-trap",
       "title": "date hint ppkkvvvv calendar optional focus trap",
+      "name": "Date hint always visible; calendar optional",
       "jobs": [
         "use_familiar_control"
       ],
@@ -3256,6 +3527,7 @@
     {
       "id": "suomi.errorsummary-link-text-equals-field-error",
       "title": "errorsummary link text equals field error",
+      "name": "Errorsummary link text equals field error",
       "jobs": [
         "explain_failure_next_to_cause"
       ],
@@ -3268,6 +3540,7 @@
     {
       "id": "suomi.file-hint-and-datetime-fieldset",
       "title": "file hint and datetime fieldset",
+      "name": "File hint and datetime fieldset",
       "jobs": [
         "use_familiar_control"
       ],
@@ -3280,6 +3553,7 @@
     {
       "id": "suomi.hide-breadcrumbs-on-mobile",
       "title": "hide breadcrumbs on mobile",
+      "name": "Hide breadcrumbs on mobile",
       "jobs": [
         "wayfind_after_nav"
       ],
@@ -3292,6 +3566,7 @@
     {
       "id": "suomi.notification-first-load-not-post-action",
       "title": "notification first load not post action",
+      "name": "Notification first load not post action",
       "jobs": [
         "announce_system_status"
       ],
@@ -3304,6 +3579,7 @@
     {
       "id": "suomi.pagination-skip-link-to-listing",
       "title": "pagination skip link to listing",
+      "name": "Pagination skip link to listing",
       "jobs": [
         "wayfind_after_nav"
       ],
@@ -3316,6 +3592,7 @@
     {
       "id": "suomi.radio-extras-hidden-then-indented",
       "title": "radio extras hidden then indented",
+      "name": "Radio extras hidden then indented",
       "jobs": [
         "choose_control_for_choice"
       ],
@@ -3328,6 +3605,7 @@
     {
       "id": "suomi.search-hide-label-only-if-name-states-context",
       "title": "search hide label only if name states context",
+      "name": "Search hide label only if name states context",
       "jobs": [
         "place_the_search_control"
       ],
@@ -3340,6 +3618,7 @@
     {
       "id": "suomi.static-validation-on-submit-default",
       "title": "static validation on submit default",
+      "name": "Static validation on submit default",
       "jobs": [
         "recover_from_invalid_input"
       ],
@@ -3352,6 +3631,7 @@
     {
       "id": "suomi.time-field-60px-hint-tmm-always-visible",
       "title": "time field 60px hint tmm always visible",
+      "name": "Time field ~60px with a visible t.mm hint",
       "jobs": [
         "use_familiar_control"
       ],
@@ -3364,6 +3644,7 @@
     {
       "id": "suomi.toast-10s-hover-stick-then-float",
       "title": "toast 10s hover stick then float",
+      "name": "Toast 10s; hover sticks, then floats",
       "jobs": [
         "announce_system_status"
       ],
@@ -3376,6 +3657,7 @@
     {
       "id": "uswds.alert-first-word-is-type",
       "title": "alert first word is type",
+      "name": "Alert first word is type",
       "jobs": [
         "announce_system_status"
       ],
@@ -3388,6 +3670,7 @@
     {
       "id": "uswds.alerts-dont-blame-name-next-step",
       "title": "alerts dont blame name next step",
+      "name": "Alerts Don't blame name next step",
       "jobs": [
         "announce_system_status"
       ],
@@ -3400,6 +3683,7 @@
     {
       "id": "uswds.banner-gov-mil-https-every-page",
       "title": "banner gov mil https every page",
+      "name": ".gov/.mil HTTPS banner on every page",
       "jobs": [
         "wayfind_after_nav"
       ],
@@ -3412,6 +3696,7 @@
     {
       "id": "uswds.character-count-brevity-or-legal",
       "title": "character count brevity or legal",
+      "name": "Character count brevity or legal",
       "jobs": [
         "group_related_inputs"
       ],
@@ -3424,6 +3709,7 @@
     {
       "id": "uswds.date-picker-when-weekday-always-type",
       "title": "date picker when weekday always type",
+      "name": "Date picker when weekday always type",
       "jobs": [
         "choose_control_for_choice"
       ],
@@ -3436,6 +3722,7 @@
     {
       "id": "uswds.dont-hide-then-reveal-alerts",
       "title": "dont hide then reveal alerts",
+      "name": "Don't hide then reveal alerts",
       "jobs": [
         "announce_system_status"
       ],
@@ -3448,6 +3735,7 @@
     {
       "id": "uswds.dont-split-phone-ssn-card",
       "title": "dont split phone ssn card",
+      "name": "Don't split phone, SSN, or card",
       "jobs": [
         "use_familiar_control"
       ],
@@ -3460,6 +3748,7 @@
     {
       "id": "uswds.filled-next-outline-this-page",
       "title": "filled next outline this page",
+      "name": "Filled Next, outline this page",
       "jobs": [
         "pick_primary_action"
       ],
@@ -3472,6 +3761,7 @@
     {
       "id": "uswds.forms-simple-vertical-stack",
       "title": "forms simple vertical stack",
+      "name": "Forms simple vertical stack",
       "jobs": [
         "group_related_inputs"
       ],
@@ -3484,6 +3774,7 @@
     {
       "id": "uswds.homepage-search-box-not-link",
       "title": "homepage search box not link",
+      "name": "Homepage search box not link",
       "jobs": [
         "place_the_search_control"
       ],
@@ -3496,6 +3787,7 @@
     {
       "id": "uswds.identifier-darker-than-footer",
       "title": "identifier darker than footer",
+      "name": "Identifier darker than footer",
       "jobs": [
         "wayfind_after_nav"
       ],
@@ -3508,6 +3800,7 @@
     {
       "id": "uswds.identifier-required-links-not-footer-dup",
       "title": "identifier required links not footer dup",
+      "name": "Identifier required links not footer dup",
       "jobs": [
         "wayfind_after_nav"
       ],
@@ -3520,6 +3813,7 @@
     {
       "id": "uswds.real-button-with-type-space-vs-enter",
       "title": "real button with type space vs enter",
+      "name": "Real button with type; Space vs Enter",
       "jobs": [
         "pick_primary_action"
       ],
@@ -3532,6 +3826,7 @@
     {
       "id": "uswds.site-alert-dont-stack-dont-panic",
       "title": "site alert dont stack dont panic",
+      "name": "Site alert: don't stack, don't panic",
       "jobs": [
         "announce_system_status"
       ],

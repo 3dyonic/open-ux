@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Buttons",
   "title": "supertask once never promo",
+  "name": "Supertask once never promo",
   "rule": "Supertask button once; never for promo; link-style button for rare actions. Supertask launches the page’s main task (apply / calculator / wizard). Not for promotion (use feature patterns). Primary still ≤1 per page (dual-cite Actions). Link buttons = infrequent (restart calculator) with a larger hit area than a text link. Danger only when consequences are real.",
   "citation": [
     {

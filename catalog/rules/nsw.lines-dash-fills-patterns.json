@@ -3,6 +3,7 @@
   "category": "Content",
   "segment": "Charts",
   "title": "lines dash fills patterns",
+  "name": "Lines dash fills patterns",
   "rule": "Lines use dash styles; fills use patterns (max 4–5). Solid / dashed / dotted / dash-dot for series. Hatch/dot/grid for bars, area, pie — not for lines. Two colours per pattern (fill + stroke).",
   "citation": [
     {

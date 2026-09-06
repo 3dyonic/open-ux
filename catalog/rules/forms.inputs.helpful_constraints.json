@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Inputs",
   "title": "helpful constraints",
+  "name": "Helpful constraints",
   "rule": "Where acceptable values are known, constrain input so invalid data cannot be entered instead of failing later.",
   "citation": [
     {

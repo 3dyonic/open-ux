@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Help",
   "title": "long legal jargon before form not tooltip",
+  "name": "Long legal jargon before form not tooltip",
   "rule": "Long or legal jargon lives before the form, not in tooltips — extra click/keystroke hides important copy; screen readers miss loose blocks between questions. Dual-cite Spectrum tooltip last-resort.",
   "citation": [
     {

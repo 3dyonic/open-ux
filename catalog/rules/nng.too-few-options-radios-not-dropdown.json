@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Choice",
   "title": "too few options radios not dropdown",
+  "name": "Too few options: radios, not dropdown",
   "rule": "Too few options → radios, not dropdown (NN/g “handful” / ~under 5; DS cutoffs cited on-page: USWDS <7, M3 6, Carbon 3).",
   "citation": [
     {

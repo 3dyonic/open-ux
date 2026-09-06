@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Copy",
   "title": "limit branded terms",
+  "name": "Limit branded terms",
   "rule": "Limit branded terms in command text (application name on the app menu and Help is enough); other commands stay nonbranded.",
   "citation": [
     {

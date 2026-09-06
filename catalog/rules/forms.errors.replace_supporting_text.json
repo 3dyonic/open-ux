@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Errors",
   "title": "replace supporting text",
+  "name": "Replace supporting text",
   "rule": "Swap supporting text for error text; do not stack error text on top of supporting text (layout shift).",
   "citation": [
     {

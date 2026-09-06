@@ -23,7 +23,7 @@ EMPTY_NOTE = (
     "(Designer UNS-44 — Forms → field labels ×3). No guideline content is invented."
 )
 
-INDEX_KEYS = ("id", "title", "jobs", "lane", "container", "card", "facet", "leaf")
+INDEX_KEYS = ("id", "title", "name", "jobs", "lane", "container", "card", "facet", "leaf")
 ROOT_SKIP = frozenset({"schema.json", "index.json", "guidelines.json", "jobs.json"})
 BODY_KEYS = frozenset({"pass_when", "fail_when", "rule", "citation", "check", "severity"})
 AGENT_KEYS = ("overview", "apply_when", "not_when", "agent_hint", "description")
@@ -93,6 +93,7 @@ def _index_from_guidelines(guidelines: list[dict[str, Any]]) -> list[dict[str, A
         row: dict[str, Any] = {
             "id": g["id"],
             "title": g.get("title") or g.get("rule", "")[:80],
+            "name": g.get("name") or g.get("title") or g.get("rule", "")[:80],
             "jobs": jobs,
             "lane": lane,
             "container": g.get("container"),
@@ -308,7 +309,10 @@ def list_index(
         if lane and entry.get("lane") != lane:
             continue
         if q:
-            blob = f"{entry.get('id') or ''} {entry.get('title') or ''}".lower()
+            blob = (
+                f"{entry.get('id') or ''} {entry.get('title') or ''} "
+                f"{entry.get('name') or ''}"
+            ).lower()
             if q not in blob:
                 continue
         out.append(entry)

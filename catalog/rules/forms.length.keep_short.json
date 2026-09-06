@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Length",
   "title": "keep short",
+  "name": "Keep short",
   "rule": "Keep the form short: remove fields that can be derived, collected later, or omitted.",
   "citation": [
     {

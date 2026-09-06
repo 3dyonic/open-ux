@@ -3,6 +3,7 @@
   "category": "Content",
   "segment": "Maps",
   "title": "maps never only channel",
+  "name": "Maps never only channel",
   "rule": "Maps are never the only channel — text-based alternative always. Aspect ratio must differ from the viewport so mobile users can still scroll the page; leave space around the map and a close/minimise control.",
   "citation": [
     {

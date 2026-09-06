@@ -3,6 +3,7 @@
   "category": "Wayfinding",
   "segment": "Search",
   "title": "search placement home vs results",
+  "name": "Search placement home vs results",
   "rule": "Search placement — landing/home: top-right (where people expect it). Results page: search box closer to the results so query and hits read as related. Dual-cite USWDS persist-query / homepage-is-a-box.",
   "citation": [
     {

@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Fields",
   "title": "required before proceed",
+  "name": "Required before proceed",
   "rule": "Make people understand they must provide required data before they can proceed (for example enable Next only after required fields are filled).",
   "citation": [
     {

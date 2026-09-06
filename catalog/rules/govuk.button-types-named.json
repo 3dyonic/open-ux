@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Buttons",
   "title": "button types named",
+  "name": "Button types named",
   "rule": "Button types named: default; Start; secondary; warning (destructive).",
   "citation": [
     {

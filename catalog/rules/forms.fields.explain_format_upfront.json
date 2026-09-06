@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Fields",
   "title": "explain format upfront",
+  "name": "Explain format upfront",
   "rule": "If a field requires a specific format or type of input, state those instructions before the user fails.",
   "citation": [
     {

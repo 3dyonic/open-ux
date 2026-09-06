@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Confirmation",
   "title": "bypass educational",
+  "name": "Bypass educational",
   "rule": "If an educational confirmation is shown for a new non-serious side effect, let the user turn off future repeats.",
   "citation": [
     {

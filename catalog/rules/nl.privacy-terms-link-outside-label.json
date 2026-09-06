@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Labels",
   "title": "privacy terms link outside label",
+  "name": "Privacy terms link outside label",
   "rule": "Privacy / terms link sits outside the label — not “I agree to the [privacy policy]” as a nested `<a>`. Put the link above, or in a fieldset description via `aria-describedby`.",
   "citation": [
     {

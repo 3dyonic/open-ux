@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Buttons",
   "title": "press state",
+  "name": "Press state",
   "rule": "Always include a press state on a custom button so the control feels like it accepted input.",
   "citation": [
     {

@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Labels",
   "title": "labels contain only text",
+  "name": "Labels contain only text",
   "rule": "Labels contain only text — no links, buttons, tooltips, or headings inside `<label>`. Voice control and screen readers break. Dual-cite clickable-label (Vercel) without stuffing interactive children into the label.",
   "citation": [
     {

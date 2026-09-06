@@ -3,6 +3,7 @@
   "category": "Content",
   "segment": "Charts",
   "title": "charts start with story",
+  "name": "Charts start with story",
   "rule": "Start with the story, not the chart. Pick the relationship (comparison, trend, proportion, distribution, correlation) first. No chart if a single callout number or a table is clearer, the set is too small, or the chart needs heavy explanation. Not for decoration.",
   "citation": [
     {

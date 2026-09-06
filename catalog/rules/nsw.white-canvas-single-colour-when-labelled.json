@@ -3,6 +3,7 @@
   "category": "Content",
   "segment": "Charts",
   "title": "white canvas single colour when labelled",
+  "name": "White canvas single colour when labelled",
   "rule": "White canvas; single colour when bars are already labelled. `#FFFFFF`. Multi-colour only for multiple series or a highlight. Approved NSW / Aboriginal chart-mark palettes only (pre-validated on white). Start with theme 01 then 02.",
   "citation": [
     {

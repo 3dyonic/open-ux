@@ -19,6 +19,7 @@ def _assert_pack_row(row: dict) -> None:
     assert set(row) == set(PACK_KEYS)
     assert row["id"]
     assert row["title"]
+    assert row["name"]
     assert row["rule"]
     assert row["pass_when"]
     assert row["fail_when"]

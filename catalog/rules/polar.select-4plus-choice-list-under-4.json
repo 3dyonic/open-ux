@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Choice",
   "title": "select 4plus choice list under 4",
+  "name": "Select for 4+; choice list under 4",
   "rule": "Select for 4+ options; Choice list for <4.",
   "citation": [
     {

@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Inputs",
   "title": "autocompletion",
+  "name": "Autocompletion",
   "rule": "As the user types a value with a known set of completions, suggest and complete matches.",
   "citation": [
     {

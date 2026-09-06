@@ -3,6 +3,7 @@
   "category": "Feedback",
   "segment": "Toast copy",
   "title": "toast writing formulas",
+  "name": "Toast writing formulas",
   "rule": "Confirmation (neutral/positive): optional noun + past-participle -ed + optional prepositional phrase; UI element names in bold. Informational: complete sentence (subject + verb + optional extra). Error: short phrase + in-line action when possible. Keep under 2 lines in English (localization grows).",
   "citation": [
     {

@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Copy",
   "title": "item hints one sentence",
+  "name": "Item hints one sentence",
   "rule": "Item hints: one short sentence, no full stops; no links in hint text.",
   "citation": [
     {

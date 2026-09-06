@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Picker",
   "title": "picker no max menu height",
+  "name": "Picker no max menu height",
   "rule": "No maximum menu height — grow to show as many options as the available space allows. Field value truncates; menu (and label) wrap.",
   "citation": [
     {

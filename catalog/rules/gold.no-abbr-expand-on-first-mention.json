@@ -3,6 +3,7 @@
   "category": "Content",
   "segment": "Abbreviations",
   "title": "no abbr expand on first mention",
+  "name": "No abbr; expand on first mention",
   "rule": "Don’t use `<abbr>`; expand on first mention. Screen-reader support for `<abbr>` is limited. Write “Australian Football League (AFL)” then “AFL”. Dual-cite Canada abbreviations (widest-audience test); GOLD names the element ban + first-mention pattern.",
   "citation": [
     {

@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Inputs",
   "title": "fill in the blanks",
+  "name": "Fill in the blanks",
   "rule": "When a label/control pair is awkward, present the request as a short sentence with blanks to fill in.",
   "citation": [
     {

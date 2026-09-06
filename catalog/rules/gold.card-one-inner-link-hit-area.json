@@ -3,6 +3,7 @@
   "category": "Hit targets",
   "segment": "Card",
   "title": "card one inner link hit area",
+  "name": "Card one inner link hit area",
   "rule": "Card: one inner link; hit-area wraps the card. Do not wrap the whole card in `<a>` (screen readers announce the entire contents; the links landmark becomes unusable). Keep a large click target via CSS hit-area on a single inner anchor. Dual-cite USWDS “card is an action, not a frame.”",
   "citation": [
     {

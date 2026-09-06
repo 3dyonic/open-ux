@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Errors",
   "title": "error identifies and fixes",
+  "name": "Error identifies and fixes",
   "rule": "Error messages identify the problem and give constructive advice so the user can fix it.",
   "citation": [
     {

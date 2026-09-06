@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Inputs",
   "title": "compute from other info",
+  "name": "Compute from other info",
   "rule": "Compute the value from other information when you can (for example state from ZIP, skip a coupon the user does not have).",
   "citation": [
     {

@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Search",
   "title": "search input attributes",
+  "name": "Search input attributes",
   "rule": "Search input attributes — `autocomplete` on search can leak sensitive queries on shared machines. `autocorrect` / `spellcheck` conflict with server-side search correction. Do not rely on `required` as the only “empty search” message.",
   "citation": [
     {

@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Menus",
   "title": "frequent items first",
+  "name": "Frequent items first",
   "rule": "List important or frequently used menu items first (still grouping related commands).",
   "citation": [
     {

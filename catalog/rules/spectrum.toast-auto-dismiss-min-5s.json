@@ -3,6 +3,7 @@
   "category": "Feedback",
   "segment": "Toast",
   "title": "toast auto dismiss min 5s",
+  "name": "Toast auto-dismiss at least 5s",
   "rule": "Auto-dismiss ≥ 5 seconds so the message can be read. If an actionable toast auto-dismisses, the action must remain available elsewhere. Pause the timer on focus or hover (including keyboard focus on toast buttons).",
   "citation": [
     {

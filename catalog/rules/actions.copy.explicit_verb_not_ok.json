@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Copy",
   "title": "explicit verb not ok",
+  "name": "Explicit verb, not OK",
   "rule": "Do not use generic OK; name the button with the action it commits (and prefer explicit Cancel/Close/Apply text over an unlabeled X).",
   "citation": [
     {

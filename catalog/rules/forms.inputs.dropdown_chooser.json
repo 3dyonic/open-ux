@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Inputs",
   "title": "dropdown chooser",
+  "name": "Dropdown chooser",
   "rule": "For a bounded choice set, let the user pick from a drop-down chooser rather than typing the value from memory.",
   "citation": [
     {

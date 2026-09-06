@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Buttons",
   "title": "named button type map",
+  "name": "Named button type map",
   "rule": "Named type map — Default = non-primary, safe if unsure. Primary = complete/recommend. Text = low emphasis (e.g. table actions). Icon-only must have a Tooltip. Text+icon = supplementary meaning. Dashed = add content in an area. Link = external links. Ghost = dark or colored background. (Primary ≤1 per button group is named here, not a second row — dual-cite Actions/Atlassian/Carbon by scope.)",
   "citation": [
     {

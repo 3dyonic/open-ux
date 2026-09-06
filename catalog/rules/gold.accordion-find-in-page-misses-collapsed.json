@@ -3,6 +3,7 @@
   "category": "Wayfinding",
   "segment": "Accordion",
   "title": "accordion find in page misses collapsed",
+  "name": "Accordion find in page misses collapsed",
   "rule": "Accordion: hidden copy is invisible to Find in page — browsers’ find does not match collapsed accordion text. Dual-cite USWDS “use only if users need a few pieces”; this names the find-in-page failure.",
   "citation": [
     {

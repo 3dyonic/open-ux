@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Field labels",
   "title": "label left default vs top",
+  "name": "Label left default vs top",
   "rule": "Ant: label left of input by default; top when the text is too long or in English context; consistent within the system. Dual-cite Fluent/Spectrum top-default. Do not pick a winner.",
   "citation": [
     {

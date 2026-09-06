@@ -3,6 +3,7 @@
   "category": "Feedback",
   "segment": "Toast",
   "title": "toast at most one action",
+  "name": "Toast at most one action",
   "rule": "At most one action — a static white, secondary, outline button; concise; only when the action is directly related to the toast text.",
   "citation": [
     {

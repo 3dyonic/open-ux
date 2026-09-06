@@ -3,6 +3,7 @@
   "category": "Content",
   "segment": "Maps",
   "title": "map pan from centre select jumps listing",
+  "name": "Map pan from centre select jumps listing",
   "rule": "Map pan updates from centre; select centres the marker and jumps the listing. Popup snapshot + further-info link; dismiss via close and when another point is selected. Overlapping points → cluster. Filter labels name the input (postcode / suburb / full address).",
   "citation": [
     {

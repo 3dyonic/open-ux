@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Control",
   "title": "cancelability",
+  "name": "Cancelability",
   "rule": "Provide a way to instantly cancel a time-consuming operation with no side effects.",
   "citation": [
     {

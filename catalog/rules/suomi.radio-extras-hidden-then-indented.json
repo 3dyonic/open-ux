@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Radios",
   "title": "radio extras hidden then indented",
+  "name": "Radio extras hidden then indented",
   "rule": "Radio extras: additional fields stay hidden, then show indented under the selected radio — not a second “radios vs checkboxes” row.",
   "citation": [
     {

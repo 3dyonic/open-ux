@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Errors",
   "title": "repeated extra help",
+  "name": "Repeated extra help",
   "rule": "When the same error repeats (three or more times in one attempt), provide extra help: review error patterns, refine the design, and make messages more actionable.",
   "citation": [
     {

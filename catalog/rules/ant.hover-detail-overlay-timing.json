@@ -3,6 +3,7 @@
   "category": "Feedback",
   "segment": "Overlay",
   "title": "hover detail overlay timing",
+  "name": "Hover detail overlay timing",
   "rule": "Hover detail overlay timing — 0.5 s delay on mouseover; close immediately on mouse-out.",
   "citation": [
     {

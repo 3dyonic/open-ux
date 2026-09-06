@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Multi-page form",
   "title": "next primary save progress secondary",
+  "name": "Next primary save progress secondary",
   "rule": "Multi-page pairing: Next page is primary; Save progress is secondary.",
   "citation": [
     {

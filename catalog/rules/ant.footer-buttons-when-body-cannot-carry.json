@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Layout",
   "title": "footer buttons when body cannot carry",
+  "name": "Footer buttons when body cannot carry",
   "rule": "Footer buttons when the body can't carry them — collapsed/hidden content (not one screen), or complex body with subgroup actions so Complete is not confused with local actions. Footer = separation from body.",
   "citation": [
     {

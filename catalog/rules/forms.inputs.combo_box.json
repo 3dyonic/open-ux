@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Inputs",
   "title": "combo box",
+  "name": "Combo box",
   "rule": "When text input must be paired with a list of choices, use a combo box.",
   "citation": [
     {

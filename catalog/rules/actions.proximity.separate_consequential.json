@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Proximity",
   "title": "separate consequential",
+  "name": "Separate consequential",
   "rule": "Do not place highly consequential or destructive actions directly next to benign confirmatory options.",
   "citation": [
     {

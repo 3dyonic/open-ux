@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Checkout",
   "title": "open field state and card expiry",
+  "name": "Open field state and card expiry",
   "rule": "Open field, not iOS picker/dropdown, for state and card expiry.",
   "citation": [
     {

@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Confirmation",
   "title": "not routine",
+  "name": "Not routine",
   "rule": "Do not use confirmation dialogs for routine actions, or people will stop reading them.",
   "citation": [
     {

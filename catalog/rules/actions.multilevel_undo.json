@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Control",
   "title": "multilevel undo",
+  "name": "Multilevel undo",
   "rule": "Let the user reverse a series of actions, not only the last one.",
   "citation": [
     {

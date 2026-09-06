@@ -3,6 +3,7 @@
   "category": "Dialogs",
   "segment": "Confirmation",
   "title": "confirmation cancel discards",
+  "name": "Confirmation cancel discards",
   "rule": "Confirmation Cancel discards — touching Cancel cancels the action, discards any changes, and closes. (Example: listen to ringtones; commit only on OK.)",
   "citation": [
     {

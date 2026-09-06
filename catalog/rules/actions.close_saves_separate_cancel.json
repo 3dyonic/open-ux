@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Close vs Cancel",
   "title": "close saves separate cancel",
+  "name": "Close saves; Cancel is separate",
   "rule": "Treat Close as dismiss-and-keep-work and provide a separate Cancel to abandon; when in doubt, save then out.",
   "citation": [
     {

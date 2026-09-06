@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Buttons",
   "title": "default not destructive",
+  "name": "Default is not destructive",
   "rule": "Highlight the common choice as default/primary, but do not assign default or primary to a destructive action (and do not default Yes on a confirmation).",
   "citation": [
     {

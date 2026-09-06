@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Field labels",
   "title": "labels sentence case no colons above",
+  "name": "Labels sentence case no colons above",
   "rule": "Labels: sentence case, no trailing colons, above the control.",
   "citation": [
     {

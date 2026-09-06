@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Buttons",
   "title": "visual loudness primary secondary tertiary",
+  "name": "Visual loudness primary secondary tertiary",
   "rule": "Visual loudness is a named three-level scale: primary / secondary / tertiary so designers can balance visual priority. Dual-cite Actions one-primary; this row is the three-loudness scale, not a second “one primary” rule.",
   "citation": [
     {

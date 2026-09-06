@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Proximity",
   "title": "redundant visual signals",
+  "name": "Redundant visual signals",
   "rule": "Separate the consequential option with space and redundant visual signals (color, icon, size, alignment), not the label alone.",
   "citation": [
     {

@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Layout",
   "title": "helper text changes field height",
+  "name": "Helper text changes field height",
   "rule": "Helper text changes field height — a field with helper text next to one without will misalign. Equalize by passing a space character as `helperText` on the sibling.",
   "citation": [
     {

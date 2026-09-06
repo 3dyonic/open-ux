@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Control",
   "title": "macros",
+  "name": "Macros",
   "rule": "Let users compose a sequence of smaller actions into one reusable macro.",
   "citation": [
     {

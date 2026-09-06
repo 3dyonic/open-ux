@@ -3,6 +3,7 @@
   "category": "Foundations",
   "segment": "Principles",
   "title": "consistent not uniform",
+  "name": "Consistent not uniform",
   "rule": "Consistent, not uniform — same behaviour for common components; services may apply their own colour, type, sub-logo, and flows without disrupting the shared default.",
   "citation": [
     {

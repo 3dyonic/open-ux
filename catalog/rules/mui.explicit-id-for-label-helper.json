@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Labels",
   "title": "explicit id for label helper",
+  "name": "Explicit id for label helper",
   "rule": "Explicit `id` for label + helper association — input linked to label and helper (`for` / `aria-describedby`). Until hydration, a TextField without an explicit `id` will not have associated labels.",
   "citation": [
     {

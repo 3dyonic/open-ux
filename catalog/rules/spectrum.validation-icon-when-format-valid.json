@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Validation",
   "title": "validation icon when format valid",
+  "name": "Validation icon when format valid",
   "rule": "For email/card/password-rules fields, show the valid icon as soon as the typed value matches the format. Dual-cite NN/g success-for-complex; this is the format-as-you-type icon, not a spam-success on required-filled.",
   "citation": [
     {

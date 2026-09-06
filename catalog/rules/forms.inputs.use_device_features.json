@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Inputs",
   "title": "use device features",
+  "name": "Use device features",
   "rule": "Populate the field from phone features when they apply (camera, GPS, voice, contacts).",
   "citation": [
     {

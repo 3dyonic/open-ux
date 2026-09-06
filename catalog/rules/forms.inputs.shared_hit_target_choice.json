@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Inputs",
   "title": "shared hit target choice",
+  "name": "Shared hit target choice",
   "rule": "Checkbox and radio label and control share a single hit target (no dead zones).",
   "citation": [
     {

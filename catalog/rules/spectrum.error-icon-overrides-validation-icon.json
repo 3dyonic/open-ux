@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Validation",
   "title": "error icon overrides validation icon",
+  "name": "Error icon overrides validation icon",
   "rule": "When both error and validation icons would apply, show error only.",
   "citation": [
     {

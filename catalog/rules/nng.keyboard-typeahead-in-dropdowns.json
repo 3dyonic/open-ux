@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Choice",
   "title": "keyboard typeahead in dropdowns",
+  "name": "Keyboard typeahead in dropdowns",
   "rule": "Keyboard typeahead in dropdowns; avoid dropdown when typing is faster (state/country).",
   "citation": [
     {

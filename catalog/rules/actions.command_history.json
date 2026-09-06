@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Control",
   "title": "command history",
+  "name": "Command history",
   "rule": "Keep a visible record of what was done, to what, and when, as the user performs actions.",
   "citation": [
     {

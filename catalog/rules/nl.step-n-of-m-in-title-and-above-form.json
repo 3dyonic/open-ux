@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Multi-step",
   "title": "step n of m in title and above form",
+  "name": "Step n of m in the title and above the form",
   "rule": "Step n of m in `document.title` and above the form — e.g. `Stap 2 van 6`. Prefer text over a progress bar (scales under zoom). If a SPA swaps steps on one URL, still update the title. Dual-cite GOV.UK “test without a progress indicator”; this names the title + heading pair and SPA title rewrite. Conditional step counts: NL says evidence is insufficient — do not invent a house rule.",
   "citation": [
     {

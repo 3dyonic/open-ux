@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Choice",
   "title": "avoid select except long lists",
+  "name": "Avoid select except long lists",
   "rule": "Avoid select except long lists — selects hide content, are inconsistent across devices, and are hard for low digital literacy. Small lists (e.g. Australian state/territory) → radios / checkboxes / text. Long lists (e.g. country) may trade usability for compactness. Dual-cite GOV.UK / USWDS / NSW cutoffs; no house number.",
   "citation": [
     {

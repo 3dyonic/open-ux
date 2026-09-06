@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Choice",
   "title": "checkbox vs switch",
+  "name": "Checkbox vs switch",
   "rule": "Checkbox often with a submit for state; a single checkbox can be two-state. Switch takes effect immediately and does not need a button. Dual-cite Lightning toggle-immediate; Ant names Switch vs checkbox pairing.",
   "citation": [
     {

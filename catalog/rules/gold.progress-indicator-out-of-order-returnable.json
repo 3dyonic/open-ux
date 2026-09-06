@@ -3,6 +3,7 @@
   "category": "Wayfinding",
   "segment": "Progress",
   "title": "progress indicator out of order returnable",
+  "name": "Progress indicator out of order returnable",
   "rule": "Progress indicator is for out-of-order, returnable tasks (tax return / driver’s licence). Named states: `todo` / `doing` / `done`. Dual-cite USWDS linear step indicator and GOV.UK “test without a progress indicator”; do not collapse into one progress widget.",
   "citation": [
     {

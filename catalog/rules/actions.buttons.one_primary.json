@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Buttons",
   "title": "one primary",
+  "name": "One primary action",
   "rule": "Use one primary (filled) action in the view; other actions use weaker styles.",
   "citation": [
     {

@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Confirmation",
   "title": "prefer undo or popconfirm over modal",
+  "name": "Prefer undo or popconfirm over modal",
   "rule": "Prefer undo (or Popconfirm) over Modal double-confirm — delete → success + Undo (message+undo gone after one minute or on Undo). If undo is invalid, use Popconfirm next to the control. Abusing Modal drops context and blocks undo. Dual-cite Primer \"never warning when you mean undo\" / NN/g undo; Ant names Popconfirm vs Modal.",
   "citation": [
     {

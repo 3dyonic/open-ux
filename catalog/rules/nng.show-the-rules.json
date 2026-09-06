@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Password",
   "title": "show the rules",
+  "name": "Show the rules",
   "rule": "Show the Rules — requirements visible the whole time the field is selected (not a hidden link; not inside the placeholder).",
   "citation": [
     {

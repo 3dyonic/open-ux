@@ -3,6 +3,7 @@
   "category": "Content",
   "segment": "Charts",
   "title": "chart text horizontal",
+  "name": "Chart text horizontal",
   "rule": "Keep chart text horizontal; long categories → horizontal bar, don’t rotate. If a tool forces rotation, cap 45° and keep ≥12px at all viewports. Min sizes: title 16–18px, data labels 12px, notes 11–12px. Y-axis labels right-aligned; X centred. Commas in thousands; no digit spaces (AT).",
   "citation": [
     {

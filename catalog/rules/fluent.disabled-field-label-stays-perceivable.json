@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Fields",
   "title": "disabled field label stays perceivable",
+  "name": "Disabled field label stays perceivable",
   "rule": "Disabled field: control disabled; label (and helper/validation) stay enabled so AT can still perceive them. Settings Save MAY disable until requireds are complete only with visible reason + this perceivable label (dual-cite with GOV.UK don’t-disable on public/question).",
   "citation": [
     {

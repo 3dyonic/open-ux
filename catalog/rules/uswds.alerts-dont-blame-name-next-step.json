@@ -3,6 +3,7 @@
   "category": "Feedback",
   "segment": "Alert",
   "title": "alerts dont blame name next step",
+  "name": "Alerts Don't blame name next step",
   "rule": "Don’t blame the user; name the next step. Polite; include how to recover. Educational material is allowed because people will read an error that unblocks them. Don’t notify off the current goal. Destructive work → confirmation modal, not an alert.",
   "citation": [
     {

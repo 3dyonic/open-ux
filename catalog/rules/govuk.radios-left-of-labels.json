@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Choice",
   "title": "radios left of labels",
+  "name": "Radios left of labels",
   "rule": "Radios sit left of their labels.",
   "citation": [
     {

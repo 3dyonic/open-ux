@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Field labels",
   "title": "labels top aligned by default",
+  "name": "Labels top aligned by default",
   "rule": "Labels top-aligned by default; left-align only if space is tight and fields are consistent type/width.",
   "citation": [
     {

@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Tools",
   "title": "hover or popup tools",
+  "name": "Hover or popup tools",
   "rule": "Associate an object with tools that appear on hover or as a pop-up rather than crowding the main chrome.",
   "citation": [
     {

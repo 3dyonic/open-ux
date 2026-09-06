@@ -3,6 +3,7 @@
   "category": "Content",
   "segment": "Lists",
   "title": "lists max 7 or split",
+  "name": "Lists max 7 or split",
   "rule": "Lists ≤7 items, or split by category. One idea per bullet; consistent grammar; numbered only for rank/order/steps. Lead-in must apply to every item (“all of” vs “one or more”).",
   "citation": [
     {

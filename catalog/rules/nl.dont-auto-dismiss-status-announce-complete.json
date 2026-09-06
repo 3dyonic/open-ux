@@ -3,6 +3,7 @@
   "category": "System status",
   "segment": "Live status",
   "title": "dont auto dismiss status announce complete",
+  "name": "Don't auto-dismiss status; announce complete",
   "rule": "Don’t auto-dismiss status; if the message is time-bound, announce completion — “uploading…” may vanish when done and a live region must say “upload complete.” Dual-cite Spectrum toast ≥5s / Suomi 10s; no house seconds.",
   "citation": [
     {

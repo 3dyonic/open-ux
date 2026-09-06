@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Menus",
   "title": "unavailable state",
+  "name": "Unavailable state",
   "rule": "Show when a menu item is unavailable (typically dimmed); if every item is unavailable, keep the menu itself openable.",
   "citation": [
     {

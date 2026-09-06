@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Inputs",
   "title": "slider intensity grade",
+  "name": "Slider intensity grade",
   "rule": "Slider = intensity/grade (volume, brightness, saturation) when a precise number is not required; pair NumberInput with Slider when precision is required.",
   "citation": [
     {

@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Copy",
   "title": "ellipsis needs more input",
+  "name": "Ellipsis means more input",
   "rule": "Append an ellipsis when the command needs more information or opens another window, view, or app.",
   "citation": [
     {

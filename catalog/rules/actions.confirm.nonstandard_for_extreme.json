@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Confirmation",
   "title": "nonstandard for extreme",
+  "name": "Nonstandard for extreme",
   "rule": "For particularly dangerous rare operations, require a nonstandard confirm (for example typing a word), reserved so it does not become a new habit.",
   "citation": [
     {

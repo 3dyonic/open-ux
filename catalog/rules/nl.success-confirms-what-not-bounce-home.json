@@ -3,6 +3,7 @@
   "category": "Empty/failure",
   "segment": "Success",
   "title": "success confirms what not bounce home",
+  "name": "Success confirms what not bounce home",
   "rule": "Success is not “form sent” or a bounce to home — visible confirmation of what went through (repeat in mail or “Mijn omgeving”). Dual-cite empty/failure success copy; NL names bounce-home as fail.",
   "citation": [
     {

@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Choice",
   "title": "no select multiple",
+  "name": "No select multiple",
   "rule": "Don’t use `<select multiple>` — keyboard/VoiceOver (Safari) cannot operate it. Use checkboxes for multi-pick.",
   "citation": [
     {

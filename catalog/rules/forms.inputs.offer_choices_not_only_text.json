@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Inputs",
   "title": "offer choices not only text",
+  "name": "Offer choices not only text",
   "rule": "When possible, offer choices (picker, menu, or other selection) instead of requiring text entry.",
   "citation": [
     {

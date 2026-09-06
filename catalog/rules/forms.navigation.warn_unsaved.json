@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Navigation",
   "title": "warn unsaved",
+  "name": "Warn unsaved",
   "rule": "Warn before navigation that would lose unsaved changes.",
   "citation": [
     {

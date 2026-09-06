@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Confirmation",
   "title": "specific consequences",
+  "name": "Specific consequences",
   "rule": "Restate the request with specific, user-centric consequences; do not ask only “Are you sure?”",
   "citation": [
     {

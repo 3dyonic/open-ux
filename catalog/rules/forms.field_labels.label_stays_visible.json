@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Field labels",
   "title": "label stays visible",
+  "name": "Label stays visible",
   "rule": "Keep the label visible while the user types and checks the value; do not rely on text that disappears inside the field.",
   "citation": [
     {

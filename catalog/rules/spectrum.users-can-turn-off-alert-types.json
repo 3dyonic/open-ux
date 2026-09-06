@@ -3,6 +3,7 @@
   "category": "Feedback",
   "segment": "Toast",
   "title": "users can turn off alert types",
+  "name": "Users can turn off alert types",
   "rule": "Users can turn off all alert types — products should allow this for people who need to focus.",
   "citation": [
     {

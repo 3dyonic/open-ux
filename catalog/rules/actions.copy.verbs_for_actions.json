@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Copy",
   "title": "verbs for actions",
+  "name": "Verbs for actions",
   "rule": "Lead with a verb (or a specific verb phrase) for commands that initiate an action or submit information; prefer a specific verb over a generic Next.",
   "citation": [
     {

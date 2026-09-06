@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Modal",
   "title": "form in modal lifecycle",
+  "name": "Form in modal lifecycle",
   "rule": "Form-in-Modal lifecycle — list-page \"create\" may popup a form in Modal. `destroyOnHidden` does not clear Form fields — call `resetFields`. `useForm` before open is disconnected unless `forceRender` (or equivalent). Prefer native submit; if the submit control is outside the Form (Modal footer), call `form.submit`.",
   "citation": [
     {

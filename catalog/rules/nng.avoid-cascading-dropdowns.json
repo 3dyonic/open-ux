@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Choice",
   "title": "avoid cascading dropdowns",
+  "name": "Avoid cascading dropdowns",
   "rule": "Avoid cascading/interdependent dropdowns (options that appear/disappear from another widget).",
   "citation": [
     {

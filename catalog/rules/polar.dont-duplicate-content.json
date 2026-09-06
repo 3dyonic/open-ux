@@ -3,6 +3,7 @@
   "category": "Copy",
   "segment": "Structure",
   "title": "dont duplicate content",
+  "name": "Don't duplicate content",
   "rule": "Don’t duplicate content (no second page title under the title bar; no extra nav that copies App nav).",
   "citation": [
     {

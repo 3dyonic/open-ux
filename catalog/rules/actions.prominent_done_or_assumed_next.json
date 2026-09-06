@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Completion",
   "title": "prominent done or assumed next",
+  "name": "Prominent Done or assumed next",
   "rule": "Place the control that finishes the transaction (or the assumed next step) at the end of the visual flow; make it prominent and well labeled.",
   "citation": [
     {

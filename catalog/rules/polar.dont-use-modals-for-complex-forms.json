@@ -3,6 +3,7 @@
   "category": "Dialogs",
   "segment": "Modal",
   "title": "dont use modals for complex forms",
+  "name": "Don't use modals for complex forms",
   "rule": "Don’t use modals for complex forms or large information; max two bottom actions; tertiary never dismisses.",
   "citation": [
     {

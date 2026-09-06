@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Inputs",
   "title": "structured format",
+  "name": "Structured format",
   "rule": "When a strict syntax is required, put that structure into the control (segmented fields or visible separators) instead of a blank box.",
   "citation": [
     {

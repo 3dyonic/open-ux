@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Choice",
   "title": "always select one radio by default",
+  "name": "Always select one radio by default",
   "rule": "Always select one radio by default (users cannot return to “none”). Dual-cite with GOV.UK no-preselect-on-questions and Polar default-when-possible: satisfy “always one selected” with explicit None when none is valid — do not force a guessed answer.",
   "citation": [
     {

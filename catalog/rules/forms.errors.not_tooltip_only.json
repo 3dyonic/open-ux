@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Errors",
   "title": "not tooltip only",
+  "name": "Not tooltip only",
   "rule": "Do not require hover or an extra click on an icon to read the error message.",
   "citation": [
     {

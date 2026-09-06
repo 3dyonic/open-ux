@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Buttons",
   "title": "one cta per screen",
+  "name": "One CTA per screen",
   "rule": "One Call to Action per screen — CTA usually appears alone, command-like (landing/welcome); may be as wide as its parent. Distinct from one-primary-in-a-group.",
   "citation": [
     {

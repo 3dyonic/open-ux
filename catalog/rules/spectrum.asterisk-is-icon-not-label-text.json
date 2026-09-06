@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Required marker",
   "title": "asterisk is icon not label text",
+  "name": "Asterisk is an icon, not label text",
   "rule": "Required marker uses a spaced icon. If you use an asterisk, include hint text that explains what it means. Never use an asterisk to mark optional.",
   "citation": [
     {

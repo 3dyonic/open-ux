@@ -15,7 +15,7 @@ LIVE_SEED = (
     "forms.field_labels.label_stays_visible",
     "forms.field_labels.error_identifies_and_fixes",
 )
-INDEX_REQUIRED = {"id", "title", "jobs", "lane", "container", "card", "facet"}
+INDEX_REQUIRED = {"id", "title", "name", "jobs", "lane", "container", "card", "facet"}
 INDEX_OPTIONAL = {"leaf"}
 BODY_KEYS = {"pass_when", "fail_when", "rule", "citation", "check"}
 EXTRA_PREFIXES = ("govuk.", "nng.", "fluent.", "polar.")
@@ -88,6 +88,7 @@ def _huge_rule() -> dict:
     return {
         "id": "pad.huge",
         "title": "pad",
+        "name": "Pad",
         "rule": "x" * (HARD_CATALOG_BYTES + 32),
         "citation": [{"source": "test", "url": "https://example.com/pad"}],
         "check": "deterministic",
@@ -186,6 +187,8 @@ def test_rules_load_harvest_counts_after_same_claim_fold(live_catalog: Path) -> 
         assert g["container"] in CONTAINER_IDS
         assert g["card"] in CARD_IDS
         assert g.get("leaf") in LEAF_IDS
+        assert g["name"]
+        assert g["name"] != g["id"]
         for key in AGENT_KEYS:
             assert g[key]
         assert "waive_reason" not in g
@@ -264,6 +267,7 @@ def test_live_seeds_keep_locked_homes_and_agent_fields(live_catalog: Path) -> No
     visible = by_id["forms.field_labels.visible_label"]
     assert visible["card"] == "design_a_form"
     assert visible["leaf"] == "avoid_placeholder_as_label"
+    assert visible["name"] == "Visible label"
     assert visible["overview"].startswith("A lasting label")
     stays = by_id["forms.field_labels.label_stays_visible"]
     assert stays["card"] == "design_a_form"
@@ -278,6 +282,7 @@ def test_schema_citation_is_array_of_one_or_many(live_catalog: Path) -> None:
     base = {
         "id": "cite.shape",
         "title": "shape",
+        "name": "Shape",
         "rule": "one claim",
         "check": "deterministic",
         "pass_when": ["ok"],

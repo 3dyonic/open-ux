@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Menus",
   "title": "smart menu items",
+  "name": "Smart menu items",
   "rule": "Change menu labels dynamically so they state precisely what the command will do when invoked.",
   "citation": [
     {

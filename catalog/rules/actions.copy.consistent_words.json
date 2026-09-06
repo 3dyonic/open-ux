@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Copy",
   "title": "consistent words",
+  "name": "Consistent words",
   "rule": "Use the same command words in every menu, dialog, or flow for the same action; add a noun when the verb alone is ambiguous.",
   "citation": [
     {

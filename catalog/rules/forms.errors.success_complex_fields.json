@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Errors",
   "title": "success complex fields",
+  "name": "Success complex fields",
   "rule": "For complex fields, show successful entry (and instant rules as the user types) without spamming success on merely-required empty-to-filled fields.",
   "citation": [
     {

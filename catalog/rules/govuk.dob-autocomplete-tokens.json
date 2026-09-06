@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Dates",
   "title": "dob autocomplete tokens",
+  "name": "Date-of-birth autocomplete tokens",
   "rule": "Date of birth fields use autocomplete tokens `bday-day` / `bday-month` / `bday-year`.",
   "citation": [
     {

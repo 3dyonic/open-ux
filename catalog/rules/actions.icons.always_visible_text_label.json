@@ -3,6 +3,7 @@
   "category": "Actions",
   "segment": "Icons",
   "title": "always visible text label",
+  "name": "Always-visible text label",
   "rule": "Put a text label next to the icon and keep it visible at all times; do not reveal the label only on hover.",
   "citation": [
     {

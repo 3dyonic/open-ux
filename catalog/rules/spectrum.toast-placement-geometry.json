@@ -3,6 +3,7 @@
   "category": "Feedback",
   "segment": "Toast",
   "title": "toast placement geometry",
+  "name": "Toast placement geometry",
   "rule": "Default bottom center. Desktop: 16 px from the bottom of the viewport. Mobile: 16 px above the bottom toolbar; never wider than the viewport (8 px left/right margins). If unnoticed or disruptive, may move to bottom end, top end, or top center.",
   "citation": [
     {

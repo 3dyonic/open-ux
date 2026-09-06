@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Errors",
   "title": "validate after finished interacting",
+  "name": "Validate after finished interacting",
   "rule": "Validate after the merchant finished interacting (not before). Overlap NN/g §7; Polar names it on the component.",
   "citation": [
     {

@@ -3,6 +3,7 @@
   "category": "Feedback",
   "segment": "Dialog",
   "title": "dialog feedback only important actionable",
+  "name": "Dialog feedback only important actionable",
   "rule": "Dialog feedback only for important, actionable information — centered, confirm/cancel to close, blocks other work. Avoid unnecessary reminders except failure. Dual-cite NN/g modal 7; Ant is the feedback-routing sentence.",
   "citation": [
     {

@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Fields",
   "title": "distinguish optional required",
+  "name": "Distinguish optional required",
   "rule": "Distinguish optional and required fields; limit optional fields and label them as optional.",
   "citation": [
     {

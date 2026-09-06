@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Inputs",
   "title": "html autocomplete and name",
+  "name": "HTML autocomplete and name",
   "rule": "Give inputs `autocomplete` and a meaningful `name`.",
   "citation": [
     {

@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Picker",
   "title": "picker mobile tray when overwhelming",
+  "name": "Picker mobile tray when overwhelming",
   "rule": "Mobile menu container — popover or tray. Use a tray when the option count would overwhelm a popover.",
   "citation": [
     {

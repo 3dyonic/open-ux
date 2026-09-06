@@ -3,6 +3,7 @@
   "category": "Wayfinding",
   "segment": "Official banner",
   "title": "banner gov mil https every page",
+  "name": ".gov/.mil HTTPS banner on every page",
   "rule": "Unaltered .gov/.mil + HTTPS copy on every page, after skipnav. Only on official .gov/.mil with HTTPS; never on .com/.org or test sites. Spanish copy on Spanish sites; `.mil` copy on `.mil`. Do not leave `aria-hidden=\"true\"` on banner content in markup (JS sets it).",
   "citation": [
     {

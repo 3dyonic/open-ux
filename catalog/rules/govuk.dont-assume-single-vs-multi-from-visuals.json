@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Choice",
   "title": "dont assume single vs multi from visuals",
+  "name": "Don't assume single vs multi from visuals",
   "rule": "Don’t assume users know single- vs multi-select from radio vs checkbox visuals alone.",
   "citation": [
     {

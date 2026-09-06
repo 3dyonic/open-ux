@@ -3,6 +3,7 @@
   "category": "Feedback",
   "segment": "Toast vs dialog",
   "title": "toast vs dialog",
+  "name": "Toast vs dialog",
   "rule": "Toast only for confirmations, simple notifications, and low-priority alerts that must not fully interrupt. Dialog when the situation needs attention or a response. Do not use a dialog for a simple upload-complete.",
   "citation": [
     {

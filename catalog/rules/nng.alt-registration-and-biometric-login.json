@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Login",
   "title": "alt registration and biometric login",
+  "name": "Alt registration and biometric login",
   "rule": "Alt registration (social/federated) + biometric login where the platform has it.",
   "citation": [
     {

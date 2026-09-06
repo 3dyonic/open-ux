@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Errors",
   "title": "inline input feedback does not auto dismiss",
+  "name": "Inline input feedback does not auto dismiss",
   "rule": "Inline input feedback does not auto-dismiss — text follows the block; stays until the user performs the corresponding interaction.",
   "citation": [
     {

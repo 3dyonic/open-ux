@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Transparency",
   "title": "progress on long forms",
+  "name": "Progress on long forms",
   "rule": "On long forms, show a clear progress indicator of how much is done and how much remains.",
   "citation": [
     {

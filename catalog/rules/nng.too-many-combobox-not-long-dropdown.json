@@ -3,6 +3,7 @@
   "category": "Forms",
   "segment": "Choice",
   "title": "too many combobox not long dropdown",
+  "name": "Too many: combobox, not a long dropdown",
   "rule": "Too many (~15+) → combobox, not a long dropdown.",
   "citation": [
     {
