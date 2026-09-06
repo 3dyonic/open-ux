@@ -2,6 +2,8 @@
 
 One shared cited catalog. **`catalog/rules/{category}/{source}/{file}.json` is the SoT** — one guideline object per file.
 
+Locks for the 13-Card set, nested path, and the 14 drops (309 → 295) live in [`locks.md`](locks.md). `content/` is a category folder, not an 8th container.
+
 - `rules/` — 295 guideline files, grouped **category first, then source**. Filename drops the harvest prefix (`copy/polar/dont-duplicate-content.json`); `id` on the rule still holds `polar.dont-duplicate-content`. Actions is a category; Ant is a source. Seven leftovers with no honest Leaf were dropped. Same-claim rows fold onto one survivor. `citation` is always an array of one or many `{source, url}`.
 - `jobs.json` — 7 containers, 13 Cards, Facet → Leaf map. Pointers only; no rule bodies
 - `index.json` — generated `{id,title,name,jobs,lane,container,card,facet,leaf?}` (no rule bodies). `name` is the human-friendly label.

@@ -362,6 +362,23 @@ def test_jobs_json_is_not_a_lane(live_catalog: Path) -> None:
     assert len(catalog.guidelines) == CATALOG_COUNT
     tree = load_job_tree(Settings.load())
     assert [card.id for card in tree.cards] == list(CARD_IDS)
+    assert len(CARD_IDS) == 13
+    assert len(CONTAINER_IDS) == 7
+    assert "write_the_interface" in CARD_IDS
+    assert "content" not in CONTAINER_IDS
+
+
+def test_fourteen_drops_are_listed_and_absent(live_catalog: Path) -> None:
+    locks = (live_catalog / "locks.md").read_text(encoding="utf-8")
+    catalog = load_catalog(Settings.load(hosted=True))
+    ids = {g["id"] for g in catalog.guidelines}
+    dropped = UNMAPPED_DROPPED | FOLDED_IDS
+    assert len(dropped) == 14
+    assert dropped.isdisjoint(ids)
+    for gid in sorted(dropped):
+        assert f"`{gid}`" in locks
+    assert "content/" in locks
+    assert "not an 8th container" in locks
 
 
 def test_names_are_claim_then_source_and_folders_follow_category(
