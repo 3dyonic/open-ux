@@ -4,7 +4,8 @@
       "id": "actions.button_groups",
       "title": "button groups",
       "jobs": [
-        "actions"
+        "actions",
+        "pick_primary_action"
       ],
       "lane": "actions"
     },
@@ -12,7 +13,8 @@
       "id": "actions.hover_or_popup_tools",
       "title": "hover or popup tools",
       "jobs": [
-        "actions"
+        "actions",
+        "use_familiar_control"
       ],
       "lane": "actions"
     },
@@ -20,7 +22,8 @@
       "id": "actions.action_panel",
       "title": "action panel",
       "jobs": [
-        "actions"
+        "actions",
+        "use_familiar_control"
       ],
       "lane": "actions"
     },
@@ -28,7 +31,8 @@
       "id": "actions.prominent_done_or_assumed_next",
       "title": "prominent done or assumed next",
       "jobs": [
-        "actions"
+        "actions",
+        "pick_primary_action"
       ],
       "lane": "actions"
     },
@@ -36,7 +40,8 @@
       "id": "actions.smart_menu_items",
       "title": "smart menu items",
       "jobs": [
-        "actions"
+        "actions",
+        "name_a_control"
       ],
       "lane": "actions"
     },
@@ -44,7 +49,8 @@
       "id": "actions.preview",
       "title": "preview",
       "jobs": [
-        "actions"
+        "actions",
+        "announce_system_status"
       ],
       "lane": "actions"
     },
@@ -52,7 +58,8 @@
       "id": "actions.cancelability",
       "title": "cancelability",
       "jobs": [
-        "actions"
+        "actions",
+        "recover_from_invalid_input"
       ],
       "lane": "actions"
     },
@@ -60,7 +67,8 @@
       "id": "actions.multilevel_undo",
       "title": "multilevel undo",
       "jobs": [
-        "actions"
+        "actions",
+        "recover_from_invalid_input"
       ],
       "lane": "actions"
     },
@@ -68,7 +76,8 @@
       "id": "actions.command_history",
       "title": "command history",
       "jobs": [
-        "actions"
+        "actions",
+        "announce_system_status"
       ],
       "lane": "actions"
     },
@@ -76,7 +85,8 @@
       "id": "actions.macros",
       "title": "macros",
       "jobs": [
-        "actions"
+        "actions",
+        "use_familiar_control"
       ],
       "lane": "actions"
     },
@@ -84,7 +94,8 @@
       "id": "actions.copy.short_clear_sentence_case",
       "title": "short clear sentence case",
       "jobs": [
-        "actions"
+        "actions",
+        "name_a_control"
       ],
       "lane": "actions"
     },
@@ -92,7 +103,8 @@
       "id": "actions.copy.consequent_state",
       "title": "consequent state",
       "jobs": [
-        "actions"
+        "actions",
+        "name_a_control"
       ],
       "lane": "actions"
     },
@@ -100,7 +112,8 @@
       "id": "actions.copy.verbs_for_actions",
       "title": "verbs for actions",
       "jobs": [
-        "actions"
+        "actions",
+        "name_a_control"
       ],
       "lane": "actions"
     },
@@ -108,7 +121,8 @@
       "id": "actions.copy.adjectives_for_appearance",
       "title": "adjectives for appearance",
       "jobs": [
-        "actions"
+        "actions",
+        "name_a_control"
       ],
       "lane": "actions"
     },
@@ -116,7 +130,8 @@
       "id": "actions.copy.avoid_vague_names",
       "title": "avoid vague names",
       "jobs": [
-        "actions"
+        "actions",
+        "name_a_control"
       ],
       "lane": "actions"
     },
@@ -124,7 +139,8 @@
       "id": "actions.copy.tooltips_clarify_outcomes",
       "title": "tooltips clarify outcomes",
       "jobs": [
-        "actions"
+        "actions",
+        "name_a_control"
       ],
       "lane": "actions"
     },
@@ -132,7 +148,8 @@
       "id": "actions.copy.limit_branded_terms",
       "title": "limit branded terms",
       "jobs": [
-        "actions"
+        "actions",
+        "name_a_control"
       ],
       "lane": "actions"
     },
@@ -140,7 +157,8 @@
       "id": "actions.copy.consistent_words",
       "title": "consistent words",
       "jobs": [
-        "actions"
+        "actions",
+        "name_a_control"
       ],
       "lane": "actions"
     },
@@ -148,7 +166,8 @@
       "id": "actions.copy.explicit_verb_not_ok",
       "title": "explicit verb not ok",
       "jobs": [
-        "actions"
+        "actions",
+        "name_a_control"
       ],
       "lane": "actions"
     },
@@ -156,7 +175,8 @@
       "id": "actions.copy.ellipsis_needs_more_input",
       "title": "ellipsis needs more input",
       "jobs": [
-        "actions"
+        "actions",
+        "name_a_control"
       ],
       "lane": "actions"
     },
@@ -164,7 +184,8 @@
       "id": "actions.buttons.follow_platform_ok_cancel_order",
       "title": "follow platform ok cancel order",
       "jobs": [
-        "actions"
+        "actions",
+        "use_familiar_control"
       ],
       "lane": "actions"
     },
@@ -172,7 +193,8 @@
       "id": "actions.buttons.default_not_destructive",
       "title": "default not destructive",
       "jobs": [
-        "actions"
+        "actions",
+        "disable_or_confirm_destructive"
       ],
       "lane": "actions"
     },
@@ -180,7 +202,8 @@
       "id": "actions.close_saves_separate_cancel",
       "title": "close saves separate cancel",
       "jobs": [
-        "actions"
+        "actions",
+        "disable_or_confirm_destructive"
       ],
       "lane": "actions"
     },
@@ -188,7 +211,8 @@
       "id": "actions.confirm.serious_or_undo",
       "title": "serious or undo",
       "jobs": [
-        "actions"
+        "actions",
+        "disable_or_confirm_destructive"
       ],
       "lane": "actions"
     },
@@ -196,7 +220,8 @@
       "id": "actions.confirm.not_routine",
       "title": "not routine",
       "jobs": [
-        "actions"
+        "actions",
+        "disable_or_confirm_destructive"
       ],
       "lane": "actions"
     },
@@ -204,7 +229,8 @@
       "id": "actions.confirm.specific_consequences",
       "title": "specific consequences",
       "jobs": [
-        "actions"
+        "actions",
+        "disable_or_confirm_destructive"
       ],
       "lane": "actions"
     },
@@ -212,7 +238,8 @@
       "id": "actions.confirm.response_summarizes_outcome",
       "title": "response summarizes outcome",
       "jobs": [
-        "actions"
+        "actions",
+        "disable_or_confirm_destructive"
       ],
       "lane": "actions"
     },
@@ -220,7 +247,8 @@
       "id": "actions.confirm.progressive_disclosure",
       "title": "progressive disclosure",
       "jobs": [
-        "actions"
+        "actions",
+        "disable_or_confirm_destructive"
       ],
       "lane": "actions"
     },
@@ -228,7 +256,8 @@
       "id": "actions.confirm.nonstandard_for_extreme",
       "title": "nonstandard for extreme",
       "jobs": [
-        "actions"
+        "actions",
+        "disable_or_confirm_destructive"
       ],
       "lane": "actions"
     },
@@ -236,7 +265,8 @@
       "id": "actions.confirm.bypass_educational",
       "title": "bypass educational",
       "jobs": [
-        "actions"
+        "actions",
+        "disable_or_confirm_destructive"
       ],
       "lane": "actions"
     },
@@ -244,7 +274,8 @@
       "id": "actions.proximity.separate_consequential",
       "title": "separate consequential",
       "jobs": [
-        "actions"
+        "actions",
+        "disable_or_confirm_destructive"
       ],
       "lane": "actions"
     },
@@ -252,7 +283,8 @@
       "id": "actions.proximity.redundant_visual_signals",
       "title": "redundant visual signals",
       "jobs": [
-        "actions"
+        "actions",
+        "disable_or_confirm_destructive"
       ],
       "lane": "actions"
     },
@@ -260,7 +292,8 @@
       "id": "actions.icons.always_visible_text_label",
       "title": "always visible text label",
       "jobs": [
-        "actions"
+        "actions",
+        "name_a_control"
       ],
       "lane": "actions"
     },
@@ -268,7 +301,8 @@
       "id": "actions.buttons.distinguishable_states",
       "title": "distinguishable states",
       "jobs": [
-        "actions"
+        "actions",
+        "announce_system_status"
       ],
       "lane": "actions"
     },
@@ -276,7 +310,8 @@
       "id": "actions.buttons.loading_on_button",
       "title": "loading on button",
       "jobs": [
-        "actions"
+        "actions",
+        "announce_system_status"
       ],
       "lane": "actions"
     },
@@ -284,7 +319,8 @@
       "id": "actions.buttons.one_primary",
       "title": "one primary",
       "jobs": [
-        "actions"
+        "actions",
+        "pick_primary_action"
       ],
       "lane": "actions"
     },
@@ -292,7 +328,8 @@
       "id": "actions.buttons.press_state",
       "title": "press state",
       "jobs": [
-        "actions"
+        "actions",
+        "announce_system_status"
       ],
       "lane": "actions"
     },
@@ -300,7 +337,8 @@
       "id": "actions.buttons.style_not_size",
       "title": "style not size",
       "jobs": [
-        "actions"
+        "actions",
+        "pick_primary_action"
       ],
       "lane": "actions"
     },
@@ -308,7 +346,8 @@
       "id": "actions.menus.unavailable_state",
       "title": "unavailable state",
       "jobs": [
-        "actions"
+        "actions",
+        "announce_system_status"
       ],
       "lane": "actions"
     },
@@ -316,7 +355,8 @@
       "id": "actions.menus.frequent_items_first",
       "title": "frequent items first",
       "jobs": [
-        "actions"
+        "actions",
+        "pick_primary_action"
       ],
       "lane": "actions"
     },
@@ -742,7 +782,8 @@
       "id": "forms.field_labels.visible_label",
       "title": "visible label",
       "jobs": [
-        "forms"
+        "forms",
+        "avoid_placeholder_as_label"
       ],
       "lane": "forms"
     },
@@ -750,7 +791,8 @@
       "id": "forms.field_labels.label_stays_visible",
       "title": "label stays visible",
       "jobs": [
-        "forms"
+        "forms",
+        "keep_field_purpose_visible_while_filled"
       ],
       "lane": "forms"
     },
@@ -758,7 +800,8 @@
       "id": "forms.field_labels.error_identifies_and_fixes",
       "title": "error identifies and fixes",
       "jobs": [
-        "forms"
+        "forms",
+        "explain_failure_next_to_cause"
       ],
       "lane": "forms"
     },
@@ -766,7 +809,8 @@
       "id": "forms.field_labels.placeholder_hint_conflict",
       "title": "placeholder hint conflict",
       "jobs": [
-        "forms"
+        "forms",
+        "avoid_placeholder_as_label"
       ],
       "lane": "forms"
     },
@@ -774,7 +818,8 @@
       "id": "forms.errors.inline_after_complete",
       "title": "inline after complete",
       "jobs": [
-        "forms"
+        "forms",
+        "recover_from_invalid_input"
       ],
       "lane": "forms"
     },
@@ -782,7 +827,8 @@
       "id": "forms.errors.success_complex_fields",
       "title": "success complex fields",
       "jobs": [
-        "forms"
+        "forms",
+        "announce_system_status"
       ],
       "lane": "forms"
     },
@@ -790,7 +836,8 @@
       "id": "forms.errors.next_to_field_not_summary_only",
       "title": "next to field not summary only",
       "jobs": [
-        "forms"
+        "forms",
+        "explain_failure_next_to_cause"
       ],
       "lane": "forms"
     },
@@ -798,7 +845,8 @@
       "id": "forms.errors.not_color_only",
       "title": "not color only",
       "jobs": [
-        "forms"
+        "forms",
+        "explain_failure_next_to_cause"
       ],
       "lane": "forms"
     },
@@ -806,7 +854,8 @@
       "id": "forms.errors.modal_not_only_copy",
       "title": "modal not only copy",
       "jobs": [
-        "forms"
+        "forms",
+        "explain_failure_next_to_cause"
       ],
       "lane": "forms"
     },
@@ -814,7 +863,8 @@
       "id": "forms.errors.not_tooltip_only",
       "title": "not tooltip only",
       "jobs": [
-        "forms"
+        "forms",
+        "explain_failure_next_to_cause"
       ],
       "lane": "forms"
     },
@@ -822,7 +872,8 @@
       "id": "forms.errors.repeated_extra_help",
       "title": "repeated extra help",
       "jobs": [
-        "forms"
+        "forms",
+        "recover_from_invalid_input"
       ],
       "lane": "forms"
     },
@@ -830,7 +881,8 @@
       "id": "forms.errors.replace_supporting_text",
       "title": "replace supporting text",
       "jobs": [
-        "forms"
+        "forms",
+        "explain_failure_next_to_cause"
       ],
       "lane": "forms"
     },
@@ -838,7 +890,8 @@
       "id": "forms.errors.focus_first_error",
       "title": "focus first error",
       "jobs": [
-        "forms"
+        "forms",
+        "recover_from_invalid_input"
       ],
       "lane": "forms"
     },
@@ -846,7 +899,8 @@
       "id": "forms.length.keep_short",
       "title": "keep short",
       "jobs": [
-        "forms"
+        "forms",
+        "group_related_inputs"
       ],
       "lane": "forms"
     },
@@ -854,7 +908,8 @@
       "id": "forms.layout.group_related_labels_fields",
       "title": "group related labels fields",
       "jobs": [
-        "forms"
+        "forms",
+        "group_related_inputs"
       ],
       "lane": "forms"
     },
@@ -862,7 +917,8 @@
       "id": "forms.layout.single_column",
       "title": "single column",
       "jobs": [
-        "forms"
+        "forms",
+        "group_related_inputs"
       ],
       "lane": "forms"
     },
@@ -870,7 +926,8 @@
       "id": "forms.layout.logical_sequence",
       "title": "logical sequence",
       "jobs": [
-        "forms"
+        "forms",
+        "group_related_inputs"
       ],
       "lane": "forms"
     },
@@ -878,7 +935,8 @@
       "id": "forms.structure.progressive_disclosure",
       "title": "progressive disclosure",
       "jobs": [
-        "forms"
+        "forms",
+        "group_related_inputs"
       ],
       "lane": "forms"
     },
@@ -886,7 +944,8 @@
       "id": "forms.transparency.requirements_before_start",
       "title": "requirements before start",
       "jobs": [
-        "forms"
+        "forms",
+        "announce_system_status"
       ],
       "lane": "forms"
     },
@@ -894,7 +953,8 @@
       "id": "forms.transparency.progress_on_long_forms",
       "title": "progress on long forms",
       "jobs": [
-        "forms"
+        "forms",
+        "announce_system_status"
       ],
       "lane": "forms"
     },
@@ -902,7 +962,8 @@
       "id": "forms.copy.plain_language",
       "title": "plain language",
       "jobs": [
-        "forms"
+        "forms",
+        "name_a_control"
       ],
       "lane": "forms"
     },
@@ -910,7 +971,8 @@
       "id": "forms.copy.positive_wording",
       "title": "positive wording",
       "jobs": [
-        "forms"
+        "forms",
+        "name_a_control"
       ],
       "lane": "forms"
     },
@@ -918,7 +980,8 @@
       "id": "forms.copy.no_double_barreled",
       "title": "no double barreled",
       "jobs": [
-        "forms"
+        "forms",
+        "name_a_control"
       ],
       "lane": "forms"
     },
@@ -926,7 +989,8 @@
       "id": "forms.fields.distinguish_optional_required",
       "title": "distinguish optional required",
       "jobs": [
-        "forms"
+        "forms",
+        "name_a_control"
       ],
       "lane": "forms"
     },
@@ -934,7 +998,8 @@
       "id": "forms.fields.explain_format_upfront",
       "title": "explain format upfront",
       "jobs": [
-        "forms"
+        "forms",
+        "name_a_control"
       ],
       "lane": "forms"
     },
@@ -942,7 +1007,8 @@
       "id": "forms.fields.required_before_proceed",
       "title": "required before proceed",
       "jobs": [
-        "forms"
+        "forms",
+        "recover_from_invalid_input"
       ],
       "lane": "forms"
     },
@@ -950,7 +1016,8 @@
       "id": "forms.actions.avoid_reset_clear",
       "title": "avoid reset clear",
       "jobs": [
-        "forms"
+        "forms",
+        "disable_or_confirm_destructive"
       ],
       "lane": "forms"
     },
@@ -958,7 +1025,8 @@
       "id": "forms.inputs.match_control_and_size",
       "title": "match control and size",
       "jobs": [
-        "forms"
+        "forms",
+        "choose_control_for_choice"
       ],
       "lane": "forms"
     },
@@ -966,7 +1034,8 @@
       "id": "forms.inputs.helpful_constraints",
       "title": "helpful constraints",
       "jobs": [
-        "forms"
+        "forms",
+        "recover_from_invalid_input"
       ],
       "lane": "forms"
     },
@@ -974,7 +1043,8 @@
       "id": "forms.inputs.use_device_features",
       "title": "use device features",
       "jobs": [
-        "forms"
+        "forms",
+        "use_familiar_control"
       ],
       "lane": "forms"
     },
@@ -982,7 +1052,8 @@
       "id": "forms.inputs.compute_from_other_info",
       "title": "compute from other info",
       "jobs": [
-        "forms"
+        "forms",
+        "recover_from_invalid_input"
       ],
       "lane": "forms"
     },
@@ -990,7 +1061,8 @@
       "id": "forms.inputs.allow_paste_and_drag",
       "title": "allow paste and drag",
       "jobs": [
-        "forms"
+        "forms",
+        "recover_from_invalid_input"
       ],
       "lane": "forms"
     },
@@ -998,7 +1070,8 @@
       "id": "forms.inputs.matching_keyboard_and_type",
       "title": "matching keyboard and type",
       "jobs": [
-        "forms"
+        "forms",
+        "choose_control_for_choice"
       ],
       "lane": "forms"
     },
@@ -1006,7 +1079,8 @@
       "id": "forms.inputs.no_autocorrect_identity_fields",
       "title": "no autocorrect identity fields",
       "jobs": [
-        "forms"
+        "forms",
+        "recover_from_invalid_input"
       ],
       "lane": "forms"
     },
@@ -1014,7 +1088,8 @@
       "id": "forms.inputs.allow_typos_abbreviations",
       "title": "allow typos abbreviations",
       "jobs": [
-        "forms"
+        "forms",
+        "recover_from_invalid_input"
       ],
       "lane": "forms"
     },
@@ -1022,7 +1097,8 @@
       "id": "forms.inputs.forgiving_format_autoformat",
       "title": "forgiving format autoformat",
       "jobs": [
-        "forms"
+        "forms",
+        "recover_from_invalid_input"
       ],
       "lane": "forms"
     },
@@ -1030,7 +1106,8 @@
       "id": "forms.inputs.structured_format",
       "title": "structured format",
       "jobs": [
-        "forms"
+        "forms",
+        "choose_control_for_choice"
       ],
       "lane": "forms"
     },
@@ -1038,7 +1115,8 @@
       "id": "forms.inputs.fill_in_the_blanks",
       "title": "fill in the blanks",
       "jobs": [
-        "forms"
+        "forms",
+        "name_a_control"
       ],
       "lane": "forms"
     },
@@ -1046,7 +1124,8 @@
       "id": "forms.inputs.password_strength_meter",
       "title": "password strength meter",
       "jobs": [
-        "forms"
+        "forms",
+        "announce_system_status"
       ],
       "lane": "forms"
     },
@@ -1054,7 +1133,8 @@
       "id": "forms.inputs.autocompletion",
       "title": "autocompletion",
       "jobs": [
-        "forms"
+        "forms",
+        "recover_from_invalid_input"
       ],
       "lane": "forms"
     },
@@ -1062,7 +1142,8 @@
       "id": "forms.inputs.dropdown_chooser",
       "title": "dropdown chooser",
       "jobs": [
-        "forms"
+        "forms",
+        "choose_control_for_choice"
       ],
       "lane": "forms"
     },
@@ -1070,7 +1151,8 @@
       "id": "forms.inputs.list_builder",
       "title": "list builder",
       "jobs": [
-        "forms"
+        "forms",
+        "choose_control_for_choice"
       ],
       "lane": "forms"
     },
@@ -1078,7 +1160,8 @@
       "id": "forms.inputs.good_defaults_smart_prefills",
       "title": "good defaults smart prefills",
       "jobs": [
-        "forms"
+        "forms",
+        "recover_from_invalid_input"
       ],
       "lane": "forms"
     },
@@ -1086,7 +1169,8 @@
       "id": "forms.inputs.get_from_system",
       "title": "get from system",
       "jobs": [
-        "forms"
+        "forms",
+        "recover_from_invalid_input"
       ],
       "lane": "forms"
     },
@@ -1094,7 +1178,8 @@
       "id": "forms.inputs.never_prepopulate_password",
       "title": "never prepopulate password",
       "jobs": [
-        "forms"
+        "forms",
+        "disable_or_confirm_destructive"
       ],
       "lane": "forms"
     },
@@ -1102,7 +1187,8 @@
       "id": "forms.inputs.offer_choices_not_only_text",
       "title": "offer choices not only text",
       "jobs": [
-        "forms"
+        "forms",
+        "choose_control_for_choice"
       ],
       "lane": "forms"
     },
@@ -1110,7 +1196,8 @@
       "id": "forms.inputs.clear_button",
       "title": "clear button",
       "jobs": [
-        "forms"
+        "forms",
+        "recover_from_invalid_input"
       ],
       "lane": "forms"
     },
@@ -1118,7 +1205,8 @@
       "id": "forms.inputs.combo_box",
       "title": "combo box",
       "jobs": [
-        "forms"
+        "forms",
+        "choose_control_for_choice"
       ],
       "lane": "forms"
     },
@@ -1126,7 +1214,8 @@
       "id": "forms.inputs.html_autocomplete_and_name",
       "title": "html autocomplete and name",
       "jobs": [
-        "forms"
+        "forms",
+        "name_a_control"
       ],
       "lane": "forms"
     },
@@ -1134,7 +1223,8 @@
       "id": "forms.inputs.shared_hit_target_choice",
       "title": "shared hit target choice",
       "jobs": [
-        "forms"
+        "forms",
+        "keep_hit_target_usable"
       ],
       "lane": "forms"
     },
@@ -1142,7 +1232,8 @@
       "id": "forms.mobile.visible_with_keyboard",
       "title": "visible with keyboard",
       "jobs": [
-        "forms"
+        "forms",
+        "keep_field_purpose_visible_while_filled"
       ],
       "lane": "forms"
     },
@@ -1150,7 +1241,8 @@
       "id": "forms.labels.clickable",
       "title": "clickable",
       "jobs": [
-        "forms"
+        "forms",
+        "name_a_control"
       ],
       "lane": "forms"
     },
@@ -1158,7 +1250,8 @@
       "id": "forms.submit.enabled_until_request",
       "title": "enabled until request",
       "jobs": [
-        "forms"
+        "forms",
+        "announce_system_status"
       ],
       "lane": "forms"
     },
@@ -1166,7 +1259,8 @@
       "id": "forms.navigation.warn_unsaved",
       "title": "warn unsaved",
       "jobs": [
-        "forms"
+        "forms",
+        "disable_or_confirm_destructive"
       ],
       "lane": "forms"
     },

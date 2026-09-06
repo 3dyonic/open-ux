@@ -7,6 +7,7 @@ import pytest
 from jsonschema import ValidationError
 
 from open_ux.catalog import CatalogError, load_catalog
+from open_ux.jobs import CARD_IDS, LEAF_IDS, load_job_tree
 from open_ux.settings import HARD_CATALOG_BYTES, Settings
 
 LIVE_SEED = (
@@ -16,23 +17,7 @@ LIVE_SEED = (
 )
 INDEX_KEYS = {"id", "title", "jobs", "lane"}
 BODY_KEYS = {"pass_when", "fail_when", "rule", "citation", "check"}
-JOBS_15 = {
-    "name_a_control",
-    "avoid_placeholder_as_label",
-    "keep_field_purpose_visible_while_filled",
-    "recover_from_invalid_input",
-    "explain_failure_next_to_cause",
-    "choose_control_for_choice",
-    "group_related_inputs",
-    "announce_system_status",
-    "wayfind_after_nav",
-    "use_familiar_control",
-    "write_empty_state",
-    "tone_of_voice_for_failure",
-    "pick_primary_action",
-    "disable_or_confirm_destructive",
-    "keep_hit_target_usable",
-}
+JOBS_15 = set(LEAF_IDS)
 EXTRA_PREFIXES = ("govuk.", "nng.", "fluent.", "polar.")
 HARVEST3_PREFIXES = ("spectrum.", "ant.", "mui.")
 HARVEST4_PREFIXES = ("uswds.", "canada.", "nsw.")
@@ -90,11 +75,17 @@ def test_lanes_load_40_actions_54_forms_extra_73_harvest3_56_harvest4_46_harvest
     assert form_ids[:3] == list(LIVE_SEED)
     by_id = {g["id"]: g for g in catalog.guidelines}
     for gid in action_ids:
-        assert by_id[gid]["jobs"] == ["actions"]
+        jobs = by_id[gid]["jobs"]
+        assert jobs[0] == "actions"
+        assert set(jobs[1:]) <= JOBS_15
+        assert jobs[1:]
         assert "do_not_claim" not in by_id[gid]
         assert INVENTED_FIELDS.isdisjoint(by_id[gid])
     for gid in form_ids:
-        assert by_id[gid]["jobs"] == ["forms"]
+        jobs = by_id[gid]["jobs"]
+        assert jobs[0] == "forms"
+        assert set(jobs[1:]) <= JOBS_15
+        assert jobs[1:]
         assert "do_not_claim" not in by_id[gid]
         assert INVENTED_FIELDS.isdisjoint(by_id[gid])
     for gid in extra_ids + harvest3_ids + harvest4_ids + harvest5_ids:
@@ -135,3 +126,27 @@ def test_on_disk_index_has_no_rule_bodies(live_catalog: Path) -> None:
     assert [row["id"] for row in catalog.index] == [g["id"] for g in catalog.guidelines]
     for seed in LIVE_SEED:
         assert seed in {row["id"] for row in catalog.index}
+
+
+def test_every_rule_reaches_a_card(live_catalog: Path) -> None:
+    catalog = load_catalog(Settings.load(hosted=True))
+    tree = load_job_tree(Settings.load())
+    leaf_to_card: dict[str, str] = {}
+    for card in tree.cards:
+        for facet in card.facets:
+            for leaf in facet.leaves:
+                leaf_to_card[leaf.id] = card.id
+    assert set(leaf_to_card) == set(LEAF_IDS)
+    unmapped: list[str] = []
+    for guideline in catalog.guidelines:
+        tags = [job for job in (guideline.get("jobs") or []) if job not in {"forms", "actions", "feedback"}]
+        if not tags or not any(tag in leaf_to_card for tag in tags):
+            unmapped.append(guideline["id"])
+    assert unmapped == []
+
+
+def test_jobs_json_is_not_a_lane(live_catalog: Path) -> None:
+    catalog = load_catalog(Settings.load(hosted=True))
+    assert len(catalog.guidelines) == 309
+    tree = load_job_tree(Settings.load())
+    assert [card.id for card in tree.cards] == list(CARD_IDS)
