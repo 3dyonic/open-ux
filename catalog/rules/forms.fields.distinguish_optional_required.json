@@ -1,0 +1,24 @@
+{
+  "id": "forms.fields.distinguish_optional_required",
+  "category": "Forms",
+  "segment": "Fields",
+  "title": "distinguish optional required",
+  "rule": "Distinguish optional and required fields; limit optional fields and label them as optional.",
+  "citation": {
+    "source": "NN/g — Website Forms Usability",
+    "url": "https://www.nngroup.com/articles/web-form-design/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Optional vs required is visible; optional fields are few and labeled optional."
+  ],
+  "fail_when": [
+    "Mix of optional and required with no marking, or many unlabeled optionals."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "field_has_no_lasting_name",
+  "leaf": "name_a_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

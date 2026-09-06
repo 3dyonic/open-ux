@@ -1,0 +1,27 @@
+{
+  "id": "forms.transparency.progress_on_long_forms",
+  "category": "Forms",
+  "segment": "Transparency",
+  "title": "progress on long forms",
+  "rule": "On long forms, show a clear progress indicator of how much is done and how much remains.",
+  "citation": {
+    "source": "NN/g — 4 Principles to Reduce Cognitive Load in Forms",
+    "url": "https://www.nngroup.com/articles/4-principles-reduce-cognitive-load/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Long form shows done vs remaining progress."
+  ],
+  "fail_when": [
+    "Long form has no progress indication."
+  ],
+  "severity": "major",
+  "container": "multi_step_flows",
+  "card": "build_a_multi_step_flow",
+  "facet": "too_much_on_one_step",
+  "overview": "Long form shows done vs remaining progress.",
+  "apply_when": "Build a checkout flow",
+  "not_when": "Not for single form on one screen.",
+  "agent_hint": "On long forms, show a clear progress indicator of how much is done and how much remains.",
+  "description": "On long forms, show a clear progress indicator of how much is done and how much remains. Long form shows done vs remaining progress. It fails when Long form has no progress indication."
+}

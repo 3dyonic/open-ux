@@ -1,0 +1,25 @@
+{
+  "id": "nsw.map-pan-from-centre-select-jumps-listing",
+  "category": "Content",
+  "segment": "Maps",
+  "title": "map pan from centre select jumps listing",
+  "rule": "Map pan updates from centre; select centres the marker and jumps the listing. Popup snapshot + further-info link; dismiss via close and when another point is selected. Overlapping points → cluster. Filter labels name the input (postcode / suburb / full address).",
+  "citation": {
+    "source": "NSW — Maps",
+    "url": "https://designsystem.nsw.gov.au/docs/content/methods/maps.html"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Pan is from centre; selecting a point centres it and moves the listing; popup has a further-info link and dismisses on close or next select; overlaps cluster; filter labels name the input."
+  ],
+  "fail_when": [
+    "Select does not update the listing; overlapping points unclustered; unnamed filter inputs."
+  ],
+  "severity": "major",
+  "container": "navigation_and_wayfinding",
+  "card": "orient_in_the_place",
+  "facet": "user_cant_tell_where_they_are",
+  "leaf": "wayfind_after_nav",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Maps-never-only-channel as this interaction row."
+}

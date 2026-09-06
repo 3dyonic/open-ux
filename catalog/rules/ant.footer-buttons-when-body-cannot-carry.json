@@ -1,0 +1,25 @@
+{
+  "id": "ant.footer-buttons-when-body-cannot-carry",
+  "category": "Actions",
+  "segment": "Layout",
+  "title": "footer buttons when body cannot carry",
+  "rule": "Footer buttons when the body can't carry them — collapsed/hidden content (not one screen), or complex body with subgroup actions so Complete is not confused with local actions. Footer = separation from body.",
+  "citation": {
+    "source": "Ant Design — Button spec",
+    "url": "https://ant.design/docs/spec/buttons"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Complete/footer actions sit in the footer when content is collapsed/not one screen, or when a complex body has subgroup actions."
+  ],
+  "fail_when": [
+    "Complete sits among local subgroup actions so it is confused with them, on a body that cannot carry the page action."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "no_clear_primary",
+  "leaf": "pick_primary_action",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Always-footer as a house default."
+}

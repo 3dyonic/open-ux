@@ -1,0 +1,25 @@
+{
+  "id": "uswds.site-alert-dont-stack-dont-panic",
+  "category": "Feedback",
+  "segment": "Site alert",
+  "title": "site alert dont stack dont panic",
+  "rule": "One full-width site alert near the top. Do not stack. Multiple messages = a list of links inside a single site alert. Positioning already gives weight; do not use heavy red/orange panic colour. Dual-cite GOV.UK notification banner and System status: sitewide static, never form validation, never stacked.",
+  "citation": {
+    "source": "USWDS — Site alert",
+    "url": "https://designsystem.digital.gov/components/site-alert/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "At most one sitewide static site alert; extra messages are links inside it; not used for form/task validation; colour is not panic-red/orange as the only weight."
+  ],
+  "fail_when": [
+    "Stacked site alerts; site alert used as field/page form validation; or panic colour as the only signal."
+  ],
+  "severity": "major",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "system_stayed_quiet_after_change",
+  "leaf": "announce_system_status",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Page alert type-word (`uswds.alert-first-word-is-type`); live system-status toasts."
+}

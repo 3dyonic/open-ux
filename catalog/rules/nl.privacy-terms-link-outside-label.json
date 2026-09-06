@@ -1,0 +1,25 @@
+{
+  "id": "nl.privacy-terms-link-outside-label",
+  "category": "Forms",
+  "segment": "Labels",
+  "title": "privacy terms link outside label",
+  "rule": "Privacy / terms link sits outside the label — not “I agree to the [privacy policy]” as a nested `<a>`. Put the link above, or in a fieldset description via `aria-describedby`.",
+  "citation": {
+    "source": "NL Design System — Niet in label",
+    "url": "https://nldesignsystem.nl/richtlijnen/formulieren/links/niet-in-label/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Policy/terms link is above the control or in a fieldset description (`aria-describedby`), not nested in the `<label>`."
+  ],
+  "fail_when": [
+    "A privacy/terms `<a>` is nested inside the agreement `<label>`."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "field_has_no_lasting_name",
+  "leaf": "name_a_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Labels-contain-only-text as this privacy-pattern row; contact pages."
+}

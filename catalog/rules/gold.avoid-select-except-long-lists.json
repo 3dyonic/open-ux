@@ -1,0 +1,25 @@
+{
+  "id": "gold.avoid-select-except-long-lists",
+  "category": "Forms",
+  "segment": "Choice",
+  "title": "avoid select except long lists",
+  "rule": "Avoid select except long lists — selects hide content, are inconsistent across devices, and are hard for low digital literacy. Small lists (e.g. Australian state/territory) → radios / checkboxes / text. Long lists (e.g. country) may trade usability for compactness. Dual-cite GOV.UK / USWDS / NSW cutoffs; no house number.",
+  "citation": {
+    "source": "GOLD — Select usage",
+    "url": "https://github.com/designsystemau/gold-design-system-site/blob/main/content/components/select/rationale/usage.md"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Short lists use radios/checkboxes/text; select is reserved for long lists (e.g. country). Dual-cite cutoff schools are not collapsed into a house N."
+  ],
+  "fail_when": [
+    "A short list (e.g. state/territory) is a select; or a house numeric cutoff is invented as GOLD."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "A house “use select above N options”; NL `<select multiple>` ban as this single-select usage row."
+}

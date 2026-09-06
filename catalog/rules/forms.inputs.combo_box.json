@@ -1,0 +1,24 @@
+{
+  "id": "forms.inputs.combo_box",
+  "category": "Forms",
+  "segment": "Inputs",
+  "title": "combo box",
+  "rule": "When text input must be paired with a list of choices, use a combo box.",
+  "citation": {
+    "source": "Apple HIG — Text fields",
+    "url": "https://developer.apple.com/design/human-interface-guidelines/text-fields"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Type-plus-list task uses a combo box (text field + choice list)."
+  ],
+  "fail_when": [
+    "Type-plus-list is split into disconnected text and list, or list-only when typing is required."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

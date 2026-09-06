@@ -1,0 +1,24 @@
+{
+  "id": "actions.preview",
+  "category": "Actions",
+  "segment": "Feedback",
+  "title": "preview",
+  "rule": "Show a preview or summary of what will happen when the user performs the action.",
+  "citation": {
+    "source": "Designing Interfaces 3e ch. Doing Things — Preview (Tidwell, Brewer, Valencia)",
+    "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "A preview or summary of the result is available before the person commits."
+  ],
+  "fail_when": [
+    "The action commits with no preview or summary of what will happen."
+  ],
+  "severity": "major",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "system_stayed_quiet_after_change",
+  "leaf": "announce_system_status",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

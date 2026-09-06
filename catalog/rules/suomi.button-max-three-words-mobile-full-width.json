@@ -1,0 +1,25 @@
+{
+  "id": "suomi.button-max-three-words-mobile-full-width",
+  "category": "Actions",
+  "segment": "Buttons",
+  "title": "button max three words mobile full width",
+  "rule": "Button label ≤3 words; verb; capital first letter; full-width on mobile, shrink-to-content on desktop. Inverted variant not on images unless contrast holds. Dual-cite Actions explicit verb; unique bits are the three-word cap and mobile full-width.",
+  "citation": {
+    "source": "Suomi.fi — Button",
+    "url": "https://designsystem.suomi.fi/components/button/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Action labels ≤3 words, verb-first, capital first letter; small screens span the viewport; desktop width follows the label; inverted not on images unless contrast holds."
+  ],
+  "fail_when": [
+    "Action label longer than three words; mobile button does not span the viewport; desktop is a fixed wide block; inverted on an image without contrast."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "no_clear_primary",
+  "leaf": "pick_primary_action",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "One primary per view; Actions explicit-verb without the three-word cap."
+}

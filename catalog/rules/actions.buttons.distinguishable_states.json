@@ -1,0 +1,24 @@
+{
+  "id": "actions.buttons.distinguishable_states",
+  "category": "Actions",
+  "segment": "Buttons",
+  "title": "distinguishable states",
+  "rule": "Button states (enabled, disabled, hover, focus, pressed) must be visually distinguishable from each other.",
+  "citation": {
+    "source": "NN/g — Button States: Communicate Interaction",
+    "url": "https://www.nngroup.com/articles/button-states-communicate-interaction/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Enabled, disabled, hover, focus, and pressed are visually distinguishable from each other."
+  ],
+  "fail_when": [
+    "Any two of those states look the same."
+  ],
+  "severity": "major",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "system_stayed_quiet_after_change",
+  "leaf": "announce_system_status",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

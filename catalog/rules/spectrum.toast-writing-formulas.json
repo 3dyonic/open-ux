@@ -1,0 +1,25 @@
+{
+  "id": "spectrum.toast-writing-formulas",
+  "category": "Feedback",
+  "segment": "Toast copy",
+  "title": "toast writing formulas",
+  "rule": "Confirmation (neutral/positive): optional noun + past-participle -ed + optional prepositional phrase; UI element names in bold. Informational: complete sentence (subject + verb + optional extra). Error: short phrase + in-line action when possible. Keep under 2 lines in English (localization grows).",
+  "citation": {
+    "source": "Spectrum — Toast",
+    "url": "https://spectrum.adobe.com/page/toast/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Copy matches the confirmation / informational / error formula; under 2 lines in English; UI names bold on confirmation."
+  ],
+  "fail_when": [
+    "Wrong formula for the toast type, or more than 2 lines in English."
+  ],
+  "severity": "major",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "tone_fights_the_moment",
+  "leaf": "tone_of_voice_for_failure",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Tone/generic-language (next row) as this formula."
+}

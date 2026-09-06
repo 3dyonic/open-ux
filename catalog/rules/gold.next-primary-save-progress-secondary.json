@@ -1,0 +1,25 @@
+{
+  "id": "gold.next-primary-save-progress-secondary",
+  "category": "Actions",
+  "segment": "Multi-page form",
+  "title": "next primary save progress secondary",
+  "rule": "Multi-page pairing: Next page is primary; Save progress is secondary.",
+  "citation": {
+    "source": "GOLD — Form template tips",
+    "url": "https://github.com/designsystemau/gold-design-system-site/blob/main/content/templates/form/tips.md"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "On a multi-page form, Next page is the primary control and Save progress is secondary."
+  ],
+  "fail_when": [
+    "Save progress is styled as primary, or Next page is demoted below Save progress."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "no_clear_primary",
+  "leaf": "pick_primary_action",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "The three-loudness scale as this pairing; NL last-step-is-send as this GOLD Next/Save pair."
+}

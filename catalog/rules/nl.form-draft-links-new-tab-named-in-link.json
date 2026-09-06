@@ -1,0 +1,25 @@
+{
+  "id": "nl.form-draft-links-new-tab-named-in-link",
+  "category": "Forms",
+  "segment": "Links",
+  "title": "form draft links new tab named in link",
+  "rule": "In-form links that must not lose the draft open in a new tab, and say so in the link text — `target=\"_blank\"` plus visible “(opent in een nieuwe tab)” (or icon + equivalent SR text inside the link). Dual-cite USWDS identify-destination; this is draft-preservation + in-link announcement.",
+  "citation": {
+    "source": "NL Design System — Nieuwe tab",
+    "url": "https://nldesignsystem.nl/richtlijnen/formulieren/links/nieuwe-tab/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Draft-preserving form links use `target=\"_blank\"` and name the new tab in the link’s visible/SR text."
+  ],
+  "fail_when": [
+    "A form link opens a new tab with no in-link announcement, or a same-tab link drops the draft with no new-tab path when the source required it."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "field_has_no_lasting_name",
+  "leaf": "name_a_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "USWDS identify-destination as a merge that drops draft-preservation; labels-only-text as this row."
+}

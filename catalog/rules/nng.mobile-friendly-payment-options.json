@@ -1,0 +1,25 @@
+{
+  "id": "nng.mobile-friendly-payment-options",
+  "category": "Forms",
+  "segment": "Checkout",
+  "title": "mobile friendly payment options",
+  "rule": "Mobile-friendly payment options without overwhelming; photo-to-fill card; cross-device cart.",
+  "citation": {
+    "source": "NN/g — The Mobile Checkout Experience",
+    "url": "https://www.nngroup.com/articles/mobile-checkout-ux/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Payment options stay usable on mobile without an overwhelming list; card can be filled from a photo; cart works across devices."
+  ],
+  "fail_when": [
+    "Overwhelming payment list, no photo-to-fill where the article’s pattern applies, or cart that cannot continue on another device."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "A required set of named wallets."
+}

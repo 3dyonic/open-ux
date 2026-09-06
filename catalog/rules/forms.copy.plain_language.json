@@ -1,0 +1,24 @@
+{
+  "id": "forms.copy.plain_language",
+  "category": "Forms",
+  "segment": "Copy",
+  "title": "plain language",
+  "rule": "Write labels and instructions in plain language that mirrors how users talk about the information.",
+  "citation": {
+    "source": "NN/g — 4 Principles to Reduce Cognitive Load in Forms",
+    "url": "https://www.nngroup.com/articles/4-principles-reduce-cognitive-load/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Labels/instructions use ordinary words for the asked data."
+  ],
+  "fail_when": [
+    "Copy requires unexplained jargon to know what to enter."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "field_has_no_lasting_name",
+  "leaf": "name_a_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

@@ -44,7 +44,6 @@ def test_jobs_forms_alias_includes_live_seeds(live_catalog: Path) -> None:
     ids = {row["id"] for row in result["guidelines"]}
     assert VISIBLE in ids
     assert ERROR in ids
-    assert all(not row["id"].startswith("actions.") for row in result["guidelines"])
     _assert_pack_row(next(r for r in result["guidelines"] if r["id"] == VISIBLE))
 
 

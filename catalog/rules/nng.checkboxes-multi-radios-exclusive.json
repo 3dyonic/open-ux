@@ -1,0 +1,25 @@
+{
+  "id": "nng.checkboxes-multi-radios-exclusive",
+  "category": "Forms",
+  "segment": "Choice",
+  "title": "checkboxes multi radios exclusive",
+  "rule": "Checkboxes = independent multi; radios = mutually exclusive exactly-one.",
+  "citation": {
+    "source": "NN/g — Checkboxes vs. Radio Buttons",
+    "url": "https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Independent multi uses checkboxes; exactly-one uses radios."
+  ],
+  "fail_when": [
+    "Checkboxes for mutually exclusive exactly-one, or radios for independent multi."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Visuals (next row); GOV.UK “don’t assume from visuals alone”."
+}

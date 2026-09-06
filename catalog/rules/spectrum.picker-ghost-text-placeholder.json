@@ -1,0 +1,25 @@
+{
+  "id": "spectrum.picker-ghost-text-placeholder",
+  "category": "Forms",
+  "segment": "Picker",
+  "title": "picker ghost text placeholder",
+  "rule": "Picker placeholder (\"ghost text\") is allowed — prompts selection and disappears once a value is chosen. CONFLICT with Spectrum text-field \"don't use placeholder\" and NN/g placeholders. Dual-cite; picker-only. Do not pick a winner.",
+  "citation": {
+    "source": "Spectrum — Picker ; Spectrum — Text field",
+    "url": "https://spectrum.adobe.com/page/picker/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "A picker may show ghost-text that disappears after a value is chosen, and text fields still have a visible label (in-field hint extra, never only label)."
+  ],
+  "fail_when": [
+    "A text field uses disappearing placeholder as the only label; or picker ghost-text is treated as a pass for text fields."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "field_has_no_lasting_name",
+  "leaf": "avoid_placeholder_as_label",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "A winner that bans picker ghost-text or legalizes placeholder-as-only-label on text fields. Overlap with Forms 54: `forms.field_labels.visible_label` / `forms.field_labels.placeholder_hint_conflict`. Extra 73 skipped Polar/Fluent placeholder-as-hint."
+}

@@ -1,0 +1,25 @@
+{
+  "id": "suomi.date-hint-ppkkvvvv-calendar-optional-focus-trap",
+  "category": "Forms",
+  "segment": "Date",
+  "title": "date hint ppkkvvvv calendar optional focus trap",
+  "rule": "Date hint `PP.KK.VVVV` (or `p.k.vvvv`) always visible; calendar optional; focus is trapped while the calendar is open. Dual-cite USWDS typeable date / GOV.UK memorable date.",
+  "citation": {
+    "source": "Suomi.fi — DateInput",
+    "url": "https://designsystem.suomi.fi/components/dateinput/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Date format hint is always visible; the field is typeable; calendar (if present) is optional and traps focus while open."
+  ],
+  "fail_when": [
+    "Date format is only in a placeholder; calendar is the only entry path; calendar open without focus trap."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Time `t.mm` row; USWDS typeable / GOV.UK memorable as a merge that drops the Finnish hint + trap."
+}

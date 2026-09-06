@@ -1,0 +1,25 @@
+{
+  "id": "nng.too-many-combobox-not-long-dropdown",
+  "category": "Forms",
+  "segment": "Choice",
+  "title": "too many combobox not long dropdown",
+  "rule": "Too many (~15+) → combobox, not a long dropdown.",
+  "citation": {
+    "source": "NN/g — Does Your Form Really Need a Dropdown List?",
+    "url": "https://www.nngroup.com/articles/dropdown-list/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "A ~15+ set is a combobox (type + list), not a long dropdown."
+  ],
+  "fail_when": [
+    "A long dropdown of ~15+ with no type-to-find."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Apple combo-box pairing (`forms.inputs.combo_box`) as a duplicate; a house “15” as law."
+}

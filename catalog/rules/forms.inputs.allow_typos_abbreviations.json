@@ -1,0 +1,24 @@
+{
+  "id": "forms.inputs.allow_typos_abbreviations",
+  "category": "Forms",
+  "segment": "Inputs",
+  "title": "allow typos abbreviations",
+  "rule": "Allow typos or abbreviations rather than rejecting near-matches the system can interpret.",
+  "citation": {
+    "source": "NN/g — A Checklist for Designing Mobile Input Fields",
+    "url": "https://www.nngroup.com/articles/mobile-input-checklist/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Interpretable near-matches (typo, abbreviation) are accepted."
+  ],
+  "fail_when": [
+    "Near-matches the system could interpret are rejected."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "handle_form_errors",
+  "facet": "invalid_input_has_no_recovery",
+  "leaf": "recover_from_invalid_input",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

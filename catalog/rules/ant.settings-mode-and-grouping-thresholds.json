@@ -1,0 +1,25 @@
+{
+  "id": "ant.settings-mode-and-grouping-thresholds",
+  "category": "Forms",
+  "segment": "Settings",
+  "title": "settings mode and grouping thresholds",
+  "rule": "One mode per page: Instant Effect or Submission Effect (use submit when items interdepend). Item count: <7 no grouping; 7–15 group; >15 tab grouping.",
+  "citation": {
+    "source": "Ant Design — Data entry",
+    "url": "https://ant.design/docs/spec/data-entry"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "A settings page is one mode (instant or submission). Counts follow <7 / 7–15 / >15 tab grouping. Interdependent items use submission."
+  ],
+  "fail_when": [
+    "Instant and submission mixed on one page; or counts grouped against those bands."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "related_inputs_feel_scattered",
+  "leaf": "group_related_inputs",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "A house number that replaces 7 / 15; Switch-immediate as this page-mode row."
+}

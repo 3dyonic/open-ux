@@ -1,0 +1,27 @@
+{
+  "id": "actions.copy.ellipsis_needs_more_input",
+  "category": "Actions",
+  "segment": "Copy",
+  "title": "ellipsis needs more input",
+  "rule": "Append an ellipsis when the command needs more information or opens another window, view, or app.",
+  "citation": {
+    "source": "NN/g — UI Copy; Apple HIG — Buttons",
+    "url": "https://www.nngroup.com/articles/ui-copy/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Ellipsis is present when more input is required or another window/view/app opens; absent when the action completes immediately."
+  ],
+  "fail_when": [
+    "Ellipsis on an immediate-complete command, or no ellipsis when more input / another view is required."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "action_wording_hides_the_outcome",
+  "overview": "Ellipsis is present when more input is required or another window/view/app opens.",
+  "apply_when": "Primary vs secondary",
+  "not_when": "Not for delete / discard / confirm, or unsaved leave.",
+  "agent_hint": "Append an ellipsis when the command needs more information or opens another window, view, or app.",
+  "description": "Append an ellipsis when the command needs more information or opens another window, view, or app. Ellipsis is present when more input is required or another window/view/app opens. It fails when Ellipsis on an immediate-complete command, or no ellipsis when more input / another view is required."
+}

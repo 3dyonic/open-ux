@@ -1,0 +1,25 @@
+{
+  "id": "suomi.toast-10s-hover-stick-then-float",
+  "category": "Feedback",
+  "segment": "Toast",
+  "title": "toast 10s hover stick then float",
+  "rule": "Toast: 10 seconds or while hovered; slide out the top; stick then float top-right on scroll — success that needs no action. Dual-cite Spectrum ≥5s vs Ant Message 3s; no house seconds.",
+  "citation": {
+    "source": "Suomi.fi — Toast",
+    "url": "https://designsystem.suomi.fi/components/toast/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Duration is one named school applied consistently (Suomi.fi 10s or while hovered; Spectrum ≥5s; Ant 3s). Suomi.fi geometry when that school is used: stick-top then float top-right after scroll; slide-out dismiss; success with no required response."
+  ],
+  "fail_when": [
+    "A house seconds value not in {10s+hover, ≥5s, 3s}; or a success-toast that requires a response; or collapsing the three durations into one house timer."
+  ],
+  "severity": "major",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "system_stayed_quiet_after_change",
+  "leaf": "announce_system_status",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "A house toast duration; Notification first-load split as this row."
+}

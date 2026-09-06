@@ -1,0 +1,25 @@
+{
+  "id": "nng.support-undo-discoverable",
+  "category": "Actions",
+  "segment": "Control",
+  "title": "support undo discoverable",
+  "rule": "Support Undo that stays discoverable — visible control; snackbar-only undo that vanishes in seconds is a miss. Always allow Back; cancel in-progress. (Heuristic #3 not filed as a catalog row.)",
+  "citation": {
+    "source": "NN/g — User Control and Freedom",
+    "url": "https://www.nngroup.com/articles/user-control-and-freedom/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Undo is a discoverable visible control (not only a vanishing snackbar); Back is available; in-progress work can be cancelled."
+  ],
+  "fail_when": [
+    "Undo only as a seconds-long snackbar; no Back; no cancel in-progress."
+  ],
+  "severity": "major",
+  "container": "navigation_and_wayfinding",
+  "card": "orient_in_the_place",
+  "facet": "user_cant_tell_where_they_are",
+  "leaf": "wayfind_after_nav",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Heuristic #3 as a row; `actions.multilevel_undo` / `actions.cancelability` as merges. Overlap with Actions 40: `multilevel_undo` / `cancelability`."
+}

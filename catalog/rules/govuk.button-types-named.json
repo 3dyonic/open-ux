@@ -1,0 +1,25 @@
+{
+  "id": "govuk.button-types-named",
+  "category": "Actions",
+  "segment": "Buttons",
+  "title": "button types named",
+  "rule": "Button types named: default; Start; secondary; warning (destructive).",
+  "citation": {
+    "source": "GOV.UK Design System — Button",
+    "url": "https://design-system.service.gov.uk/components/button/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "The button’s type matches its role (default / Start / secondary / warning for destructive)."
+  ],
+  "fail_when": [
+    "Destructive uses default styling, or Start/secondary/warning are used for the wrong role."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "no_clear_primary",
+  "leaf": "pick_primary_action",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "One-primary (`actions.buttons.one_primary`); default-not-destructive as a second winner. Overlap with Actions 40: `actions.buttons.default_not_destructive`."
+}

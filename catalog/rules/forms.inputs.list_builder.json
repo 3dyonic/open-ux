@@ -1,0 +1,24 @@
+{
+  "id": "forms.inputs.list_builder",
+  "category": "Forms",
+  "segment": "Inputs",
+  "title": "list builder",
+  "rule": "When the user must assemble a list of items, provide a list builder (available vs selected), not a single free-text dump.",
+  "citation": {
+    "source": "Designing Interfaces 3e ch. Getting Input — List Builder (Tidwell, Brewer, Valencia)",
+    "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Assembling a list uses available-vs-selected (add/remove) UI."
+  ],
+  "fail_when": [
+    "Multi-item list is one free-text dump."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

@@ -1,0 +1,25 @@
+{
+  "id": "uswds.character-count-brevity-or-legal",
+  "category": "Forms",
+  "segment": "Character count",
+  "title": "character count brevity or legal",
+  "rule": "Character count only for brevity or a legal cap — not to paper over backend field limits (raise the limit). Skip if length is implied (phone/zip) or if well over 99% of users will never hit the cap (e.g. address at 250). Provide a non-JS backup message. Dual-cite GOV.UK raise-backend + no-maxlength-truncate vs USWDS using `maxlength` for the component. No winner on truncate.",
+  "citation": {
+    "source": "USWDS — Character count",
+    "url": "https://designsystem.digital.gov/components/character-count/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Count is shown only for brevity or a legal cap; backend limit is raised rather than used as a fake cap; implied-length and never-hit caps omit the count; a non-JS backup message exists."
+  ],
+  "fail_when": [
+    "Count papers over a short backend limit; or count on phone/zip / an address field almost nobody will hit."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "use_familiar_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "A winner that bans or requires `maxlength`."
+}

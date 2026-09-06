@@ -1,0 +1,25 @@
+{
+  "id": "suomi.errorsummary-link-text-equals-field-error",
+  "category": "Forms",
+  "segment": "Errors",
+  "title": "errorsummary link text equals field error",
+  "rule": "ErrorSummary link text = the field’s error text — same wording in both places so either context still reads.",
+  "citation": {
+    "source": "Suomi.fi — Static form",
+    "url": "https://designsystem.suomi.fi/patterns/static-form/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Each ErrorSummary link uses the same wording as that field’s error text."
+  ],
+  "fail_when": [
+    "Summary link wording differs from the field error (e.g. only the field label in the summary)."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "handle_form_errors",
+  "facet": "errors_dont_point_to_the_fix",
+  "leaf": "explain_failure_next_to_cause",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil; MULTI_HOME picked explain_failure_next_to_cause; leftover harvest tag recover_from_invalid_input",
+  "do_not_claim": "Submit-time default as this wording row; GOV.UK error summary as a merge that drops same-wording."
+}

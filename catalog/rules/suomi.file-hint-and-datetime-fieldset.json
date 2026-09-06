@@ -1,0 +1,25 @@
+{
+  "id": "suomi.file-hint-and-datetime-fieldset",
+  "category": "Forms",
+  "segment": "File / datetime",
+  "title": "file hint and datetime fieldset",
+  "rule": "File: `hintText` states max size / types / count; `dragAreaText` names drag-and-drop; `addedFileAriaText` is read before the filename; `removeFileText` names remove. Dual-cite USWDS prefer-one-file. Datetime combo: wrap date+time in a fieldset with a legend; desktop uses external HintText/StatusText ids on `aria-describedby`; mobile uses built-in hint/status because fields stack.",
+  "citation": {
+    "source": "Suomi.fi — FileInput · Date+time pattern https://designsystem.suomi.fi/patterns/datetime/",
+    "url": "https://designsystem.suomi.fi/components/fileinput/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "File hints name size/types/count; drag and remove strings are named; added-file SR text precedes the filename. Date+time share a fieldset/legend; desktop external hint/status ids; mobile built-in hint/status on stacked fields."
+  ],
+  "fail_when": [
+    "File input has no size/types/count hint; date+time are unrelated fields with no shared legend; desktop omits external describedby ids while claiming this pattern."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "related_inputs_feel_scattered",
+  "leaf": "group_related_inputs",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "USWDS prefer-one-file / file types+size as a merge that drops the named string props; date-hint `PP.KK.VVVV` as this fieldset row."
+}

@@ -1,0 +1,25 @@
+{
+  "id": "spectrum.users-can-turn-off-alert-types",
+  "category": "Feedback",
+  "segment": "Toast",
+  "title": "users can turn off alert types",
+  "rule": "Users can turn off all alert types — products should allow this for people who need to focus.",
+  "citation": {
+    "source": "Spectrum — Toast",
+    "url": "https://spectrum.adobe.com/page/toast/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Alert types can be turned off."
+  ],
+  "fail_when": [
+    "No way to turn off alert types."
+  ],
+  "severity": "major",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "system_stayed_quiet_after_change",
+  "leaf": "announce_system_status",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "`actions.confirm.bypass_educational` as a merge."
+}

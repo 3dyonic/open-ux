@@ -1,0 +1,25 @@
+{
+  "id": "canada.no-separate-mobile-site",
+  "category": "Wayfinding",
+  "segment": "Responsive",
+  "title": "no separate mobile site",
+  "rule": "No separate mobile site — same content on phone and desktop; IA as flat as possible; in-page navigation over menus; limit page weight. Dual-cite USWDS continuity / mobile-friendly without a second origin and Wayfinding Jump to Item (do not merge with USWDS tab-before-main / never-link-externally in-page row).",
+  "citation": {
+    "source": "Canada.ca — Designing content",
+    "url": "https://design.canada.ca/specifications/design-content.html"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Phone and desktop share the same content origin; IA is flat; in-page nav is preferred over extra menus."
+  ],
+  "fail_when": [
+    "A separate mobile origin/site, or a second menu instead of in-page nav on a long page."
+  ],
+  "severity": "major",
+  "container": "navigation_and_wayfinding",
+  "card": "orient_in_the_place",
+  "facet": "user_cant_tell_where_they_are",
+  "leaf": "wayfind_after_nav",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "USWDS in-page tab-before-main geometry as this row."
+}

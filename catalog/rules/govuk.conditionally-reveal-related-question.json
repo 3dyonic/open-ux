@@ -1,0 +1,25 @@
+{
+  "id": "govuk.conditionally-reveal-related-question",
+  "category": "Forms",
+  "segment": "Structure",
+  "title": "conditionally reveal related question",
+  "rule": "Conditionally reveal a related question on the chosen radio/checkbox.",
+  "citation": {
+    "source": "GOV.UK Design System — Radios; GOV.UK Design System — Checkboxes",
+    "url": "https://design-system.service.gov.uk/components/radios/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "A follow-up that applies only to one choice is revealed when that radio/checkbox is chosen."
+  ],
+  "fail_when": [
+    "Related follow-up is always visible, or never available after the choice."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "related_inputs_feel_scattered",
+  "leaf": "group_related_inputs",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Generic progressive disclosure (`forms.structure.progressive_disclosure`) as a second copy of this row. Overlap with Forms 54: `forms.structure.progressive_disclosure`."
+}

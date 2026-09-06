@@ -1,0 +1,24 @@
+{
+  "id": "actions.command_history",
+  "category": "Actions",
+  "segment": "Control",
+  "title": "command history",
+  "rule": "Keep a visible record of what was done, to what, and when, as the user performs actions.",
+  "citation": {
+    "source": "Designing Interfaces 3e ch. Doing Things — Command History (Tidwell, Brewer, Valencia)",
+    "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "A visible record shows what was done, to what, and when."
+  ],
+  "fail_when": [
+    "No visible history of what / to what / when."
+  ],
+  "severity": "major",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "system_stayed_quiet_after_change",
+  "leaf": "announce_system_status",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

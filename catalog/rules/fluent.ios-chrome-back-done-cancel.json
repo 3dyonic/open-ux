@@ -1,0 +1,25 @@
+{
+  "id": "fluent.ios-chrome-back-done-cancel",
+  "category": "Actions",
+  "segment": "Buttons",
+  "title": "ios chrome back done cancel",
+  "rule": "iOS chrome: Back top-left; Done/Save top-right; Cancel top-left when paired with Done/Save, else Cancel top-right.",
+  "citation": {
+    "source": "Fluent 2 — iOS Button usage",
+    "url": "https://fluent2.microsoft.design/components/ios/core/button/usage"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "iOS: Back top-left; Done/Save top-right; Cancel top-left when paired with Done/Save, otherwise Cancel top-right."
+  ],
+  "fail_when": [
+    "Those controls swapped against that pairing."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "no_clear_primary",
+  "leaf": "pick_primary_action",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "A global web OK/Cancel order (`actions.buttons.follow_platform_ok_cancel_order`). Overlap with Actions 40: `follow_platform_ok_cancel_order`."
+}

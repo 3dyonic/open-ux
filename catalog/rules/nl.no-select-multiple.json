@@ -1,0 +1,25 @@
+{
+  "id": "nl.no-select-multiple",
+  "category": "Forms",
+  "segment": "Choice",
+  "title": "no select multiple",
+  "rule": "Don’t use `<select multiple>` — keyboard/VoiceOver (Safari) cannot operate it. Use checkboxes for multi-pick.",
+  "citation": {
+    "source": "NL Design System — Iedereen kan invullen",
+    "url": "https://nldesignsystem.nl/richtlijnen/formulieren/wanneer-welk-form-element/iedereen-kan-invullen/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Multi-choice uses checkboxes, not native `<select multiple>`."
+  ],
+  "fail_when": [
+    "Native `<select multiple>` is the control."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "GOLD avoid-select-except-long-lists as this multi-select ban; NSW multi-select pattern as a winner."
+}

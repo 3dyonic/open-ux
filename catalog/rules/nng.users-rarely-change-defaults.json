@@ -1,0 +1,25 @@
+{
+  "id": "nng.users-rarely-change-defaults",
+  "category": "Forms",
+  "segment": "Defaults",
+  "title": "users rarely change defaults",
+  "rule": "Users rarely change defaults — pick most common/safe, not first-alpha; don’t always default the most expensive.",
+  "citation": {
+    "source": "NN/g — The Power of Defaults",
+    "url": "https://www.nngroup.com/articles/the-power-of-defaults/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Default is the common or safe value, not alphabetical-first and not automatically the most expensive."
+  ],
+  "fail_when": [
+    "First-alpha or most-expensive default with no common/safe basis."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "use_familiar_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Question silent-preselect (locked dual-cite); Tidwell Good Defaults as a merge."
+}

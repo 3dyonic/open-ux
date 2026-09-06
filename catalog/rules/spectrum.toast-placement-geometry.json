@@ -1,0 +1,25 @@
+{
+  "id": "spectrum.toast-placement-geometry",
+  "category": "Feedback",
+  "segment": "Toast",
+  "title": "toast placement geometry",
+  "rule": "Default bottom center. Desktop: 16 px from the bottom of the viewport. Mobile: 16 px above the bottom toolbar; never wider than the viewport (8 px left/right margins). If unnoticed or disruptive, may move to bottom end, top end, or top center.",
+  "citation": {
+    "source": "Spectrum — Toast",
+    "url": "https://spectrum.adobe.com/page/toast/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Default is bottom center with those desktop/mobile offsets and margins; alternate corners only if unnoticed or disruptive."
+  ],
+  "fail_when": [
+    "Default placement other than bottom center with no unnoticed/disruptive reason, or toast wider than the viewport / overlapping the cited margins."
+  ],
+  "severity": "major",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "system_stayed_quiet_after_change",
+  "leaf": "announce_system_status",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Ant Message top-center as a house winner."
+}

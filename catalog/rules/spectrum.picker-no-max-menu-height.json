@@ -1,0 +1,25 @@
+{
+  "id": "spectrum.picker-no-max-menu-height",
+  "category": "Forms",
+  "segment": "Picker",
+  "title": "picker no max menu height",
+  "rule": "No maximum menu height — grow to show as many options as the available space allows. Field value truncates; menu (and label) wrap.",
+  "citation": {
+    "source": "Spectrum — Picker",
+    "url": "https://spectrum.adobe.com/page/picker/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Menu grows with available space (no artificial max); field value may truncate; menu and label wrap."
+  ],
+  "fail_when": [
+    "A capped menu that hides available-space options, or menu that truncates like the field."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Item wrapping discouraged (next row) as a max-height rule."
+}

@@ -1,0 +1,25 @@
+{
+  "id": "uswds.filled-next-outline-this-page",
+  "category": "Actions",
+  "segment": "Buttons",
+  "title": "filled next outline this page",
+  "rule": "Standard (filled) for actions that go to a next step. Outline for actions that happen on the current page. Unstyled only for less important actions that may look like links.",
+  "citation": {
+    "source": "USWDS — Button",
+    "url": "https://designsystem.digital.gov/components/button/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Next-step actions are filled; same-page actions are outline; unstyled is only for less important link-like actions."
+  ],
+  "fail_when": [
+    "Filled used for a same-page action, outline used as the next-step control, or unstyled used as the primary next step."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "no_clear_primary",
+  "leaf": "pick_primary_action",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Actions one-primary / distinctive-primary as this row."
+}

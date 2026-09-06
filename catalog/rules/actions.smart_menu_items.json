@@ -1,0 +1,24 @@
+{
+  "id": "actions.smart_menu_items",
+  "category": "Actions",
+  "segment": "Menus",
+  "title": "smart menu items",
+  "rule": "Change menu labels dynamically so they state precisely what the command will do when invoked.",
+  "citation": {
+    "source": "Designing Interfaces 3e ch. Doing Things — Smart Menu Items (Tidwell, Brewer, Valencia)",
+    "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Menu labels reword with context to state the actual command."
+  ],
+  "fail_when": [
+    "Labels stay generic/static and do not state what will happen."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "field_has_no_lasting_name",
+  "leaf": "name_a_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

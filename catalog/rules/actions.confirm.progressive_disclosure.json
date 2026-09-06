@@ -1,0 +1,24 @@
+{
+  "id": "actions.confirm.progressive_disclosure",
+  "category": "Actions",
+  "segment": "Confirmation",
+  "title": "progressive disclosure",
+  "rule": "Keep confirmation copy short and offer a way to learn more before commit.",
+  "citation": {
+    "source": "NN/g — Confirmation Dialogs (§5)",
+    "url": "https://www.nngroup.com/articles/confirmation-dialog/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Confirmation copy is short; extra detail is available before commit."
+  ],
+  "fail_when": [
+    "All extra consequence detail dumped on the first screen, or no way to learn more when extra detail exists."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "protect_destructive_and_leave",
+  "facet": "destructive_is_too_easy",
+  "leaf": "disable_or_confirm_destructive",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

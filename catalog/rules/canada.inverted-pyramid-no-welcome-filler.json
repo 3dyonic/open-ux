@@ -1,0 +1,25 @@
+{
+  "id": "canada.inverted-pyramid-no-welcome-filler",
+  "category": "Content",
+  "segment": "Structure",
+  "title": "inverted pyramid no welcome filler",
+  "rule": "Inverted pyramid; no welcome-message filler. Most important idea/step first; then prioritized tasks; extra detail last and only if it supports the task. Stay on topic; no “welcome to our site” or background for its own sake.",
+  "citation": {
+    "source": "Canada.ca — Designing content; Content Style Guide",
+    "url": "https://design.canada.ca/specifications/design-content.html"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Lead is the main idea/step; extra detail is last and task-supporting; no welcome/background filler."
+  ],
+  "fail_when": [
+    "Welcome-to-our-site opener, or background before the task."
+  ],
+  "severity": "major",
+  "container": "navigation_and_wayfinding",
+  "card": "orient_in_the_place",
+  "facet": "user_cant_tell_where_they_are",
+  "leaf": "wayfind_after_nav",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Four writing qualities as this structure row."
+}

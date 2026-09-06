@@ -1,0 +1,25 @@
+{
+  "id": "canada.supertask-once-never-promo",
+  "category": "Actions",
+  "segment": "Buttons",
+  "title": "supertask once never promo",
+  "rule": "Supertask button once; never for promo; link-style button for rare actions. Supertask launches the page’s main task (apply / calculator / wizard). Not for promotion (use feature patterns). Primary still ≤1 per page (dual-cite Actions). Link buttons = infrequent (restart calculator) with a larger hit area than a text link. Danger only when consequences are real.",
+  "citation": {
+    "source": "Canada.ca — Buttons",
+    "url": "https://design.canada.ca/common-design-patterns/buttons.html"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "At most one supertask; it starts the main task; not used for promo; ≤1 primary; link-style only for rare actions with a larger hit area; danger only for real consequences."
+  ],
+  "fail_when": [
+    "Two supertasks; supertask used as promo; two primaries; danger used without real consequences."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "no_clear_primary",
+  "leaf": "pick_primary_action",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "A second primary class that beats Actions one-primary."
+}

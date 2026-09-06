@@ -1,0 +1,28 @@
+{
+  "id": "nsw.maps-never-only-channel",
+  "category": "Content",
+  "segment": "Maps",
+  "title": "maps never only channel",
+  "rule": "Maps are never the only channel — text-based alternative always. Aspect ratio must differ from the viewport so mobile users can still scroll the page; leave space around the map and a close/minimise control.",
+  "citation": {
+    "source": "NSW — Maps",
+    "url": "https://designsystem.nsw.gov.au/docs/content/methods/maps.html"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "A text alternative exists; map aspect ratio is not the full viewport; close/minimise and space around the map exist."
+  ],
+  "fail_when": [
+    "Map is the only channel; map fills the viewport so the page cannot scroll."
+  ],
+  "severity": "major",
+  "container": "layout_and_data_display",
+  "card": "compose_a_data_display",
+  "facet": "data_is_unscannable",
+  "overview": "A text alternative exists.",
+  "apply_when": "Table or card grid for this data",
+  "not_when": "Not for controls inside a form, or density on a form.",
+  "agent_hint": "Maps are never the only channel — text-based alternative always.",
+  "description": "Maps are never the only channel — text-based alternative always. A text alternative exists. It fails when Map is the only channel.",
+  "do_not_claim": "44×44 marker size (already hit-targets)."
+}

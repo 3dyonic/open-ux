@@ -1,0 +1,25 @@
+{
+  "id": "nng.open-field-state-and-card-expiry",
+  "category": "Forms",
+  "segment": "Checkout",
+  "title": "open field state and card expiry",
+  "rule": "Open field, not iOS picker/dropdown, for state and card expiry.",
+  "citation": {
+    "source": "NN/g — The Mobile Checkout Experience",
+    "url": "https://www.nngroup.com/articles/mobile-checkout-ux/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "State and card expiry are open fields (typeable), not iOS pickers/dropdowns."
+  ],
+  "fail_when": [
+    "State or expiry uses a picker/dropdown as the only entry."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "All dropdowns everywhere (see choice-cutoff rows)."
+}

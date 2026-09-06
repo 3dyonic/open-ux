@@ -1,0 +1,24 @@
+{
+  "id": "forms.inputs.forgiving_format_autoformat",
+  "category": "Forms",
+  "segment": "Inputs",
+  "title": "forgiving format autoformat",
+  "rule": "Accept the value in whatever recognizable format the user types and autoformat it; do not force a single syntax.",
+  "citation": {
+    "source": "NN/g — A Checklist for Designing Mobile Input Fields; Designing Interfaces 3e ch. Getting Input — Forgiving Format (Tidwell, Brewer, Valencia)",
+    "url": "https://www.nngroup.com/articles/mobile-input-checklist/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Recognizable variants are accepted and autoformatted."
+  ],
+  "fail_when": [
+    "A single punctuation/syntax is required; other recognizable forms are rejected."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "handle_form_errors",
+  "facet": "invalid_input_has_no_recovery",
+  "leaf": "recover_from_invalid_input",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

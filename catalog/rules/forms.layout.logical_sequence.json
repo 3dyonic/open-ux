@@ -1,0 +1,24 @@
+{
+  "id": "forms.layout.logical_sequence",
+  "category": "Forms",
+  "segment": "Layout",
+  "title": "logical sequence",
+  "rule": "Sequence fields and choices in a logical, conventional order and make Tab order match that sequence.",
+  "citation": {
+    "source": "NN/g — Website Forms Usability",
+    "url": "https://www.nngroup.com/articles/web-form-design/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Visual order matches a conventional task order; Tab moves in that same order."
+  ],
+  "fail_when": [
+    "Fields jump topics, or Tab order disagrees with visual order."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "related_inputs_feel_scattered",
+  "leaf": "group_related_inputs",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

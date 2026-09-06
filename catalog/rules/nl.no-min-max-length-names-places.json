@@ -1,0 +1,25 @@
+{
+  "id": "nl.no-min-max-length-names-places",
+  "category": "Forms",
+  "segment": "Constraints",
+  "title": "no min max length names places",
+  "rule": "No min/max length on names and places — one-character given names and 50-character place names exist. Dual-cite USWDS “raise the DB limit” / character-count not as a cap.",
+  "citation": {
+    "source": "NL Design System — Geen min/max lengte",
+    "url": "https://nldesignsystem.nl/richtlijnen/formulieren/vragen/geen-min-max-lengte/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Unconstrained name and place fields have no rejecting `minLength`/`maxLength`."
+  ],
+  "fail_when": [
+    "`minLength`/`maxLength` rejects a one-character name or a long toponym."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "handle_form_errors",
+  "facet": "invalid_input_has_no_recovery",
+  "leaf": "recover_from_invalid_input",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Character-count component; USWDS raise-the-cap as a merge."
+}

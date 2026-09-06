@@ -1,0 +1,25 @@
+{
+  "id": "govuk.radios-left-of-labels",
+  "category": "Forms",
+  "segment": "Choice",
+  "title": "radios left of labels",
+  "rule": "Radios sit left of their labels.",
+  "citation": {
+    "source": "GOV.UK Design System — Radios",
+    "url": "https://design-system.service.gov.uk/components/radios/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Each radio control is to the left of its label."
+  ],
+  "fail_when": [
+    "Label left / control right (or stacked so the control is not left of the label)."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "field_has_no_lasting_name",
+  "leaf": "name_a_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Hit-target sharing (`forms.inputs.shared_hit_target_choice`); LTR-only as a world rule."
+}

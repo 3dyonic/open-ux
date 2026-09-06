@@ -1,0 +1,24 @@
+{
+  "id": "actions.menus.unavailable_state",
+  "category": "Actions",
+  "segment": "Menus",
+  "title": "unavailable state",
+  "rule": "Show when a menu item is unavailable (typically dimmed); if every item is unavailable, keep the menu itself openable.",
+  "citation": {
+    "source": "Apple HIG — Menus",
+    "url": "https://developer.apple.com/design/human-interface-guidelines/menus"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Unavailable items are shown as unavailable (typically dimmed); if all items are unavailable, the menu still opens."
+  ],
+  "fail_when": [
+    "Unavailable items are omitted with no unavailable state, or the menu cannot be opened when every item is unavailable."
+  ],
+  "severity": "major",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "system_stayed_quiet_after_change",
+  "leaf": "announce_system_status",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

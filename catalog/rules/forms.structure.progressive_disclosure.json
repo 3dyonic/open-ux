@@ -1,0 +1,27 @@
+{
+  "id": "forms.structure.progressive_disclosure",
+  "category": "Forms",
+  "segment": "Structure",
+  "title": "progressive disclosure",
+  "rule": "Show only what is needed at the current step; reveal further fields as the user progresses (pages or conditional logic).",
+  "citation": {
+    "source": "NN/g — 4 Principles to Reduce Cognitive Load in Forms",
+    "url": "https://www.nngroup.com/articles/4-principles-reduce-cognitive-load/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Only the current step’s needed fields are shown; later or conditional fields appear when relevant."
+  ],
+  "fail_when": [
+    "Every possible question is visible at once on a long flow with no paging or conditionals."
+  ],
+  "severity": "major",
+  "container": "overlays_and_content_structure",
+  "card": "choose_an_overlay",
+  "facet": "wrong_layer_for_the_content",
+  "overview": "Only the current step’s needed fields are shown.",
+  "apply_when": "Modal vs accordion",
+  "not_when": "Not for the destructive decision inside a dialog.",
+  "agent_hint": "Show only what is needed at the current step.",
+  "description": "Show only what is needed at the current step. Only the current step’s needed fields are shown. It fails when Every possible question is visible at once on a long flow with no paging or conditionals."
+}

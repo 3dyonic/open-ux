@@ -1,0 +1,25 @@
+{
+  "id": "suomi.time-field-60px-hint-tmm-always-visible",
+  "category": "Forms",
+  "segment": "Time",
+  "title": "time field 60px hint tmm always visible",
+  "rule": "Time field is fixed ~60px; hint `t.mm` always visible; component normalises to Finnish time — not placeholder-only format. Dual-cite USWDS time picker increments. Placeholder/label lock: format is not only in a placeholder.",
+  "citation": {
+    "source": "Suomi.fi — TimeInput",
+    "url": "https://designsystem.suomi.fi/components/timeinput/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Time input is ~60px wide; `t.mm` hint is always visible; value is normalised to Finnish time."
+  ],
+  "fail_when": [
+    "Time format lives only in a placeholder; field is far wider than the named ~60px with no always-visible hint."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "field_has_no_lasting_name",
+  "leaf": "keep_field_purpose_visible_while_filled",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Date `PP.KK.VVVV` hint as this time row; USWDS increments as a merge."
+}

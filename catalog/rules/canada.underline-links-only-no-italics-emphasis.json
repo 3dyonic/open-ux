@@ -1,0 +1,25 @@
+{
+  "id": "canada.underline-links-only-no-italics-emphasis",
+  "category": "Content",
+  "segment": "Typography",
+  "title": "underline links only no italics emphasis",
+  "rule": "Underline = links only; no italics for emphasis — italics are hard for dyslexia; use bold sparingly. Don’t combine underline+bold except the topic-page hyperlink style.",
+  "citation": {
+    "source": "Canada.ca — Content Style Guide; Typography",
+    "url": "https://design.canada.ca/style-guide/index.html"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Underline is only for links; emphasis is not italics; underline+bold only on the named topic-page hyperlink style."
+  ],
+  "fail_when": [
+    "Underlined non-links; italics used for emphasis; underline+bold on ordinary text."
+  ],
+  "severity": "major",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "tone_fights_the_moment",
+  "leaf": "tone_of_voice_for_failure",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "WCAG contrast; hit targets."
+}

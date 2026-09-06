@@ -1,0 +1,25 @@
+{
+  "id": "govuk.labels-sentence-case-no-colons-above",
+  "category": "Forms",
+  "segment": "Field labels",
+  "title": "labels sentence case no colons above",
+  "rule": "Labels: sentence case, no trailing colons, above the control.",
+  "citation": {
+    "source": "GOV.UK Design System — Text input",
+    "url": "https://design-system.service.gov.uk/components/text-input/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Visible label is sentence case, has no trailing colon, and sits above the control."
+  ],
+  "fail_when": [
+    "Title Case / ALL CAPS, trailing colon, or label beside/inside as the only placement."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "field_has_no_lasting_name",
+  "leaf": "name_a_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "LIVE visible-label existence (`forms.field_labels.visible_label`); Fluent left-align-when-tight; Polar 1–3 word cap. Overlap with Forms 54: beyond LIVE `visible_label` / `label_stays_visible`."
+}

@@ -1,0 +1,24 @@
+{
+  "id": "forms.field_labels.placeholder_hint_conflict",
+  "category": "Forms",
+  "segment": "Field labels",
+  "title": "placeholder hint conflict",
+  "rule": "CONFLICT — NN/g: do not use placeholder as the label; put essential hints outside the field so they stay visible. Apple HIG: a text field may show placeholder hint text to communicate purpose, and because that text disappears also include a separate label. Tidwell Input Prompt fills an empty field with a prompt of expected input; Tidwell Input Hints put an explanatory comment next to the field (NN/g side). Dual-cite; not two winners.",
+  "citation": {
+    "source": "NN/g — Placeholders in Form Fields Are Harmful; Apple HIG — Text fields; Apple HIG — Entering data; Designing Interfaces 3e ch. Getting Input — Input Hints; Input Prompt (Tidwell, Brewer, Valencia)",
+    "url": "https://www.nngroup.com/articles/form-design-placeholders/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "A separate label is present. If in-field hint/prompt exists, it is extra, not the only name for the field. Essential format/help that must stay readable is also available outside the field (NN/g / Tidwell hints) without treating Apple’s extra hint as a fail."
+  ],
+  "fail_when": [
+    "Placeholder or in-field prompt is the only label (agreed fail across the cites)."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "field_has_no_lasting_name",
+  "leaf": "avoid_placeholder_as_label",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

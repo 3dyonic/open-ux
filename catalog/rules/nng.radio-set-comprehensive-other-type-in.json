@@ -1,0 +1,25 @@
+{
+  "id": "nng.radio-set-comprehensive-other-type-in",
+  "category": "Forms",
+  "segment": "Choice",
+  "title": "radio set comprehensive other type in",
+  "rule": "Radio set must be comprehensive; add Other + type-in if not.",
+  "citation": {
+    "source": "NN/g — Checkboxes vs. Radio Buttons",
+    "url": "https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Every valid answer is in the set, or Other + type-in covers the rest."
+  ],
+  "fail_when": [
+    "Set is incomplete and there is no Other + type-in."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Silent preselect of a guessed Other."
+}

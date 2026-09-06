@@ -1,0 +1,25 @@
+{
+  "id": "nsw.established-colour-conventions",
+  "category": "Content",
+  "segment": "Charts",
+  "title": "established colour conventions",
+  "rule": "Established colour conventions override the theme palette — traffic light risk, party colours, water/vegetation, finance red/black. Still label/pattern so colour is not the only channel. Do not generalize the exception.",
+  "citation": {
+    "source": "NSW — Charts and graphs",
+    "url": "https://designsystem.nsw.gov.au/docs/content/methods/charts-and-graphs.html"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Domain conventions (risk/party/land/finance) override theme; colour is not the only channel."
+  ],
+  "fail_when": [
+    "Theme palette used where a named convention applies, or colour is the only channel."
+  ],
+  "severity": "major",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "system_stayed_quiet_after_change",
+  "leaf": "announce_system_status",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "A general “always traffic-light” house rule."
+}

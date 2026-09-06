@@ -1,0 +1,24 @@
+{
+  "id": "forms.copy.positive_wording",
+  "category": "Forms",
+  "segment": "Copy",
+  "title": "positive wording",
+  "rule": "Use positive wording; avoid negatives that force users to reverse the statement (especially opt-in checkboxes).",
+  "citation": {
+    "source": "NN/g — 4 Principles to Reduce Cognitive Load in Forms",
+    "url": "https://www.nngroup.com/articles/4-principles-reduce-cognitive-load/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Statements (esp. opt-in checkboxes) are positive; checking means agreement with a direct statement."
+  ],
+  "fail_when": [
+    "User must reverse a negative (e.g. “don’t not email me”) to opt in or out."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "field_has_no_lasting_name",
+  "leaf": "name_a_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

@@ -1,0 +1,25 @@
+{
+  "id": "spectrum.picker-readonly-only-if-selection",
+  "category": "Forms",
+  "segment": "Picker",
+  "title": "picker readonly only if selection",
+  "rule": "Read-only only if a selection exists — a picker with no selection has no read-only option.",
+  "citation": {
+    "source": "Spectrum — Picker",
+    "url": "https://spectrum.adobe.com/page/picker/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Read-only picker has a selection. Empty picker is not read-only."
+  ],
+  "fail_when": [
+    "Read-only picker with no selection."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "use_familiar_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Text-field read-only vs disabled as this row."
+}

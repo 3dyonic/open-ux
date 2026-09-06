@@ -1,0 +1,25 @@
+{
+  "id": "govuk.item-hints-one-sentence",
+  "category": "Forms",
+  "segment": "Copy",
+  "title": "item hints one sentence",
+  "rule": "Item hints: one short sentence, no full stops; no links in hint text.",
+  "citation": {
+    "source": "GOV.UK Design System — Radios; GOV.UK Design System — Select",
+    "url": "https://design-system.service.gov.uk/components/radios/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Per-item hint is one short sentence without a full stop and without links."
+  ],
+  "fail_when": [
+    "Multi-sentence hints, trailing full stops, or links inside hint text."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "field_has_no_lasting_name",
+  "leaf": "name_a_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Field-level helper text (Fluent); placeholder-as-hint (skipped)."
+}

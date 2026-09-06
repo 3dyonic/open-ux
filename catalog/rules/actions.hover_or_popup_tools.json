@@ -1,0 +1,24 @@
+{
+  "id": "actions.hover_or_popup_tools",
+  "category": "Actions",
+  "segment": "Tools",
+  "title": "hover or popup tools",
+  "rule": "Associate an object with tools that appear on hover or as a pop-up rather than crowding the main chrome.",
+  "citation": {
+    "source": "Designing Interfaces 3e ch. Doing Things — Hover or Pop-Up Tools (Tidwell, Brewer, Valencia)",
+    "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Occasional object tools appear on hover or in a pop-up tied to the object; they are not stuffed into persistent chrome."
+  ],
+  "fail_when": [
+    "Occasional tools occupy the main chrome and crowd it."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "use_familiar_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

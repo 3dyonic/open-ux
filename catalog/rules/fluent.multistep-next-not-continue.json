@@ -1,0 +1,28 @@
+{
+  "id": "fluent.multistep-next-not-continue",
+  "category": "Actions",
+  "segment": "Copy",
+  "title": "multistep next not continue",
+  "rule": "Multistep: Next not Continue; Previous not Back. Dual-cite with GOV.UK question-page Continue / Back — by surface, not a winner.",
+  "citation": {
+    "source": "Fluent 2 — Button usage",
+    "url": "https://fluent2.microsoft.design/components/web/react/core/button/usage"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Multistep settings/wizard uses Next and Previous. Question pages still use Continue and Back (GOV.UK)."
+  ],
+  "fail_when": [
+    "Multistep uses Continue/Back as this Fluent usage; or a global Next/Continue winner applied to the other surface."
+  ],
+  "severity": "major",
+  "container": "multi_step_flows",
+  "card": "build_a_multi_step_flow",
+  "facet": "too_much_on_one_step",
+  "overview": "Multistep settings/wizard uses Next and Previous.",
+  "apply_when": "Build a checkout flow",
+  "not_when": "Not for single form on one screen.",
+  "agent_hint": "Multistep: Next not Continue; Previous not Back.",
+  "description": "Multistep: Next not Continue; Previous not Back. Multistep settings/wizard uses Next and Previous. It fails when Multistep uses Continue/Back as this Fluent usage.",
+  "do_not_claim": "NN/g prefer specific verb over generic Next as a winner that bans Next here. Overlap with Actions 40: `actions.copy.verbs_for_actions` (prefer specific verb over generic Next) and GOV.UK question-page Continue."
+}

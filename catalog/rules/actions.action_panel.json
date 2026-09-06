@@ -1,0 +1,24 @@
+{
+  "id": "actions.action_panel",
+  "category": "Actions",
+  "segment": "Tools",
+  "title": "action panel",
+  "rule": "Instead of burying a large set of related commands in menus, present them on a richly organized panel that stays visible.",
+  "citation": {
+    "source": "Designing Interfaces 3e ch. Doing Things — Action Panel (Tidwell, Brewer, Valencia)",
+    "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "A large related command set is on a visible, organized panel."
+  ],
+  "fail_when": [
+    "That set exists only buried in menus, with no staying-visible panel."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "use_familiar_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

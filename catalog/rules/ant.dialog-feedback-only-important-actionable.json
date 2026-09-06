@@ -1,0 +1,25 @@
+{
+  "id": "ant.dialog-feedback-only-important-actionable",
+  "category": "Feedback",
+  "segment": "Dialog",
+  "title": "dialog feedback only important actionable",
+  "rule": "Dialog feedback only for important, actionable information — centered, confirm/cancel to close, blocks other work. Avoid unnecessary reminders except failure. Dual-cite NN/g modal 7; Ant is the feedback-routing sentence.",
+  "citation": {
+    "source": "Ant Design — Feedback spec",
+    "url": "https://ant.design/docs/spec/feedback"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Blocking dialog is used for important actionable information / failure, not unnecessary reminders."
+  ],
+  "fail_when": [
+    "Blocking dialog for a non-important reminder, or important actionable failure with no dialog when this routing applies."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "use_familiar_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Deleting `nng.modal-and-nonmodal-dialogs`; Spectrum toast-vs-dialog as a merge."
+}

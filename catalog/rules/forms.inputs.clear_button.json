@@ -1,0 +1,24 @@
+{
+  "id": "forms.inputs.clear_button",
+  "category": "Forms",
+  "segment": "Inputs",
+  "title": "clear button",
+  "rule": "Display a trailing Clear control so people can erase the field without repeatedly tapping Delete.",
+  "citation": {
+    "source": "Apple HIG — Text fields",
+    "url": "https://developer.apple.com/design/human-interface-guidelines/text-fields"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Filled text field shows a trailing Clear that empties that field."
+  ],
+  "fail_when": [
+    "User can only erase by repeated Delete; no trailing Clear."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "handle_form_errors",
+  "facet": "invalid_input_has_no_recovery",
+  "leaf": "recover_from_invalid_input",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

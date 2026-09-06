@@ -1,0 +1,25 @@
+{
+  "id": "nl.long-legal-jargon-before-form-not-tooltip",
+  "category": "Forms",
+  "segment": "Help",
+  "title": "long legal jargon before form not tooltip",
+  "rule": "Long or legal jargon lives before the form, not in tooltips — extra click/keystroke hides important copy; screen readers miss loose blocks between questions. Dual-cite Spectrum tooltip last-resort.",
+  "citation": {
+    "source": "NL Design System — Descriptions lengte",
+    "url": "https://nldesignsystem.nl/richtlijnen/formulieren/descriptions/lengte/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Long/legal help is before the form (or on an intro page), not only in a tooltip or loose between questions."
+  ],
+  "fail_when": [
+    "Important long/legal copy is only in a tooltip or only as a loose block between questions."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "field_has_no_lasting_name",
+  "leaf": "keep_field_purpose_visible_while_filled",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Spectrum tooltip-last-resort as a merge; format-in-description from the `pattern` ban as this length/placement row."
+}

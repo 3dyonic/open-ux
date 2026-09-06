@@ -1,0 +1,25 @@
+{
+  "id": "fluent.required-asterisk-or-one-instruction",
+  "category": "Forms",
+  "segment": "Fields",
+  "title": "required asterisk or one instruction",
+  "rule": "Required: red asterisk via required prop; if all fields required, one instruction — not an asterisk on every field; two-field sign-in may omit.",
+  "citation": {
+    "source": "Fluent 2 — Field usage",
+    "url": "https://fluent2.microsoft.design/components/web/react/core/field/usage"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Mixed required/optional uses the required asterisk. All-required uses one instruction, not an asterisk on every field. Two-field sign-in may omit."
+  ],
+  "fail_when": [
+    "Asterisk on every field of an all-required form (beyond the two-field sign-in omit), or required unmarked in a mixed form."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "field_has_no_lasting_name",
+  "leaf": "name_a_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "NN/g mark-optional (`forms.fields.distinguish_optional_required`) as a winner. Overlap with Forms 54: `forms.fields.distinguish_optional_required`."
+}

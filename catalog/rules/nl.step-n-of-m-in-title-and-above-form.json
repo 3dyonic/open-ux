@@ -1,0 +1,28 @@
+{
+  "id": "nl.step-n-of-m-in-title-and-above-form",
+  "category": "Forms",
+  "segment": "Multi-step",
+  "title": "step n of m in title and above form",
+  "rule": "Step n of m in `document.title` and above the form — e.g. `Stap 2 van 6`. Prefer text over a progress bar (scales under zoom). If a SPA swaps steps on one URL, still update the title. Dual-cite GOV.UK “test without a progress indicator”; this names the title + heading pair and SPA title rewrite. Conditional step counts: NL says evidence is insufficient — do not invent a house rule.",
+  "citation": {
+    "source": "NL Design System — Voortgang tonen",
+    "url": "https://nldesignsystem.nl/richtlijnen/formulieren/meerdere-stappen/voortgang-tonen/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "`document.title` and the heading above the form both include step n of m (text, not only a bar); SPA step swaps update the title."
+  ],
+  "fail_when": [
+    "Step n of m is missing from the title or from above the form; SPA keeps a stale title; a house rule for conditional step counts is invented."
+  ],
+  "severity": "major",
+  "container": "multi_step_flows",
+  "card": "build_a_multi_step_flow",
+  "facet": "too_much_on_one_step",
+  "overview": "`document.title` and the heading above the form both include step n of m (text, not only a bar).",
+  "apply_when": "Build a checkout flow",
+  "not_when": "Not for single form on one screen.",
+  "agent_hint": "Step n of m in `document.title` and above the form — e.g.",
+  "description": "Step n of m in `document.title` and above the form — e.g. `document.title` and the heading above the form both include step n of m (text, not only a bar). It fails when Step n of m is missing from the title or from above the form.",
+  "do_not_claim": "GOLD out-of-order progress indicator; GOV.UK test-without as a merge that drops title+heading; a house conditional-count rule."
+}

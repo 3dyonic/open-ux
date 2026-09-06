@@ -1,0 +1,25 @@
+{
+  "id": "polar.guide-dont-prescribe",
+  "category": "Copy",
+  "segment": "Voice",
+  "title": "guide dont prescribe",
+  "rule": "Guide, don’t prescribe — merchant in control; enough info to decide.",
+  "citation": {
+    "source": "Shopify — Product content principles",
+    "url": "https://shopify.dev/docs/apps/design/content"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Copy guides with enough to decide; merchant stays in control."
+  ],
+  "fail_when": [
+    "Prescriptive copy that removes the decision, or too little to decide."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "no_clear_primary",
+  "leaf": "pick_primary_action",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "NN/g UI-copy / confirmation already-filed verb+noun / no “you can”."
+}

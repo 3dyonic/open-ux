@@ -1,0 +1,24 @@
+{
+  "id": "actions.multilevel_undo",
+  "category": "Actions",
+  "segment": "Control",
+  "title": "multilevel undo",
+  "rule": "Let the user reverse a series of actions, not only the last one.",
+  "citation": {
+    "source": "Designing Interfaces 3e ch. Doing Things — Multilevel Undo (Tidwell, Brewer, Valencia)",
+    "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "More than the last action can be reversed."
+  ],
+  "fail_when": [
+    "No undo, or only last-action undo."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "handle_form_errors",
+  "facet": "invalid_input_has_no_recovery",
+  "leaf": "recover_from_invalid_input",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

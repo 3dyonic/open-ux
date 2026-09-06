@@ -1,0 +1,25 @@
+{
+  "id": "spectrum.tab-into-field-selects-text",
+  "category": "Forms",
+  "segment": "Keyboard",
+  "title": "tab into field selects text",
+  "rule": "Tab into a text field selects existing text.",
+  "citation": {
+    "source": "Spectrum — Text field",
+    "url": "https://spectrum.adobe.com/page/text-field/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Keyboard focus into a text field with existing text selects that text."
+  ],
+  "fail_when": [
+    "Tab-in places a caret without selecting existing text."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "use_familiar_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Click-to-edit caret placement."
+}

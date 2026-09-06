@@ -1,0 +1,24 @@
+{
+  "id": "actions.buttons.one_primary",
+  "category": "Actions",
+  "segment": "Buttons",
+  "title": "one primary",
+  "rule": "Use one primary (filled) action in the view; other actions use weaker styles.",
+  "citation": {
+    "source": "NN/g — Button States: Communicate Interaction; Material 3 — Buttons (filled style ideally for only one action on a page)",
+    "url": "https://www.nngroup.com/articles/button-states-communicate-interaction/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "One primary/filled action in the view; others use weaker styles."
+  ],
+  "fail_when": [
+    "Multiple filled/high-emphasis primaries, or no primary/weaker distinction."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "no_clear_primary",
+  "leaf": "pick_primary_action",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

@@ -1,0 +1,25 @@
+{
+  "id": "ant.ok-cancel-default-vs-explicit-verb",
+  "category": "Actions",
+  "segment": "Copy",
+  "title": "ok cancel default vs explicit verb",
+  "rule": "OK / Cancel as Ant default labels (CONFLICT). Spec still defaults to OK/Cancel but also: use a verb; describe the result (Publish, Login); if primary is negative, stress consequences (Delete / Cancel). Dual-cite vs NN/g `explicit_verb_not_ok`. Do not pick a winner. Prefer cited verb-names-the-outcome as pass when both apply; Ant default is a conflict flag, not a second invented rule.",
+  "citation": {
+    "source": "Ant Design — Button spec ; NN/g — UI Copy",
+    "url": "https://ant.design/docs/spec/buttons"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "When both cites apply, the primary names the outcome (Publish, Login, Delete); if primary is negative, the pair stresses consequences (Delete / Cancel)."
+  ],
+  "fail_when": [
+    "Generic OK where a specific verb is available and treated as satisfying the verb-names cite; or a house \"always OK/Cancel\" / \"never OK\" that deletes the other cite."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "no_clear_primary",
+  "leaf": "pick_primary_action",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Collapsing Ant's named default into a second invented rule, or deleting `actions.copy.explicit_verb_not_ok`. Overlap with Actions 40: `actions.copy.explicit_verb_not_ok`."
+}

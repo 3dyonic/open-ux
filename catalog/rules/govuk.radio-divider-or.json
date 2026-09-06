@@ -1,0 +1,25 @@
+{
+  "id": "govuk.radio-divider-or",
+  "category": "Forms",
+  "segment": "Choice",
+  "title": "radio divider or",
+  "rule": "Use a radio divider (usually “or”) for an unlike option.",
+  "citation": {
+    "source": "GOV.UK Design System — Radios",
+    "url": "https://design-system.service.gov.uk/components/radios/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "An unlike option (e.g. “None of these”, “I don’t know”) is separated with a divider, usually “or”."
+  ],
+  "fail_when": [
+    "Unlike option sits in the same undifferentiated list as the similar options."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "That every set needs a divider."
+}

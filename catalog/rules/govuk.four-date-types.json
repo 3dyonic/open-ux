@@ -1,0 +1,25 @@
+{
+  "id": "govuk.four-date-types",
+  "category": "Forms",
+  "segment": "Dates",
+  "title": "four date types",
+  "rule": "Distinguish four date types: memorable; from documents/cards; approximate; relative.",
+  "citation": {
+    "source": "GOV.UK Design System — Dates (pattern)",
+    "url": "https://design-system.service.gov.uk/patterns/dates/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "The control matches the type (memorable / document / approximate / relative) rather than one date widget for all."
+  ],
+  "fail_when": [
+    "One date-input/calendar is used regardless of whether the date is memorable, documented, approximate, or relative."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "A house fifth type."
+}

@@ -1,0 +1,25 @@
+{
+  "id": "spectrum.toast-at-most-one-action",
+  "category": "Feedback",
+  "segment": "Toast",
+  "title": "toast at most one action",
+  "rule": "At most one action — a static white, secondary, outline button; concise; only when the action is directly related to the toast text.",
+  "citation": {
+    "source": "Spectrum — Toast",
+    "url": "https://spectrum.adobe.com/page/toast/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Zero or one related concise action, styled as that secondary outline control."
+  ],
+  "fail_when": [
+    "Two or more toast actions, or an unrelated action on the toast."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "no_clear_primary",
+  "leaf": "pick_primary_action",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Polar modal max two bottom actions as this toast row."
+}

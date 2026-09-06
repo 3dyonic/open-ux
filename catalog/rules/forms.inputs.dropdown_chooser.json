@@ -1,0 +1,24 @@
+{
+  "id": "forms.inputs.dropdown_chooser",
+  "category": "Forms",
+  "segment": "Inputs",
+  "title": "dropdown chooser",
+  "rule": "For a bounded choice set, let the user pick from a drop-down chooser rather than typing the value from memory.",
+  "citation": {
+    "source": "Designing Interfaces 3e ch. Getting Input — Drop-down Chooser (Tidwell, Brewer, Valencia)",
+    "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Bounded set is picked from a drop-down (or equivalent chooser), not typed from memory."
+  ],
+  "fail_when": [
+    "Bounded list is a blank the user must recall."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

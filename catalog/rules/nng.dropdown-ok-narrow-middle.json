@@ -1,0 +1,25 @@
+{
+  "id": "nng.dropdown-ok-narrow-middle",
+  "category": "Forms",
+  "segment": "Choice",
+  "title": "dropdown ok narrow middle",
+  "rule": "Dropdown OK in a narrow middle (~5–10) when the field is secondary or compactness matters.",
+  "citation": {
+    "source": "NN/g — Does Your Form Really Need a Dropdown List?",
+    "url": "https://www.nngroup.com/articles/dropdown-list/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "A ~5–10 secondary/compact field may use a dropdown."
+  ],
+  "fail_when": [
+    "Treating “dropdown never” or “dropdown always” as the rule for this middle band."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "GOV.UK select-last-resort as a winner over this band."
+}

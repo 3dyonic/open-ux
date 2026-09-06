@@ -1,0 +1,24 @@
+{
+  "id": "forms.length.keep_short",
+  "category": "Forms",
+  "segment": "Length",
+  "title": "keep short",
+  "rule": "Keep the form short: remove fields that can be derived, collected later, or omitted.",
+  "citation": {
+    "source": "NN/g — Website Forms Usability",
+    "url": "https://www.nngroup.com/articles/web-form-design/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Asked fields are needed now; derivable, deferrable, or omitable data is not on this form."
+  ],
+  "fail_when": [
+    "The form asks for unused-now, already-known, or computable data."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "related_inputs_feel_scattered",
+  "leaf": "group_related_inputs",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

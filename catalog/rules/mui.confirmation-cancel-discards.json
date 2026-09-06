@@ -1,0 +1,28 @@
+{
+  "id": "mui.confirmation-cancel-discards",
+  "category": "Dialogs",
+  "segment": "Confirmation",
+  "title": "confirmation cancel discards",
+  "rule": "Confirmation Cancel discards — touching Cancel cancels the action, discards any changes, and closes. (Example: listen to ringtones; commit only on OK.)",
+  "citation": {
+    "source": "MUI — Dialog",
+    "url": "https://mui.com/material-ui/react-dialog/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Confirmation Cancel discards changes and closes; commit is only on the confirm control."
+  ],
+  "fail_when": [
+    "Confirmation Cancel keeps changes, or Cancel commits."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "protect_destructive_and_leave",
+  "facet": "leaving_discards_work",
+  "overview": "Confirmation Cancel discards changes and closes.",
+  "apply_when": "Add a delete confirmation",
+  "not_when": "Not for unclear Continue / Submit label.",
+  "agent_hint": "Confirmation Cancel discards — touching Cancel cancels the action, discards any changes, and closes.",
+  "description": "Confirmation Cancel discards — touching Cancel cancels the action, discards any changes, and closes. Confirmation Cancel discards changes and closes. It fails when Confirmation Cancel keeps changes, or Cancel commits.",
+  "do_not_claim": "`actions.close_saves_separate_cancel` (Close keeps) as a merge that deletes this Cancel-discards claim. Overlap with Actions 40: `actions.close_saves_separate_cancel`."
+}

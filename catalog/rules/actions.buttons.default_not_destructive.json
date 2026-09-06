@@ -1,0 +1,24 @@
+{
+  "id": "actions.buttons.default_not_destructive",
+  "category": "Actions",
+  "segment": "Buttons",
+  "title": "default not destructive",
+  "rule": "Highlight the common choice as default/primary, but do not assign default or primary to a destructive action (and do not default Yes on a confirmation).",
+  "citation": {
+    "source": "NN/g — OK-Cancel or Cancel-OK; Apple HIG — Buttons (don’t assign primary to destructive); NN/g — Confirmation Dialogs (§6 avoid default Yes)",
+    "url": "https://www.nngroup.com/articles/ok-cancel-or-cancel-ok/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "The common choice is default/primary; destructive is not default/primary; confirmation does not default Yes."
+  ],
+  "fail_when": [
+    "Destructive or confirmation-Yes is the default/primary."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "protect_destructive_and_leave",
+  "facet": "destructive_is_too_easy",
+  "leaf": "disable_or_confirm_destructive",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

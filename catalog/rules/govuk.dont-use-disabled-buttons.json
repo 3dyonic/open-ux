@@ -1,0 +1,25 @@
+{
+  "id": "govuk.dont-use-disabled-buttons",
+  "category": "Actions",
+  "segment": "Submit",
+  "title": "dont use disabled buttons",
+  "rule": "Don’t use disabled buttons on public/question flows — keep the button enabled and explain on press (GOV.UK). Settings Save MAY disable until requireds are complete ONLY if the disabled reason is visible and the label stays perceivable (Fluent). Dual-cite; not a global never/always.",
+  "citation": {
+    "source": "GOV.UK Design System — Button; Fluent 2 — Field usage (disabled control; label/helper stay perceivable)",
+    "url": "https://design-system.service.gov.uk/components/button/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Public/question: submit stays enabled; pressing it with incomplete/invalid input explains why. Settings Save: either the same enabled+explain pattern, or disabled until requireds are complete with the reason visible and the label still perceivable."
+  ],
+  "fail_when": [
+    "Disabled with no explanation; or a single global never-disable / always-disable that ignores question vs settings."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "protect_destructive_and_leave",
+  "facet": "destructive_is_too_easy",
+  "leaf": "disable_or_confirm_destructive",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "A house winner vs `forms.submit.enabled_until_request` / `forms.fields.required_before_proceed`. Overlap with Forms 54 disabled-submit conflict and Actions 40 `actions.buttons.distinguishable_states` / `actions.buttons.loading_on_button` / `govuk.stop-accidental-double-submit`. Same lock — not a new winner."
+}

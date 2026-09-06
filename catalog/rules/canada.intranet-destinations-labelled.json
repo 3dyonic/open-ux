@@ -1,0 +1,25 @@
+{
+  "id": "canada.intranet-destinations-labelled",
+  "category": "Content",
+  "segment": "Links",
+  "title": "intranet destinations labelled",
+  "rule": "Intranet destinations: “(accessible only on the Government of Canada network)” — public pages must not silently link behind the GC network. (Not a contact pattern.)",
+  "citation": {
+    "source": "Canada.ca — Content Style Guide",
+    "url": "https://design.canada.ca/style-guide/index.html"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Public-page links to GC-network-only destinations include that parenthetical."
+  ],
+  "fail_when": [
+    "A public page silently links behind the GC network."
+  ],
+  "severity": "major",
+  "container": "navigation_and_wayfinding",
+  "card": "orient_in_the_place",
+  "facet": "user_cant_tell_where_they_are",
+  "leaf": "wayfind_after_nav",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Contact-centre patterns."
+}

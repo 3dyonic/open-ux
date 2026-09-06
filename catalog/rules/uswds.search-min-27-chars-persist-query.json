@@ -1,0 +1,25 @@
+{
+  "id": "uswds.search-min-27-chars-persist-query",
+  "category": "Wayfinding",
+  "segment": "Search",
+  "title": "search min 27 chars persist query",
+  "rule": "Search field as wide as possible, minimum 27 characters (Romance languages ~20% longer). Preload the original terms in the results search box. Magnifying glass is enough visually if “Search” remains for AT.",
+  "citation": {
+    "source": "USWDS — Search",
+    "url": "https://designsystem.digital.gov/components/search/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Field is ≥27 characters wide; results page still shows the query; accessible name remains “Search” if the visible label is icon-only."
+  ],
+  "fail_when": [
+    "Narrower than 27 characters; query not persisted on results; icon-only with no AT name."
+  ],
+  "severity": "major",
+  "container": "navigation_and_wayfinding",
+  "card": "orient_in_the_place",
+  "facet": "user_cant_tell_where_they_are",
+  "leaf": "wayfind_after_nav",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Placeholder-as-label; advanced search as default (next row)."
+}

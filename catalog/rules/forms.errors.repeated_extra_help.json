@@ -1,0 +1,24 @@
+{
+  "id": "forms.errors.repeated_extra_help",
+  "category": "Forms",
+  "segment": "Errors",
+  "title": "repeated extra help",
+  "rule": "When the same error repeats (three or more times in one attempt), provide extra help: review error patterns, refine the design, and make messages more actionable.",
+  "citation": {
+    "source": "NN/g — 10 Design Guidelines for Reporting Errors in Forms (§10)",
+    "url": "https://www.nngroup.com/articles/errors-forms-design-guidelines/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "On the third-or-more same error in one attempt, the UI offers extra help and more actionable copy than the first showing."
+  ],
+  "fail_when": [
+    "The same error copy repeats three or more times with no added help."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "handle_form_errors",
+  "facet": "invalid_input_has_no_recovery",
+  "leaf": "recover_from_invalid_input",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

@@ -1,0 +1,24 @@
+{
+  "id": "actions.copy.limit_branded_terms",
+  "category": "Actions",
+  "segment": "Copy",
+  "title": "limit branded terms",
+  "rule": "Limit branded terms in command text (application name on the app menu and Help is enough); other commands stay nonbranded.",
+  "citation": {
+    "source": "NN/g — UI Copy",
+    "url": "https://www.nngroup.com/articles/ui-copy/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "App name appears on the app menu and Help as needed; other command text is nonbranded."
+  ],
+  "fail_when": [
+    "Brand/product name stuffed into ordinary command labels."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "field_has_no_lasting_name",
+  "leaf": "name_a_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

@@ -1,0 +1,25 @@
+{
+  "id": "uswds.homepage-search-box-not-link",
+  "category": "Wayfinding",
+  "segment": "Search",
+  "title": "homepage search box not link",
+  "rule": "Home page: search box, not a search link. Advanced search is not the default (most people use one or two terms; advanced as default increases mistakes). Tiny/single-page sites may omit search.",
+  "citation": {
+    "source": "USWDS — Search",
+    "url": "https://designsystem.digital.gov/components/search/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Home offers a search field (unless the site is tiny/single-page and omits search); default search is simple, not advanced."
+  ],
+  "fail_when": [
+    "Home search is only a link to another page, or advanced search is the default."
+  ],
+  "severity": "major",
+  "container": "navigation_and_wayfinding",
+  "card": "orient_in_the_place",
+  "facet": "user_cant_tell_where_they_are",
+  "leaf": "wayfind_after_nav",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "27-character width as this row."
+}

@@ -1,0 +1,25 @@
+{
+  "id": "suomi.static-validation-on-submit-default",
+  "category": "Forms",
+  "segment": "Validation",
+  "title": "static validation on submit default",
+  "rule": "Static validation on submit is the recommended default — errors appear together via ErrorSummary above the form; focus moves to the summary heading. Dual-cite NN/g prefer-inline and GCDS blur-validate; conflict flag, not a house winner. Unique claim: submit-time summary as the cognitive default.",
+  "citation": {
+    "source": "Suomi.fi — Static form",
+    "url": "https://designsystem.suomi.fi/patterns/static-form/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Submit-time ErrorSummary above the form with focus to the summary heading or (dual-cite) inline/blur school applied consistently — not mixed as one house winner."
+  ],
+  "fail_when": [
+    "Schools mixed on one form (submit-summary and blur-inline claimed as one default) with no cited system."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "handle_form_errors",
+  "facet": "invalid_input_has_no_recovery",
+  "leaf": "recover_from_invalid_input",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "A house winner vs NN/g inline / GCDS blur; ErrorSummary link-text row as this timing row."
+}

@@ -1,0 +1,25 @@
+{
+  "id": "ant.input-overlay-click-outside-preserves",
+  "category": "Forms",
+  "segment": "Overlay",
+  "title": "input overlay click outside preserves",
+  "rule": "Input overlay: click outside preserves and closes.",
+  "citation": {
+    "source": "Ant Design — Stay on the Page",
+    "url": "https://ant.design/docs/spec/stay"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Clicking outside an input overlay closes it and preserves the input."
+  ],
+  "fail_when": [
+    "Click outside discards the input, or does not close."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "use_familiar_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Modal confirm Cancel-discards (MUI) as this overlay row."
+}

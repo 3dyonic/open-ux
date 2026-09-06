@@ -1,0 +1,25 @@
+{
+  "id": "govuk.dob-autocomplete-tokens",
+  "category": "Forms",
+  "segment": "Dates",
+  "title": "dob autocomplete tokens",
+  "rule": "Date of birth fields use autocomplete tokens `bday-day` / `bday-month` / `bday-year`.",
+  "citation": {
+    "source": "GOV.UK Design System — Date input",
+    "url": "https://design-system.service.gov.uk/components/date-input/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "DOB day/month/year inputs have those autocomplete tokens."
+  ],
+  "fail_when": [
+    "DOB segments omit the tokens or use a generic autocomplete."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "use_familiar_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Generic HTML autocomplete+name (`forms.inputs.html_autocomplete_and_name`); typeahead suggestions. Overlap with Forms 54: tokens are the new claim."
+}

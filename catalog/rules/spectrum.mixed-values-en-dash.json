@@ -1,0 +1,25 @@
+{
+  "id": "spectrum.mixed-values-en-dash",
+  "category": "Forms",
+  "segment": "Mixed values",
+  "title": "mixed values en dash",
+  "rule": "When the field represents multiple non-identical values, show an en dash (–), not a blank or a single value.",
+  "citation": {
+    "source": "Spectrum — Text field",
+    "url": "https://spectrum.adobe.com/page/text-field/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Mixed non-identical values display an en dash (–)."
+  ],
+  "fail_when": [
+    "Mixed values shown as blank or as one of the values."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "field_has_no_lasting_name",
+  "leaf": "name_a_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "A hyphen/minus as equivalent; bulk-edit architecture."
+}

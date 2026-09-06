@@ -1,0 +1,24 @@
+{
+  "id": "forms.inputs.compute_from_other_info",
+  "category": "Forms",
+  "segment": "Inputs",
+  "title": "compute from other info",
+  "rule": "Compute the value from other information when you can (for example state from ZIP, skip a coupon the user does not have).",
+  "citation": {
+    "source": "NN/g — A Checklist for Designing Mobile Input Fields",
+    "url": "https://www.nngroup.com/articles/mobile-input-checklist/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Values derivable from answers already given are filled or skipped (e.g. state from ZIP)."
+  ],
+  "fail_when": [
+    "User re-enters data the form could compute, or is forced through a field that does not apply."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "handle_form_errors",
+  "facet": "invalid_input_has_no_recovery",
+  "leaf": "recover_from_invalid_input",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

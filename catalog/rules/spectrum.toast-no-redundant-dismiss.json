@@ -1,0 +1,25 @@
+{
+  "id": "spectrum.toast-no-redundant-dismiss",
+  "category": "Feedback",
+  "segment": "Toast",
+  "title": "toast no redundant dismiss",
+  "rule": "No redundant Dismiss — every toast already has a close control.",
+  "citation": {
+    "source": "Spectrum — Toast",
+    "url": "https://spectrum.adobe.com/page/toast/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "No extra Dismiss action besides the toast close control."
+  ],
+  "fail_when": [
+    "A Dismiss button in addition to the close control."
+  ],
+  "severity": "major",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "system_stayed_quiet_after_change",
+  "leaf": "announce_system_status",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "That the close control may be omitted."
+}

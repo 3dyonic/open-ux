@@ -1,0 +1,25 @@
+{
+  "id": "polar.dont-use-modals-for-complex-forms",
+  "category": "Dialogs",
+  "segment": "Modal",
+  "title": "dont use modals for complex forms",
+  "rule": "Don’t use modals for complex forms or large information; max two bottom actions; tertiary never dismisses.",
+  "citation": {
+    "source": "Polaris — Modal",
+    "url": "https://polaris.shopify.com/components/overlays/modal"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Complex forms / large information are not in a modal; modal has at most two bottom actions; a tertiary action does not dismiss."
+  ],
+  "fail_when": [
+    "Complex form or large information in a modal; more than two bottom actions; tertiary dismisses."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "use_familiar_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "NN/g modal 7-list as a merge; `actions.button_groups` “three or four”. Overlap with Actions 40: `button_groups` / confirm."
+}

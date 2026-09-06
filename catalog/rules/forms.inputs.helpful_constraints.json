@@ -1,0 +1,27 @@
+{
+  "id": "forms.inputs.helpful_constraints",
+  "category": "Forms",
+  "segment": "Inputs",
+  "title": "helpful constraints",
+  "rule": "Where acceptable values are known, constrain input so invalid data cannot be entered instead of failing later.",
+  "citation": {
+    "source": "NN/g — 4 Principles to Reduce Cognitive Load in Forms",
+    "url": "https://www.nngroup.com/articles/4-principles-reduce-cognitive-load/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Known-valid set is constrained (picker, allowed charset, max length, stepper) so invalid values cannot be entered."
+  ],
+  "fail_when": [
+    "Known-valid set is free text rejected only after entry."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "requirements_are_a_surprise",
+  "overview": "Known-valid set is constrained (picker, allowed charset, max length, stepper) so invalid values cannot be entered.",
+  "apply_when": "Design or build signup, settings, or checkout fields",
+  "not_when": "Not for validation / inline errors after submit.",
+  "agent_hint": "Where acceptable values are known, constrain input so invalid data cannot be entered instead of failing later.",
+  "description": "Where acceptable values are known, constrain input so invalid data cannot be entered instead of failing later. Known-valid set is constrained (picker, allowed charset, max length, stepper) so invalid values cannot be entered. It fails when Known-valid set is free text rejected only after entry."
+}

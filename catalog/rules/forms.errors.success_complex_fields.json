@@ -1,0 +1,24 @@
+{
+  "id": "forms.errors.success_complex_fields",
+  "category": "Forms",
+  "segment": "Errors",
+  "title": "success complex fields",
+  "rule": "For complex fields, show successful entry (and instant rules as the user types) without spamming success on merely-required empty-to-filled fields.",
+  "citation": {
+    "source": "NN/g — 10 Design Guidelines for Reporting Errors in Forms (§2)",
+    "url": "https://www.nngroup.com/articles/errors-forms-design-guidelines/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "A complex field (multiple rules, e.g. password) shows success and/or live rule checks; simple required fields do not get a success state for merely becoming non-empty."
+  ],
+  "fail_when": [
+    "Complex field shows only errors, or every required field flashes success when filled."
+  ],
+  "severity": "major",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "system_stayed_quiet_after_change",
+  "leaf": "announce_system_status",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

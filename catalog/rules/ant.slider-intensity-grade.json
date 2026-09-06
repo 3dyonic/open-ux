@@ -1,0 +1,25 @@
+{
+  "id": "ant.slider-intensity-grade",
+  "category": "Forms",
+  "segment": "Inputs",
+  "title": "slider intensity grade",
+  "rule": "Slider = intensity/grade (volume, brightness, saturation) when a precise number is not required; pair NumberInput with Slider when precision is required.",
+  "citation": {
+    "source": "Ant Design — Data entry",
+    "url": "https://ant.design/docs/spec/data-entry"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Slider is used for intensity/grade without a required precise number; precision uses Slider + NumberInput."
+  ],
+  "fail_when": [
+    "Slider as the only control when a precise number is required; or slider for a non-intensity discrete choice."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "GOV.UK \"don't use range sliders\" on question pages as a winner; MUI/Apple number-entry dual-cite as this slider row."
+}

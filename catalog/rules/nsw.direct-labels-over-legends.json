@@ -1,0 +1,25 @@
+{
+  "id": "nsw.direct-labels-over-legends",
+  "category": "Content",
+  "segment": "Charts",
+  "title": "direct labels over legends",
+  "rule": "Direct labels over legends; pie/doughnut 2–4 slices; doughnut preferred in digital. Legend only when direct labels fail; keep it readable at 200% zoom. Stacked bar: 3–4 segments. Multi-line: 3–4 series. Horizontal bar when category labels are long.",
+  "citation": {
+    "source": "NSW — Charts and graphs",
+    "url": "https://designsystem.nsw.gov.au/docs/content/methods/charts-and-graphs.html"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Direct labels where they fit; pie/doughnut 2–4 slices (doughnut preferred on digital); stacked bar / multi-line 3–4; long categories use horizontal bar."
+  ],
+  "fail_when": [
+    "Legend as the only labels when direct labels would fit; pie with many slices; many stacked segments or lines."
+  ],
+  "severity": "major",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "system_stayed_quiet_after_change",
+  "leaf": "announce_system_status",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "A house choice-cutoff for form controls."
+}

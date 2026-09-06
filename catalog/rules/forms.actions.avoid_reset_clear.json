@@ -1,0 +1,24 @@
+{
+  "id": "forms.actions.avoid_reset_clear",
+  "category": "Forms",
+  "segment": "Actions",
+  "title": "avoid reset clear",
+  "rule": "Avoid Reset and Clear on web forms; if Cancel is needed for sensitive data, give it much less prominence than Submit.",
+  "citation": {
+    "source": "NN/g — Website Forms Usability",
+    "url": "https://www.nngroup.com/articles/web-form-design/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "No form-wide Reset/Clear; if Cancel exists for sensitive data, it is visually weaker than Submit."
+  ],
+  "fail_when": [
+    "Reset/Clear wipes the form, or Cancel equals/competes with Submit."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "protect_destructive_and_leave",
+  "facet": "destructive_is_too_easy",
+  "leaf": "disable_or_confirm_destructive",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

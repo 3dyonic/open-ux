@@ -1,0 +1,25 @@
+{
+  "id": "govuk.task-list-statuses",
+  "category": "Forms",
+  "segment": "Structure",
+  "title": "task list statuses",
+  "rule": "Task list statuses (Not started / Cannot start yet / In progress / Completed) plus complete-multiple-tasks grouping.",
+  "citation": {
+    "source": "GOV.UK Design System — Task list; GOV.UK Design System — Complete multiple tasks",
+    "url": "https://design-system.service.gov.uk/components/task-list/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Tasks show those statuses (as they apply) and related tasks are grouped for completing multiple tasks."
+  ],
+  "fail_when": [
+    "No statuses, invented status labels that drop Cannot-start-yet / In-progress, or an ungrouped dump of tasks."
+  ],
+  "severity": "major",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "system_stayed_quiet_after_change",
+  "leaf": "announce_system_status",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Long-form progress bar (`forms.transparency.progress_on_long_forms`)."
+}

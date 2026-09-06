@@ -1,0 +1,25 @@
+{
+  "id": "nng.keyboard-typeahead-in-dropdowns",
+  "category": "Forms",
+  "segment": "Choice",
+  "title": "keyboard typeahead in dropdowns",
+  "rule": "Keyboard typeahead in dropdowns; avoid dropdown when typing is faster (state/country).",
+  "citation": {
+    "source": "NN/g — Dropdowns: Design Guidelines",
+    "url": "https://www.nngroup.com/articles/drop-down-menus/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Dropdowns support typeahead; state/country (typing faster) is not a dropdown."
+  ],
+  "fail_when": [
+    "Dropdown with no typeahead, or state/country forced through a dropdown."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Mobile checkout “open field not iOS picker” as this row (see `nng.open-field-state-and-card-expiry`)."
+}

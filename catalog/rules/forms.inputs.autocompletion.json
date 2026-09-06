@@ -1,0 +1,24 @@
+{
+  "id": "forms.inputs.autocompletion",
+  "category": "Forms",
+  "segment": "Inputs",
+  "title": "autocompletion",
+  "rule": "As the user types a value with a known set of completions, suggest and complete matches.",
+  "citation": {
+    "source": "Designing Interfaces 3e ch. Getting Input — Autocompletion (Tidwell, Brewer, Valencia); NN/g — A Checklist for Designing Mobile Input Fields",
+    "url": "https://www.nngroup.com/articles/mobile-input-checklist/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Known completion set: suggestions appear from typed prefix and can complete the value."
+  ],
+  "fail_when": [
+    "Known set is typed from memory with no suggestions."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "handle_form_errors",
+  "facet": "invalid_input_has_no_recovery",
+  "leaf": "recover_from_invalid_input",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

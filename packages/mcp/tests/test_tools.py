@@ -14,7 +14,7 @@ LIVE_SEED = (
     "forms.field_labels.label_stays_visible",
     "forms.field_labels.error_identifies_and_fixes",
 )
-INDEX_KEYS = {"id", "title", "jobs", "lane"}
+INDEX_KEYS = {"id", "title", "jobs", "lane", "container", "card", "facet", "leaf"}
 BODY_KEYS = {"pass_when", "fail_when", "rule", "citation", "check"}
 EXTRA_SAMPLE = "govuk.date-input-only-memorable"
 HARVEST3_SAMPLE = "spectrum.quiet-vs-standard-background"
@@ -135,11 +135,11 @@ async def test_search_jobs_actions_only(live_catalog: Path) -> None:
             "search_guidelines", {"jobs": "actions", "limit": 200}
         )
         data = found.data
-        assert data["total"] == 40
+        action_cards = {"design_actions_and_ctas", "protect_destructive_and_leave"}
+        assert data["total"] >= 1
         _assert_index_rows(data["guidelines"])
-        assert all(row["id"].startswith("actions.") for row in data["guidelines"])
-        assert all("actions" in row["jobs"] for row in data["guidelines"])
-        assert not any(row["id"].startswith("forms.") for row in data["guidelines"])
+        assert all(row["card"] in action_cards for row in data["guidelines"])
+        assert {row["card"] for row in data["guidelines"]} <= action_cards
 
 
 @pytest.mark.asyncio

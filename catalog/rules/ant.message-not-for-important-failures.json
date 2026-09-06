@@ -1,0 +1,25 @@
+{
+  "id": "ant.message-not-for-important-failures",
+  "category": "Feedback",
+  "segment": "Message",
+  "title": "message not for important failures",
+  "rule": "Message is not for important failures — Ant Message = top-centered, auto-dismiss (default 3s), non-blocking. Important failure → dialog with the reason. Do not use a lightweight prompt for important failure.",
+  "citation": {
+    "source": "Ant Design — Feedback spec",
+    "url": "https://ant.design/docs/spec/feedback"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Important failure uses a dialog with the reason. Lightweight Message is not used for that failure."
+  ],
+  "fail_when": [
+    "Important failure only as a 3s top Message."
+  ],
+  "severity": "major",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "system_stayed_quiet_after_change",
+  "leaf": "announce_system_status",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Spectrum toast ≥5s as a house winner over 3s; WCAG interruptions."
+}

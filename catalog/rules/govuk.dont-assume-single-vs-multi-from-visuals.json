@@ -1,0 +1,25 @@
+{
+  "id": "govuk.dont-assume-single-vs-multi-from-visuals",
+  "category": "Forms",
+  "segment": "Choice",
+  "title": "dont assume single vs multi from visuals",
+  "rule": "Don’t assume users know single- vs multi-select from radio vs checkbox visuals alone.",
+  "citation": {
+    "source": "GOV.UK Design System — Radios",
+    "url": "https://design-system.service.gov.uk/components/radios/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Copy or grouping makes single- vs multi-select explicit; visuals are not the only cue."
+  ],
+  "fail_when": [
+    "Only the radio/checkbox shape tells people whether one or many can be chosen."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "The control-type rule itself (see `nng.checkboxes-multi-radios-exclusive`)."
+}

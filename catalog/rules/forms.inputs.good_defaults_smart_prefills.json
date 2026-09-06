@@ -1,0 +1,24 @@
+{
+  "id": "forms.inputs.good_defaults_smart_prefills",
+  "category": "Forms",
+  "segment": "Inputs",
+  "title": "good defaults smart prefills",
+  "rule": "Prefill with good defaults and smart values the user can accept or edit.",
+  "citation": {
+    "source": "Designing Interfaces 3e ch. Getting Input — Good Defaults and Smart Prefills (Tidwell, Brewer, Valencia); NN/g — A Checklist for Designing Mobile Input Fields",
+    "url": "https://www.nngroup.com/articles/mobile-input-checklist/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Known defaults, history, or frequent values are prefilled and editable."
+  ],
+  "fail_when": [
+    "User retypes a known default/history/frequent value with no prefill."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "handle_form_errors",
+  "facet": "invalid_input_has_no_recovery",
+  "leaf": "recover_from_invalid_input",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

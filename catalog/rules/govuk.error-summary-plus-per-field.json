@@ -1,0 +1,25 @@
+{
+  "id": "govuk.error-summary-plus-per-field",
+  "category": "Forms",
+  "segment": "Errors",
+  "title": "error summary plus per field",
+  "rule": "Error summary + per-field errors + focus the summary + link each item to the answer. Compatible with NN/g “not summary-only”; GOV.UK requires the summary as well.",
+  "citation": {
+    "source": "GOV.UK Design System — Error summary",
+    "url": "https://design-system.service.gov.uk/components/error-summary/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "On submit errors: a summary is focused, each summary item links to its answer, and each field also has its error."
+  ],
+  "fail_when": [
+    "Summary only (no per-field); per-field only (no summary on this pattern); summary not focused; items don’t link to answers."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "handle_form_errors",
+  "facet": "errors_dont_point_to_the_fix",
+  "leaf": "explain_failure_next_to_cause",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil; MULTI_HOME picked explain_failure_next_to_cause; leftover harvest tag recover_from_invalid_input",
+  "do_not_claim": "A winner vs Vercel focus-first-field (`forms.errors.focus_first_error`); Polar banner (dual-cite, see `polar.long-form-errors-banner-plus-inline`). Overlap with Forms 54: `forms.errors.next_to_field_not_summary_only` + `forms.errors.focus_first_error`. Compatible with “not summary-only”; do not drop the summary."
+}

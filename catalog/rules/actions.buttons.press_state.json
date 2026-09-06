@@ -1,0 +1,24 @@
+{
+  "id": "actions.buttons.press_state",
+  "category": "Actions",
+  "segment": "Buttons",
+  "title": "press state",
+  "rule": "Always include a press state on a custom button so the control feels like it accepted input.",
+  "citation": {
+    "source": "Apple HIG — Buttons",
+    "url": "https://developer.apple.com/design/human-interface-guidelines/buttons"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Custom buttons have a press state that shows the control accepted input."
+  ],
+  "fail_when": [
+    "Custom button has no press/active visual."
+  ],
+  "severity": "major",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "system_stayed_quiet_after_change",
+  "leaf": "announce_system_status",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

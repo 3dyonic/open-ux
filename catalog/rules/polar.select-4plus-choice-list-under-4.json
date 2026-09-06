@@ -1,0 +1,25 @@
+{
+  "id": "polar.select-4plus-choice-list-under-4",
+  "category": "Forms",
+  "segment": "Choice",
+  "title": "select 4plus choice list under 4",
+  "rule": "Select for 4+ options; Choice list for <4.",
+  "citation": {
+    "source": "Polaris — Select",
+    "url": "https://polaris.shopify.com/components/selection-and-input/select"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Fewer than 4 → choice list; 4+ → select (Polar named cutoffs)."
+  ],
+  "fail_when": [
+    "Polar surface uses select for <4 or choice list for a long 4+ set as if the Polar cutoff were ignored."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "A house number that beats NN/g handful / GOV.UK last-resort / USWDS <7 / M3 6 / Carbon 3. Overlap with Forms 54: `forms.inputs.match_control_and_size`, `dropdown_chooser`, `combo_box`, `offer_choices_not_only_text`."
+}

@@ -1,0 +1,25 @@
+{
+  "id": "ant.label-left-default-vs-top",
+  "category": "Forms",
+  "segment": "Field labels",
+  "title": "label left default vs top",
+  "rule": "Ant: label left of input by default; top when the text is too long or in English context; consistent within the system. Dual-cite Fluent/Spectrum top-default. Do not pick a winner.",
+  "citation": {
+    "source": "Ant Design — Data entry",
+    "url": "https://ant.design/docs/spec/data-entry"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Labels are consistently left or consistently top in-product (Ant left-default; Fluent/Spectrum top-default). Ant also allows top when label text is too long or in English context."
+  ],
+  "fail_when": [
+    "Mixed left/top in one form with no reason; or a house default that bans the other cite."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "field_has_no_lasting_name",
+  "leaf": "name_a_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "A house left-or-top winner; GOV.UK sentence-case/no-colons as this placement row. Overlap with extra 73: `fluent.labels-top-aligned-by-default`. Overlap with Forms 54: beyond LIVE `visible_label` / `label_stays_visible`."
+}

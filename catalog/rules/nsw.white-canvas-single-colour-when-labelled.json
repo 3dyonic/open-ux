@@ -1,0 +1,25 @@
+{
+  "id": "nsw.white-canvas-single-colour-when-labelled",
+  "category": "Content",
+  "segment": "Charts",
+  "title": "white canvas single colour when labelled",
+  "rule": "White canvas; single colour when bars are already labelled. `#FFFFFF`. Multi-colour only for multiple series or a highlight. Approved NSW / Aboriginal chart-mark palettes only (pre-validated on white). Start with theme 01 then 02.",
+  "citation": {
+    "source": "NSW — Charts and graphs",
+    "url": "https://designsystem.nsw.gov.au/docs/content/methods/charts-and-graphs.html"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Chart sits on white; labelled single-series bars use one colour; extra colours only for series or highlight; NSW/Aboriginal palettes only."
+  ],
+  "fail_when": [
+    "Non-white canvas; rainbow single-series labelled bars; unapproved palette."
+  ],
+  "severity": "major",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "system_stayed_quiet_after_change",
+  "leaf": "announce_system_status",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Established conventions (next row) as a free-for-all palette."
+}

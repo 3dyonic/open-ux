@@ -1,0 +1,24 @@
+{
+  "id": "forms.errors.not_color_only",
+  "category": "Forms",
+  "segment": "Errors",
+  "title": "not color only",
+  "rule": "Differentiate error from normal field state with color plus non-color cues (outline, weight, icon); do not rely on color alone.",
+  "citation": {
+    "source": "NN/g — 10 Design Guidelines for Reporting Errors in Forms (§4, §5); NN/g — Website Forms Usability",
+    "url": "https://www.nngroup.com/articles/errors-forms-design-guidelines/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Error state uses color and at least one non-color cue (outline, weight, icon, or error text)."
+  ],
+  "fail_when": [
+    "Error is only a color change (e.g. red border or red text with no other cue)."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "handle_form_errors",
+  "facet": "errors_dont_point_to_the_fix",
+  "leaf": "explain_failure_next_to_cause",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

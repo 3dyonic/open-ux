@@ -1,0 +1,25 @@
+{
+  "id": "suomi.notification-first-load-not-post-action",
+  "category": "Feedback",
+  "segment": "Notification",
+  "title": "notification first load not post action",
+  "rule": "Notification is first-load page content, not a post-action pop-in — `role=\"region\"`. Dynamic after interaction → InlineAlert. Dual-cite NSW in-page vs global alert.",
+  "citation": {
+    "source": "Suomi.fi — Notification",
+    "url": "https://designsystem.suomi.fi/components/notification/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "`Notification` is on the initial page load; post-action dynamic feedback uses InlineAlert."
+  ],
+  "fail_when": [
+    "`Notification` is used as a post-interaction popup."
+  ],
+  "severity": "major",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "system_stayed_quiet_after_change",
+  "leaf": "announce_system_status",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Toast row; NSW in-page vs global as a merge; ErrorSummary."
+}

@@ -1,0 +1,24 @@
+{
+  "id": "actions.buttons.follow_platform_ok_cancel_order",
+  "category": "Actions",
+  "segment": "Buttons",
+  "title": "follow platform ok cancel order",
+  "rule": "Follow the platform convention for OK/Cancel order (Windows: OK first; Apple: OK last; web: the platform of most users).",
+  "citation": {
+    "source": "NN/g — OK-Cancel or Cancel-OK",
+    "url": "https://www.nngroup.com/articles/ok-cancel-or-cancel-ok/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Commit/dismiss order matches the platform (Windows OK first; Apple OK last; web = platform of most users)."
+  ],
+  "fail_when": [
+    "A third invented sequence, or the opposite of the target platform."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "use_familiar_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

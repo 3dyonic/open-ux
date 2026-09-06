@@ -1,105 +1,134 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/3dyonic/open-ux/catalog/schema.json",
-  "title": "Open UX catalog",
-  "description": "One shared, cited guideline catalog. Design ~50–100 KB; hard ceiling ~384 KB. Optional jobs[] and patterns[] may be empty. Do not invent house rules.",
+  "title": "Open UX guideline",
+  "description": "One cited guideline file. Placement points into catalog/jobs.json. Agent-facing fields live here, never in SKILL.md.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["version", "guidelines"],
+  "required": [
+    "id",
+    "title",
+    "rule",
+    "citation",
+    "check",
+    "pass_when",
+    "fail_when",
+    "severity",
+    "container",
+    "card",
+    "facet"
+  ],
   "properties": {
-    "version": {
+    "id": {
       "type": "string",
       "minLength": 1,
-      "description": "Catalog document version, not a guideline id."
+      "pattern": "^[a-z0-9._-]+$"
     },
-    "guidelines": {
+    "category": { "type": "string", "minLength": 1 },
+    "segment": { "type": "string", "minLength": 1 },
+    "title": { "type": "string", "minLength": 1 },
+    "rule": { "type": "string", "minLength": 1 },
+    "rationale": { "type": "string" },
+    "citation": { "$ref": "#/$defs/citation" },
+    "applies_to": {
       "type": "array",
-      "items": { "$ref": "#/$defs/guideline" }
+      "items": { "type": "string" }
     },
+    "check": {
+      "type": "string",
+      "enum": ["deterministic", "llm_judgment", "either"]
+    },
+    "pass_when": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "fail_when": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "examples": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/example" }
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["blocker", "major", "minor", "info"]
+    },
+    "container": {
+      "type": "string",
+      "enum": [
+        "forms_and_input",
+        "actions_and_decisions",
+        "feedback_and_status",
+        "navigation_and_wayfinding",
+        "layout_and_data_display",
+        "overlays_and_content_structure",
+        "multi_step_flows"
+      ]
+    },
+    "card": {
+      "type": "string",
+      "enum": [
+        "design_a_form",
+        "handle_form_errors",
+        "design_actions_and_ctas",
+        "protect_destructive_and_leave",
+        "compose_feedback",
+        "orient_in_the_place",
+        "compose_a_data_display",
+        "choose_an_overlay",
+        "build_a_multi_step_flow"
+      ]
+    },
+    "facet": { "type": "string", "minLength": 1 },
+    "leaf": {
+      "type": "string",
+      "enum": [
+        "avoid_placeholder_as_label",
+        "keep_field_purpose_visible_while_filled",
+        "name_a_control",
+        "choose_control_for_choice",
+        "use_familiar_control",
+        "group_related_inputs",
+        "explain_failure_next_to_cause",
+        "recover_from_invalid_input",
+        "pick_primary_action",
+        "keep_hit_target_usable",
+        "disable_or_confirm_destructive",
+        "announce_system_status",
+        "write_empty_state",
+        "tone_of_voice_for_failure",
+        "wayfind_after_nav"
+      ]
+    },
+    "overview": { "type": "string", "minLength": 1 },
+    "apply_when": { "type": "string", "minLength": 1 },
+    "not_when": { "type": "string", "minLength": 1 },
+    "agent_hint": { "type": "string", "minLength": 1 },
+    "description": { "type": "string", "minLength": 1 },
+    "waive_reason": { "type": "string", "minLength": 1 },
     "jobs": {
       "type": "array",
       "items": { "type": "string" },
-      "description": "Optional inventory of LLM jobs. Empty is valid."
+      "description": "Legacy harvest tags. Not placement SoT."
     },
     "patterns": {
       "type": "array",
-      "items": { "type": "string" },
-      "description": "Optional pattern tags. Empty is valid."
+      "items": { "type": "string" }
+    },
+    "ux_dimensions": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "source_scheme": { "type": "string" },
+    "do_not_claim": {
+      "type": "string",
+      "description": "Craft-pass fence. Optional; omit when the source row has none."
     }
   },
   "$defs": {
-    "guideline": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "id",
-        "category",
-        "segment",
-        "title",
-        "rule",
-        "citation",
-        "check",
-        "pass_when",
-        "fail_when",
-        "severity"
-      ],
-      "properties": {
-        "id": {
-          "type": "string",
-          "minLength": 1,
-          "pattern": "^[a-z0-9._-]+$"
-        },
-        "category": { "type": "string", "minLength": 1 },
-        "segment": { "type": "string", "minLength": 1 },
-        "title": { "type": "string", "minLength": 1 },
-        "rule": { "type": "string", "minLength": 1 },
-        "rationale": { "type": "string" },
-        "citation": { "$ref": "#/$defs/citation" },
-        "applies_to": {
-          "type": "array",
-          "items": { "type": "string" }
-        },
-        "check": {
-          "type": "string",
-          "enum": ["deterministic", "llm_judgment", "either"]
-        },
-        "pass_when": {
-          "type": "array",
-          "items": { "type": "string" },
-          "minItems": 1
-        },
-        "fail_when": {
-          "type": "array",
-          "items": { "type": "string" },
-          "minItems": 1
-        },
-        "examples": {
-          "type": "array",
-          "items": { "$ref": "#/$defs/example" }
-        },
-        "severity": {
-          "type": "string",
-          "enum": ["blocker", "major", "minor", "info"]
-        },
-        "jobs": {
-          "type": "array",
-          "items": { "type": "string" }
-        },
-        "patterns": {
-          "type": "array",
-          "items": { "type": "string" }
-        },
-        "ux_dimensions": {
-          "type": "array",
-          "items": { "type": "string" }
-        },
-        "source_scheme": { "type": "string" },
-        "do_not_claim": {
-          "type": "string",
-          "description": "Craft-pass fence. Optional; omit when the source row has none."
-        }
-      }
-    },
     "citation": {
       "type": "object",
       "additionalProperties": false,

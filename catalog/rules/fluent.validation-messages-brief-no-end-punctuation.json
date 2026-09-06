@@ -1,0 +1,25 @@
+{
+  "id": "fluent.validation-messages-brief-no-end-punctuation",
+  "category": "Forms",
+  "segment": "Errors",
+  "title": "validation messages brief no end punctuation",
+  "rule": "Validation messages brief; no end punctuation unless multiple sentences.",
+  "citation": {
+    "source": "Fluent 2 — Field usage",
+    "url": "https://fluent2.microsoft.design/components/web/react/core/field/usage"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Brief validation; no end punctuation on a single sentence; punctuation only if multiple sentences."
+  ],
+  "fail_when": [
+    "Single-sentence validation with a trailing period, or long un-brief validation."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "handle_form_errors",
+  "facet": "errors_dont_point_to_the_fix",
+  "leaf": "explain_failure_next_to_cause",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil; MULTI_HOME picked explain_failure_next_to_cause; leftover harvest tag recover_from_invalid_input",
+  "do_not_claim": "Error identifies-and-fixes (`forms.field_labels.error_identifies_and_fixes`)."
+}

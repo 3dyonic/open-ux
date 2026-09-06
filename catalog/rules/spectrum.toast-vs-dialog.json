@@ -1,0 +1,28 @@
+{
+  "id": "spectrum.toast-vs-dialog",
+  "category": "Feedback",
+  "segment": "Toast vs dialog",
+  "title": "toast vs dialog",
+  "rule": "Toast only for confirmations, simple notifications, and low-priority alerts that must not fully interrupt. Dialog when the situation needs attention or a response. Do not use a dialog for a simple upload-complete.",
+  "citation": {
+    "source": "Spectrum — Toast",
+    "url": "https://spectrum.adobe.com/page/toast/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Low-priority confirmations/notifications use toast; situations that need attention or a response use dialog."
+  ],
+  "fail_when": [
+    "Dialog for a simple upload-complete; or toast for a situation that needs attention/response."
+  ],
+  "severity": "major",
+  "container": "overlays_and_content_structure",
+  "card": "choose_an_overlay",
+  "facet": "wrong_layer_for_the_content",
+  "overview": "Low-priority confirmations/notifications use toast.",
+  "apply_when": "Modal vs accordion",
+  "not_when": "Not for the destructive decision inside a dialog.",
+  "agent_hint": "Toast only for confirmations, simple notifications, and low-priority alerts that must not fully interrupt.",
+  "description": "Toast only for confirmations, simple notifications, and low-priority alerts that must not fully interrupt. Low-priority confirmations/notifications use toast. It fails when Dialog for a simple upload-complete.",
+  "do_not_claim": "A winner vs NN/g modal 7 (`nng.modal-and-nonmodal-dialogs`); Ant Message vs dialog (separate rows)."
+}

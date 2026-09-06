@@ -1,0 +1,25 @@
+{
+  "id": "suomi.radio-extras-hidden-then-indented",
+  "category": "Forms",
+  "segment": "Radios",
+  "title": "radio extras hidden then indented",
+  "rule": "Radio extras: additional fields stay hidden, then show indented under the selected radio — not a second “radios vs checkboxes” row.",
+  "citation": {
+    "source": "Suomi.fi — RadioButton",
+    "url": "https://designsystem.suomi.fi/components/radiobutton/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Extra fields for a radio are hidden until that radio is selected, then appear indented under it."
+  ],
+  "fail_when": [
+    "Extra fields for unselected radios are visible; extras appear unindented / disconnected from the selected radio."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Radios vs checkboxes vs toggle (already filed)."
+}

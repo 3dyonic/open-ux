@@ -1,0 +1,25 @@
+{
+  "id": "uswds.dont-split-phone-ssn-card",
+  "category": "Forms",
+  "segment": "Text input",
+  "title": "dont split phone ssn card",
+  "rule": "Do not split phone, SSN, or credit-card numbers into separate fields. One input; segmented fields force meaningless labels for AT. Distinct from GOV.UK three-field dates.",
+  "citation": {
+    "source": "USWDS — Text input; Form templates",
+    "url": "https://designsystem.digital.gov/components/text-input/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Phone, SSN, and card number are each one field."
+  ],
+  "fail_when": [
+    "Those numbers are split across multiple fields."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "use_familiar_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Memorable date three fields as this row; input-mask (skipped as NN/g)."
+}

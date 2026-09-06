@@ -1,0 +1,25 @@
+{
+  "id": "polar.match-shopify-admin-voice",
+  "category": "Copy",
+  "segment": "Voice",
+  "title": "match shopify admin voice",
+  "rule": "Match Shopify admin voice; tone shifts (errors more direct than onboarding tips).",
+  "citation": {
+    "source": "Shopify — Product content principles",
+    "url": "https://shopify.dev/docs/apps/design/content"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "App copy matches admin voice; errors are more direct than onboarding tips."
+  ],
+  "fail_when": [
+    "Off-admin voice, or the same chipper onboarding tone on errors."
+  ],
+  "severity": "major",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "tone_fights_the_moment",
+  "leaf": "tone_of_voice_for_failure",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "A house flavour deck."
+}

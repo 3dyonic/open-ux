@@ -1,0 +1,24 @@
+{
+  "id": "actions.copy.tooltips_clarify_outcomes",
+  "category": "Actions",
+  "segment": "Copy",
+  "title": "tooltips clarify outcomes",
+  "rule": "When an icon or button initiates an action, include a tooltip that states the outcome without conflicting with the visible label.",
+  "citation": {
+    "source": "NN/g — UI Copy",
+    "url": "https://www.nngroup.com/articles/ui-copy/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "An action-initiating icon or button has a tooltip that states the outcome and does not conflict with the visible label."
+  ],
+  "fail_when": [
+    "No tooltip on that control, or the tooltip conflicts with the visible label."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "field_has_no_lasting_name",
+  "leaf": "name_a_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

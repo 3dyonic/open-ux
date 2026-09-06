@@ -62,7 +62,8 @@ def test_expand_need_cards_not_leaves(live_catalog: Path) -> None:
     assert "avoid_placeholder_as_label" in expand_need("design_a_form", tree)
     assert "explain_failure_next_to_cause" in expand_need("handle_form_errors", tree)
     assert expand_need("avoid_placeholder_as_label", tree) == []
-    assert expand_need("forms", tree) == ["forms"]
+    assert expand_need("forms", tree) == expand_need("forms_and_input", tree)
+    assert "avoid_placeholder_as_label" in expand_need("forms", tree)
     assert "avoid_placeholder_as_label" in expand_need("forms_and_input", tree)
     assert expand_need("compose_a_data_display", tree) == []
     display = resolve_need("compose_a_data_display", tree)

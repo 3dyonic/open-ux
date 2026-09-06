@@ -1,0 +1,25 @@
+{
+  "id": "ant.one-cta-per-screen",
+  "category": "Actions",
+  "segment": "Buttons",
+  "title": "one cta per screen",
+  "rule": "One Call to Action per screen — CTA usually appears alone, command-like (landing/welcome); may be as wide as its parent. Distinct from one-primary-in-a-group.",
+  "citation": {
+    "source": "Ant Design — Button spec",
+    "url": "https://ant.design/docs/spec/buttons"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Landing/welcome (command-like) screen has one CTA, usually alone; may span its parent."
+  ],
+  "fail_when": [
+    "Multiple CTAs on that landing/welcome screen."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "no_clear_primary",
+  "leaf": "pick_primary_action",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "One invented global cap vs group / page / section; `actions.buttons.one_primary` as a delete of this named CTA-per-screen row."
+}

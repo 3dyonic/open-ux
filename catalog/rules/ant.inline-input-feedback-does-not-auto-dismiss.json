@@ -1,0 +1,25 @@
+{
+  "id": "ant.inline-input-feedback-does-not-auto-dismiss",
+  "category": "Forms",
+  "segment": "Errors",
+  "title": "inline input feedback does not auto dismiss",
+  "rule": "Inline input feedback does not auto-dismiss — text follows the block; stays until the user performs the corresponding interaction.",
+  "citation": {
+    "source": "Ant Design — Feedback spec",
+    "url": "https://ant.design/docs/spec/feedback"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Inline input feedback stays until the corresponding interaction."
+  ],
+  "fail_when": [
+    "Inline input feedback auto-dismisses."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "handle_form_errors",
+  "facet": "errors_dont_point_to_the_fix",
+  "leaf": "explain_failure_next_to_cause",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil; MULTI_HOME picked explain_failure_next_to_cause; leftover harvest tag recover_from_invalid_input",
+  "do_not_claim": "Toast/Message auto-dismiss timings as this inline row."
+}

@@ -1,0 +1,24 @@
+{
+  "id": "actions.confirm.serious_or_undo",
+  "category": "Actions",
+  "segment": "Confirmation",
+  "title": "serious or undo",
+  "rule": "Before actions with serious consequences (especially those that cannot be undone), use a confirmation dialog, or offer an undo window; never make destruction immediate.",
+  "citation": {
+    "source": "NN/g — Confirmation Dialogs (§1); NN/g — Cancel vs Close (ask for confirmation); Vercel Web Interface Guidelines (destructive actions need confirmation modal or undo)",
+    "url": "https://www.nngroup.com/articles/confirmation-dialog/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Serious / irreversible actions have a confirmation dialog or an undo window; destruction is not immediate."
+  ],
+  "fail_when": [
+    "Immediate irreversible destructive commit with neither confirm nor undo."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "protect_destructive_and_leave",
+  "facet": "destructive_is_too_easy",
+  "leaf": "disable_or_confirm_destructive",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

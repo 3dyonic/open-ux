@@ -1,0 +1,24 @@
+{
+  "id": "forms.inputs.use_device_features",
+  "category": "Forms",
+  "segment": "Inputs",
+  "title": "use device features",
+  "rule": "Populate the field from phone features when they apply (camera, GPS, voice, contacts).",
+  "citation": {
+    "source": "NN/g — A Checklist for Designing Mobile Input Fields",
+    "url": "https://www.nngroup.com/articles/mobile-input-checklist/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Where camera, GPS, voice, or contacts can supply the value, that path is offered."
+  ],
+  "fail_when": [
+    "Applicable device capture is typing-only."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "use_familiar_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

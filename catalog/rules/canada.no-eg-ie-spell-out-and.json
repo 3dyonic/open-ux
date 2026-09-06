@@ -1,0 +1,25 @@
+{
+  "id": "canada.no-eg-ie-spell-out-and",
+  "category": "Content",
+  "segment": "Style",
+  "title": "no eg ie spell out and",
+  "rule": "No e.g. / i.e.; spell out “and.” Use “for example” / “that is.” Ampersand only in proper names and set abbreviations (R&D, O&M). Latin abbreviations only when space is tight (tables).",
+  "citation": {
+    "source": "Canada.ca — Content Style Guide",
+    "url": "https://design.canada.ca/style-guide/index.html"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Prose uses “for example” / “that is” and “and”; & only in proper names/set abbreviations."
+  ],
+  "fail_when": [
+    "e.g. / i.e. in prose, or & used as “and” outside names/abbreviations."
+  ],
+  "severity": "major",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "tone_fights_the_moment",
+  "leaf": "tone_of_voice_for_failure",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Underline/italics (next row)."
+}

@@ -1,0 +1,24 @@
+{
+  "id": "actions.prominent_done_or_assumed_next",
+  "category": "Actions",
+  "segment": "Completion",
+  "title": "prominent done or assumed next",
+  "rule": "Place the control that finishes the transaction (or the assumed next step) at the end of the visual flow; make it prominent and well labeled.",
+  "citation": {
+    "source": "Designing Interfaces 3e ch. Doing Things — Prominent Done or Assumed Next Step (Tidwell, Brewer, Valencia)",
+    "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Finish / assumed-next sits at the end of the visual flow, is prominent, and is well labeled."
+  ],
+  "fail_when": [
+    "That control is weak, unlabeled, or not at the end of the flow."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "no_clear_primary",
+  "leaf": "pick_primary_action",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

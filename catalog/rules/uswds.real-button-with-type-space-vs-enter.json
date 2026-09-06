@@ -1,0 +1,25 @@
+{
+  "id": "uswds.real-button-with-type-space-vs-enter",
+  "category": "Actions",
+  "segment": "Buttons",
+  "title": "real button with type space vs enter",
+  "rule": "Use a real `<button>` with `type` set (`submit` / `button` / `reset`; default is submit). Do not use `<a>` or `<div>` as the only control. Space triggers a button; Enter triggers a link — do not style links as buttons without that difference.",
+  "citation": {
+    "source": "USWDS — Button",
+    "url": "https://designsystem.digital.gov/components/button/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "The control is `<button>` with an explicit `type`. Links are not styled as the only button control."
+  ],
+  "fail_when": [
+    "`<a>` or `<div>` is the only control, or `type` is omitted on a non-submit button so it submits."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "use_familiar_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Hit-target size; one-primary."
+}

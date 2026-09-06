@@ -1,0 +1,25 @@
+{
+  "id": "nsw.lines-dash-fills-patterns",
+  "category": "Content",
+  "segment": "Charts",
+  "title": "lines dash fills patterns",
+  "rule": "Lines use dash styles; fills use patterns (max 4–5). Solid / dashed / dotted / dash-dot for series. Hatch/dot/grid for bars, area, pie — not for lines. Two colours per pattern (fill + stroke).",
+  "citation": {
+    "source": "NSW — Charts and graphs",
+    "url": "https://designsystem.nsw.gov.au/docs/content/methods/charts-and-graphs.html"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Line series use dash styles; area/bar/pie fills use patterns (≤4–5) with two colours per pattern; patterns are not used on lines."
+  ],
+  "fail_when": [
+    "Line series distinguished only by colour with no dash; patterns on lines; more than 5 fill patterns."
+  ],
+  "severity": "major",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "system_stayed_quiet_after_change",
+  "leaf": "announce_system_status",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Established colour conventions as a merge that drops dash/pattern."
+}

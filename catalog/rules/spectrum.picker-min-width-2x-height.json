@@ -1,0 +1,25 @@
+{
+  "id": "spectrum.picker-min-width-2x-height",
+  "category": "Forms",
+  "segment": "Picker",
+  "title": "picker min width 2x height",
+  "rule": "Minimum width 2× field-button height — quiet pickers have no minimum; width follows text.",
+  "citation": {
+    "source": "Spectrum — Picker",
+    "url": "https://spectrum.adobe.com/page/picker/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Non-quiet picker width is at least 2× field-button height. Quiet picker width follows text (no minimum)."
+  ],
+  "fail_when": [
+    "Non-quiet picker narrower than 2× height, or a quiet-picker minimum invented in-house."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "controls_are_hard_to_hit",
+  "leaf": "keep_hit_target_usable",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Text-field 1.5× minimum as this row."
+}

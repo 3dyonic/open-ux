@@ -1,0 +1,25 @@
+{
+  "id": "spectrum.one-toast-at-a-time",
+  "category": "Feedback",
+  "segment": "Toast",
+  "title": "one toast at a time",
+  "rule": "One toast at a time — consecutive/simultaneous toasts follow a priority queue; do not stack multiple visible toasts.",
+  "citation": {
+    "source": "Spectrum — Toast",
+    "url": "https://spectrum.adobe.com/page/toast/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Only one toast is visible; others wait in a priority queue."
+  ],
+  "fail_when": [
+    "Multiple toasts stacked/visible at once."
+  ],
+  "severity": "major",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "system_stayed_quiet_after_change",
+  "leaf": "announce_system_status",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Bundle copy (see `spectrum.bundle-instead-of-spam-toasts`)."
+}

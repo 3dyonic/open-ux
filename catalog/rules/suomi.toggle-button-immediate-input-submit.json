@@ -1,0 +1,25 @@
+{
+  "id": "suomi.toggle-button-immediate-input-submit",
+  "category": "Forms",
+  "segment": "Toggle",
+  "title": "toggle button immediate input submit",
+  "rule": "Toggle has two variants: `button` (immediate action) vs `input` (in a form) — always one default state; not a checkbox. Dual-cite Ant/Lightning immediate-toggle; Suomi names the form-input variant. Locked dual-cite by variant; no global winner.",
+  "citation": {
+    "source": "Suomi.fi — Toggle",
+    "url": "https://designsystem.suomi.fi/components/toggle/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Button-toggle applies immediately with no extra confirm; input-toggle waits for submit — or Ant/Lightning always-immediate switch used as that school on that surface. Checkbox is not the state-change control. Always one default state."
+  ],
+  "fail_when": [
+    "Button-toggle requires extra confirm; input-toggle applies immediately while treated as a submit-time form control; checkbox used for state change; a global “all switches immediate” house rule that erases the variant split."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "A global immediate-vs-submit winner."
+}

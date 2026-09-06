@@ -1,0 +1,25 @@
+{
+  "id": "ant.form-in-modal-lifecycle",
+  "category": "Forms",
+  "segment": "Modal",
+  "title": "form in modal lifecycle",
+  "rule": "Form-in-Modal lifecycle — list-page \"create\" may popup a form in Modal. `destroyOnHidden` does not clear Form fields — call `resetFields`. `useForm` before open is disconnected unless `forceRender` (or equivalent). Prefer native submit; if the submit control is outside the Form (Modal footer), call `form.submit`.",
+  "citation": {
+    "source": "Ant Design — Form ; Ant Design — Modal",
+    "url": "https://ant.design/components/form"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Reopened create-modal form is reset (`resetFields`); form instance is connected when opened; footer submit still submits the Form (`form.submit` if outside)."
+  ],
+  "fail_when": [
+    "Stale fields after close (`destroyOnHidden` treated as reset); disconnected `useForm` without force-render; footer button that does not submit the Form."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "use_familiar_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "API-table props beyond these named lifecycle facts; Polar \"don't use modals for complex forms\" as a winner."
+}

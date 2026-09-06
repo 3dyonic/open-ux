@@ -1,0 +1,25 @@
+{
+  "id": "spectrum.quiet-vs-standard-background",
+  "category": "Forms",
+  "segment": "Text field",
+  "title": "quiet vs standard background",
+  "rule": "Visible background for dense control arrays / isolated buttons; quiet (no fill) only when a clear stack/table/grid makes the field parseable. Too many quiet controls in a small space are hard to read.",
+  "citation": {
+    "source": "Spectrum — Text field",
+    "url": "https://spectrum.adobe.com/page/text-field/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Standard (visible background) is used for dense arrays or isolated buttons; quiet is used only where a clear stack/table/grid makes the field parseable."
+  ],
+  "fail_when": [
+    "Quiet (no fill) in a dense small space, or isolated buttons with no visible field background."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "use_familiar_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Hit-target px floors; quiet as a brand default."
+}

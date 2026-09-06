@@ -1,0 +1,25 @@
+{
+  "id": "nng.listbox-vs-dropdown",
+  "category": "Forms",
+  "segment": "Choice",
+  "title": "listbox vs dropdown",
+  "rule": "Dropdown to downplay alternatives / keep a default; listbox to expose options and encourage change.",
+  "citation": {
+    "source": "NN/g — Listboxes vs. Dropdown Lists",
+    "url": "https://www.nngroup.com/articles/listbox-dropdown/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Dropdown is used to keep a default / downplay alternatives; listbox is used when options should stay visible and change is encouraged."
+  ],
+  "fail_when": [
+    "Listbox hides alternatives that should stay visible, or a dropdown is used when the design needs to encourage changing the default."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Radio vs dropdown (separate rows)."
+}

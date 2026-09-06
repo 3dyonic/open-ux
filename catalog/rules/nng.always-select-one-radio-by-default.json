@@ -1,0 +1,25 @@
+{
+  "id": "nng.always-select-one-radio-by-default",
+  "category": "Forms",
+  "segment": "Choice",
+  "title": "always select one radio by default",
+  "rule": "Always select one radio by default (users cannot return to “none”). Dual-cite with GOV.UK no-preselect-on-questions and Polar default-when-possible: satisfy “always one selected” with explicit None when none is valid — do not force a guessed answer.",
+  "citation": {
+    "source": "NN/g — Radio Buttons: Select One by Default",
+    "url": "https://www.nngroup.com/articles/radio-buttons-default-selection/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "The radio set has a selected value. If “none” is valid, that value is an explicit None. Settings: current/safe default."
+  ],
+  "fail_when": [
+    "No selected radio (stuck with no way back to none, or an empty set); or a guessed real answer is preselected on a question where none/unknown is valid; or a global always/never with no question-vs-settings split."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "A winner over GOV.UK questions or Polar “Select” placeholder when no logical default. Overlap with Forms 54: `forms.inputs.good_defaults_smart_prefills`."
+}

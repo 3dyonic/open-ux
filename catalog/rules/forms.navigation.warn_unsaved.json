@@ -1,0 +1,24 @@
+{
+  "id": "forms.navigation.warn_unsaved",
+  "category": "Forms",
+  "segment": "Navigation",
+  "title": "warn unsaved",
+  "rule": "Warn before navigation that would lose unsaved changes.",
+  "citation": {
+    "source": "Vercel Web Interface Guidelines — Forms",
+    "url": "https://github.com/vercel-labs/web-interface-guidelines/blob/main/command.md"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Leaving with unsaved changes prompts a warning."
+  ],
+  "fail_when": [
+    "Navigation discards unsaved values with no warning."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "protect_destructive_and_leave",
+  "facet": "destructive_is_too_easy",
+  "leaf": "disable_or_confirm_destructive",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

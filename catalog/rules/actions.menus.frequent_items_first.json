@@ -1,0 +1,24 @@
+{
+  "id": "actions.menus.frequent_items_first",
+  "category": "Actions",
+  "segment": "Menus",
+  "title": "frequent items first",
+  "rule": "List important or frequently used menu items first (still grouping related commands).",
+  "citation": {
+    "source": "Apple HIG — Menus",
+    "url": "https://developer.apple.com/design/human-interface-guidelines/menus"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Important or frequently used items are listed first, with related commands still grouped."
+  ],
+  "fail_when": [
+    "Frequent items are buried, or first-listing scatters related commands with no grouping."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "no_clear_primary",
+  "leaf": "pick_primary_action",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

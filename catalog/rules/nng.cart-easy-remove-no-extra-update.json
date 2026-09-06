@@ -1,0 +1,25 @@
+{
+  "id": "nng.cart-easy-remove-no-extra-update",
+  "category": "Forms",
+  "segment": "Checkout",
+  "title": "cart easy remove no extra update",
+  "rule": "Cart: easy Remove per line; no extra Update button to commit quantity.",
+  "citation": {
+    "source": "NN/g — The Mobile Checkout Experience",
+    "url": "https://www.nngroup.com/articles/mobile-checkout-ux/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Each line has easy Remove; quantity commits without a separate Update button."
+  ],
+  "fail_when": [
+    "Remove is hard to find, or quantity needs an extra Update to commit."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "no_clear_primary",
+  "leaf": "pick_primary_action",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Undo snackbar (see `nng.support-undo-discoverable`)."
+}

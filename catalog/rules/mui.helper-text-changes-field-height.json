@@ -1,0 +1,25 @@
+{
+  "id": "mui.helper-text-changes-field-height",
+  "category": "Forms",
+  "segment": "Layout",
+  "title": "helper text changes field height",
+  "rule": "Helper text changes field height — a field with helper text next to one without will misalign. Equalize by passing a space character as `helperText` on the sibling.",
+  "citation": {
+    "source": "MUI — Text Field",
+    "url": "https://mui.com/material-ui/react-text-field/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Adjacent fields with/without helper text stay aligned (sibling gets space `helperText` or equivalent)."
+  ],
+  "fail_when": [
+    "Adjacent fields misalign because only one has helper text."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "field_has_no_lasting_name",
+  "leaf": "name_a_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Helper association `id` (next row) as this height row."
+}

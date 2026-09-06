@@ -1,0 +1,24 @@
+{
+  "id": "actions.icons.always_visible_text_label",
+  "category": "Actions",
+  "segment": "Icons",
+  "title": "always visible text label",
+  "rule": "Put a text label next to the icon and keep it visible at all times; do not reveal the label only on hover.",
+  "citation": {
+    "source": "NN/g — Icon Usability",
+    "url": "https://www.nngroup.com/articles/icon-usability/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Command icons have an always-visible text label next to the icon."
+  ],
+  "fail_when": [
+    "Icon-only command, or label only on hover/tooltip."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "field_has_no_lasting_name",
+  "leaf": "name_a_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

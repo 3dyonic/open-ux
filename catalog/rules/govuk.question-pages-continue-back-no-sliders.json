@@ -1,0 +1,25 @@
+{
+  "id": "govuk.question-pages-continue-back-no-sliders",
+  "category": "Forms",
+  "segment": "Question pages",
+  "title": "question pages continue back no sliders",
+  "rule": "Question pages: Continue (not “Submit” jargon); Back link; don’t use range sliders.",
+  "citation": {
+    "source": "GOV.UK Design System — Question pages",
+    "url": "https://design-system.service.gov.uk/patterns/question-pages/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Question page primary is Continue (not Submit); a Back link is present; no range slider for the answer."
+  ],
+  "fail_when": [
+    "Submit jargon on a question page; no Back; or a range slider as the answer control."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "no_clear_primary",
+  "leaf": "pick_primary_action",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Fluent multistep “Next not Continue” as a winner — dual-cite by surface (question page vs multistep settings). Overlap with Actions 40: `actions.copy.verbs_for_actions`."
+}

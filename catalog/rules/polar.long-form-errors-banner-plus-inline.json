@@ -1,0 +1,25 @@
+{
+  "id": "polar.long-form-errors-banner-plus-inline",
+  "category": "Forms",
+  "segment": "Errors",
+  "title": "long form errors banner plus inline",
+  "rule": "Long/complex form errors: critical banner at top + move focus to it + inline field errors. Dual-cite with GOV.UK error summary.",
+  "citation": {
+    "source": "Polaris — Banner",
+    "url": "https://polaris.shopify.com/components/banner"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Long/complex form: critical banner at top, focus moves to it, plus inline field errors."
+  ],
+  "fail_when": [
+    "Banner only, inline only, or focus not moved to the banner."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "handle_form_errors",
+  "facet": "errors_dont_point_to_the_fix",
+  "leaf": "explain_failure_next_to_cause",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil; MULTI_HOME picked explain_failure_next_to_cause; leftover harvest tag recover_from_invalid_input",
+  "do_not_claim": "A winner vs GOV.UK error summary; dropping either summary/banner or inline (`forms.errors.next_to_field_not_summary_only`). Overlap with Forms 54: `forms.errors.next_to_field_not_summary_only` + `forms.errors.focus_first_error`."
+}

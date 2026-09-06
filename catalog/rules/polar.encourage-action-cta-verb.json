@@ -1,0 +1,25 @@
+{
+  "id": "polar.encourage-action-cta-verb",
+  "category": "Actions",
+  "segment": "Copy",
+  "title": "encourage action cta verb",
+  "rule": "Encourage action — CTA starts with a strong verb; active voice; break complicated tasks into steps.",
+  "citation": {
+    "source": "Shopify — Product content principles",
+    "url": "https://shopify.dev/docs/apps/design/content"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "CTA starts with a strong verb; active voice; complicated tasks are stepped."
+  ],
+  "fail_when": [
+    "Noun-only or weak CTA; passive; complicated task as one blob."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "no_clear_primary",
+  "leaf": "pick_primary_action",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "`actions.copy.verbs_for_actions` as a merge that drops Polar’s stepped-tasks half. Overlap with Actions 40: `verbs_for_actions`."
+}

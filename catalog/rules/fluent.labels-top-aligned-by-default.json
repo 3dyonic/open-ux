@@ -1,0 +1,25 @@
+{
+  "id": "fluent.labels-top-aligned-by-default",
+  "category": "Forms",
+  "segment": "Field labels",
+  "title": "labels top aligned by default",
+  "rule": "Labels top-aligned by default; left-align only if space is tight and fields are consistent type/width.",
+  "citation": {
+    "source": "Fluent 2 — Field usage",
+    "url": "https://fluent2.microsoft.design/components/web/react/core/field/usage"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Labels sit above fields; left-aligned labels only when space is tight and fields share type/width."
+  ],
+  "fail_when": [
+    "Left-aligned labels on mixed-type/width fields, or as the default when space is not tight."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "field_has_no_lasting_name",
+  "leaf": "name_a_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "GOV.UK above-the-control as a merge of sentence-case/colons. Overlap with Forms 54: beyond LIVE `visible_label` / `label_stays_visible`."
+}

@@ -1,0 +1,24 @@
+{
+  "id": "forms.inputs.get_from_system",
+  "category": "Forms",
+  "segment": "Inputs",
+  "title": "get from system",
+  "rule": "Get information from the system whenever possible; do not ask people to type data you can gather automatically or with permission.",
+  "citation": {
+    "source": "Apple HIG — Entering data",
+    "url": "https://developer.apple.com/design/human-interface-guidelines/entering-data"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Data the system can gather (auto or with permission) is gathered, not typed."
+  ],
+  "fail_when": [
+    "User types data the system already has or can request."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "handle_form_errors",
+  "facet": "invalid_input_has_no_recovery",
+  "leaf": "recover_from_invalid_input",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

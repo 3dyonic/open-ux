@@ -1,0 +1,25 @@
+{
+  "id": "canada.equivalent-content-both-official-languages",
+  "category": "Content",
+  "segment": "Language",
+  "title": "equivalent content both official languages",
+  "rule": "Equivalent content in both official languages — professionally translated; Canadian EN/FR conventions; bilingual images, multimedia and transcripts (or equivalent information in both languages). Not a “summary in the other language.” Dual-cite USWDS language selector (full equivalent translations) vs Canada Official-Language keep-place toggle — two jobs; this row is content equivalence, not the toggle control.",
+  "citation": {
+    "source": "Canada.ca — Designing content; Designing content for Canada.ca",
+    "url": "https://design.canada.ca/specifications/design-content.html"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "EN and FR are equivalent professional translations, including media/transcripts or equivalent information."
+  ],
+  "fail_when": [
+    "Other language is only a summary, or media exists in one official language only with no equivalent."
+  ],
+  "severity": "major",
+  "container": "navigation_and_wayfinding",
+  "card": "orient_in_the_place",
+  "facet": "user_cant_tell_where_they_are",
+  "leaf": "wayfind_after_nav",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Keep-place language toggle as this row; USWDS 2-vs-3+ selector as this row."
+}

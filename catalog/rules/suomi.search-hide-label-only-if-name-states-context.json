@@ -1,0 +1,25 @@
+{
+  "id": "suomi.search-hide-label-only-if-name-states-context",
+  "category": "Forms",
+  "segment": "Search",
+  "title": "search hide label only if name states context",
+  "rule": "Search: visually hide the label only if the accessible name states the search context (“Hae sivustolta” / “Hae toimipisteitä”). Placeholder is visual extra. Clear control appears once there is a query. Skip search on tiny single-page tools. Placeholder/label lock: this is not a general placeholder-as-label pass.",
+  "citation": {
+    "source": "Suomi.fi — SearchInput",
+    "url": "https://designsystem.suomi.fi/components/searchinput/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "If the search label is visually hidden, the accessible name states context; placeholder is extra; clear appears once there is a query; tiny single-page tools may omit search."
+  ],
+  "fail_when": [
+    "Visually hidden search label with a generic name that does not state context; or ordinary non-search fields hide the label citing this."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "field_has_no_lasting_name",
+  "leaf": "avoid_placeholder_as_label",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "NL header-search placeholder exception as this context-name row; GOLD search placement."
+}

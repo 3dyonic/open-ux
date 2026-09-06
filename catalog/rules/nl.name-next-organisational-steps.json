@@ -1,0 +1,25 @@
+{
+  "id": "nl.name-next-organisational-steps",
+  "category": "Empty/failure",
+  "segment": "Success",
+  "title": "name next organisational steps",
+  "rule": "Name the next organisational steps — e.g. case number, who acts, how the person hears back. (Contact-channel pages not filed.)",
+  "citation": {
+    "source": "NL Design System — Vervolgstappen",
+    "url": "https://nldesignsystem.nl/richtlijnen/formulieren/bevestigingspagina/vervolgstappen/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Confirmation names what happens next: case number and/or who acts and/or how the person hears back."
+  ],
+  "fail_when": [
+    "Confirmation has no next organisational step (no case number, actor, or how they hear back)."
+  ],
+  "severity": "major",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "empty_or_dead_end_has_no_next_step",
+  "leaf": "write_empty_state",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Contact-channel pages; success-what-went-through as this next-steps row."
+}

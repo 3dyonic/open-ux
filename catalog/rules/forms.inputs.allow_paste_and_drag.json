@@ -1,0 +1,24 @@
+{
+  "id": "forms.inputs.allow_paste_and_drag",
+  "category": "Forms",
+  "segment": "Inputs",
+  "title": "allow paste and drag",
+  "rule": "Allow copy/paste (never block paste) and, where the platform supports it, drag-and-drop into the field.",
+  "citation": {
+    "source": "NN/g — A Checklist for Designing Mobile Input Fields; Vercel Web Interface Guidelines; Apple HIG — Entering data",
+    "url": "https://www.nngroup.com/articles/mobile-input-checklist/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Paste into the field works; copy out works; drag-and-drop works where the platform supports it."
+  ],
+  "fail_when": [
+    "Paste is blocked or stripped by the field."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "handle_form_errors",
+  "facet": "invalid_input_has_no_recovery",
+  "leaf": "recover_from_invalid_input",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

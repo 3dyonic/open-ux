@@ -1,0 +1,25 @@
+{
+  "id": "ant.never-two-icons-in-one-button",
+  "category": "Actions",
+  "segment": "Buttons",
+  "title": "never two icons in one button",
+  "rule": "Never two icons in one button.",
+  "citation": {
+    "source": "Ant Design — Button spec",
+    "url": "https://ant.design/docs/spec/buttons"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "A button has zero or one icon."
+  ],
+  "fail_when": [
+    "Two icons in one button."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "no_clear_primary",
+  "leaf": "pick_primary_action",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Icon+text supplementary meaning as this row."
+}

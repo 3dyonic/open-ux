@@ -1,0 +1,25 @@
+{
+  "id": "nsw.100pct-stacked-show-absolute-totals",
+  "category": "Content",
+  "segment": "Charts",
+  "title": "100pct stacked show absolute totals",
+  "rule": "100% stacked bars must show absolute totals — percentages hide count; give the total per category so scale is judgeable.",
+  "citation": {
+    "source": "NSW — Charts and graphs",
+    "url": "https://designsystem.nsw.gov.au/docs/content/methods/charts-and-graphs.html"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "100% stacked bars include the absolute total per category."
+  ],
+  "fail_when": [
+    "100% stacked bars show percentages only."
+  ],
+  "severity": "major",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "system_stayed_quiet_after_change",
+  "leaf": "announce_system_status",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Honest zero baseline as this totals row."
+}

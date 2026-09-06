@@ -1,0 +1,25 @@
+{
+  "id": "ant.dropdown-when-over-5-no-truncate",
+  "category": "Forms",
+  "segment": "Choice",
+  "title": "dropdown when over 5 no truncate",
+  "rule": "Dropdown when >5 — logical sort; option text fully displayed. Dual-cite NN/g dropdown band; this is Ant's cutoff + no-truncate.",
+  "citation": {
+    "source": "Ant Design — Data entry",
+    "url": "https://ant.design/docs/spec/data-entry"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "A >5 set uses a dropdown (on this Ant surface), options logically sorted, text fully displayed."
+  ],
+  "fail_when": [
+    ">5 as a radio list on this Ant surface, truncated option text, or unsorted dump."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "A house winner vs NN/g ~5–10 / combobox ~15+ / GOV.UK select-last-resort. Overlap with extra 73: `nng.dropdown-ok-narrow-middle` / `nng.too-many-combobox-not-long-dropdown` / `govuk.select-last-resort`."
+}

@@ -1,0 +1,25 @@
+{
+  "id": "nng.standard-visuals-checkbox-square-radio-circle",
+  "category": "Forms",
+  "segment": "Choice",
+  "title": "standard visuals checkbox square radio circle",
+  "rule": "Standard visuals: checkbox square; radio circle with solid inner.",
+  "citation": {
+    "source": "NN/g — Checkboxes vs. Radio Buttons",
+    "url": "https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Checkboxes are squares; radios are circles with a solid inner when selected."
+  ],
+  "fail_when": [
+    "Swapped or nonstandard shapes that make the two indistinguishable."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "use_familiar_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Brand icon swaps as a house exception."
+}

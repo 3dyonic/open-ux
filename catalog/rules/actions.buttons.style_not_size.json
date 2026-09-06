@@ -1,0 +1,24 @@
+{
+  "id": "actions.buttons.style_not_size",
+  "category": "Actions",
+  "segment": "Buttons",
+  "title": "style not size",
+  "rule": "Use style, not size, to distinguish the preferred choice among a set of same-role buttons.",
+  "citation": {
+    "source": "Apple HIG — Buttons",
+    "url": "https://developer.apple.com/design/human-interface-guidelines/buttons"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "The preferred same-role button is distinguished by style, not by making it larger."
+  ],
+  "fail_when": [
+    "The preferred button is bigger rather than restyled."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "no_clear_primary",
+  "leaf": "pick_primary_action",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

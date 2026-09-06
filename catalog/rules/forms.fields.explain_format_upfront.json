@@ -1,0 +1,24 @@
+{
+  "id": "forms.fields.explain_format_upfront",
+  "category": "Forms",
+  "segment": "Fields",
+  "title": "explain format upfront",
+  "rule": "If a field requires a specific format or type of input, state those instructions before the user fails.",
+  "citation": {
+    "source": "NN/g — Website Forms Usability",
+    "url": "https://www.nngroup.com/articles/web-form-design/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Format/type instructions are visible next to the field before submit failure."
+  ],
+  "fail_when": [
+    "Format is stated only in a post-submit error, or never."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "field_has_no_lasting_name",
+  "leaf": "name_a_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

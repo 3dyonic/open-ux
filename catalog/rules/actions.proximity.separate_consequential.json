@@ -1,0 +1,24 @@
+{
+  "id": "actions.proximity.separate_consequential",
+  "category": "Actions",
+  "segment": "Proximity",
+  "title": "separate consequential",
+  "rule": "Do not place highly consequential or destructive actions directly next to benign confirmatory options.",
+  "citation": {
+    "source": "NN/g — Dangerous UX: Consequential Options Close to Benign Options",
+    "url": "https://www.nngroup.com/articles/proximity-consequential-options/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Highly consequential or destructive actions are not directly next to benign confirmatory options."
+  ],
+  "fail_when": [
+    "Destructive sits in the same tight cluster as benign confirm/save."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "protect_destructive_and_leave",
+  "facet": "destructive_is_too_easy",
+  "leaf": "disable_or_confirm_destructive",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

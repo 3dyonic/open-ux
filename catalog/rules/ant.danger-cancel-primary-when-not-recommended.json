@@ -1,0 +1,25 @@
+{
+  "id": "ant.danger-cancel-primary-when-not-recommended",
+  "category": "Actions",
+  "segment": "Destructive",
+  "title": "danger cancel primary when not recommended",
+  "rule": "If the user's intention is delete, use danger to warn. If the system does not recommend the deletion, set Cancel as the primary action. Compatible with \"primary not destructive\"; dual-cite, don't collapse.",
+  "citation": {
+    "source": "Ant Design — Button spec",
+    "url": "https://ant.design/docs/spec/buttons"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Delete uses danger warning. When the system does not recommend deletion, Cancel is the primary; destructive is not the recommended/primary."
+  ],
+  "fail_when": [
+    "Delete is primary when the system does not recommend it; or danger/primary collapsed so destructive is the recommended path."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "protect_destructive_and_leave",
+  "facet": "destructive_is_too_easy",
+  "leaf": "disable_or_confirm_destructive",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "A second invented rule beyond this cite + `actions.buttons.default_not_destructive`. Overlap with Actions 40: `actions.buttons.default_not_destructive`."
+}

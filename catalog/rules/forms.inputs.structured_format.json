@@ -1,0 +1,24 @@
+{
+  "id": "forms.inputs.structured_format",
+  "category": "Forms",
+  "segment": "Inputs",
+  "title": "structured format",
+  "rule": "When a strict syntax is required, put that structure into the control (segmented fields or visible separators) instead of a blank box.",
+  "citation": {
+    "source": "Designing Interfaces 3e ch. Getting Input — Structured Format (Tidwell, Brewer, Valencia)",
+    "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Strict-syntax values use segmented fields or visible separators."
+  ],
+  "fail_when": [
+    "Strict syntax is a blank box plus after-the-fact format errors only."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

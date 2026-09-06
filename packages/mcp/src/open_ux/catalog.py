@@ -8,7 +8,14 @@ from typing import Any
 
 import jsonschema
 
-from open_ux.jobs import NeedScope, resolve_need_scope
+from open_ux.jobs import (
+    CARD_IDS,
+    CONTAINER_IDS,
+    NeedScope,
+    JobTree,
+    load_job_tree,
+    resolve_need_scope,
+)
 from open_ux.settings import HARD_CATALOG_BYTES, SOFT_CATALOG_BYTES, Settings
 
 EMPTY_NOTE = (
@@ -16,13 +23,15 @@ EMPTY_NOTE = (
     "(Designer UNS-44 — Forms → field labels ×3). No guideline content is invented."
 )
 
-INDEX_KEYS = ("id", "title", "jobs", "lane")
-LANE_SKIP = frozenset({"schema.json", "index.json", "guidelines.json", "jobs.json"})
+INDEX_KEYS = ("id", "title", "jobs", "lane", "container", "card", "facet", "leaf")
+ROOT_SKIP = frozenset({"schema.json", "index.json", "guidelines.json", "jobs.json"})
 BODY_KEYS = frozenset({"pass_when", "fail_when", "rule", "citation", "check", "severity"})
+AGENT_KEYS = ("overview", "apply_when", "not_when", "agent_hint", "description")
+CATALOG_VERSION = "0.3.0"
 
 
 class CatalogError(ValueError):
-    """Catalog failed schema or size checks."""
+    """Catalog failed schema, placement, or size checks."""
 
 
 @dataclass(frozen=True)
@@ -47,20 +56,18 @@ def _validate_size(n: int) -> None:
         )
 
 
-def _lane_files(catalog_path: Path) -> list[Path]:
+def _rule_files(catalog_path: Path) -> list[Path]:
     if catalog_path.is_file():
         return [catalog_path]
     if not catalog_path.is_dir():
         raise CatalogError(f"Catalog path does not exist: {catalog_path}")
-    files = sorted(
-        p for p in catalog_path.glob("*.json") if p.name not in LANE_SKIP
-    )
-    if files:
-        return files
+    rules_dir = catalog_path / "rules"
+    if rules_dir.is_dir():
+        return sorted(p for p in rules_dir.glob("*.json") if p.is_file())
     legacy = catalog_path / "guidelines.json"
     if legacy.is_file():
         return [legacy]
-    raise CatalogError(f"No lane JSON files in {catalog_path}")
+    return []
 
 
 def _index_entry(row: dict[str, Any]) -> dict[str, Any]:
@@ -69,65 +76,168 @@ def _index_entry(row: dict[str, Any]) -> dict[str, Any]:
         raise CatalogError(
             f"Index entry {row.get('id')!r} contains rule bodies: {sorted(extra & BODY_KEYS)}"
         )
-    return {k: row.get(k) for k in INDEX_KEYS}
+    out = {k: row.get(k) for k in INDEX_KEYS if k in row or k != "leaf"}
+    if row.get("leaf"):
+        out["leaf"] = row["leaf"]
+    elif "leaf" in out:
+        out.pop("leaf", None)
+    return out
 
 
 def _index_from_guidelines(guidelines: list[dict[str, Any]]) -> list[dict[str, Any]]:
     out: list[dict[str, Any]] = []
     for g in guidelines:
-        jobs = list(g.get("jobs") or [])
-        lane = jobs[0] if jobs else (str(g.get("id") or "").split(".", 1)[0] or None)
-        out.append(
-            {
-                "id": g["id"],
-                "title": g.get("title") or g.get("rule", "")[:80],
-                "jobs": jobs,
-                "lane": lane,
-            }
-        )
+        leaf = g.get("leaf")
+        jobs = [leaf] if leaf else list(g.get("jobs") or [])
+        lane = str(g.get("id") or "").split(".", 1)[0] or None
+        row: dict[str, Any] = {
+            "id": g["id"],
+            "title": g.get("title") or g.get("rule", "")[:80],
+            "jobs": jobs,
+            "lane": lane,
+            "container": g.get("container"),
+            "card": g.get("card"),
+            "facet": g.get("facet"),
+        }
+        if leaf:
+            row["leaf"] = leaf
+        out.append(row)
     return out
 
 
-def _load_on_disk_index(index_path: Path) -> list[dict[str, Any]]:
+def _load_on_disk_index(index_path: Path) -> tuple[str, list[dict[str, Any]]]:
     data = json.loads(index_path.read_text(encoding="utf-8"))
-    rows = data.get("guidelines") if isinstance(data, dict) else data
+    if isinstance(data, dict):
+        version = str(data.get("version") or CATALOG_VERSION)
+        rows = data.get("guidelines")
+    else:
+        version = CATALOG_VERSION
+        rows = data
     if not isinstance(rows, list):
         raise CatalogError("catalog/index.json must be a list or {guidelines: [...]}.")
-    return [_index_entry(row) for row in rows]
+    return version, [_index_entry(row) for row in rows]
 
 
-def _strip_lane(guideline: dict[str, Any]) -> dict[str, Any]:
-    if "lane" not in guideline:
-        return guideline
-    cleaned = dict(guideline)
-    cleaned.pop("lane", None)
-    return cleaned
+def _load_one(path: Path, schema: dict[str, Any]) -> dict[str, Any]:
+    raw = path.read_bytes()
+    data = json.loads(raw.decode("utf-8"))
+    if path.name == "guidelines.json" or (
+        isinstance(data, dict) and "guidelines" in data and "id" not in data
+    ):
+        jsonschema.validate(instance=data, schema=_empty_wrapper_schema())
+        rows = data.get("guidelines") or []
+        if rows:
+            raise CatalogError("Legacy guidelines.json must be empty; use catalog/rules/{id}.json.")
+        return {"_empty_wrapper": True, "_bytes": len(raw)}
+    jsonschema.validate(instance=data, schema=schema)
+    if path.stem != data.get("id"):
+        raise CatalogError(f"Filename {path.name!r} does not match id {data.get('id')!r}.")
+    data["_bytes"] = len(raw)
+    return data
+
+
+def _empty_wrapper_schema() -> dict[str, Any]:
+    return {
+        "type": "object",
+        "required": ["version", "guidelines"],
+        "properties": {
+            "version": {"type": "string"},
+            "guidelines": {"type": "array", "maxItems": 0},
+            "jobs": {"type": "array"},
+            "patterns": {"type": "array"},
+        },
+    }
+
+
+def _tree_homes(tree: JobTree) -> tuple[dict[str, dict[str, Any]], set[str], dict[str, str]]:
+    facet: dict[str, dict[str, Any]] = {}
+    cluster_ids: set[str] = set()
+    pointer_files: dict[str, str] = {}
+    for card in tree.cards:
+        for item in card.facets:
+            facet[item.id] = {
+                "container": card.container,
+                "card": card.id,
+                "has_leaves": bool(item.leaves),
+                "leaf_ids": {leaf.id for leaf in item.leaves},
+            }
+            if not item.leaves:
+                for gid in item.guideline_ids:
+                    cluster_ids.add(gid)
+                    pointer_files[gid] = item.id
+            for leaf in item.leaves:
+                for gid in leaf.guideline_ids:
+                    pointer_files[gid] = leaf.id
+    return facet, cluster_ids, pointer_files
+
+
+def validate_placement(guidelines: list[dict[str, Any]], tree: JobTree) -> None:
+    facet, cluster_ids, pointer_files = _tree_homes(tree)
+    seen: set[str] = set()
+    for g in guidelines:
+        gid = str(g.get("id") or "")
+        if gid in seen:
+            raise CatalogError(f"Duplicate guideline id {gid!r}.")
+        seen.add(gid)
+        container = g.get("container")
+        card = g.get("card")
+        facet_id = g.get("facet")
+        leaf = g.get("leaf")
+        if container not in CONTAINER_IDS:
+            raise CatalogError(f"{gid}: container {container!r} is not locked.")
+        if card not in CARD_IDS:
+            raise CatalogError(f"{gid}: card {card!r} is not locked.")
+        home = facet.get(str(facet_id or ""))
+        if home is None:
+            raise CatalogError(f"{gid}: facet {facet_id!r} is not in jobs.json.")
+        if home["container"] != container or home["card"] != card:
+            raise CatalogError(f"{gid}: placement disagrees with jobs.json.")
+        if home["has_leaves"]:
+            if leaf not in home["leaf_ids"]:
+                raise CatalogError(
+                    f"{gid}: leaf {leaf!r} is required and must sit on facet {facet_id!r}."
+                )
+        elif leaf:
+            raise CatalogError(f"{gid}: cluster facet {facet_id!r} cannot have a leaf.")
+        elif gid not in cluster_ids:
+            raise CatalogError(
+                f"{gid}: cluster home must appear in facet guideline_ids[]."
+            )
+        agent = [key for key in AGENT_KEYS if g.get(key)]
+        waived = bool(g.get("waive_reason"))
+        if agent and len(agent) != len(AGENT_KEYS):
+            raise CatalogError(f"{gid}: agent-facing fields must be complete or waived.")
+        if not agent and not waived:
+            raise CatalogError(f"{gid}: missing agent-facing fields and waive_reason.")
+        if agent and waived:
+            raise CatalogError(f"{gid}: waive_reason is only for rows without agent fields.")
+    for gid, target in pointer_files.items():
+        if gid not in seen:
+            raise CatalogError(f"jobs.json points at missing rule file {gid!r} ({target}).")
 
 
 def load_catalog(settings: Settings | None = None) -> Catalog:
     settings = settings or Settings.load()
     catalog_path = settings.catalog_path
     schema = json.loads(settings.schema_path.read_text(encoding="utf-8"))
-    lane_files = _lane_files(catalog_path)
+    files = _rule_files(catalog_path)
 
     guidelines: list[dict[str, Any]] = []
     jobs: list[str] = []
     patterns: list[str] = []
-    version = "0.0.0"
+    version = CATALOG_VERSION
     size_bytes = 0
 
-    for path in lane_files:
-        raw = path.read_bytes()
-        size_bytes += len(raw)
-        data = json.loads(raw.decode("utf-8"))
-        jsonschema.validate(instance=data, schema=schema)
-        version = str(data.get("version") or version)
-        for g in data.get("guidelines") or []:
-            guidelines.append(_strip_lane(g))
-        for job in data.get("jobs") or []:
+    for path in files:
+        loaded = _load_one(path, schema)
+        size_bytes += int(loaded.pop("_bytes", 0))
+        if loaded.pop("_empty_wrapper", False):
+            continue
+        guidelines.append(loaded)
+        for job in loaded.get("jobs") or []:
             if job not in jobs:
                 jobs.append(job)
-        for pattern in data.get("patterns") or []:
+        for pattern in loaded.get("patterns") or []:
             if pattern not in patterns:
                 patterns.append(pattern)
 
@@ -136,17 +246,24 @@ def load_catalog(settings: Settings | None = None) -> Catalog:
     if len(ids) != len(set(ids)):
         raise CatalogError("Duplicate guideline ids in catalog.")
 
+    if guidelines:
+        tree = load_job_tree(settings)
+        if not tree.empty:
+            validate_placement(guidelines, tree)
+
     index_path = (
         catalog_path / "index.json"
         if catalog_path.is_dir()
         else catalog_path.parent / "index.json"
     )
-    if catalog_path.is_dir() and index_path.is_file():
-        index = _load_on_disk_index(index_path)
+    if catalog_path.is_dir() and index_path.is_file() and guidelines:
+        version, index = _load_on_disk_index(index_path)
         catalog_ids = [g["id"] for g in guidelines]
         index_ids = [row["id"] for row in index]
-        if catalog_ids != index_ids:
-            raise CatalogError("catalog/index.json ids do not match merged lane files.")
+        if sorted(catalog_ids) != sorted(index_ids):
+            raise CatalogError("catalog/index.json ids do not match catalog/rules.")
+        by_id = {g["id"]: g for g in guidelines}
+        guidelines = [by_id[gid] for gid in index_ids]
     else:
         index = _index_from_guidelines(guidelines)
 
@@ -180,8 +297,13 @@ def list_index(
     q = (query or "").strip().lower()
     out: list[dict[str, Any]] = []
     for row in catalog.index:
-        entry = {k: row.get(k) for k in INDEX_KEYS}
-        if scope is not None and not _in_scope(entry.get("id"), entry.get("jobs") or [], scope):
+        entry = {k: row.get(k) for k in INDEX_KEYS if k in row}
+        if scope is not None and not _in_scope(
+            entry.get("id"),
+            entry.get("jobs") or [],
+            scope,
+            leaf=entry.get("leaf"),
+        ):
             continue
         if lane and entry.get("lane") != lane:
             continue
@@ -215,10 +337,19 @@ def select(catalog: Catalog, guideline_ids: list[str] | None) -> list[dict[str, 
     return found
 
 
-def _in_scope(guideline_id: Any, jobs: list[Any], scope: NeedScope) -> bool:
+def _in_scope(
+    guideline_id: Any,
+    jobs: list[Any],
+    scope: NeedScope,
+    *,
+    leaf: Any = None,
+) -> bool:
     if scope.guideline_ids and guideline_id in scope.guideline_ids:
         return True
-    if scope.tags and any(tag in jobs for tag in scope.tags):
+    tags = set(scope.tags)
+    if tags and leaf in tags:
+        return True
+    if tags and any(tag in jobs for tag in tags):
         return True
     return False
 
@@ -230,7 +361,7 @@ def select_by_jobs(catalog: Catalog, jobs: str | list[str]) -> list[dict[str, An
     return [
         g
         for g in catalog.guidelines
-        if _in_scope(g.get("id"), g.get("jobs") or [], scope)
+        if _in_scope(g.get("id"), g.get("jobs") or [], scope, leaf=g.get("leaf"))
     ]
 
 

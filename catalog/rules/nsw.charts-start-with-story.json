@@ -1,0 +1,28 @@
+{
+  "id": "nsw.charts-start-with-story",
+  "category": "Content",
+  "segment": "Charts",
+  "title": "charts start with story",
+  "rule": "Start with the story, not the chart. Pick the relationship (comparison, trend, proportion, distribution, correlation) first. No chart if a single callout number or a table is clearer, the set is too small, or the chart needs heavy explanation. Not for decoration.",
+  "citation": {
+    "source": "NSW — Charts and graphs",
+    "url": "https://designsystem.nsw.gov.au/docs/content/methods/charts-and-graphs.html"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Chart type matches the relationship; no chart when a callout or table is clearer, the set is too small, or it needs heavy explanation."
+  ],
+  "fail_when": [
+    "Decorative chart; chart for a single number that a callout would carry."
+  ],
+  "severity": "major",
+  "container": "layout_and_data_display",
+  "card": "compose_a_data_display",
+  "facet": "data_is_unscannable",
+  "overview": "Chart type matches the relationship.",
+  "apply_when": "Table or card grid for this data",
+  "not_when": "Not for controls inside a form, or density on a form.",
+  "agent_hint": "Start with the story, not the chart.",
+  "description": "Start with the story, not the chart. Chart type matches the relationship. It fails when Decorative chart.",
+  "do_not_claim": "Anatomy (title/insight/table) as this story row."
+}

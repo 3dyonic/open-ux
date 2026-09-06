@@ -1,0 +1,25 @@
+{
+  "id": "nsw.honest-baseline-bars-zero-or-truncation",
+  "category": "Content",
+  "segment": "Charts",
+  "title": "honest baseline bars zero or truncation",
+  "rule": "Honest baseline: bars start at zero or show truncation. Meaningful scales, consistent time intervals, readable labels. Don’t rotate labels to hide a truncated axis.",
+  "citation": {
+    "source": "NSW — Charts and graphs",
+    "url": "https://designsystem.nsw.gov.au/docs/content/methods/charts-and-graphs.html"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Bars start at zero, or truncation is shown; scales/intervals are consistent; labels are not rotated to hide a truncated axis."
+  ],
+  "fail_when": [
+    "Truncated bar axis with no truncation mark; labels rotated to hide it."
+  ],
+  "severity": "major",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "system_stayed_quiet_after_change",
+  "leaf": "announce_system_status",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Keep-text-horizontal min px as this baseline row."
+}

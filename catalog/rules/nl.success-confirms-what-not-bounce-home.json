@@ -1,0 +1,25 @@
+{
+  "id": "nl.success-confirms-what-not-bounce-home",
+  "category": "Empty/failure",
+  "segment": "Success",
+  "title": "success confirms what not bounce home",
+  "rule": "Success is not “form sent” or a bounce to home — visible confirmation of what went through (repeat in mail or “Mijn omgeving”). Dual-cite empty/failure success copy; NL names bounce-home as fail.",
+  "citation": {
+    "source": "NL Design System — Succesmelding",
+    "url": "https://nldesignsystem.nl/richtlijnen/formulieren/bevestigingspagina/succesmelding/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "After send, the person sees what was submitted (on-page and/or in mail / “Mijn omgeving”), not only “sent”."
+  ],
+  "fail_when": [
+    "Success is only “form sent”, or the person is bounced to home with no confirmation of what went through."
+  ],
+  "severity": "major",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "empty_or_dead_end_has_no_next_step",
+  "leaf": "write_empty_state",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Next organisational steps as this “what went through” row; empty/failure success-copy as a merge that drops bounce-home."
+}

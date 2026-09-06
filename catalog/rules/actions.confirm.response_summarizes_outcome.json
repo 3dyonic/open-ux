@@ -1,0 +1,24 @@
+{
+  "id": "actions.confirm.response_summarizes_outcome",
+  "category": "Actions",
+  "segment": "Confirmation",
+  "title": "response summarizes outcome",
+  "rule": "Label responses with what will happen (Delete file / Keep file), not Yes/No.",
+  "citation": {
+    "source": "NN/g — Confirmation Dialogs (§4)",
+    "url": "https://www.nngroup.com/articles/confirmation-dialog/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Confirmation actions are labeled with the outcome (e.g. Delete file / Keep file)."
+  ],
+  "fail_when": [
+    "Yes/No (or OK) on the confirmation."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "protect_destructive_and_leave",
+  "facet": "destructive_is_too_easy",
+  "leaf": "disable_or_confirm_destructive",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

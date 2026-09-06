@@ -1,0 +1,25 @@
+{
+  "id": "ant.named-button-type-map",
+  "category": "Actions",
+  "segment": "Buttons",
+  "title": "named button type map",
+  "rule": "Named type map — Default = non-primary, safe if unsure. Primary = complete/recommend. Text = low emphasis (e.g. table actions). Icon-only must have a Tooltip. Text+icon = supplementary meaning. Dashed = add content in an area. Link = external links. Ghost = dark or colored background. (Primary ≤1 per button group is named here, not a second row — dual-cite Actions/Atlassian/Carbon by scope.)",
+  "citation": {
+    "source": "Ant Design — Button spec ; Ant Design — Button",
+    "url": "https://ant.design/docs/spec/buttons"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Button type matches that map; icon-only has a tooltip; at most one primary in a button group."
+  ],
+  "fail_when": [
+    "Type used off-map (e.g. link for an in-app action, dashed for a primary complete); icon-only with no tooltip; two primaries in one group."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "no_clear_primary",
+  "leaf": "pick_primary_action",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "One global primary cap for page/section (`actions.buttons.one_primary`); that a tooltip replaces always-visible text (`actions.icons.always_visible_text_label`). Overlap with Actions 40: `actions.buttons.one_primary` (page/view). Dual-cite by cited scope; do not invent one global cap."
+}

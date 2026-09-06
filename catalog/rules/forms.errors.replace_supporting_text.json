@@ -1,0 +1,24 @@
+{
+  "id": "forms.errors.replace_supporting_text",
+  "category": "Forms",
+  "segment": "Errors",
+  "title": "replace supporting text",
+  "rule": "Swap supporting text for error text; do not stack error text on top of supporting text (layout shift).",
+  "citation": {
+    "source": "Material 3 — Text fields",
+    "url": "https://m3.material.io/components/text-fields/guidelines"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "In error, supporting text is replaced by error text in the same slot; layout does not grow a second line under the hint."
+  ],
+  "fail_when": [
+    "Error stacks on supporting text and shifts the layout."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "handle_form_errors",
+  "facet": "errors_dont_point_to_the_fix",
+  "leaf": "explain_failure_next_to_cause",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

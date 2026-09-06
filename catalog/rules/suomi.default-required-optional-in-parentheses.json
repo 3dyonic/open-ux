@@ -1,0 +1,25 @@
+{
+  "id": "suomi.default-required-optional-in-parentheses",
+  "category": "Forms",
+  "segment": "Required / optional",
+  "title": "default required optional in parentheses",
+  "rule": "Default: fields are required; optional is `(optionalText)` in parentheses on the label. Dual-cite NL `(niet verplicht)` / NN/g; this names the Finnish default-required + parenthetical optional. Locked dual-cite; no house marker.",
+  "citation": {
+    "source": "Suomi.fi — TextInput",
+    "url": "https://designsystem.suomi.fi/components/textinput/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "One named school applied consistently: default-required + optional in parentheses (Suomi.fi); or NL `(niet verplicht)` + above-form key; or mark-the-minority; or mark-both."
+  ],
+  "fail_when": [
+    "Optional vs required unmarked; schools mixed on one form; a house marker invented."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "field_has_no_lasting_name",
+  "leaf": "name_a_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "A house required marker; NL Dutch wording as this Finnish parenthetical row."
+}

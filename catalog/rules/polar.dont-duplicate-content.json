@@ -1,0 +1,25 @@
+{
+  "id": "polar.dont-duplicate-content",
+  "category": "Copy",
+  "segment": "Structure",
+  "title": "dont duplicate content",
+  "rule": "Don’t duplicate content (no second page title under the title bar; no extra nav that copies App nav).",
+  "citation": {
+    "source": "Shopify — Product content principles",
+    "url": "https://shopify.dev/docs/apps/design/content"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "One page title; no extra nav that copies App nav."
+  ],
+  "fail_when": [
+    "A second title under the title bar, or duplicate App nav."
+  ],
+  "severity": "major",
+  "container": "navigation_and_wayfinding",
+  "card": "orient_in_the_place",
+  "facet": "user_cant_tell_where_they_are",
+  "leaf": "wayfind_after_nav",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Wayfinding cluster breadcrumbs."
+}

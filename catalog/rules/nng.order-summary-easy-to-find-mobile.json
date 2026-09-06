@@ -1,0 +1,25 @@
+{
+  "id": "nng.order-summary-easy-to-find-mobile",
+  "category": "Forms",
+  "segment": "Checkout",
+  "title": "order summary easy to find mobile",
+  "rule": "Order summary easy to find on mobile (not only below the fold).",
+  "citation": {
+    "source": "NN/g — The Mobile Checkout Experience",
+    "url": "https://www.nngroup.com/articles/mobile-checkout-ux/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "On mobile checkout, order summary is findable without only living below the fold."
+  ],
+  "fail_when": [
+    "Summary only below the fold with no easy way to find it."
+  ],
+  "severity": "major",
+  "container": "navigation_and_wayfinding",
+  "card": "orient_in_the_place",
+  "facet": "user_cant_tell_where_they_are",
+  "leaf": "wayfind_after_nav",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "A required sticky-bar implementation."
+}

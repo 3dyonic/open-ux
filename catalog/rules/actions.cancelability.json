@@ -1,0 +1,27 @@
+{
+  "id": "actions.cancelability",
+  "category": "Actions",
+  "segment": "Control",
+  "title": "cancelability",
+  "rule": "Provide a way to instantly cancel a time-consuming operation with no side effects.",
+  "citation": {
+    "source": "Designing Interfaces 3e ch. Doing Things — Cancelability (Tidwell, Brewer, Valencia)",
+    "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "A time-consuming operation can be cancelled at once, with no side effects from the cancelled work."
+  ],
+  "fail_when": [
+    "No cancel, cancel is not instant, or cancel still applies side effects."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "protect_destructive_and_leave",
+  "facet": "leaving_discards_work",
+  "overview": "A time-consuming operation can be cancelled at once, with no side effects from the cancelled work.",
+  "apply_when": "Add a delete confirmation",
+  "not_when": "Not for unclear Continue / Submit label.",
+  "agent_hint": "Provide a way to instantly cancel a time-consuming operation with no side effects.",
+  "description": "Provide a way to instantly cancel a time-consuming operation with no side effects. A time-consuming operation can be cancelled at once, with no side effects from the cancelled work. It fails when No cancel, cancel is not instant, or cancel still applies side effects."
+}

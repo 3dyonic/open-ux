@@ -1,0 +1,25 @@
+{
+  "id": "nl.labels-contain-only-text",
+  "category": "Forms",
+  "segment": "Labels",
+  "title": "labels contain only text",
+  "rule": "Labels contain only text — no links, buttons, tooltips, or headings inside `<label>`. Voice control and screen readers break. Dual-cite clickable-label (Vercel) without stuffing interactive children into the label.",
+  "citation": {
+    "source": "NL Design System — Labels alleen tekst",
+    "url": "https://nldesignsystem.nl/richtlijnen/formulieren/labels/alleen-tekst/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "`<label>` contains text only — no nested link, button, tooltip, or heading."
+  ],
+  "fail_when": [
+    "Interactive or heading content is nested inside `<label>`."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "field_has_no_lasting_name",
+  "leaf": "name_a_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Privacy-link-outside-label as a duplicate of this general ban; visible-label lock as this row."
+}

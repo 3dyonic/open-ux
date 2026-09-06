@@ -1,0 +1,25 @@
+{
+  "id": "nng.eas-framework",
+  "category": "Forms",
+  "segment": "Effort",
+  "title": "eas framework",
+  "rule": "EAS framework (named): Eliminate → Automate → Simplify (one row, not a re-dump of keep-short / device features).",
+  "citation": {
+    "source": "NN/g — EAS Framework",
+    "url": "https://www.nngroup.com/articles/eas-framework-simplify-forms/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Form effort is attacked in that order: eliminate, then automate, then simplify what remains."
+  ],
+  "fail_when": [
+    "The named order is inverted (simplify first while still asking for eliminable/automatable data)."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "use_familiar_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Re-listing `keep_short` / `use_device_features` / `compute_from_other_info` as this row. Overlap with Forms 54: `forms.length.keep_short`, `compute_from_other_info`, `use_device_features`. One named EAS row only."
+}

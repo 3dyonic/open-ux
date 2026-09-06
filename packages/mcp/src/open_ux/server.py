@@ -130,7 +130,7 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         limit: int = 50,
         offset: int = 0,
     ) -> dict[str, Any]:
-        """Paged index only: id, title, jobs, lane. No rule bodies."""
+        """Paged index only: id, title, jobs, lane, placement. No rule bodies."""
         items, total = list_index(catalog, limit=limit, offset=offset)
         _maybe_telemetry(settings, tool="list_guidelines")
         payload: dict[str, Any] = {

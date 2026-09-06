@@ -1,0 +1,28 @@
+{
+  "id": "forms.field_labels.error_identifies_and_fixes",
+  "category": "Forms",
+  "segment": "Errors",
+  "title": "error identifies and fixes",
+  "rule": "Error messages identify the problem and give constructive advice so the user can fix it.",
+  "citation": {
+    "source": "NN/g — 10 Design Guidelines for Reporting Errors in Forms; NN/g — Website Forms Usability; Vercel Web Interface Guidelines",
+    "url": "https://www.nngroup.com/articles/errors-forms-design-guidelines/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "On error, visible text says what is wrong and how to fix it (or the next step)."
+  ],
+  "fail_when": [
+    "Copy is generic, does not identify the problem, or gives no constructive advice. (Preserve-input is cited; this row checks the message, not whether the value was wiped.)"
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "handle_form_errors",
+  "facet": "errors_dont_point_to_the_fix",
+  "leaf": "explain_failure_next_to_cause",
+  "overview": "Error text says what is wrong and how to fix it.",
+  "apply_when": "Composing validation or inline form errors after submit.",
+  "not_when": "Page-level empty, 404, or hard error — that is compose_feedback.",
+  "agent_hint": "Identify the problem and give constructive advice next to the field.",
+  "description": "A rejected field needs a message that names the problem and the next step. On error, visible text says what is wrong and how to fix it. Generic copy, or copy that never identifies the field, fails this rule. This checks the message, not whether the typed value was wiped."
+}

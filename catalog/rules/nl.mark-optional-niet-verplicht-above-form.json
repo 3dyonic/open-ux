@@ -1,0 +1,25 @@
+{
+  "id": "nl.mark-optional-niet-verplicht-above-form",
+  "category": "Forms",
+  "segment": "Required / optional",
+  "title": "mark optional niet verplicht above form",
+  "rule": "Mark the exception: `(niet verplicht)` not “optioneel” — NL research prefers marking optional fields because most asked fields should be required. Instruction above the form. Dual-cite NN/g mark-optional / Fluent all-required-one-instruction / Spectrum never-mark-optional / Suomi parenthetical optional; do not pick a house winner. Unique claims: Dutch wording and above-form key.",
+  "citation": {
+    "source": "NL Design System — Verplichte velden",
+    "url": "https://nldesignsystem.nl/richtlijnen/formulieren/voorkom-fouten/verplichte-velden/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "One cited school applied consistently: NL `(niet verplicht)` + above-form key; or Suomi default-required + parenthetical optional; or mark-the-minority; or mark-both. On an NL-school form, optional is `(niet verplicht)` not “optioneel”, with the key above the form."
+  ],
+  "fail_when": [
+    "Optional vs required unmarked; schools mixed on one form; a house asterisk invented; NL-school form uses “optioneel” or puts the key only in a tooltip."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "field_has_no_lasting_name",
+  "leaf": "name_a_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "A house required marker; Suomi parenthetical optional as this Dutch-wording/above-form row."
+}

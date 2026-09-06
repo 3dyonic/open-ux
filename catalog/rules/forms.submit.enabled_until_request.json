@@ -1,0 +1,24 @@
+{
+  "id": "forms.submit.enabled_until_request",
+  "category": "Forms",
+  "segment": "Submit",
+  "title": "enabled until request",
+  "rule": "Keep Submit enabled until the request starts; then show a spinner on the request.",
+  "citation": {
+    "source": "Vercel Web Interface Guidelines — Forms",
+    "url": "https://github.com/vercel-labs/web-interface-guidelines/blob/main/command.md"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Submit stays enabled until the request starts; then a spinner (in-flight) shows."
+  ],
+  "fail_when": [
+    "Submit is disabled before the request starts, or in-flight has no spinner."
+  ],
+  "severity": "major",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "system_stayed_quiet_after_change",
+  "leaf": "announce_system_status",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

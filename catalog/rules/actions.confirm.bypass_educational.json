@@ -1,0 +1,24 @@
+{
+  "id": "actions.confirm.bypass_educational",
+  "category": "Actions",
+  "segment": "Confirmation",
+  "title": "bypass educational",
+  "rule": "If an educational confirmation is shown for a new non-serious side effect, let the user turn off future repeats.",
+  "citation": {
+    "source": "NN/g — Confirmation Dialogs (§8)",
+    "url": "https://www.nngroup.com/articles/confirmation-dialog/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Educational confirmation for a new non-serious side effect offers a way to turn off future repeats."
+  ],
+  "fail_when": [
+    "That confirmation has no bypass."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "protect_destructive_and_leave",
+  "facet": "destructive_is_too_easy",
+  "leaf": "disable_or_confirm_destructive",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

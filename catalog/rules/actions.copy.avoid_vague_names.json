@@ -1,0 +1,27 @@
+{
+  "id": "actions.copy.avoid_vague_names",
+  "category": "Actions",
+  "segment": "Copy",
+  "title": "avoid vague names",
+  "rule": "Avoid vague, cutesy, or faddish command names; text should be straightforward, descriptive, and accurate.",
+  "citation": {
+    "source": "NN/g — UI Copy",
+    "url": "https://www.nngroup.com/articles/ui-copy/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Names are straightforward, descriptive, and accurate."
+  ],
+  "fail_when": [
+    "Vague, cutesy, or faddish command names."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "action_wording_hides_the_outcome",
+  "overview": "Names are straightforward, descriptive, and accurate.",
+  "apply_when": "Primary vs secondary",
+  "not_when": "Not for delete / discard / confirm, or unsaved leave.",
+  "agent_hint": "Avoid vague, cutesy, or faddish command names.",
+  "description": "Avoid vague, cutesy, or faddish command names. Names are straightforward, descriptive, and accurate. It fails when Vague, cutesy, or faddish command names."
+}

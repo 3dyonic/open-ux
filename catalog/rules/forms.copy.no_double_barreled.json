@@ -1,0 +1,24 @@
+{
+  "id": "forms.copy.no_double_barreled",
+  "category": "Forms",
+  "segment": "Copy",
+  "title": "no double barreled",
+  "rule": "Do not ask two things in one question; split double-barreled items.",
+  "citation": {
+    "source": "NN/g — 4 Principles to Reduce Cognitive Load in Forms",
+    "url": "https://www.nngroup.com/articles/4-principles-reduce-cognitive-load/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Each question/control asks one thing."
+  ],
+  "fail_when": [
+    "One item asks two things (and/or) that could disagree."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "field_has_no_lasting_name",
+  "leaf": "name_a_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

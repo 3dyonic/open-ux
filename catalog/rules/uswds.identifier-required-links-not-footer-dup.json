@@ -1,0 +1,25 @@
+{
+  "id": "uswds.identifier-required-links-not-footer-dup",
+  "category": "Wayfinding",
+  "segment": "Identifier",
+  "title": "identifier required links not footer dup",
+  "rule": "Identifier holds the required federal links — don’t duplicate them in the site footer. Parent agency (highest in the hierarchy), not the product logo. Multiple parents/logos in hierarchical order, highest first. Omit identifier logo if it duplicates the footer agency mark. Entire component; no deleted required links.",
+  "citation": {
+    "source": "USWDS — Identifier",
+    "url": "https://designsystem.digital.gov/components/identifier/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Required links live in the identifier once (not also in the footer); parent agency is highest in hierarchy; product logo is not used as the identifier mark; required links are not deleted."
+  ],
+  "fail_when": [
+    "Required links duplicated in the footer; product logo in the identifier; required links omitted."
+  ],
+  "severity": "major",
+  "container": "navigation_and_wayfinding",
+  "card": "orient_in_the_place",
+  "facet": "user_cant_tell_where_they_are",
+  "leaf": "wayfind_after_nav",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Identifier darker-than-footer (next row) as this links rule; Canada GC signature as a merge."
+}

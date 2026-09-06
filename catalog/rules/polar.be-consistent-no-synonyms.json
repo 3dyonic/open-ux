@@ -1,0 +1,25 @@
+{
+  "id": "polar.be-consistent-no-synonyms",
+  "category": "Copy",
+  "segment": "Language",
+  "title": "be consistent no synonyms",
+  "rule": "Be consistent — no synonyms for a key concept/action.",
+  "citation": {
+    "source": "Shopify — Product content principles",
+    "url": "https://shopify.dev/docs/apps/design/content"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "A key concept/action uses one term."
+  ],
+  "fail_when": [
+    "Synonyms for the same key concept/action."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "no_clear_primary",
+  "leaf": "pick_primary_action",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "`actions.copy.consistent_words` as a delete of this Polar-named row. Overlap with Actions 40: `actions.copy.consistent_words`."
+}

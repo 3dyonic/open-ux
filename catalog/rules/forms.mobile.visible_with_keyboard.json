@@ -1,0 +1,24 @@
+{
+  "id": "forms.mobile.visible_with_keyboard",
+  "category": "Forms",
+  "segment": "Mobile",
+  "title": "visible with keyboard",
+  "rule": "Keep the field visible in both orientations when the keyboard is displayed.",
+  "citation": {
+    "source": "NN/g — A Checklist for Designing Mobile Input Fields",
+    "url": "https://www.nngroup.com/articles/mobile-input-checklist/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Focused field stays visible with the on-screen keyboard in portrait and landscape."
+  ],
+  "fail_when": [
+    "Keyboard covers the field in an orientation so the value cannot be seen."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "field_has_no_lasting_name",
+  "leaf": "keep_field_purpose_visible_while_filled",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

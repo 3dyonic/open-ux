@@ -1,0 +1,25 @@
+{
+  "id": "canada.functional-alt-140-decorative-empty",
+  "category": "Content",
+  "segment": "Images",
+  "title": "functional alt 140 decorative empty",
+  "rule": "Functional alt ≈140 characters; decorative `alt=\"\"`; long description if more. Describe as if on the phone; don’t write “image of…”. If equivalent explanation already sits next to the figure, skip the long desc. Transcripts for pre-recorded audio/video (dialogue, on-screen text, important sound/action).",
+  "citation": {
+    "source": "Canada.ca — Content Style Guide",
+    "url": "https://design.canada.ca/style-guide/index.html"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Functional images have concise alt (about 140 characters, not “image of”); decorative `alt=\"\"`; longer meaning has a long desc unless equivalent text is already beside the figure; pre-recorded AV has a transcript."
+  ],
+  "fail_when": [
+    "Missing alt; “image of…” filler; decorative images with long alt; no transcript for pre-recorded AV that needs one."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "field_has_no_lasting_name",
+  "leaf": "name_a_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "WCAG SC numbers as this row."
+}

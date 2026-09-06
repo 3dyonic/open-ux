@@ -1,0 +1,24 @@
+{
+  "id": "forms.inputs.matching_keyboard_and_type",
+  "category": "Forms",
+  "segment": "Inputs",
+  "title": "matching keyboard and type",
+  "rule": "Show the keyboard and input type that match the content (email, tel, URL, number, and equivalent platform keyboards).",
+  "citation": {
+    "source": "NN/g — A Checklist for Designing Mobile Input Fields; Apple HIG — Text fields; Vercel Web Interface Guidelines",
+    "url": "https://www.nngroup.com/articles/mobile-input-checklist/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Email/tel/URL/number (and equivalents) use matching `type`/`inputmode`/platform keyboard."
+  ],
+  "fail_when": [
+    "Those contents use a generic text keyboard."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

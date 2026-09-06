@@ -1,0 +1,24 @@
+{
+  "id": "actions.buttons.loading_on_button",
+  "category": "Actions",
+  "segment": "Buttons",
+  "title": "loading on button",
+  "rule": "For a slow action, show loading on the button itself (spinner on the control that was pressed).",
+  "citation": {
+    "source": "NN/g — Button States: Communicate Interaction; Apple HIG — Buttons (activity indicator when the action does not complete instantly)",
+    "url": "https://www.nngroup.com/articles/button-states-communicate-interaction/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "A slow action shows a spinner/activity indicator on the pressed button itself."
+  ],
+  "fail_when": [
+    "No loading on a slow action, or loading only elsewhere (page bar, toast) with none on the control."
+  ],
+  "severity": "major",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "system_stayed_quiet_after_change",
+  "leaf": "announce_system_status",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

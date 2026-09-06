@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-import json
-import os
 from pathlib import Path
 
 import pytest
@@ -17,14 +15,9 @@ def tmp_env(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
     (catalog_dir / "schema.json").write_bytes(
         (catalog_src / "schema.json").read_bytes()
     )
-    (catalog_dir / "guidelines.json").write_text(
-        json.dumps(
-            {"version": "0.0.0", "guidelines": [], "jobs": [], "patterns": []}
-        ),
-        encoding="utf-8",
-    )
+    (catalog_dir / "rules").mkdir()
     db = tmp_path / "open-ux.sqlite"
-    monkeypatch.setenv("OPEN_UX_CATALOG", str(catalog_dir / "guidelines.json"))
+    monkeypatch.setenv("OPEN_UX_CATALOG", str(catalog_dir))
     monkeypatch.setenv("OPEN_UX_SCHEMA", str(catalog_dir / "schema.json"))
     monkeypatch.setenv("OPEN_UX_DATABASE", str(db))
     monkeypatch.setenv("OPEN_UX_DATA_DIR", str(tmp_path))

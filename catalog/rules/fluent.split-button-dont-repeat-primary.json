@@ -1,0 +1,25 @@
+{
+  "id": "fluent.split-button-dont-repeat-primary",
+  "category": "Actions",
+  "segment": "Buttons",
+  "title": "split button dont repeat primary",
+  "rule": "Split button: full phrase on the rest-state primary; don’t repeat that primary in the secondary list.",
+  "citation": {
+    "source": "Fluent 2 — Button usage",
+    "url": "https://fluent2.microsoft.design/components/web/react/core/button/usage"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Rest-state primary has the full phrase; the secondary list does not repeat that primary."
+  ],
+  "fail_when": [
+    "Primary phrase is incomplete, or the same primary is duplicated in the list."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "no_clear_primary",
+  "leaf": "pick_primary_action",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Button-groups count (`actions.button_groups`)."
+}

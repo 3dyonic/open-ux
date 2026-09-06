@@ -1,0 +1,25 @@
+{
+  "id": "spectrum.toast-auto-dismiss-min-5s",
+  "category": "Feedback",
+  "segment": "Toast",
+  "title": "toast auto dismiss min 5s",
+  "rule": "Auto-dismiss ≥ 5 seconds so the message can be read. If an actionable toast auto-dismisses, the action must remain available elsewhere. Pause the timer on focus or hover (including keyboard focus on toast buttons).",
+  "citation": {
+    "source": "Spectrum — Toast",
+    "url": "https://spectrum.adobe.com/page/toast/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Auto-dismiss is at least 5 seconds; timer pauses on focus/hover; an actionable toast's action remains available elsewhere after dismiss."
+  ],
+  "fail_when": [
+    "Auto-dismiss under 5 seconds; timer ignores focus/hover; or the only path to the action vanishes with the toast."
+  ],
+  "severity": "major",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "system_stayed_quiet_after_change",
+  "leaf": "announce_system_status",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Ant Message default 3s as a house winner; snackbar-only undo (`nng.support-undo-discoverable`)."
+}

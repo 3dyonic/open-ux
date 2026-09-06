@@ -1,0 +1,25 @@
+{
+  "id": "polar.validate-after-finished-interacting",
+  "category": "Forms",
+  "segment": "Errors",
+  "title": "validate after finished interacting",
+  "rule": "Validate after the merchant finished interacting (not before). Overlap NN/g §7; Polar names it on the component.",
+  "citation": {
+    "source": "Polaris — Text field",
+    "url": "https://polaris.shopify.com/components/selection-and-input/text-field"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Validation runs after interaction with the field finishes, not while it is still being completed."
+  ],
+  "fail_when": [
+    "Error shown before the merchant finished interacting."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "handle_form_errors",
+  "facet": "invalid_input_has_no_recovery",
+  "leaf": "recover_from_invalid_input",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Deleting `forms.errors.inline_after_complete`; this is the Polar-named component row. Overlap with Forms 54: `forms.errors.inline_after_complete` (NN/g §7). Keep the named row; do not re-dump §7."
+}

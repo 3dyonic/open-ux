@@ -1,0 +1,24 @@
+{
+  "id": "actions.copy.short_clear_sentence_case",
+  "category": "Actions",
+  "segment": "Copy",
+  "title": "short clear sentence case",
+  "rule": "Keep command labels short and clear (NN/g: just enough text, typically up to 2–4 words, drop articles; M3: ideally 1–3 words, sentence case, no wrap).",
+  "citation": {
+    "source": "NN/g — UI Copy: UX Guidelines for Command Names and Keyboard Shortcuts; Material 3 — Buttons",
+    "url": "https://www.nngroup.com/articles/ui-copy/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Label is short and clear: typically 2–4 words (NN/g), articles dropped; and ideally 1–3 words, sentence case, no wrap (M3)."
+  ],
+  "fail_when": [
+    "Wrapping, padded articles, or a long unclear command name."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "field_has_no_lasting_name",
+  "leaf": "name_a_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

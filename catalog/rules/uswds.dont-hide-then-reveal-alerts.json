@@ -1,0 +1,25 @@
+{
+  "id": "uswds.dont-hide-then-reveal-alerts",
+  "category": "Feedback",
+  "segment": "Alert",
+  "title": "dont hide then reveal alerts",
+  "rule": "Don’t hide-then-reveal alerts in the DOM — older AT can still perceive visually hidden messages that are not currently applicable.",
+  "citation": {
+    "source": "USWDS — Alert",
+    "url": "https://designsystem.digital.gov/components/alert/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Inapplicable alerts are not left visually hidden in the DOM."
+  ],
+  "fail_when": [
+    "Alerts stay in the DOM as visually hidden until “revealed.”"
+  ],
+  "severity": "major",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "system_stayed_quiet_after_change",
+  "leaf": "announce_system_status",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Site-alert unused-remove (`display:none`) from the first-pass catalog as this row."
+}

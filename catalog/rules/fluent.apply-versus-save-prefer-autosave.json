@@ -1,0 +1,25 @@
+{
+  "id": "fluent.apply-versus-save-prefer-autosave",
+  "category": "Actions",
+  "segment": "Copy",
+  "title": "apply versus save prefer autosave",
+  "rule": "Apply versus Save; prefer autosave; if not, Save + success/error via message bar or confirmation toast.",
+  "citation": {
+    "source": "Fluent 2 — Button usage",
+    "url": "https://fluent2.microsoft.design/components/web/react/core/button/usage"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Apply vs Save is used for the right scope; autosave is preferred; without autosave, Save reports success/error via message bar or confirmation toast."
+  ],
+  "fail_when": [
+    "Apply/Save mixed up; no autosave and no success/error after Save."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "no_clear_primary",
+  "leaf": "pick_primary_action",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Disabled-until-complete as this row (that lock lives on `govuk.dont-use-disabled-buttons` + `fluent.disabled-field-label-stays-perceivable`); `actions.close_saves_separate_cancel` as a merge."
+}

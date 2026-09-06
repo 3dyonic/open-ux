@@ -1,0 +1,25 @@
+{
+  "id": "nng.familiar-values-type-not-dropdown",
+  "category": "Forms",
+  "segment": "Choice",
+  "title": "familiar values type not dropdown",
+  "rule": "Highly familiar/predictable values → type, not dropdown.",
+  "citation": {
+    "source": "NN/g — Does Your Form Really Need a Dropdown List?",
+    "url": "https://www.nngroup.com/articles/dropdown-list/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Familiar/predictable values (e.g. name-like known strings) are typed."
+  ],
+  "fail_when": [
+    "Those values are only in a dropdown."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Autocompletion suggestions as this row."
+}

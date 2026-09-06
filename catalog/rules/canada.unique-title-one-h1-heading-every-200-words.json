@@ -1,0 +1,25 @@
+{
+  "id": "canada.unique-title-one-h1-heading-every-200-words",
+  "category": "Content",
+  "segment": "Headings",
+  "title": "unique title one h1 heading every 200 words",
+  "rule": "Unique page title; one H1; a heading about every 200 words. Title makes sense alone, keywords first, no trailing punctuation, no boast copy. Publication/program titles are usually bad web titles. Heading 1 once.",
+  "citation": {
+    "source": "Canada.ca — Content Style Guide",
+    "url": "https://design.canada.ca/style-guide/index.html"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Unique title (keywords first, no trailing punctuation/boast); exactly one H1; headings break long copy (~every 200 words)."
+  ],
+  "fail_when": [
+    "Duplicate/boast title; multiple H1s; long unheaded slabs."
+  ],
+  "severity": "major",
+  "container": "navigation_and_wayfinding",
+  "card": "orient_in_the_place",
+  "facet": "user_cant_tell_where_they_are",
+  "leaf": "wayfind_after_nav",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Doormat heading character caps as this row."
+}

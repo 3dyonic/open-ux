@@ -1,0 +1,24 @@
+{
+  "id": "forms.inputs.match_control_and_size",
+  "category": "Forms",
+  "segment": "Inputs",
+  "title": "match control and size",
+  "rule": "Match the control and field size to the type and expected length of input (avoid dropdowns for two or three options that can be radios; size the text field to the expected value).",
+  "citation": {
+    "source": "NN/g — Website Forms Usability; Apple HIG — Text fields",
+    "url": "https://www.nngroup.com/articles/web-form-design/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Two–three options are radios (not a dropdown); text field width fits typical expected length."
+  ],
+  "fail_when": [
+    "Two–three options hidden in a dropdown, or a long value is clipped in a too-narrow field (or a tiny value sits in an oversized unmatched control)."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

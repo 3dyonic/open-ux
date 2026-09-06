@@ -1,0 +1,25 @@
+{
+  "id": "nng.show-the-rules",
+  "category": "Forms",
+  "segment": "Password",
+  "title": "show the rules",
+  "rule": "Show the Rules — requirements visible the whole time the field is selected (not a hidden link; not inside the placeholder).",
+  "citation": {
+    "source": "NN/g — Password Creation: 3 Ways To Make It Easier",
+    "url": "https://www.nngroup.com/articles/password-creation/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "While the password-creation field is selected, the requirements stay visible outside the placeholder."
+  ],
+  "fail_when": [
+    "Rules only in a hidden link, only in the placeholder, or only after submit."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "handle_form_errors",
+  "facet": "invalid_input_has_no_recovery",
+  "leaf": "recover_from_invalid_input",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Strength meter (`forms.inputs.password_strength_meter`). Overlap with Forms 54: `forms.inputs.password_strength_meter` + `forms.fields.explain_format_upfront`. Meter already skipped; this row is requirements visible the whole time the field is selected."
+}

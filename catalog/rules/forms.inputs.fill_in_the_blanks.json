@@ -1,0 +1,24 @@
+{
+  "id": "forms.inputs.fill_in_the_blanks",
+  "category": "Forms",
+  "segment": "Inputs",
+  "title": "fill in the blanks",
+  "rule": "When a label/control pair is awkward, present the request as a short sentence with blanks to fill in.",
+  "citation": {
+    "source": "Designing Interfaces 3e ch. Getting Input — Fill-in-the-Blanks (Tidwell, Brewer, Valencia)",
+    "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Awkward label/control pairs are recast as a short sentence with blanks."
+  ],
+  "fail_when": [
+    "The request is an awkward disconnected label+blank where a sentence-blank would fit the cited pattern."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "field_has_no_lasting_name",
+  "leaf": "name_a_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

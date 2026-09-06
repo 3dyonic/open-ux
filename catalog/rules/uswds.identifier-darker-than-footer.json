@@ -1,0 +1,25 @@
+{
+  "id": "uswds.identifier-darker-than-footer",
+  "category": "Wayfinding",
+  "segment": "Identifier",
+  "title": "identifier darker than footer",
+  "rule": "Identifier darker than the footer (grade 80+ / black). Primary or base family, darker than the preceding section, anchored at the bottom so it is not another footer stripe.",
+  "citation": {
+    "source": "USWDS — Identifier",
+    "url": "https://designsystem.digital.gov/components/identifier/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Identifier is darker than the preceding footer section (primary/base grade 80+ or black) and sits at the bottom."
+  ],
+  "fail_when": [
+    "Identifier matches the footer stripe or sits mid-page as another footer band."
+  ],
+  "severity": "major",
+  "container": "navigation_and_wayfinding",
+  "card": "orient_in_the_place",
+  "facet": "user_cant_tell_where_they_are",
+  "leaf": "wayfind_after_nav",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Required-links placement as this colour row."
+}

@@ -1,0 +1,25 @@
+{
+  "id": "uswds.alerts-dont-blame-name-next-step",
+  "category": "Feedback",
+  "segment": "Alert",
+  "title": "alerts dont blame name next step",
+  "rule": "Don’t blame the user; name the next step. Polite; include how to recover. Educational material is allowed because people will read an error that unblocks them. Don’t notify off the current goal. Destructive work → confirmation modal, not an alert.",
+  "citation": {
+    "source": "USWDS — Alert",
+    "url": "https://designsystem.digital.gov/components/alert/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Copy is polite, names recovery, stays on the current goal; destructive actions use a confirmation modal."
+  ],
+  "fail_when": [
+    "Blame-the-user copy; no next step; alert used instead of a destructive confirmation; notification unrelated to the current goal."
+  ],
+  "severity": "major",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "tone_fights_the_moment",
+  "leaf": "tone_of_voice_for_failure",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Site alert stacking; Spectrum toast-vs-dialog."
+}

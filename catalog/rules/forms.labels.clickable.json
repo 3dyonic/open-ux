@@ -1,0 +1,24 @@
+{
+  "id": "forms.labels.clickable",
+  "category": "Forms",
+  "segment": "Field labels",
+  "title": "clickable",
+  "rule": "Labels are clickable (`htmlFor` or wrapping the control).",
+  "citation": {
+    "source": "Vercel Web Interface Guidelines — Forms",
+    "url": "https://github.com/vercel-labs/web-interface-guidelines/blob/main/command.md"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Activating the label focuses or toggles the associated control via `htmlFor` or wrapping."
+  ],
+  "fail_when": [
+    "Label click does nothing; no association."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "field_has_no_lasting_name",
+  "leaf": "name_a_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

@@ -1,0 +1,25 @@
+{
+  "id": "ant.conversation-vs-navigation-order",
+  "category": "Actions",
+  "segment": "Order",
+  "title": "conversation vs navigation order",
+  "rule": "Conversation: ask for the needed/desired action, then present risks. Navigation: Back on the left (previous step). Less important actions go right or bottom. Collapsed overflow content stays on the right.",
+  "citation": {
+    "source": "Ant Design — Button spec",
+    "url": "https://ant.design/docs/spec/buttons"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Conversation order is desired action then risks. Navigation has Back on the left. Less important / overflow sit right or bottom as cited."
+  ],
+  "fail_when": [
+    "Risks before the needed action in a conversation pattern; Back not on the left in navigation; overflow collapsed to the left."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "no_clear_primary",
+  "leaf": "pick_primary_action",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "A global web OK/Cancel order (`actions.buttons.follow_platform_ok_cancel_order`)."
+}

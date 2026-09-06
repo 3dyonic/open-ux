@@ -1,0 +1,24 @@
+{
+  "id": "forms.transparency.requirements_before_start",
+  "category": "Forms",
+  "segment": "Transparency",
+  "title": "requirements before start",
+  "rule": "Before a long form, communicate requirements up front (time, materials, deadlines, attempt limits, whether progress is saved).",
+  "citation": {
+    "source": "NN/g — 4 Principles to Reduce Cognitive Load in Forms",
+    "url": "https://www.nngroup.com/articles/4-principles-reduce-cognitive-load/"
+  },
+  "check": "deterministic",
+  "pass_when": [
+    "Before the first field of a long form, time, materials, deadlines, attempt limits, and save behavior that apply are stated."
+  ],
+  "fail_when": [
+    "Those requirements appear only mid-form or after failure — or not at all on a long form."
+  ],
+  "severity": "major",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "system_stayed_quiet_after_change",
+  "leaf": "announce_system_status",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil"
+}

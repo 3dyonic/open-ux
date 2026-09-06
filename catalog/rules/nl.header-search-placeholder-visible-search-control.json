@@ -1,0 +1,25 @@
+{
+  "id": "nl.header-search-placeholder-visible-search-control",
+  "category": "Forms",
+  "segment": "Search",
+  "title": "header search placeholder visible search control",
+  "rule": "Header search may use placeholder + visible Search control — the only named placeholder-as-visible-label exception: visually hidden `<label>`, placeholder “Zoek”, submit with text and/or magnifying-glass. Does not pass on ordinary fields. Dual-cite Forms no-placeholder-as-label. Placeholder/label lock unchanged.",
+  "citation": {
+    "source": "NL Design System — Placeholders zoekfunctie",
+    "url": "https://nldesignsystem.nl/richtlijnen/formulieren/placeholders/zoekfunctie/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Header search: hidden `<label>` + placeholder “Zoek” + visible Search control. Ordinary fields still have a visible label (lock)."
+  ],
+  "fail_when": [
+    "An ordinary field uses placeholder as its only label, citing this exception; or header search has no visible Search control and no accessible name."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "field_has_no_lasting_name",
+  "leaf": "avoid_placeholder_as_label",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Placeholder-as-label as passing on non-search fields; GOLD search attributes as this exception."
+}

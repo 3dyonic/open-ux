@@ -1,0 +1,27 @@
+{
+  "id": "actions.close_saves_separate_cancel",
+  "category": "Actions",
+  "segment": "Close vs Cancel",
+  "title": "close saves separate cancel",
+  "rule": "Treat Close as dismiss-and-keep-work and provide a separate Cancel to abandon; when in doubt, save then out.",
+  "citation": {
+    "source": "NN/g — Cancel vs Close",
+    "url": "https://www.nngroup.com/articles/cancel-vs-close/"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Close (or X-as-close) dismisses and keeps work; a separate Cancel abandons; when in doubt, save then out."
+  ],
+  "fail_when": [
+    "One control means both keep and abandon, or Close discards with no separate abandon path."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "protect_destructive_and_leave",
+  "facet": "leaving_discards_work",
+  "overview": "Close (or X-as-close) dismisses and keeps work.",
+  "apply_when": "Add a delete confirmation",
+  "not_when": "Not for unclear Continue / Submit label.",
+  "agent_hint": "Treat Close as dismiss-and-keep-work and provide a separate Cancel to abandon.",
+  "description": "Treat Close as dismiss-and-keep-work and provide a separate Cancel to abandon. Close (or X-as-close) dismisses and keeps work. It fails when One control means both keep and abandon, or Close discards with no separate abandon path."
+}

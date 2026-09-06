@@ -1,16 +1,16 @@
 # Catalog
 
-One shared cited catalog, split by lane:
+One shared cited catalog. **`catalog/rules/{id}.json` is the SoT** — one guideline object per file.
 
-- `actions.json` — 40 Actions/verbs guidelines (UNS-65 craft-pass)
-- `forms.json` — 54 Forms guidelines (UNS-66 craft-pass; first three are the LIVE seed)
-- `govuk.json` / `nng.json` / `fluent.json` / `polar.json` — extra harvest 73 (GOV.UK 22 + NN/g 28 + Fluent 11 + Polar 12)
-- `spectrum.json` / `ant.json` / `mui.json` — extra harvest 3 (Spectrum 25 + Ant 23 + MUI 8)
-- `uswds.json` / `canada.json` / `nsw.json` — extra harvest 4 (USWDS 15 + Canada 18 + NSW 13)
-- `gold.json` / `nl.json` / `suomi.json` — extra harvest 5 (GOLD 10 + NL 16 + Suomi.fi 14)
-- `index.json` — all lanes, `{id,title,jobs,lane}` only (no rule bodies)
-- `schema.json` — guideline document shape
+- `rules/` — 309 guideline files (filename = `id`)
+- `jobs.json` — 7 containers, 9 Cards, 21 Facets, 15 Leaves. Pointers only; no rule bodies
+- `index.json` — generated `{id,title,jobs,lane,container,card,facet,leaf?}` (no rule bodies)
+- `schema.json` — one guideline object
 
-The loader merges lane files. `lane` is index-only and is not stored on guideline objects.
+Placement on every rule: `container`, `card`, `facet`, and `leaf` when that Facet has working leaves. Cluster-only Facets omit `leaf` and the id sits in that Facet’s `guideline_ids[]`.
 
-Soft size: ~50–100 KB. Hard ceiling: ~384 KB (`open_ux.catalog` enforces both).
+Agent-facing fields (`overview`, `apply_when`, `not_when`, `agent_hint`, `description`) are on the rule or the row has `waive_reason`. Never in SKILL.md.
+
+`lane` is a harvest prefix on the index only (UNS-88). It is not a placement key.
+
+The loader walks `catalog/rules/*.json`. Soft size: ~50–100 KB. Hard ceiling: ~384 KB (`open_ux.catalog` enforces both).

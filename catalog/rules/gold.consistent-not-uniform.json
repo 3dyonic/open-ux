@@ -1,0 +1,25 @@
+{
+  "id": "gold.consistent-not-uniform",
+  "category": "Foundations",
+  "segment": "Principles",
+  "title": "consistent not uniform",
+  "rule": "Consistent, not uniform — same behaviour for common components; services may apply their own colour, type, sub-logo, and flows without disrupting the shared default.",
+  "citation": {
+    "source": "GOLD — Principles",
+    "url": "https://github.com/designsystemau/gold-design-system-site/blob/main/content/about/principles.md"
+  },
+  "check": "llm_judgment",
+  "pass_when": [
+    "Shared components keep the same behaviour; service colour/type/sub-logo/flow differences do not change that default behaviour."
+  ],
+  "fail_when": [
+    "A service restyles a common control so its behaviour no longer matches the shared default."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "use_familiar_control",
+  "waive_reason": "agent_fields pending — do not invent from harvest stencil",
+  "do_not_claim": "Visual loudness / one-primary as this principle; a house brand-token set."
+}

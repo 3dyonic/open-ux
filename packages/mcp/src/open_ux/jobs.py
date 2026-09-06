@@ -349,13 +349,11 @@ def _alias_for_container(tree: JobTree, container_id: str) -> str | None:
 
 
 def expand_need(need: str, tree: JobTree | None = None) -> list[str]:
-    """Tags to match on guideline.jobs. Leaf ids expand to nothing."""
+    """Tags to match on guideline placement. Leaf ids expand to nothing."""
     job = (need or "").strip()
     if not job:
         return []
     tree = tree or load_job_tree()
-    if job in JOB_ALIASES:
-        return [job]
     container = container_by_id_or_alias(tree, job)
     if container is not None:
         leaves: list[str] = []
@@ -387,8 +385,6 @@ def resolve_need(need: str, tree: JobTree | None = None) -> NeedScope:
     if not job:
         return NeedScope()
     tree = tree or load_job_tree()
-    if job in JOB_ALIASES:
-        return NeedScope(tags=(job,))
     container = container_by_id_or_alias(tree, job)
     if container is not None:
         tags: list[str] = []
