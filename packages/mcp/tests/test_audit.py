@@ -35,6 +35,8 @@ def test_jobs_template_returns_criteria_without_content(live_catalog: Path) -> N
     assert result["total"] >= result["count"]
     assert result["count"] >= 1
     assert result["count"] <= DEFAULT_LIMIT
+    ids = {row["id"] for row in result["guidelines"]}
+    assert VISIBLE in ids
     for row in result["guidelines"]:
         _assert_pack_row(row)
 

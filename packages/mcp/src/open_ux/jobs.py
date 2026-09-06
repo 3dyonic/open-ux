@@ -48,8 +48,8 @@ JobId = Literal[
     "feedback",
 ]
 
-# Until UNS-86 retags LIVE seeds, a template with no tagged rows
-# falls back to its container alias so the call is not empty.
+# If a template has no tagged rows, fall back to its skill container
+# so the call is not empty. After UNS-86 every rule has a template.
 TEMPLATE_FALLBACK_ALIAS: dict[str, str] = {
     "name_a_control": "forms",
     "avoid_placeholder_as_label": "forms",

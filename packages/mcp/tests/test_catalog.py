@@ -7,6 +7,7 @@ import pytest
 from jsonschema import ValidationError
 
 from open_ux.catalog import CatalogError, load_catalog
+from open_ux.jobs import JOB_TEMPLATES
 from open_ux.settings import HARD_CATALOG_BYTES, Settings
 
 LIVE_SEED = (
@@ -90,11 +91,15 @@ def test_lanes_load_40_actions_54_forms_extra_73_harvest3_56_harvest4_46_harvest
     assert form_ids[:3] == list(LIVE_SEED)
     by_id = {g["id"]: g for g in catalog.guidelines}
     for gid in action_ids:
-        assert by_id[gid]["jobs"] == ["actions"]
+        jobs = by_id[gid]["jobs"]
+        assert jobs[0] == "actions"
+        assert set(jobs) & JOBS_15
         assert "do_not_claim" not in by_id[gid]
         assert INVENTED_FIELDS.isdisjoint(by_id[gid])
     for gid in form_ids:
-        assert by_id[gid]["jobs"] == ["forms"]
+        jobs = by_id[gid]["jobs"]
+        assert jobs[0] == "forms"
+        assert set(jobs) & JOBS_15
         assert "do_not_claim" not in by_id[gid]
         assert INVENTED_FIELDS.isdisjoint(by_id[gid])
     for gid in extra_ids + harvest3_ids + harvest4_ids + harvest5_ids:
@@ -135,3 +140,31 @@ def test_on_disk_index_has_no_rule_bodies(live_catalog: Path) -> None:
     assert [row["id"] for row in catalog.index] == [g["id"] for g in catalog.guidelines]
     for seed in LIVE_SEED:
         assert seed in {row["id"] for row in catalog.index}
+
+
+def test_jobs_inventory_is_the_closed_15(live_catalog: Path) -> None:
+    data = json.loads((live_catalog / "jobs.json").read_text(encoding="utf-8"))
+    ids = [row["id"] for row in data["jobs"]]
+    assert ids == list(JOB_TEMPLATES)
+    assert set(ids) == JOBS_15
+    catalog = load_catalog(Settings.load(hosted=True))
+    assert catalog.jobs == list(JOB_TEMPLATES)
+    for g in catalog.guidelines:
+        templates = set(g.get("jobs") or []) & JOBS_15
+        assert templates, g["id"]
+    by_id = {g["id"]: g for g in catalog.guidelines}
+    assert "avoid_placeholder_as_label" in by_id[LIVE_SEED[0]]["jobs"]
+    assert "keep_field_purpose_visible_while_filled" in by_id[LIVE_SEED[1]]["jobs"]
+    assert "explain_failure_next_to_cause" in by_id[LIVE_SEED[2]]["jobs"]
+
+
+def test_search_template_finds_visible_label_seed(live_catalog: Path) -> None:
+    from open_ux.catalog import list_index
+
+    catalog = load_catalog(Settings.load(hosted=True))
+    rows, total = list_index(
+        catalog, jobs="avoid_placeholder_as_label", limit=50
+    )
+    ids = {row["id"] for row in rows}
+    assert total >= 1
+    assert "forms.field_labels.visible_label" in ids

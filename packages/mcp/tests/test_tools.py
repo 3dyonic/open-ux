@@ -295,6 +295,19 @@ async def test_audit_schema_shows_jobs_enum_not_target(live_catalog: Path) -> No
 
 
 @pytest.mark.asyncio
+async def test_search_avoid_placeholder_finds_live_seed(live_catalog: Path) -> None:
+    mcp = create_mcp(hosted=False)
+    async with Client(mcp) as client:
+        found = await client.call_tool(
+            "search_guidelines",
+            {"jobs": "avoid_placeholder_as_label", "limit": 50},
+        )
+        data = found.data
+        ids = {row["id"] for row in data["guidelines"]}
+        assert "forms.field_labels.visible_label" in ids
+
+
+@pytest.mark.asyncio
 async def test_audit_jobs_returns_criteria(live_catalog: Path) -> None:
     mcp = create_mcp(hosted=False)
     async with Client(mcp) as client:

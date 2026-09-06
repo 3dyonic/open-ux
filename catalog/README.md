@@ -9,8 +9,9 @@ One shared cited catalog, split by lane:
 - `uswds.json` / `canada.json` / `nsw.json` — extra harvest 4 (USWDS 15 + Canada 18 + NSW 13)
 - `gold.json` / `nl.json` / `suomi.json` — extra harvest 5 (GOLD 10 + NL 16 + Suomi.fi 14)
 - `index.json` — all lanes, `{id,title,jobs,lane}` only (no rule bodies)
+- `jobs.json` — closed 15 job templates (LLM intent). Each: id, problem, UX, skill container.
 - `schema.json` — guideline document shape
 
-The loader merges lane files. `lane` is index-only and is not stored on guideline objects.
+The loader merges lane files. `lane` is index-only and is not stored on guideline objects. Every guideline `jobs` includes ≥1 template from `jobs.json`. `forms` / `actions` / `feedback` are skill-container aliases, not templates.
 
 Soft size: ~50–100 KB. Hard ceiling: ~384 KB (`open_ux.catalog` enforces both).

@@ -1,0 +1,95 @@
+{
+  "version": "0.1.0",
+  "jobs": [
+    {
+      "id": "name_a_control",
+      "problem": "User must know what this control is",
+      "ux": "Visible, stable name on the control",
+      "container": "forms"
+    },
+    {
+      "id": "avoid_placeholder_as_label",
+      "problem": "User loses the name once they type",
+      "ux": "Label outside the field, not placeholder-only",
+      "container": "forms"
+    },
+    {
+      "id": "keep_field_purpose_visible_while_filled",
+      "problem": "Purpose disappears while editing",
+      "ux": "Label stays on screen with value / focus",
+      "container": "forms"
+    },
+    {
+      "id": "recover_from_invalid_input",
+      "problem": "User submitted something the system rejects",
+      "ux": "How to recover, not a dead end",
+      "container": "forms"
+    },
+    {
+      "id": "explain_failure_next_to_cause",
+      "problem": "User cannot see what failed",
+      "ux": "Error next to the cause, with a fix",
+      "container": "forms"
+    },
+    {
+      "id": "choose_control_for_choice",
+      "problem": "User must pick among options",
+      "ux": "The right choice control, not a fake text field",
+      "container": "forms"
+    },
+    {
+      "id": "group_related_inputs",
+      "problem": "User cannot see what belongs together",
+      "ux": "Grouped fields, one task",
+      "container": "forms"
+    },
+    {
+      "id": "announce_system_status",
+      "problem": "User cannot tell if it worked / is working",
+      "ux": "Status in the UI, not silence",
+      "container": "feedback"
+    },
+    {
+      "id": "wayfind_after_nav",
+      "problem": "User is lost after a move",
+      "ux": "Where they are, what changed",
+      "container": "feedback"
+    },
+    {
+      "id": "use_familiar_control",
+      "problem": "User must relearn a common action",
+      "ux": "Familiar control, not a novel widget",
+      "container": "actions"
+    },
+    {
+      "id": "write_empty_state",
+      "problem": "The surface has nothing to show",
+      "ux": "Empty / no-results that says what to do",
+      "container": "feedback"
+    },
+    {
+      "id": "tone_of_voice_for_failure",
+      "problem": "Failure copy makes it worse",
+      "ux": "Failure tone that helps",
+      "container": "feedback"
+    },
+    {
+      "id": "pick_primary_action",
+      "problem": "User cannot see the next step",
+      "ux": "One primary action",
+      "container": "actions"
+    },
+    {
+      "id": "disable_or_confirm_destructive",
+      "problem": "A destructive act is too easy",
+      "ux": "Disable or confirm before destroy",
+      "container": "actions"
+    },
+    {
+      "id": "keep_hit_target_usable",
+      "problem": "The control is hard to hit",
+      "ux": "Usable hit target",
+      "container": "actions"
+    }
+  ]
+}

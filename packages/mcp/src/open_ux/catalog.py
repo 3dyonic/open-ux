@@ -8,6 +8,7 @@ from typing import Any
 
 import jsonschema
 
+from open_ux.jobs import JOB_TEMPLATES
 from open_ux.settings import HARD_CATALOG_BYTES, SOFT_CATALOG_BYTES, Settings
 
 EMPTY_NOTE = (
@@ -16,7 +17,13 @@ EMPTY_NOTE = (
 )
 
 INDEX_KEYS = ("id", "title", "jobs", "lane")
-LANE_SKIP = frozenset({"schema.json", "index.json", "guidelines.json"})
+LANE_SKIP = frozenset({"schema.json", "index.json", "guidelines.json", "jobs.json"})
+JOBS_INVENTORY_REQUIRED = (
+    "id",
+    "problem",
+    "ux",
+    "container",
+)
 BODY_KEYS = frozenset({"pass_when", "fail_when", "rule", "citation", "check", "severity"})
 
 
@@ -44,6 +51,38 @@ def _validate_size(n: int) -> None:
         raise CatalogError(
             f"Catalog is {n} bytes; hard ceiling is {HARD_CATALOG_BYTES} (~384 KB)."
         )
+
+
+def _load_jobs_inventory(catalog_path: Path) -> list[str]:
+    """Closed 15-template SoT from catalog/jobs.json. Missing is valid (empty catalog)."""
+    inventory_path = (
+        catalog_path / "jobs.json"
+        if catalog_path.is_dir()
+        else catalog_path.parent / "jobs.json"
+    )
+    if not inventory_path.is_file():
+        return []
+    data = json.loads(inventory_path.read_text(encoding="utf-8"))
+    rows = data.get("jobs") if isinstance(data, dict) else None
+    if not isinstance(rows, list) or not rows:
+        raise CatalogError("catalog/jobs.json must be {jobs: [...]} with the closed set.")
+    ids: list[str] = []
+    for row in rows:
+        if not isinstance(row, dict):
+            raise CatalogError("catalog/jobs.json entries must be objects.")
+        missing = [k for k in JOBS_INVENTORY_REQUIRED if not row.get(k)]
+        if missing:
+            raise CatalogError(f"catalog/jobs.json entry missing {missing}.")
+        if row.get("container") not in {"forms", "actions", "feedback"}:
+            raise CatalogError(
+                f"catalog/jobs.json {row.get('id')!r} container must be forms, actions, or feedback."
+            )
+        ids.append(str(row["id"]))
+    if ids != list(JOB_TEMPLATES):
+        raise CatalogError(
+            "catalog/jobs.json must list the closed 15 templates in lock order."
+        )
+    return ids
 
 
 def _lane_files(catalog_path: Path) -> list[Path]:
@@ -148,6 +187,10 @@ def load_catalog(settings: Settings | None = None) -> Catalog:
             raise CatalogError("catalog/index.json ids do not match merged lane files.")
     else:
         index = _index_from_guidelines(guidelines)
+
+    inventory_ids = _load_jobs_inventory(catalog_path)
+    if inventory_ids:
+        jobs = inventory_ids
 
     return Catalog(
         version=version,
