@@ -71,7 +71,7 @@ LANDING_HTML = """<!DOCTYPE html>
       align-items: center;
       gap: 16px;
     }
-    .nav-github {
+    .nav-github, .nav-catalog {
       font-size: 13px;
       font-weight: 500;
       color: var(--muted);
@@ -416,6 +416,7 @@ LANDING_HTML = """<!DOCTYPE html>
   <header class="nav">
     <span class="nav-brand"><span class="pip" aria-hidden="true"></span>Open UX</span>
     <div class="nav-actions">
+      <a class="nav-catalog" href="/catalog">Catalog</a>
       <a class="nav-github" href="https://github.com/3dyonic/open-ux">GitHub</a>
       <a class="btn btn--primary btn--nav" href="/invite">Get a key</a>
     </div>

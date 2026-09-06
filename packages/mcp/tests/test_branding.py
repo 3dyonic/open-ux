@@ -41,6 +41,8 @@ def test_landing_has_figma_sections_and_register_cta(tmp_env: Path) -> None:
     assert "height: 38px" in html
     assert "height: 143px" in html
     assert ">Get a key</a>" in html
+    assert ">Catalog</a>" in html
+    assert 'href="/catalog"' in html
     assert ">Request access</a>" in html
     assert ">How it works</h2>" in html
     assert ">Connect</h3>" in html
