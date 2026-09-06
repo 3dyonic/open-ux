@@ -1,0 +1,32 @@
+{
+  "id": "nng.support-undo-discoverable",
+  "category": "Actions",
+  "segment": "Control",
+  "title": "support undo discoverable",
+  "name": "Support undo discoverable — NN/g",
+  "rule": "Support Undo that stays discoverable — visible control; snackbar-only undo that vanishes in seconds is a miss. Always allow Back; cancel in-progress. (Heuristic #3 not filed as a catalog row.)",
+  "citation": [
+    {
+      "source": "NN/g — User Control and Freedom",
+      "url": "https://www.nngroup.com/articles/user-control-and-freedom/"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "Undo is a discoverable visible control (not only a vanishing snackbar); Back is available; in-progress work can be cancelled."
+  ],
+  "fail_when": [
+    "Undo only as a seconds-long snackbar; no Back; no cancel in-progress."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "protect_destructive_and_leave",
+  "facet": "destructive_is_too_easy",
+  "leaf": "disable_or_confirm_destructive",
+  "overview": "Undo stays discoverable; always allow Back and cancel in-progress work.",
+  "apply_when": "Destructive or reversible actions needing undo, Back, or cancel.",
+  "not_when": "Undo only as a vanishing snackbar, or no Back or cancel in-progress.",
+  "agent_hint": "Provide discoverable visible Undo, always allow Back, and let users cancel in-progress work.",
+  "description": "Support Undo that stays discoverable as a visible control; snackbar-only undo that vanishes in seconds is a miss. Always allow Back; cancel in-progress. Pass when Undo is a discoverable visible control, Back is available, and in-progress work can be cancelled. Fail when Undo is only a seconds-long snackbar, there is no Back, or no cancel in-progress.",
+  "do_not_claim": "Heuristic #3 as a row; `actions.multilevel_undo` / `actions.cancelability` as merges. Overlap with Actions 40: `multilevel_undo` / `cancelability`."
+}

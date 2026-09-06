@@ -1,0 +1,31 @@
+{
+  "id": "forms.inputs.good_defaults_smart_prefills",
+  "category": "Forms",
+  "segment": "Inputs",
+  "title": "good defaults smart prefills",
+  "name": "Good defaults smart prefills — Tidwell",
+  "rule": "Prefill with good defaults and smart values the user can accept or edit.",
+  "citation": [
+    {
+      "source": "Designing Interfaces 3e ch. Getting Input — Good Defaults and Smart Prefills (Tidwell, Brewer, Valencia); NN/g — A Checklist for Designing Mobile Input Fields",
+      "url": "https://www.nngroup.com/articles/mobile-input-checklist/"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "Known defaults, history, or frequent values are prefilled and editable."
+  ],
+  "fail_when": [
+    "User retypes a known default/history/frequent value with no prefill."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "use_familiar_control",
+  "overview": "Prefill editable defaults from known, historical, or frequent values.",
+  "apply_when": "Fields with known defaults, history, or frequent prior values.",
+  "not_when": "First-time fields with no reliable default or history to offer.",
+  "agent_hint": "Prefill known defaults or frequent values and keep them editable.",
+  "description": "Prefill with good defaults and smart values the user can accept or edit. Pass when known defaults, history, or frequent values appear prefilled and remain editable; fail when the user must retype a known default, history, or frequent value with no prefill. Defaults should speed completion, not lock the user into an uneditable guess they cannot change."
+}

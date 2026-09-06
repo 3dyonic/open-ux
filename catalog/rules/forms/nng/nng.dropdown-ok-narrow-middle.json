@@ -1,0 +1,32 @@
+{
+  "id": "nng.dropdown-ok-narrow-middle",
+  "category": "Forms",
+  "segment": "Choice",
+  "title": "dropdown ok narrow middle",
+  "name": "Dropdown OK narrow middle — NN/g",
+  "rule": "Dropdown OK in a narrow middle (~5–10) when the field is secondary or compactness matters.",
+  "citation": [
+    {
+      "source": "NN/g — Does Your Form Really Need a Dropdown List?",
+      "url": "https://www.nngroup.com/articles/dropdown-list/"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "A ~5–10 secondary/compact field may use a dropdown."
+  ],
+  "fail_when": [
+    "Treating “dropdown never” or “dropdown always” as the rule for this middle band."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "overview": "Dropdown is acceptable for a secondary ~5–10 option compact field.",
+  "apply_when": "Secondary or compact field with roughly five to ten options.",
+  "not_when": "Treating dropdown as never or always for this middle band.",
+  "agent_hint": "Allow dropdown for secondary ~5–10 options; reject absolute never/always rules.",
+  "description": "In the narrow middle band of about five to ten choices, a dropdown can be fine when the field is secondary or compactness matters. Pass when that secondary or compact field uses a dropdown. Fail when the design treats “dropdown never” or “dropdown always” as the rule for this band instead of judging secondary use and compactness.",
+  "do_not_claim": "GOV.UK select-last-resort as a winner over this band."
+}

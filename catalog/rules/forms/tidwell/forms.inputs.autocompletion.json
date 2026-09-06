@@ -1,0 +1,31 @@
+{
+  "id": "forms.inputs.autocompletion",
+  "category": "Forms",
+  "segment": "Inputs",
+  "title": "autocompletion",
+  "name": "Autocompletion — Tidwell",
+  "rule": "As the user types a value with a known set of completions, suggest and complete matches.",
+  "citation": [
+    {
+      "source": "Designing Interfaces 3e ch. Getting Input — Autocompletion (Tidwell, Brewer, Valencia); NN/g — A Checklist for Designing Mobile Input Fields",
+      "url": "https://www.nngroup.com/articles/mobile-input-checklist/"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "Known completion set: suggestions appear from typed prefix and can complete the value."
+  ],
+  "fail_when": [
+    "Known set is typed from memory with no suggestions."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "use_familiar_control",
+  "overview": "Suggest and complete matches from a known set as the user types.",
+  "apply_when": "Fields with a known completion set and typed prefixes.",
+  "not_when": "Open free-text with no known completion vocabulary.",
+  "agent_hint": "Offer prefix suggestions from the known set and let them complete the value.",
+  "description": "When the user types a value that has a known set of completions, the UI should suggest matches from the typed prefix and allow completing the value. Pass when suggestions appear and can finish the entry; fail when the known set must be typed entirely from memory with no suggestions. Use for closed or catalogued values, not open prose."
+}

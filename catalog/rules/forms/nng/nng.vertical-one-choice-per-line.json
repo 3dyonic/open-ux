@@ -1,0 +1,32 @@
+{
+  "id": "nng.vertical-one-choice-per-line",
+  "category": "Forms",
+  "segment": "Choice",
+  "title": "vertical one choice per line",
+  "name": "Vertical one choice per line — NN/g",
+  "rule": "Vertical one-choice-per-line; space carefully if horizontal.",
+  "citation": [
+    {
+      "source": "NN/g — Checkboxes vs. Radio Buttons",
+      "url": "https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "Choices are stacked one per line, or a horizontal row is carefully spaced so each label maps to one control."
+  ],
+  "fail_when": [
+    "Crowded horizontal choices that attach the wrong label to a control."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "overview": "Stack one choice per line; space horizontal rows so labels map clearly.",
+  "apply_when": "Laying out radio or checkbox choice lists.",
+  "not_when": "Crowded horizontal choices that attach the wrong label to a control.",
+  "agent_hint": "Stack choices vertically one per line, or carefully space any horizontal row.",
+  "description": "Prefer vertical layout with one choice per line for radios and checkboxes. If a horizontal row is used, space carefully so each label maps to one control without ambiguity. Pass when choices are stacked one per line, or a horizontal row is carefully spaced. Fail when crowded horizontal choices attach the wrong label to a control.",
+  "do_not_claim": "Hit-target px floors."
+}

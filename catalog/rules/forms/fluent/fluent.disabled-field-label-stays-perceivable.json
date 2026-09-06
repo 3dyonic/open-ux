@@ -1,0 +1,32 @@
+{
+  "id": "fluent.disabled-field-label-stays-perceivable",
+  "category": "Forms",
+  "segment": "Fields",
+  "title": "disabled field label stays perceivable",
+  "name": "Disabled field label stays perceivable — Fluent",
+  "rule": "Disabled field: control disabled; label (and helper/validation) stay enabled so AT can still perceive them. Settings Save MAY disable until requireds are complete only with visible reason + this perceivable label (dual-cite with GOV.UK don’t-disable on public/question).",
+  "citation": [
+    {
+      "source": "Fluent 2 — Field usage",
+      "url": "https://fluent2.microsoft.design/components/web/react/core/field/usage"
+    }
+  ],
+  "check": "deterministic",
+  "pass_when": [
+    "Disabled control still has a perceivable (not disabled-away) label and helper/validation. If Settings Save is disabled, the reason is visible and the label stays perceivable."
+  ],
+  "fail_when": [
+    "Disabled control whose label/helper/validation cannot be perceived; or disabled Save with no visible reason."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "field_has_no_lasting_name",
+  "leaf": "avoid_placeholder_as_label",
+  "overview": "A disabled field keeps its label and helper perceivable to assistive tech.",
+  "apply_when": "Disabling Fluent fields or Settings Save until requireds are complete.",
+  "not_when": "GOV.UK public question pages that generally avoid disabling submit.",
+  "agent_hint": "Disable the control, not the label/helper; show why if Save stays disabled.",
+  "description": "When a Fluent field is disabled, the control is disabled but the label (and helper/validation) stay enabled so assistive technology can still perceive them. Settings Save may disable until requireds are complete only with a visible reason and this perceivable label (dual-cite GOV.UK don’t-disable on public/question). Fail a disabled control whose label/helper cannot be perceived, or disabled Save with no visible reason.",
+  "do_not_claim": "Global never-disable on public/question flows (see `govuk.dont-use-disabled-buttons`)."
+}

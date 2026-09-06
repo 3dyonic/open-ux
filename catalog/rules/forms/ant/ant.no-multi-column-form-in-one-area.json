@@ -1,0 +1,32 @@
+{
+  "id": "ant.no-multi-column-form-in-one-area",
+  "category": "Forms",
+  "segment": "Layout",
+  "title": "no multi column form in one area",
+  "name": "No multi column form in one area — Ant",
+  "rule": "No multi-column form inside one area — vertical single column is the efficient default; weak grouping may put short related fields on one line, not a second reading column. Card grouping when content is usually more than two screens, each card with a large title.",
+  "citation": [
+    {
+      "source": "Ant Design — Data entry ; Ant Design — Form research",
+      "url": "https://ant.design/docs/spec/data-entry"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "One area is a single reading column (short related fields may share a line). Content usually more than two screens uses titled cards."
+  ],
+  "fail_when": [
+    "Two reading columns of fields in one area; or >two-screens dump with no titled cards."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "related_inputs_feel_scattered",
+  "leaf": "group_related_inputs",
+  "overview": "One form area stays a single reading column; long forms use titled cards.",
+  "apply_when": "Laying out fields inside one Ant form area or long settings page.",
+  "not_when": "Dashboard multi-widget layouts that are not one form reading path.",
+  "agent_hint": "Keep one reading column per area; card-group content over two screens.",
+  "description": "Ant treats a vertical single column as the efficient form default inside one area. Short related fields may share a line for weak grouping, but that is not a second reading column of fields. When content usually spans more than two screens, group into cards each with a large title. Fail two reading columns of fields in one area, or a long dump past two screens with no titled cards.",
+  "do_not_claim": "Forms keep-short / one-thing-per-page as a merge. Overlap with Forms 54: `forms.length.keep_short` / `forms.layout.single_column`."
+}

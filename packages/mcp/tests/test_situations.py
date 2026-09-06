@@ -43,6 +43,7 @@ def test_skill_description_is_compose_task_and_short() -> None:
     assert "verdict" not in desc
     assert "pass_when" not in rest
     assert "forms.field_labels" not in rest
+    assert "MANIFEST.md" in rest
     for card_id in CARD_IDS:
         assert card_id in rest
     for title in (

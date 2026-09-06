@@ -1,14 +1,33 @@
 #!/usr/bin/env python3
-"""Write a human-friendly name on every rule. Does not change rule text."""
+"""Write a human-friendly name on every rule and place it on disk.
+
+Layout: catalog/rules/{category}/{source}/{id}.json
+Name: claim first, source last. Actions is a category; Ant is a source.
+"""
 
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+SRC = ROOT / "packages" / "mcp" / "src"
+if str(SRC) not in sys.path:
+    sys.path.insert(0, str(SRC))
+
+from open_ux.catalog import (  # noqa: E402
+    build_manifest,
+    iter_rule_files,
+    render_manifest_markdown,
+    rule_dest,
+    source_house,
+)
+
 RULES = ROOT / "catalog" / "rules"
 INDEX = ROOT / "catalog" / "index.json"
+MANIFEST_JSON = ROOT / "catalog" / "manifest.json"
+MANIFEST_MD = ROOT / "catalog" / "MANIFEST.md"
 LIVE_SEED = (
     "forms.field_labels.visible_label",
     "forms.field_labels.label_stays_visible",
@@ -16,6 +35,7 @@ LIVE_SEED = (
 )
 
 # Short display labels. Derived from the existing title/slug, not new claims.
+# Do not put the source at the start — display_name appends it.
 OVERRIDES = {
     "forms.field_labels.visible_label": "Visible field label",
     "forms.field_labels.label_stays_visible": "Label stays visible",
@@ -169,9 +189,14 @@ def name_from_title(title: str) -> str:
 
 def display_name(guideline: dict) -> str:
     gid = guideline["id"]
-    if gid in OVERRIDES:
-        return OVERRIDES[gid]
-    return name_from_title(guideline.get("title") or gid.split(".")[-1])
+    _slug, house = source_house(guideline)
+    base = OVERRIDES[gid] if gid in OVERRIDES else name_from_title(
+        guideline.get("title") or gid.split(".")[-1]
+    )
+    suffix = f" — {house}"
+    if base.endswith(suffix):
+        return base
+    return f"{base}{suffix}"
 
 
 def _index_row(guideline: dict) -> dict:
@@ -191,16 +216,25 @@ def _index_row(guideline: dict) -> dict:
     return row
 
 
+def _prune_empty(root: Path) -> None:
+    for folder in sorted((p for p in root.rglob("*") if p.is_dir()), reverse=True):
+        if folder.is_dir() and not any(folder.iterdir()):
+            folder.rmdir()
+
+
 def main() -> int:
     written: list[dict] = []
-    for path in sorted(RULES.glob("*.json")):
+    for path in iter_rule_files(RULES):
         data = json.loads(path.read_text(encoding="utf-8"))
         data["name"] = display_name(data)
-        path.write_text(
-            json.dumps(_ordered(data), indent=2, ensure_ascii=False) + "\n",
-            encoding="utf-8",
-        )
+        dest = rule_dest(RULES, data)
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        text = json.dumps(_ordered(data), indent=2, ensure_ascii=False) + "\n"
+        dest.write_text(text, encoding="utf-8")
+        if path.resolve() != dest.resolve():
+            path.unlink()
         written.append(data)
+    _prune_empty(RULES)
     by_id = {item["id"]: item for item in written}
     ordered_ids = list(LIVE_SEED) + sorted(gid for gid in by_id if gid not in LIVE_SEED)
     index = {
@@ -208,7 +242,14 @@ def main() -> int:
         "guidelines": [_index_row(by_id[gid]) for gid in ordered_ids],
     }
     INDEX.write_text(json.dumps(index, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-    print(f"named {len(written)} rules")
+    ordered = [by_id[gid] for gid in ordered_ids]
+    manifest = build_manifest(ordered)
+    MANIFEST_JSON.write_text(
+        json.dumps(manifest, indent=2, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
+    MANIFEST_MD.write_text(render_manifest_markdown(manifest), encoding="utf-8")
+    print(f"named {len(written)} rules; wrote manifest")
     return 0
 
 

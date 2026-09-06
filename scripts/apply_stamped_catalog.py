@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Apply the stamped UNS-91 consolidate CSV: 302 rules + 13-card tree.
 
-Drops 7 UNMAPPED leftovers. Regenerates jobs.json, rules/*.json, index.json.
+Drops 7 UNMAPPED leftovers. Regenerates jobs.json, rules/{category}/{source}/*.json, index.json, manifest.
 Then folds the three verified same-claim families. Citation is always
 an array of one or many {source, url}.
 """
@@ -15,6 +15,12 @@ from collections import defaultdict
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+SRC = ROOT / "packages" / "mcp" / "src"
+if str(SRC) not in sys.path:
+    sys.path.insert(0, str(SRC))
+
+from open_ux.catalog import find_rule_file, iter_rule_files, rule_dest  # noqa: E402
+
 CATALOG = ROOT / "catalog"
 RULES = CATALOG / "rules"
 CSV_PATH = Path(sys.argv[1]) if len(sys.argv) > 1 else None
@@ -689,7 +695,9 @@ def main() -> int:
     keep_ids = {row["id"] for row in placed}
     for row in placed:
         gid = row["id"]
-        path = RULES / f"{gid}.json"
+        path = find_rule_file(RULES, gid)
+        if path is None:
+            raise SystemExit(f"missing rule file {gid}")
         data = json.loads(path.read_text(encoding="utf-8"))
         data["container"] = row["container_id"]
         data["card"] = row["card_id"]
@@ -705,15 +713,19 @@ def main() -> int:
             data["description"] = row["description"]
         data.pop("waive_reason", None)
         data = _ordered(data)
-        path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+        dest = rule_dest(RULES, data)
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        dest.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+        if path.resolve() != dest.resolve():
+            path.unlink()
         written.append(data)
 
     removed = []
-    for path in RULES.glob("*.json"):
+    for path in iter_rule_files(RULES):
         if path.stem not in keep_ids:
             path.unlink()
             removed.append(path.stem)
-    leftover = [gid for gid in dropped if (RULES / f"{gid}.json").exists()]
+    leftover = [gid for gid in dropped if find_rule_file(RULES, gid) is not None]
     if leftover:
         raise SystemExit(f"failed to drop UNMAPPED files: {leftover}")
 
@@ -724,7 +736,7 @@ def main() -> int:
         json.dumps(index, indent=2, ensure_ascii=False) + "\n",
         encoding="utf-8",
     )
-    size = sum(p.stat().st_size for p in RULES.glob("*.json"))
+    size = sum(p.stat().st_size for p in iter_rule_files(RULES))
     print(f"wrote {len(written)} rules; dropped {removed}; catalog bytes {size}")
     print("leaf counts", {k: len(v) for k, v in sorted(by_leaf.items(), key=lambda x: -len(x[1]))})
     from fold_same_claim_rules import apply_folds

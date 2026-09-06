@@ -18,6 +18,8 @@ Cited UX rules agents audit against. The catalog is the source of truth.
 
 This skill does **not** contain rule bodies or guideline ids. Route to a Card, then call the server.
 
+When you need a map of what exists — by **category**, then **source** — read [`catalog/MANIFEST.md`](../../../../catalog/MANIFEST.md). Then fetch one id. Do not load every rule file.
+
 ## Connect
 
 1. Hosted URL + bearer `uxmcp_` in client settings (`OPEN_UX_URL`, `OPEN_UX_API_KEY`). Self-host stdio needs no key.

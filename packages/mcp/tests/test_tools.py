@@ -125,7 +125,7 @@ async def test_get_guideline_returns_full_body(live_catalog: Path) -> None:
         assert body["found"] is True
         g = body["guideline"]
         assert g["id"] == "forms.field_labels.visible_label"
-        assert g["name"] == "Visible field label"
+        assert g["name"] == "Visible field label — NN/g"
         assert "lane" not in g
         assert g["rule"]
         assert g["pass_when"]

@@ -1,0 +1,31 @@
+{
+  "id": "actions.buttons.distinguishable_states",
+  "category": "Actions",
+  "segment": "Buttons",
+  "title": "distinguishable states",
+  "name": "Distinguishable states — NN/g",
+  "rule": "Button states (enabled, disabled, hover, focus, pressed) must be visually distinguishable from each other.",
+  "citation": [
+    {
+      "source": "NN/g — Button States: Communicate Interaction",
+      "url": "https://www.nngroup.com/articles/button-states-communicate-interaction/"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "Enabled, disabled, hover, focus, and pressed are visually distinguishable from each other."
+  ],
+  "fail_when": [
+    "Any two of those states look the same."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "action_state_is_silent",
+  "leaf": "show_action_state",
+  "overview": "Each button state—enabled, disabled, hover, focus, pressed—looks different.",
+  "apply_when": "Styling interactive buttons that change with pointer and keyboard.",
+  "not_when": "Static non-interactive badges or plain text that never change state.",
+  "agent_hint": "Make enabled, disabled, hover, focus, and pressed visually distinct.",
+  "description": "A button only communicates interaction if its states are easy to tell apart. Enabled, disabled, hover, focus, and pressed must each have a distinct visual treatment so people can see affordance, focus, and acceptance of input. Collapse any two of those looks and the control becomes ambiguous. Apply this to real buttons; decorative chips that never receive interaction are out of scope."
+}

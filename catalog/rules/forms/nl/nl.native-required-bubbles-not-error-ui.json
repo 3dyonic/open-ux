@@ -1,0 +1,32 @@
+{
+  "id": "nl.native-required-bubbles-not-error-ui",
+  "category": "Forms",
+  "segment": "Errors",
+  "title": "native required bubbles not error ui",
+  "name": "Native required bubbles not error UI — NL",
+  "rule": "Native HTML `required` / browser bubbles are not the error UI — insufficient explanation, especially with `pattern`. Prefer custom client errors; `novalidate` once JS loads if `required` was a no-JS fallback. Server-side validation is the guideline. Dual-cite GOLD server-side + error list (not a separate GOLD unique in this 40).",
+  "citation": [
+    {
+      "source": "NL Design System — HTML formuliervalidatie",
+      "url": "https://nldesignsystem.nl/richtlijnen/formulieren/foutmeldingen/html-formuliervalidatie/"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "With JS, native bubbles are not the error UI (`novalidate` if `required` is a no-JS fallback); errors are custom; server-side validation remains."
+  ],
+  "fail_when": [
+    "Browser `required`/`pattern` bubbles are the only error UI after JS has loaded."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "handle_form_errors",
+  "facet": "invalid_input_has_no_recovery",
+  "leaf": "recover_from_invalid_input",
+  "overview": "Native required and browser bubbles are not the error UI once JS has loaded.",
+  "apply_when": "Implementing client validation on forms that may also use required as a no-JS fallback.",
+  "not_when": "Not as an excuse to drop server-side validation, which remains required.",
+  "agent_hint": "Prefer custom errors; use novalidate once JS loads if required was a no-JS fallback.",
+  "description": "Native HTML `required` and browser bubbles are insufficient error UI, especially with `pattern`. Prefer custom client errors; use `novalidate` once JS loads if `required` was only a no-JS fallback. Server-side validation remains the guideline. Fail when browser required/pattern bubbles are the only error UI after JS has loaded. Apply when implementing client validation on forms that may keep required as a no-JS fallback.",
+  "do_not_claim": "GOV.UK error-summary as this native-bubble ban; an invented GOLD “server-side” unique; WCAG numbers."
+}

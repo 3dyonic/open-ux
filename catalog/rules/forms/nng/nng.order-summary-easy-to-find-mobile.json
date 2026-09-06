@@ -1,0 +1,32 @@
+{
+  "id": "nng.order-summary-easy-to-find-mobile",
+  "category": "Forms",
+  "segment": "Checkout",
+  "title": "order summary easy to find mobile",
+  "name": "Order summary easy to find mobile — NN/g",
+  "rule": "Order summary easy to find on mobile (not only below the fold).",
+  "citation": [
+    {
+      "source": "NN/g — The Mobile Checkout Experience",
+      "url": "https://www.nngroup.com/articles/mobile-checkout-ux/"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "On mobile checkout, order summary is findable without only living below the fold."
+  ],
+  "fail_when": [
+    "Summary only below the fold with no easy way to find it."
+  ],
+  "severity": "major",
+  "container": "multi_step_flows",
+  "card": "build_a_multi_step_flow",
+  "facet": "too_much_on_one_step",
+  "leaf": "show_step_progress",
+  "overview": "On mobile checkout, order summary must be easy to find, not fold-only.",
+  "apply_when": "Mobile checkout where users need to locate the order summary.",
+  "not_when": "Summary only below the fold with no easy find path.",
+  "agent_hint": "Make order summary findable on mobile; do not leave it below the fold only.",
+  "description": "On mobile checkout, the order summary must be easy to find and must not live only below the fold. Pass when the summary is findable without depending solely on scrolling past the fold. Fail when the summary sits only below the fold with no easy way to locate it during checkout, so totals stay hard to verify.",
+  "do_not_claim": "A required sticky-bar implementation."
+}

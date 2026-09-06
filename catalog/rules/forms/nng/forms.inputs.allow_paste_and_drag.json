@@ -1,0 +1,31 @@
+{
+  "id": "forms.inputs.allow_paste_and_drag",
+  "category": "Forms",
+  "segment": "Inputs",
+  "title": "allow paste and drag",
+  "name": "Allow paste and drag — NN/g",
+  "rule": "Allow copy/paste (never block paste) and, where the platform supports it, drag-and-drop into the field.",
+  "citation": [
+    {
+      "source": "NN/g — A Checklist for Designing Mobile Input Fields; Vercel Web Interface Guidelines; Apple HIG — Entering data",
+      "url": "https://www.nngroup.com/articles/mobile-input-checklist/"
+    }
+  ],
+  "check": "deterministic",
+  "pass_when": [
+    "Paste into the field works; copy out works; drag-and-drop works where the platform supports it."
+  ],
+  "fail_when": [
+    "Paste is blocked or stripped by the field."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "use_familiar_control",
+  "overview": "Allow paste into fields; support drag-and-drop where the platform can.",
+  "apply_when": "Text or value entry where users may paste or drop content.",
+  "not_when": "Platforms that cannot offer drag-and-drop into the field.",
+  "agent_hint": "Never block paste; enable drag-and-drop where the platform supports it.",
+  "description": "Copy/paste must work into the field — never block paste — and where the platform supports it, drag-and-drop into the field should work too. Pass when paste in, copy out, and supported drag-and-drop succeed; fail when paste is blocked or stripped by the field. This recovers users who bring values from elsewhere instead of forcing retyping."
+}

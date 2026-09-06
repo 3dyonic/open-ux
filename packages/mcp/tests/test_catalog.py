@@ -6,7 +6,15 @@ from pathlib import Path
 import pytest
 from jsonschema import ValidationError, validate
 
-from open_ux.catalog import AGENT_KEYS, CatalogError, citations, load_catalog
+from open_ux.catalog import (
+    AGENT_KEYS,
+    CatalogError,
+    build_manifest,
+    citations,
+    load_catalog,
+    rule_relpath,
+    source_house,
+)
 from open_ux.jobs import CARD_IDS, CONTAINER_IDS, LEAF_IDS, load_job_tree
 from open_ux.settings import HARD_CATALOG_BYTES, Settings
 
@@ -199,11 +207,13 @@ def test_rules_load_harvest_counts_after_same_claim_fold(live_catalog: Path) -> 
 def test_no_lane_blobs(live_catalog: Path) -> None:
     for name in LANE_BLOBS:
         assert not (live_catalog / name).exists()
-    rules = list((live_catalog / "rules").glob("*.json"))
+    rules = list((live_catalog / "rules").rglob("*.json"))
+    assert list((live_catalog / "rules").glob("*.json")) == []
     assert len(rules) == CATALOG_COUNT
     for path in rules:
         data = json.loads(path.read_text(encoding="utf-8"))
         assert path.stem == data["id"]
+        assert path == live_catalog / "rules" / rule_relpath(data)
 
 
 def test_on_disk_index_has_no_rule_bodies(live_catalog: Path) -> None:
@@ -267,7 +277,7 @@ def test_live_seeds_keep_locked_homes_and_agent_fields(live_catalog: Path) -> No
     visible = by_id["forms.field_labels.visible_label"]
     assert visible["card"] == "design_a_form"
     assert visible["leaf"] == "avoid_placeholder_as_label"
-    assert visible["name"] == "Visible field label"
+    assert visible["name"] == "Visible field label — NN/g"
     assert visible["overview"].startswith("A lasting label")
     stays = by_id["forms.field_labels.label_stays_visible"]
     assert stays["card"] == "design_a_form"
@@ -350,3 +360,49 @@ def test_jobs_json_is_not_a_lane(live_catalog: Path) -> None:
     assert len(catalog.guidelines) == CATALOG_COUNT
     tree = load_job_tree(Settings.load())
     assert [card.id for card in tree.cards] == list(CARD_IDS)
+
+
+def test_names_are_claim_then_source_and_folders_follow_category(
+    live_catalog: Path,
+) -> None:
+    catalog = load_catalog(Settings.load(hosted=True))
+    by_id = {g["id"]: g for g in catalog.guidelines}
+    visible = by_id["forms.field_labels.visible_label"]
+    assert visible["name"] == "Visible field label — NN/g"
+    assert visible["category"] == "Forms"
+    assert (live_catalog / "rules" / "forms" / "nng" / "forms.field_labels.visible_label.json").is_file()
+
+    primary = by_id["actions.buttons.one_primary"]
+    assert primary["name"] == "One primary action — NN/g"
+    assert primary["category"] == "Actions"
+    assert (live_catalog / "rules" / "actions" / "nng" / "actions.buttons.one_primary.json").is_file()
+
+    ant = by_id["ant.one-cta-per-screen"]
+    assert ant["name"] == "One CTA per screen — Ant"
+    assert ant["category"] == "Actions"
+    assert (live_catalog / "rules" / "actions" / "ant" / "ant.one-cta-per-screen.json").is_file()
+
+    for guideline in catalog.guidelines:
+        _slug, label = source_house(guideline)
+        assert guideline["name"].endswith(f" — {label}")
+        assert not guideline["name"].endswith(" — Actions")
+        assert not guideline["name"].endswith(" — Forms")
+
+
+def test_manifest_is_category_then_source_without_bodies(live_catalog: Path) -> None:
+    catalog = load_catalog(Settings.load(hosted=True))
+    data = json.loads((live_catalog / "manifest.json").read_text(encoding="utf-8"))
+    markdown = (live_catalog / "MANIFEST.md").read_text(encoding="utf-8")
+    assert data["count"] == CATALOG_COUNT
+    assert data == build_manifest(catalog.guidelines)
+    dumped = json.dumps(data)
+    assert "pass_when" not in dumped
+    assert "fail_when" not in dumped
+    assert "pass_when" not in markdown
+    actions = next(item for item in data["categories"] if item["id"] == "actions")
+    sources = {item["id"] for item in actions["sources"]}
+    assert "ant" in sources
+    assert "nng" in sources
+    assert "actions" not in sources
+    assert "One CTA per screen — Ant" in markdown
+    assert "catalog/rules/{category}/{source}/{id}.json" in markdown

@@ -8,9 +8,16 @@ those pages support this one claim. Survivor rule text stays as written.
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+SRC = ROOT / "packages" / "mcp" / "src"
+if str(SRC) not in sys.path:
+    sys.path.insert(0, str(SRC))
+
+from open_ux.catalog import find_rule_file, iter_rule_files  # noqa: E402
+
 CATALOG = ROOT / "catalog"
 RULES = CATALOG / "rules"
 LIVE_SEED = (
@@ -138,8 +145,8 @@ def apply_folds(catalog: Path | None = None) -> dict:
     fold_to_keep = {fold: keep for keep, folds in FOLDS.items() for fold in folds}
 
     for keep, folds in FOLDS.items():
-        keep_path = rules / f"{keep}.json"
-        if not keep_path.is_file():
+        keep_path = find_rule_file(rules, keep)
+        if keep_path is None:
             raise SystemExit(f"missing keep file {keep}")
         keep_data = json.loads(keep_path.read_text(encoding="utf-8"))
         cites = _as_cites(keep_data.get("citation"))
@@ -148,8 +155,8 @@ def apply_folds(catalog: Path | None = None) -> dict:
         if keep_data.get("do_not_claim"):
             fences.append(str(keep_data["do_not_claim"]).strip())
         for fold in folds:
-            fold_path = rules / f"{fold}.json"
-            if not fold_path.is_file():
+            fold_path = find_rule_file(rules, fold)
+            if fold_path is None:
                 raise SystemExit(f"missing fold file {fold}")
             fold_data = json.loads(fold_path.read_text(encoding="utf-8"))
             for cite in _as_cites(fold_data.get("citation")):
@@ -170,8 +177,8 @@ def apply_folds(catalog: Path | None = None) -> dict:
 
     removed: list[str] = []
     for gid in sorted(fold_to_keep):
-        path = rules / f"{gid}.json"
-        if path.is_file():
+        path = find_rule_file(rules, gid)
+        if path is not None:
             path.unlink()
             removed.append(gid)
 
@@ -193,7 +200,7 @@ def apply_folds(catalog: Path | None = None) -> dict:
     )
 
     remaining = []
-    for path in sorted(rules.glob("*.json")):
+    for path in iter_rule_files(rules):
         data = json.loads(path.read_text(encoding="utf-8"))
         data["citation"] = _citation_field(_as_cites(data.get("citation")))
         path.write_text(
@@ -218,7 +225,7 @@ def apply_folds(catalog: Path | None = None) -> dict:
         json.dumps(index, indent=2, ensure_ascii=False) + "\n",
         encoding="utf-8",
     )
-    size = sum(p.stat().st_size for p in rules.glob("*.json"))
+    size = sum(p.stat().st_size for p in iter_rule_files(rules))
     stats = {
         "kept": len(FOLDS),
         "folded": len(removed),

@@ -1,0 +1,31 @@
+{
+  "id": "forms.inputs.match_control_and_size",
+  "category": "Forms",
+  "segment": "Inputs",
+  "title": "match control and size",
+  "name": "Match control and size — NN/g",
+  "rule": "Match the control and field size to the type and expected length of input (avoid dropdowns for two or three options that can be radios; size the text field to the expected value).",
+  "citation": [
+    {
+      "source": "NN/g — Website Forms Usability; Apple HIG — Text fields",
+      "url": "https://www.nngroup.com/articles/web-form-design/"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "Two–three options are radios (not a dropdown); text field width fits typical expected length."
+  ],
+  "fail_when": [
+    "Two–three options hidden in a dropdown, or a long value is clipped in a too-narrow field (or a tiny value sits in an oversized unmatched control)."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "overview": "Match control type and field size to option count and expected value length.",
+  "apply_when": "Choosing radios vs dropdowns or sizing text fields to expected length.",
+  "not_when": "Long option lists where a compact chooser is already justified.",
+  "agent_hint": "Use radios for two–three options; size text fields to expected length.",
+  "description": "Match the control and field size to the type and expected length of input: avoid dropdowns for two or three options that can be radios, and size the text field to the expected value. Pass when two–three options are radios and text width fits typical length; fail when those options hide in a dropdown, a long value clips in a narrow field, or a tiny value sits in an oversized unmatched control."
+}

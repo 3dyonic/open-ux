@@ -1,0 +1,32 @@
+{
+  "id": "uswds.real-button-with-type-space-vs-enter",
+  "category": "Actions",
+  "segment": "Buttons",
+  "title": "real button with type space vs enter",
+  "name": "Real button with type; Space vs Enter — USWDS",
+  "rule": "Use a real `<button>` with `type` set (`submit` / `button` / `reset`; default is submit). Do not use `<a>` or `<div>` as the only control. Space triggers a button; Enter triggers a link — do not style links as buttons without that difference.",
+  "citation": [
+    {
+      "source": "USWDS — Button",
+      "url": "https://designsystem.digital.gov/components/button/"
+    }
+  ],
+  "check": "deterministic",
+  "pass_when": [
+    "The control is `<button>` with an explicit `type`. Links are not styled as the only button control."
+  ],
+  "fail_when": [
+    "`<a>` or `<div>` is the only control, or `type` is omitted on a non-submit button so it submits."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "no_clear_primary",
+  "leaf": "pick_primary_action",
+  "overview": "Actions use a real button element with an explicit type; links are not the only button control.",
+  "apply_when": "Implementing clickable actions that submit, reset, or run in-page commands.",
+  "not_when": "Anchor navigation that should remain a real link, not a faux button.",
+  "agent_hint": "Use <button> with explicit type; do not make <a> or <div> the only button control.",
+  "description": "USWDS requires a real `<button>` with `type` set to `submit`, `button`, or `reset` (default is submit). Do not use `<a>` or `<div>` as the only control. Space triggers a button; Enter triggers a link—do not style links as buttons without that difference. Omitting `type` on a non-submit button so it submits, or relying on an anchor/div as the sole control, fails.",
+  "do_not_claim": "Hit-target size; one-primary."
+}

@@ -1,0 +1,32 @@
+{
+  "id": "nng.checkboxes-multi-radios-exclusive",
+  "category": "Forms",
+  "segment": "Choice",
+  "title": "checkboxes multi radios exclusive",
+  "name": "Checkboxes multi radios exclusive — NN/g",
+  "rule": "Checkboxes = independent multi; radios = mutually exclusive exactly-one.",
+  "citation": [
+    {
+      "source": "NN/g — Checkboxes vs. Radio Buttons",
+      "url": "https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/"
+    }
+  ],
+  "check": "deterministic",
+  "pass_when": [
+    "Independent multi uses checkboxes; exactly-one uses radios."
+  ],
+  "fail_when": [
+    "Checkboxes for mutually exclusive exactly-one, or radios for independent multi."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "overview": "Checkboxes are independent multi-select; radios are mutually exclusive exactly-one.",
+  "apply_when": "Choosing between checkbox and radio controls for a choice set.",
+  "not_when": "Not for switches or selects used outside this checkbox-versus-radio decision.",
+  "agent_hint": "Use checkboxes for independent multi; use radios for mutually exclusive exactly-one.",
+  "description": "Checkboxes mean independent multi-select; radios mean mutually exclusive exactly-one. Match the control to that semantics so people do not think they can pick many when only one is allowed, or vice versa. Fail if checkboxes are used for mutually exclusive exactly-one, or radios for independent multi. Choose the control from the exclusivity requirement first. Apply when deciding between checkbox and radio for a choice set.",
+  "do_not_claim": "Visuals (next row); GOV.UK “don’t assume from visuals alone”."
+}

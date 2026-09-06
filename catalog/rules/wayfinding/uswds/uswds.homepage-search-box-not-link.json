@@ -1,0 +1,32 @@
+{
+  "id": "uswds.homepage-search-box-not-link",
+  "category": "Wayfinding",
+  "segment": "Search",
+  "title": "homepage search box not link",
+  "name": "Homepage search box not link — USWDS",
+  "rule": "Home page: search box, not a search link. Advanced search is not the default (most people use one or two terms; advanced as default increases mistakes). Tiny/single-page sites may omit search.",
+  "citation": [
+    {
+      "source": "USWDS — Search",
+      "url": "https://designsystem.digital.gov/components/search/"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "Home offers a search field (unless the site is tiny/single-page and omits search); default search is simple, not advanced."
+  ],
+  "fail_when": [
+    "Home search is only a link to another page, or advanced search is the default."
+  ],
+  "severity": "major",
+  "container": "navigation_and_wayfinding",
+  "card": "compose_search",
+  "facet": "search_is_hard_to_find",
+  "leaf": "place_the_search_control",
+  "overview": "Homepages offer a search box by default, not a link out to search, unless the site is tiny.",
+  "apply_when": "Placing search on a site home where people expect an immediate query field.",
+  "not_when": "Tiny single-page sites that omit search, or advanced search forced as the default.",
+  "agent_hint": "Put a simple search field on the home page; do not default to advanced search.",
+  "description": "USWDS home pages provide a search box, not a search link that sends people elsewhere before they can type. Advanced search is not the default because most people use one or two terms and advanced-as-default increases mistakes. Tiny or single-page sites may omit search. A home that only links away to search, or that opens on advanced search, fails the pattern.",
+  "do_not_claim": "27-character width as this row."
+}

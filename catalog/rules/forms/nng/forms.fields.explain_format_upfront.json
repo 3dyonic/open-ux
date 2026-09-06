@@ -1,0 +1,31 @@
+{
+  "id": "forms.fields.explain_format_upfront",
+  "category": "Forms",
+  "segment": "Fields",
+  "title": "explain format upfront",
+  "name": "Explain format upfront — NN/g",
+  "rule": "If a field requires a specific format or type of input, state those instructions before the user fails.",
+  "citation": [
+    {
+      "source": "NN/g — Website Forms Usability",
+      "url": "https://www.nngroup.com/articles/web-form-design/"
+    }
+  ],
+  "check": "deterministic",
+  "pass_when": [
+    "Format/type instructions are visible next to the field before submit failure."
+  ],
+  "fail_when": [
+    "Format is stated only in a post-submit error, or never."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "requirements_are_a_surprise",
+  "leaf": "mark_requirements_up_front",
+  "overview": "State format or type instructions before the user fails submit.",
+  "apply_when": "Fields require a specific format, pattern, or input type.",
+  "not_when": "Free-text fields with no format or type constraint.",
+  "agent_hint": "Show format instructions beside the field before any submit error.",
+  "description": "If a field needs a specific format or type of input, those instructions must be visible next to the field before the user hits a submit failure. Stating format only in a post-submit error, or never, fails. Pass when format/type guidance is readable up front; fail when users learn the rule only after an error or not at all. Keep the copy tied to the constrained field, not buried elsewhere."
+}

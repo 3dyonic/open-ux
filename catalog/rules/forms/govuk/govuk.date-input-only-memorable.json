@@ -1,0 +1,32 @@
+{
+  "id": "govuk.date-input-only-memorable",
+  "category": "Forms",
+  "segment": "Dates",
+  "title": "date input only memorable",
+  "name": "Date input only memorable — GOV.UK",
+  "rule": "Use date input only for memorable or look-up dates — not for dates users won’t know exactly.",
+  "citation": [
+    {
+      "source": "GOV.UK Design System — Date input",
+      "url": "https://design-system.service.gov.uk/components/date-input/"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "Day/month/year date input is used for dates people know or can look up (e.g. date of birth, document date)."
+  ],
+  "fail_when": [
+    "Date input is used for a date the user will not know exactly."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "overview": "Day/month/year date input is for memorable or look-up dates only.",
+  "apply_when": "Collecting dates people know or can look up, such as birth or document dates.",
+  "not_when": "Not for approximate, relative, or unknown exact dates users cannot recall.",
+  "agent_hint": "Use day/month/year only for memorable or look-up dates, not unknowns.",
+  "description": "Use the day/month/year date input when people know the date or can look it up—for example date of birth or a document date. The pattern is for memorable or look-up dates, not for dates the person will not know exactly. Asking for precise day, month, and year when they cannot supply them creates avoidable errors. Fail if date input is offered for a date they cannot provide precisely. Prefer another date pattern when the value is approximate, relative, or otherwise unknown.",
+  "do_not_claim": "Calendar vs approximate/relative (see `govuk.four-date-types` / `govuk.calendar-control-when`)."
+}

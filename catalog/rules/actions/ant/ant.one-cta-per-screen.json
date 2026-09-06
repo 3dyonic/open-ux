@@ -1,0 +1,32 @@
+{
+  "id": "ant.one-cta-per-screen",
+  "category": "Actions",
+  "segment": "Buttons",
+  "title": "one cta per screen",
+  "name": "One CTA per screen — Ant",
+  "rule": "One Call to Action per screen — CTA usually appears alone, command-like (landing/welcome); may be as wide as its parent. Distinct from one-primary-in-a-group.",
+  "citation": [
+    {
+      "source": "Ant Design — Button spec",
+      "url": "https://ant.design/docs/spec/buttons"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "Landing/welcome (command-like) screen has one CTA, usually alone; may span its parent."
+  ],
+  "fail_when": [
+    "Multiple CTAs on that landing/welcome screen."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "no_clear_primary",
+  "leaf": "pick_primary_action",
+  "overview": "Landing and welcome screens carry one command-like Call to Action.",
+  "apply_when": "Composing a landing or welcome screen with a main command CTA.",
+  "not_when": "In-app button groups — that is one-primary-per-group, not screen CTA.",
+  "agent_hint": "Give landing/welcome screens one CTA alone; do not stack several CTAs.",
+  "description": "Ant’s one Call to Action per screen is for command-like landing or welcome surfaces: the CTA usually appears alone and may span its parent width. It is distinct from limiting Primary inside a button group elsewhere in the product. Use it when composing that landing or welcome command, not ordinary multi-action toolbars. Fail multiple competing CTAs on that landing or welcome screen.",
+  "do_not_claim": "One invented global cap vs group / page / section; `actions.buttons.one_primary` as a delete of this named CTA-per-screen row."
+}

@@ -1,0 +1,32 @@
+{
+  "id": "spectrum.picker-concise-items-full-value",
+  "category": "Forms",
+  "segment": "Picker",
+  "title": "picker concise items full value",
+  "name": "Picker concise items full value — Spectrum",
+  "rule": "Concise menu items; width shows the chosen value in full — wrapping items discouraged; if wrapping is frequent, revise copy or change pattern. Field button should be wide enough that selected items are not ellipsized.",
+  "citation": [
+    {
+      "source": "Spectrum — Picker",
+      "url": "https://spectrum.adobe.com/page/picker/"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "Menu items are concise; the field button is wide enough that the selected value is not ellipsized; frequent wrapping is treated as a copy/pattern problem."
+  ],
+  "fail_when": [
+    "Selected value ellipsized in the field button, or frequently wrapping items left as-is."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "use_familiar_control",
+  "overview": "Picker menu items stay concise; the field button shows the chosen value fully.",
+  "apply_when": "Building pickers and select-like fields where the chosen value must stay readable.",
+  "not_when": "Free-text inputs, multi-line text areas, or icon-only toolbar menus.",
+  "agent_hint": "Keep menu items concise and widen the field so the selection is not ellipsized.",
+  "description": "A Spectrum picker should keep menu copy short and size the field button wide enough that the selected value is not ellipsized. Frequent wrapping is treated as a copy or pattern problem, not something to leave as-is. Truncating the chosen value in the closed field hides what was picked; wrapping every item usually means the labels need revision or a different control. Apply on form pickers; do not stretch this to free-text fields.",
+  "do_not_claim": "Ant dropdown \"option text fully displayed\" as a merge that drops picker field-button width."
+}

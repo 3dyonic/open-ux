@@ -1,0 +1,32 @@
+{
+  "id": "spectrum.dont-place-mobile-toasts-over-navigation",
+  "category": "Feedback",
+  "segment": "Toast",
+  "title": "dont place mobile toasts over navigation",
+  "name": "Don't place mobile toasts over navigation — Spectrum",
+  "rule": "Don't place mobile toasts over navigation.",
+  "citation": [
+    {
+      "source": "Spectrum — Toast",
+      "url": "https://spectrum.adobe.com/page/toast/"
+    }
+  ],
+  "check": "deterministic",
+  "pass_when": [
+    "Mobile toast sits 16 px above the bottom toolbar / not over navigation."
+  ],
+  "fail_when": [
+    "Mobile toast covers navigation."
+  ],
+  "severity": "major",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "system_stayed_quiet_after_change",
+  "leaf": "announce_system_status",
+  "overview": "Mobile toasts must not cover navigation; sit above the bottom toolbar.",
+  "apply_when": "Placing toasts on mobile layouts with bottom navigation.",
+  "not_when": "Mobile toasts that cover navigation controls.",
+  "agent_hint": "Place mobile toasts 16 px above the bottom toolbar, not over navigation.",
+  "description": "On mobile, do not place toasts over navigation. The toast should sit 16 px above the bottom toolbar so nav controls stay reachable. Pass when the mobile toast sits 16 px above the bottom toolbar and not over navigation. Fail when a mobile toast covers navigation and blocks those controls for the duration of the toast.",
+  "do_not_claim": "Desktop bottom-center geometry as this row."
+}

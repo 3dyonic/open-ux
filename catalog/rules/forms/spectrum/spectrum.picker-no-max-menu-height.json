@@ -1,0 +1,32 @@
+{
+  "id": "spectrum.picker-no-max-menu-height",
+  "category": "Forms",
+  "segment": "Picker",
+  "title": "picker no max menu height",
+  "name": "Picker no max menu height — Spectrum",
+  "rule": "No maximum menu height — grow to show as many options as the available space allows. Field value truncates; menu (and label) wrap.",
+  "citation": [
+    {
+      "source": "Spectrum — Picker",
+      "url": "https://spectrum.adobe.com/page/picker/"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "Menu grows with available space (no artificial max); field value may truncate; menu and label wrap."
+  ],
+  "fail_when": [
+    "A capped menu that hides available-space options, or menu that truncates like the field."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "use_familiar_control",
+  "overview": "Picker menus grow with available space; no artificial maximum height.",
+  "apply_when": "Long picker menus where options should fill available viewport space.",
+  "not_when": "Field-value truncation in the closed button, which may still ellipsize.",
+  "agent_hint": "Let the menu grow with space; wrap menu and label, do not invent a max height.",
+  "description": "Spectrum picker menus have no maximum height: they grow to show as many options as available space allows. The closed field value may truncate, while menu items and labels wrap. Capping the menu so available-space options stay hidden, or truncating menu copy like the field button, fails the pattern. Use this when reviewing long option lists; do not confuse field-value ellipsis with a menu height cap.",
+  "do_not_claim": "Item wrapping discouraged (next row) as a max-height rule."
+}

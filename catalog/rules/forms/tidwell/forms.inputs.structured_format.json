@@ -1,0 +1,31 @@
+{
+  "id": "forms.inputs.structured_format",
+  "category": "Forms",
+  "segment": "Inputs",
+  "title": "structured format",
+  "name": "Structured format — Tidwell",
+  "rule": "When a strict syntax is required, put that structure into the control (segmented fields or visible separators) instead of a blank box.",
+  "citation": [
+    {
+      "source": "Designing Interfaces 3e ch. Getting Input — Structured Format (Tidwell, Brewer, Valencia)",
+      "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "Strict-syntax values use segmented fields or visible separators."
+  ],
+  "fail_when": [
+    "Strict syntax is a blank box plus after-the-fact format errors only."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "use_familiar_control",
+  "overview": "Encode strict syntax in segmented fields or separators, not a blank box.",
+  "apply_when": "Values that require a strict syntax users must get right.",
+  "not_when": "Forgiving-format fields that accept multiple recognizable shapes.",
+  "agent_hint": "Use segmented fields or visible separators for strict-syntax values.",
+  "description": "When a strict syntax is required, put that structure into the control — segmented fields or visible separators — instead of a blank box. Pass when strict-syntax values use those structures; fail when strict syntax is a blank box plus after-the-fact format errors only. Structure in the control guides correct entry before submit fails on format."
+}

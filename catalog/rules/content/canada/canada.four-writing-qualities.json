@@ -1,0 +1,32 @@
+{
+  "id": "canada.four-writing-qualities",
+  "category": "Content",
+  "segment": "Voice",
+  "title": "four writing qualities",
+  "name": "Four writing qualities — Canada.ca",
+  "rule": "Four writing qualities: intuitive / comprehensive / targeted / consistent — just enough for a first-time user to finish alone; enough depth for specialists; most important first (don’t dump every option); standardized so people can scan with trust.",
+  "citation": [
+    {
+      "source": "Canada.ca — Designing content; Designing content for Canada.ca",
+      "url": "https://design.canada.ca/specifications/design-content.html"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "Copy lets a first-time user finish, keeps specialist depth, leads with the important, and stays consistent for scanning."
+  ],
+  "fail_when": [
+    "Every option dumped up front; first-time user cannot finish alone; inconsistent patterns that block scanning."
+  ],
+  "severity": "major",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "tone_fights_the_moment",
+  "leaf": "tone_of_voice_for_failure",
+  "overview": "Canada.ca copy should be intuitive, comprehensive, targeted, and consistent.",
+  "apply_when": "Writing task copy so first-time and specialist users can finish.",
+  "not_when": "Purely visual layout choices with no wording or scanning impact.",
+  "agent_hint": "Lead with what matters; enough for first-timers and specialists; stay scannably consistent.",
+  "description": "Canada.ca’s four writing qualities are intuitive, comprehensive, targeted, and consistent: just enough for a first-time user to finish alone, enough depth for specialists, most important first without dumping every option, and standardized so people can scan with trust. Fail dumping every option up front, copy a first-time user cannot finish alone, or inconsistent patterns that block scanning.",
+  "do_not_claim": "Inverted pyramid (next row) as this qualities list."
+}

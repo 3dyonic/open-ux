@@ -1,0 +1,31 @@
+{
+  "id": "forms.inputs.offer_choices_not_only_text",
+  "category": "Forms",
+  "segment": "Inputs",
+  "title": "offer choices not only text",
+  "name": "Offer choices not only text — Apple",
+  "rule": "When possible, offer choices (picker, menu, or other selection) instead of requiring text entry.",
+  "citation": [
+    {
+      "source": "Apple HIG — Entering data",
+      "url": "https://developer.apple.com/design/human-interface-guidelines/entering-data"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "Where a known choice set exists, user picks (picker/menu/selection) instead of typing."
+  ],
+  "fail_when": [
+    "Known choice set is text-entry only."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "overview": "Offer picker or menu choices instead of text entry when a set is known.",
+  "apply_when": "Known choice sets where picking is possible instead of typing.",
+  "not_when": "Open answers with no predefined choice set.",
+  "agent_hint": "Prefer picker/menu/selection over text when the choice set is known.",
+  "description": "When possible, offer choices — picker, menu, or other selection — instead of requiring text entry. Pass where a known choice set exists and the user picks rather than types; fail when that known set is text-entry only. Selection reduces typos and format errors for closed option spaces without inventing choices where none already exist."
+}

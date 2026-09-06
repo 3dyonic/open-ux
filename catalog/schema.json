@@ -31,7 +31,7 @@
     "name": {
       "type": "string",
       "minLength": 1,
-      "description": "Human-friendly display name. Id stays the key; title stays the slug."
+      "description": "Human-friendly display name. Claim first, source last (Ant is a source; Actions is a category). Id stays the key; title stays the slug."
     },
     "rule": { "type": "string", "minLength": 1 },
     "rationale": { "type": "string" },

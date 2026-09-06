@@ -1,0 +1,32 @@
+{
+  "id": "nng.mobile-friendly-payment-options",
+  "category": "Forms",
+  "segment": "Checkout",
+  "title": "mobile friendly payment options",
+  "name": "Mobile friendly payment options — NN/g",
+  "rule": "Mobile-friendly payment options without overwhelming; photo-to-fill card; cross-device cart.",
+  "citation": [
+    {
+      "source": "NN/g — The Mobile Checkout Experience",
+      "url": "https://www.nngroup.com/articles/mobile-checkout-ux/"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "Payment options stay usable on mobile without an overwhelming list; card can be filled from a photo; cart works across devices."
+  ],
+  "fail_when": [
+    "Overwhelming payment list, no photo-to-fill where the article’s pattern applies, or cart that cannot continue on another device."
+  ],
+  "severity": "major",
+  "container": "multi_step_flows",
+  "card": "build_a_multi_step_flow",
+  "facet": "too_much_on_one_step",
+  "leaf": "show_step_progress",
+  "overview": "Mobile payments stay usable; support photo-to-fill and cross-device cart.",
+  "apply_when": "Mobile checkout payment options, card entry, and multi-device carts.",
+  "not_when": "Overwhelming payment lists or carts that cannot continue on another device.",
+  "agent_hint": "Keep mobile payments manageable; enable photo-to-fill card and cross-device cart.",
+  "description": "Offer mobile-friendly payment options without overwhelming the list. Support photo-to-fill for cards and a cart that works across devices. Pass when payment options stay usable on mobile without an overwhelming list, card can be filled from a photo, and cart works across devices. Fail when the payment list overwhelms, photo-to-fill is missing where the pattern applies, or the cart cannot continue on another device.",
+  "do_not_claim": "A required set of named wallets."
+}

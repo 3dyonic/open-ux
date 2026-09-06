@@ -1,0 +1,32 @@
+{
+  "id": "govuk.character-count-fieldset-legend",
+  "category": "Forms",
+  "segment": "Inputs",
+  "title": "character count fieldset legend",
+  "name": "Character count fieldset legend — GOV.UK",
+  "rule": "Character count when a limit is justified; consider word count if more helpful; fieldset+legend to group related controls. (Also named, merged here: break a hard open question into radios instead of one textarea.)",
+  "citation": [
+    {
+      "source": "GOV.UK Design System — Character count; GOV.UK Design System — Fieldset",
+      "url": "https://design-system.service.gov.uk/components/character-count/"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "A justified limit uses a character count (or word count if that is more helpful). Related controls are grouped with fieldset and legend. A hard open question is radios rather than one textarea when that split applies."
+  ],
+  "fail_when": [
+    "Unjustified limit with no count; related controls ungrouped; a hard closed choice dumped into a textarea."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "related_inputs_feel_scattered",
+  "leaf": "group_related_inputs",
+  "overview": "Justified limits get a character or word count; related controls use fieldset and legend.",
+  "apply_when": "Adding a justified length limit or grouping related form controls together.",
+  "not_when": "Not for unjustified caps, or unrelated fields that should stay separate.",
+  "agent_hint": "Show a justified count; group related controls with fieldset and legend.",
+  "description": "When a length limit is justified, show a character count—or a word count if that helps more. Related controls belong in a fieldset with a legend so the group reads as one question. A hard open question that is really a closed choice should become radios instead of one textarea. Fail for an unjustified limit with no count, ungrouped related controls, or a closed choice dumped into a free-text area.",
+  "do_not_claim": "M3 swap supporting text for error (`forms.errors.replace_supporting_text`)."
+}

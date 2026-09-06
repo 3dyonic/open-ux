@@ -1,0 +1,31 @@
+{
+  "id": "forms.labels.clickable",
+  "category": "Forms",
+  "segment": "Field labels",
+  "title": "clickable",
+  "name": "Clickable — Vercel",
+  "rule": "Labels are clickable (`htmlFor` or wrapping the control).",
+  "citation": [
+    {
+      "source": "Vercel Web Interface Guidelines — Forms",
+      "url": "https://github.com/vercel-labs/web-interface-guidelines/blob/main/command.md"
+    }
+  ],
+  "check": "deterministic",
+  "pass_when": [
+    "Activating the label focuses or toggles the associated control via `htmlFor` or wrapping."
+  ],
+  "fail_when": [
+    "Label click does nothing; no association."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "field_has_no_lasting_name",
+  "leaf": "name_a_control",
+  "overview": "Associate labels so activating them focuses or toggles the control.",
+  "apply_when": "HTML labels paired with inputs, checkboxes, or radios.",
+  "not_when": "Decorative text that is not the control’s label.",
+  "agent_hint": "Wire labels with htmlFor or wrapping so clicks activate the control.",
+  "description": "Labels must be clickable via `htmlFor` or by wrapping the control. Pass when activating the label focuses or toggles the associated control; fail when label click does nothing and there is no association. Clickable labels enlarge the hit target and keep the lasting name wired to the control for both pointer and assistive users alike."
+}

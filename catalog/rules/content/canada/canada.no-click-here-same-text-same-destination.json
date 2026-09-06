@@ -1,0 +1,32 @@
+{
+  "id": "canada.no-click-here-same-text-same-destination",
+  "category": "Content",
+  "segment": "Links",
+  "title": "no click here same text same destination",
+  "name": "No “click here”; same text, same destination — Canada.ca",
+  "rule": "No “click here” / “read more”; same text → same destination. Unique descriptive text per distinct URL; same words when two links go to the same page. Don’t bury the task-critical link mid-paragraph. Downloads: file type + size in parentheses inside the link. Other-language / duration likewise in parentheses inside the link.",
+  "citation": [
+    {
+      "source": "Canada.ca — Content Style Guide",
+      "url": "https://design.canada.ca/style-guide/index.html"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "Link text describes the destination; identical text shares a destination; file type/size (and other-language/duration) sit inside the link; task-critical links are not buried mid-paragraph."
+  ],
+  "fail_when": [
+    "“Click here” / “read more”; same text to different URLs; type/size only outside the link."
+  ],
+  "severity": "major",
+  "container": "layout_and_data_display",
+  "card": "write_the_interface",
+  "facet": "link_text_hides_destination",
+  "leaf": "name_the_link_by_destination",
+  "overview": "Link text describes the destination; same words share the same URL.",
+  "apply_when": "Writing Canada.ca in-content links, downloads, or other-language links.",
+  "not_when": "Button or CTA labels governed by action-label patterns instead.",
+  "agent_hint": "Describe the destination in the link; put type/size inside; avoid click here.",
+  "description": "Canada.ca bans “click here” and “read more.” Unique descriptive text per distinct URL; identical wording when two links go to the same page. Do not bury the task-critical link mid-paragraph. Downloads put file type and size in parentheses inside the link; other-language or duration likewise sit inside the link. Fail vague click-here copy, same text to different URLs, or type/size only outside the link.",
+  "do_not_claim": "Intranet parenthetical (next row) as this."
+}

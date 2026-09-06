@@ -1,0 +1,31 @@
+{
+  "id": "actions.icons.always_visible_text_label",
+  "category": "Actions",
+  "segment": "Icons",
+  "title": "always visible text label",
+  "name": "Always-visible text label — NN/g",
+  "rule": "Put a text label next to the icon and keep it visible at all times; do not reveal the label only on hover.",
+  "citation": [
+    {
+      "source": "NN/g — Icon Usability",
+      "url": "https://www.nngroup.com/articles/icon-usability/"
+    }
+  ],
+  "check": "deterministic",
+  "pass_when": [
+    "Command icons have an always-visible text label next to the icon."
+  ],
+  "fail_when": [
+    "Icon-only command, or label only on hover/tooltip."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "action_wording_hides_the_outcome",
+  "leaf": "word_the_action",
+  "overview": "Command icons keep a text label visible beside them at all times.",
+  "apply_when": "Using icons for commands people must recognize without hovering.",
+  "not_when": "Extremely space-constrained toolbars with established universal icons only.",
+  "agent_hint": "Place lasting text beside command icons; do not rely on hover-only labels.",
+  "description": "Command icons need a text label next to them that stays visible at all times. Icon-only commands, or labels revealed only on hover or tooltip, fail recognition for many people and contexts. Pair icon and lasting text for actionable controls so meaning does not depend on pointer hover. Ultra-dense expert chrome with truly universal icons is a narrow exception, not the default pattern."
+}

@@ -1,0 +1,32 @@
+{
+  "id": "nl.header-search-placeholder-visible-search-control",
+  "category": "Forms",
+  "segment": "Search",
+  "title": "header search placeholder visible search control",
+  "name": "Header search placeholder visible search control — NL",
+  "rule": "Header search may use placeholder + visible Search control — the only named placeholder-as-visible-label exception: visually hidden `<label>`, placeholder “Zoek”, submit with text and/or magnifying-glass. Does not pass on ordinary fields. Dual-cite Forms no-placeholder-as-label. Placeholder/label lock unchanged.",
+  "citation": [
+    {
+      "source": "NL Design System — Placeholders zoekfunctie",
+      "url": "https://nldesignsystem.nl/richtlijnen/formulieren/placeholders/zoekfunctie/"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "Header search: hidden `<label>` + placeholder “Zoek” + visible Search control. Ordinary fields still have a visible label (lock)."
+  ],
+  "fail_when": [
+    "An ordinary field uses placeholder as its only label, citing this exception; or header search has no visible Search control and no accessible name."
+  ],
+  "severity": "major",
+  "container": "navigation_and_wayfinding",
+  "card": "compose_search",
+  "facet": "search_is_hard_to_find",
+  "leaf": "place_the_search_control",
+  "overview": "Header search may pair a hidden label and Zoek placeholder with a visible Search control.",
+  "apply_when": "Building the site header search field with a visible Search affordance.",
+  "not_when": "Not for ordinary fields; placeholder-as-only-label remains banned elsewhere.",
+  "agent_hint": "For header search only: hidden label, Zoek placeholder, and a visible Search control.",
+  "description": "Header search is the named exception: a visually hidden `<label>`, placeholder “Zoek”, and a submit with text and/or magnifying-glass. Ordinary fields still need a visible label; this exception does not pass elsewhere. Fail if an ordinary field uses placeholder as its only label citing this exception, or if header search lacks a visible Search control and accessible name. Apply only to site header search with a visible Search affordance.",
+  "do_not_claim": "Placeholder-as-label as passing on non-search fields; GOLD search attributes as this exception."
+}

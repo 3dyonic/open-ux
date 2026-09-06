@@ -1,0 +1,32 @@
+{
+  "id": "ant.hover-detail-overlay-timing",
+  "category": "Feedback",
+  "segment": "Overlay",
+  "title": "hover detail overlay timing",
+  "name": "Hover detail overlay timing — Ant",
+  "rule": "Hover detail overlay timing — 0.5 s delay on mouseover; close immediately on mouse-out.",
+  "citation": [
+    {
+      "source": "Ant Design — Stay on the Page",
+      "url": "https://ant.design/docs/spec/stay"
+    }
+  ],
+  "check": "deterministic",
+  "pass_when": [
+    "Detail overlay appears after 0.5 s hover; closes immediately on mouse-out."
+  ],
+  "fail_when": [
+    "Instant open, delayed close, or no 0.5 s delay."
+  ],
+  "severity": "major",
+  "container": "overlays_and_content_structure",
+  "card": "choose_an_overlay",
+  "facet": "wrong_layer_for_the_content",
+  "leaf": "disclose_instead_of_dump",
+  "overview": "Detail overlays open after 0.5 s hover and close immediately on mouse-out.",
+  "apply_when": "Ant hover detail overlays that enrich content without leaving the page.",
+  "not_when": "Click-driven popovers or menus that are not hover detail overlays.",
+  "agent_hint": "Delay overlay open 0.5 s on hover; close immediately when the pointer leaves.",
+  "description": "Hover detail overlays should appear after a 0.5 second mouseover delay and close immediately on mouse-out. Instant open causes flicker as the pointer crosses the target; delayed close leaves stale overlays hanging over content. The half-second delay filters accidental passes while still feeling responsive for intentional hover. Apply this timing to hover detail layers; click-triggered popovers follow different open and close rules.",
+  "do_not_claim": "Click-outside input overlay (next row)."
+}

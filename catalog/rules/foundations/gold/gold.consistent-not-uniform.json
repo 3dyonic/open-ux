@@ -1,0 +1,32 @@
+{
+  "id": "gold.consistent-not-uniform",
+  "category": "Foundations",
+  "segment": "Principles",
+  "title": "consistent not uniform",
+  "name": "Consistent not uniform — GOLD",
+  "rule": "Consistent, not uniform — same behaviour for common components; services may apply their own colour, type, sub-logo, and flows without disrupting the shared default.",
+  "citation": [
+    {
+      "source": "GOLD — Principles",
+      "url": "https://github.com/designsystemau/gold-design-system-site/blob/main/content/about/principles.md"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "Shared components keep the same behaviour; service colour/type/sub-logo/flow differences do not change that default behaviour."
+  ],
+  "fail_when": [
+    "A service restyles a common control so its behaviour no longer matches the shared default."
+  ],
+  "severity": "major",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "tone_fights_the_moment",
+  "leaf": "tone_of_voice_for_failure",
+  "overview": "Keep shared component behaviour consistent; services may vary colour, type, sub-logo, flows.",
+  "apply_when": "Services restyle shared GOLD components across products.",
+  "not_when": "Demanding identical colour and type across every service.",
+  "agent_hint": "Preserve shared default behaviour; allow service colour/type/sub-logo/flow variation.",
+  "description": "Consistent, not uniform — same behaviour for common components; services may apply their own colour, type, sub-logo, and flows without disrupting the shared default. Pass when shared components keep the same behaviour and service visual or flow differences do not change that default; fail when a service restyles a common control so its behaviour no longer matches the shared default. Behaviour stays aligned; surface branding may differ.",
+  "do_not_claim": "Visual loudness / one-primary as this principle; a house brand-token set."
+}

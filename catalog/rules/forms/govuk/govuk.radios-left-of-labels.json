@@ -1,0 +1,32 @@
+{
+  "id": "govuk.radios-left-of-labels",
+  "category": "Forms",
+  "segment": "Choice",
+  "title": "radios left of labels",
+  "name": "Radios left of labels — GOV.UK",
+  "rule": "Radios sit left of their labels.",
+  "citation": [
+    {
+      "source": "GOV.UK Design System — Radios",
+      "url": "https://design-system.service.gov.uk/components/radios/"
+    }
+  ],
+  "check": "deterministic",
+  "pass_when": [
+    "Each radio control is to the left of its label."
+  ],
+  "fail_when": [
+    "Label left / control right (or stacked so the control is not left of the label)."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "controls_are_hard_to_hit",
+  "leaf": "keep_hit_target_usable",
+  "overview": "Each radio control sits to the left of its label.",
+  "apply_when": "Laying out radio options with visible labels.",
+  "not_when": "Not for checkbox-only groups, or icon buttons without radio semantics.",
+  "agent_hint": "Place each radio to the left of its label; do not reverse or mis-stack them.",
+  "description": "Each radio control belongs to the left of its label so the association stays clear and matches familiar reading order. Reversing label and control, or stacking so the control is not left of the label, breaks that expectation. Keep the radio left and the label immediately to its right. Fail if the label is left and the control right, or if stacking puts the control somewhere other than left of the label. Apply when laying out radio options with visible labels.",
+  "do_not_claim": "Hit-target sharing (`forms.inputs.shared_hit_target_choice`); LTR-only as a world rule."
+}

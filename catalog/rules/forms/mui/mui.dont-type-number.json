@@ -1,0 +1,32 @@
+{
+  "id": "mui.dont-type-number",
+  "category": "Forms",
+  "segment": "Inputs",
+  "title": "dont type number",
+  "name": "Don't use type=number — MUI",
+  "rule": "Do not use `type=\"number\"` on Text Field — allows `e`/`+`/`-`/`.` and silently discards others; scroll increment is accidental. MUI points at GOV.UK number inputs. Dual-cite; do not invent a winner vs Apple number formatter. Fail native `type=number`. Formatted numeric control is Apple's claim, not a house pick.",
+  "citation": [
+    {
+      "source": "MUI — Text Field",
+      "url": "https://mui.com/material-ui/react-text-field/"
+    }
+  ],
+  "check": "deterministic",
+  "pass_when": [
+    "The Text Field does not use native `type=\"number\"`. A formatted numeric control may exist as Apple's claim — not required or banned here."
+  ],
+  "fail_when": [
+    "Native `type=\"number\"` on the Text Field."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "overview": "Do not use native type=number on Text Field; it allows e/+/-/. and accidental scroll increment.",
+  "apply_when": "Collecting numeric values in an MUI Text Field.",
+  "not_when": "Not for non-numeric text, or separate formatted numeric controls claimed elsewhere.",
+  "agent_hint": "Avoid native type=number on Text Field; do not rely on its silent filtering.",
+  "description": "Do not put native `type=\"number\"` on a Text Field: it allows `e`, `+`, `-`, and `.`, silently drops other characters, and makes scroll increment accidental. Those behaviors create surprising invalid or discarded input. Fail whenever the Text Field uses native `type=\"number\"`. A formatted numeric control may exist as another claim—it is neither required nor banned here. Apply when collecting numeric values in an MUI Text Field.",
+  "do_not_claim": "A house winner vs Apple number formatter; that formatted numeric entry is forbidden."
+}

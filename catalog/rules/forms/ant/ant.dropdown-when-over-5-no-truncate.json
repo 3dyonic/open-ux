@@ -1,0 +1,32 @@
+{
+  "id": "ant.dropdown-when-over-5-no-truncate",
+  "category": "Forms",
+  "segment": "Choice",
+  "title": "dropdown when over 5 no truncate",
+  "name": "Dropdown over 5, no truncate — Ant",
+  "rule": "Dropdown when >5 — logical sort; option text fully displayed. Dual-cite NN/g dropdown band; this is Ant's cutoff + no-truncate.",
+  "citation": [
+    {
+      "source": "Ant Design — Data entry",
+      "url": "https://ant.design/docs/spec/data-entry"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "A >5 set uses a dropdown (on this Ant surface), options logically sorted, text fully displayed."
+  ],
+  "fail_when": [
+    ">5 as a radio list on this Ant surface, truncated option text, or unsorted dump."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "overview": "Sets over five options use a dropdown with full text and logical sort.",
+  "apply_when": "Ant data-entry choices with more than five options.",
+  "not_when": "Small option sets (five or fewer) better shown as radios or similar.",
+  "agent_hint": "For >5 options use a dropdown, full labels, and a logical sort order.",
+  "description": "On Ant data-entry surfaces, option sets larger than five belong in a dropdown, with options logically sorted and text fully displayed. Rendering more than five as a long radio list, truncating labels, or dumping an unsorted list fights that cutoff and readability. Full option text prevents guessing truncated meanings. Smaller sets can stay visible as radios or equivalent; this rule targets the oversized band.",
+  "do_not_claim": "A house winner vs NN/g ~5–10 / combobox ~15+ / GOV.UK select-last-resort. Overlap with extra 73: `nng.dropdown-ok-narrow-middle` / `nng.too-many-combobox-not-long-dropdown` / `govuk.select-last-resort`."
+}

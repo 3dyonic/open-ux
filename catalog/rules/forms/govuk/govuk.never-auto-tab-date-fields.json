@@ -1,0 +1,32 @@
+{
+  "id": "govuk.never-auto-tab-date-fields",
+  "category": "Forms",
+  "segment": "Dates",
+  "title": "never auto tab date fields",
+  "name": "Never auto tab date fields — GOV.UK",
+  "rule": "Never auto-tab between day/month/year fields.",
+  "citation": [
+    {
+      "source": "GOV.UK Design System — Date input",
+      "url": "https://design-system.service.gov.uk/components/date-input/"
+    }
+  ],
+  "check": "deterministic",
+  "pass_when": [
+    "Focus stays in the current day, month, or year field until the user moves it."
+  ],
+  "fail_when": [
+    "Completing one segment auto-tabs into the next."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "use_familiar_control",
+  "overview": "Never auto-tab between day, month, and year date fields.",
+  "apply_when": "Implementing segmented day/month/year date inputs.",
+  "not_when": "Not for single-field dates, or intentional user-driven focus moves.",
+  "agent_hint": "Leave focus in the current date segment until the user moves it.",
+  "description": "Focus must stay in the current day, month, or year field until the user moves it. Never auto-tab into the next segment when one is completed; automatic jumps surprise keyboard and assistive-tech users and cause mistyped dates. Let people move between segments themselves. Fail if finishing a segment automatically jumps focus to the next. Apply whenever you implement segmented day/month/year date inputs.",
+  "do_not_claim": "Autocomplete tokens (see `govuk.dob-autocomplete-tokens`)."
+}

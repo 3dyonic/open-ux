@@ -1,0 +1,32 @@
+{
+  "id": "nng.cart-easy-remove-no-extra-update",
+  "category": "Forms",
+  "segment": "Checkout",
+  "title": "cart easy remove no extra update",
+  "name": "Cart easy remove no extra update — NN/g",
+  "rule": "Cart: easy Remove per line; no extra Update button to commit quantity.",
+  "citation": [
+    {
+      "source": "NN/g — The Mobile Checkout Experience",
+      "url": "https://www.nngroup.com/articles/mobile-checkout-ux/"
+    }
+  ],
+  "check": "deterministic",
+  "pass_when": [
+    "Each line has easy Remove; quantity commits without a separate Update button."
+  ],
+  "fail_when": [
+    "Remove is hard to find, or quantity needs an extra Update to commit."
+  ],
+  "severity": "major",
+  "container": "multi_step_flows",
+  "card": "build_a_multi_step_flow",
+  "facet": "too_much_on_one_step",
+  "leaf": "show_step_progress",
+  "overview": "Cart lines offer easy Remove; quantity commits without a separate Update button.",
+  "apply_when": "Designing mobile cart line actions for remove and quantity changes.",
+  "not_when": "Not for non-cart lists without quantity or purchase-line semantics.",
+  "agent_hint": "Put easy Remove on each line; commit quantity without an extra Update button.",
+  "description": "Each cart line needs easy Remove, and quantity should commit without a separate Update button. Extra Update steps and hard-to-find Remove slow mobile checkout and invite mistakes. Fail if Remove is hard to find, or quantity needs an extra Update to commit. Make line removal obvious and let quantity changes take effect directly. Apply when designing mobile cart line actions for remove and quantity.",
+  "do_not_claim": "Undo snackbar (see `nng.support-undo-discoverable`)."
+}

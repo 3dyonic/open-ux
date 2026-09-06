@@ -1,0 +1,32 @@
+{
+  "id": "gold.visual-loudness-primary-secondary-tertiary",
+  "category": "Actions",
+  "segment": "Buttons",
+  "title": "visual loudness primary secondary tertiary",
+  "name": "Visual loudness primary secondary tertiary — GOLD",
+  "rule": "Visual loudness is a named three-level scale: primary / secondary / tertiary so designers can balance visual priority. Dual-cite Actions one-primary; this row is the three-loudness scale, not a second “one primary” rule.",
+  "citation": [
+    {
+      "source": "GOLD — Buttons wayfinding",
+      "url": "https://github.com/designsystemau/gold-design-system-site/blob/main/content/components/buttons/rationale/wayfinding.md"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "Button variants on a view map to primary / secondary / tertiary loudness; one primary remains the dual-cite cap."
+  ],
+  "fail_when": [
+    "All actions share the same loudness with no primary/secondary/tertiary distinction, claimed as this GOLD scale."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "no_clear_primary",
+  "leaf": "pick_primary_action",
+  "overview": "Map button variants to a three-level loudness scale: primary, secondary, tertiary.",
+  "apply_when": "Balancing visual priority of multiple actions on one view.",
+  "not_when": "Treating this row as a second one-primary rule — that is Actions dual-cite.",
+  "agent_hint": "Assign primary/secondary/tertiary loudness; keep one primary as the dual-cite cap.",
+  "description": "Visual loudness is a named three-level scale — primary / secondary / tertiary — so designers can balance visual priority. Dual-cite Actions one-primary; this row is the three-loudness scale, not a second “one primary” rule. Pass when button variants on a view map to primary / secondary / tertiary loudness while one primary remains the dual-cite cap; fail when all actions share the same loudness with no primary/secondary/tertiary distinction claimed as this GOLD scale.",
+  "do_not_claim": "Actions one-primary as this three-level row; Next vs Save-progress pairing as this scale."
+}

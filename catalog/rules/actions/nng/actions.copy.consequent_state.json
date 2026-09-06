@@ -1,0 +1,31 @@
+{
+  "id": "actions.copy.consequent_state",
+  "category": "Actions",
+  "segment": "Copy",
+  "title": "consequent state",
+  "name": "Consequent state — NN/g",
+  "rule": "Command labels describe the state the system will move into, not the current state.",
+  "citation": [
+    {
+      "source": "NN/g — UI Copy",
+      "url": "https://www.nngroup.com/articles/ui-copy/"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "The label names the consequent state."
+  ],
+  "fail_when": [
+    "The label names the current state instead of the state after the command."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "action_wording_hides_the_outcome",
+  "leaf": "word_the_action",
+  "overview": "Command labels name the state after the action, not the current state.",
+  "apply_when": "Labeling toggles or commands that move the system into a new state.",
+  "not_when": "Status readouts that intentionally report the current state only.",
+  "agent_hint": "Label the consequent state the command will enter, not the current one.",
+  "description": "A command label should describe the state the system will move into, not the state it is in now. Naming the current state makes people unsure what clicking will do. Point the words at the consequent state. Status text that only reports current condition is a different pattern and should not be rewritten as a command."
+}

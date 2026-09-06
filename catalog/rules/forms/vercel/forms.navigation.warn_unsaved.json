@@ -1,0 +1,31 @@
+{
+  "id": "forms.navigation.warn_unsaved",
+  "category": "Forms",
+  "segment": "Navigation",
+  "title": "warn unsaved",
+  "name": "Warn unsaved — Vercel",
+  "rule": "Warn before navigation that would lose unsaved changes.",
+  "citation": [
+    {
+      "source": "Vercel Web Interface Guidelines — Forms",
+      "url": "https://github.com/vercel-labs/web-interface-guidelines/blob/main/command.md"
+    }
+  ],
+  "check": "deterministic",
+  "pass_when": [
+    "Leaving with unsaved changes prompts a warning."
+  ],
+  "fail_when": [
+    "Navigation discards unsaved values with no warning."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "protect_destructive_and_leave",
+  "facet": "leaving_discards_work",
+  "leaf": "warn_before_leave",
+  "overview": "Warn before navigation that would discard unsaved form changes.",
+  "apply_when": "Leaving a form or step with dirty unsaved values.",
+  "not_when": "Saved or pristine forms where navigation loses nothing.",
+  "agent_hint": "Prompt before leave when unsaved changes would be discarded.",
+  "description": "Warn before navigation that would lose unsaved changes. Pass when leaving with unsaved changes prompts a warning; fail when navigation discards unsaved values with no warning. The warning protects against accidental data loss on leave without inventing auto-save behavior this row does not require. Apply when the form is dirty; skip when nothing would be lost."
+}

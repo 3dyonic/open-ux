@@ -1,0 +1,32 @@
+{
+  "id": "uswds.filled-next-outline-this-page",
+  "category": "Actions",
+  "segment": "Buttons",
+  "title": "filled next outline this page",
+  "name": "Filled Next, outline this page — USWDS",
+  "rule": "Standard (filled) for actions that go to a next step. Outline for actions that happen on the current page. Unstyled only for less important actions that may look like links.",
+  "citation": [
+    {
+      "source": "USWDS — Button",
+      "url": "https://designsystem.digital.gov/components/button/"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "Next-step actions are filled; same-page actions are outline; unstyled is only for less important link-like actions."
+  ],
+  "fail_when": [
+    "Filled used for a same-page action, outline used as the next-step control, or unstyled used as the primary next step."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "no_clear_primary",
+  "leaf": "pick_primary_action",
+  "overview": "Filled buttons go to a next step; outline buttons act on the current page.",
+  "apply_when": "Choosing filled versus outline button styles for navigation and page actions.",
+  "not_when": "Using unstyled controls as the primary next-step action.",
+  "agent_hint": "Use filled for next-step actions, outline for same-page actions, unstyled only for lesser link-like actions.",
+  "description": "USWDS uses standard filled buttons for actions that go to a next step, outline for actions that happen on the current page, and unstyled only for less important actions that may look like links. Filled same-page actions, outline next-step controls, or unstyled primary next steps invert that hierarchy. Match style to whether the action leaves the page or stays.",
+  "do_not_claim": "Actions one-primary / distinctive-primary as this row."
+}

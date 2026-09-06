@@ -29,9 +29,159 @@ BODY_KEYS = frozenset({"pass_when", "fail_when", "rule", "citation", "check", "s
 AGENT_KEYS = ("overview", "apply_when", "not_when", "agent_hint", "description")
 CATALOG_VERSION = "0.3.0"
 
+# Id prefixes that are sources. `actions` and `forms` are categories, not sources.
+SOURCE_HOUSES: dict[str, str] = {
+    "ant": "Ant",
+    "nng": "NN/g",
+    "govuk": "GOV.UK",
+    "fluent": "Fluent",
+    "polar": "Polaris",
+    "spectrum": "Spectrum",
+    "uswds": "USWDS",
+    "canada": "Canada.ca",
+    "nsw": "NSW",
+    "gold": "GOLD",
+    "nl": "NL",
+    "suomi": "Suomi.fi",
+    "mui": "MUI",
+    "apple": "Apple",
+    "vercel": "Vercel",
+    "material": "Material",
+    "tidwell": "Tidwell",
+}
+CATEGORY_LANES = frozenset({"actions", "forms"})
+CITE_MARKERS: tuple[tuple[str, str], ...] = (
+    ("ant.design", "ant"),
+    ("ant design", "ant"),
+    ("nngroup.com", "nng"),
+    ("nn/g", "nng"),
+    ("developer.apple.com", "apple"),
+    ("apple hig", "apple"),
+    ("vercel", "vercel"),
+    ("material.io", "material"),
+    ("material 3", "material"),
+    ("gov.uk", "govuk"),
+    ("fluent 2", "fluent"),
+    ("fluent", "fluent"),
+    ("polaris", "polar"),
+    ("shopify", "polar"),
+    ("spectrum.adobe", "spectrum"),
+    ("spectrum —", "spectrum"),
+    ("spectrum -", "spectrum"),
+    ("uswds", "uswds"),
+    ("canada.ca", "canada"),
+    ("nsw design", "nsw"),
+    ("nsw —", "nsw"),
+    ("nsw -", "nsw"),
+    ("gold —", "gold"),
+    ("gold -", "gold"),
+    ("nldesignsystem", "nl"),
+    ("nl design", "nl"),
+    ("suomi.fi", "suomi"),
+    ("suomi", "suomi"),
+    ("mui —", "mui"),
+    ("mui -", "mui"),
+    ("tidwell", "tidwell"),
+    ("designing interfaces", "tidwell"),
+)
+
 
 class CatalogError(ValueError):
     """Catalog failed schema, placement, or size checks."""
+
+
+def category_folder(category: str) -> str:
+    text = (category or "").strip().lower().replace("&", "and")
+    slug = "".join(ch if ch.isalnum() else "_" for ch in text)
+    while "__" in slug:
+        slug = slug.replace("__", "_")
+    slug = slug.strip("_")
+    if not slug:
+        raise CatalogError("category is required for the on-disk folder")
+    return slug
+
+
+def _cite_blob(guideline: dict[str, Any]) -> str:
+    cites = guideline.get("citation") or []
+    if not cites:
+        return ""
+    first = cites[0] if isinstance(cites, list) else cites
+    if not isinstance(first, dict):
+        return str(first)
+    return f"{first.get('source') or ''} {first.get('url') or ''}"
+
+
+def _house_from_cite(blob: str) -> str | None:
+    text = blob.lower()
+    best: tuple[int, str] | None = None
+    for marker, slug in CITE_MARKERS:
+        idx = text.find(marker)
+        if idx < 0:
+            continue
+        if best is None or idx < best[0]:
+            best = (idx, slug)
+    return best[1] if best else None
+
+
+def source_house(guideline: dict[str, Any]) -> tuple[str, str]:
+    """Return (folder slug, display label). Source, not category."""
+    gid = str(guideline.get("id") or "")
+    lane = gid.split(".", 1)[0]
+    if lane in SOURCE_HOUSES and lane not in CATEGORY_LANES:
+        return lane, SOURCE_HOUSES[lane]
+    slug = _house_from_cite(_cite_blob(guideline))
+    if slug and slug in SOURCE_HOUSES:
+        return slug, SOURCE_HOUSES[slug]
+    raise CatalogError(f"{gid}: cannot derive a source house")
+
+
+def rule_relpath(guideline: dict[str, Any]) -> Path:
+    slug, _label = source_house(guideline)
+    return (
+        Path(category_folder(str(guideline.get("category") or "")))
+        / slug
+        / f"{guideline['id']}.json"
+    )
+
+
+def rule_dest(rules_dir: Path, guideline: dict[str, Any]) -> Path:
+    return rules_dir / rule_relpath(guideline)
+
+
+def iter_rule_files(rules_dir: Path) -> list[Path]:
+    if not rules_dir.is_dir():
+        return []
+    return sorted(p for p in rules_dir.rglob("*.json") if p.is_file())
+
+
+def find_rule_file(rules_dir: Path, gid: str) -> Path | None:
+    hits = [path for path in iter_rule_files(rules_dir) if path.stem == gid]
+    if len(hits) > 1:
+        raise CatalogError(f"duplicate files for {gid}: {hits}")
+    return hits[0] if hits else None
+
+
+def _rules_root(path: Path) -> Path | None:
+    for parent in path.parents:
+        if parent.name == "rules":
+            return parent
+    return None
+
+
+def _check_rule_path(path: Path, data: dict[str, Any]) -> None:
+    rules_root = _rules_root(path)
+    if rules_root is None or not data.get("category"):
+        return
+    try:
+        expected = rule_relpath(data)
+    except CatalogError:
+        return
+    rel = path.relative_to(rules_root)
+    if rel != expected:
+        raise CatalogError(
+            f"{data['id']}: path catalog/rules/{rel.as_posix()} "
+            f"must be catalog/rules/{expected.as_posix()}"
+        )
 
 
 @dataclass(frozen=True)
@@ -63,7 +213,7 @@ def _rule_files(catalog_path: Path) -> list[Path]:
         raise CatalogError(f"Catalog path does not exist: {catalog_path}")
     rules_dir = catalog_path / "rules"
     if rules_dir.is_dir():
-        return sorted(p for p in rules_dir.glob("*.json") if p.is_file())
+        return iter_rule_files(rules_dir)
     legacy = catalog_path / "guidelines.json"
     if legacy.is_file():
         return [legacy]
@@ -82,6 +232,90 @@ def _index_entry(row: dict[str, Any]) -> dict[str, Any]:
     elif "leaf" in out:
         out.pop("leaf", None)
     return out
+
+
+def build_manifest(guidelines: list[dict[str, Any]]) -> dict[str, Any]:
+    """Category → source map. No rule bodies. For skill reference."""
+    buckets: dict[tuple[str, str, str, str], list[dict[str, Any]]] = {}
+    for guideline in guidelines:
+        cat_title = str(guideline.get("category") or "")
+        cat_id = category_folder(cat_title)
+        src_id, src_title = source_house(guideline)
+        key = (cat_title, cat_id, src_title, src_id)
+        rel = rule_relpath(guideline).as_posix()
+        buckets.setdefault(key, []).append(
+            {
+                "id": guideline["id"],
+                "name": guideline.get("name") or guideline.get("title") or "",
+                "card": guideline.get("card"),
+                "path": f"rules/{rel}",
+            }
+        )
+    categories: dict[str, dict[str, Any]] = {}
+    for cat_title, cat_id, src_title, src_id in sorted(
+        buckets, key=lambda item: (item[0].lower(), item[2].lower())
+    ):
+        rows = sorted(buckets[(cat_title, cat_id, src_title, src_id)], key=lambda r: r["name"].lower())
+        cat = categories.setdefault(
+            cat_id,
+            {"id": cat_id, "title": cat_title, "count": 0, "sources": []},
+        )
+        cat["sources"].append(
+            {"id": src_id, "title": src_title, "count": len(rows), "rules": rows}
+        )
+        cat["count"] += len(rows)
+    return {
+        "version": CATALOG_VERSION,
+        "count": sum(item["count"] for item in categories.values()),
+        "note": (
+            "Auto-generated. Category folder, then source folder. "
+            "No rule bodies. Agents read this map, then fetch one id."
+        ),
+        "categories": list(categories.values()),
+    }
+
+
+def render_manifest_markdown(manifest: dict[str, Any]) -> str:
+    lines = [
+        "# Open UX catalog manifest",
+        "",
+        "Auto-generated. Do not edit by hand. No rule bodies.",
+        "",
+        "Layout: `catalog/rules/{category}/{source}/{id}.json`.",
+        "",
+        "Read this map when you need to see what exists. Then call "
+        "`Open-UX:get_guideline` or open that one file. "
+        "Do not copy guideline ids into SKILL.md.",
+        "",
+        f"{manifest['count']} rules.",
+        "",
+    ]
+    for category in manifest["categories"]:
+        lines.append(f"## {category['title']}")
+        lines.append("")
+        for source in category["sources"]:
+            lines.append(f"### {source['title']}")
+            lines.append("")
+            for row in source["rules"]:
+                card = row.get("card") or ""
+                suffix = f" · `{card}`" if card else ""
+                lines.append(
+                    f"- [{row['name']}]({row['path']}) — `{row['id']}`{suffix}"
+                )
+            lines.append("")
+    return "\n".join(lines).rstrip() + "\n"
+
+
+def _manifest_ids(manifest: dict[str, Any]) -> list[str]:
+    ids: list[str] = []
+    for category in manifest.get("categories") or []:
+        for source in category.get("sources") or []:
+            for row in source.get("rules") or []:
+                ids.append(row["id"])
+                dumped = json.dumps(row)
+                if any(key in dumped for key in ("pass_when", "fail_when", '"rule"')):
+                    raise CatalogError("catalog/manifest.json must not contain rule bodies.")
+    return ids
 
 
 def _index_from_guidelines(guidelines: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -133,6 +367,7 @@ def _load_one(path: Path, schema: dict[str, Any]) -> dict[str, Any]:
     jsonschema.validate(instance=data, schema=schema)
     if path.stem != data.get("id"):
         raise CatalogError(f"Filename {path.name!r} does not match id {data.get('id')!r}.")
+    _check_rule_path(path, data)
     data["_bytes"] = len(raw)
     return data
 
@@ -265,6 +500,11 @@ def load_catalog(settings: Settings | None = None) -> Catalog:
             raise CatalogError("catalog/index.json ids do not match catalog/rules.")
         by_id = {g["id"]: g for g in guidelines}
         guidelines = [by_id[gid] for gid in index_ids]
+        manifest_path = catalog_path / "manifest.json"
+        if manifest_path.is_file():
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            if sorted(_manifest_ids(manifest)) != sorted(catalog_ids):
+                raise CatalogError("catalog/manifest.json ids do not match catalog/rules.")
     else:
         index = _index_from_guidelines(guidelines)
 

@@ -1,0 +1,32 @@
+{
+  "id": "nng.standard-visuals-checkbox-square-radio-circle",
+  "category": "Forms",
+  "segment": "Choice",
+  "title": "standard visuals checkbox square radio circle",
+  "name": "Standard visuals checkbox square radio circle — NN/g",
+  "rule": "Standard visuals: checkbox square; radio circle with solid inner.",
+  "citation": [
+    {
+      "source": "NN/g — Checkboxes vs. Radio Buttons",
+      "url": "https://www.nngroup.com/articles/checkboxes-vs-radio-buttons/"
+    }
+  ],
+  "check": "deterministic",
+  "pass_when": [
+    "Checkboxes are squares; radios are circles with a solid inner when selected."
+  ],
+  "fail_when": [
+    "Swapped or nonstandard shapes that make the two indistinguishable."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "overview": "Checkboxes are squares; radios are circles with a solid selected inner.",
+  "apply_when": "Rendering checkbox and radio controls in forms.",
+  "not_when": "Swapped or nonstandard shapes that make the two indistinguishable.",
+  "agent_hint": "Draw checkboxes as squares and radios as circles with a solid inner when selected.",
+  "description": "Use standard visuals so the two controls stay recognizable: checkboxes are squares; radios are circles with a solid inner when selected. Pass when those shapes hold in the UI for both control types. Fail when shapes are swapped or nonstandard so checkbox and radio become indistinguishable, undermining familiar control recognition for exclusive versus multi-select choices.",
+  "do_not_claim": "Brand icon swaps as a house exception."
+}

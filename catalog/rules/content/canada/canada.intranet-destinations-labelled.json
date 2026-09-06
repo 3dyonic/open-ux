@@ -1,0 +1,32 @@
+{
+  "id": "canada.intranet-destinations-labelled",
+  "category": "Content",
+  "segment": "Links",
+  "title": "intranet destinations labelled",
+  "name": "Intranet destinations labelled — Canada.ca",
+  "rule": "Intranet destinations: “(accessible only on the Government of Canada network)” — public pages must not silently link behind the GC network. (Not a contact pattern.)",
+  "citation": [
+    {
+      "source": "Canada.ca — Content Style Guide",
+      "url": "https://design.canada.ca/style-guide/index.html"
+    }
+  ],
+  "check": "deterministic",
+  "pass_when": [
+    "Public-page links to GC-network-only destinations include that parenthetical."
+  ],
+  "fail_when": [
+    "A public page silently links behind the GC network."
+  ],
+  "severity": "major",
+  "container": "navigation_and_wayfinding",
+  "card": "orient_in_the_place",
+  "facet": "user_cant_tell_where_they_are",
+  "leaf": "wayfind_after_nav",
+  "overview": "Public pages must label links that only work on the GC network.",
+  "apply_when": "Linking from a public Canada.ca page into GC-network-only destinations.",
+  "not_when": "Contact patterns or links that already resolve for the public web.",
+  "agent_hint": "Add “(accessible only on the Government of Canada network)” on those links.",
+  "description": "When a public page links to an intranet destination reachable only on the Government of Canada network, include the parenthetical “(accessible only on the Government of Canada network)”. Public pages must not silently send people behind the GC network. This is not a contact pattern. Fail a public page that links behind the network with no label.",
+  "do_not_claim": "Contact-centre patterns."
+}

@@ -1,0 +1,32 @@
+{
+  "id": "nl.long-legal-jargon-before-form-not-tooltip",
+  "category": "Forms",
+  "segment": "Help",
+  "title": "long legal jargon before form not tooltip",
+  "name": "Long legal jargon before form not tooltip — NL",
+  "rule": "Long or legal jargon lives before the form, not in tooltips — extra click/keystroke hides important copy; screen readers miss loose blocks between questions. Dual-cite Spectrum tooltip last-resort.",
+  "citation": [
+    {
+      "source": "NL Design System — Descriptions lengte",
+      "url": "https://nldesignsystem.nl/richtlijnen/formulieren/descriptions/lengte/"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "Long/legal help is before the form (or on an intro page), not only in a tooltip or loose between questions."
+  ],
+  "fail_when": [
+    "Important long/legal copy is only in a tooltip or only as a loose block between questions."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "field_and_helper_wording",
+  "leaf": "word_the_field_help",
+  "overview": "Long or legal help belongs before the form, not only in tooltips or between questions.",
+  "apply_when": "Placing lengthy or legal explanatory copy for a form.",
+  "not_when": "Not for one-line field hints that stay beside the control.",
+  "agent_hint": "Put long or legal jargon before the form; do not hide it in tooltips alone.",
+  "description": "Long or legal jargon lives before the form or on an intro page—not only in tooltips or as loose blocks between questions. Extra clicks hide important copy, and screen readers miss loose interstitial blocks between fields. Put the explanation where it stays available before people start answering. Fail when important long or legal copy is only in a tooltip or only loose between questions. Apply when placing lengthy or legal help for a form.",
+  "do_not_claim": "Spectrum tooltip-last-resort as a merge; format-in-description from the `pattern` ban as this length/placement row."
+}

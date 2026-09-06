@@ -1,0 +1,32 @@
+{
+  "id": "nl.form-draft-links-new-tab-named-in-link",
+  "category": "Forms",
+  "segment": "Links",
+  "title": "form draft links new tab named in link",
+  "name": "Form draft links new tab named in link — NL",
+  "rule": "In-form links that must not lose the draft open in a new tab, and say so in the link text — `target=\"_blank\"` plus visible “(opent in een nieuwe tab)” (or icon + equivalent SR text inside the link). Dual-cite USWDS identify-destination; this is draft-preservation + in-link announcement.",
+  "citation": [
+    {
+      "source": "NL Design System — Nieuwe tab",
+      "url": "https://nldesignsystem.nl/richtlijnen/formulieren/links/nieuwe-tab/"
+    }
+  ],
+  "check": "deterministic",
+  "pass_when": [
+    "Draft-preserving form links use `target=\"_blank\"` and name the new tab in the link’s visible/SR text."
+  ],
+  "fail_when": [
+    "A form link opens a new tab with no in-link announcement, or a same-tab link drops the draft with no new-tab path when the source required it."
+  ],
+  "severity": "major",
+  "container": "layout_and_data_display",
+  "card": "write_the_interface",
+  "facet": "link_text_hides_destination",
+  "leaf": "name_the_link_by_destination",
+  "overview": "Draft-preserving form links open in a new tab and say so in the link text.",
+  "apply_when": "Linking out from a form where leaving the tab would lose the draft.",
+  "not_when": "Not for ordinary same-tab navigation that intentionally leaves a saved form.",
+  "agent_hint": "Use target=_blank and name the new tab in visible or SR link text.",
+  "description": "In-form links that must not lose the draft open in a new tab (`target=\"_blank\"`) and say so in the link’s visible or screen-reader text—for example “(opent in een nieuwe tab)” or an icon with equivalent SR text inside the link. Fail if a form link opens a new tab with no in-link announcement, or if a same-tab link drops the draft when the source required a new-tab path.",
+  "do_not_claim": "USWDS identify-destination as a merge that drops draft-preservation; labels-only-text as this row."
+}

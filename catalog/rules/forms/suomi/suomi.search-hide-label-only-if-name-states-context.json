@@ -1,0 +1,32 @@
+{
+  "id": "suomi.search-hide-label-only-if-name-states-context",
+  "category": "Forms",
+  "segment": "Search",
+  "title": "search hide label only if name states context",
+  "name": "Search hide label only if name states context — Suomi.fi",
+  "rule": "Search: visually hide the label only if the accessible name states the search context (“Hae sivustolta” / “Hae toimipisteitä”). Placeholder is visual extra. Clear control appears once there is a query. Skip search on tiny single-page tools. Placeholder/label lock: this is not a general placeholder-as-label pass.",
+  "citation": [
+    {
+      "source": "Suomi.fi — SearchInput",
+      "url": "https://designsystem.suomi.fi/components/searchinput/"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "If the search label is visually hidden, the accessible name states context; placeholder is extra; clear appears once there is a query; tiny single-page tools may omit search."
+  ],
+  "fail_when": [
+    "Visually hidden search label with a generic name that does not state context; or ordinary non-search fields hide the label citing this."
+  ],
+  "severity": "major",
+  "container": "navigation_and_wayfinding",
+  "card": "compose_search",
+  "facet": "search_is_hard_to_find",
+  "leaf": "place_the_search_control",
+  "overview": "Visually hide a search label only when the accessible name states the search context.",
+  "apply_when": "Search inputs where a visible label may be hidden if the name carries context.",
+  "not_when": "Ordinary non-search fields, or generic accessible names that omit search context.",
+  "agent_hint": "Hide the search label only if the accessible name states context; keep placeholder as extra.",
+  "description": "Suomi.fi allows visually hiding a search label only when the accessible name states the search context (for example “Hae sivustolta” / “Hae toimipisteitä”). Placeholder remains visual extra; a clear control appears once there is a query; tiny single-page tools may omit search. This is not a general placeholder-as-label pass. A hidden label with a generic name, or ordinary fields citing this rule, fails.",
+  "do_not_claim": "NL header-search placeholder exception as this context-name row; GOLD search placement."
+}
