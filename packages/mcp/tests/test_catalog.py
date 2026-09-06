@@ -15,8 +15,18 @@ from open_ux.catalog import (
     rule_file_stem,
     rule_relpath,
     source_house,
+    validate_placement,
 )
-from open_ux.jobs import CARD_IDS, CONTAINER_IDS, LEAF_IDS, load_job_tree
+from open_ux.jobs import (
+    CARD_IDS,
+    CONTAINER_IDS,
+    LEAF_IDS,
+    Card,
+    Facet,
+    JobTree,
+    Leaf,
+    load_job_tree,
+)
 from open_ux.settings import HARD_CATALOG_BYTES, Settings
 
 LIVE_SEED = (
@@ -195,7 +205,8 @@ def test_rules_load_harvest_counts_after_same_claim_fold(live_catalog: Path) -> 
         assert g["severity"] == "major"
         assert g["container"] in CONTAINER_IDS
         assert g["card"] in CARD_IDS
-        assert g.get("leaf") in LEAF_IDS
+        if "leaf" in g:
+            assert g["leaf"] in LEAF_IDS
         assert g["name"]
         assert g["name"] != g["id"]
         for key in AGENT_KEYS:
@@ -248,21 +259,23 @@ def test_every_rule_has_one_home(live_catalog: Path) -> None:
     catalog = load_catalog(Settings.load(hosted=True))
     tree = load_job_tree(Settings.load())
     facet_home = {}
-    cluster_facets = set()
     for card in tree.cards:
         for facet in card.facets:
-            facet_home[facet.id] = (card.container, card.id, bool(facet.leaves))
-            if not facet.leaves:
-                cluster_facets.add(facet.id)
+            facet_home[facet.id] = (
+                card.container,
+                card.id,
+                {leaf.id for leaf in facet.leaves},
+            )
     unmapped: list[str] = []
     for guideline in catalog.guidelines:
         home = facet_home.get(guideline["facet"])
         if home is None or home[0] != guideline["container"] or home[1] != guideline["card"]:
             unmapped.append(guideline["id"])
             continue
-        if home[2] and guideline.get("leaf") not in LEAF_IDS:
+        leaf_ids = home[2]
+        if leaf_ids and guideline.get("leaf") not in leaf_ids:
             unmapped.append(guideline["id"])
-        if not home[2] and guideline.get("leaf"):
+        if not leaf_ids and guideline.get("leaf"):
             unmapped.append(guideline["id"])
     assert unmapped == []
     by_id = {g["id"]: g for g in catalog.guidelines}
@@ -314,6 +327,126 @@ def test_schema_citation_is_array_of_one_or_many(live_catalog: Path) -> None:
     )
     with pytest.raises(ValidationError):
         validate(instance={**base, "citation": one}, schema=schema)
+
+
+def _schema_probe(**overrides: object) -> dict:
+    row = {
+        "id": "schema.probe",
+        "title": "probe",
+        "name": "Probe",
+        "rule": "one claim",
+        "citation": [{"source": "A", "url": "https://a.example/x"}],
+        "check": "deterministic",
+        "pass_when": ["ok"],
+        "fail_when": ["bad"],
+        "severity": "major",
+        "container": "forms_and_input",
+        "card": "design_a_form",
+        "facet": "field_has_no_lasting_name",
+        "leaf": "name_a_control",
+        "overview": "What this is.",
+        "apply_when": "When composing this.",
+        "not_when": "When it is the wrong job.",
+        "agent_hint": "Apply the cited claim.",
+        "description": "A half-paragraph so the agent can apply the claim without opening SKILL.md.",
+    }
+    row.update(overrides)
+    return row
+
+
+def test_schema_requires_agent_fields_unless_waived(live_catalog: Path) -> None:
+    schema = json.loads((live_catalog / "schema.json").read_text())
+    validate(instance=_schema_probe(), schema=schema)
+    waived = _schema_probe()
+    for key in AGENT_KEYS:
+        waived.pop(key)
+    waived["waive_reason"] = "schema probe"
+    validate(instance=waived, schema=schema)
+    missing = _schema_probe()
+    missing.pop("overview")
+    with pytest.raises(ValidationError):
+        validate(instance=missing, schema=schema)
+    silent = _schema_probe()
+    for key in AGENT_KEYS:
+        silent.pop(key)
+    with pytest.raises(ValidationError):
+        validate(instance=silent, schema=schema)
+
+
+def _placement_rule(**overrides: object) -> dict:
+    row = {
+        "id": "t.rule",
+        "container": "forms_and_input",
+        "card": "design_a_form",
+        "facet": "field_has_no_lasting_name",
+        "leaf": "name_a_control",
+        "overview": "o",
+        "apply_when": "a",
+        "not_when": "n",
+        "agent_hint": "h",
+        "description": "d",
+    }
+    row.update(overrides)
+    return row
+
+
+def test_leaf_required_iff_facet_has_working_leaves() -> None:
+    working = JobTree(
+        containers=(),
+        cards=(
+            Card(
+                id="design_a_form",
+                title="Design a form",
+                container="forms_and_input",
+                problem="p",
+                when=("w",),
+                reject=(),
+                hints=(),
+                facets=(
+                    Facet(
+                        id="field_has_no_lasting_name",
+                        title="t",
+                        leaves=(Leaf(id="name_a_control", guideline_ids=("t.rule",)),),
+                    ),
+                ),
+            ),
+        ),
+    )
+    validate_placement([_placement_rule()], working)
+    omitted = _placement_rule()
+    omitted.pop("leaf")
+    with pytest.raises(CatalogError, match="leaf"):
+        validate_placement([omitted], working)
+
+    cluster = JobTree(
+        containers=(),
+        cards=(
+            Card(
+                id="design_a_form",
+                title="Design a form",
+                container="forms_and_input",
+                problem="p",
+                when=("w",),
+                reject=(),
+                hints=(),
+                facets=(
+                    Facet(
+                        id="cluster_home",
+                        title="t",
+                        guideline_ids=("t.cluster",),
+                    ),
+                ),
+            ),
+        ),
+    )
+    clustered = _placement_rule(id="t.cluster", facet="cluster_home")
+    clustered.pop("leaf")
+    validate_placement([clustered], cluster)
+    with pytest.raises(CatalogError, match="cannot have a leaf"):
+        validate_placement(
+            [_placement_rule(id="t.cluster", facet="cluster_home")],
+            cluster,
+        )
 
 
 def test_citation_is_object_or_array_of_sources() -> None:

@@ -24,7 +24,7 @@ Example: `copy/polar/dont-duplicate-content.json` still has `"id": "polar.dont-d
 | `manifest.json` / `MANIFEST.md` | Generated category → source map for agents. No rule bodies |
 | `schema.json` | One guideline object |
 
-Placement on every rule: `container`, `card`, `facet`, and `leaf` when that Facet has working leaves. Agent-facing fields (`overview`, `apply_when`, `not_when`, `agent_hint`, `description`) live on the rule, never in SKILL.md.
+Placement on every rule: `container`, `card`, `facet`, and `leaf` when that Facet has working leaves. Cluster-only Facets omit `leaf` and list the id in that Facet’s `guideline_ids[]`. Agent-facing fields (`overview`, `apply_when`, `not_when`, `agent_hint`, `description`) are required on the rule, never in SKILL.md. `waive_reason` is the only way to omit them; published files do not use it.
 
 `lane` on the index is the harvest prefix of the `id`. It is not a folder and not a placement key.
 

@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/3dyonic/open-ux/catalog/schema.json",
   "title": "Open UX guideline",
-  "description": "One cited guideline file. Placement points into catalog/jobs.json. Agent-facing fields live here, never in SKILL.md.",
+  "description": "One cited guideline file. Placement points into catalog/jobs.json. Agent-facing fields live here, never in SKILL.md. Those five fields are required unless waive_reason is set. leaf is required only when the Facet has working leaves.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -18,6 +18,20 @@
     "container",
     "card",
     "facet"
+  ],
+  "allOf": [
+    {
+      "if": { "not": { "required": ["waive_reason"] } },
+      "then": {
+        "required": [
+          "overview",
+          "apply_when",
+          "not_when",
+          "agent_hint",
+          "description"
+        ]
+      }
+    }
   ],
   "properties": {
     "id": {
@@ -133,12 +147,36 @@
         "show_step_progress"
       ]
     },
-    "overview": { "type": "string", "minLength": 1 },
-    "apply_when": { "type": "string", "minLength": 1 },
-    "not_when": { "type": "string", "minLength": 1 },
-    "agent_hint": { "type": "string", "minLength": 1 },
-    "description": { "type": "string", "minLength": 1 },
-    "waive_reason": { "type": "string", "minLength": 1 },
+    "overview": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Short definition of what this guideline is. Required unless waive_reason is set."
+    },
+    "apply_when": {
+      "type": "string",
+      "minLength": 1,
+      "description": "When to use, in task language. Required unless waive_reason is set."
+    },
+    "not_when": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Closest wrong use. Required unless waive_reason is set."
+    },
+    "agent_hint": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Short how-to apply while composing. Required unless waive_reason is set."
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Half-paragraph (2–4 sentences). Required unless waive_reason is set."
+    },
+    "waive_reason": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Omit all five agent-facing fields and set this instead. The published catalog does not waive."
+    },
     "jobs": {
       "type": "array",
       "items": { "type": "string" },
