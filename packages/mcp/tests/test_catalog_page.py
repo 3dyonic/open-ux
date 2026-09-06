@@ -4,9 +4,10 @@ from pathlib import Path
 
 from starlette.testclient import TestClient
 
-from open_ux.catalog import Catalog, load_catalog
+from open_ux.catalog import Catalog, citations, load_catalog
 from open_ux.catalog_page import (
     CONTAINER_CHIPS,
+    _strip_source_suffix,
     render_catalog_list,
     render_catalog_not_found,
     render_catalog_rule,
@@ -20,6 +21,8 @@ LIVE_SEED = (
     "forms.field_labels.label_stays_visible",
     "forms.field_labels.error_identifies_and_fixes",
 )
+NNG_SEED = LIVE_SEED[0]
+MULTI_CITE_ID = "forms.fields.distinguish_optional_required"
 KNOWN_BODY = "Place a clear label outside the field so users always know what information belongs there."
 FIELD_ORDER = (
     "name",
@@ -51,6 +54,13 @@ def _public_page_guards(html: str) -> None:
     assert "test-admin-token" not in html
     assert "Bearer " not in html
     assert "OPEN_UX_PEPPER" not in html
+
+
+def test_strip_source_suffix_drops_known_houses() -> None:
+    assert _strip_source_suffix("Visible field label — NN/g") == "Visible field label"
+    assert _strip_source_suffix("One toast at a time — Spectrum") == "One toast at a time"
+    assert _strip_source_suffix("No suffix") == "No suffix"
+    assert _strip_source_suffix("<script>alert(1)</script>") == "<script>alert(1)</script>"
 
 
 def test_seven_container_chips() -> None:
@@ -125,7 +135,9 @@ def test_catalog_rule_known_id_ordered_fields(live_catalog: Path) -> None:
         response = client.get(f"/catalog/{gid}")
         assert response.status_code == 200
         html = response.text
-        assert guideline["name"] in html
+        claim = _strip_source_suffix(guideline["name"])
+        assert f'<h1 class="rule-name" data-field="name">{claim}</h1>' in html
+        assert guideline["name"] != claim
         assert gid in html
         assert guideline["rule"] in html
         positions = [html.index(f'data-field="{field}"') for field in FIELD_ORDER]
@@ -242,3 +254,56 @@ def test_landing_catalog_link(tmp_env: Path) -> None:
         html = client.get("/").text
         assert 'href="/catalog"' in html
         assert ">Catalog</a>" in html
+
+
+def _row_name_for(html: str, guideline_id: str) -> str:
+    marker = f'data-id="{guideline_id}"'
+    start = html.index(marker)
+    chunk = html[start : html.index("</a>", start)]
+    open_tag = chunk.index('class="row-name">') + len('class="row-name">')
+    return chunk[open_tag : chunk.index("</span>", open_tag)]
+
+
+def test_catalog_list_row_title_is_name_without_source(live_catalog: Path) -> None:
+    catalog = load_catalog(Settings.load(hosted=True))
+    guideline = next(g for g in catalog.guidelines if g["id"] == NNG_SEED)
+    assert guideline["name"].endswith(" — NN/g")
+    with _client() as client:
+        html = client.get("/catalog").text
+    title = _row_name_for(html, NNG_SEED)
+    assert title == _strip_source_suffix(guideline["name"])
+    assert title == "Visible field label"
+    assert "— NN/g" not in title
+    assert "— Spectrum" not in title
+    assert title != guideline["name"]
+
+
+def test_catalog_rule_h1_is_name_field_without_source(live_catalog: Path) -> None:
+    catalog = load_catalog(Settings.load(hosted=True))
+    guideline = next(g for g in catalog.guidelines if g["id"] == NNG_SEED)
+    claim = _strip_source_suffix(guideline["name"])
+    assert claim == "Visible field label"
+    with _client() as client:
+        html = client.get(f"/catalog/{NNG_SEED}").text
+    h1 = html.split('<h1 class="rule-name" data-field="name">', 1)[1].split("</h1>", 1)[0]
+    assert h1 == claim
+    assert "— NN/g" not in h1
+    assert h1 != guideline["name"]
+
+
+def test_catalog_rule_one_cite_row_per_citation(live_catalog: Path) -> None:
+    catalog = load_catalog(Settings.load(hosted=True))
+    guideline = next(g for g in catalog.guidelines if g["id"] == MULTI_CITE_ID)
+    cites = citations(guideline)
+    assert len(cites) >= 2
+    with _client() as client:
+        html = client.get(f"/catalog/{MULTI_CITE_ID}").text
+    assert html.count('class="cite-row"') == len(cites)
+    joined = "; ".join(str(row["source"]) for row in cites)
+    assert joined not in html
+    for row in cites:
+        source = str(row["source"])
+        url = str(row["url"])
+        assert f'<div class="cite-row">' in html
+        assert f'<p class="cite-source">{source}</p>' in html
+        assert f'<a class="cite-url" href="{url}">{url}</a>' in html
