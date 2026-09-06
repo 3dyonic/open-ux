@@ -30,7 +30,7 @@
     "rule": { "type": "string", "minLength": 1 },
     "rationale": { "type": "string" },
     "citation": {
-      "description": "Sources that support this one claim. Always an array; extra URLs are more trust, not more claims.",
+      "description": "Sources that support this one claim. Always an array of one or many {source, url}. Extra URLs are more trust, not more claims.",
       "type": "array",
       "minItems": 1,
       "items": { "$ref": "#/$defs/citation" }

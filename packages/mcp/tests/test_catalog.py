@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 
 import pytest
-from jsonschema import ValidationError
+from jsonschema import ValidationError, validate
 
 from open_ux.catalog import AGENT_KEYS, CatalogError, citations, load_catalog
 from open_ux.jobs import CARD_IDS, CONTAINER_IDS, LEAF_IDS, load_job_tree
@@ -273,10 +273,39 @@ def test_live_seeds_keep_locked_homes_and_agent_fields(live_catalog: Path) -> No
     assert error["leaf"] == "explain_failure_next_to_cause"
 
 
+def test_schema_citation_is_array_of_one_or_many(live_catalog: Path) -> None:
+    schema = json.loads((live_catalog / "schema.json").read_text())
+    base = {
+        "id": "cite.shape",
+        "title": "shape",
+        "rule": "one claim",
+        "check": "deterministic",
+        "pass_when": ["ok"],
+        "fail_when": ["bad"],
+        "severity": "major",
+        "container": "forms_and_input",
+        "card": "design_a_form",
+        "facet": "field_has_no_lasting_name",
+        "leaf": "name_a_control",
+        "waive_reason": "shape probe",
+    }
+    one = {"source": "A", "url": "https://a.example/x"}
+    validate(instance={**base, "citation": [one]}, schema=schema)
+    validate(
+        instance={**base, "citation": [one, {"source": "B", "url": "https://b.example/y"}]},
+        schema=schema,
+    )
+    with pytest.raises(ValidationError):
+        validate(instance={**base, "citation": one}, schema=schema)
+
+
 def test_citation_is_object_or_array_of_sources() -> None:
     assert citations({"citation": {"source": "A", "url": "https://a.example"}}) == [
         {"source": "A", "url": "https://a.example"}
     ]
+    assert citations(
+        {"citation": [{"source": "A", "url": "https://a.example"}]}
+    ) == [{"source": "A", "url": "https://a.example"}]
     assert citations(
         {
             "citation": [

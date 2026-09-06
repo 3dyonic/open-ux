@@ -2,7 +2,7 @@
 
 One shared cited catalog. **`catalog/rules/{id}.json` is the SoT** — one guideline object per file.
 
-- `rules/` — 295 guideline files (filename = `id`). Seven leftovers with no honest Leaf were dropped. Same-claim rows fold onto one survivor; `citation` is always an array of `{source, url}`.
+- `rules/` — 295 guideline files (filename = `id`). Seven leftovers with no honest Leaf were dropped. Same-claim rows fold onto one survivor. `citation` is always an array of one or many `{source, url}`.
 - `jobs.json` — 7 containers, 13 Cards, Facet → Leaf map. Pointers only; no rule bodies
 - `index.json` — generated `{id,title,jobs,lane,container,card,facet,leaf?}` (no rule bodies)
 - `schema.json` — one guideline object

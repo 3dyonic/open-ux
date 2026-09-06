@@ -2,8 +2,8 @@
 """Apply the stamped UNS-91 consolidate CSV: 302 rules + 13-card tree.
 
 Drops 7 UNMAPPED leftovers. Regenerates jobs.json, rules/*.json, index.json.
-Then folds the three verified same-claim families and normalizes citation
-to an array of {source, url}.
+Then folds the three verified same-claim families. Citation is always
+an array of one or many {source, url}.
 """
 
 from __future__ import annotations

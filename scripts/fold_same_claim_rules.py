@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Fold same-claim rule files onto one survivor.
 
-Citation is always an array of {source, url}. Extra URLs mean those pages
-support this one claim. Survivor rule / overview / description stay as written.
+Citation is always an array of one or many {source, url}. Extra URLs mean
+those pages support this one claim. Survivor rule text stays as written.
 """
 
 from __future__ import annotations
@@ -98,7 +98,7 @@ def _as_cites(raw) -> list[dict]:
 
 def _citation_field(cites: list[dict]) -> list[dict]:
     if not cites:
-        raise SystemExit("citation array must have at least one {source, url}")
+        raise SystemExit("citation must have at least one {source, url}")
     return cites
 
 
