@@ -1,0 +1,32 @@
+{
+  "id": "uswds.dont-hide-then-reveal-alerts",
+  "category": "Feedback",
+  "segment": "Alert",
+  "title": "dont hide then reveal alerts",
+  "name": "Don't hide then reveal alerts — USWDS",
+  "rule": "Don’t hide-then-reveal alerts in the DOM — older AT can still perceive visually hidden messages that are not currently applicable.",
+  "citation": [
+    {
+      "source": "USWDS — Alert",
+      "url": "https://designsystem.digital.gov/components/alert/"
+    }
+  ],
+  "check": "deterministic",
+  "pass_when": [
+    "Inapplicable alerts are not left visually hidden in the DOM."
+  ],
+  "fail_when": [
+    "Alerts stay in the DOM as visually hidden until “revealed.”"
+  ],
+  "severity": "major",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "system_stayed_quiet_after_change",
+  "leaf": "announce_system_status",
+  "overview": "Do not leave inapplicable alerts visually hidden in the DOM for later reveal.",
+  "apply_when": "Managing alert presence for screen-reader-safe show and hide behavior.",
+  "not_when": "Alerts that are currently applicable and meant to be perceived.",
+  "agent_hint": "Remove inapplicable alerts from the DOM; do not park them visually hidden for later.",
+  "description": "USWDS warns against hide-then-reveal alerts in the DOM because older assistive technology can still perceive visually hidden messages that are not currently applicable. Inapplicable alerts should not remain visually hidden waiting to be “revealed.” Keep only applicable alerts in the DOM; remove or omit the others rather than toggling visibility alone so AT users are not flooded with stale warnings.",
+  "do_not_claim": "Site-alert unused-remove (`display:none`) from the first-pass catalog as this row."
+}

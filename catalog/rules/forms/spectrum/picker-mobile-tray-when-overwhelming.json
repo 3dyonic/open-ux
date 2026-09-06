@@ -1,0 +1,32 @@
+{
+  "id": "spectrum.picker-mobile-tray-when-overwhelming",
+  "category": "Forms",
+  "segment": "Picker",
+  "title": "picker mobile tray when overwhelming",
+  "name": "Picker mobile tray when overwhelming — Spectrum",
+  "rule": "Mobile menu container — popover or tray. Use a tray when the option count would overwhelm a popover.",
+  "citation": [
+    {
+      "source": "Spectrum — Picker",
+      "url": "https://spectrum.adobe.com/page/picker/"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "Mobile picker uses popover, or tray when the option count would overwhelm a popover."
+  ],
+  "fail_when": [
+    "A large option set is forced into a popover that the count would overwhelm, with no tray."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "use_familiar_control",
+  "overview": "Mobile pickers use a popover, or a tray when the option count would overwhelm it.",
+  "apply_when": "Mobile menus with many picker options that would crowd a popover.",
+  "not_when": "Desktop pickers, or small option sets that fit a compact popover.",
+  "agent_hint": "On mobile, switch from popover to tray when the option count would overwhelm.",
+  "description": "On mobile, Spectrum picker menus live in a popover or a tray. Prefer a tray when the option count would overwhelm a popover, rather than forcing a large set into a cramped overlay. Small sets can stay in a popover; large catalogs need the tray pattern so choices remain scannable. Apply on mobile picker containers; do not force tray on desktop or on tiny lists that already fit.",
+  "do_not_claim": "A house option-count cutoff."
+}

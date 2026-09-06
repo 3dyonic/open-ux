@@ -36,7 +36,7 @@ Use the hosted endpoint (request an invite, redeem for an API key) or self-host 
 | `forms.field_labels.label_stays_visible` | The field label remains visible while the field has a value (floating or persistent — not replaced by the value alone). | [Material 3 — Text fields](https://m3.material.io/components/text-fields/guidelines) |
 | `forms.field_labels.error_identifies_and_fixes` | Error text identifies the field and tells the user how to fix it. | [NN/g — Error-Message Guidelines](https://www.nngroup.com/articles/error-message-guidelines/) |
 
-Those ids are the Designer LIVE seed (UNS-44), kept as the first three rows in [`catalog/forms.json`](catalog/forms.json). Actions/verbs live in [`catalog/actions.json`](catalog/actions.json). The on-disk index is [`catalog/index.json`](catalog/index.json).
+Those ids are the Designer LIVE seed (UNS-44), kept first in the generated index. Files live under [`catalog/rules/{category}/{source}/`](catalog/rules/). How the catalog is laid out, and which harvest rows are not files, is in [`catalog/README.md`](catalog/README.md). The generated index is [`catalog/index.json`](catalog/index.json). The skill-facing map is [`catalog/MANIFEST.md`](catalog/MANIFEST.md). The tree is [`catalog/jobs.json`](catalog/jobs.json).
 
 **Out of v1:** other form segments, screenshots, search, suggest-fixes, bulk ingest, inventing look, a server LLM grader.
 
@@ -47,7 +47,7 @@ Those ids are the Designer LIVE seed (UNS-44), kept as the first three rows in [
 | `list_situations` | optional `container`, `limit`, `offset` | Paged Situation Cards (id, title, container) |
 | `get_situation` | Card `id` | Card + facets + leaf / rule pointers. Fails on a Leaf id |
 | `suggest_situations` | `task_text`, optional `surface` | Ranked Card ids from the allowlist. Fallback only |
-| `list_guidelines` | `limit`, `offset` | Paged index: id, title, jobs, lane |
+| `list_guidelines` | `limit`, `offset` | Paged index: id, title, jobs, lane, placement |
 | `search_guidelines` | `query` and/or `jobs` and/or `lane` | Same index shape |
 | `get_guideline` | `id` | Full rule body |
 | `audit` | `jobs` (one Card or container) or `guideline_ids`; optional `query`, `limit` | `{ guidelines: [{ id, title, rule, pass_when, fail_when }], count, total }` |
@@ -56,7 +56,7 @@ Those ids are the Designer LIVE seed (UNS-44), kept as the first three rows in [
 
 ## Catalog
 
-Lane files plus index: [`catalog/actions.json`](catalog/actions.json), [`catalog/forms.json`](catalog/forms.json), [`catalog/govuk.json`](catalog/govuk.json), [`catalog/nng.json`](catalog/nng.json), [`catalog/fluent.json`](catalog/fluent.json), [`catalog/polar.json`](catalog/polar.json), [`catalog/spectrum.json`](catalog/spectrum.json), [`catalog/ant.json`](catalog/ant.json), [`catalog/mui.json`](catalog/mui.json), [`catalog/uswds.json`](catalog/uswds.json), [`catalog/canada.json`](catalog/canada.json), [`catalog/nsw.json`](catalog/nsw.json), [`catalog/gold.json`](catalog/gold.json), [`catalog/nl.json`](catalog/nl.json), [`catalog/suomi.json`](catalog/suomi.json), [`catalog/index.json`](catalog/index.json), [`catalog/schema.json`](catalog/schema.json). Never forked per tenant.
+One file per rule in [`catalog/rules/{category}/{source}/`](catalog/rules/) (`id` on the rule; filename drops the harvest prefix). Generated index: [`catalog/index.json`](catalog/index.json). Skill map: [`catalog/MANIFEST.md`](catalog/MANIFEST.md). Schema: [`catalog/schema.json`](catalog/schema.json). Tree: [`catalog/jobs.json`](catalog/jobs.json). Never forked per tenant.
 
 Soft size ~50–100 KB. Hard ceiling ~384 KB.
 

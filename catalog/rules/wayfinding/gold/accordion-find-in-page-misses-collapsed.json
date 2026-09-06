@@ -1,0 +1,32 @@
+{
+  "id": "gold.accordion-find-in-page-misses-collapsed",
+  "category": "Wayfinding",
+  "segment": "Accordion",
+  "title": "accordion find in page misses collapsed",
+  "name": "Accordion find in page misses collapsed — GOLD",
+  "rule": "Accordion: hidden copy is invisible to Find in page — browsers’ find does not match collapsed accordion text. Dual-cite USWDS “use only if users need a few pieces”; this names the find-in-page failure.",
+  "citation": [
+    {
+      "source": "GOLD — Accordion usage",
+      "url": "https://github.com/designsystemau/gold-design-system-site/blob/main/content/components/accordion/rationale/usage.md"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "Content people must find with Find in page is not only inside a collapsed accordion."
+  ],
+  "fail_when": [
+    "Essential copy lives only in collapsed accordion panels (Find in page cannot match it)."
+  ],
+  "severity": "major",
+  "container": "overlays_and_content_structure",
+  "card": "choose_an_overlay",
+  "facet": "wrong_layer_for_the_content",
+  "leaf": "disclose_instead_of_dump",
+  "overview": "Do not put Find-in-page–essential copy only inside collapsed accordion panels.",
+  "apply_when": "Accordions hold copy users may search for with Find in page.",
+  "not_when": "Non-essential details users need only after intentional expand.",
+  "agent_hint": "Keep Find-in-page–needed copy outside collapsed-only accordion panels.",
+  "description": "Browsers’ Find in page does not match collapsed accordion text, so hidden copy is invisible to find. Dual-cite USWDS “use only if users need a few pieces”; this row names the find-in-page failure. Pass when content people must find with Find in page is not only inside a collapsed accordion; fail when essential copy lives only in collapsed panels Find cannot match.",
+  "do_not_claim": "USWDS accordion-sparingly as a merge that drops the find-in-page name."
+}

@@ -1,0 +1,32 @@
+{
+  "id": "ant.inline-input-feedback-does-not-auto-dismiss",
+  "category": "Forms",
+  "segment": "Errors",
+  "title": "inline input feedback does not auto dismiss",
+  "name": "Inline input feedback does not auto dismiss — Ant",
+  "rule": "Inline input feedback does not auto-dismiss — text follows the block; stays until the user performs the corresponding interaction.",
+  "citation": [
+    {
+      "source": "Ant Design — Feedback spec",
+      "url": "https://ant.design/docs/spec/feedback"
+    }
+  ],
+  "check": "deterministic",
+  "pass_when": [
+    "Inline input feedback stays until the corresponding interaction."
+  ],
+  "fail_when": [
+    "Inline input feedback auto-dismisses."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "handle_form_errors",
+  "facet": "invalid_input_has_no_recovery",
+  "leaf": "recover_from_invalid_input",
+  "overview": "Inline input feedback stays until the user performs the related interaction.",
+  "apply_when": "Showing Ant inline validation or input feedback beside a field.",
+  "not_when": "Transient toasts that are meant to auto-dismiss by design.",
+  "agent_hint": "Keep inline input feedback visible until the matching user interaction occurs.",
+  "description": "Inline input feedback follows the field block and must not auto-dismiss on a timer. It stays until the user performs the corresponding interaction—such as fixing the value or clearing the error. Auto-dismissing inline feedback can vanish before it is read or acted on, leaving the person without guidance. Use lasting inline messages for field feedback; reserve timed dismissal for separate toast patterns that are meant to fade.",
+  "do_not_claim": "Toast/Message auto-dismiss timings as this inline row."
+}

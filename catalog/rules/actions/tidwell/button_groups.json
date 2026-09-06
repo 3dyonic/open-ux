@@ -1,0 +1,31 @@
+{
+  "id": "actions.button_groups",
+  "category": "Actions",
+  "segment": "Layout",
+  "title": "button groups",
+  "name": "Button groups — Tidwell",
+  "rule": "Present related actions as a small cluster of buttons, aligned horizontally or vertically; split into more groups if there are more than three or four actions.",
+  "citation": [
+    {
+      "source": "Designing Interfaces 3e ch. Doing Things — Button Groups (Tidwell, Brewer, Valencia)",
+      "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "Related actions sit in one small horizontal or vertical cluster; more than three or four are split into further groups."
+  ],
+  "fail_when": [
+    "Related actions are scattered, or more than three or four sit in one undifferentiated strip."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "no_clear_primary",
+  "leaf": "pick_primary_action",
+  "overview": "A small aligned cluster of related action buttons, split when the set grows.",
+  "apply_when": "Presenting a few related actions side by side or stacked.",
+  "not_when": "A large command set needs an action panel or overflow menu.",
+  "agent_hint": "Cluster related buttons; split past three or four into further groups.",
+  "description": "Related actions read as one unit when they sit in a small horizontal or vertical cluster rather than scattering across the chrome. Keep each cluster to about three or four buttons; past that, split into further groups so the strip stays scannable. Apply this to peer actions that share a role; do not force a huge tool set into one undifferentiated strip when an action panel or menu is the better home."
+}

@@ -43,6 +43,7 @@ def test_skill_description_is_compose_task_and_short() -> None:
     assert "verdict" not in desc
     assert "pass_when" not in rest
     assert "forms.field_labels" not in rest
+    assert "MANIFEST.md" in rest
     for card_id in CARD_IDS:
         assert card_id in rest
     for title in (
@@ -62,12 +63,13 @@ def test_expand_need_cards_not_leaves(live_catalog: Path) -> None:
     assert "avoid_placeholder_as_label" in expand_need("design_a_form", tree)
     assert "explain_failure_next_to_cause" in expand_need("handle_form_errors", tree)
     assert expand_need("avoid_placeholder_as_label", tree) == []
-    assert expand_need("forms", tree) == ["forms"]
+    assert expand_need("forms", tree) == expand_need("forms_and_input", tree)
+    assert "avoid_placeholder_as_label" in expand_need("forms", tree)
     assert "avoid_placeholder_as_label" in expand_need("forms_and_input", tree)
-    assert expand_need("compose_a_data_display", tree) == []
+    assert "chart_has_a_story" in expand_need("compose_a_data_display", tree)
     display = resolve_need("compose_a_data_display", tree)
-    assert display.tags == ()
-    assert "canada.tables-no-blank-cells" in display.guideline_ids
+    assert "chart_has_a_story" in display.tags
+    assert "nsw.charts-start-with-story" in display.guideline_ids
     overlay = resolve_need("choose_an_overlay", tree)
     assert "nng.modal-and-nonmodal-dialogs" in overlay.guideline_ids
     steps = resolve_need("build_a_multi_step_flow", tree)
@@ -79,7 +81,7 @@ def test_list_situations_returns_allowlist_only(live_catalog: Path) -> None:
     result = list_situations(_tree(live_catalog))
     ids = [row["id"] for row in result["situations"]]
     assert ids == list(CARD_IDS)
-    assert result["total"] == 9
+    assert result["total"] == 13
     for row in result["situations"]:
         assert set(row) == {"id", "title", "container", "facet_count", "provisional"}
         assert BODY_KEYS.isdisjoint(row)
@@ -88,7 +90,7 @@ def test_list_situations_returns_allowlist_only(live_catalog: Path) -> None:
 def test_list_situations_filters_container_alias(live_catalog: Path) -> None:
     result = list_situations(_tree(live_catalog), container="forms")
     ids = [row["id"] for row in result["situations"]]
-    assert ids == ["design_a_form", "handle_form_errors"]
+    assert ids == ["design_a_form", "handle_form_errors", "compose_sign_in"]
 
 
 def test_get_situation_returns_pointers_not_bodies(live_catalog: Path) -> None:

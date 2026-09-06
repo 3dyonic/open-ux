@@ -1,0 +1,32 @@
+{
+  "id": "polar.dont-use-modals-for-complex-forms",
+  "category": "Dialogs",
+  "segment": "Modal",
+  "title": "dont use modals for complex forms",
+  "name": "Don't use modals for complex forms — Polaris",
+  "rule": "Don’t use modals for complex forms or large information; max two bottom actions; tertiary never dismisses.",
+  "citation": [
+    {
+      "source": "Polaris — Modal",
+      "url": "https://polaris.shopify.com/components/overlays/modal"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "Complex forms / large information are not in a modal; modal has at most two bottom actions; a tertiary action does not dismiss."
+  ],
+  "fail_when": [
+    "Complex form or large information in a modal; more than two bottom actions; tertiary dismisses."
+  ],
+  "severity": "major",
+  "container": "overlays_and_content_structure",
+  "card": "choose_an_overlay",
+  "facet": "wrong_layer_for_the_content",
+  "leaf": "pick_modal_only_when_blocking",
+  "overview": "Keep complex forms out of modals; max two bottom actions; tertiary never dismisses.",
+  "apply_when": "Deciding whether a form or large content belongs in a modal.",
+  "not_when": "Complex forms in modals, more than two bottom actions, or tertiary dismiss.",
+  "agent_hint": "Keep complex forms out of modals; limit to two bottom actions; tertiary never dismisses.",
+  "description": "Don’t use modals for complex forms or large information; max two bottom actions; tertiary never dismisses. Pass when complex forms or large information are not in a modal, the modal has at most two bottom actions, and a tertiary action does not dismiss. Fail when a complex form or large information is in a modal, there are more than two bottom actions, or tertiary dismisses.",
+  "do_not_claim": "NN/g modal 7-list as a merge; `actions.button_groups` “three or four”. Overlap with Actions 40: `button_groups` / confirm."
+}

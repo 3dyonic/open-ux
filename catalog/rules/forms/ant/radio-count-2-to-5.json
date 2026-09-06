@@ -1,0 +1,32 @@
+{
+  "id": "ant.radio-count-2-to-5",
+  "category": "Forms",
+  "segment": "Choice",
+  "title": "radio count 2 to 5",
+  "name": "Radio count 2 to 5 — Ant",
+  "rule": "Radio count — must be more than two, normally fewer than five (all options visible to compare). Dual-cite NN/g handful/dropdown cutoff; Ant names the 2–5 band.",
+  "citation": [
+    {
+      "source": "Ant Design — Data entry",
+      "url": "https://ant.design/docs/spec/data-entry"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "Radios are used for more than two and normally fewer than five visible options."
+  ],
+  "fail_when": [
+    "Radios for two-or-fewer as this Ant band, or a long set as radios when Ant would use dropdown (>5)."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "overview": "Radios fit more than two and normally fewer than five visible options.",
+  "apply_when": "Choosing radios versus dropdown for a small exclusive option set.",
+  "not_when": "Binary toggles or long option lists that belong in a dropdown.",
+  "agent_hint": "Use radios for roughly two-to-five visible options users must compare.",
+  "description": "Ant’s radio band is more than two options and normally fewer than five, so every choice stays visible to compare. Dual-cite NN/g handful versus dropdown cutoff; this row names Ant’s 2–5 band. Fail radios for two-or-fewer treated as this Ant band, or a long set kept as radios when Ant would switch to dropdown above five.",
+  "do_not_claim": "One house cutoff vs NN/g handful / Polar <4 / USWDS <7 / M3 6 / Carbon 3. Overlap with extra 73: `nng.too-few-options-radios-not-dropdown` / `polar.select-4plus-choice-list-under-4`. Overlap with Forms 54: `forms.inputs.match_control_and_size`, `dropdown_chooser`, `combo_box`, `offer_choices_not_only_text`."
+}

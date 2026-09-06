@@ -1,0 +1,32 @@
+{
+  "id": "suomi.pagination-skip-link-to-listing",
+  "category": "Wayfinding",
+  "segment": "Pagination",
+  "title": "pagination skip link to listing",
+  "name": "Pagination skip link to listing — Suomi.fi",
+  "rule": "Pagination: skip-link (or in-page link) back to the listing; optional page-number field when there are many pages; SR copy without odd punctuation (“Sivu 1 kautta 20”). Dual-cite USWDS/NSW pagination.",
+  "citation": [
+    {
+      "source": "Suomi.fi — Pagination",
+      "url": "https://designsystem.suomi.fi/components/pagination/"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "A skip/in-page link returns to the listing; many-page sets may include a page-number field; SR text avoids odd punctuation."
+  ],
+  "fail_when": [
+    "Pagination has no way back to the listing start; SR copy uses odd punctuation instead of the named pattern."
+  ],
+  "severity": "major",
+  "container": "navigation_and_wayfinding",
+  "card": "orient_in_the_place",
+  "facet": "user_cant_tell_where_they_are",
+  "leaf": "wayfind_after_nav",
+  "overview": "Pagination includes a skip or in-page link back to the listing start.",
+  "apply_when": "Paginating long listings where users return to the top of results.",
+  "not_when": "Single-page lists with no pagination controls.",
+  "agent_hint": "Add a skip/in-page link back to the listing; keep SR page copy free of odd punctuation.",
+  "description": "Suomi.fi pagination provides a skip-link or in-page link back to the listing, may include an optional page-number field when there are many pages, and keeps screen-reader copy free of odd punctuation (for example “Sivu 1 kautta 20”). Dual-cite USWDS/NSW pagination. Pagination with no return to the listing start, or SR text that uses odd punctuation instead of the named pattern, fails.",
+  "do_not_claim": "USWDS/NSW pagination as a merge that drops skip-back-to-listing."
+}

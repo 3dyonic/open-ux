@@ -1,0 +1,31 @@
+{
+  "id": "actions.copy.verbs_for_actions",
+  "category": "Actions",
+  "segment": "Copy",
+  "title": "verbs for actions",
+  "name": "Verbs for actions — NN/g",
+  "rule": "Lead with a verb (or a specific verb phrase) for commands that initiate an action or submit information; prefer a specific verb over a generic Next.",
+  "citation": [
+    {
+      "source": "NN/g — UI Copy",
+      "url": "https://www.nngroup.com/articles/ui-copy/"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "Action/submit commands lead with a verb or specific verb phrase, not a generic Next."
+  ],
+  "fail_when": [
+    "Noun-only or generic Next where a specific verb is available."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "action_wording_hides_the_outcome",
+  "leaf": "word_the_action",
+  "overview": "Action and submit commands lead with a specific verb, not generic Next.",
+  "apply_when": "Labeling commands that initiate work or submit information.",
+  "not_when": "Appearance adjectives for look/state toggles rather than actions.",
+  "agent_hint": "Lead action/submit labels with a specific verb; avoid noun-only or Next.",
+  "description": "Commands that initiate an action or submit information should lead with a verb or specific verb phrase. Prefer a concrete verb over a generic Next when a better word exists for the outcome. Noun-only labels and vague Next hide what will happen after the click. Keep adjectives for appearance commands; verbs own the action and submit lane."
+}

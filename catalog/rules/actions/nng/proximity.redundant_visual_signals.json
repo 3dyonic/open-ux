@@ -1,0 +1,31 @@
+{
+  "id": "actions.proximity.redundant_visual_signals",
+  "category": "Actions",
+  "segment": "Proximity",
+  "title": "redundant visual signals",
+  "name": "Redundant visual signals — NN/g",
+  "rule": "Separate the consequential option with space and redundant visual signals (color, icon, size, alignment), not the label alone.",
+  "citation": [
+    {
+      "source": "NN/g — Dangerous UX: Consequential Options Close to Benign Options",
+      "url": "https://www.nngroup.com/articles/proximity-consequential-options/"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "The consequential option is separated with space and more than one of color, icon, size, alignment — not the label alone."
+  ],
+  "fail_when": [
+    "Distinction is label-only, or a single non-label cue with no space."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "protect_destructive_and_leave",
+  "facet": "destructive_is_too_easy",
+  "leaf": "disable_or_confirm_destructive",
+  "overview": "Consequential options are separated by space plus redundant visual signals.",
+  "apply_when": "Distinguishing a dangerous option near safer peers in the same view.",
+  "not_when": "Ordinary peer actions that share equal risk and need no danger separation.",
+  "agent_hint": "Separate consequential options with space and multiple cues, not label alone.",
+  "description": "A consequential option should be separated with space and redundant visual signals—color, icon, size, alignment—not the label alone. Label-only distinction, or a single cue without space, is easy to miss under speed or stress. Stack multiple cues when danger sits near benign choices so the separation survives a quick glance. Equal-risk peer actions that share the same stakes do not need this danger treatment."
+}

@@ -1,0 +1,32 @@
+{
+  "id": "ant.form-in-modal-lifecycle",
+  "category": "Forms",
+  "segment": "Modal",
+  "title": "form in modal lifecycle",
+  "name": "Form in modal lifecycle — Ant",
+  "rule": "Form-in-Modal lifecycle — list-page \"create\" may popup a form in Modal. `destroyOnHidden` does not clear Form fields — call `resetFields`. `useForm` before open is disconnected unless `forceRender` (or equivalent). Prefer native submit; if the submit control is outside the Form (Modal footer), call `form.submit`.",
+  "citation": [
+    {
+      "source": "Ant Design — Form ; Ant Design — Modal",
+      "url": "https://ant.design/components/form"
+    }
+  ],
+  "check": "deterministic",
+  "pass_when": [
+    "Reopened create-modal form is reset (`resetFields`); form instance is connected when opened; footer submit still submits the Form (`form.submit` if outside)."
+  ],
+  "fail_when": [
+    "Stale fields after close (`destroyOnHidden` treated as reset); disconnected `useForm` without force-render; footer button that does not submit the Form."
+  ],
+  "severity": "major",
+  "container": "overlays_and_content_structure",
+  "card": "choose_an_overlay",
+  "facet": "wrong_layer_for_the_content",
+  "leaf": "pick_modal_only_when_blocking",
+  "overview": "Create-modals reset fields, keep the form connected, and submit from the footer.",
+  "apply_when": "Ant list-page create flows that open a form inside a Modal.",
+  "not_when": "Inline page forms that are not mounted in a create Modal lifecycle.",
+  "agent_hint": "Call resetFields on reopen; connect useForm; submit via form.submit from footer.",
+  "description": "List-page create may open a form in a Modal. destroyOnHidden does not clear Form fields—call resetFields. useForm created before open stays disconnected unless forceRender (or equivalent) connects it. Prefer native submit; if the submit control sits in the Modal footer outside the Form, call form.submit. Stale fields, disconnected instances, or footer buttons that never submit break the lifecycle.",
+  "do_not_claim": "API-table props beyond these named lifecycle facts; Polar \"don't use modals for complex forms\" as a winner."
+}

@@ -19,6 +19,7 @@ def _assert_pack_row(row: dict) -> None:
     assert set(row) == set(PACK_KEYS)
     assert row["id"]
     assert row["title"]
+    assert row["name"]
     assert row["rule"]
     assert row["pass_when"]
     assert row["fail_when"]
@@ -44,7 +45,6 @@ def test_jobs_forms_alias_includes_live_seeds(live_catalog: Path) -> None:
     ids = {row["id"] for row in result["guidelines"]}
     assert VISIBLE in ids
     assert ERROR in ids
-    assert all(not row["id"].startswith("actions.") for row in result["guidelines"])
     _assert_pack_row(next(r for r in result["guidelines"] if r["id"] == VISIBLE))
 
 
@@ -139,7 +139,6 @@ def test_cluster_only_cards_return_pointer_criteria(live_catalog: Path) -> None:
     display_ids = {row["id"] for row in display["guidelines"]}
     overlay_ids = {row["id"] for row in overlay["guidelines"]}
     step_ids = {row["id"] for row in steps["guidelines"]}
-    assert "canada.tables-no-blank-cells" in display_ids
     assert "nsw.charts-start-with-story" in display_ids
     assert "nng.modal-and-nonmodal-dialogs" in overlay_ids
     assert "nl.step-n-of-m-in-title-and-above-form" in step_ids
@@ -152,7 +151,7 @@ def test_cluster_only_cards_return_pointer_criteria(live_catalog: Path) -> None:
 def test_container_without_leaves_uses_card_pointers(live_catalog: Path) -> None:
     result = audit(_catalog(live_catalog), jobs="layout_and_data_display", limit=50)
     ids = {row["id"] for row in result["guidelines"]}
-    assert "canada.tables-no-blank-cells" in ids
+    assert "nsw.charts-start-with-story" in ids
 
 
 def test_dense_card_includes_cluster_pointers(live_catalog: Path) -> None:

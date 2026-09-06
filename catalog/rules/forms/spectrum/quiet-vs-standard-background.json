@@ -1,0 +1,32 @@
+{
+  "id": "spectrum.quiet-vs-standard-background",
+  "category": "Forms",
+  "segment": "Text field",
+  "title": "quiet vs standard background",
+  "name": "Quiet vs standard background — Spectrum",
+  "rule": "Visible background for dense control arrays / isolated buttons; quiet (no fill) only when a clear stack/table/grid makes the field parseable. Too many quiet controls in a small space are hard to read.",
+  "citation": [
+    {
+      "source": "Spectrum — Text field",
+      "url": "https://spectrum.adobe.com/page/text-field/"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "Standard (visible background) is used for dense arrays or isolated buttons; quiet is used only where a clear stack/table/grid makes the field parseable."
+  ],
+  "fail_when": [
+    "Quiet (no fill) in a dense small space, or isolated buttons with no visible field background."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "use_familiar_control",
+  "overview": "Standard filled backgrounds for dense or isolated controls; quiet only in clear grids.",
+  "apply_when": "Choosing quiet versus standard text-field chrome in dense forms or tables.",
+  "not_when": "Isolated buttons or dense clusters that need a visible field background.",
+  "agent_hint": "Use visible backgrounds for dense or isolated controls; quiet only in clear stacks.",
+  "description": "Spectrum text fields use a visible background for dense control arrays and isolated buttons so each field stays parseable. Quiet (no fill) is reserved for places where a clear stack, table, or grid already makes the field boundaries obvious. Too many quiet controls in a small space become hard to read. Prefer standard chrome for crowded or lone controls; reserve quiet for structured layouts that already group the fields.",
+  "do_not_claim": "Hit-target px floors; quiet as a brand default."
+}

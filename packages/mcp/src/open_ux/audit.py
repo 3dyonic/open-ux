@@ -5,7 +5,7 @@ from typing import Any
 from open_ux.catalog import EMPTY_NOTE, Catalog, get_by_id, select_by_jobs
 from open_ux.jobs import DEFAULT_LIMIT, MAX_LIMIT, MISS_NOTE
 
-PACK_KEYS = ("id", "title", "rule", "pass_when", "fail_when")
+PACK_KEYS = ("id", "title", "name", "rule", "pass_when", "fail_when")
 NEED_ERROR = "audit requires jobs or guideline_ids; the full catalog is never run."
 
 
@@ -21,6 +21,7 @@ def _pack(guideline: dict[str, Any]) -> dict[str, Any]:
     return {
         "id": guideline["id"],
         "title": guideline.get("title") or "",
+        "name": guideline.get("name") or guideline.get("title") or "",
         "rule": guideline.get("rule") or "",
         "pass_when": list(guideline.get("pass_when") or []),
         "fail_when": list(guideline.get("fail_when") or []),
@@ -35,6 +36,7 @@ def _matches_query(guideline: dict[str, Any], query: str | None) -> bool:
         [
             str(guideline.get("id") or ""),
             str(guideline.get("title") or ""),
+            str(guideline.get("name") or ""),
             str(guideline.get("rule") or ""),
             " ".join(guideline.get("pass_when") or []),
             " ".join(guideline.get("fail_when") or []),

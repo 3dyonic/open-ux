@@ -1,0 +1,32 @@
+{
+  "id": "uswds.alerts-dont-blame-name-next-step",
+  "category": "Feedback",
+  "segment": "Alert",
+  "title": "alerts dont blame name next step",
+  "name": "Alerts Don't blame name next step — USWDS",
+  "rule": "Don’t blame the user; name the next step. Polite; include how to recover. Educational material is allowed because people will read an error that unblocks them. Don’t notify off the current goal. Destructive work → confirmation modal, not an alert.",
+  "citation": [
+    {
+      "source": "USWDS — Alert",
+      "url": "https://designsystem.digital.gov/components/alert/"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "Copy is polite, names recovery, stays on the current goal; destructive actions use a confirmation modal."
+  ],
+  "fail_when": [
+    "Blame-the-user copy; no next step; alert used instead of a destructive confirmation; notification unrelated to the current goal."
+  ],
+  "severity": "major",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "system_stayed_quiet_after_change",
+  "leaf": "announce_system_status",
+  "overview": "Alert copy stays polite, names the next step, and keeps destructive work in a confirmation modal.",
+  "apply_when": "Writing recovery-oriented alerts tied to the user’s current goal.",
+  "not_when": "Blameful error copy, goal-unrelated notices, or alerts standing in for destructive confirms.",
+  "agent_hint": "Write polite recovery steps on-goal; use a confirmation modal for destructive work.",
+  "description": "USWDS alerts do not blame the user; they name the next step, stay polite, and include how to recover. Educational material is allowed because people will read an error that unblocks them. Do not notify off the current goal, and send destructive work to a confirmation modal rather than an alert. Blameful copy, missing next steps, off-goal notices, or alerts replacing destructive confirms fail.",
+  "do_not_claim": "Site alert stacking; Spectrum toast-vs-dialog."
+}

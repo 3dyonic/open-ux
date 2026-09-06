@@ -1,0 +1,32 @@
+{
+  "id": "suomi.errorsummary-link-text-equals-field-error",
+  "category": "Forms",
+  "segment": "Errors",
+  "title": "errorsummary link text equals field error",
+  "name": "Errorsummary link text equals field error — Suomi.fi",
+  "rule": "ErrorSummary link text = the field’s error text — same wording in both places so either context still reads.",
+  "citation": [
+    {
+      "source": "Suomi.fi — Static form",
+      "url": "https://designsystem.suomi.fi/patterns/static-form/"
+    }
+  ],
+  "check": "deterministic",
+  "pass_when": [
+    "Each ErrorSummary link uses the same wording as that field’s error text."
+  ],
+  "fail_when": [
+    "Summary link wording differs from the field error (e.g. only the field label in the summary)."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "handle_form_errors",
+  "facet": "errors_dont_point_to_the_fix",
+  "leaf": "explain_failure_next_to_cause",
+  "overview": "Each ErrorSummary link repeats that field’s error text with the same wording.",
+  "apply_when": "Wiring submit-time ErrorSummary links back to invalid fields.",
+  "not_when": "Success summaries, toast confirmations, or summaries that only repeat field labels.",
+  "agent_hint": "Match ErrorSummary link text to each field’s error wording exactly.",
+  "description": "Suomi.fi ErrorSummary links must use the same wording as the field’s error text so either context still reads clearly. Replacing the error with only the field label, or rewriting the summary in different words, breaks that parallel recognition. Keep the strings identical so users spot the same problem at the summary and beside the field without translating between two phrasings.",
+  "do_not_claim": "Submit-time default as this wording row; GOV.UK error summary as a merge that drops same-wording."
+}

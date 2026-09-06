@@ -1,0 +1,31 @@
+{
+  "id": "forms.submit.enabled_until_request",
+  "category": "Forms",
+  "segment": "Submit",
+  "title": "enabled until request",
+  "name": "Enabled until request — Vercel",
+  "rule": "Keep Submit enabled until the request starts; then show a spinner on the request.",
+  "citation": [
+    {
+      "source": "Vercel Web Interface Guidelines — Forms",
+      "url": "https://github.com/vercel-labs/web-interface-guidelines/blob/main/command.md"
+    }
+  ],
+  "check": "deterministic",
+  "pass_when": [
+    "Submit stays enabled until the request starts; then a spinner (in-flight) shows."
+  ],
+  "fail_when": [
+    "Submit is disabled before the request starts, or in-flight has no spinner."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "no_clear_primary",
+  "leaf": "pick_primary_action",
+  "overview": "Keep Submit enabled until the request starts; then show an in-flight spinner.",
+  "apply_when": "Submit actions that fire a network or async request.",
+  "not_when": "Client-only saves with no request that needs in-flight feedback.",
+  "agent_hint": "Leave Submit enabled until request start; show a spinner while in flight.",
+  "description": "Keep Submit enabled until the request starts; then show a spinner on the request. Pass when Submit stays enabled until the request starts and an in-flight spinner shows; fail when Submit is disabled before the request starts, or in-flight has no spinner. Premature disable blocks last-second correction; a missing spinner hides that work is in flight."
+}

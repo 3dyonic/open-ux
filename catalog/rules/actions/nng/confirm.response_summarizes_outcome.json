@@ -1,0 +1,31 @@
+{
+  "id": "actions.confirm.response_summarizes_outcome",
+  "category": "Actions",
+  "segment": "Confirmation",
+  "title": "response summarizes outcome",
+  "name": "Response summarizes outcome — NN/g",
+  "rule": "Label responses with what will happen (Delete file / Keep file), not Yes/No.",
+  "citation": [
+    {
+      "source": "NN/g — Confirmation Dialogs (§4)",
+      "url": "https://www.nngroup.com/articles/confirmation-dialog/"
+    }
+  ],
+  "check": "deterministic",
+  "pass_when": [
+    "Confirmation actions are labeled with the outcome (e.g. Delete file / Keep file)."
+  ],
+  "fail_when": [
+    "Yes/No (or OK) on the confirmation."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "protect_destructive_and_leave",
+  "facet": "destructive_is_too_easy",
+  "leaf": "disable_or_confirm_destructive",
+  "overview": "Confirm buttons name the outcome, such as Delete file versus Keep file.",
+  "apply_when": "Labeling actions on confirmation dialogs for consequential choices.",
+  "not_when": "Simple notices with a single dismiss that is not a binary choice.",
+  "agent_hint": "Label confirm actions with outcomes, not Yes, No, or bare OK.",
+  "description": "Confirmation responses should say what will happen—Delete file / Keep file—not generic Yes/No or bare OK. Outcome labels reduce misclicks because the commit verb restates the consequence in the same words as the decision. Use them on choice dialogs where two paths diverge in impact. A lone dismiss on an informational notice does not need a fake binary pair of Yes and No."
+}

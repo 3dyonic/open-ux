@@ -1,0 +1,32 @@
+{
+  "id": "ant.group-spacing-overflow-dropdown",
+  "category": "Actions",
+  "segment": "Button groups",
+  "title": "group spacing overflow dropdown",
+  "name": "Group spacing overflow dropdown — Ant",
+  "rule": "Flush groups look like a Toggle. Align in one line with spaces. Same group: no dividers. Different groups: space or a divider. If more than three operations: 1 primary + n secondary, extra into a Dropdown.",
+  "citation": [
+    {
+      "source": "Ant Design — Button spec",
+      "url": "https://ant.design/docs/spec/buttons"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "Related actions are spaced (not flush-as-toggle); same group has no divider; different groups use space or a divider; more than three operations use 1 primary + secondaries, extras in a Dropdown."
+  ],
+  "fail_when": [
+    "Flush non-toggle groups; dividers inside one group; more than three operations left in one undifferentiated strip."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "no_clear_primary",
+  "leaf": "pick_primary_action",
+  "overview": "Spaced button groups, dividers between groups, overflow past three into Dropdown.",
+  "apply_when": "Arranging multiple Ant operations in toolbars or action strips.",
+  "not_when": "A true Toggle group that intentionally uses flush joined segments.",
+  "agent_hint": "Space related actions; divide groups; keep 1 primary and overflow extras.",
+  "description": "Flush groups can look like a Toggle—align related actions in one line with spaces. Same group: no dividers. Different groups: space or a divider. With more than three operations, keep one primary plus secondaries and move extras into a Dropdown. Flush non-toggle groups, dividers inside one group, or an undifferentiated strip of many operations all fail this Ant button guidance.",
+  "do_not_claim": "A house cap other than Ant's \"more than three\" / Tidwell \"three or four\". Overlap with Actions 40: `actions.button_groups`."
+}

@@ -1,0 +1,31 @@
+{
+  "id": "forms.layout.group_related_labels_fields",
+  "category": "Forms",
+  "segment": "Layout",
+  "title": "group related labels fields",
+  "name": "Group related labels fields — NN/g",
+  "rule": "Visually group related labels and fields; put each label close to its field (not equidistant from several).",
+  "citation": [
+    {
+      "source": "NN/g — Website Forms Usability",
+      "url": "https://www.nngroup.com/articles/web-form-design/"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "Related fields share a visual group; each label is closer to its own field than to neighbors."
+  ],
+  "fail_when": [
+    "Related fields are ungrouped, or a label sits equally between two controls."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "related_inputs_feel_scattered",
+  "leaf": "group_related_inputs",
+  "overview": "Group related fields visually; keep each label closer to its own control.",
+  "apply_when": "Forms with related field clusters or multi-control rows.",
+  "not_when": "Single isolated fields with no related neighbors to group.",
+  "agent_hint": "Cluster related fields; place each label nearer its field than neighbors.",
+  "description": "Visually group related labels and fields; put each label close to its field, not equidistant from several. Pass when related fields share a visual group and each label is closer to its own field than to neighbors; fail when related fields are ungrouped or a label sits equally between two controls. Proximity carries ownership without inventing extra grouping chrome."
+}

@@ -18,6 +18,8 @@ Cited UX rules agents audit against. The catalog is the source of truth.
 
 This skill does **not** contain rule bodies or guideline ids. Route to a Card, then call the server.
 
+When you need a map of what exists — by **category**, then **source** — read [`catalog/MANIFEST.md`](../../../../catalog/MANIFEST.md). Then fetch one id. Do not load every rule file.
+
 ## Connect
 
 1. Hosted URL + bearer `uxmcp_` in client settings (`OPEN_UX_URL`, `OPEN_UX_API_KEY`). Self-host stdio needs no key.
@@ -40,22 +42,28 @@ If the catalog is empty, say so. Do not invent rules.
 | --- | --- | --- |
 | Forms & input | `design_a_form` | Signup, settings, or checkout *fields*; labels; choosing a control; grouping; required; helper text |
 | Forms & input | `handle_form_errors` | Validation, inline or summary errors, submit-failure messaging *on a form* |
+| Forms & input | `compose_sign_in` | Login, show password, forgot-password, credential fields |
 | Actions & decisions | `design_actions_and_ctas` | Primary vs secondary; submit / continue label; toolbar; buttons too small |
 | Actions & decisions | `protect_destructive_and_leave` | Delete confirmation; discard; leave unsaved work; confirm / undo |
 | Feedback & status | `compose_feedback` | Toast after save; loading; empty state; 404; hard error (not a field); failure tone |
 | Navigation & wayfinding | `orient_in_the_place` | Sidebar; breadcrumbs; tabs or menu; which *section* they are in; top nav |
+| Navigation & wayfinding | `compose_search` | Header or homepage search; place the search control |
 | Layout & data display | `compose_a_data_display` | Table or card grid; dashboard; scannable table; chart vs table |
+| Layout & data display | `compose_the_layout` | Page scan path; headings; inverted pyramid |
+| Layout & data display | `write_the_interface` | Link destination text; you/your voice; page copy |
 | Overlays & content structure | `choose_an_overlay` | Modal vs accordion; tooltip vs inline help; progressive disclosure; side panel |
 | Multi-step flows | `build_a_multi_step_flow` | Checkout *flow*; split a long form into steps; progress indicator; leave mid-flow; onboarding *sequence* |
-
-`compose_a_data_display` and `choose_an_overlay` are provisional. Still pick them when that is the job; do not invent a tenth Card.
 
 ## Reject (closest wrong Card)
 
 - Validation / inline errors → `handle_form_errors`, not `design_a_form` or `compose_feedback`
+- Login / password → `compose_sign_in`, not `design_a_form`
 - Delete / unsaved leave → `protect_destructive_and_leave`, not `design_actions_and_ctas`
 - Wizard / steps → `build_a_multi_step_flow`, not `orient_in_the_place`
-- Table / dashboard → `compose_a_data_display`, not `design_a_form`
+- Search control → `compose_search`, not `orient_in_the_place`
+- Table / dashboard / chart → `compose_a_data_display`, not `design_a_form` or `compose_the_layout`
+- Page scan / headings → `compose_the_layout`, not `compose_a_data_display`
+- Link text / you-voice → `write_the_interface`, not `design_actions_and_ctas`
 - `checkout` / `home` / `cart` → decompose; they are not Cards
 
 ## Tools

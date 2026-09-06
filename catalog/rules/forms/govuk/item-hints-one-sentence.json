@@ -1,0 +1,32 @@
+{
+  "id": "govuk.item-hints-one-sentence",
+  "category": "Forms",
+  "segment": "Copy",
+  "title": "item hints one sentence",
+  "name": "Item hints one sentence — GOV.UK",
+  "rule": "Item hints: one short sentence, no full stops; no links in hint text.",
+  "citation": [
+    {
+      "source": "GOV.UK Design System — Radios; GOV.UK Design System — Select",
+      "url": "https://design-system.service.gov.uk/components/radios/"
+    }
+  ],
+  "check": "deterministic",
+  "pass_when": [
+    "Per-item hint is one short sentence without a full stop and without links."
+  ],
+  "fail_when": [
+    "Multi-sentence hints, trailing full stops, or links inside hint text."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "field_and_helper_wording",
+  "leaf": "word_the_field_help",
+  "overview": "Per-item hints are one short sentence with no full stop and no links.",
+  "apply_when": "Adding hint text under individual radio or select options.",
+  "not_when": "Not for page-level help, field labels, or error messages.",
+  "agent_hint": "Keep each item hint to one short sentence; ban trailing full stops and links.",
+  "description": "Hints on individual radio or select items should be one short sentence, without a trailing full stop, and without links inside the hint text. Short, link-free hints keep options scannable and avoid nesting navigation inside the choice. Multi-sentence or link-filled hints compete with the option label itself. Fail for multi-sentence hints, trailing full stops, or links nested in hint copy. Use this when adding per-item help under radios or select options.",
+  "do_not_claim": "Field-level helper text (Fluent); placeholder-as-hint (skipped)."
+}

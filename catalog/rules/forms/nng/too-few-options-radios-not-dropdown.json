@@ -1,0 +1,32 @@
+{
+  "id": "nng.too-few-options-radios-not-dropdown",
+  "category": "Forms",
+  "segment": "Choice",
+  "title": "too few options radios not dropdown",
+  "name": "Too few options: radios, not dropdown — NN/g",
+  "rule": "Too few options → radios, not dropdown (NN/g “handful” / ~under 5; DS cutoffs cited on-page: USWDS <7, M3 6, Carbon 3).",
+  "citation": [
+    {
+      "source": "NN/g — Does Your Form Really Need a Dropdown List?",
+      "url": "https://www.nngroup.com/articles/dropdown-list/"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "A handful of options (~under 5; other cited DS cutoffs on-page) is radios, not a dropdown."
+  ],
+  "fail_when": [
+    "Two–few options hidden in a dropdown."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "overview": "A handful of options (~under 5) should be radios, not a dropdown.",
+  "apply_when": "Choice sets with roughly under five options (handful / DS cutoffs).",
+  "not_when": "Two-to-few options hidden inside a dropdown.",
+  "agent_hint": "Use radios for a handful of options; do not hide few choices in a dropdown.",
+  "description": "Too few options should be radios, not a dropdown. NN/g points at a handful (~under 5); cited design-system cutoffs on-page include USWDS under 7, M3 at 6, and Carbon at 3. Pass when a handful of options is radios, not a dropdown. Fail when two-to-few options are hidden in a dropdown instead of staying visible as radios.",
+  "do_not_claim": "One house cutoff that collapses NN/g handful vs USWDS <7 vs M3 6 vs Carbon 3 vs Polar <4. Overlap with Forms 54: `forms.inputs.match_control_and_size`, `dropdown_chooser`, `combo_box`, `offer_choices_not_only_text`."
+}

@@ -1,0 +1,32 @@
+{
+  "id": "polar.long-form-errors-banner-plus-inline",
+  "category": "Forms",
+  "segment": "Errors",
+  "title": "long form errors banner plus inline",
+  "name": "Long form errors banner plus inline — Polaris",
+  "rule": "Long/complex form errors: critical banner at top + move focus to it + inline field errors. Dual-cite with GOV.UK error summary.",
+  "citation": [
+    {
+      "source": "Polaris — Banner",
+      "url": "https://polaris.shopify.com/components/banner"
+    }
+  ],
+  "check": "deterministic",
+  "pass_when": [
+    "Long/complex form: critical banner at top, focus moves to it, plus inline field errors."
+  ],
+  "fail_when": [
+    "Banner only, inline only, or focus not moved to the banner."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "handle_form_errors",
+  "facet": "errors_dont_point_to_the_fix",
+  "leaf": "explain_failure_next_to_cause",
+  "overview": "Long-form errors need a top critical banner, focus move, and inline errors.",
+  "apply_when": "Surfacing errors on long or complex forms after submit.",
+  "not_when": "Banner-only, inline-only, or banner without moving focus to it.",
+  "agent_hint": "On long forms show a top critical banner, move focus to it, and add inline errors.",
+  "description": "On long or complex forms, errors need a critical banner at the top, focus moved to that banner, plus inline field errors (aligned with GOV.UK error summary). Pass when all three happen together after submit. Fail when there is banner only, inline only, or the banner appears without moving focus to it for keyboard and AT users.",
+  "do_not_claim": "A winner vs GOV.UK error summary; dropping either summary/banner or inline (`forms.errors.next_to_field_not_summary_only`). Overlap with Forms 54: `forms.errors.next_to_field_not_summary_only` + `forms.errors.focus_first_error`."
+}

@@ -1,0 +1,32 @@
+{
+  "id": "canada.unique-title-one-h1-heading-every-200-words",
+  "category": "Content",
+  "segment": "Headings",
+  "title": "unique title one h1 heading every 200 words",
+  "name": "Unique title, one H1, heading every 200 words — Canada.ca",
+  "rule": "Unique page title; one H1; a heading about every 200 words. Title makes sense alone, keywords first, no trailing punctuation, no boast copy. Publication/program titles are usually bad web titles. Heading 1 once.",
+  "citation": [
+    {
+      "source": "Canada.ca — Content Style Guide",
+      "url": "https://design.canada.ca/style-guide/index.html"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "Unique title (keywords first, no trailing punctuation/boast); exactly one H1; headings break long copy (~every 200 words)."
+  ],
+  "fail_when": [
+    "Duplicate/boast title; multiple H1s; long unheaded slabs."
+  ],
+  "severity": "major",
+  "container": "layout_and_data_display",
+  "card": "compose_the_layout",
+  "facet": "page_has_no_scan_path",
+  "leaf": "keep_the_page_scannable",
+  "overview": "Each page needs a unique title, one H1, and headings about every 200 words.",
+  "apply_when": "Titling and structuring long Canada.ca content pages.",
+  "not_when": "In-app modal titles that are not full web page document titles.",
+  "agent_hint": "Unique keyword-first title; exactly one H1; break long copy with headings.",
+  "description": "Canada.ca pages get a unique title that makes sense alone, keywords first, no trailing punctuation, and no boast copy. Publication or program titles are usually bad web titles. Use Heading 1 once. Break long copy with a heading about every 200 words so scanners can orient. Apply when titling and structuring long content pages, not in-app modal titles. Fail duplicate or boast titles, multiple H1s, or long unheaded slabs.",
+  "do_not_claim": "Doormat heading character caps as this row."
+}

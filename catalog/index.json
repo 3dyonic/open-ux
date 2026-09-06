@@ -1,2576 +1,3840 @@
 {
+  "version": "0.3.0",
   "guidelines": [
-    {
-      "id": "actions.button_groups",
-      "title": "button groups",
-      "jobs": [
-        "actions",
-        "pick_primary_action"
-      ],
-      "lane": "actions"
-    },
-    {
-      "id": "actions.hover_or_popup_tools",
-      "title": "hover or popup tools",
-      "jobs": [
-        "actions",
-        "use_familiar_control"
-      ],
-      "lane": "actions"
-    },
-    {
-      "id": "actions.action_panel",
-      "title": "action panel",
-      "jobs": [
-        "actions",
-        "use_familiar_control"
-      ],
-      "lane": "actions"
-    },
-    {
-      "id": "actions.prominent_done_or_assumed_next",
-      "title": "prominent done or assumed next",
-      "jobs": [
-        "actions",
-        "pick_primary_action"
-      ],
-      "lane": "actions"
-    },
-    {
-      "id": "actions.smart_menu_items",
-      "title": "smart menu items",
-      "jobs": [
-        "actions",
-        "name_a_control"
-      ],
-      "lane": "actions"
-    },
-    {
-      "id": "actions.preview",
-      "title": "preview",
-      "jobs": [
-        "actions",
-        "announce_system_status"
-      ],
-      "lane": "actions"
-    },
-    {
-      "id": "actions.cancelability",
-      "title": "cancelability",
-      "jobs": [
-        "actions",
-        "recover_from_invalid_input"
-      ],
-      "lane": "actions"
-    },
-    {
-      "id": "actions.multilevel_undo",
-      "title": "multilevel undo",
-      "jobs": [
-        "actions",
-        "recover_from_invalid_input"
-      ],
-      "lane": "actions"
-    },
-    {
-      "id": "actions.command_history",
-      "title": "command history",
-      "jobs": [
-        "actions",
-        "announce_system_status"
-      ],
-      "lane": "actions"
-    },
-    {
-      "id": "actions.macros",
-      "title": "macros",
-      "jobs": [
-        "actions",
-        "use_familiar_control"
-      ],
-      "lane": "actions"
-    },
-    {
-      "id": "actions.copy.short_clear_sentence_case",
-      "title": "short clear sentence case",
-      "jobs": [
-        "actions",
-        "name_a_control"
-      ],
-      "lane": "actions"
-    },
-    {
-      "id": "actions.copy.consequent_state",
-      "title": "consequent state",
-      "jobs": [
-        "actions",
-        "name_a_control"
-      ],
-      "lane": "actions"
-    },
-    {
-      "id": "actions.copy.verbs_for_actions",
-      "title": "verbs for actions",
-      "jobs": [
-        "actions",
-        "name_a_control"
-      ],
-      "lane": "actions"
-    },
-    {
-      "id": "actions.copy.adjectives_for_appearance",
-      "title": "adjectives for appearance",
-      "jobs": [
-        "actions",
-        "name_a_control"
-      ],
-      "lane": "actions"
-    },
-    {
-      "id": "actions.copy.avoid_vague_names",
-      "title": "avoid vague names",
-      "jobs": [
-        "actions",
-        "name_a_control"
-      ],
-      "lane": "actions"
-    },
-    {
-      "id": "actions.copy.tooltips_clarify_outcomes",
-      "title": "tooltips clarify outcomes",
-      "jobs": [
-        "actions",
-        "name_a_control"
-      ],
-      "lane": "actions"
-    },
-    {
-      "id": "actions.copy.limit_branded_terms",
-      "title": "limit branded terms",
-      "jobs": [
-        "actions",
-        "name_a_control"
-      ],
-      "lane": "actions"
-    },
-    {
-      "id": "actions.copy.consistent_words",
-      "title": "consistent words",
-      "jobs": [
-        "actions",
-        "name_a_control"
-      ],
-      "lane": "actions"
-    },
-    {
-      "id": "actions.copy.explicit_verb_not_ok",
-      "title": "explicit verb not ok",
-      "jobs": [
-        "actions",
-        "name_a_control"
-      ],
-      "lane": "actions"
-    },
-    {
-      "id": "actions.copy.ellipsis_needs_more_input",
-      "title": "ellipsis needs more input",
-      "jobs": [
-        "actions",
-        "name_a_control"
-      ],
-      "lane": "actions"
-    },
-    {
-      "id": "actions.buttons.follow_platform_ok_cancel_order",
-      "title": "follow platform ok cancel order",
-      "jobs": [
-        "actions",
-        "use_familiar_control"
-      ],
-      "lane": "actions"
-    },
-    {
-      "id": "actions.buttons.default_not_destructive",
-      "title": "default not destructive",
-      "jobs": [
-        "actions",
-        "disable_or_confirm_destructive"
-      ],
-      "lane": "actions"
-    },
-    {
-      "id": "actions.close_saves_separate_cancel",
-      "title": "close saves separate cancel",
-      "jobs": [
-        "actions",
-        "disable_or_confirm_destructive"
-      ],
-      "lane": "actions"
-    },
-    {
-      "id": "actions.confirm.serious_or_undo",
-      "title": "serious or undo",
-      "jobs": [
-        "actions",
-        "disable_or_confirm_destructive"
-      ],
-      "lane": "actions"
-    },
-    {
-      "id": "actions.confirm.not_routine",
-      "title": "not routine",
-      "jobs": [
-        "actions",
-        "disable_or_confirm_destructive"
-      ],
-      "lane": "actions"
-    },
-    {
-      "id": "actions.confirm.specific_consequences",
-      "title": "specific consequences",
-      "jobs": [
-        "actions",
-        "disable_or_confirm_destructive"
-      ],
-      "lane": "actions"
-    },
-    {
-      "id": "actions.confirm.response_summarizes_outcome",
-      "title": "response summarizes outcome",
-      "jobs": [
-        "actions",
-        "disable_or_confirm_destructive"
-      ],
-      "lane": "actions"
-    },
-    {
-      "id": "actions.confirm.progressive_disclosure",
-      "title": "progressive disclosure",
-      "jobs": [
-        "actions",
-        "disable_or_confirm_destructive"
-      ],
-      "lane": "actions"
-    },
-    {
-      "id": "actions.confirm.nonstandard_for_extreme",
-      "title": "nonstandard for extreme",
-      "jobs": [
-        "actions",
-        "disable_or_confirm_destructive"
-      ],
-      "lane": "actions"
-    },
-    {
-      "id": "actions.confirm.bypass_educational",
-      "title": "bypass educational",
-      "jobs": [
-        "actions",
-        "disable_or_confirm_destructive"
-      ],
-      "lane": "actions"
-    },
-    {
-      "id": "actions.proximity.separate_consequential",
-      "title": "separate consequential",
-      "jobs": [
-        "actions",
-        "disable_or_confirm_destructive"
-      ],
-      "lane": "actions"
-    },
-    {
-      "id": "actions.proximity.redundant_visual_signals",
-      "title": "redundant visual signals",
-      "jobs": [
-        "actions",
-        "disable_or_confirm_destructive"
-      ],
-      "lane": "actions"
-    },
-    {
-      "id": "actions.icons.always_visible_text_label",
-      "title": "always visible text label",
-      "jobs": [
-        "actions",
-        "name_a_control"
-      ],
-      "lane": "actions"
-    },
-    {
-      "id": "actions.buttons.distinguishable_states",
-      "title": "distinguishable states",
-      "jobs": [
-        "actions",
-        "announce_system_status"
-      ],
-      "lane": "actions"
-    },
-    {
-      "id": "actions.buttons.loading_on_button",
-      "title": "loading on button",
-      "jobs": [
-        "actions",
-        "announce_system_status"
-      ],
-      "lane": "actions"
-    },
-    {
-      "id": "actions.buttons.one_primary",
-      "title": "one primary",
-      "jobs": [
-        "actions",
-        "pick_primary_action"
-      ],
-      "lane": "actions"
-    },
-    {
-      "id": "actions.buttons.press_state",
-      "title": "press state",
-      "jobs": [
-        "actions",
-        "announce_system_status"
-      ],
-      "lane": "actions"
-    },
-    {
-      "id": "actions.buttons.style_not_size",
-      "title": "style not size",
-      "jobs": [
-        "actions",
-        "pick_primary_action"
-      ],
-      "lane": "actions"
-    },
-    {
-      "id": "actions.menus.unavailable_state",
-      "title": "unavailable state",
-      "jobs": [
-        "actions",
-        "announce_system_status"
-      ],
-      "lane": "actions"
-    },
-    {
-      "id": "actions.menus.frequent_items_first",
-      "title": "frequent items first",
-      "jobs": [
-        "actions",
-        "pick_primary_action"
-      ],
-      "lane": "actions"
-    },
-    {
-      "id": "ant.named-button-type-map",
-      "title": "named button type map",
-      "jobs": [
-        "pick_primary_action"
-      ],
-      "lane": "ant"
-    },
-    {
-      "id": "ant.never-two-icons-in-one-button",
-      "title": "never two icons in one button",
-      "jobs": [
-        "pick_primary_action"
-      ],
-      "lane": "ant"
-    },
-    {
-      "id": "ant.danger-cancel-primary-when-not-recommended",
-      "title": "danger cancel primary when not recommended",
-      "jobs": [
-        "disable_or_confirm_destructive"
-      ],
-      "lane": "ant"
-    },
-    {
-      "id": "ant.one-cta-per-screen",
-      "title": "one cta per screen",
-      "jobs": [
-        "pick_primary_action"
-      ],
-      "lane": "ant"
-    },
-    {
-      "id": "ant.footer-buttons-when-body-cannot-carry",
-      "title": "footer buttons when body cannot carry",
-      "jobs": [
-        "pick_primary_action"
-      ],
-      "lane": "ant"
-    },
-    {
-      "id": "ant.conversation-vs-navigation-order",
-      "title": "conversation vs navigation order",
-      "jobs": [
-        "pick_primary_action"
-      ],
-      "lane": "ant"
-    },
-    {
-      "id": "ant.group-spacing-overflow-dropdown",
-      "title": "group spacing overflow dropdown",
-      "jobs": [
-        "pick_primary_action"
-      ],
-      "lane": "ant"
-    },
-    {
-      "id": "ant.ok-cancel-default-vs-explicit-verb",
-      "title": "ok cancel default vs explicit verb",
-      "jobs": [
-        "pick_primary_action"
-      ],
-      "lane": "ant"
-    },
-    {
-      "id": "ant.label-left-default-vs-top",
-      "title": "label left default vs top",
-      "jobs": [
-        "name_a_control"
-      ],
-      "lane": "ant"
-    },
-    {
-      "id": "ant.radio-count-2-to-5",
-      "title": "radio count 2 to 5",
-      "jobs": [
-        "choose_control_for_choice"
-      ],
-      "lane": "ant"
-    },
-    {
-      "id": "ant.checkbox-vs-switch",
-      "title": "checkbox vs switch",
-      "jobs": [
-        "choose_control_for_choice"
-      ],
-      "lane": "ant"
-    },
-    {
-      "id": "ant.dropdown-when-over-5-no-truncate",
-      "title": "dropdown when over 5 no truncate",
-      "jobs": [
-        "choose_control_for_choice"
-      ],
-      "lane": "ant"
-    },
-    {
-      "id": "ant.slider-intensity-grade",
-      "title": "slider intensity grade",
-      "jobs": [
-        "choose_control_for_choice"
-      ],
-      "lane": "ant"
-    },
-    {
-      "id": "ant.settings-mode-and-grouping-thresholds",
-      "title": "settings mode and grouping thresholds",
-      "jobs": [
-        "group_related_inputs"
-      ],
-      "lane": "ant"
-    },
-    {
-      "id": "ant.editable-list-pattern-by-field-count",
-      "title": "editable list pattern by field count",
-      "jobs": [
-        "group_related_inputs"
-      ],
-      "lane": "ant"
-    },
-    {
-      "id": "ant.no-multi-column-form-in-one-area",
-      "title": "no multi column form in one area",
-      "jobs": [
-        "group_related_inputs"
-      ],
-      "lane": "ant"
-    },
-    {
-      "id": "ant.inline-input-feedback-does-not-auto-dismiss",
-      "title": "inline input feedback does not auto dismiss",
-      "jobs": [
-        "recover_from_invalid_input",
-        "explain_failure_next_to_cause"
-      ],
-      "lane": "ant"
-    },
-    {
-      "id": "ant.prefer-undo-or-popconfirm-over-modal",
-      "title": "prefer undo or popconfirm over modal",
-      "jobs": [
-        "disable_or_confirm_destructive"
-      ],
-      "lane": "ant"
-    },
-    {
-      "id": "ant.message-not-for-important-failures",
-      "title": "message not for important failures",
-      "jobs": [
-        "announce_system_status"
-      ],
-      "lane": "ant"
-    },
-    {
-      "id": "ant.dialog-feedback-only-important-actionable",
-      "title": "dialog feedback only important actionable",
-      "jobs": [
-        "use_familiar_control"
-      ],
-      "lane": "ant"
-    },
-    {
-      "id": "ant.hover-detail-overlay-timing",
-      "title": "hover detail overlay timing",
-      "jobs": [
-        "use_familiar_control"
-      ],
-      "lane": "ant"
-    },
-    {
-      "id": "ant.input-overlay-click-outside-preserves",
-      "title": "input overlay click outside preserves",
-      "jobs": [
-        "use_familiar_control"
-      ],
-      "lane": "ant"
-    },
-    {
-      "id": "ant.form-in-modal-lifecycle",
-      "title": "form in modal lifecycle",
-      "jobs": [
-        "use_familiar_control"
-      ],
-      "lane": "ant"
-    },
-    {
-      "id": "canada.equivalent-content-both-official-languages",
-      "title": "equivalent content both official languages",
-      "jobs": [
-        "wayfind_after_nav"
-      ],
-      "lane": "canada"
-    },
-    {
-      "id": "canada.four-writing-qualities",
-      "title": "four writing qualities",
-      "jobs": [
-        "tone_of_voice_for_failure"
-      ],
-      "lane": "canada"
-    },
-    {
-      "id": "canada.inverted-pyramid-no-welcome-filler",
-      "title": "inverted pyramid no welcome filler",
-      "jobs": [
-        "wayfind_after_nav"
-      ],
-      "lane": "canada"
-    },
-    {
-      "id": "canada.you-your-never-i-my",
-      "title": "you your never i my",
-      "jobs": [
-        "tone_of_voice_for_failure"
-      ],
-      "lane": "canada"
-    },
-    {
-      "id": "canada.must-need-may-might",
-      "title": "must need may might",
-      "jobs": [
-        "tone_of_voice_for_failure"
-      ],
-      "lane": "canada"
-    },
-    {
-      "id": "canada.no-eg-ie-spell-out-and",
-      "title": "no eg ie spell out and",
-      "jobs": [
-        "tone_of_voice_for_failure"
-      ],
-      "lane": "canada"
-    },
-    {
-      "id": "canada.underline-links-only-no-italics-emphasis",
-      "title": "underline links only no italics emphasis",
-      "jobs": [
-        "tone_of_voice_for_failure"
-      ],
-      "lane": "canada"
-    },
-    {
-      "id": "canada.unique-title-one-h1-heading-every-200-words",
-      "title": "unique title one h1 heading every 200 words",
-      "jobs": [
-        "wayfind_after_nav"
-      ],
-      "lane": "canada"
-    },
-    {
-      "id": "canada.lists-max-7-or-split",
-      "title": "lists max 7 or split",
-      "jobs": [
-        "group_related_inputs"
-      ],
-      "lane": "canada"
-    },
-    {
-      "id": "canada.tables-no-blank-cells",
-      "title": "tables no blank cells",
-      "jobs": [
-        "group_related_inputs"
-      ],
-      "lane": "canada"
-    },
-    {
-      "id": "canada.functional-alt-140-decorative-empty",
-      "title": "functional alt 140 decorative empty",
-      "jobs": [
-        "name_a_control"
-      ],
-      "lane": "canada"
-    },
-    {
-      "id": "canada.no-click-here-same-text-same-destination",
-      "title": "no click here same text same destination",
-      "jobs": [
-        "wayfind_after_nav"
-      ],
-      "lane": "canada"
-    },
-    {
-      "id": "canada.intranet-destinations-labelled",
-      "title": "intranet destinations labelled",
-      "jobs": [
-        "wayfind_after_nav"
-      ],
-      "lane": "canada"
-    },
-    {
-      "id": "canada.find-understand-use-nonpriority-must-not-block",
-      "title": "find understand use nonpriority must not block",
-      "jobs": [
-        "wayfind_after_nav"
-      ],
-      "lane": "canada"
-    },
-    {
-      "id": "canada.no-separate-mobile-site",
-      "title": "no separate mobile site",
-      "jobs": [
-        "wayfind_after_nav"
-      ],
-      "lane": "canada"
-    },
-    {
-      "id": "canada.doormats-max-9",
-      "title": "doormats max 9",
-      "jobs": [
-        "wayfind_after_nav"
-      ],
-      "lane": "canada"
-    },
-    {
-      "id": "canada.interactive-questions-max-7-same-place",
-      "title": "interactive questions max 7 same place",
-      "jobs": [
-        "group_related_inputs"
-      ],
-      "lane": "canada"
-    },
-    {
-      "id": "canada.supertask-once-never-promo",
-      "title": "supertask once never promo",
-      "jobs": [
-        "pick_primary_action"
-      ],
-      "lane": "canada"
-    },
-    {
-      "id": "fluent.labels-top-aligned-by-default",
-      "title": "labels top aligned by default",
-      "jobs": [
-        "name_a_control"
-      ],
-      "lane": "fluent"
-    },
-    {
-      "id": "fluent.required-asterisk-or-one-instruction",
-      "title": "required asterisk or one instruction",
-      "jobs": [
-        "name_a_control"
-      ],
-      "lane": "fluent"
-    },
-    {
-      "id": "fluent.disabled-field-label-stays-perceivable",
-      "title": "disabled field label stays perceivable",
-      "jobs": [
-        "name_a_control"
-      ],
-      "lane": "fluent"
-    },
-    {
-      "id": "fluent.helper-text-below",
-      "title": "helper text below",
-      "jobs": [
-        "name_a_control"
-      ],
-      "lane": "fluent"
-    },
-    {
-      "id": "fluent.validation-messages-brief-no-end-punctuation",
-      "title": "validation messages brief no end punctuation",
-      "jobs": [
-        "recover_from_invalid_input",
-        "explain_failure_next_to_cause"
-      ],
-      "lane": "fluent"
-    },
-    {
-      "id": "fluent.create-labels-new-thing",
-      "title": "create labels new thing",
-      "jobs": [
-        "pick_primary_action"
-      ],
-      "lane": "fluent"
-    },
-    {
-      "id": "fluent.split-button-dont-repeat-primary",
-      "title": "split button dont repeat primary",
-      "jobs": [
-        "pick_primary_action"
-      ],
-      "lane": "fluent"
-    },
-    {
-      "id": "fluent.multistep-next-not-continue",
-      "title": "multistep next not continue",
-      "jobs": [
-        "pick_primary_action"
-      ],
-      "lane": "fluent"
-    },
-    {
-      "id": "fluent.end-of-task-labels-named",
-      "title": "end of task labels named",
-      "jobs": [
-        "pick_primary_action"
-      ],
-      "lane": "fluent"
-    },
-    {
-      "id": "fluent.apply-versus-save-prefer-autosave",
-      "title": "apply versus save prefer autosave",
-      "jobs": [
-        "pick_primary_action"
-      ],
-      "lane": "fluent"
-    },
-    {
-      "id": "fluent.ios-chrome-back-done-cancel",
-      "title": "ios chrome back done cancel",
-      "jobs": [
-        "pick_primary_action"
-      ],
-      "lane": "fluent"
-    },
     {
       "id": "forms.field_labels.visible_label",
       "title": "visible label",
+      "name": "Visible field label — NN/g",
       "jobs": [
-        "forms",
         "avoid_placeholder_as_label"
       ],
-      "lane": "forms"
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "field_has_no_lasting_name",
+      "leaf": "avoid_placeholder_as_label"
     },
     {
       "id": "forms.field_labels.label_stays_visible",
       "title": "label stays visible",
+      "name": "Label stays visible — NN/g",
       "jobs": [
-        "forms",
-        "keep_field_purpose_visible_while_filled"
+        "avoid_placeholder_as_label"
       ],
-      "lane": "forms"
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "field_has_no_lasting_name",
+      "leaf": "avoid_placeholder_as_label"
     },
     {
       "id": "forms.field_labels.error_identifies_and_fixes",
       "title": "error identifies and fixes",
+      "name": "Error identifies and fixes — NN/g",
       "jobs": [
-        "forms",
         "explain_failure_next_to_cause"
       ],
-      "lane": "forms"
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "handle_form_errors",
+      "facet": "errors_dont_point_to_the_fix",
+      "leaf": "explain_failure_next_to_cause"
     },
     {
-      "id": "forms.field_labels.placeholder_hint_conflict",
-      "title": "placeholder hint conflict",
+      "id": "actions.action_panel",
+      "title": "action panel",
+      "name": "Action panel — Tidwell",
       "jobs": [
-        "forms",
+        "compose_the_command_surface"
+      ],
+      "lane": "actions",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "command_surface_is_opaque",
+      "leaf": "compose_the_command_surface"
+    },
+    {
+      "id": "actions.button_groups",
+      "title": "button groups",
+      "name": "Button groups — Tidwell",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "lane": "actions",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "no_clear_primary",
+      "leaf": "pick_primary_action"
+    },
+    {
+      "id": "actions.buttons.default_not_destructive",
+      "title": "default not destructive",
+      "name": "Default is not destructive — NN/g",
+      "jobs": [
+        "disable_or_confirm_destructive"
+      ],
+      "lane": "actions",
+      "container": "actions_and_decisions",
+      "card": "protect_destructive_and_leave",
+      "facet": "destructive_is_too_easy",
+      "leaf": "disable_or_confirm_destructive"
+    },
+    {
+      "id": "actions.buttons.distinguishable_states",
+      "title": "distinguishable states",
+      "name": "Distinguishable states — NN/g",
+      "jobs": [
+        "show_action_state"
+      ],
+      "lane": "actions",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "action_state_is_silent",
+      "leaf": "show_action_state"
+    },
+    {
+      "id": "actions.buttons.follow_platform_ok_cancel_order",
+      "title": "follow platform ok cancel order",
+      "name": "Follow the platform OK/Cancel order — NN/g",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "lane": "actions",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "no_clear_primary",
+      "leaf": "pick_primary_action"
+    },
+    {
+      "id": "actions.buttons.loading_on_button",
+      "title": "loading on button",
+      "name": "Loading on button — NN/g",
+      "jobs": [
+        "show_action_state"
+      ],
+      "lane": "actions",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "action_state_is_silent",
+      "leaf": "show_action_state"
+    },
+    {
+      "id": "actions.buttons.one_primary",
+      "title": "one primary",
+      "name": "One primary action — NN/g",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "lane": "actions",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "no_clear_primary",
+      "leaf": "pick_primary_action"
+    },
+    {
+      "id": "actions.buttons.press_state",
+      "title": "press state",
+      "name": "Press state — Apple",
+      "jobs": [
+        "show_action_state"
+      ],
+      "lane": "actions",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "action_state_is_silent",
+      "leaf": "show_action_state"
+    },
+    {
+      "id": "actions.buttons.style_not_size",
+      "title": "style not size",
+      "name": "Style, not size — Apple",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "lane": "actions",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "no_clear_primary",
+      "leaf": "pick_primary_action"
+    },
+    {
+      "id": "actions.cancelability",
+      "title": "cancelability",
+      "name": "Cancelability — Tidwell",
+      "jobs": [
+        "warn_before_leave"
+      ],
+      "lane": "actions",
+      "container": "actions_and_decisions",
+      "card": "protect_destructive_and_leave",
+      "facet": "leaving_discards_work",
+      "leaf": "warn_before_leave"
+    },
+    {
+      "id": "actions.close_saves_separate_cancel",
+      "title": "close saves separate cancel",
+      "name": "Close saves; Cancel is separate — NN/g",
+      "jobs": [
+        "warn_before_leave"
+      ],
+      "lane": "actions",
+      "container": "actions_and_decisions",
+      "card": "protect_destructive_and_leave",
+      "facet": "leaving_discards_work",
+      "leaf": "warn_before_leave"
+    },
+    {
+      "id": "actions.command_history",
+      "title": "command history",
+      "name": "Command history — Tidwell",
+      "jobs": [
+        "compose_the_command_surface"
+      ],
+      "lane": "actions",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "command_surface_is_opaque",
+      "leaf": "compose_the_command_surface"
+    },
+    {
+      "id": "actions.confirm.bypass_educational",
+      "title": "bypass educational",
+      "name": "Bypass educational — NN/g",
+      "jobs": [
+        "disable_or_confirm_destructive"
+      ],
+      "lane": "actions",
+      "container": "actions_and_decisions",
+      "card": "protect_destructive_and_leave",
+      "facet": "destructive_is_too_easy",
+      "leaf": "disable_or_confirm_destructive"
+    },
+    {
+      "id": "actions.confirm.nonstandard_for_extreme",
+      "title": "nonstandard for extreme",
+      "name": "Nonstandard for extreme — NN/g",
+      "jobs": [
+        "disable_or_confirm_destructive"
+      ],
+      "lane": "actions",
+      "container": "actions_and_decisions",
+      "card": "protect_destructive_and_leave",
+      "facet": "destructive_is_too_easy",
+      "leaf": "disable_or_confirm_destructive"
+    },
+    {
+      "id": "actions.confirm.not_routine",
+      "title": "not routine",
+      "name": "Not routine — NN/g",
+      "jobs": [
+        "disable_or_confirm_destructive"
+      ],
+      "lane": "actions",
+      "container": "actions_and_decisions",
+      "card": "protect_destructive_and_leave",
+      "facet": "destructive_is_too_easy",
+      "leaf": "disable_or_confirm_destructive"
+    },
+    {
+      "id": "actions.confirm.progressive_disclosure",
+      "title": "progressive disclosure",
+      "name": "Progressive disclosure — NN/g",
+      "jobs": [
+        "disable_or_confirm_destructive"
+      ],
+      "lane": "actions",
+      "container": "actions_and_decisions",
+      "card": "protect_destructive_and_leave",
+      "facet": "destructive_is_too_easy",
+      "leaf": "disable_or_confirm_destructive"
+    },
+    {
+      "id": "actions.confirm.response_summarizes_outcome",
+      "title": "response summarizes outcome",
+      "name": "Response summarizes outcome — NN/g",
+      "jobs": [
+        "disable_or_confirm_destructive"
+      ],
+      "lane": "actions",
+      "container": "actions_and_decisions",
+      "card": "protect_destructive_and_leave",
+      "facet": "destructive_is_too_easy",
+      "leaf": "disable_or_confirm_destructive"
+    },
+    {
+      "id": "actions.confirm.serious_or_undo",
+      "title": "serious or undo",
+      "name": "Serious or undo — NN/g",
+      "jobs": [
+        "disable_or_confirm_destructive"
+      ],
+      "lane": "actions",
+      "container": "actions_and_decisions",
+      "card": "protect_destructive_and_leave",
+      "facet": "destructive_is_too_easy",
+      "leaf": "disable_or_confirm_destructive"
+    },
+    {
+      "id": "actions.confirm.specific_consequences",
+      "title": "specific consequences",
+      "name": "Specific consequences — NN/g",
+      "jobs": [
+        "disable_or_confirm_destructive"
+      ],
+      "lane": "actions",
+      "container": "actions_and_decisions",
+      "card": "protect_destructive_and_leave",
+      "facet": "destructive_is_too_easy",
+      "leaf": "disable_or_confirm_destructive"
+    },
+    {
+      "id": "actions.copy.adjectives_for_appearance",
+      "title": "adjectives for appearance",
+      "name": "Adjectives for appearance — NN/g",
+      "jobs": [
+        "word_the_action"
+      ],
+      "lane": "actions",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "action_wording_hides_the_outcome",
+      "leaf": "word_the_action"
+    },
+    {
+      "id": "actions.copy.avoid_vague_names",
+      "title": "avoid vague names",
+      "name": "Avoid vague names — NN/g",
+      "jobs": [
+        "word_the_action"
+      ],
+      "lane": "actions",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "action_wording_hides_the_outcome",
+      "leaf": "word_the_action"
+    },
+    {
+      "id": "actions.copy.consequent_state",
+      "title": "consequent state",
+      "name": "Consequent state — NN/g",
+      "jobs": [
+        "word_the_action"
+      ],
+      "lane": "actions",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "action_wording_hides_the_outcome",
+      "leaf": "word_the_action"
+    },
+    {
+      "id": "actions.copy.consistent_words",
+      "title": "consistent words",
+      "name": "Consistent words — NN/g",
+      "jobs": [
+        "word_the_action"
+      ],
+      "lane": "actions",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "action_wording_hides_the_outcome",
+      "leaf": "word_the_action"
+    },
+    {
+      "id": "actions.copy.ellipsis_needs_more_input",
+      "title": "ellipsis needs more input",
+      "name": "Ellipsis means more input — NN/g",
+      "jobs": [
+        "word_the_action"
+      ],
+      "lane": "actions",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "action_wording_hides_the_outcome",
+      "leaf": "word_the_action"
+    },
+    {
+      "id": "actions.copy.explicit_verb_not_ok",
+      "title": "explicit verb not ok",
+      "name": "Explicit verb, not OK — NN/g",
+      "jobs": [
+        "word_the_action"
+      ],
+      "lane": "actions",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "action_wording_hides_the_outcome",
+      "leaf": "word_the_action"
+    },
+    {
+      "id": "actions.copy.limit_branded_terms",
+      "title": "limit branded terms",
+      "name": "Limit branded terms — NN/g",
+      "jobs": [
+        "word_the_action"
+      ],
+      "lane": "actions",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "action_wording_hides_the_outcome",
+      "leaf": "word_the_action"
+    },
+    {
+      "id": "actions.copy.short_clear_sentence_case",
+      "title": "short clear sentence case",
+      "name": "Short clear sentence case — NN/g",
+      "jobs": [
+        "word_the_action"
+      ],
+      "lane": "actions",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "action_wording_hides_the_outcome",
+      "leaf": "word_the_action"
+    },
+    {
+      "id": "actions.copy.tooltips_clarify_outcomes",
+      "title": "tooltips clarify outcomes",
+      "name": "Tooltips clarify outcomes — NN/g",
+      "jobs": [
+        "word_the_action"
+      ],
+      "lane": "actions",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "action_wording_hides_the_outcome",
+      "leaf": "word_the_action"
+    },
+    {
+      "id": "actions.copy.verbs_for_actions",
+      "title": "verbs for actions",
+      "name": "Verbs for actions — NN/g",
+      "jobs": [
+        "word_the_action"
+      ],
+      "lane": "actions",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "action_wording_hides_the_outcome",
+      "leaf": "word_the_action"
+    },
+    {
+      "id": "actions.hover_or_popup_tools",
+      "title": "hover or popup tools",
+      "name": "Hover or popup tools — Tidwell",
+      "jobs": [
+        "disclose_instead_of_dump"
+      ],
+      "lane": "actions",
+      "container": "overlays_and_content_structure",
+      "card": "choose_an_overlay",
+      "facet": "wrong_layer_for_the_content",
+      "leaf": "disclose_instead_of_dump"
+    },
+    {
+      "id": "actions.icons.always_visible_text_label",
+      "title": "always visible text label",
+      "name": "Always-visible text label — NN/g",
+      "jobs": [
+        "word_the_action"
+      ],
+      "lane": "actions",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "action_wording_hides_the_outcome",
+      "leaf": "word_the_action"
+    },
+    {
+      "id": "actions.macros",
+      "title": "macros",
+      "name": "Macros — Tidwell",
+      "jobs": [
+        "compose_the_command_surface"
+      ],
+      "lane": "actions",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "command_surface_is_opaque",
+      "leaf": "compose_the_command_surface"
+    },
+    {
+      "id": "actions.menus.frequent_items_first",
+      "title": "frequent items first",
+      "name": "Frequent items first — Apple",
+      "jobs": [
+        "compose_the_command_surface"
+      ],
+      "lane": "actions",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "command_surface_is_opaque",
+      "leaf": "compose_the_command_surface"
+    },
+    {
+      "id": "actions.menus.unavailable_state",
+      "title": "unavailable state",
+      "name": "Unavailable state — Apple",
+      "jobs": [
+        "compose_the_command_surface"
+      ],
+      "lane": "actions",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "command_surface_is_opaque",
+      "leaf": "compose_the_command_surface"
+    },
+    {
+      "id": "actions.multilevel_undo",
+      "title": "multilevel undo",
+      "name": "Multilevel undo — Tidwell",
+      "jobs": [
+        "disable_or_confirm_destructive"
+      ],
+      "lane": "actions",
+      "container": "actions_and_decisions",
+      "card": "protect_destructive_and_leave",
+      "facet": "destructive_is_too_easy",
+      "leaf": "disable_or_confirm_destructive"
+    },
+    {
+      "id": "actions.preview",
+      "title": "preview",
+      "name": "Preview — Tidwell",
+      "jobs": [
+        "compose_the_command_surface"
+      ],
+      "lane": "actions",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "command_surface_is_opaque",
+      "leaf": "compose_the_command_surface"
+    },
+    {
+      "id": "actions.prominent_done_or_assumed_next",
+      "title": "prominent done or assumed next",
+      "name": "Prominent Done or assumed next — Tidwell",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "lane": "actions",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "no_clear_primary",
+      "leaf": "pick_primary_action"
+    },
+    {
+      "id": "actions.proximity.redundant_visual_signals",
+      "title": "redundant visual signals",
+      "name": "Redundant visual signals — NN/g",
+      "jobs": [
+        "disable_or_confirm_destructive"
+      ],
+      "lane": "actions",
+      "container": "actions_and_decisions",
+      "card": "protect_destructive_and_leave",
+      "facet": "destructive_is_too_easy",
+      "leaf": "disable_or_confirm_destructive"
+    },
+    {
+      "id": "actions.proximity.separate_consequential",
+      "title": "separate consequential",
+      "name": "Separate consequential — NN/g",
+      "jobs": [
+        "disable_or_confirm_destructive"
+      ],
+      "lane": "actions",
+      "container": "actions_and_decisions",
+      "card": "protect_destructive_and_leave",
+      "facet": "destructive_is_too_easy",
+      "leaf": "disable_or_confirm_destructive"
+    },
+    {
+      "id": "actions.smart_menu_items",
+      "title": "smart menu items",
+      "name": "Smart menu items — Tidwell",
+      "jobs": [
+        "compose_the_command_surface"
+      ],
+      "lane": "actions",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "command_surface_is_opaque",
+      "leaf": "compose_the_command_surface"
+    },
+    {
+      "id": "ant.checkbox-vs-switch",
+      "title": "checkbox vs switch",
+      "name": "Checkbox vs switch — Ant",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "ant",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
+    },
+    {
+      "id": "ant.conversation-vs-navigation-order",
+      "title": "conversation vs navigation order",
+      "name": "Conversation vs navigation order — Ant",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "lane": "ant",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "no_clear_primary",
+      "leaf": "pick_primary_action"
+    },
+    {
+      "id": "ant.danger-cancel-primary-when-not-recommended",
+      "title": "danger cancel primary when not recommended",
+      "name": "Danger cancel primary when not recommended — Ant",
+      "jobs": [
+        "disable_or_confirm_destructive"
+      ],
+      "lane": "ant",
+      "container": "actions_and_decisions",
+      "card": "protect_destructive_and_leave",
+      "facet": "destructive_is_too_easy",
+      "leaf": "disable_or_confirm_destructive"
+    },
+    {
+      "id": "ant.dialog-feedback-only-important-actionable",
+      "title": "dialog feedback only important actionable",
+      "name": "Dialog feedback only important actionable — Ant",
+      "jobs": [
+        "pick_modal_only_when_blocking"
+      ],
+      "lane": "ant",
+      "container": "overlays_and_content_structure",
+      "card": "choose_an_overlay",
+      "facet": "wrong_layer_for_the_content",
+      "leaf": "pick_modal_only_when_blocking"
+    },
+    {
+      "id": "ant.dropdown-when-over-5-no-truncate",
+      "title": "dropdown when over 5 no truncate",
+      "name": "Dropdown over 5, no truncate — Ant",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "ant",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
+    },
+    {
+      "id": "ant.editable-list-pattern-by-field-count",
+      "title": "editable list pattern by field count",
+      "name": "Editable list pattern by field count — Ant",
+      "jobs": [
+        "group_related_inputs"
+      ],
+      "lane": "ant",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "related_inputs_feel_scattered",
+      "leaf": "group_related_inputs"
+    },
+    {
+      "id": "ant.footer-buttons-when-body-cannot-carry",
+      "title": "footer buttons when body cannot carry",
+      "name": "Footer buttons when body cannot carry — Ant",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "lane": "ant",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "no_clear_primary",
+      "leaf": "pick_primary_action"
+    },
+    {
+      "id": "ant.form-in-modal-lifecycle",
+      "title": "form in modal lifecycle",
+      "name": "Form in modal lifecycle — Ant",
+      "jobs": [
+        "pick_modal_only_when_blocking"
+      ],
+      "lane": "ant",
+      "container": "overlays_and_content_structure",
+      "card": "choose_an_overlay",
+      "facet": "wrong_layer_for_the_content",
+      "leaf": "pick_modal_only_when_blocking"
+    },
+    {
+      "id": "ant.group-spacing-overflow-dropdown",
+      "title": "group spacing overflow dropdown",
+      "name": "Group spacing overflow dropdown — Ant",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "lane": "ant",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "no_clear_primary",
+      "leaf": "pick_primary_action"
+    },
+    {
+      "id": "ant.hover-detail-overlay-timing",
+      "title": "hover detail overlay timing",
+      "name": "Hover detail overlay timing — Ant",
+      "jobs": [
+        "disclose_instead_of_dump"
+      ],
+      "lane": "ant",
+      "container": "overlays_and_content_structure",
+      "card": "choose_an_overlay",
+      "facet": "wrong_layer_for_the_content",
+      "leaf": "disclose_instead_of_dump"
+    },
+    {
+      "id": "ant.inline-input-feedback-does-not-auto-dismiss",
+      "title": "inline input feedback does not auto dismiss",
+      "name": "Inline input feedback does not auto dismiss — Ant",
+      "jobs": [
+        "recover_from_invalid_input"
+      ],
+      "lane": "ant",
+      "container": "forms_and_input",
+      "card": "handle_form_errors",
+      "facet": "invalid_input_has_no_recovery",
+      "leaf": "recover_from_invalid_input"
+    },
+    {
+      "id": "ant.input-overlay-click-outside-preserves",
+      "title": "input overlay click outside preserves",
+      "name": "Input overlay click outside preserves — Ant",
+      "jobs": [
+        "disclose_instead_of_dump"
+      ],
+      "lane": "ant",
+      "container": "overlays_and_content_structure",
+      "card": "choose_an_overlay",
+      "facet": "wrong_layer_for_the_content",
+      "leaf": "disclose_instead_of_dump"
+    },
+    {
+      "id": "ant.label-left-default-vs-top",
+      "title": "label left default vs top",
+      "name": "Label left default vs top — Ant",
+      "jobs": [
+        "name_a_control"
+      ],
+      "lane": "ant",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "field_has_no_lasting_name",
+      "leaf": "name_a_control"
+    },
+    {
+      "id": "ant.message-not-for-important-failures",
+      "title": "message not for important failures",
+      "name": "Message not for important failures — Ant",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "lane": "ant",
+      "container": "feedback_and_status",
+      "card": "compose_feedback",
+      "facet": "system_stayed_quiet_after_change",
+      "leaf": "announce_system_status"
+    },
+    {
+      "id": "ant.named-button-type-map",
+      "title": "named button type map",
+      "name": "Named button type map — Ant",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "lane": "ant",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "no_clear_primary",
+      "leaf": "pick_primary_action"
+    },
+    {
+      "id": "ant.never-two-icons-in-one-button",
+      "title": "never two icons in one button",
+      "name": "Never two icons in one button — Ant",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "lane": "ant",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "no_clear_primary",
+      "leaf": "pick_primary_action"
+    },
+    {
+      "id": "ant.no-multi-column-form-in-one-area",
+      "title": "no multi column form in one area",
+      "name": "No multi column form in one area — Ant",
+      "jobs": [
+        "group_related_inputs"
+      ],
+      "lane": "ant",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "related_inputs_feel_scattered",
+      "leaf": "group_related_inputs"
+    },
+    {
+      "id": "ant.ok-cancel-default-vs-explicit-verb",
+      "title": "ok cancel default vs explicit verb",
+      "name": "OK/Cancel default vs explicit verb — Ant",
+      "jobs": [
+        "word_the_action"
+      ],
+      "lane": "ant",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "action_wording_hides_the_outcome",
+      "leaf": "word_the_action"
+    },
+    {
+      "id": "ant.one-cta-per-screen",
+      "title": "one cta per screen",
+      "name": "One CTA per screen — Ant",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "lane": "ant",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "no_clear_primary",
+      "leaf": "pick_primary_action"
+    },
+    {
+      "id": "ant.prefer-undo-or-popconfirm-over-modal",
+      "title": "prefer undo or popconfirm over modal",
+      "name": "Prefer undo or popconfirm over modal — Ant",
+      "jobs": [
+        "disable_or_confirm_destructive"
+      ],
+      "lane": "ant",
+      "container": "actions_and_decisions",
+      "card": "protect_destructive_and_leave",
+      "facet": "destructive_is_too_easy",
+      "leaf": "disable_or_confirm_destructive"
+    },
+    {
+      "id": "ant.radio-count-2-to-5",
+      "title": "radio count 2 to 5",
+      "name": "Radio count 2 to 5 — Ant",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "ant",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
+    },
+    {
+      "id": "ant.settings-mode-and-grouping-thresholds",
+      "title": "settings mode and grouping thresholds",
+      "name": "Settings mode and grouping thresholds — Ant",
+      "jobs": [
+        "group_related_inputs"
+      ],
+      "lane": "ant",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "related_inputs_feel_scattered",
+      "leaf": "group_related_inputs"
+    },
+    {
+      "id": "ant.slider-intensity-grade",
+      "title": "slider intensity grade",
+      "name": "Slider intensity grade — Ant",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "ant",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
+    },
+    {
+      "id": "canada.doormats-max-9",
+      "title": "doormats max 9",
+      "name": "Doormats max 9 — Canada.ca",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "lane": "canada",
+      "container": "navigation_and_wayfinding",
+      "card": "orient_in_the_place",
+      "facet": "user_cant_tell_where_they_are",
+      "leaf": "wayfind_after_nav"
+    },
+    {
+      "id": "canada.equivalent-content-both-official-languages",
+      "title": "equivalent content both official languages",
+      "name": "Equivalent content both official languages — Canada.ca",
+      "jobs": [
+        "name_the_link_by_destination"
+      ],
+      "lane": "canada",
+      "container": "layout_and_data_display",
+      "card": "write_the_interface",
+      "facet": "link_text_hides_destination",
+      "leaf": "name_the_link_by_destination"
+    },
+    {
+      "id": "canada.find-understand-use-nonpriority-must-not-block",
+      "title": "find understand use nonpriority must not block",
+      "name": "Find understand use nonpriority must not block — Canada.ca",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "lane": "canada",
+      "container": "navigation_and_wayfinding",
+      "card": "orient_in_the_place",
+      "facet": "user_cant_tell_where_they_are",
+      "leaf": "wayfind_after_nav"
+    },
+    {
+      "id": "canada.four-writing-qualities",
+      "title": "four writing qualities",
+      "name": "Four writing qualities — Canada.ca",
+      "jobs": [
+        "tone_of_voice_for_failure"
+      ],
+      "lane": "canada",
+      "container": "feedback_and_status",
+      "card": "compose_feedback",
+      "facet": "tone_fights_the_moment",
+      "leaf": "tone_of_voice_for_failure"
+    },
+    {
+      "id": "canada.interactive-questions-max-7-same-place",
+      "title": "interactive questions max 7 same place",
+      "name": "Interactive questions max 7 same place — Canada.ca",
+      "jobs": [
+        "group_related_inputs"
+      ],
+      "lane": "canada",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "related_inputs_feel_scattered",
+      "leaf": "group_related_inputs"
+    },
+    {
+      "id": "canada.intranet-destinations-labelled",
+      "title": "intranet destinations labelled",
+      "name": "Intranet destinations labelled — Canada.ca",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "lane": "canada",
+      "container": "navigation_and_wayfinding",
+      "card": "orient_in_the_place",
+      "facet": "user_cant_tell_where_they_are",
+      "leaf": "wayfind_after_nav"
+    },
+    {
+      "id": "canada.inverted-pyramid-no-welcome-filler",
+      "title": "inverted pyramid no welcome filler",
+      "name": "Inverted pyramid no welcome filler — Canada.ca",
+      "jobs": [
+        "keep_the_page_scannable"
+      ],
+      "lane": "canada",
+      "container": "layout_and_data_display",
+      "card": "compose_the_layout",
+      "facet": "page_has_no_scan_path",
+      "leaf": "keep_the_page_scannable"
+    },
+    {
+      "id": "canada.lists-max-7-or-split",
+      "title": "lists max 7 or split",
+      "name": "Lists max 7 or split — Canada.ca",
+      "jobs": [
+        "group_related_inputs"
+      ],
+      "lane": "canada",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "related_inputs_feel_scattered",
+      "leaf": "group_related_inputs"
+    },
+    {
+      "id": "canada.must-need-may-might",
+      "title": "must need may might",
+      "name": "Must, need to, may, might — Canada.ca",
+      "jobs": [
+        "tone_of_voice_for_failure"
+      ],
+      "lane": "canada",
+      "container": "feedback_and_status",
+      "card": "compose_feedback",
+      "facet": "tone_fights_the_moment",
+      "leaf": "tone_of_voice_for_failure"
+    },
+    {
+      "id": "canada.no-click-here-same-text-same-destination",
+      "title": "no click here same text same destination",
+      "name": "No “click here”; same text, same destination — Canada.ca",
+      "jobs": [
+        "name_the_link_by_destination"
+      ],
+      "lane": "canada",
+      "container": "layout_and_data_display",
+      "card": "write_the_interface",
+      "facet": "link_text_hides_destination",
+      "leaf": "name_the_link_by_destination"
+    },
+    {
+      "id": "canada.no-eg-ie-spell-out-and",
+      "title": "no eg ie spell out and",
+      "name": "No e.g. or i.e.; spell out and — Canada.ca",
+      "jobs": [
+        "tone_of_voice_for_failure"
+      ],
+      "lane": "canada",
+      "container": "feedback_and_status",
+      "card": "compose_feedback",
+      "facet": "tone_fights_the_moment",
+      "leaf": "tone_of_voice_for_failure"
+    },
+    {
+      "id": "canada.no-separate-mobile-site",
+      "title": "no separate mobile site",
+      "name": "No separate mobile site — Canada.ca",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "lane": "canada",
+      "container": "navigation_and_wayfinding",
+      "card": "orient_in_the_place",
+      "facet": "user_cant_tell_where_they_are",
+      "leaf": "wayfind_after_nav"
+    },
+    {
+      "id": "canada.supertask-once-never-promo",
+      "title": "supertask once never promo",
+      "name": "Supertask once never promo — Canada.ca",
+      "jobs": [
+        "keep_the_page_scannable"
+      ],
+      "lane": "canada",
+      "container": "layout_and_data_display",
+      "card": "compose_the_layout",
+      "facet": "page_has_no_scan_path",
+      "leaf": "keep_the_page_scannable"
+    },
+    {
+      "id": "canada.underline-links-only-no-italics-emphasis",
+      "title": "underline links only no italics emphasis",
+      "name": "Underline links only no italics emphasis — Canada.ca",
+      "jobs": [
+        "name_the_link_by_destination"
+      ],
+      "lane": "canada",
+      "container": "layout_and_data_display",
+      "card": "write_the_interface",
+      "facet": "link_text_hides_destination",
+      "leaf": "name_the_link_by_destination"
+    },
+    {
+      "id": "canada.unique-title-one-h1-heading-every-200-words",
+      "title": "unique title one h1 heading every 200 words",
+      "name": "Unique title, one H1, heading every 200 words — Canada.ca",
+      "jobs": [
+        "keep_the_page_scannable"
+      ],
+      "lane": "canada",
+      "container": "layout_and_data_display",
+      "card": "compose_the_layout",
+      "facet": "page_has_no_scan_path",
+      "leaf": "keep_the_page_scannable"
+    },
+    {
+      "id": "canada.you-your-never-i-my",
+      "title": "you your never i my",
+      "name": "You/your, never I/my — Canada.ca",
+      "jobs": [
+        "write_to_you"
+      ],
+      "lane": "canada",
+      "container": "layout_and_data_display",
+      "card": "write_the_interface",
+      "facet": "voice_talks_about_the_system",
+      "leaf": "write_to_you"
+    },
+    {
+      "id": "fluent.apply-versus-save-prefer-autosave",
+      "title": "apply versus save prefer autosave",
+      "name": "Apply versus save prefer autosave — Fluent",
+      "jobs": [
+        "word_the_action"
+      ],
+      "lane": "fluent",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "action_wording_hides_the_outcome",
+      "leaf": "word_the_action"
+    },
+    {
+      "id": "fluent.create-labels-new-thing",
+      "title": "create labels new thing",
+      "name": "Create labels: New {thing} — Fluent",
+      "jobs": [
+        "word_the_action"
+      ],
+      "lane": "fluent",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "action_wording_hides_the_outcome",
+      "leaf": "word_the_action"
+    },
+    {
+      "id": "fluent.disabled-field-label-stays-perceivable",
+      "title": "disabled field label stays perceivable",
+      "name": "Disabled field label stays perceivable — Fluent",
+      "jobs": [
         "avoid_placeholder_as_label"
       ],
-      "lane": "forms"
+      "lane": "fluent",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "field_has_no_lasting_name",
+      "leaf": "avoid_placeholder_as_label"
     },
     {
-      "id": "forms.errors.inline_after_complete",
-      "title": "inline after complete",
+      "id": "fluent.end-of-task-labels-named",
+      "title": "end of task labels named",
+      "name": "End of task labels named — Fluent",
       "jobs": [
-        "forms",
+        "pick_primary_action"
+      ],
+      "lane": "fluent",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "no_clear_primary",
+      "leaf": "pick_primary_action"
+    },
+    {
+      "id": "fluent.helper-text-below",
+      "title": "helper text below",
+      "name": "Helper text below — Fluent",
+      "jobs": [
+        "mark_requirements_up_front"
+      ],
+      "lane": "fluent",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "requirements_are_a_surprise",
+      "leaf": "mark_requirements_up_front"
+    },
+    {
+      "id": "fluent.ios-chrome-back-done-cancel",
+      "title": "ios chrome back done cancel",
+      "name": "iOS chrome: Back, Done, Cancel — Fluent",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "lane": "fluent",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "no_clear_primary",
+      "leaf": "pick_primary_action"
+    },
+    {
+      "id": "fluent.labels-top-aligned-by-default",
+      "title": "labels top aligned by default",
+      "name": "Labels top aligned by default — Fluent",
+      "jobs": [
+        "name_a_control"
+      ],
+      "lane": "fluent",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "field_has_no_lasting_name",
+      "leaf": "name_a_control"
+    },
+    {
+      "id": "fluent.multistep-next-not-continue",
+      "title": "multistep next not continue",
+      "name": "Multistep: Next, not Continue — Fluent",
+      "jobs": [
+        "show_step_progress"
+      ],
+      "lane": "fluent",
+      "container": "multi_step_flows",
+      "card": "build_a_multi_step_flow",
+      "facet": "too_much_on_one_step",
+      "leaf": "show_step_progress"
+    },
+    {
+      "id": "fluent.split-button-dont-repeat-primary",
+      "title": "split button dont repeat primary",
+      "name": "Split button: don't repeat primary — Fluent",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "lane": "fluent",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "no_clear_primary",
+      "leaf": "pick_primary_action"
+    },
+    {
+      "id": "fluent.validation-messages-brief-no-end-punctuation",
+      "title": "validation messages brief no end punctuation",
+      "name": "Validation messages brief no end punctuation — Fluent",
+      "jobs": [
         "recover_from_invalid_input"
       ],
-      "lane": "forms"
-    },
-    {
-      "id": "forms.errors.success_complex_fields",
-      "title": "success complex fields",
-      "jobs": [
-        "forms",
-        "announce_system_status"
-      ],
-      "lane": "forms"
-    },
-    {
-      "id": "forms.errors.next_to_field_not_summary_only",
-      "title": "next to field not summary only",
-      "jobs": [
-        "forms",
-        "explain_failure_next_to_cause"
-      ],
-      "lane": "forms"
-    },
-    {
-      "id": "forms.errors.not_color_only",
-      "title": "not color only",
-      "jobs": [
-        "forms",
-        "explain_failure_next_to_cause"
-      ],
-      "lane": "forms"
-    },
-    {
-      "id": "forms.errors.modal_not_only_copy",
-      "title": "modal not only copy",
-      "jobs": [
-        "forms",
-        "explain_failure_next_to_cause"
-      ],
-      "lane": "forms"
-    },
-    {
-      "id": "forms.errors.not_tooltip_only",
-      "title": "not tooltip only",
-      "jobs": [
-        "forms",
-        "explain_failure_next_to_cause"
-      ],
-      "lane": "forms"
-    },
-    {
-      "id": "forms.errors.repeated_extra_help",
-      "title": "repeated extra help",
-      "jobs": [
-        "forms",
-        "recover_from_invalid_input"
-      ],
-      "lane": "forms"
-    },
-    {
-      "id": "forms.errors.replace_supporting_text",
-      "title": "replace supporting text",
-      "jobs": [
-        "forms",
-        "explain_failure_next_to_cause"
-      ],
-      "lane": "forms"
-    },
-    {
-      "id": "forms.errors.focus_first_error",
-      "title": "focus first error",
-      "jobs": [
-        "forms",
-        "recover_from_invalid_input"
-      ],
-      "lane": "forms"
-    },
-    {
-      "id": "forms.length.keep_short",
-      "title": "keep short",
-      "jobs": [
-        "forms",
-        "group_related_inputs"
-      ],
-      "lane": "forms"
-    },
-    {
-      "id": "forms.layout.group_related_labels_fields",
-      "title": "group related labels fields",
-      "jobs": [
-        "forms",
-        "group_related_inputs"
-      ],
-      "lane": "forms"
-    },
-    {
-      "id": "forms.layout.single_column",
-      "title": "single column",
-      "jobs": [
-        "forms",
-        "group_related_inputs"
-      ],
-      "lane": "forms"
-    },
-    {
-      "id": "forms.layout.logical_sequence",
-      "title": "logical sequence",
-      "jobs": [
-        "forms",
-        "group_related_inputs"
-      ],
-      "lane": "forms"
-    },
-    {
-      "id": "forms.structure.progressive_disclosure",
-      "title": "progressive disclosure",
-      "jobs": [
-        "forms",
-        "group_related_inputs"
-      ],
-      "lane": "forms"
-    },
-    {
-      "id": "forms.transparency.requirements_before_start",
-      "title": "requirements before start",
-      "jobs": [
-        "forms",
-        "announce_system_status"
-      ],
-      "lane": "forms"
-    },
-    {
-      "id": "forms.transparency.progress_on_long_forms",
-      "title": "progress on long forms",
-      "jobs": [
-        "forms",
-        "announce_system_status"
-      ],
-      "lane": "forms"
-    },
-    {
-      "id": "forms.copy.plain_language",
-      "title": "plain language",
-      "jobs": [
-        "forms",
-        "name_a_control"
-      ],
-      "lane": "forms"
-    },
-    {
-      "id": "forms.copy.positive_wording",
-      "title": "positive wording",
-      "jobs": [
-        "forms",
-        "name_a_control"
-      ],
-      "lane": "forms"
-    },
-    {
-      "id": "forms.copy.no_double_barreled",
-      "title": "no double barreled",
-      "jobs": [
-        "forms",
-        "name_a_control"
-      ],
-      "lane": "forms"
-    },
-    {
-      "id": "forms.fields.distinguish_optional_required",
-      "title": "distinguish optional required",
-      "jobs": [
-        "forms",
-        "name_a_control"
-      ],
-      "lane": "forms"
-    },
-    {
-      "id": "forms.fields.explain_format_upfront",
-      "title": "explain format upfront",
-      "jobs": [
-        "forms",
-        "name_a_control"
-      ],
-      "lane": "forms"
-    },
-    {
-      "id": "forms.fields.required_before_proceed",
-      "title": "required before proceed",
-      "jobs": [
-        "forms",
-        "recover_from_invalid_input"
-      ],
-      "lane": "forms"
+      "lane": "fluent",
+      "container": "forms_and_input",
+      "card": "handle_form_errors",
+      "facet": "invalid_input_has_no_recovery",
+      "leaf": "recover_from_invalid_input"
     },
     {
       "id": "forms.actions.avoid_reset_clear",
       "title": "avoid reset clear",
+      "name": "Avoid reset clear — NN/g",
       "jobs": [
-        "forms",
-        "disable_or_confirm_destructive"
+        "pick_primary_action"
       ],
-      "lane": "forms"
+      "lane": "forms",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "no_clear_primary",
+      "leaf": "pick_primary_action"
     },
     {
-      "id": "forms.inputs.match_control_and_size",
-      "title": "match control and size",
+      "id": "forms.copy.no_double_barreled",
+      "title": "no double barreled",
+      "name": "No double-barreled questions — NN/g",
       "jobs": [
-        "forms",
-        "choose_control_for_choice"
+        "write_to_you"
       ],
-      "lane": "forms"
+      "lane": "forms",
+      "container": "layout_and_data_display",
+      "card": "write_the_interface",
+      "facet": "voice_talks_about_the_system",
+      "leaf": "write_to_you"
     },
     {
-      "id": "forms.inputs.helpful_constraints",
-      "title": "helpful constraints",
+      "id": "forms.copy.plain_language",
+      "title": "plain language",
+      "name": "Plain language — NN/g",
       "jobs": [
-        "forms",
+        "write_to_you"
+      ],
+      "lane": "forms",
+      "container": "layout_and_data_display",
+      "card": "write_the_interface",
+      "facet": "voice_talks_about_the_system",
+      "leaf": "write_to_you"
+    },
+    {
+      "id": "forms.copy.positive_wording",
+      "title": "positive wording",
+      "name": "Positive wording — NN/g",
+      "jobs": [
+        "write_to_you"
+      ],
+      "lane": "forms",
+      "container": "layout_and_data_display",
+      "card": "write_the_interface",
+      "facet": "voice_talks_about_the_system",
+      "leaf": "write_to_you"
+    },
+    {
+      "id": "forms.errors.focus_first_error",
+      "title": "focus first error",
+      "name": "Focus first error — Vercel",
+      "jobs": [
         "recover_from_invalid_input"
       ],
-      "lane": "forms"
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "handle_form_errors",
+      "facet": "invalid_input_has_no_recovery",
+      "leaf": "recover_from_invalid_input"
     },
     {
-      "id": "forms.inputs.use_device_features",
-      "title": "use device features",
+      "id": "forms.errors.inline_after_complete",
+      "title": "inline after complete",
+      "name": "Inline after complete — NN/g",
       "jobs": [
-        "forms",
-        "use_familiar_control"
-      ],
-      "lane": "forms"
-    },
-    {
-      "id": "forms.inputs.compute_from_other_info",
-      "title": "compute from other info",
-      "jobs": [
-        "forms",
         "recover_from_invalid_input"
       ],
-      "lane": "forms"
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "handle_form_errors",
+      "facet": "invalid_input_has_no_recovery",
+      "leaf": "recover_from_invalid_input"
+    },
+    {
+      "id": "forms.errors.modal_not_only_copy",
+      "title": "modal not only copy",
+      "name": "Modal is not the only copy — NN/g",
+      "jobs": [
+        "explain_failure_next_to_cause"
+      ],
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "handle_form_errors",
+      "facet": "errors_dont_point_to_the_fix",
+      "leaf": "explain_failure_next_to_cause"
+    },
+    {
+      "id": "forms.errors.next_to_field_not_summary_only",
+      "title": "next to field not summary only",
+      "name": "Next to the field, not summary only — NN/g",
+      "jobs": [
+        "explain_failure_next_to_cause"
+      ],
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "handle_form_errors",
+      "facet": "errors_dont_point_to_the_fix",
+      "leaf": "explain_failure_next_to_cause"
+    },
+    {
+      "id": "forms.errors.not_color_only",
+      "title": "not color only",
+      "name": "Not color only — NN/g",
+      "jobs": [
+        "explain_failure_next_to_cause"
+      ],
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "handle_form_errors",
+      "facet": "errors_dont_point_to_the_fix",
+      "leaf": "explain_failure_next_to_cause"
+    },
+    {
+      "id": "forms.errors.not_tooltip_only",
+      "title": "not tooltip only",
+      "name": "Not tooltip only — NN/g",
+      "jobs": [
+        "explain_failure_next_to_cause"
+      ],
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "handle_form_errors",
+      "facet": "errors_dont_point_to_the_fix",
+      "leaf": "explain_failure_next_to_cause"
+    },
+    {
+      "id": "forms.errors.repeated_extra_help",
+      "title": "repeated extra help",
+      "name": "Repeated extra help — NN/g",
+      "jobs": [
+        "recover_from_invalid_input"
+      ],
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "handle_form_errors",
+      "facet": "invalid_input_has_no_recovery",
+      "leaf": "recover_from_invalid_input"
+    },
+    {
+      "id": "forms.errors.replace_supporting_text",
+      "title": "replace supporting text",
+      "name": "Replace supporting text — Material",
+      "jobs": [
+        "recover_from_invalid_input"
+      ],
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "handle_form_errors",
+      "facet": "invalid_input_has_no_recovery",
+      "leaf": "recover_from_invalid_input"
+    },
+    {
+      "id": "forms.errors.success_complex_fields",
+      "title": "success complex fields",
+      "name": "Success complex fields — NN/g",
+      "jobs": [
+        "recover_from_invalid_input"
+      ],
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "handle_form_errors",
+      "facet": "invalid_input_has_no_recovery",
+      "leaf": "recover_from_invalid_input"
+    },
+    {
+      "id": "forms.field_labels.placeholder_hint_conflict",
+      "title": "placeholder hint conflict",
+      "name": "Placeholder hint conflict — NN/g",
+      "jobs": [
+        "avoid_placeholder_as_label"
+      ],
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "field_has_no_lasting_name",
+      "leaf": "avoid_placeholder_as_label"
+    },
+    {
+      "id": "forms.fields.distinguish_optional_required",
+      "title": "distinguish optional required",
+      "name": "Distinguish optional required — NN/g",
+      "jobs": [
+        "mark_requirements_up_front"
+      ],
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "requirements_are_a_surprise",
+      "leaf": "mark_requirements_up_front"
+    },
+    {
+      "id": "forms.fields.explain_format_upfront",
+      "title": "explain format upfront",
+      "name": "Explain format upfront — NN/g",
+      "jobs": [
+        "mark_requirements_up_front"
+      ],
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "requirements_are_a_surprise",
+      "leaf": "mark_requirements_up_front"
+    },
+    {
+      "id": "forms.fields.required_before_proceed",
+      "title": "required before proceed",
+      "name": "Required before proceed — Apple",
+      "jobs": [
+        "mark_requirements_up_front"
+      ],
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "requirements_are_a_surprise",
+      "leaf": "mark_requirements_up_front"
     },
     {
       "id": "forms.inputs.allow_paste_and_drag",
       "title": "allow paste and drag",
+      "name": "Allow paste and drag — NN/g",
       "jobs": [
-        "forms",
-        "recover_from_invalid_input"
+        "use_familiar_control"
       ],
-      "lane": "forms"
-    },
-    {
-      "id": "forms.inputs.matching_keyboard_and_type",
-      "title": "matching keyboard and type",
-      "jobs": [
-        "forms",
-        "choose_control_for_choice"
-      ],
-      "lane": "forms"
-    },
-    {
-      "id": "forms.inputs.no_autocorrect_identity_fields",
-      "title": "no autocorrect identity fields",
-      "jobs": [
-        "forms",
-        "recover_from_invalid_input"
-      ],
-      "lane": "forms"
-    },
-    {
-      "id": "forms.inputs.allow_typos_abbreviations",
-      "title": "allow typos abbreviations",
-      "jobs": [
-        "forms",
-        "recover_from_invalid_input"
-      ],
-      "lane": "forms"
-    },
-    {
-      "id": "forms.inputs.forgiving_format_autoformat",
-      "title": "forgiving format autoformat",
-      "jobs": [
-        "forms",
-        "recover_from_invalid_input"
-      ],
-      "lane": "forms"
-    },
-    {
-      "id": "forms.inputs.structured_format",
-      "title": "structured format",
-      "jobs": [
-        "forms",
-        "choose_control_for_choice"
-      ],
-      "lane": "forms"
-    },
-    {
-      "id": "forms.inputs.fill_in_the_blanks",
-      "title": "fill in the blanks",
-      "jobs": [
-        "forms",
-        "name_a_control"
-      ],
-      "lane": "forms"
-    },
-    {
-      "id": "forms.inputs.password_strength_meter",
-      "title": "password strength meter",
-      "jobs": [
-        "forms",
-        "announce_system_status"
-      ],
-      "lane": "forms"
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
     },
     {
       "id": "forms.inputs.autocompletion",
       "title": "autocompletion",
+      "name": "Autocompletion — Tidwell",
       "jobs": [
-        "forms",
-        "recover_from_invalid_input"
+        "use_familiar_control"
       ],
-      "lane": "forms"
-    },
-    {
-      "id": "forms.inputs.dropdown_chooser",
-      "title": "dropdown chooser",
-      "jobs": [
-        "forms",
-        "choose_control_for_choice"
-      ],
-      "lane": "forms"
-    },
-    {
-      "id": "forms.inputs.list_builder",
-      "title": "list builder",
-      "jobs": [
-        "forms",
-        "choose_control_for_choice"
-      ],
-      "lane": "forms"
-    },
-    {
-      "id": "forms.inputs.good_defaults_smart_prefills",
-      "title": "good defaults smart prefills",
-      "jobs": [
-        "forms",
-        "recover_from_invalid_input"
-      ],
-      "lane": "forms"
-    },
-    {
-      "id": "forms.inputs.get_from_system",
-      "title": "get from system",
-      "jobs": [
-        "forms",
-        "recover_from_invalid_input"
-      ],
-      "lane": "forms"
-    },
-    {
-      "id": "forms.inputs.never_prepopulate_password",
-      "title": "never prepopulate password",
-      "jobs": [
-        "forms",
-        "disable_or_confirm_destructive"
-      ],
-      "lane": "forms"
-    },
-    {
-      "id": "forms.inputs.offer_choices_not_only_text",
-      "title": "offer choices not only text",
-      "jobs": [
-        "forms",
-        "choose_control_for_choice"
-      ],
-      "lane": "forms"
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
     },
     {
       "id": "forms.inputs.clear_button",
       "title": "clear button",
+      "name": "Clear button — Apple",
       "jobs": [
-        "forms",
-        "recover_from_invalid_input"
+        "use_familiar_control"
       ],
-      "lane": "forms"
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
     },
     {
       "id": "forms.inputs.combo_box",
       "title": "combo box",
+      "name": "Combo box — Apple",
       "jobs": [
-        "forms",
         "choose_control_for_choice"
       ],
-      "lane": "forms"
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
+    },
+    {
+      "id": "forms.inputs.compute_from_other_info",
+      "title": "compute from other info",
+      "name": "Compute from other info — NN/g",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
+    },
+    {
+      "id": "forms.inputs.dropdown_chooser",
+      "title": "dropdown chooser",
+      "name": "Dropdown chooser — Tidwell",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
+    },
+    {
+      "id": "forms.inputs.fill_in_the_blanks",
+      "title": "fill in the blanks",
+      "name": "Fill in the blanks — Tidwell",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
+    },
+    {
+      "id": "forms.inputs.forgiving_format_autoformat",
+      "title": "forgiving format autoformat",
+      "name": "Forgiving format, autoformat — NN/g",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
+    },
+    {
+      "id": "forms.inputs.get_from_system",
+      "title": "get from system",
+      "name": "Get from system — Apple",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
+    },
+    {
+      "id": "forms.inputs.good_defaults_smart_prefills",
+      "title": "good defaults smart prefills",
+      "name": "Good defaults smart prefills — Tidwell",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
+    },
+    {
+      "id": "forms.inputs.helpful_constraints",
+      "title": "helpful constraints",
+      "name": "Helpful constraints — NN/g",
+      "jobs": [
+        "mark_requirements_up_front"
+      ],
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "requirements_are_a_surprise",
+      "leaf": "mark_requirements_up_front"
     },
     {
       "id": "forms.inputs.html_autocomplete_and_name",
       "title": "html autocomplete and name",
+      "name": "HTML autocomplete and name — Vercel",
       "jobs": [
-        "forms",
-        "name_a_control"
+        "use_familiar_control"
       ],
-      "lane": "forms"
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
+    },
+    {
+      "id": "forms.inputs.list_builder",
+      "title": "list builder",
+      "name": "List builder — Tidwell",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
+    },
+    {
+      "id": "forms.inputs.match_control_and_size",
+      "title": "match control and size",
+      "name": "Match control and size — NN/g",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
+    },
+    {
+      "id": "forms.inputs.matching_keyboard_and_type",
+      "title": "matching keyboard and type",
+      "name": "Matching keyboard and type — NN/g",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
+    },
+    {
+      "id": "forms.inputs.never_prepopulate_password",
+      "title": "never prepopulate password",
+      "name": "Never prepopulate password — Apple",
+      "jobs": [
+        "show_the_password"
+      ],
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "compose_sign_in",
+      "facet": "credentials_are_hard_to_enter",
+      "leaf": "show_the_password"
+    },
+    {
+      "id": "forms.inputs.no_autocorrect_identity_fields",
+      "title": "no autocorrect identity fields",
+      "name": "No autocorrect identity fields — NN/g",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
+    },
+    {
+      "id": "forms.inputs.offer_choices_not_only_text",
+      "title": "offer choices not only text",
+      "name": "Offer choices not only text — Apple",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
+    },
+    {
+      "id": "forms.inputs.password_strength_meter",
+      "title": "password strength meter",
+      "name": "Password strength meter — Tidwell",
+      "jobs": [
+        "recover_from_invalid_input"
+      ],
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "handle_form_errors",
+      "facet": "invalid_input_has_no_recovery",
+      "leaf": "recover_from_invalid_input"
     },
     {
       "id": "forms.inputs.shared_hit_target_choice",
       "title": "shared hit target choice",
+      "name": "Shared hit target choice — Vercel",
       "jobs": [
-        "forms",
         "keep_hit_target_usable"
       ],
-      "lane": "forms"
+      "lane": "forms",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "controls_are_hard_to_hit",
+      "leaf": "keep_hit_target_usable"
     },
     {
-      "id": "forms.mobile.visible_with_keyboard",
-      "title": "visible with keyboard",
+      "id": "forms.inputs.structured_format",
+      "title": "structured format",
+      "name": "Structured format — Tidwell",
       "jobs": [
-        "forms",
-        "keep_field_purpose_visible_while_filled"
+        "use_familiar_control"
       ],
-      "lane": "forms"
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
+    },
+    {
+      "id": "forms.inputs.use_device_features",
+      "title": "use device features",
+      "name": "Use device features — NN/g",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
     },
     {
       "id": "forms.labels.clickable",
       "title": "clickable",
+      "name": "Clickable — Vercel",
       "jobs": [
-        "forms",
         "name_a_control"
       ],
-      "lane": "forms"
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "field_has_no_lasting_name",
+      "leaf": "name_a_control"
     },
     {
-      "id": "forms.submit.enabled_until_request",
-      "title": "enabled until request",
+      "id": "forms.layout.group_related_labels_fields",
+      "title": "group related labels fields",
+      "name": "Group related labels fields — NN/g",
       "jobs": [
-        "forms",
-        "announce_system_status"
+        "group_related_inputs"
       ],
-      "lane": "forms"
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "related_inputs_feel_scattered",
+      "leaf": "group_related_inputs"
+    },
+    {
+      "id": "forms.layout.logical_sequence",
+      "title": "logical sequence",
+      "name": "Logical sequence — NN/g",
+      "jobs": [
+        "group_related_inputs"
+      ],
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "related_inputs_feel_scattered",
+      "leaf": "group_related_inputs"
+    },
+    {
+      "id": "forms.layout.single_column",
+      "title": "single column",
+      "name": "Single column — NN/g",
+      "jobs": [
+        "group_related_inputs"
+      ],
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "related_inputs_feel_scattered",
+      "leaf": "group_related_inputs"
+    },
+    {
+      "id": "forms.length.keep_short",
+      "title": "keep short",
+      "name": "Keep short — NN/g",
+      "jobs": [
+        "group_related_inputs"
+      ],
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "related_inputs_feel_scattered",
+      "leaf": "group_related_inputs"
+    },
+    {
+      "id": "forms.mobile.visible_with_keyboard",
+      "title": "visible with keyboard",
+      "name": "Visible with keyboard — NN/g",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
     },
     {
       "id": "forms.navigation.warn_unsaved",
       "title": "warn unsaved",
+      "name": "Warn unsaved — Vercel",
       "jobs": [
-        "forms",
-        "disable_or_confirm_destructive"
+        "warn_before_leave"
       ],
-      "lane": "forms"
+      "lane": "forms",
+      "container": "actions_and_decisions",
+      "card": "protect_destructive_and_leave",
+      "facet": "leaving_discards_work",
+      "leaf": "warn_before_leave"
     },
     {
-      "id": "gold.consistent-not-uniform",
-      "title": "consistent not uniform",
+      "id": "forms.structure.progressive_disclosure",
+      "title": "progressive disclosure",
+      "name": "Progressive disclosure — NN/g",
       "jobs": [
-        "use_familiar_control"
+        "disclose_instead_of_dump"
       ],
-      "lane": "gold"
+      "lane": "forms",
+      "container": "overlays_and_content_structure",
+      "card": "choose_an_overlay",
+      "facet": "wrong_layer_for_the_content",
+      "leaf": "disclose_instead_of_dump"
     },
     {
-      "id": "gold.visual-loudness-primary-secondary-tertiary",
-      "title": "visual loudness primary secondary tertiary",
+      "id": "forms.submit.enabled_until_request",
+      "title": "enabled until request",
+      "name": "Enabled until request — Vercel",
       "jobs": [
         "pick_primary_action"
       ],
-      "lane": "gold"
+      "lane": "forms",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "no_clear_primary",
+      "leaf": "pick_primary_action"
     },
     {
-      "id": "gold.next-primary-save-progress-secondary",
-      "title": "next primary save progress secondary",
+      "id": "forms.transparency.progress_on_long_forms",
+      "title": "progress on long forms",
+      "name": "Progress on long forms — NN/g",
       "jobs": [
-        "pick_primary_action"
+        "show_step_progress"
       ],
-      "lane": "gold"
+      "lane": "forms",
+      "container": "multi_step_flows",
+      "card": "build_a_multi_step_flow",
+      "facet": "too_much_on_one_step",
+      "leaf": "show_step_progress"
     },
     {
-      "id": "gold.avoid-select-except-long-lists",
-      "title": "avoid select except long lists",
+      "id": "forms.transparency.requirements_before_start",
+      "title": "requirements before start",
+      "name": "Requirements before start — NN/g",
       "jobs": [
-        "choose_control_for_choice"
+        "mark_requirements_up_front"
       ],
-      "lane": "gold"
-    },
-    {
-      "id": "gold.progress-indicator-out-of-order-returnable",
-      "title": "progress indicator out of order returnable",
-      "jobs": [
-        "wayfind_after_nav"
-      ],
-      "lane": "gold"
-    },
-    {
-      "id": "gold.search-placement-home-vs-results",
-      "title": "search placement home vs results",
-      "jobs": [
-        "wayfind_after_nav"
-      ],
-      "lane": "gold"
-    },
-    {
-      "id": "gold.search-input-attributes",
-      "title": "search input attributes",
-      "jobs": [
-        "use_familiar_control"
-      ],
-      "lane": "gold"
-    },
-    {
-      "id": "gold.card-one-inner-link-hit-area",
-      "title": "card one inner link hit area",
-      "jobs": [
-        "keep_hit_target_usable"
-      ],
-      "lane": "gold"
+      "lane": "forms",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "requirements_are_a_surprise",
+      "leaf": "mark_requirements_up_front"
     },
     {
       "id": "gold.accordion-find-in-page-misses-collapsed",
       "title": "accordion find in page misses collapsed",
+      "name": "Accordion find in page misses collapsed — GOLD",
       "jobs": [
-        "wayfind_after_nav"
+        "disclose_instead_of_dump"
       ],
-      "lane": "gold"
+      "lane": "gold",
+      "container": "overlays_and_content_structure",
+      "card": "choose_an_overlay",
+      "facet": "wrong_layer_for_the_content",
+      "leaf": "disclose_instead_of_dump"
+    },
+    {
+      "id": "gold.avoid-select-except-long-lists",
+      "title": "avoid select except long lists",
+      "name": "Avoid select except long lists — GOLD",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "gold",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
+    },
+    {
+      "id": "gold.card-one-inner-link-hit-area",
+      "title": "card one inner link hit area",
+      "name": "Card one inner link hit area — GOLD",
+      "jobs": [
+        "keep_hit_target_usable"
+      ],
+      "lane": "gold",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "controls_are_hard_to_hit",
+      "leaf": "keep_hit_target_usable"
+    },
+    {
+      "id": "gold.consistent-not-uniform",
+      "title": "consistent not uniform",
+      "name": "Consistent not uniform — GOLD",
+      "jobs": [
+        "tone_of_voice_for_failure"
+      ],
+      "lane": "gold",
+      "container": "feedback_and_status",
+      "card": "compose_feedback",
+      "facet": "tone_fights_the_moment",
+      "leaf": "tone_of_voice_for_failure"
+    },
+    {
+      "id": "gold.next-primary-save-progress-secondary",
+      "title": "next primary save progress secondary",
+      "name": "Next primary save progress secondary — GOLD",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "lane": "gold",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "no_clear_primary",
+      "leaf": "pick_primary_action"
     },
     {
       "id": "gold.no-abbr-expand-on-first-mention",
       "title": "no abbr expand on first mention",
+      "name": "No abbr; expand on first mention — GOLD",
       "jobs": [
-        "name_a_control"
+        "tone_of_voice_for_failure"
       ],
-      "lane": "gold"
+      "lane": "gold",
+      "container": "feedback_and_status",
+      "card": "compose_feedback",
+      "facet": "tone_fights_the_moment",
+      "leaf": "tone_of_voice_for_failure"
     },
     {
-      "id": "govuk.date-input-only-memorable",
-      "title": "date input only memorable",
+      "id": "gold.progress-indicator-out-of-order-returnable",
+      "title": "progress indicator out of order returnable",
+      "name": "Progress indicator out of order returnable — GOLD",
       "jobs": [
-        "choose_control_for_choice"
+        "show_step_progress"
       ],
-      "lane": "govuk"
+      "lane": "gold",
+      "container": "multi_step_flows",
+      "card": "build_a_multi_step_flow",
+      "facet": "too_much_on_one_step",
+      "leaf": "show_step_progress"
     },
     {
-      "id": "govuk.never-auto-tab-date-fields",
-      "title": "never auto tab date fields",
+      "id": "gold.search-input-attributes",
+      "title": "search input attributes",
+      "name": "Search input attributes — GOLD",
       "jobs": [
-        "use_familiar_control"
+        "place_the_search_control"
       ],
-      "lane": "govuk"
+      "lane": "gold",
+      "container": "navigation_and_wayfinding",
+      "card": "compose_search",
+      "facet": "search_is_hard_to_find",
+      "leaf": "place_the_search_control"
     },
     {
-      "id": "govuk.dob-autocomplete-tokens",
-      "title": "dob autocomplete tokens",
+      "id": "gold.search-placement-home-vs-results",
+      "title": "search placement home vs results",
+      "name": "Search placement home vs results — GOLD",
       "jobs": [
-        "use_familiar_control"
+        "place_the_search_control"
       ],
-      "lane": "govuk"
+      "lane": "gold",
+      "container": "navigation_and_wayfinding",
+      "card": "compose_search",
+      "facet": "search_is_hard_to_find",
+      "leaf": "place_the_search_control"
     },
     {
-      "id": "govuk.four-date-types",
-      "title": "four date types",
+      "id": "gold.visual-loudness-primary-secondary-tertiary",
+      "title": "visual loudness primary secondary tertiary",
+      "name": "Visual loudness primary secondary tertiary — GOLD",
       "jobs": [
-        "choose_control_for_choice"
+        "pick_primary_action"
       ],
-      "lane": "govuk"
-    },
-    {
-      "id": "govuk.calendar-control-when",
-      "title": "calendar control when",
-      "jobs": [
-        "choose_control_for_choice"
-      ],
-      "lane": "govuk"
-    },
-    {
-      "id": "govuk.example-dates-unambiguous-order",
-      "title": "example dates unambiguous order",
-      "jobs": [
-        "use_familiar_control"
-      ],
-      "lane": "govuk"
-    },
-    {
-      "id": "govuk.labels-sentence-case-no-colons-above",
-      "title": "labels sentence case no colons above",
-      "jobs": [
-        "name_a_control"
-      ],
-      "lane": "govuk"
-    },
-    {
-      "id": "govuk.select-last-resort",
-      "title": "select last resort",
-      "jobs": [
-        "choose_control_for_choice"
-      ],
-      "lane": "govuk"
-    },
-    {
-      "id": "govuk.select-preselect-settings-not-questions",
-      "title": "select preselect settings not questions",
-      "jobs": [
-        "choose_control_for_choice"
-      ],
-      "lane": "govuk"
-    },
-    {
-      "id": "govuk.radios-left-of-labels",
-      "title": "radios left of labels",
-      "jobs": [
-        "name_a_control"
-      ],
-      "lane": "govuk"
-    },
-    {
-      "id": "govuk.dont-assume-single-vs-multi-from-visuals",
-      "title": "dont assume single vs multi from visuals",
-      "jobs": [
-        "choose_control_for_choice"
-      ],
-      "lane": "govuk"
-    },
-    {
-      "id": "govuk.radio-divider-or",
-      "title": "radio divider or",
-      "jobs": [
-        "choose_control_for_choice"
-      ],
-      "lane": "govuk"
-    },
-    {
-      "id": "govuk.conditionally-reveal-related-question",
-      "title": "conditionally reveal related question",
-      "jobs": [
-        "group_related_inputs"
-      ],
-      "lane": "govuk"
-    },
-    {
-      "id": "govuk.item-hints-one-sentence",
-      "title": "item hints one sentence",
-      "jobs": [
-        "name_a_control"
-      ],
-      "lane": "govuk"
+      "lane": "gold",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "no_clear_primary",
+      "leaf": "pick_primary_action"
     },
     {
       "id": "govuk.button-types-named",
       "title": "button types named",
+      "name": "Button types named — GOV.UK",
       "jobs": [
         "pick_primary_action"
       ],
-      "lane": "govuk"
+      "lane": "govuk",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "no_clear_primary",
+      "leaf": "pick_primary_action"
     },
     {
-      "id": "govuk.dont-use-disabled-buttons",
-      "title": "dont use disabled buttons",
+      "id": "govuk.calendar-control-when",
+      "title": "calendar control when",
+      "name": "Calendar control when — GOV.UK",
       "jobs": [
-        "disable_or_confirm_destructive"
+        "choose_control_for_choice"
       ],
-      "lane": "govuk"
-    },
-    {
-      "id": "govuk.stop-accidental-double-submit",
-      "title": "stop accidental double submit",
-      "jobs": [
-        "pick_primary_action"
-      ],
-      "lane": "govuk"
-    },
-    {
-      "id": "govuk.file-upload-reuse-already-uploaded",
-      "title": "file upload reuse already uploaded",
-      "jobs": [
-        "use_familiar_control"
-      ],
-      "lane": "govuk"
-    },
-    {
-      "id": "govuk.question-pages-continue-back-no-sliders",
-      "title": "question pages continue back no sliders",
-      "jobs": [
-        "pick_primary_action"
-      ],
-      "lane": "govuk"
-    },
-    {
-      "id": "govuk.task-list-statuses",
-      "title": "task list statuses",
-      "jobs": [
-        "announce_system_status"
-      ],
-      "lane": "govuk"
-    },
-    {
-      "id": "govuk.error-summary-plus-per-field",
-      "title": "error summary plus per field",
-      "jobs": [
-        "recover_from_invalid_input",
-        "explain_failure_next_to_cause"
-      ],
-      "lane": "govuk"
+      "lane": "govuk",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
     },
     {
       "id": "govuk.character-count-fieldset-legend",
       "title": "character count fieldset legend",
+      "name": "Character count fieldset legend — GOV.UK",
       "jobs": [
         "group_related_inputs"
       ],
-      "lane": "govuk"
+      "lane": "govuk",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "related_inputs_feel_scattered",
+      "leaf": "group_related_inputs"
     },
     {
-      "id": "mui.button-variant-roles",
-      "title": "button variant roles",
+      "id": "govuk.conditionally-reveal-related-question",
+      "title": "conditionally reveal related question",
+      "name": "Conditionally reveal related question — GOV.UK",
+      "jobs": [
+        "disclose_instead_of_dump"
+      ],
+      "lane": "govuk",
+      "container": "overlays_and_content_structure",
+      "card": "choose_an_overlay",
+      "facet": "wrong_layer_for_the_content",
+      "leaf": "disclose_instead_of_dump"
+    },
+    {
+      "id": "govuk.date-input-only-memorable",
+      "title": "date input only memorable",
+      "name": "Date input only memorable — GOV.UK",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "govuk",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
+    },
+    {
+      "id": "govuk.dob-autocomplete-tokens",
+      "title": "dob autocomplete tokens",
+      "name": "Date-of-birth autocomplete tokens — GOV.UK",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "lane": "govuk",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
+    },
+    {
+      "id": "govuk.dont-assume-single-vs-multi-from-visuals",
+      "title": "dont assume single vs multi from visuals",
+      "name": "Don't assume single vs multi from visuals — GOV.UK",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "govuk",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
+    },
+    {
+      "id": "govuk.dont-use-disabled-buttons",
+      "title": "dont use disabled buttons",
+      "name": "Don't use disabled buttons — GOV.UK",
       "jobs": [
         "pick_primary_action"
       ],
-      "lane": "mui"
+      "lane": "govuk",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "no_clear_primary",
+      "leaf": "pick_primary_action"
     },
     {
-      "id": "mui.dont-type-number",
-      "title": "dont type number",
+      "id": "govuk.error-summary-plus-per-field",
+      "title": "error summary plus per field",
+      "name": "Error summary plus per field — GOV.UK",
+      "jobs": [
+        "explain_failure_next_to_cause"
+      ],
+      "lane": "govuk",
+      "container": "forms_and_input",
+      "card": "handle_form_errors",
+      "facet": "errors_dont_point_to_the_fix",
+      "leaf": "explain_failure_next_to_cause"
+    },
+    {
+      "id": "govuk.example-dates-unambiguous-order",
+      "title": "example dates unambiguous order",
+      "name": "Example dates unambiguous order — GOV.UK",
       "jobs": [
         "use_familiar_control"
       ],
-      "lane": "mui"
+      "lane": "govuk",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
     },
     {
-      "id": "mui.helper-text-changes-field-height",
-      "title": "helper text changes field height",
+      "id": "govuk.file-upload-reuse-already-uploaded",
+      "title": "file upload reuse already uploaded",
+      "name": "File upload reuse already uploaded — GOV.UK",
+      "jobs": [
+        "word_the_field_help"
+      ],
+      "lane": "govuk",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "field_and_helper_wording",
+      "leaf": "word_the_field_help"
+    },
+    {
+      "id": "govuk.four-date-types",
+      "title": "four date types",
+      "name": "Four date types — GOV.UK",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "govuk",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
+    },
+    {
+      "id": "govuk.item-hints-one-sentence",
+      "title": "item hints one sentence",
+      "name": "Item hints one sentence — GOV.UK",
+      "jobs": [
+        "word_the_field_help"
+      ],
+      "lane": "govuk",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "field_and_helper_wording",
+      "leaf": "word_the_field_help"
+    },
+    {
+      "id": "govuk.labels-sentence-case-no-colons-above",
+      "title": "labels sentence case no colons above",
+      "name": "Labels sentence case no colons above — GOV.UK",
       "jobs": [
         "name_a_control"
       ],
-      "lane": "mui"
+      "lane": "govuk",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "field_has_no_lasting_name",
+      "leaf": "name_a_control"
     },
     {
-      "id": "mui.explicit-id-for-label-helper",
-      "title": "explicit id for label helper",
-      "jobs": [
-        "name_a_control"
-      ],
-      "lane": "mui"
-    },
-    {
-      "id": "mui.most-alerts-dont-need-titles",
-      "title": "most alerts dont need titles",
+      "id": "govuk.never-auto-tab-date-fields",
+      "title": "never auto tab date fields",
+      "name": "Never auto tab date fields — GOV.UK",
       "jobs": [
         "use_familiar_control"
       ],
-      "lane": "mui"
+      "lane": "govuk",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
+    },
+    {
+      "id": "govuk.question-pages-continue-back-no-sliders",
+      "title": "question pages continue back no sliders",
+      "name": "Question pages continue back no sliders — GOV.UK",
+      "jobs": [
+        "show_step_progress"
+      ],
+      "lane": "govuk",
+      "container": "multi_step_flows",
+      "card": "build_a_multi_step_flow",
+      "facet": "too_much_on_one_step",
+      "leaf": "show_step_progress"
+    },
+    {
+      "id": "govuk.radio-divider-or",
+      "title": "radio divider or",
+      "name": "Radio divider “or” — GOV.UK",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "govuk",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
+    },
+    {
+      "id": "govuk.radios-left-of-labels",
+      "title": "radios left of labels",
+      "name": "Radios left of labels — GOV.UK",
+      "jobs": [
+        "keep_hit_target_usable"
+      ],
+      "lane": "govuk",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "controls_are_hard_to_hit",
+      "leaf": "keep_hit_target_usable"
+    },
+    {
+      "id": "govuk.select-last-resort",
+      "title": "select last resort",
+      "name": "Select last resort — GOV.UK",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "govuk",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
+    },
+    {
+      "id": "govuk.select-preselect-settings-not-questions",
+      "title": "select preselect settings not questions",
+      "name": "Select preselect settings not questions — GOV.UK",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "govuk",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
+    },
+    {
+      "id": "govuk.stop-accidental-double-submit",
+      "title": "stop accidental double submit",
+      "name": "Stop accidental double submit — GOV.UK",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "lane": "govuk",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "no_clear_primary",
+      "leaf": "pick_primary_action"
+    },
+    {
+      "id": "govuk.task-list-statuses",
+      "title": "task list statuses",
+      "name": "Task list statuses — GOV.UK",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "lane": "govuk",
+      "container": "feedback_and_status",
+      "card": "compose_feedback",
+      "facet": "system_stayed_quiet_after_change",
+      "leaf": "announce_system_status"
     },
     {
       "id": "mui.avoid-apologies-alarm-ambiguity-in-dialog-titles",
       "title": "avoid apologies alarm ambiguity in dialog titles",
+      "name": "Avoid apologies alarm ambiguity in dialog titles — MUI",
       "jobs": [
-        "tone_of_voice_for_failure"
+        "disable_or_confirm_destructive"
       ],
-      "lane": "mui"
+      "lane": "mui",
+      "container": "actions_and_decisions",
+      "card": "protect_destructive_and_leave",
+      "facet": "destructive_is_too_easy",
+      "leaf": "disable_or_confirm_destructive"
+    },
+    {
+      "id": "mui.button-variant-roles",
+      "title": "button variant roles",
+      "name": "Button variant roles — MUI",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "lane": "mui",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "no_clear_primary",
+      "leaf": "pick_primary_action"
     },
     {
       "id": "mui.confirmation-cancel-discards",
       "title": "confirmation cancel discards",
+      "name": "Confirmation cancel discards — MUI",
       "jobs": [
-        "disable_or_confirm_destructive"
+        "warn_before_leave"
       ],
-      "lane": "mui"
+      "lane": "mui",
+      "container": "actions_and_decisions",
+      "card": "protect_destructive_and_leave",
+      "facet": "leaving_discards_work",
+      "leaf": "warn_before_leave"
+    },
+    {
+      "id": "mui.dont-type-number",
+      "title": "dont type number",
+      "name": "Don't use type=number — MUI",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "mui",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
+    },
+    {
+      "id": "mui.explicit-id-for-label-helper",
+      "title": "explicit id for label helper",
+      "name": "Explicit id for label helper — MUI",
+      "jobs": [
+        "name_a_control"
+      ],
+      "lane": "mui",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "field_has_no_lasting_name",
+      "leaf": "name_a_control"
+    },
+    {
+      "id": "mui.helper-text-changes-field-height",
+      "title": "helper text changes field height",
+      "name": "Helper text changes field height — MUI",
+      "jobs": [
+        "recover_from_invalid_input"
+      ],
+      "lane": "mui",
+      "container": "forms_and_input",
+      "card": "handle_form_errors",
+      "facet": "invalid_input_has_no_recovery",
+      "leaf": "recover_from_invalid_input"
+    },
+    {
+      "id": "mui.most-alerts-dont-need-titles",
+      "title": "most alerts dont need titles",
+      "name": "Most alerts don't need titles — MUI",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "lane": "mui",
+      "container": "feedback_and_status",
+      "card": "compose_feedback",
+      "facet": "system_stayed_quiet_after_change",
+      "leaf": "announce_system_status"
     },
     {
       "id": "mui.non-modal-dialogs-allowed",
       "title": "non modal dialogs allowed",
+      "name": "Non modal dialogs allowed — MUI",
       "jobs": [
-        "use_familiar_control"
+        "pick_modal_only_when_blocking"
       ],
-      "lane": "mui"
-    },
-    {
-      "id": "nl.header-search-placeholder-visible-search-control",
-      "title": "header search placeholder visible search control",
-      "jobs": [
-        "avoid_placeholder_as_label"
-      ],
-      "lane": "nl"
-    },
-    {
-      "id": "nl.no-forced-input-patterns-or-masks",
-      "title": "no forced input patterns or masks",
-      "jobs": [
-        "recover_from_invalid_input"
-      ],
-      "lane": "nl"
-    },
-    {
-      "id": "nl.dont-reject-valid-variants",
-      "title": "dont reject valid variants",
-      "jobs": [
-        "recover_from_invalid_input"
-      ],
-      "lane": "nl"
-    },
-    {
-      "id": "nl.no-min-max-length-names-places",
-      "title": "no min max length names places",
-      "jobs": [
-        "recover_from_invalid_input"
-      ],
-      "lane": "nl"
-    },
-    {
-      "id": "nl.no-select-multiple",
-      "title": "no select multiple",
-      "jobs": [
-        "choose_control_for_choice"
-      ],
-      "lane": "nl"
-    },
-    {
-      "id": "nl.step-n-of-m-in-title-and-above-form",
-      "title": "step n of m in title and above form",
-      "jobs": [
-        "wayfind_after_nav"
-      ],
-      "lane": "nl"
-    },
-    {
-      "id": "nl.last-step-is-send-not-volgende",
-      "title": "last step is send not volgende",
-      "jobs": [
-        "pick_primary_action"
-      ],
-      "lane": "nl"
-    },
-    {
-      "id": "nl.labels-contain-only-text",
-      "title": "labels contain only text",
-      "jobs": [
-        "name_a_control"
-      ],
-      "lane": "nl"
-    },
-    {
-      "id": "nl.privacy-terms-link-outside-label",
-      "title": "privacy terms link outside label",
-      "jobs": [
-        "name_a_control"
-      ],
-      "lane": "nl"
-    },
-    {
-      "id": "nl.form-draft-links-new-tab-named-in-link",
-      "title": "form draft links new tab named in link",
-      "jobs": [
-        "name_a_control"
-      ],
-      "lane": "nl"
-    },
-    {
-      "id": "nl.success-confirms-what-not-bounce-home",
-      "title": "success confirms what not bounce home",
-      "jobs": [
-        "write_empty_state"
-      ],
-      "lane": "nl"
-    },
-    {
-      "id": "nl.name-next-organisational-steps",
-      "title": "name next organisational steps",
-      "jobs": [
-        "write_empty_state"
-      ],
-      "lane": "nl"
+      "lane": "mui",
+      "container": "overlays_and_content_structure",
+      "card": "choose_an_overlay",
+      "facet": "wrong_layer_for_the_content",
+      "leaf": "pick_modal_only_when_blocking"
     },
     {
       "id": "nl.dont-auto-dismiss-status-announce-complete",
       "title": "dont auto dismiss status announce complete",
+      "name": "Don't auto-dismiss status; announce complete — NL",
       "jobs": [
         "announce_system_status"
       ],
-      "lane": "nl"
+      "lane": "nl",
+      "container": "feedback_and_status",
+      "card": "compose_feedback",
+      "facet": "system_stayed_quiet_after_change",
+      "leaf": "announce_system_status"
     },
     {
-      "id": "nl.mark-optional-niet-verplicht-above-form",
-      "title": "mark optional niet verplicht above form",
+      "id": "nl.form-draft-links-new-tab-named-in-link",
+      "title": "form draft links new tab named in link",
+      "name": "Form draft links new tab named in link — NL",
+      "jobs": [
+        "name_the_link_by_destination"
+      ],
+      "lane": "nl",
+      "container": "layout_and_data_display",
+      "card": "write_the_interface",
+      "facet": "link_text_hides_destination",
+      "leaf": "name_the_link_by_destination"
+    },
+    {
+      "id": "nl.header-search-placeholder-visible-search-control",
+      "title": "header search placeholder visible search control",
+      "name": "Header search placeholder visible search control — NL",
+      "jobs": [
+        "place_the_search_control"
+      ],
+      "lane": "nl",
+      "container": "navigation_and_wayfinding",
+      "card": "compose_search",
+      "facet": "search_is_hard_to_find",
+      "leaf": "place_the_search_control"
+    },
+    {
+      "id": "nl.labels-contain-only-text",
+      "title": "labels contain only text",
+      "name": "Labels contain only text — NL",
       "jobs": [
         "name_a_control"
       ],
-      "lane": "nl"
+      "lane": "nl",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "field_has_no_lasting_name",
+      "leaf": "name_a_control"
     },
     {
       "id": "nl.long-legal-jargon-before-form-not-tooltip",
       "title": "long legal jargon before form not tooltip",
+      "name": "Long legal jargon before form not tooltip — NL",
       "jobs": [
-        "keep_field_purpose_visible_while_filled"
+        "word_the_field_help"
       ],
-      "lane": "nl"
+      "lane": "nl",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "field_and_helper_wording",
+      "leaf": "word_the_field_help"
+    },
+    {
+      "id": "nl.name-next-organisational-steps",
+      "title": "name next organisational steps",
+      "name": "Name next organisational steps — NL",
+      "jobs": [
+        "name_the_link_by_destination"
+      ],
+      "lane": "nl",
+      "container": "layout_and_data_display",
+      "card": "write_the_interface",
+      "facet": "link_text_hides_destination",
+      "leaf": "name_the_link_by_destination"
     },
     {
       "id": "nl.native-required-bubbles-not-error-ui",
       "title": "native required bubbles not error ui",
-      "jobs": [
-        "recover_from_invalid_input",
-        "explain_failure_next_to_cause"
-      ],
-      "lane": "nl"
-    },
-    {
-      "id": "nng.too-few-options-radios-not-dropdown",
-      "title": "too few options radios not dropdown",
-      "jobs": [
-        "choose_control_for_choice"
-      ],
-      "lane": "nng"
-    },
-    {
-      "id": "nng.too-many-combobox-not-long-dropdown",
-      "title": "too many combobox not long dropdown",
-      "jobs": [
-        "choose_control_for_choice"
-      ],
-      "lane": "nng"
-    },
-    {
-      "id": "nng.familiar-values-type-not-dropdown",
-      "title": "familiar values type not dropdown",
-      "jobs": [
-        "choose_control_for_choice"
-      ],
-      "lane": "nng"
-    },
-    {
-      "id": "nng.dropdown-ok-narrow-middle",
-      "title": "dropdown ok narrow middle",
-      "jobs": [
-        "choose_control_for_choice"
-      ],
-      "lane": "nng"
-    },
-    {
-      "id": "nng.listbox-vs-dropdown",
-      "title": "listbox vs dropdown",
-      "jobs": [
-        "choose_control_for_choice"
-      ],
-      "lane": "nng"
-    },
-    {
-      "id": "nng.keyboard-typeahead-in-dropdowns",
-      "title": "keyboard typeahead in dropdowns",
-      "jobs": [
-        "choose_control_for_choice"
-      ],
-      "lane": "nng"
-    },
-    {
-      "id": "nng.avoid-cascading-dropdowns",
-      "title": "avoid cascading dropdowns",
-      "jobs": [
-        "choose_control_for_choice"
-      ],
-      "lane": "nng"
-    },
-    {
-      "id": "nng.checkboxes-multi-radios-exclusive",
-      "title": "checkboxes multi radios exclusive",
-      "jobs": [
-        "choose_control_for_choice"
-      ],
-      "lane": "nng"
-    },
-    {
-      "id": "nng.standard-visuals-checkbox-square-radio-circle",
-      "title": "standard visuals checkbox square radio circle",
-      "jobs": [
-        "use_familiar_control"
-      ],
-      "lane": "nng"
-    },
-    {
-      "id": "nng.vertical-one-choice-per-line",
-      "title": "vertical one choice per line",
-      "jobs": [
-        "use_familiar_control"
-      ],
-      "lane": "nng"
-    },
-    {
-      "id": "nng.prefer-radios-over-dropdowns-when-visible",
-      "title": "prefer radios over dropdowns when visible",
-      "jobs": [
-        "choose_control_for_choice"
-      ],
-      "lane": "nng"
-    },
-    {
-      "id": "nng.radio-set-comprehensive-other-type-in",
-      "title": "radio set comprehensive other type in",
-      "jobs": [
-        "choose_control_for_choice"
-      ],
-      "lane": "nng"
-    },
-    {
-      "id": "nng.always-select-one-radio-by-default",
-      "title": "always select one radio by default",
-      "jobs": [
-        "choose_control_for_choice"
-      ],
-      "lane": "nng"
-    },
-    {
-      "id": "nng.users-rarely-change-defaults",
-      "title": "users rarely change defaults",
-      "jobs": [
-        "use_familiar_control"
-      ],
-      "lane": "nng"
-    },
-    {
-      "id": "nng.eas-framework",
-      "title": "eas framework",
-      "jobs": [
-        "use_familiar_control"
-      ],
-      "lane": "nng"
-    },
-    {
-      "id": "nng.show-the-rules",
-      "title": "show the rules",
+      "name": "Native required bubbles not error UI — NL",
       "jobs": [
         "recover_from_invalid_input"
       ],
-      "lane": "nng"
+      "lane": "nl",
+      "container": "forms_and_input",
+      "card": "handle_form_errors",
+      "facet": "invalid_input_has_no_recovery",
+      "leaf": "recover_from_invalid_input"
     },
     {
-      "id": "nng.show-the-input-password-creation",
-      "title": "show the input password creation",
+      "id": "nl.no-min-max-length-names-places",
+      "title": "no min max length names places",
+      "name": "No min max length names places — NL",
       "jobs": [
         "use_familiar_control"
       ],
-      "lane": "nng"
+      "lane": "nl",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
     },
     {
-      "id": "nng.dont-repeat-password-email-fields",
-      "title": "dont repeat password email fields",
+      "id": "nl.no-select-multiple",
+      "title": "no select multiple",
+      "name": "No select multiple — NL",
       "jobs": [
-        "group_related_inputs"
+        "choose_control_for_choice"
       ],
-      "lane": "nng"
+      "lane": "nl",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
     },
     {
-      "id": "nng.login-mask-plus-show-password",
-      "title": "login mask plus show password",
+      "id": "nl.privacy-terms-link-outside-label",
+      "title": "privacy terms link outside label",
+      "name": "Privacy terms link outside label — NL",
       "jobs": [
-        "use_familiar_control"
+        "name_the_link_by_destination"
       ],
-      "lane": "nng"
+      "lane": "nl",
+      "container": "layout_and_data_display",
+      "card": "write_the_interface",
+      "facet": "link_text_hides_destination",
+      "leaf": "name_the_link_by_destination"
     },
     {
-      "id": "nng.forgot-password-link",
-      "title": "forgot password link",
+      "id": "nl.step-n-of-m-in-title-and-above-form",
+      "title": "step n of m in title and above form",
+      "name": "Step n of m in the title and above the form — NL",
       "jobs": [
-        "recover_from_invalid_input"
+        "show_step_progress"
       ],
-      "lane": "nng"
+      "lane": "nl",
+      "container": "multi_step_flows",
+      "card": "build_a_multi_step_flow",
+      "facet": "too_much_on_one_step",
+      "leaf": "show_step_progress"
+    },
+    {
+      "id": "nl.success-confirms-what-not-bounce-home",
+      "title": "success confirms what not bounce home",
+      "name": "Success confirms what not bounce home — NL",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "lane": "nl",
+      "container": "feedback_and_status",
+      "card": "compose_feedback",
+      "facet": "system_stayed_quiet_after_change",
+      "leaf": "announce_system_status"
     },
     {
       "id": "nng.alt-registration-and-biometric-login",
       "title": "alt registration and biometric login",
+      "name": "Alt registration and biometric login — NN/g",
       "jobs": [
-        "use_familiar_control"
+        "show_the_password"
       ],
-      "lane": "nng"
+      "lane": "nng",
+      "container": "forms_and_input",
+      "card": "compose_sign_in",
+      "facet": "credentials_are_hard_to_enter",
+      "leaf": "show_the_password"
     },
     {
-      "id": "nng.guest-checkout-prominent",
-      "title": "guest checkout prominent",
+      "id": "nng.always-select-one-radio-by-default",
+      "title": "always select one radio by default",
+      "name": "Always select one radio by default — NN/g",
       "jobs": [
-        "pick_primary_action"
+        "choose_control_for_choice"
       ],
-      "lane": "nng"
+      "lane": "nng",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
+    },
+    {
+      "id": "nng.avoid-cascading-dropdowns",
+      "title": "avoid cascading dropdowns",
+      "name": "Avoid cascading dropdowns — NN/g",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "nng",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
     },
     {
       "id": "nng.cart-easy-remove-no-extra-update",
       "title": "cart easy remove no extra update",
+      "name": "Cart easy remove no extra update — NN/g",
       "jobs": [
-        "pick_primary_action"
+        "show_step_progress"
       ],
-      "lane": "nng"
+      "lane": "nng",
+      "container": "multi_step_flows",
+      "card": "build_a_multi_step_flow",
+      "facet": "too_much_on_one_step",
+      "leaf": "show_step_progress"
     },
     {
-      "id": "nng.order-summary-easy-to-find-mobile",
-      "title": "order summary easy to find mobile",
-      "jobs": [
-        "wayfind_after_nav"
-      ],
-      "lane": "nng"
-    },
-    {
-      "id": "nng.open-field-state-and-card-expiry",
-      "title": "open field state and card expiry",
+      "id": "nng.checkboxes-multi-radios-exclusive",
+      "title": "checkboxes multi radios exclusive",
+      "name": "Checkboxes multi radios exclusive — NN/g",
       "jobs": [
         "choose_control_for_choice"
       ],
-      "lane": "nng"
+      "lane": "nng",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
+    },
+    {
+      "id": "nng.dont-repeat-password-email-fields",
+      "title": "dont repeat password email fields",
+      "name": "Don't repeat password or email fields — NN/g",
+      "jobs": [
+        "show_the_password"
+      ],
+      "lane": "nng",
+      "container": "forms_and_input",
+      "card": "compose_sign_in",
+      "facet": "credentials_are_hard_to_enter",
+      "leaf": "show_the_password"
+    },
+    {
+      "id": "nng.dropdown-ok-narrow-middle",
+      "title": "dropdown ok narrow middle",
+      "name": "Dropdown OK narrow middle — NN/g",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "nng",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
+    },
+    {
+      "id": "nng.familiar-values-type-not-dropdown",
+      "title": "familiar values type not dropdown",
+      "name": "Familiar values type not dropdown — NN/g",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "nng",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
+    },
+    {
+      "id": "nng.forgot-password-link",
+      "title": "forgot password link",
+      "name": "Forgot password link — NN/g",
+      "jobs": [
+        "show_the_password"
+      ],
+      "lane": "nng",
+      "container": "forms_and_input",
+      "card": "compose_sign_in",
+      "facet": "credentials_are_hard_to_enter",
+      "leaf": "show_the_password"
+    },
+    {
+      "id": "nng.keyboard-typeahead-in-dropdowns",
+      "title": "keyboard typeahead in dropdowns",
+      "name": "Keyboard typeahead in dropdowns — NN/g",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "nng",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
+    },
+    {
+      "id": "nng.listbox-vs-dropdown",
+      "title": "listbox vs dropdown",
+      "name": "Listbox vs dropdown — NN/g",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "nng",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
+    },
+    {
+      "id": "nng.login-mask-plus-show-password",
+      "title": "login mask plus show password",
+      "name": "Login mask plus show password — NN/g",
+      "jobs": [
+        "show_the_password"
+      ],
+      "lane": "nng",
+      "container": "forms_and_input",
+      "card": "compose_sign_in",
+      "facet": "credentials_are_hard_to_enter",
+      "leaf": "show_the_password"
     },
     {
       "id": "nng.mobile-friendly-payment-options",
       "title": "mobile friendly payment options",
+      "name": "Mobile friendly payment options — NN/g",
       "jobs": [
-        "choose_control_for_choice"
+        "show_step_progress"
       ],
-      "lane": "nng"
+      "lane": "nng",
+      "container": "multi_step_flows",
+      "card": "build_a_multi_step_flow",
+      "facet": "too_much_on_one_step",
+      "leaf": "show_step_progress"
     },
     {
       "id": "nng.modal-and-nonmodal-dialogs",
       "title": "modal and nonmodal dialogs",
+      "name": "Modal and nonmodal dialogs — NN/g",
       "jobs": [
-        "use_familiar_control"
+        "pick_modal_only_when_blocking"
       ],
-      "lane": "nng"
+      "lane": "nng",
+      "container": "overlays_and_content_structure",
+      "card": "choose_an_overlay",
+      "facet": "wrong_layer_for_the_content",
+      "leaf": "pick_modal_only_when_blocking"
+    },
+    {
+      "id": "nng.open-field-state-and-card-expiry",
+      "title": "open field state and card expiry",
+      "name": "Open field state and card expiry — NN/g",
+      "jobs": [
+        "show_step_progress"
+      ],
+      "lane": "nng",
+      "container": "multi_step_flows",
+      "card": "build_a_multi_step_flow",
+      "facet": "too_much_on_one_step",
+      "leaf": "show_step_progress"
+    },
+    {
+      "id": "nng.order-summary-easy-to-find-mobile",
+      "title": "order summary easy to find mobile",
+      "name": "Order summary easy to find mobile — NN/g",
+      "jobs": [
+        "show_step_progress"
+      ],
+      "lane": "nng",
+      "container": "multi_step_flows",
+      "card": "build_a_multi_step_flow",
+      "facet": "too_much_on_one_step",
+      "leaf": "show_step_progress"
+    },
+    {
+      "id": "nng.prefer-radios-over-dropdowns-when-visible",
+      "title": "prefer radios over dropdowns when visible",
+      "name": "Prefer radios over dropdowns when visible — NN/g",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "nng",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
+    },
+    {
+      "id": "nng.radio-set-comprehensive-other-type-in",
+      "title": "radio set comprehensive other type in",
+      "name": "Radio set comprehensive other type in — NN/g",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "nng",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
+    },
+    {
+      "id": "nng.show-the-input-password-creation",
+      "title": "show the input password creation",
+      "name": "Show the input password creation — NN/g",
+      "jobs": [
+        "show_the_password"
+      ],
+      "lane": "nng",
+      "container": "forms_and_input",
+      "card": "compose_sign_in",
+      "facet": "credentials_are_hard_to_enter",
+      "leaf": "show_the_password"
+    },
+    {
+      "id": "nng.show-the-rules",
+      "title": "show the rules",
+      "name": "Show the rules — NN/g",
+      "jobs": [
+        "recover_from_invalid_input"
+      ],
+      "lane": "nng",
+      "container": "forms_and_input",
+      "card": "handle_form_errors",
+      "facet": "invalid_input_has_no_recovery",
+      "leaf": "recover_from_invalid_input"
+    },
+    {
+      "id": "nng.standard-visuals-checkbox-square-radio-circle",
+      "title": "standard visuals checkbox square radio circle",
+      "name": "Standard visuals checkbox square radio circle — NN/g",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "nng",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
     },
     {
       "id": "nng.support-undo-discoverable",
       "title": "support undo discoverable",
+      "name": "Support undo discoverable — NN/g",
       "jobs": [
-        "wayfind_after_nav"
+        "disable_or_confirm_destructive"
       ],
-      "lane": "nng"
+      "lane": "nng",
+      "container": "actions_and_decisions",
+      "card": "protect_destructive_and_leave",
+      "facet": "destructive_is_too_easy",
+      "leaf": "disable_or_confirm_destructive"
     },
     {
-      "id": "nsw.charts-start-with-story",
-      "title": "charts start with story",
+      "id": "nng.too-few-options-radios-not-dropdown",
+      "title": "too few options radios not dropdown",
+      "name": "Too few options: radios, not dropdown — NN/g",
       "jobs": [
-        "announce_system_status"
+        "choose_control_for_choice"
       ],
-      "lane": "nsw"
+      "lane": "nng",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
     },
     {
-      "id": "nsw.honest-baseline-bars-zero-or-truncation",
-      "title": "honest baseline bars zero or truncation",
+      "id": "nng.too-many-combobox-not-long-dropdown",
+      "title": "too many combobox not long dropdown",
+      "name": "Too many: combobox, not a long dropdown — NN/g",
       "jobs": [
-        "announce_system_status"
+        "choose_control_for_choice"
       ],
-      "lane": "nsw"
+      "lane": "nng",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
     },
     {
-      "id": "nsw.chart-anatomy-title-insight-table",
-      "title": "chart anatomy title insight table",
+      "id": "nng.users-rarely-change-defaults",
+      "title": "users rarely change defaults",
+      "name": "Users rarely change defaults — NN/g",
       "jobs": [
-        "announce_system_status"
+        "choose_control_for_choice"
       ],
-      "lane": "nsw"
+      "lane": "nng",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
     },
     {
-      "id": "nsw.direct-labels-over-legends",
-      "title": "direct labels over legends",
+      "id": "nng.vertical-one-choice-per-line",
+      "title": "vertical one choice per line",
+      "name": "Vertical one choice per line — NN/g",
       "jobs": [
-        "announce_system_status"
+        "choose_control_for_choice"
       ],
-      "lane": "nsw"
-    },
-    {
-      "id": "nsw.no-tooltip-only-values",
-      "title": "no tooltip only values",
-      "jobs": [
-        "announce_system_status"
-      ],
-      "lane": "nsw"
+      "lane": "nng",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
     },
     {
       "id": "nsw.100pct-stacked-show-absolute-totals",
       "title": "100pct stacked show absolute totals",
+      "name": "100% stacked: show absolute totals — NSW",
       "jobs": [
-        "announce_system_status"
+        "chart_has_a_story"
       ],
-      "lane": "nsw"
+      "lane": "nsw",
+      "container": "layout_and_data_display",
+      "card": "compose_a_data_display",
+      "facet": "data_is_unscannable",
+      "leaf": "chart_has_a_story"
     },
     {
-      "id": "nsw.lines-dash-fills-patterns",
-      "title": "lines dash fills patterns",
+      "id": "nsw.chart-anatomy-title-insight-table",
+      "title": "chart anatomy title insight table",
+      "name": "Chart anatomy title insight table — NSW",
       "jobs": [
-        "announce_system_status"
+        "chart_has_a_story"
       ],
-      "lane": "nsw"
+      "lane": "nsw",
+      "container": "layout_and_data_display",
+      "card": "compose_a_data_display",
+      "facet": "data_is_unscannable",
+      "leaf": "chart_has_a_story"
     },
     {
       "id": "nsw.chart-text-horizontal",
       "title": "chart text horizontal",
+      "name": "Chart text horizontal — NSW",
       "jobs": [
-        "announce_system_status"
+        "chart_has_a_story"
       ],
-      "lane": "nsw"
+      "lane": "nsw",
+      "container": "layout_and_data_display",
+      "card": "compose_a_data_display",
+      "facet": "data_is_unscannable",
+      "leaf": "chart_has_a_story"
     },
     {
-      "id": "nsw.white-canvas-single-colour-when-labelled",
-      "title": "white canvas single colour when labelled",
+      "id": "nsw.charts-start-with-story",
+      "title": "charts start with story",
+      "name": "Charts start with story — NSW",
       "jobs": [
-        "announce_system_status"
+        "chart_has_a_story"
       ],
-      "lane": "nsw"
+      "lane": "nsw",
+      "container": "layout_and_data_display",
+      "card": "compose_a_data_display",
+      "facet": "data_is_unscannable",
+      "leaf": "chart_has_a_story"
+    },
+    {
+      "id": "nsw.direct-labels-over-legends",
+      "title": "direct labels over legends",
+      "name": "Direct labels over legends — NSW",
+      "jobs": [
+        "chart_has_a_story"
+      ],
+      "lane": "nsw",
+      "container": "layout_and_data_display",
+      "card": "compose_a_data_display",
+      "facet": "data_is_unscannable",
+      "leaf": "chart_has_a_story"
     },
     {
       "id": "nsw.established-colour-conventions",
       "title": "established colour conventions",
+      "name": "Established colour conventions — NSW",
       "jobs": [
-        "announce_system_status"
+        "chart_has_a_story"
       ],
-      "lane": "nsw"
+      "lane": "nsw",
+      "container": "layout_and_data_display",
+      "card": "compose_a_data_display",
+      "facet": "data_is_unscannable",
+      "leaf": "chart_has_a_story"
     },
     {
-      "id": "nsw.maps-never-only-channel",
-      "title": "maps never only channel",
+      "id": "nsw.honest-baseline-bars-zero-or-truncation",
+      "title": "honest baseline bars zero or truncation",
+      "name": "Honest baseline bars zero or truncation — NSW",
       "jobs": [
-        "wayfind_after_nav"
+        "chart_has_a_story"
       ],
-      "lane": "nsw"
+      "lane": "nsw",
+      "container": "layout_and_data_display",
+      "card": "compose_a_data_display",
+      "facet": "data_is_unscannable",
+      "leaf": "chart_has_a_story"
+    },
+    {
+      "id": "nsw.lines-dash-fills-patterns",
+      "title": "lines dash fills patterns",
+      "name": "Lines dash fills patterns — NSW",
+      "jobs": [
+        "chart_has_a_story"
+      ],
+      "lane": "nsw",
+      "container": "layout_and_data_display",
+      "card": "compose_a_data_display",
+      "facet": "data_is_unscannable",
+      "leaf": "chart_has_a_story"
     },
     {
       "id": "nsw.map-pan-from-centre-select-jumps-listing",
       "title": "map pan from centre select jumps listing",
+      "name": "Map pan from centre select jumps listing — NSW",
       "jobs": [
-        "wayfind_after_nav"
+        "map_is_not_the_only_channel"
       ],
-      "lane": "nsw"
+      "lane": "nsw",
+      "container": "layout_and_data_display",
+      "card": "compose_a_data_display",
+      "facet": "data_is_unscannable",
+      "leaf": "map_is_not_the_only_channel"
+    },
+    {
+      "id": "nsw.maps-never-only-channel",
+      "title": "maps never only channel",
+      "name": "Maps never only channel — NSW",
+      "jobs": [
+        "map_is_not_the_only_channel"
+      ],
+      "lane": "nsw",
+      "container": "layout_and_data_display",
+      "card": "compose_a_data_display",
+      "facet": "data_is_unscannable",
+      "leaf": "map_is_not_the_only_channel"
+    },
+    {
+      "id": "nsw.no-tooltip-only-values",
+      "title": "no tooltip only values",
+      "name": "No tooltip only values — NSW",
+      "jobs": [
+        "chart_has_a_story"
+      ],
+      "lane": "nsw",
+      "container": "layout_and_data_display",
+      "card": "compose_a_data_display",
+      "facet": "data_is_unscannable",
+      "leaf": "chart_has_a_story"
     },
     {
       "id": "nsw.privacy-by-design-pia-security-day-one",
       "title": "privacy by design pia security day one",
+      "name": "Privacy by design: PIA and security from day one — NSW",
       "jobs": [
-        "announce_system_status"
+        "map_is_not_the_only_channel"
       ],
-      "lane": "nsw"
+      "lane": "nsw",
+      "container": "layout_and_data_display",
+      "card": "compose_a_data_display",
+      "facet": "data_is_unscannable",
+      "leaf": "map_is_not_the_only_channel"
     },
     {
-      "id": "polar.match-shopify-admin-voice",
-      "title": "match shopify admin voice",
+      "id": "nsw.white-canvas-single-colour-when-labelled",
+      "title": "white canvas single colour when labelled",
+      "name": "White canvas single colour when labelled — NSW",
       "jobs": [
-        "tone_of_voice_for_failure"
+        "chart_has_a_story"
       ],
-      "lane": "polar"
-    },
-    {
-      "id": "polar.dont-duplicate-content",
-      "title": "dont duplicate content",
-      "jobs": [
-        "wayfind_after_nav"
-      ],
-      "lane": "polar"
-    },
-    {
-      "id": "polar.plain-language-grade-7",
-      "title": "plain language grade 7",
-      "jobs": [
-        "tone_of_voice_for_failure"
-      ],
-      "lane": "polar"
-    },
-    {
-      "id": "polar.be-consistent-no-synonyms",
-      "title": "be consistent no synonyms",
-      "jobs": [
-        "pick_primary_action"
-      ],
-      "lane": "polar"
-    },
-    {
-      "id": "polar.encourage-action-cta-verb",
-      "title": "encourage action cta verb",
-      "jobs": [
-        "pick_primary_action"
-      ],
-      "lane": "polar"
-    },
-    {
-      "id": "polar.guide-dont-prescribe",
-      "title": "guide dont prescribe",
-      "jobs": [
-        "pick_primary_action"
-      ],
-      "lane": "polar"
-    },
-    {
-      "id": "polar.select-4plus-choice-list-under-4",
-      "title": "select 4plus choice list under 4",
-      "jobs": [
-        "choose_control_for_choice"
-      ],
-      "lane": "polar"
+      "lane": "nsw",
+      "container": "layout_and_data_display",
+      "card": "compose_a_data_display",
+      "facet": "data_is_unscannable",
+      "leaf": "chart_has_a_story"
     },
     {
       "id": "polar.default-option-selected-when-possible",
       "title": "default option selected when possible",
+      "name": "Default option selected when possible — Polaris",
       "jobs": [
         "choose_control_for_choice"
       ],
-      "lane": "polar"
+      "lane": "polar",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
     },
     {
-      "id": "polar.labels-1-3-words-sentence-case-i18n",
-      "title": "labels 1 3 words sentence case i18n",
+      "id": "polar.dont-duplicate-content",
+      "title": "dont duplicate content",
+      "name": "Don't duplicate content — Polaris",
       "jobs": [
-        "name_a_control"
+        "wayfind_after_nav"
       ],
-      "lane": "polar"
-    },
-    {
-      "id": "polar.validate-after-finished-interacting",
-      "title": "validate after finished interacting",
-      "jobs": [
-        "recover_from_invalid_input"
-      ],
-      "lane": "polar"
-    },
-    {
-      "id": "polar.long-form-errors-banner-plus-inline",
-      "title": "long form errors banner plus inline",
-      "jobs": [
-        "recover_from_invalid_input",
-        "explain_failure_next_to_cause"
-      ],
-      "lane": "polar"
+      "lane": "polar",
+      "container": "navigation_and_wayfinding",
+      "card": "orient_in_the_place",
+      "facet": "user_cant_tell_where_they_are",
+      "leaf": "wayfind_after_nav"
     },
     {
       "id": "polar.dont-use-modals-for-complex-forms",
       "title": "dont use modals for complex forms",
+      "name": "Don't use modals for complex forms — Polaris",
       "jobs": [
-        "use_familiar_control"
+        "pick_modal_only_when_blocking"
       ],
-      "lane": "polar"
+      "lane": "polar",
+      "container": "overlays_and_content_structure",
+      "card": "choose_an_overlay",
+      "facet": "wrong_layer_for_the_content",
+      "leaf": "pick_modal_only_when_blocking"
     },
     {
-      "id": "spectrum.quiet-vs-standard-background",
-      "title": "quiet vs standard background",
+      "id": "polar.encourage-action-cta-verb",
+      "title": "encourage action cta verb",
+      "name": "Encourage action: CTA verb — Polaris",
       "jobs": [
-        "use_familiar_control"
+        "pick_primary_action"
       ],
-      "lane": "spectrum"
+      "lane": "polar",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "no_clear_primary",
+      "leaf": "pick_primary_action"
+    },
+    {
+      "id": "polar.guide-dont-prescribe",
+      "title": "guide dont prescribe",
+      "name": "Guide, don't prescribe — Polaris",
+      "jobs": [
+        "tone_of_voice_for_failure"
+      ],
+      "lane": "polar",
+      "container": "feedback_and_status",
+      "card": "compose_feedback",
+      "facet": "tone_fights_the_moment",
+      "leaf": "tone_of_voice_for_failure"
+    },
+    {
+      "id": "polar.labels-1-3-words-sentence-case-i18n",
+      "title": "labels 1 3 words sentence case i18n",
+      "name": "Labels: 1–3 words, sentence case — Polaris",
+      "jobs": [
+        "name_a_control"
+      ],
+      "lane": "polar",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "field_has_no_lasting_name",
+      "leaf": "name_a_control"
+    },
+    {
+      "id": "polar.long-form-errors-banner-plus-inline",
+      "title": "long form errors banner plus inline",
+      "name": "Long form errors banner plus inline — Polaris",
+      "jobs": [
+        "explain_failure_next_to_cause"
+      ],
+      "lane": "polar",
+      "container": "forms_and_input",
+      "card": "handle_form_errors",
+      "facet": "errors_dont_point_to_the_fix",
+      "leaf": "explain_failure_next_to_cause"
+    },
+    {
+      "id": "polar.match-shopify-admin-voice",
+      "title": "match shopify admin voice",
+      "name": "Match shopify admin voice — Polaris",
+      "jobs": [
+        "tone_of_voice_for_failure"
+      ],
+      "lane": "polar",
+      "container": "feedback_and_status",
+      "card": "compose_feedback",
+      "facet": "tone_fights_the_moment",
+      "leaf": "tone_of_voice_for_failure"
+    },
+    {
+      "id": "polar.plain-language-grade-7",
+      "title": "plain language grade 7",
+      "name": "Plain language, grade 7 — Polaris",
+      "jobs": [
+        "tone_of_voice_for_failure"
+      ],
+      "lane": "polar",
+      "container": "feedback_and_status",
+      "card": "compose_feedback",
+      "facet": "tone_fights_the_moment",
+      "leaf": "tone_of_voice_for_failure"
+    },
+    {
+      "id": "polar.select-4plus-choice-list-under-4",
+      "title": "select 4plus choice list under 4",
+      "name": "Select for 4+; choice list under 4 — Polaris",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "polar",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
+    },
+    {
+      "id": "polar.validate-after-finished-interacting",
+      "title": "validate after finished interacting",
+      "name": "Validate after finished interacting — Polaris",
+      "jobs": [
+        "recover_from_invalid_input"
+      ],
+      "lane": "polar",
+      "container": "forms_and_input",
+      "card": "handle_form_errors",
+      "facet": "invalid_input_has_no_recovery",
+      "leaf": "recover_from_invalid_input"
     },
     {
       "id": "spectrum.asterisk-is-icon-not-label-text",
       "title": "asterisk is icon not label text",
+      "name": "Asterisk is an icon, not label text — Spectrum",
       "jobs": [
-        "name_a_control"
+        "mark_requirements_up_front"
       ],
-      "lane": "spectrum"
-    },
-    {
-      "id": "spectrum.error-icon-overrides-validation-icon",
-      "title": "error icon overrides validation icon",
-      "jobs": [
-        "recover_from_invalid_input"
-      ],
-      "lane": "spectrum"
-    },
-    {
-      "id": "spectrum.readonly-vs-disabled",
-      "title": "readonly vs disabled",
-      "jobs": [
-        "use_familiar_control"
-      ],
-      "lane": "spectrum"
-    },
-    {
-      "id": "spectrum.mixed-values-en-dash",
-      "title": "mixed values en dash",
-      "jobs": [
-        "name_a_control"
-      ],
-      "lane": "spectrum"
-    },
-    {
-      "id": "spectrum.min-width-1-5x-field-height",
-      "title": "min width 1 5x field height",
-      "jobs": [
-        "keep_hit_target_usable"
-      ],
-      "lane": "spectrum"
-    },
-    {
-      "id": "spectrum.tab-into-field-selects-text",
-      "title": "tab into field selects text",
-      "jobs": [
-        "use_familiar_control"
-      ],
-      "lane": "spectrum"
-    },
-    {
-      "id": "spectrum.validation-icon-when-format-valid",
-      "title": "validation icon when format valid",
-      "jobs": [
-        "recover_from_invalid_input"
-      ],
-      "lane": "spectrum"
-    },
-    {
-      "id": "spectrum.toast-vs-dialog",
-      "title": "toast vs dialog",
-      "jobs": [
-        "announce_system_status"
-      ],
-      "lane": "spectrum"
-    },
-    {
-      "id": "spectrum.toast-placement-geometry",
-      "title": "toast placement geometry",
-      "jobs": [
-        "announce_system_status"
-      ],
-      "lane": "spectrum"
-    },
-    {
-      "id": "spectrum.dont-place-mobile-toasts-over-navigation",
-      "title": "dont place mobile toasts over navigation",
-      "jobs": [
-        "announce_system_status"
-      ],
-      "lane": "spectrum"
-    },
-    {
-      "id": "spectrum.toast-at-most-one-action",
-      "title": "toast at most one action",
-      "jobs": [
-        "pick_primary_action"
-      ],
-      "lane": "spectrum"
-    },
-    {
-      "id": "spectrum.toast-no-redundant-dismiss",
-      "title": "toast no redundant dismiss",
-      "jobs": [
-        "announce_system_status"
-      ],
-      "lane": "spectrum"
-    },
-    {
-      "id": "spectrum.one-toast-at-a-time",
-      "title": "one toast at a time",
-      "jobs": [
-        "announce_system_status"
-      ],
-      "lane": "spectrum"
+      "lane": "spectrum",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "requirements_are_a_surprise",
+      "leaf": "mark_requirements_up_front"
     },
     {
       "id": "spectrum.bundle-instead-of-spam-toasts",
       "title": "bundle instead of spam toasts",
+      "name": "Bundle instead of spam toasts — Spectrum",
       "jobs": [
         "announce_system_status"
       ],
-      "lane": "spectrum"
+      "lane": "spectrum",
+      "container": "feedback_and_status",
+      "card": "compose_feedback",
+      "facet": "system_stayed_quiet_after_change",
+      "leaf": "announce_system_status"
     },
     {
-      "id": "spectrum.users-can-turn-off-alert-types",
-      "title": "users can turn off alert types",
+      "id": "spectrum.dont-place-mobile-toasts-over-navigation",
+      "title": "dont place mobile toasts over navigation",
+      "name": "Don't place mobile toasts over navigation — Spectrum",
       "jobs": [
         "announce_system_status"
       ],
-      "lane": "spectrum"
+      "lane": "spectrum",
+      "container": "feedback_and_status",
+      "card": "compose_feedback",
+      "facet": "system_stayed_quiet_after_change",
+      "leaf": "announce_system_status"
     },
     {
-      "id": "spectrum.toast-auto-dismiss-min-5s",
-      "title": "toast auto dismiss min 5s",
+      "id": "spectrum.error-icon-overrides-validation-icon",
+      "title": "error icon overrides validation icon",
+      "name": "Error icon overrides validation icon — Spectrum",
       "jobs": [
-        "announce_system_status"
+        "explain_failure_next_to_cause"
       ],
-      "lane": "spectrum"
+      "lane": "spectrum",
+      "container": "forms_and_input",
+      "card": "handle_form_errors",
+      "facet": "errors_dont_point_to_the_fix",
+      "leaf": "explain_failure_next_to_cause"
     },
     {
-      "id": "spectrum.toast-writing-formulas",
-      "title": "toast writing formulas",
-      "jobs": [
-        "tone_of_voice_for_failure"
-      ],
-      "lane": "spectrum"
-    },
-    {
-      "id": "spectrum.toast-sentence-case-generic-tone",
-      "title": "toast sentence case generic tone",
-      "jobs": [
-        "tone_of_voice_for_failure"
-      ],
-      "lane": "spectrum"
-    },
-    {
-      "id": "spectrum.picker-ghost-text-placeholder",
-      "title": "picker ghost text placeholder",
-      "jobs": [
-        "avoid_placeholder_as_label"
-      ],
-      "lane": "spectrum"
-    },
-    {
-      "id": "spectrum.picker-mobile-tray-when-overwhelming",
-      "title": "picker mobile tray when overwhelming",
-      "jobs": [
-        "choose_control_for_choice"
-      ],
-      "lane": "spectrum"
-    },
-    {
-      "id": "spectrum.picker-readonly-only-if-selection",
-      "title": "picker readonly only if selection",
+      "id": "spectrum.min-width-1-5x-field-height",
+      "title": "min width 1 5x field height",
+      "name": "Minimum width 1.5× field height — Spectrum",
       "jobs": [
         "use_familiar_control"
       ],
-      "lane": "spectrum"
+      "lane": "spectrum",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
     },
     {
-      "id": "spectrum.picker-min-width-2x-height",
-      "title": "picker min width 2x height",
+      "id": "spectrum.mixed-values-en-dash",
+      "title": "mixed values en dash",
+      "name": "Mixed values EN dash — Spectrum",
       "jobs": [
-        "keep_hit_target_usable"
+        "use_familiar_control"
       ],
-      "lane": "spectrum"
+      "lane": "spectrum",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
     },
     {
-      "id": "spectrum.picker-no-max-menu-height",
-      "title": "picker no max menu height",
+      "id": "spectrum.one-toast-at-a-time",
+      "title": "one toast at a time",
+      "name": "One toast at a time — Spectrum",
       "jobs": [
-        "choose_control_for_choice"
+        "announce_system_status"
       ],
-      "lane": "spectrum"
+      "lane": "spectrum",
+      "container": "feedback_and_status",
+      "card": "compose_feedback",
+      "facet": "system_stayed_quiet_after_change",
+      "leaf": "announce_system_status"
     },
     {
       "id": "spectrum.picker-concise-items-full-value",
       "title": "picker concise items full value",
+      "name": "Picker concise items full value — Spectrum",
       "jobs": [
-        "name_a_control"
+        "use_familiar_control"
       ],
-      "lane": "spectrum"
+      "lane": "spectrum",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
     },
     {
-      "id": "suomi.static-validation-on-submit-default",
-      "title": "static validation on submit default",
+      "id": "spectrum.picker-ghost-text-placeholder",
+      "title": "picker ghost text placeholder",
+      "name": "Picker ghost text placeholder — Spectrum",
       "jobs": [
-        "recover_from_invalid_input"
+        "avoid_placeholder_as_label"
       ],
-      "lane": "suomi"
+      "lane": "spectrum",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "field_has_no_lasting_name",
+      "leaf": "avoid_placeholder_as_label"
     },
     {
-      "id": "suomi.errorsummary-link-text-equals-field-error",
-      "title": "errorsummary link text equals field error",
+      "id": "spectrum.picker-min-width-2x-height",
+      "title": "picker min width 2x height",
+      "name": "Picker minimum width 2× height — Spectrum",
       "jobs": [
-        "recover_from_invalid_input",
-        "explain_failure_next_to_cause"
+        "use_familiar_control"
       ],
-      "lane": "suomi"
+      "lane": "spectrum",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
     },
     {
-      "id": "suomi.default-required-optional-in-parentheses",
-      "title": "default required optional in parentheses",
+      "id": "spectrum.picker-mobile-tray-when-overwhelming",
+      "title": "picker mobile tray when overwhelming",
+      "name": "Picker mobile tray when overwhelming — Spectrum",
       "jobs": [
-        "name_a_control"
+        "use_familiar_control"
       ],
-      "lane": "suomi"
+      "lane": "spectrum",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
     },
     {
-      "id": "suomi.toast-10s-hover-stick-then-float",
-      "title": "toast 10s hover stick then float",
+      "id": "spectrum.picker-no-max-menu-height",
+      "title": "picker no max menu height",
+      "name": "Picker no max menu height — Spectrum",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "lane": "spectrum",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
+    },
+    {
+      "id": "spectrum.picker-readonly-only-if-selection",
+      "title": "picker readonly only if selection",
+      "name": "Picker readonly only if selection — Spectrum",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "lane": "spectrum",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
+    },
+    {
+      "id": "spectrum.quiet-vs-standard-background",
+      "title": "quiet vs standard background",
+      "name": "Quiet vs standard background — Spectrum",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "lane": "spectrum",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
+    },
+    {
+      "id": "spectrum.readonly-vs-disabled",
+      "title": "readonly vs disabled",
+      "name": "Readonly vs disabled — Spectrum",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "lane": "spectrum",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
+    },
+    {
+      "id": "spectrum.tab-into-field-selects-text",
+      "title": "tab into field selects text",
+      "name": "Tab into field selects text — Spectrum",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "lane": "spectrum",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
+    },
+    {
+      "id": "spectrum.toast-at-most-one-action",
+      "title": "toast at most one action",
+      "name": "Toast at most one action — Spectrum",
       "jobs": [
         "announce_system_status"
       ],
-      "lane": "suomi"
+      "lane": "spectrum",
+      "container": "feedback_and_status",
+      "card": "compose_feedback",
+      "facet": "system_stayed_quiet_after_change",
+      "leaf": "announce_system_status"
     },
     {
-      "id": "suomi.notification-first-load-not-post-action",
-      "title": "notification first load not post action",
+      "id": "spectrum.toast-auto-dismiss-min-5s",
+      "title": "toast auto dismiss min 5s",
+      "name": "Toast auto-dismiss at least 5s — Spectrum",
       "jobs": [
         "announce_system_status"
       ],
-      "lane": "suomi"
+      "lane": "spectrum",
+      "container": "feedback_and_status",
+      "card": "compose_feedback",
+      "facet": "system_stayed_quiet_after_change",
+      "leaf": "announce_system_status"
     },
     {
-      "id": "suomi.hide-breadcrumbs-on-mobile",
-      "title": "hide breadcrumbs on mobile",
+      "id": "spectrum.toast-no-redundant-dismiss",
+      "title": "toast no redundant dismiss",
+      "name": "Toast no redundant dismiss — Spectrum",
       "jobs": [
-        "wayfind_after_nav"
+        "announce_system_status"
       ],
-      "lane": "suomi"
+      "lane": "spectrum",
+      "container": "feedback_and_status",
+      "card": "compose_feedback",
+      "facet": "system_stayed_quiet_after_change",
+      "leaf": "announce_system_status"
+    },
+    {
+      "id": "spectrum.toast-placement-geometry",
+      "title": "toast placement geometry",
+      "name": "Toast placement geometry — Spectrum",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "lane": "spectrum",
+      "container": "feedback_and_status",
+      "card": "compose_feedback",
+      "facet": "system_stayed_quiet_after_change",
+      "leaf": "announce_system_status"
+    },
+    {
+      "id": "spectrum.toast-sentence-case-generic-tone",
+      "title": "toast sentence case generic tone",
+      "name": "Toast sentence case generic tone — Spectrum",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "lane": "spectrum",
+      "container": "feedback_and_status",
+      "card": "compose_feedback",
+      "facet": "system_stayed_quiet_after_change",
+      "leaf": "announce_system_status"
+    },
+    {
+      "id": "spectrum.toast-vs-dialog",
+      "title": "toast vs dialog",
+      "name": "Toast vs dialog — Spectrum",
+      "jobs": [
+        "pick_modal_only_when_blocking"
+      ],
+      "lane": "spectrum",
+      "container": "overlays_and_content_structure",
+      "card": "choose_an_overlay",
+      "facet": "wrong_layer_for_the_content",
+      "leaf": "pick_modal_only_when_blocking"
+    },
+    {
+      "id": "spectrum.toast-writing-formulas",
+      "title": "toast writing formulas",
+      "name": "Toast writing formulas — Spectrum",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "lane": "spectrum",
+      "container": "feedback_and_status",
+      "card": "compose_feedback",
+      "facet": "system_stayed_quiet_after_change",
+      "leaf": "announce_system_status"
+    },
+    {
+      "id": "spectrum.users-can-turn-off-alert-types",
+      "title": "users can turn off alert types",
+      "name": "Users can turn off alert types — Spectrum",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "lane": "spectrum",
+      "container": "feedback_and_status",
+      "card": "compose_feedback",
+      "facet": "system_stayed_quiet_after_change",
+      "leaf": "announce_system_status"
+    },
+    {
+      "id": "spectrum.validation-icon-when-format-valid",
+      "title": "validation icon when format valid",
+      "name": "Validation icon when format valid — Spectrum",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "lane": "spectrum",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
     },
     {
       "id": "suomi.button-max-three-words-mobile-full-width",
       "title": "button max three words mobile full width",
+      "name": "Button: max three words; full width on mobile — Suomi.fi",
       "jobs": [
         "pick_primary_action"
       ],
-      "lane": "suomi"
-    },
-    {
-      "id": "suomi.time-field-60px-hint-tmm-always-visible",
-      "title": "time field 60px hint tmm always visible",
-      "jobs": [
-        "keep_field_purpose_visible_while_filled"
-      ],
-      "lane": "suomi"
+      "lane": "suomi",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "no_clear_primary",
+      "leaf": "pick_primary_action"
     },
     {
       "id": "suomi.date-hint-ppkkvvvv-calendar-optional-focus-trap",
       "title": "date hint ppkkvvvv calendar optional focus trap",
+      "name": "Date hint always visible; calendar optional — Suomi.fi",
       "jobs": [
-        "choose_control_for_choice"
+        "use_familiar_control"
       ],
-      "lane": "suomi"
+      "lane": "suomi",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
     },
     {
-      "id": "suomi.search-hide-label-only-if-name-states-context",
-      "title": "search hide label only if name states context",
+      "id": "suomi.errorsummary-link-text-equals-field-error",
+      "title": "errorsummary link text equals field error",
+      "name": "Errorsummary link text equals field error — Suomi.fi",
       "jobs": [
-        "avoid_placeholder_as_label"
+        "explain_failure_next_to_cause"
       ],
-      "lane": "suomi"
-    },
-    {
-      "id": "suomi.pagination-skip-link-to-listing",
-      "title": "pagination skip link to listing",
-      "jobs": [
-        "wayfind_after_nav"
-      ],
-      "lane": "suomi"
-    },
-    {
-      "id": "suomi.toggle-button-immediate-input-submit",
-      "title": "toggle button immediate input submit",
-      "jobs": [
-        "choose_control_for_choice"
-      ],
-      "lane": "suomi"
-    },
-    {
-      "id": "suomi.radio-extras-hidden-then-indented",
-      "title": "radio extras hidden then indented",
-      "jobs": [
-        "choose_control_for_choice"
-      ],
-      "lane": "suomi"
+      "lane": "suomi",
+      "container": "forms_and_input",
+      "card": "handle_form_errors",
+      "facet": "errors_dont_point_to_the_fix",
+      "leaf": "explain_failure_next_to_cause"
     },
     {
       "id": "suomi.file-hint-and-datetime-fieldset",
       "title": "file hint and datetime fieldset",
-      "jobs": [
-        "group_related_inputs"
-      ],
-      "lane": "suomi"
-    },
-    {
-      "id": "uswds.filled-next-outline-this-page",
-      "title": "filled next outline this page",
-      "jobs": [
-        "pick_primary_action"
-      ],
-      "lane": "uswds"
-    },
-    {
-      "id": "uswds.real-button-with-type-space-vs-enter",
-      "title": "real button with type space vs enter",
+      "name": "File hint and datetime fieldset — Suomi.fi",
       "jobs": [
         "use_familiar_control"
       ],
-      "lane": "uswds"
+      "lane": "suomi",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
     },
     {
-      "id": "uswds.dont-split-phone-ssn-card",
-      "title": "dont split phone ssn card",
-      "jobs": [
-        "use_familiar_control"
-      ],
-      "lane": "uswds"
-    },
-    {
-      "id": "uswds.forms-simple-vertical-stack",
-      "title": "forms simple vertical stack",
-      "jobs": [
-        "group_related_inputs"
-      ],
-      "lane": "uswds"
-    },
-    {
-      "id": "uswds.character-count-brevity-or-legal",
-      "title": "character count brevity or legal",
-      "jobs": [
-        "use_familiar_control"
-      ],
-      "lane": "uswds"
-    },
-    {
-      "id": "uswds.search-min-27-chars-persist-query",
-      "title": "search min 27 chars persist query",
+      "id": "suomi.hide-breadcrumbs-on-mobile",
+      "title": "hide breadcrumbs on mobile",
+      "name": "Hide breadcrumbs on mobile — Suomi.fi",
       "jobs": [
         "wayfind_after_nav"
       ],
-      "lane": "uswds"
+      "lane": "suomi",
+      "container": "navigation_and_wayfinding",
+      "card": "orient_in_the_place",
+      "facet": "user_cant_tell_where_they_are",
+      "leaf": "wayfind_after_nav"
     },
     {
-      "id": "uswds.homepage-search-box-not-link",
-      "title": "homepage search box not link",
+      "id": "suomi.notification-first-load-not-post-action",
+      "title": "notification first load not post action",
+      "name": "Notification first load not post action — Suomi.fi",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "lane": "suomi",
+      "container": "feedback_and_status",
+      "card": "compose_feedback",
+      "facet": "system_stayed_quiet_after_change",
+      "leaf": "announce_system_status"
+    },
+    {
+      "id": "suomi.pagination-skip-link-to-listing",
+      "title": "pagination skip link to listing",
+      "name": "Pagination skip link to listing — Suomi.fi",
       "jobs": [
         "wayfind_after_nav"
       ],
-      "lane": "uswds"
+      "lane": "suomi",
+      "container": "navigation_and_wayfinding",
+      "card": "orient_in_the_place",
+      "facet": "user_cant_tell_where_they_are",
+      "leaf": "wayfind_after_nav"
+    },
+    {
+      "id": "suomi.radio-extras-hidden-then-indented",
+      "title": "radio extras hidden then indented",
+      "name": "Radio extras hidden then indented — Suomi.fi",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "suomi",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
+    },
+    {
+      "id": "suomi.search-hide-label-only-if-name-states-context",
+      "title": "search hide label only if name states context",
+      "name": "Search hide label only if name states context — Suomi.fi",
+      "jobs": [
+        "place_the_search_control"
+      ],
+      "lane": "suomi",
+      "container": "navigation_and_wayfinding",
+      "card": "compose_search",
+      "facet": "search_is_hard_to_find",
+      "leaf": "place_the_search_control"
+    },
+    {
+      "id": "suomi.static-validation-on-submit-default",
+      "title": "static validation on submit default",
+      "name": "Static validation on submit default — Suomi.fi",
+      "jobs": [
+        "recover_from_invalid_input"
+      ],
+      "lane": "suomi",
+      "container": "forms_and_input",
+      "card": "handle_form_errors",
+      "facet": "invalid_input_has_no_recovery",
+      "leaf": "recover_from_invalid_input"
+    },
+    {
+      "id": "suomi.time-field-60px-hint-tmm-always-visible",
+      "title": "time field 60px hint tmm always visible",
+      "name": "Time field ~60px with a visible t.mm hint — Suomi.fi",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "lane": "suomi",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
+    },
+    {
+      "id": "suomi.toast-10s-hover-stick-then-float",
+      "title": "toast 10s hover stick then float",
+      "name": "Toast 10s; hover sticks, then floats — Suomi.fi",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "lane": "suomi",
+      "container": "feedback_and_status",
+      "card": "compose_feedback",
+      "facet": "system_stayed_quiet_after_change",
+      "leaf": "announce_system_status"
     },
     {
       "id": "uswds.alert-first-word-is-type",
       "title": "alert first word is type",
+      "name": "Alert first word is type — USWDS",
       "jobs": [
         "announce_system_status"
       ],
-      "lane": "uswds"
+      "lane": "uswds",
+      "container": "feedback_and_status",
+      "card": "compose_feedback",
+      "facet": "system_stayed_quiet_after_change",
+      "leaf": "announce_system_status"
     },
     {
       "id": "uswds.alerts-dont-blame-name-next-step",
       "title": "alerts dont blame name next step",
-      "jobs": [
-        "tone_of_voice_for_failure"
-      ],
-      "lane": "uswds"
-    },
-    {
-      "id": "uswds.dont-hide-then-reveal-alerts",
-      "title": "dont hide then reveal alerts",
+      "name": "Alerts Don't blame name next step — USWDS",
       "jobs": [
         "announce_system_status"
       ],
-      "lane": "uswds"
-    },
-    {
-      "id": "uswds.site-alert-dont-stack-dont-panic",
-      "title": "site alert dont stack dont panic",
-      "jobs": [
-        "announce_system_status"
-      ],
-      "lane": "uswds"
-    },
-    {
-      "id": "uswds.date-picker-when-weekday-always-type",
-      "title": "date picker when weekday always type",
-      "jobs": [
-        "choose_control_for_choice"
-      ],
-      "lane": "uswds"
+      "lane": "uswds",
+      "container": "feedback_and_status",
+      "card": "compose_feedback",
+      "facet": "system_stayed_quiet_after_change",
+      "leaf": "announce_system_status"
     },
     {
       "id": "uswds.banner-gov-mil-https-every-page",
       "title": "banner gov mil https every page",
+      "name": ".gov/.mil HTTPS banner on every page — USWDS",
       "jobs": [
         "wayfind_after_nav"
       ],
-      "lane": "uswds"
+      "lane": "uswds",
+      "container": "navigation_and_wayfinding",
+      "card": "orient_in_the_place",
+      "facet": "user_cant_tell_where_they_are",
+      "leaf": "wayfind_after_nav"
     },
     {
-      "id": "uswds.identifier-required-links-not-footer-dup",
-      "title": "identifier required links not footer dup",
+      "id": "uswds.character-count-brevity-or-legal",
+      "title": "character count brevity or legal",
+      "name": "Character count brevity or legal — USWDS",
       "jobs": [
-        "wayfind_after_nav"
+        "group_related_inputs"
       ],
-      "lane": "uswds"
+      "lane": "uswds",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "related_inputs_feel_scattered",
+      "leaf": "group_related_inputs"
+    },
+    {
+      "id": "uswds.date-picker-when-weekday-always-type",
+      "title": "date picker when weekday always type",
+      "name": "Date picker when weekday always type — USWDS",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "uswds",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
+    },
+    {
+      "id": "uswds.dont-hide-then-reveal-alerts",
+      "title": "dont hide then reveal alerts",
+      "name": "Don't hide then reveal alerts — USWDS",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "lane": "uswds",
+      "container": "feedback_and_status",
+      "card": "compose_feedback",
+      "facet": "system_stayed_quiet_after_change",
+      "leaf": "announce_system_status"
+    },
+    {
+      "id": "uswds.dont-split-phone-ssn-card",
+      "title": "dont split phone ssn card",
+      "name": "Don't split phone, SSN, or card — USWDS",
+      "jobs": [
+        "use_familiar_control"
+      ],
+      "lane": "uswds",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "use_familiar_control"
+    },
+    {
+      "id": "uswds.filled-next-outline-this-page",
+      "title": "filled next outline this page",
+      "name": "Filled Next, outline this page — USWDS",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "lane": "uswds",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "no_clear_primary",
+      "leaf": "pick_primary_action"
+    },
+    {
+      "id": "uswds.forms-simple-vertical-stack",
+      "title": "forms simple vertical stack",
+      "name": "Forms simple vertical stack — USWDS",
+      "jobs": [
+        "group_related_inputs"
+      ],
+      "lane": "uswds",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "related_inputs_feel_scattered",
+      "leaf": "group_related_inputs"
+    },
+    {
+      "id": "uswds.homepage-search-box-not-link",
+      "title": "homepage search box not link",
+      "name": "Homepage search box not link — USWDS",
+      "jobs": [
+        "place_the_search_control"
+      ],
+      "lane": "uswds",
+      "container": "navigation_and_wayfinding",
+      "card": "compose_search",
+      "facet": "search_is_hard_to_find",
+      "leaf": "place_the_search_control"
     },
     {
       "id": "uswds.identifier-darker-than-footer",
       "title": "identifier darker than footer",
+      "name": "Identifier darker than footer — USWDS",
       "jobs": [
         "wayfind_after_nav"
       ],
-      "lane": "uswds"
+      "lane": "uswds",
+      "container": "navigation_and_wayfinding",
+      "card": "orient_in_the_place",
+      "facet": "user_cant_tell_where_they_are",
+      "leaf": "wayfind_after_nav"
+    },
+    {
+      "id": "uswds.identifier-required-links-not-footer-dup",
+      "title": "identifier required links not footer dup",
+      "name": "Identifier required links not footer dup — USWDS",
+      "jobs": [
+        "wayfind_after_nav"
+      ],
+      "lane": "uswds",
+      "container": "navigation_and_wayfinding",
+      "card": "orient_in_the_place",
+      "facet": "user_cant_tell_where_they_are",
+      "leaf": "wayfind_after_nav"
+    },
+    {
+      "id": "uswds.real-button-with-type-space-vs-enter",
+      "title": "real button with type space vs enter",
+      "name": "Real button with type; Space vs Enter — USWDS",
+      "jobs": [
+        "pick_primary_action"
+      ],
+      "lane": "uswds",
+      "container": "actions_and_decisions",
+      "card": "design_actions_and_ctas",
+      "facet": "no_clear_primary",
+      "leaf": "pick_primary_action"
+    },
+    {
+      "id": "uswds.site-alert-dont-stack-dont-panic",
+      "title": "site alert dont stack dont panic",
+      "name": "Site alert: don't stack, don't panic — USWDS",
+      "jobs": [
+        "announce_system_status"
+      ],
+      "lane": "uswds",
+      "container": "feedback_and_status",
+      "card": "compose_feedback",
+      "facet": "system_stayed_quiet_after_change",
+      "leaf": "announce_system_status"
     }
   ]
 }

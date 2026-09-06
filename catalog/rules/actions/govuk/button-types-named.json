@@ -1,0 +1,32 @@
+{
+  "id": "govuk.button-types-named",
+  "category": "Actions",
+  "segment": "Buttons",
+  "title": "button types named",
+  "name": "Button types named — GOV.UK",
+  "rule": "Button types named: default; Start; secondary; warning (destructive).",
+  "citation": [
+    {
+      "source": "GOV.UK Design System — Button",
+      "url": "https://design-system.service.gov.uk/components/button/"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "The button’s type matches its role (default / Start / secondary / warning for destructive)."
+  ],
+  "fail_when": [
+    "Destructive uses default styling, or Start/secondary/warning are used for the wrong role."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "no_clear_primary",
+  "leaf": "pick_primary_action",
+  "overview": "Button type must match role: default, Start, secondary, or warning.",
+  "apply_when": "Choosing button styling for primary, start, secondary, or destructive actions.",
+  "not_when": "Not for link styling, or icon-only toolbar controls without a button role.",
+  "agent_hint": "Match button type to role; use warning only for destructive actions.",
+  "description": "Named button types keep action weight readable: default for ordinary actions, Start for the service start, secondary for lower emphasis, and warning for destructive work. The type must match the role so people can trust the styling. Fail if a destructive action uses default styling, or if Start, secondary, or warning is used for the wrong job. Apply when designing action and CTA buttons that need clear priority.",
+  "do_not_claim": "One-primary (`actions.buttons.one_primary`); default-not-destructive as a second winner. Overlap with Actions 40: `actions.buttons.default_not_destructive`."
+}

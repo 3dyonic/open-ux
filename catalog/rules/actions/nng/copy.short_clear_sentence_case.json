@@ -1,0 +1,31 @@
+{
+  "id": "actions.copy.short_clear_sentence_case",
+  "category": "Actions",
+  "segment": "Copy",
+  "title": "short clear sentence case",
+  "name": "Short clear sentence case — NN/g",
+  "rule": "Keep command labels short and clear (NN/g: just enough text, typically up to 2–4 words, drop articles; M3: ideally 1–3 words, sentence case, no wrap).",
+  "citation": [
+    {
+      "source": "NN/g — UI Copy: UX Guidelines for Command Names and Keyboard Shortcuts; Material 3 — Buttons",
+      "url": "https://www.nngroup.com/articles/ui-copy/"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "Label is short and clear: typically 2–4 words (NN/g), articles dropped; and ideally 1–3 words, sentence case, no wrap (M3)."
+  ],
+  "fail_when": [
+    "Wrapping, padded articles, or a long unclear command name."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "action_wording_hides_the_outcome",
+  "leaf": "word_the_action",
+  "overview": "Command labels are short, clear, sentence case, and usually a few words.",
+  "apply_when": "Writing button and menu command labels people must scan quickly.",
+  "not_when": "Long-form instructional copy outside the command control itself.",
+  "agent_hint": "Keep labels short (about 1–4 words), sentence case, no wrap or padding.",
+  "description": "Command labels should stay short and clear—typically a few words, articles dropped, ideally sentence case without wrapping. Long, padded, or wrapping names slow scanning and hide the action inside filler. Aim for roughly two to four words (or one to three per Material guidance) so the control stays readable at a glance. Put longer explanation in adjacent help text if needed; the control label itself stays compact."
+}

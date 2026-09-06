@@ -1,0 +1,31 @@
+{
+  "id": "forms.transparency.progress_on_long_forms",
+  "category": "Forms",
+  "segment": "Transparency",
+  "title": "progress on long forms",
+  "name": "Progress on long forms — NN/g",
+  "rule": "On long forms, show a clear progress indicator of how much is done and how much remains.",
+  "citation": [
+    {
+      "source": "NN/g — 4 Principles to Reduce Cognitive Load in Forms",
+      "url": "https://www.nngroup.com/articles/4-principles-reduce-cognitive-load/"
+    }
+  ],
+  "check": "deterministic",
+  "pass_when": [
+    "Long form shows done vs remaining progress."
+  ],
+  "fail_when": [
+    "Long form has no progress indication."
+  ],
+  "severity": "major",
+  "container": "multi_step_flows",
+  "card": "build_a_multi_step_flow",
+  "facet": "too_much_on_one_step",
+  "leaf": "show_step_progress",
+  "overview": "On long forms, show clear progress for how much is done versus remaining.",
+  "apply_when": "Long multi-section or multi-page forms users must finish.",
+  "not_when": "Short single-screen forms with no meaningful remaining work.",
+  "agent_hint": "Show done-versus-remaining progress on long forms.",
+  "description": "On long forms, show a clear progress indicator of how much is done and how much remains. Pass when the long form shows done versus remaining progress; fail when a long form has no progress indication. Progress orientation reduces uncertainty about remaining effort without inventing a specific widget brand or forcing a progress UI on short forms."
+}

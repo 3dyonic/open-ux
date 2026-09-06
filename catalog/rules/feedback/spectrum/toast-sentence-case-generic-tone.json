@@ -1,0 +1,32 @@
+{
+  "id": "spectrum.toast-sentence-case-generic-tone",
+  "category": "Feedback",
+  "segment": "Toast copy",
+  "title": "toast sentence case generic tone",
+  "name": "Toast sentence case generic tone — Spectrum",
+  "rule": "Sentence case, no period on a single sentence; instructive/neutral tone (not playful, celebratory, or promotional/upsell); generic language (no filenames/usernames/folders unless necessary).",
+  "citation": [
+    {
+      "source": "Spectrum — Toast",
+      "url": "https://spectrum.adobe.com/page/toast/"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "Sentence case; single sentence has no period; tone is instructive/neutral; names/files omitted unless necessary."
+  ],
+  "fail_when": [
+    "Title Case; period on a single sentence; playful/celebratory/upsell; unnecessary filenames/usernames/folders."
+  ],
+  "severity": "major",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "system_stayed_quiet_after_change",
+  "leaf": "announce_system_status",
+  "overview": "Toast copy uses sentence case, neutral tone, and generic wording without unnecessary names.",
+  "apply_when": "Writing confirmation, info, or low-priority alert toast messages.",
+  "not_when": "Marketing banners, celebratory campaigns, or detailed error dialogs that need specifics.",
+  "agent_hint": "Write sentence-case neutral toast copy; skip periods on single sentences and unnecessary names.",
+  "description": "Spectrum toast writing stays in sentence case, drops the period on a single sentence, keeps an instructive or neutral tone, and uses generic language unless a filename, username, or folder is necessary. Title Case, playful or promotional voice, and unnecessary identity details fight the low-priority status surface. Keep copy calm and generic on toasts; move celebratory or upsell language elsewhere.",
+  "do_not_claim": "General UI sentence-case already filed (Actions/Forms) as a delete of this toast row."
+}

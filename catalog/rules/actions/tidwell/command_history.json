@@ -1,0 +1,31 @@
+{
+  "id": "actions.command_history",
+  "category": "Actions",
+  "segment": "Control",
+  "title": "command history",
+  "name": "Command history — Tidwell",
+  "rule": "Keep a visible record of what was done, to what, and when, as the user performs actions.",
+  "citation": [
+    {
+      "source": "Designing Interfaces 3e ch. Doing Things — Command History (Tidwell, Brewer, Valencia)",
+      "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
+    }
+  ],
+  "check": "deterministic",
+  "pass_when": [
+    "A visible record shows what was done, to what, and when."
+  ],
+  "fail_when": [
+    "No visible history of what / to what / when."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "command_surface_is_opaque",
+  "leaf": "compose_the_command_surface",
+  "overview": "A visible record of what was done, to what, and when.",
+  "apply_when": "People need to review or audit recent actions in the product.",
+  "not_when": "Trivial one-off taps that never need a recoverable history trail.",
+  "agent_hint": "Keep a visible history of what, to what, and when for user actions.",
+  "description": "A command history makes past work inspectable: what ran, on which target, and when. Without a visible record, people cannot verify, audit, or reconstruct what happened after a busy session. Provide that trail as actions accumulate so the sequence stays reviewable. Reserve history for meaningful operations; do not invent history UI for fleeting chrome taps that never matter later."
+}

@@ -1,0 +1,31 @@
+{
+  "id": "forms.inputs.list_builder",
+  "category": "Forms",
+  "segment": "Inputs",
+  "title": "list builder",
+  "name": "List builder — Tidwell",
+  "rule": "When the user must assemble a list of items, provide a list builder (available vs selected), not a single free-text dump.",
+  "citation": [
+    {
+      "source": "Designing Interfaces 3e ch. Getting Input — List Builder (Tidwell, Brewer, Valencia)",
+      "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
+    }
+  ],
+  "check": "deterministic",
+  "pass_when": [
+    "Assembling a list uses available-vs-selected (add/remove) UI."
+  ],
+  "fail_when": [
+    "Multi-item list is one free-text dump."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "overview": "Assemble multi-item lists with available-versus-selected add/remove UI.",
+  "apply_when": "Users must build a list of items from candidates.",
+  "not_when": "Single-value fields that are not multi-item lists.",
+  "agent_hint": "Provide available-vs-selected add/remove; ban one free-text dump for lists.",
+  "description": "When the user must assemble a list of items, provide a list builder with available versus selected (add/remove), not a single free-text dump. Pass when assembling a list uses that UI; fail when a multi-item list is one free-text dump. The builder makes membership visible and editable without inventing list semantics beyond the cited pattern."
+}

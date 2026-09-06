@@ -1,0 +1,32 @@
+{
+  "id": "nng.keyboard-typeahead-in-dropdowns",
+  "category": "Forms",
+  "segment": "Choice",
+  "title": "keyboard typeahead in dropdowns",
+  "name": "Keyboard typeahead in dropdowns — NN/g",
+  "rule": "Keyboard typeahead in dropdowns; avoid dropdown when typing is faster (state/country).",
+  "citation": [
+    {
+      "source": "NN/g — Dropdowns: Design Guidelines",
+      "url": "https://www.nngroup.com/articles/drop-down-menus/"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "Dropdowns support typeahead; state/country (typing faster) is not a dropdown."
+  ],
+  "fail_when": [
+    "Dropdown with no typeahead, or state/country forced through a dropdown."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "overview": "Dropdowns need keyboard typeahead; skip dropdown when typing is faster.",
+  "apply_when": "Using dropdowns, especially long lists like state or country.",
+  "not_when": "State or country forced through a dropdown with no typeahead.",
+  "agent_hint": "Add typeahead to dropdowns; avoid dropdown when typing state or country is faster.",
+  "description": "Dropdowns should support keyboard typeahead so people can jump by typing. Avoid a dropdown when typing is faster, especially for state or country. Pass when dropdowns support typeahead and state or country is not forced through a dropdown. Fail when a dropdown has no typeahead, or state or country is forced through a dropdown despite typing being faster.",
+  "do_not_claim": "Mobile checkout “open field not iOS picker” as this row (see `nng.open-field-state-and-card-expiry`)."
+}

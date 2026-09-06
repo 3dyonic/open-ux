@@ -1,0 +1,32 @@
+{
+  "id": "fluent.create-labels-new-thing",
+  "category": "Actions",
+  "segment": "Copy",
+  "title": "create labels new thing",
+  "name": "Create labels: New {thing} — Fluent",
+  "rule": "Create labels: “New {thing}”; menu trigger “New”; menu items drop the word New.",
+  "citation": [
+    {
+      "source": "Fluent 2 — Button usage",
+      "url": "https://fluent2.microsoft.design/components/web/react/core/button/usage"
+    }
+  ],
+  "check": "deterministic",
+  "pass_when": [
+    "Create action is “New {thing}”; the menu trigger is “New”; items inside drop New."
+  ],
+  "fail_when": [
+    "Menu items repeat New, or the create control is unlabeled / generic Add with no New pattern where this usage applies."
+  ],
+  "severity": "major",
+  "container": "actions_and_decisions",
+  "card": "design_actions_and_ctas",
+  "facet": "action_wording_hides_the_outcome",
+  "leaf": "word_the_action",
+  "overview": "Create actions read New {thing}; menu trigger New; items drop the word New.",
+  "apply_when": "Labeling Fluent create actions and New menus that spawn items.",
+  "not_when": "Add-to-collection actions that are not the Fluent New create pattern.",
+  "agent_hint": "Label create as New {thing}; menu trigger New; omit New on menu items.",
+  "description": "Fluent create labels use “New {thing}.” The menu trigger that opens create options is simply “New”; items inside the menu drop the word New so the list stays scannable. Apply when labeling Fluent create actions and New menus that spawn items. Fail menu items that repeat New, or a create control that is unlabeled or a generic Add where this New pattern applies.",
+  "do_not_claim": "NN/g verb-leading as a merge. Overlap with Actions 40: `actions.copy.verbs_for_actions`."
+}

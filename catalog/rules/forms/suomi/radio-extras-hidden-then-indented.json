@@ -1,0 +1,32 @@
+{
+  "id": "suomi.radio-extras-hidden-then-indented",
+  "category": "Forms",
+  "segment": "Radios",
+  "title": "radio extras hidden then indented",
+  "name": "Radio extras hidden then indented — Suomi.fi",
+  "rule": "Radio extras: additional fields stay hidden, then show indented under the selected radio — not a second “radios vs checkboxes” row.",
+  "citation": [
+    {
+      "source": "Suomi.fi — RadioButton",
+      "url": "https://designsystem.suomi.fi/components/radiobutton/"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "Extra fields for a radio are hidden until that radio is selected, then appear indented under it."
+  ],
+  "fail_when": [
+    "Extra fields for unselected radios are visible; extras appear unindented / disconnected from the selected radio."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "overview": "Extra fields for a radio stay hidden until selected, then appear indented under it.",
+  "apply_when": "Radios that reveal follow-up fields only for the chosen option.",
+  "not_when": "Independent checkbox groups, or always-visible related fields that are not radio extras.",
+  "agent_hint": "Hide radio extras until selection; show them indented under the chosen radio.",
+  "description": "Suomi.fi radio extras stay hidden until that radio is selected, then appear indented under it—not as a second radios-versus-checkboxes row. Showing extras for unselected radios, or placing them unindented and disconnected from the choice, breaks the progressive disclosure. Reveal only the selected branch and keep it visually nested under that radio so the relationship stays obvious.",
+  "do_not_claim": "Radios vs checkboxes vs toggle (already filed)."
+}

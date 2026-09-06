@@ -1,0 +1,32 @@
+{
+  "id": "mui.most-alerts-dont-need-titles",
+  "category": "Dialogs",
+  "segment": "Alert",
+  "title": "most alerts dont need titles",
+  "name": "Most alerts don't need titles — MUI",
+  "rule": "Most alerts don't need titles — summarize in a sentence or two (question or statement tied to the buttons). Use `role=\"alertdialog\"`. Title-bar alerts only for high-risk (e.g. potential loss of connectivity). Users should understand the choices from title and button text alone.",
+  "citation": [
+    {
+      "source": "MUI — Dialog",
+      "url": "https://mui.com/material-ui/react-dialog/"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "Ordinary alerts have no title bar; copy is a sentence or two tied to the buttons; `role=\"alertdialog\"`. Title-bar only for high-risk. Choices are understandable from title (if any) and button text alone."
+  ],
+  "fail_when": [
+    "Title-bar on a non-high-risk alert; missing alertdialog role; choices that cannot be understood from title + buttons."
+  ],
+  "severity": "major",
+  "container": "feedback_and_status",
+  "card": "compose_feedback",
+  "facet": "system_stayed_quiet_after_change",
+  "leaf": "announce_system_status",
+  "overview": "Ordinary alerts skip a title bar; use alertdialog role and copy tied to the buttons.",
+  "apply_when": "Designing alert dialogs for ordinary confirmations versus high-risk warnings.",
+  "not_when": "Not for non-alert modal editors that need a lasting working title.",
+  "agent_hint": "Omit title bars on ordinary alerts; reserve titles for high-risk; use alertdialog.",
+  "description": "Most alerts do not need titles—summarize in a sentence or two tied to the buttons, and use `role=\"alertdialog\"`. Reserve a title bar for high-risk cases such as potential loss of connectivity. People should understand choices from title (if any) and button text alone. Fail for a title bar on a non-high-risk alert, a missing alertdialog role, or choices that cannot be understood from title and buttons.",
+  "do_not_claim": "Banned-title list (next row) as this \"most don't need titles\" row."
+}

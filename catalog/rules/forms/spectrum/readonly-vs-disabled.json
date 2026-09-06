@@ -1,0 +1,32 @@
+{
+  "id": "spectrum.readonly-vs-disabled",
+  "category": "Forms",
+  "segment": "Field state",
+  "title": "readonly vs disabled",
+  "name": "Readonly vs disabled — Spectrum",
+  "rule": "Disabled = field exists but is unavailable. If the value must still be shown and copied, use read-only, not disabled.",
+  "citation": [
+    {
+      "source": "Spectrum — Text field",
+      "url": "https://spectrum.adobe.com/page/text-field/"
+    }
+  ],
+  "check": "deterministic",
+  "pass_when": [
+    "Unavailable fields are disabled. Values that must remain visible and copyable are read-only."
+  ],
+  "fail_when": [
+    "A value that must be copied is in a disabled field."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "use_familiar_control",
+  "overview": "Disabled means unavailable; read-only keeps a value visible and copyable.",
+  "apply_when": "Deciding whether a shown value must stay copyable or the field is unavailable.",
+  "not_when": "Truly unavailable fields with no value users need to read or copy.",
+  "agent_hint": "Use read-only when the value must stay visible and copyable; disable only if unavailable.",
+  "description": "Spectrum separates disabled from read-only: disabled means the field exists but is unavailable, while read-only keeps a value on screen so users can still read and copy it. Putting a must-copy value in a disabled field blocks selection and fails the split. Use disabled for unavailable inputs; switch to read-only whenever the content still matters after interaction is locked.",
+  "do_not_claim": "Fluent disabled-label-stays-perceivable as a merge; picker read-only (see `spectrum.picker-readonly-only-if-selection`). Overlap with extra 73: `fluent.disabled-field-label-stays-perceivable`."
+}

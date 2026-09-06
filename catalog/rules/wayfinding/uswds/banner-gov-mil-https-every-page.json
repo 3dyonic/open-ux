@@ -1,0 +1,32 @@
+{
+  "id": "uswds.banner-gov-mil-https-every-page",
+  "category": "Wayfinding",
+  "segment": "Official banner",
+  "title": "banner gov mil https every page",
+  "name": ".gov/.mil HTTPS banner on every page — USWDS",
+  "rule": "Unaltered .gov/.mil + HTTPS copy on every page, after skipnav. Only on official .gov/.mil with HTTPS; never on .com/.org or test sites. Spanish copy on Spanish sites; `.mil` copy on `.mil`. Do not leave `aria-hidden=\"true\"` on banner content in markup (JS sets it).",
+  "citation": [
+    {
+      "source": "USWDS — Banner",
+      "url": "https://designsystem.digital.gov/components/banner/"
+    }
+  ],
+  "check": "deterministic",
+  "pass_when": [
+    "Official .gov/.mil HTTPS sites show the unaltered TLD/HTTPS banner on every page after skipnav; language/TLD copy matches the site; banner content is not `aria-hidden` in the markup."
+  ],
+  "fail_when": [
+    "Banner on .com/.org or test; customized TLD text; missing on inner pages; or `aria-hidden=\"true\"` left on banner content in markup."
+  ],
+  "severity": "major",
+  "container": "navigation_and_wayfinding",
+  "card": "orient_in_the_place",
+  "facet": "user_cant_tell_where_they_are",
+  "leaf": "wayfind_after_nav",
+  "overview": "Official .gov/.mil HTTPS sites show the unaltered TLD and HTTPS banner on every page after skipnav.",
+  "apply_when": "Official .gov or .mil HTTPS sites that must show the federal identity banner.",
+  "not_when": ".com/.org or test sites, or customized TLD banner wording.",
+  "agent_hint": "Place the unaltered .gov/.mil HTTPS banner after skipnav on every official page.",
+  "description": "USWDS requires the unaltered .gov/.mil plus HTTPS banner on every page after skipnav, only on official .gov/.mil sites with HTTPS—never on .com/.org or test sites. Spanish sites use Spanish copy; `.mil` sites use `.mil` copy. Do not leave `aria-hidden=\"true\"` on banner content in markup (JS sets it). Customized TLD text, missing inner-page banners, or markup-locked aria-hidden fail.",
+  "do_not_claim": "This as an Open UX rule for non-government products; Canada signature / NSW hero as the same rule."
+}

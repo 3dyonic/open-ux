@@ -1,0 +1,32 @@
+{
+  "id": "govuk.dob-autocomplete-tokens",
+  "category": "Forms",
+  "segment": "Dates",
+  "title": "dob autocomplete tokens",
+  "name": "Date-of-birth autocomplete tokens — GOV.UK",
+  "rule": "Date of birth fields use autocomplete tokens `bday-day` / `bday-month` / `bday-year`.",
+  "citation": [
+    {
+      "source": "GOV.UK Design System — Date input",
+      "url": "https://design-system.service.gov.uk/components/date-input/"
+    }
+  ],
+  "check": "deterministic",
+  "pass_when": [
+    "DOB day/month/year inputs have those autocomplete tokens."
+  ],
+  "fail_when": [
+    "DOB segments omit the tokens or use a generic autocomplete."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "use_familiar_control",
+  "overview": "Date-of-birth segments use bday-day, bday-month, and bday-year autocomplete tokens.",
+  "apply_when": "Building day, month, and year inputs for date of birth.",
+  "not_when": "Not for non-DOB dates, or single free-text date fields without segments.",
+  "agent_hint": "Set autocomplete to bday-day, bday-month, and bday-year on DOB segments.",
+  "description": "Date-of-birth day, month, and year fields need the matching autocomplete tokens `bday-day`, `bday-month`, and `bday-year` so browsers and password managers can fill them correctly. Those tokens are specific to DOB segments, not a generic autocomplete value. Missing or wrong tokens force retyping and break familiar autofill. Fail if DOB segments omit those tokens or use a generic autocomplete instead. Apply whenever you build segmented day/month/year inputs for date of birth.",
+  "do_not_claim": "Generic HTML autocomplete+name (`forms.inputs.html_autocomplete_and_name`); typeahead suggestions. Overlap with Forms 54: tokens are the new claim."
+}
