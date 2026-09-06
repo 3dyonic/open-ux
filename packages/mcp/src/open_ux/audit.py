@@ -1,140 +1,121 @@
 from __future__ import annotations
 
-from typing import Any, Literal
+from typing import Any
 
 from open_ux.catalog import EMPTY_NOTE, Catalog, get_by_id, select_by_jobs
-
-Verdict = Literal["pass", "fail", "incomplete"]
-
-INCOMPLETE_NO_CHECKER = (
-    "No deterministic checker is registered for this rule. "
-    "Client LLM may finish using pass_when / fail_when. No server LLM."
-)
-INCOMPLETE_DESCRIPTION = (
-    "Target type is description; server does not grade prose. "
-    "Client LLM may finish using pass_when / fail_when. No server LLM."
+from open_ux.jobs import (
+    DEFAULT_LIMIT,
+    MAX_LIMIT,
+    MISS_NOTE,
+    TEMPLATE_FALLBACK_ALIAS,
 )
 
-
-def _reasons(guideline: dict[str, Any], *, kind: Literal["pass", "fail", "incomplete"]) -> list[str]:
-    """Reuse catalog wording + rule id. No house soft-copy."""
-    gid = guideline["id"]
-    if kind == "pass":
-        body = list(guideline.get("pass_when") or [])
-    elif kind == "fail":
-        body = list(guideline.get("fail_when") or [])
-    else:
-        body = list(guideline.get("pass_when") or []) + list(guideline.get("fail_when") or [])
-    return [f"{gid}: {line}" for line in body]
+PACK_KEYS = ("id", "title", "rule", "pass_when", "fail_when")
+NEED_ERROR = "audit requires jobs or guideline_ids; the full catalog is never run."
 
 
-def _unknown(guideline_id: str) -> dict[str, Any]:
+def _clamp_limit(limit: int) -> int:
+    if limit < 1:
+        return 1
+    if limit > MAX_LIMIT:
+        return MAX_LIMIT
+    return limit
+
+
+def _pack(guideline: dict[str, Any]) -> dict[str, Any]:
     return {
-        "guideline_id": guideline_id,
-        "verdict": "incomplete",
-        "reasons": [
-            f"{guideline_id}: Unknown guideline_id. Catalog has no matching rule."
-        ],
-    }
-
-
-def _catalog_meta(catalog: Catalog) -> dict[str, Any]:
-    return {
-        "status": "empty" if catalog.empty else "ok",
-        "guideline_count": len(catalog.guidelines),
-        "version": catalog.version,
-    }
-
-
-def audit(
-    catalog: Catalog,
-    *,
-    target_type: str,
-    content: str,
-    guideline_ids: list[str] | None = None,
-    jobs: str | list[str] | None = None,
-) -> dict[str, Any]:
-    if target_type not in {"html", "jsx", "description"}:
-        raise ValueError("target.type must be html, jsx, or description")
-
-    requested = [gid for gid in (guideline_ids or []) if gid]
-    job_scope = jobs if isinstance(jobs, list) else ([jobs] if jobs else [])
-    job_scope = [j for j in job_scope if j]
-
-    if not requested and not job_scope:
-        payload: dict[str, Any] = {
-            "error": "audit requires jobs or guideline_ids; the full catalog is never run.",
-            "results": [],
-            "summary": {"pass": 0, "fail": 0, "incomplete": 0},
-            "catalog": _catalog_meta(catalog),
-        }
-        if catalog.empty:
-            payload["note"] = EMPTY_NOTE
-        return payload
-
-    results: list[dict[str, Any]] = []
-
-    if catalog.empty:
-        for gid in requested:
-            results.append(_unknown(gid))
-        if not requested:
-            # jobs-only on an empty catalog: nothing to grade.
-            pass
-        payload = {
-            "results": results,
-            "summary": _summary(results),
-            "catalog": _catalog_meta(catalog),
-            "note": EMPTY_NOTE,
-        }
-        return payload
-
-    if requested:
-        for gid in requested:
-            g = get_by_id(catalog, gid)
-            if g is None:
-                results.append(_unknown(gid))
-            else:
-                results.append(_grade(g, target_type=target_type, content=content))
-    else:
-        for g in select_by_jobs(catalog, job_scope):
-            results.append(_grade(g, target_type=target_type, content=content))
-
-    return {
-        "results": results,
-        "summary": _summary(results),
-        "catalog": _catalog_meta(catalog),
-    }
-
-
-def _grade(guideline: dict[str, Any], *, target_type: str, content: str) -> dict[str, Any]:
-    del content  # Hybrid C: no server LLM; no invented HTML/JSX checkers in this scaffold.
-    check = guideline.get("check")
-    if target_type == "description" or check in {"llm_judgment", "either"}:
-        return {
-            "guideline_id": guideline["id"],
-            "verdict": "incomplete",
-            "reasons": _reasons(guideline, kind="incomplete")
-            + [f"{guideline['id']}: {INCOMPLETE_DESCRIPTION if target_type == 'description' else INCOMPLETE_NO_CHECKER}"],
-            "rule": guideline.get("rule"),
-            "pass_when": list(guideline.get("pass_when") or []),
-            "fail_when": list(guideline.get("fail_when") or []),
-        }
-    # deterministic + html/jsx — checkers land with the rules, not before.
-    return {
-        "guideline_id": guideline["id"],
-        "verdict": "incomplete",
-        "reasons": _reasons(guideline, kind="incomplete")
-        + [f"{guideline['id']}: {INCOMPLETE_NO_CHECKER}"],
-        "rule": guideline.get("rule"),
+        "id": guideline["id"],
+        "title": guideline.get("title") or "",
+        "rule": guideline.get("rule") or "",
         "pass_when": list(guideline.get("pass_when") or []),
         "fail_when": list(guideline.get("fail_when") or []),
     }
 
 
-def _summary(results: list[dict[str, Any]]) -> dict[str, int]:
-    counts = {"pass": 0, "fail": 0, "incomplete": 0}
-    for row in results:
-        v = row.get("verdict")
-        if v in counts:
-            counts[v] += 1
-    return counts
+def _matches_query(guideline: dict[str, Any], query: str | None) -> bool:
+    q = (query or "").strip().lower()
+    if not q:
+        return True
+    blob = " ".join(
+        [
+            str(guideline.get("id") or ""),
+            str(guideline.get("title") or ""),
+            str(guideline.get("rule") or ""),
+            " ".join(guideline.get("pass_when") or []),
+            " ".join(guideline.get("fail_when") or []),
+        ]
+    ).lower()
+    return q in blob
+
+
+def _select_by_need(catalog: Catalog, jobs: str) -> list[dict[str, Any]]:
+    matched = select_by_jobs(catalog, jobs)
+    if matched:
+        return matched
+    alias = TEMPLATE_FALLBACK_ALIAS.get(jobs)
+    if alias:
+        return select_by_jobs(catalog, alias)
+    return []
+
+
+def _payload(
+    rows: list[dict[str, Any]],
+    *,
+    total: int,
+    note: str | None = None,
+    error: str | None = None,
+) -> dict[str, Any]:
+    packed = [_pack(g) for g in rows]
+    out: dict[str, Any] = {
+        "guidelines": packed,
+        "count": len(packed),
+        "total": total,
+    }
+    if note:
+        out["note"] = note
+    if error:
+        out["error"] = error
+    return out
+
+
+def audit(
+    catalog: Catalog,
+    *,
+    jobs: str | None = None,
+    query: str | None = None,
+    guideline_ids: list[str] | None = None,
+    limit: int = DEFAULT_LIMIT,
+    target: Any = None,
+    content: Any = None,
+    target_type: str | None = None,
+) -> dict[str, Any]:
+    """Need in, matching rule criteria out. Leftover target/content are ignored."""
+    del target, content, target_type
+    cap = _clamp_limit(limit)
+    requested = [gid for gid in (guideline_ids or []) if gid]
+    job = (jobs or "").strip() or None
+
+    if not requested and not job:
+        note = EMPTY_NOTE if catalog.empty else None
+        return _payload([], total=0, note=note, error=NEED_ERROR)
+
+    if catalog.empty:
+        return _payload([], total=0, note=EMPTY_NOTE)
+
+    if requested:
+        found: list[dict[str, Any]] = []
+        for gid in requested:
+            g = get_by_id(catalog, gid)
+            if g is not None and _matches_query(g, query):
+                found.append(g)
+        selected = found
+    else:
+        assert job is not None
+        selected = [g for g in _select_by_need(catalog, job) if _matches_query(g, query)]
+
+    total = len(selected)
+    capped = selected[:cap]
+    note = None
+    if total == 0:
+        note = MISS_NOTE
+    return _payload(capped, total=total, note=note)

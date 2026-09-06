@@ -1,11 +1,11 @@
 from __future__ import annotations
 
 import secrets
-from typing import Any, Literal
+from typing import Annotated, Any
 
 from fastmcp import FastMCP
 from fastmcp.server.dependencies import get_access_token
-from pydantic import BaseModel, Field
+from pydantic import Field
 from starlette.requests import Request
 from starlette.responses import HTMLResponse, JSONResponse, RedirectResponse, Response
 
@@ -18,15 +18,17 @@ from open_ux.auth import (
     redeem_invite,
     request_invite,
 )
-from open_ux.catalog import EMPTY_NOTE, content_hash, get_by_id, list_index, load_catalog
+from open_ux.catalog import EMPTY_NOTE, get_by_id, list_index, load_catalog
 from open_ux.invite_page import REQUEST_HTML, REQUESTED_HTML, REDEEM_HTML
+from open_ux.jobs import (
+    DEFAULT_LIMIT,
+    JOB_FIELD_DESCRIPTION,
+    JobId,
+    MAX_LIMIT,
+)
 from open_ux.landing import LANDING_HTML
 from open_ux.settings import Settings
 from open_ux.store import get_store
-
-class AuditTarget(BaseModel):
-    type: Literal["html", "jsx", "description"]
-    content: str = Field(description="Snippet to audit. Never persisted raw.")
 
 
 def _key_hash_or_none() -> str | None:
@@ -41,26 +43,21 @@ def _maybe_telemetry(
     settings: Settings,
     *,
     tool: str,
-    target_type: str | None = None,
-    content: str | None = None,
     guideline_ids: list[str] | None = None,
-    verdicts: dict[str, Any] | None = None,
 ) -> None:
     if not settings.telemetry:
         return
     key_hash = _key_hash_or_none()
     if not key_hash:
         return
-    length = len(content.encode("utf-8")) if content is not None else None
-    digest = content_hash(content) if content is not None else None
     get_store(settings).record_telemetry(
         key_hash=key_hash,
         tool=tool,
-        target_type=target_type,
-        content_length=length,
-        content_hash=digest,
+        target_type=None,
+        content_length=None,
+        content_hash=None,
         guideline_ids=guideline_ids,
-        verdicts=verdicts,
+        verdicts=None,
     )
 
 
@@ -109,10 +106,11 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         instructions=(
             "Open UX: cited UX rules agents audit against. "
             "Tools: list_guidelines, search_guidelines, get_guideline, audit. "
-            "Hybrid C — no server LLM. "
+            "No server LLM. "
             "list/search return a paged index (id, title, jobs, lane) only. "
-            "audit requires jobs or guideline_ids; never the whole catalog. "
-            "If the catalog is empty, return empty/incomplete; do not invent rules."
+            "audit: say the UX need as one jobs template; returns cited rule "
+            "criteria. Does not take a file. Does not return pass or fail. "
+            "If the catalog is empty, return empty; do not invent rules."
         ),
         version="0.1.0",
         website_url="https://github.com/3dyonic/open-ux",
@@ -199,31 +197,44 @@ def create_mcp(*, hosted: bool) -> FastMCP:
 
     @mcp.tool
     def audit(
-        target: AuditTarget,
-        guideline_ids: list[str] | None = None,
-        jobs: str | None = None,
+        jobs: Annotated[JobId | None, Field(description=JOB_FIELD_DESCRIPTION)] = None,
+        query: Annotated[
+            str | None,
+            Field(
+                description=(
+                    "Optional words to narrow within that job. Not a substitute for jobs."
+                )
+            ),
+        ] = None,
+        guideline_ids: Annotated[
+            list[str] | None,
+            Field(description="Use only if ids are already known from search or get."),
+        ] = None,
+        limit: Annotated[
+            int,
+            Field(
+                ge=1,
+                le=MAX_LIMIT,
+                description="Max rules to return. Default 10. Never the whole catalog.",
+            ),
+        ] = DEFAULT_LIMIT,
     ) -> dict[str, Any]:
-        """Audit html | jsx | description. Deterministic Hybrid C. No server LLM.
+        """Say the UX need as one jobs template. Returns cited rule criteria.
 
-        Requires jobs or guideline_ids — never runs the whole catalog.
-        reasons[] reuse catalog pass_when / fail_when plus the rule id.
-        Raw content is never persisted (length + optional hash only).
+        Does not take a file. Does not return pass or fail.
+        Required: jobs or guideline_ids.
         """
         result = run_audit(
             catalog,
-            target_type=target.type,
-            content=target.content,
-            guideline_ids=guideline_ids,
             jobs=jobs,
+            query=query,
+            guideline_ids=guideline_ids,
+            limit=limit,
         )
         _maybe_telemetry(
             settings,
             tool="audit",
-            target_type=target.type,
-            content=target.content,
-            guideline_ids=guideline_ids
-            or [r.get("guideline_id") for r in result.get("results") or [] if r.get("guideline_id")],
-            verdicts=result.get("summary"),
+            guideline_ids=[row.get("id") for row in result.get("guidelines") or [] if row.get("id")],
         )
         return result
 
