@@ -9,23 +9,18 @@ Pointers only. One skill: `open-ux` (`clients/claude/skills/open-ux/SKILL.md`). 
 
 ## Connect
 
-`pip install` the package, or hosted — same tools, same Cards.
+- Hosted: `https://open-ux.dev/mcp` + bearer `uxmcp_` (`OPEN_UX_API_KEY`). Invite: hosted `/invite`.
+- Self-host: `OPEN_UX_URL` or `python -m open_ux stdio` (no key).
 
-- **Package** (local): `pip install open-ux`, then `python -m open_ux stdio` (console script: `open-ux`). Same catalog. No invite. Telemetry off.
-- **Hosted** (shared live catalog): `https://open-ux.dev/mcp` with bearer `uxmcp_` (`OPEN_UX_API_KEY`). Invite at [open-ux.dev/invite](https://open-ux.dev/invite).
+## Scripts
 
-## Path
-
-| Job | Tools |
+| Job | Run |
 | --- | --- |
-| compose / review | Pick a Card → `Open-UX:get_situation` → `Open-UX:audit` `jobs=<card_id>` |
-| map | `Open-UX:suggest_situations` when the ask is a surface. Fallback inside the skill. |
-| cite | `Open-UX:search_guidelines` / `Open-UX:get_guideline` |
+| compose / review | `skills/open-ux/scripts/audit.py --jobs=<card_id>` |
+| map | `skills/open-ux/scripts/suggest.py "task text"` |
+| cite | `skills/open-ux/scripts/get.py <guideline_id>` |
+| index | `skills/open-ux/scripts/list.py` |
 
-## Tools
+Always scope `audit` (`jobs=` or `--guideline-ids`). Never a file. No pass or fail from the host. Surfaces are context, not ids. Leaf ids are not needs.
 
-`Open-UX:list_situations`, `Open-UX:get_situation`, `Open-UX:suggest_situations`, `Open-UX:list_guidelines`, `Open-UX:search_guidelines`, `Open-UX:get_guideline`, `Open-UX:audit`.
-
-Scope `audit` (`jobs=` or `guideline_ids`). Surfaces are context, not ids. Leaf ids are not needs.
-
-Slash commands `/list` `/get` `/audit` plus aliases `/forms` `/actions` `/feedback` route into this same skill.
+Slash commands `/list` `/get` `/audit` plus aliases `/forms` `/actions` `/feedback` run those scripts.

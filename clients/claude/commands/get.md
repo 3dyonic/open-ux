@@ -1,5 +1,11 @@
 ---
-description: Fetch one Situation Card or one cited guideline.
+description: Fetch one Open UX Situation Card or one guideline by id.
 ---
 
-**Not a script.** Call `Open-UX:get_situation`, `Open-UX:get_guideline`, or `Open-UX:get_inspiration`. Example: `/get design_a_form`. Do not send a file.
+`$ARGUMENTS` is a Card id, container alias, or guideline id.
+
+```
+python3 skills/open-ux/scripts/get.py $ARGUMENTS
+```
+
+No file. No pass/fail. Do not invent an id. Surfaces (`home` / `cart` / `checkout`) are not ids.
