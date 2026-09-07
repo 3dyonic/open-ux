@@ -8,10 +8,12 @@ from open_ux.public_html import (
     LANDING_TITLE,
     MARK_CSS,
     NAV_BRAND_HTML,
+    OSS_FOOTER_CSS,
     head_meta,
     public_consent_footer,
     public_gtm_head,
     public_gtm_noscript,
+    public_oss_footer,
 )
 
 
@@ -404,25 +406,10 @@ def render_landing(*, consent: str | None = None) -> str:
       font-size: 13px;
       color: var(--muted);
     }
-    .footer {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      width: 100%;
-      padding: 16px 48px 24px;
-      font-size: 12px;
-      color: var(--muted);
-    }
-    .footer p { margin: 0; }
-    .footer-repo {
-      font-family: var(--mono);
-      font-size: 11px;
-    }
 """
         + MARK_CSS
         + CONSENT_CSS
+        + OSS_FOOTER_CSS
         + """
   </style>
 </head>
@@ -517,10 +504,9 @@ def render_landing(*, consent: str | None = None) -> str:
     </div>
     <a class="btn btn--primary" href="/invite">Get a key</a>
   </section>
-  <footer class="footer">
-    <p>Open UX · cited UX rules agents audit against</p>
-    <p class="footer-repo"><a href="https://github.com/3dyonic/open-ux">github.com/3dyonic/open-ux</a></p>
-  </footer>
+"""
+        + public_oss_footer()
+        + """
   <script>
     if (location.hash === '#register') location.replace('/invite');
   </script>

@@ -146,3 +146,40 @@ def test_public_pages_have_pack_head_and_no_mcp_or_og_image(live_catalog: Path) 
     assert "uns-44" not in rule
     assert "NN/g · field labels stay visible while typing" not in landing
     assert "GOV.UK · labels sentence case, no colons, above" in landing
+
+
+def test_public_pages_have_oss_footer_strip(live_catalog: Path) -> None:
+    strip = "Open UX is open source · "
+    github = 'href="https://github.com/3dyonic/open-ux"'
+    license_href = 'href="https://github.com/3dyonic/open-ux/blob/master/LICENSE"'
+    public_paths = ("/", "/catalog", f"/catalog/{ANT_SEED}", "/invite", "/privacy")
+    never_paths = (
+        "/mcp",
+        "/admin/invite/waitlist",
+        "/invite/redeem",
+        "/account/delete",
+        "/health",
+        "/invite/requested",
+    )
+    with _client() as client:
+        for path in public_paths:
+            html = client.get(path).text
+            assert strip in html, path
+            assert github in html, path
+            assert ">GitHub</a>" in html, path
+            assert license_href in html, path
+            assert ">MIT</a>" in html, path
+        for path in never_paths:
+            html = client.get(path).text
+            assert strip not in html, path
+            assert license_href not in html, path
+        admin = client.get(
+            "/admin/invite/waitlist",
+            headers={"Authorization": "Bearer test-admin-token"},
+        )
+        assert strip not in admin.text
+        account = client.post(
+            "/account/delete",
+            json={"email": "ada@example.com", "key": "uxmcp_nope"},
+        )
+        assert strip not in account.text

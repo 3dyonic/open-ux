@@ -14,10 +14,12 @@ from open_ux.public_html import (
     LANDING_DESCRIPTION,
     MARK_CSS,
     NAV_BRAND_HTML,
+    OSS_FOOTER_CSS,
     head_meta,
     public_consent_footer,
     public_gtm_head,
     public_gtm_noscript,
+    public_oss_footer,
     rule_meta_description,
     rule_meta_title,
 )
@@ -420,7 +422,7 @@ _CSS = """
       font-size: 16px;
       color: var(--muted);
     }
-""" + MARK_CSS + CONSENT_CSS
+""" + MARK_CSS + CONSENT_CSS + OSS_FOOTER_CSS
 
 
 def _e(value: Any) -> str:
@@ -578,6 +580,7 @@ def _page(
             if script
             else ""
         )
+        + public_oss_footer()
         + public_consent_footer(consent)
         + """
 </body>

@@ -11,9 +11,11 @@ from open_ux.public_html import (
     FAVICON_HREF,
     MARK_CSS,
     NAV_BRAND_HTML,
+    OSS_FOOTER_CSS,
     public_consent_footer,
     public_gtm_head,
     public_gtm_noscript,
+    public_oss_footer,
 )
 
 _CSS = """
@@ -268,6 +270,7 @@ def _page(
 ) -> str:
     head_gtm = public_gtm_head(consent) if consent_gate else ""
     body_gtm = public_gtm_noscript(consent) if consent_gate else ""
+    oss = public_oss_footer() if consent_gate else ""
     footer = public_consent_footer(consent) if consent_gate else ""
     return (
         """<!DOCTYPE html>
@@ -286,6 +289,7 @@ def _page(
 """
         + _CSS
         + (CONSENT_CSS if consent_gate else "")
+        + (OSS_FOOTER_CSS if consent_gate else "")
         + """
   </style>
 </head>
@@ -305,6 +309,7 @@ def _page(
         + """
   </script>
 """
+        + oss
         + footer
         + """
 </body>

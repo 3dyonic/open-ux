@@ -45,6 +45,8 @@ MARK_CSS = """
       color: var(--ink);
     }
 """
+GITHUB_REPO_HREF = "https://github.com/3dyonic/open-ux"
+LICENSE_HREF = "https://github.com/3dyonic/open-ux/blob/master/LICENSE"
 DEFAULT_GTM_ID = "GTM-N3BL3G9K"
 CONSENT_COOKIE = "open_ux_gtm_consent"
 CONSENT_GRANTED = "granted"
@@ -160,6 +162,24 @@ CONSENT_CSS = """
       background: transparent;
       color: var(--ink, #1F1B16);
       border: 1px solid var(--ink, #1F1B16);
+    }
+"""
+OSS_FOOTER_CSS = """
+    .footer {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      padding: 16px 48px;
+      border-top: 1px solid var(--line, #DED4C8);
+      background: var(--paper, #F9F6F2);
+      font-size: 12px;
+      line-height: 16px;
+      color: var(--muted, #6A6056);
+    }
+    .footer p { margin: 0; }
+    .footer a {
+      color: inherit;
+      text-decoration: underline;
     }
 """
 ROBOTS_TXT = """User-agent: *
@@ -344,6 +364,17 @@ def public_consent_footer(consent: str | None = None) -> str:
     return consent_banner_html(hidden=decided) + consent_script_html()
 
 
+def public_oss_footer() -> str:
+    return (
+        '  <footer class="footer">\n'
+        "    <p>Open UX is open source · "
+        f'<a href="{GITHUB_REPO_HREF}">GitHub</a>'
+        " · "
+        f'<a href="{LICENSE_HREF}">MIT</a></p>\n'
+        "  </footer>\n"
+    )
+
+
 def privacy_content_html() -> str:
     parts = [
         f"    <h1>{escape(PRIVACY_H1)}</h1>\n",
@@ -486,6 +517,7 @@ def render_privacy_page(*, consent: str | None = None) -> str:
 """
         + MARK_CSS
         + CONSENT_CSS
+        + OSS_FOOTER_CSS
         + """
   </style>
 </head>
@@ -509,6 +541,7 @@ def render_privacy_page(*, consent: str | None = None) -> str:
         + """
   </main>
 """
+        + public_oss_footer()
         + public_consent_footer(consent)
         + """
 </body>

@@ -66,8 +66,8 @@ def test_landing_has_figma_sections_and_register_cta(tmp_env: Path) -> None:
     assert "invented rule · no source" in html
     assert "cited rule · source attached" in html
     assert "Join the waitlist. One key after approve and redeem — no vibes." in html
-    assert "Open UX · cited UX rules agents audit against" in html
-    assert "github.com/3dyonic/open-ux" in html
+    assert "Open UX is open source · " in html
+    assert '>GitHub</a> · <a href="https://github.com/3dyonic/open-ux/blob/master/LICENSE">MIT</a>' in html
 
     assert html.count('href="https://github.com/3dyonic/open-ux"') >= 2
     assert 'href="/invite"' in html
