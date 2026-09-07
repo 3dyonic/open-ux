@@ -324,37 +324,43 @@ def _row_name_for(html: str, guideline_id: str) -> str:
     return chunk[open_tag : chunk.index("</span>", open_tag)]
 
 
-def test_catalog_list_row_title_keeps_house_suffix(live_catalog: Path) -> None:
+def test_catalog_list_row_title_strips_house_suffix(live_catalog: Path) -> None:
     catalog = load_catalog(Settings.load(hosted=True))
     guideline = next(g for g in catalog.guidelines if g["id"] == NNG_SEED)
     assert guideline["name"].endswith(" — NN/g")
     with _client() as client:
         html = client.get("/catalog").text
     title = _row_name_for(html, NNG_SEED)
-    assert title == guideline["name"]
-    assert title == "Visible field label — NN/g"
-    assert "— NN/g" in title
+    assert title == "Visible field label"
+    assert "—" not in title
+    assert "NN/g" not in title
+    assert 'class="row-name">Visible field label — NN/g</span>' not in html
 
 
-def test_catalog_rule_h1_strips_house_suffix(live_catalog: Path) -> None:
+def test_catalog_human_titles_strip_house_suffix(live_catalog: Path) -> None:
     catalog = load_catalog(Settings.load(hosted=True))
     guideline = next(g for g in catalog.guidelines if g["id"] == NNG_SEED)
     claim = guideline["name"]
     assert claim == "Visible field label — NN/g"
     with _client() as client:
-        html = client.get(f"/catalog/{NNG_SEED}").text
-    h1 = html.split('<h1 class="rule-name" data-field="name">', 1)[1].split("</h1>", 1)[0]
+        listed = client.get("/catalog").text
+        rule = client.get(f"/catalog/{NNG_SEED}").text
+    assert _row_name_for(listed, NNG_SEED) == "Visible field label"
+    h1 = rule.split('<h1 class="rule-name" data-field="name">', 1)[1].split("</h1>", 1)[0]
     assert h1 == "Visible field label"
     assert "—" not in h1
     assert "NN/g" not in h1
-    assert 'class="row-name">Visible field label — NN/g</span>' not in html
-    assert ">Visible field label — NN/g</span>" not in html
+    assert ">Visible field label — NN/g</span>" not in listed
+    assert ">Visible field label — NN/g</span>" not in rule
     assert re.search(
         r'<a class="tree-item tree-item--rule is-active"[^>]*>'
         r'(?:<span class="tree-pip"[^>]*></span>)?'
         r"<span>Visible field label</span></a>",
-        html,
+        rule,
     )
+    assert "NN/g — Placeholders in Form Fields Are Harmful" in rule
+    assert 'data-field="citation"' in rule
+    assert '<p class="cite-source">' in rule
 
 
 def test_catalog_rule_one_cite_row_per_citation(live_catalog: Path) -> None:

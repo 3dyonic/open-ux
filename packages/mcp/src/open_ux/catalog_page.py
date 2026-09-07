@@ -486,7 +486,7 @@ def _search_blob(row: dict[str, Any]) -> str:
 
 
 def _strip_house_suffix(name: str) -> str:
-    """Drop a trailing ` — {house}` from the rule H1 only."""
+    """Drop a trailing ` — {house}` from human-facing rule titles."""
     text = name.strip()
     for suffix in _SOURCE_SUFFIXES:
         if text.endswith(suffix):
@@ -495,8 +495,8 @@ def _strip_house_suffix(name: str) -> str:
 
 
 def _display_name(row: dict[str, Any]) -> str:
-    """Master `name` as-is (fallback title → id). Keep a trailing ` — {house}` suffix."""
-    return _raw_name(row)
+    """Human-facing title: master `name` without ` — {house}` (fallback title → id)."""
+    return _strip_house_suffix(_raw_name(row))
 
 
 def _row_container(row: dict[str, Any], tree: JobTree) -> str:
@@ -927,7 +927,7 @@ def _tree_html(
                         if active
                         else ""
                     )
-                    label = _strip_house_suffix(_display_name(row))
+                    label = _display_name(row)
                     parts.append(
                         f'<a class="{cls}" href="{_e(_href_id(gid))}">{pip}'
                         f"<span>{_e(label)}</span></a>"
@@ -974,11 +974,10 @@ def render_catalog_rule(
     tree = tree or empty_job_tree()
     index = _full_index(catalog)
     name = _display_name(found)
-    title = _strip_house_suffix(name)
     gid = str(found.get("id") or guideline_id)
     fields: list[str] = []
     fields.append(
-        f'<h1 class="rule-name" data-field="name">{_e(title)}</h1>'
+        f'<h1 class="rule-name" data-field="name">{_e(name)}</h1>'
     )
     fields.append(
         f'<p class="rule-id" data-field="id">{_e(gid)}</p>'
@@ -1015,7 +1014,7 @@ def render_catalog_rule(
     </main>
   </div>
 """
-    return _page(f"{title} · Open UX", body, _tree_script())
+    return _page(f"{name} · Open UX", body, _tree_script())
 
 
 def render_catalog_not_found(guideline_id: str) -> str:
