@@ -71,7 +71,14 @@ cd packages/mcp && python -m pytest
 
 ### Claude plugin
 
-Thin client in [`clients/claude`](clients/claude). It connects to the catalog; it does not ship a second copy of the rules.
+Pack in [`clients/claude`](clients/claude). It connects to the catalog; it does not ship a second copy of the rules. `.cursor` and `.claude` in this repo are mounts (symlinks) into that pack.
+
+```bash
+claude plugin marketplace add 3dyonic/open-ux
+claude plugin install open-ux@open-ux
+```
+
+Enable, then paste a key from [open-ux.dev/invite](https://open-ux.dev/invite).
 
 ## Agent tools
 

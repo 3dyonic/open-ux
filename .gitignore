@@ -43,8 +43,18 @@ data/
 *.sqlite-journal
 
 # Editor / agent local (never publish chats or transcripts)
-.cursor/
-.claude/
+.cursor/*
+!.cursor/skills/
+!.cursor/skills/open-ux
+!.cursor/rules/
+!.cursor/rules/open-ux.mdc
+.claude/*
+!.claude/skills/
+!.claude/skills/open-ux
+!.claude/agents/
+!.claude/agents/open-ux.md
+!.claude/commands/
+!.claude/commands/*.md
 .codex/
 agent-transcripts/
 *.jsonl

@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import importlib.util
 import io
 import json
 from email.message import Message
@@ -11,12 +10,17 @@ from urllib.error import HTTPError
 
 import pytest
 
+from open_ux import client as ux_client
+from open_ux.client import McpError, _http_post, _parse_rpc_body, _unwrap_tool_result, call_tool
+
 ROOT = Path(__file__).resolve().parents[3]
 HELPER = ROOT / "scripts" / "mcp_call.py"
 AUDIT_SCRIPT = ROOT / "scripts" / "audit.py"
 
 
 def _load(path: Path, name: str) -> ModuleType:
+    import importlib.util
+
     spec = importlib.util.spec_from_file_location(name, path)
     assert spec is not None and spec.loader is not None
     mod = importlib.util.module_from_spec(spec)
@@ -34,24 +38,24 @@ def audit_mod() -> ModuleType:
     return _load(AUDIT_SCRIPT, "open_ux_audit_helper")
 
 
-def test_hosted_http_requires_key(helper: ModuleType, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_hosted_http_requires_key(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.delenv("OPEN_UX_API_KEY", raising=False)
     monkeypatch.delenv("OPEN_UX_URL", raising=False)
     monkeypatch.setenv("OPEN_UX_TRANSPORT", "http")
-    with pytest.raises(helper.McpError, match="OPEN_UX_API_KEY"):
-        helper.call_tool("audit", {"jobs": "design_a_form"})
+    with pytest.raises(McpError, match="OPEN_UX_API_KEY"):
+        call_tool("audit", {"jobs": "design_a_form"})
 
 
-def test_http_helper_unwraps_sse_tool_result(helper: ModuleType) -> None:
+def test_http_helper_unwraps_sse_tool_result() -> None:
     sse = (
         "event: message\n"
         'data: {"jsonrpc":"2.0","id":1,"result":{"structuredContent":{"ok":true}}}\n\n'
     ).encode("utf-8")
-    msg = helper._parse_rpc_body("text/event-stream", sse)
-    assert helper._unwrap_tool_result(msg["result"]) == {"ok": True}
+    msg = _parse_rpc_body("text/event-stream", sse)
+    assert _unwrap_tool_result(msg["result"]) == {"ok": True}
 
 
-def test_http_helper_maps_401(helper: ModuleType, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_http_helper_maps_401(monkeypatch: pytest.MonkeyPatch) -> None:
     def boom(*_args: Any, **_kwargs: Any) -> Any:
         raise HTTPError(
             "https://open-ux.dev/mcp",
@@ -61,9 +65,9 @@ def test_http_helper_maps_401(helper: ModuleType, monkeypatch: pytest.MonkeyPatc
             fp=io.BytesIO(b'{"error":"no"}'),
         )
 
-    monkeypatch.setattr(helper.urllib.request, "urlopen", boom)
-    with pytest.raises(helper.McpError, match="OPEN_UX_API_KEY"):
-        helper._http_post("https://open-ux.dev/mcp", {"jsonrpc": "2.0"}, {}, None)
+    monkeypatch.setattr(ux_client.urllib.request, "urlopen", boom)
+    with pytest.raises(McpError, match="OPEN_UX_API_KEY"):
+        _http_post("https://open-ux.dev/mcp", {"jsonrpc": "2.0"}, {}, None)
 
 
 def test_mcp_call_inprocess_list_and_audit(
@@ -84,11 +88,16 @@ def test_mcp_call_inprocess_list_and_audit(
 
 def test_helper_never_imports_catalog() -> None:
     source = HELPER.read_text(encoding="utf-8")
+    client = Path(ux_client.__file__).read_text(encoding="utf-8")
     assert "catalog/rules" not in source
     assert "from open_ux.audit import" not in source
     assert "load_catalog" not in source
+    assert "sys.path.insert" not in source
     assert "tools/list" in source
     assert "tools/call" in source
+    assert "load_catalog" not in client
+    assert "from open_ux.audit import" not in client
+    assert "catalog/rules" not in client
 
 
 def test_audit_script_requires_jobs_or_ids(
@@ -132,8 +141,10 @@ def test_audit_script_prints_pack(
 
 def test_audit_script_uses_shared_helper() -> None:
     source = AUDIT_SCRIPT.read_text(encoding="utf-8")
-    assert "from open_ux.audit import audit" in source
-    assert "load_catalog" in source
+    assert "from open_ux.cli import main" in source
+    assert "load_catalog" not in source
+    assert "from open_ux.audit import" not in source
+    assert "sys.path.insert" not in source
     assert "--jobs" in source
     assert "--guideline-ids" in source
     assert "not required" in source.lower()

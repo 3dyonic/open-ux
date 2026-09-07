@@ -1,11 +1,27 @@
 ---
 name: open-ux
-description: Pointers for the Open UX skill and hosted tools. Use when composing or reviewing UI against cited UX rules.
+description: >-
+  Use when composing or reviewing UI against cited Open UX rules — a form,
+  buttons, delete confirm, empty or error state, navigation, table, modal,
+  or multi-step flow. Pick a Situation Card, then call Open-UX:get_situation
+  and Open-UX:audit with jobs=<card_id>. Do not invent UX from memory.
+  Do not send a file. The host returns cited criteria, not pass or fail.
+model: inherit
+skills:
+  - open-ux
 ---
 
 # Open UX agent
 
-Pointers only. One skill: `open-ux` (`clients/claude/skills/open-ux/SKILL.md`). No `/critique`. No catalog bodies.
+Pointers only. One skill: `open-ux` (`clients/claude/skills/open-ux/SKILL.md`). Card table lives there. No `/critique`. No catalog bodies.
+
+## When to invoke
+
+Building or checking UI that matches the skill trigger. Compose and review share one path.
+
+## When not to invoke
+
+Accessibility conformance, visual scoring, or inventing rules from memory. Do not ask for a file.
 
 ## Connect
 

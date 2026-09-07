@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 280" width="960" height="280" role="img" aria-label="Open UX offerings: compose, review, map, cite">
+  <rect width="960" height="280" fill="#F9F6F2"/>
+  <rect x="24" y="40" width="210" height="200" rx="6" fill="#FFFFFF" stroke="#1F1C1A" stroke-width="2"/>
+  <rect x="24" y="40" width="210" height="8" rx="6" fill="#FF4B00"/>
+  <text x="44" y="96" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22" fill="#1F1C1A">Compose</text>
+  <text x="44" y="136" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15" fill="#1F1C1A">Build the UI. Same</text>
+  <text x="44" y="158" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15" fill="#1F1C1A">Card. Same audit.</text>
+  <rect x="258" y="40" width="210" height="200" rx="6" fill="#FFFFFF" stroke="#1F1C1A" stroke-width="2"/>
+  <rect x="258" y="40" width="210" height="8" rx="6" fill="#FF4B00"/>
+  <text x="278" y="96" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22" fill="#1F1C1A">Review</text>
+  <text x="278" y="136" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15" fill="#1F1C1A">Check work in hand.</text>
+  <text x="278" y="158" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15" fill="#1F1C1A">jobs= still. No file.</text>
+  <rect x="492" y="40" width="210" height="200" rx="6" fill="#FFFFFF" stroke="#1F1C1A" stroke-width="2"/>
+  <rect x="492" y="40" width="210" height="8" rx="6" fill="#FF4B00"/>
+  <text x="512" y="96" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22" fill="#1F1C1A">Map</text>
+  <text x="512" y="136" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15" fill="#1F1C1A">Vague surface? Suggest</text>
+  <text x="512" y="158" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15" fill="#1F1C1A">a Card, then audit.</text>
+  <rect x="726" y="40" width="210" height="200" rx="6" fill="#FFECE0" stroke="#1F1C1A" stroke-width="2"/>
+  <rect x="726" y="40" width="210" height="8" rx="6" fill="#FF4B00"/>
+  <text x="746" y="96" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22" fill="#1F1C1A">Cite</text>
+  <text x="746" y="136" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15" fill="#1F1C1A">One guideline body</text>
+  <text x="746" y="158" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15" fill="#1F1C1A">by id. Search first.</text>
+</svg>

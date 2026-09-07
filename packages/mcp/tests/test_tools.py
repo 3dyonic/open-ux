@@ -304,7 +304,9 @@ async def test_audit_schema_shows_jobs_enum_not_target(live_catalog: Path) -> No
     async with Client(mcp) as client:
         tools = await client.list_tools()
     audit_tool = next(t for t in tools if t.name == "audit")
-    schema = audit_tool.input_schema
+    schema = getattr(audit_tool, "input_schema", None) or getattr(
+        audit_tool, "inputSchema"
+    )
     props = schema["properties"]
     assert "target" not in props
     assert "content" not in props

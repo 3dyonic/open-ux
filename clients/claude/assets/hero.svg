@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 420" width="1280" height="420" role="img" aria-label="Open UX: Card to get_situation to audit">
+  <rect width="1280" height="420" fill="#F9F6F2"/>
+  <text x="64" y="72" font-family="Georgia, 'Times New Roman', serif" font-size="36" fill="#1F1C1A">Open UX</text>
+  <text x="64" y="112" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18" fill="#1F1C1A">Cited UX rules agents audit against</text>
+  <rect x="64" y="168" width="280" height="160" rx="6" fill="#FFFFFF" stroke="#1F1C1A" stroke-width="2"/>
+  <text x="88" y="208" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#FF4B00">1 · Card</text>
+  <text x="88" y="248" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22" fill="#1F1C1A">Pick the job</text>
+  <text x="88" y="284" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#1F1C1A">Situation you are composing</text>
+  <path d="M360 248 H424" stroke="#FF4B00" stroke-width="3"/>
+  <polygon points="424,242 440,248 424,254" fill="#FF4B00"/>
+  <rect x="456" y="168" width="320" height="160" rx="6" fill="#FFFFFF" stroke="#1F1C1A" stroke-width="2"/>
+  <text x="480" y="208" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#FF4B00">2 · get_situation</text>
+  <text x="480" y="248" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22" fill="#1F1C1A">When / reject</text>
+  <text x="480" y="284" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#1F1C1A">Pointers, not rule bodies</text>
+  <path d="M792 248 H856" stroke="#FF4B00" stroke-width="3"/>
+  <polygon points="856,242 872,248 856,254" fill="#FF4B00"/>
+  <rect x="888" y="168" width="328" height="160" rx="6" fill="#FFECE0" stroke="#1F1C1A" stroke-width="2"/>
+  <text x="912" y="208" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#FF4B00">3 · audit · jobs=</text>
+  <text x="912" y="248" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22" fill="#1F1C1A">Criteria pack</text>
+  <text x="912" y="284" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#1F1C1A">Cited rules. No file. No verdict.</text>
+</svg>
