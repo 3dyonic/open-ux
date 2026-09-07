@@ -7,7 +7,7 @@ from pathlib import Path
 import pytest
 from starlette.testclient import TestClient
 
-from open_ux.auth import hash_key, register, request_invite
+from open_ux.auth import AuthError, hash_key, normalize_email, register, request_invite
 from open_ux.server import create_mcp
 from open_ux.settings import Settings
 from open_ux.store import get_store
@@ -143,6 +143,93 @@ def test_invalid_email_request_error(tmp_env: Path) -> None:
         response = client.post("/invite/request", json={"email": "not-an-email"})
         assert response.status_code == 400
         assert response.json()["error"] == "Enter a valid email to request an invite."
+
+
+@pytest.mark.parametrize(
+    "payload",
+    [
+        "<script>alert(1)</script>@x.com",
+        'ada@example.com"><img src=x onerror=alert(1)>',
+        '"ada"@example.com',
+        "ada@example.com\r\nBcc:evil@x.com",
+        "ada@example.com\x00",
+        {"$gt": ""},
+        ["ada@example.com"],
+        "a" * 300 + "@example.com",
+        "ada@exam ple.com",
+        "javascript:alert(1)@x.com",
+        "ada..tag@example.com",
+    ],
+)
+def test_normalize_email_rejects_injection(payload: object) -> None:
+    with pytest.raises(AuthError):
+        normalize_email(payload)
+
+
+def test_normalize_email_accepts_plus_and_casefold() -> None:
+    assert normalize_email("Ada+Tag@Example.com") == "ada+tag@example.com"
+
+
+def test_invite_request_rejects_script_and_object(tmp_env: Path) -> None:
+    settings = Settings.load(hosted=True)
+    store = get_store(settings)
+    with _hosted_client(tmp_env) as client:
+        scripted = client.post(
+            "/invite/request",
+            json={"email": "<script>alert(1)</script>@x.com"},
+        )
+        typed = client.post("/invite/request", json={"email": {"$gt": ""}})
+    assert scripted.status_code == 400
+    assert typed.status_code == 400
+    assert store.waitlist_count() == 0
+
+
+def test_invite_request_accepts_plus_tag(tmp_env: Path) -> None:
+    with _hosted_client(tmp_env) as client:
+        response = client.post(
+            "/invite/request", json={"email": "Ada+Tag@Example.com"}
+        )
+    assert response.status_code == 200
+    assert response.json()["email"] == "ada+tag@example.com"
+
+
+@pytest.mark.parametrize(
+    "token",
+    ["<script>", "uxmcp_notaninvite", {"x": 1}, "inv_<script>alert(1)"],
+)
+def test_redeem_rejects_bad_tokens(tmp_env: Path, token: object) -> None:
+    with _hosted_client(tmp_env) as client:
+        response = client.post("/invite/redeem", json={"token": token})
+    assert response.status_code == 400
+    assert "Invite invalid or already used" in response.json()["error"]
+
+
+def test_invite_request_rate_limited(tmp_env: Path) -> None:
+    with _hosted_client(tmp_env) as client:
+        statuses = [
+            client.post(
+                "/invite/request", json={"email": f"ada{i}@example.com"}
+            ).status_code
+            for i in range(6)
+        ]
+        assert statuses[:5] == [200, 200, 200, 200, 200]
+        assert statuses[5] == 429
+
+
+def test_invite_pages_send_security_headers(tmp_env: Path) -> None:
+    with _hosted_client(tmp_env) as client:
+        for path in ("/invite", "/invite/requested", "/invite/redeem"):
+            response = client.get(path)
+            assert response.headers["x-content-type-options"] == "nosniff"
+            assert response.headers["x-frame-options"] == "DENY"
+            assert (
+                response.headers["referrer-policy"]
+                == "strict-origin-when-cross-origin"
+            )
+            csp = response.headers["content-security-policy"]
+            assert "object-src 'none'" in csp
+            assert "form-action 'self'" in csp
+            assert "base-uri 'self'" in csp
 
 
 def test_expired_invite_cannot_redeem(tmp_env: Path) -> None:

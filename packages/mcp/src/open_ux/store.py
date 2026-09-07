@@ -275,14 +275,20 @@ class Store:
                 ),
             )
 
-    def consume_rate(self, key_hash: str) -> tuple[bool, str | None]:
+    def consume_rate(
+        self,
+        key_hash: str,
+        *,
+        per_minute: int = RATE_PER_MINUTE,
+        per_day: int = RATE_PER_DAY,
+    ) -> tuple[bool, str | None]:
         now = _utcnow()
         minute = f"min:{now.strftime('%Y-%m-%dT%H:%M')}"
         day = f"day:{now.strftime('%Y-%m-%d')}"
         with self.cursor() as cur:
             for window, limit, label in (
-                (minute, RATE_PER_MINUTE, "minute"),
-                (day, RATE_PER_DAY, "day"),
+                (minute, per_minute, "minute"),
+                (day, per_day, "day"),
             ):
                 row = cur.execute(
                     "SELECT count FROM rate_buckets WHERE key_hash = ? AND window = ?",

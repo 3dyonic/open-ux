@@ -20,7 +20,16 @@ def _utcnow() -> datetime:
 def _iso(dt: datetime) -> str:
     return dt.astimezone(timezone.utc).replace(microsecond=0).isoformat()
 
-_EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
+# ASCII addr-spec only. Rejects markup, quotes, whitespace, and control
+# octets so a waitlist email cannot carry script or header injection.
+_EMAIL_MAX_RAW = 320
+_EMAIL_MAX = 254
+_EMAIL_RE = re.compile(
+    r"^[a-z0-9](?:[a-z0-9._+-]{0,62}[a-z0-9])?"
+    r"@(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}$"
+)
+_INVITE_TOKEN_RE = re.compile(r"^inv_[A-Za-z0-9_-]{16,64}$")
+_INVITE_TOKEN_MAX_RAW = 80
 
 __all__ = [
     "AuthError",
@@ -33,6 +42,7 @@ __all__ = [
     "generate_key",
     "hash_key",
     "normalize_email",
+    "normalize_invite_token",
     "redeem_invite",
     "register",
     "request_invite",
@@ -44,11 +54,24 @@ class AuthError(ValueError):
     pass
 
 
-def normalize_email(email: str) -> str:
+def normalize_email(email: object) -> str:
+    if not isinstance(email, str) or len(email) > _EMAIL_MAX_RAW:
+        raise AuthError("A valid email is required.")
+    if any(ord(ch) < 32 or ord(ch) == 127 for ch in email):
+        raise AuthError("A valid email is required.")
     value = email.strip().lower()
-    if not _EMAIL_RE.match(value) or len(value) > 254:
+    if ".." in value or len(value) > _EMAIL_MAX or not _EMAIL_RE.fullmatch(value):
         raise AuthError("A valid email is required.")
     return value
+
+
+def normalize_invite_token(token: object) -> str:
+    if not isinstance(token, str) or len(token) > _INVITE_TOKEN_MAX_RAW:
+        raise AuthError("Invite invalid or already used. Request a new one if needed.")
+    raw = token.strip()
+    if not _INVITE_TOKEN_RE.fullmatch(raw):
+        raise AuthError("Invite invalid or already used. Request a new one if needed.")
+    return raw
 
 
 def hash_key(raw: str, pepper: str) -> str:
@@ -116,9 +139,7 @@ def redeem_invite(
 ) -> IssuedKey:
     settings = settings or Settings.load()
     store = store or get_store(settings)
-    raw = token.strip()
-    if not raw:
-        raise AuthError("Invite invalid or already used. Request a new one if needed.")
+    raw = normalize_invite_token(token)
     digest = hash_key(raw, settings.pepper)
     key_raw = generate_key()
     key_digest = hash_key(key_raw, settings.pepper)

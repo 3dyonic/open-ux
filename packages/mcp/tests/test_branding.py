@@ -162,6 +162,8 @@ def test_invite_request_page_matches_figma(tmp_env: Path) -> None:
     assert 'id="name"' not in html
     assert html.count("<input") == 1
     assert html.count('type="email"') == 1
+    assert 'maxlength="254"' in html
+    assert "spellcheck=\"false\"" in html
 
     assert "--paper: #F9F6F2" in html
     assert "--ink: #1F1B16" in html
@@ -202,6 +204,7 @@ def test_invite_redeem_page_matches_figma(tmp_env: Path) -> None:
     assert "Invite · redeem once" in html
     assert "Paste your invite token, or open the link from your email." in html
     assert '<label for="token">Invite token</label>' in html
+    assert 'maxlength="68"' in html
     assert 'placeholder="inv_••••••••••••"' in html
     assert '<button class="btn btn--primary" type="submit">Redeem</button>' in html
     assert "Redeeming burns the invite and mints your uxmcp_ key once." in html
