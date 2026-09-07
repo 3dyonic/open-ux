@@ -34,7 +34,7 @@ Choosing the Card is **not a script**. Use this table. Reject **crosses containe
 
 ## Required script: audit
 
-`/audit`, compose, and review **must** run the script. Do not improvise the wire. Do not call `Open-UX:audit` instead of the script.
+`/audit`, compose, and review **must run** the script. Do not improvise the wire. Do not call `Open-UX:audit` instead of the script.
 
 ```
 python clients/claude/skills/open-ux/scripts/audit.py --jobs <card_id>
@@ -63,13 +63,13 @@ Do not add a Python CLI per command.
 
 1. Pick the Card (table). Reject off-lane.
 2. `Open-UX:get_situation` for that Card.
-3. **Must** run `scripts/audit.py --jobs <card_id>`.
+3. **Must run** `scripts/audit.py --jobs <card_id>`.
 4. Design against the pack. Do not invent a 14th Card.
 
 ## Review
 
 1. Same Card as compose.
-2. **Must** run `scripts/audit.py --jobs <card_id>`.
+2. **Must run** `scripts/audit.py --jobs <card_id>`.
 3. Narrate against the returned criteria. No host pass or fail.
 
 ## Examples

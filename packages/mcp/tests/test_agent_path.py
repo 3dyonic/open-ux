@@ -91,14 +91,14 @@ def test_skill_routing_table_has_when_and_cross_container_reject() -> None:
     assert "design_actions_and_ctas" in body
     assert "Field labels stay `design_a_form`" in body
     assert "jobs=" in body
-    assert "must run" in body.lower()
+    assert "must run" in body.lower().replace("*", "")
     assert "scripts/audit.py" in body
     assert "not a script" in body.lower()
 
 
 def test_skill_compose_review_must_run_audit_script() -> None:
     text = SKILL.read_text(encoding="utf-8")
-    assert "must run" in text.lower()
+    assert "must run" in text.lower().replace("*", "")
     assert "scripts/audit.py" in text
     assert "`design_a_form`" in text
     assert "`protect_destructive_and_leave`" in text
