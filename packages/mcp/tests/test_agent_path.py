@@ -277,14 +277,27 @@ def test_connect_offers_hosted_or_package() -> None:
         ROOT / "AGENTS.md",
         ROOT / "CLAUDE.md",
         ROOT / "clients" / "claude" / "README.md",
+        AGENT,
     )
     for path in paths:
         text = path.read_text(encoding="utf-8")
         assert "https://open-ux.dev/mcp" in text
         assert "pip install open-ux" in text
         assert "python -m open_ux stdio" in text
+        assert "OPEN_UX_MODE=hosted python -m open_ux http" in text
         assert "uxmcp_" in text or "OPEN_UX_API_KEY" in text
         assert "package" in text.lower() or "pip install" in text.lower()
     skill = SKILL.read_text(encoding="utf-8")
     assert 'pip install -e "packages/mcp[dev]"' not in skill
     assert "clone" not in skill.lower()
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    assert "### Self-host" in readme
+    assert "pip install open-ux" in readme
+    assert "python -m open_ux validate-catalog" in readme
+    assert "python -m open_ux stdio" in readme
+    assert "OPEN_UX_MODE=hosted python -m open_ux http" in readme
+    assert "### Contribute from this repo" in readme
+    assert readme.index("### Self-host") < readme.index("### Contribute from this repo")
+    assert readme.index("pip install open-ux") < readme.index(
+        'pip install -e "packages/mcp[dev]"'
+    )

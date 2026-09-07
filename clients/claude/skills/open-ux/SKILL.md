@@ -33,7 +33,7 @@ When you need a map of what exists — by **category**, then **source** — read
 
 `pip install` the package, or hosted — same tools, same Cards.
 
-- **Package** (local): `pip install open-ux`, then `python -m open_ux stdio` (console script: `open-ux`). Same catalog. No invite. Telemetry off.
+- **Package** (local): `pip install open-ux`, then `python -m open_ux stdio` (console script: `open-ux`) or `OPEN_UX_MODE=hosted python -m open_ux http`. Same catalog. No invite. Telemetry off.
 - **Hosted** (shared live catalog): `https://open-ux.dev/mcp` + bearer `uxmcp_` (`OPEN_UX_API_KEY`). Request an invite at `/invite` (landing **Get a key**).
 
 ## Situation Cards
