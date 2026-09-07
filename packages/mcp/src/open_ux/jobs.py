@@ -157,7 +157,7 @@ class Card:
     id: str
     title: str
     container: str
-    problem: str
+    overview: str
     when: tuple[str, ...]
     reject: tuple[Reject, ...]
     hints: tuple[str, ...]
@@ -232,7 +232,7 @@ def _card(raw: Any) -> Card:
         id=str(raw["id"]),
         title=str(raw.get("title") or raw["id"]),
         container=str(raw.get("container") or ""),
-        problem=str(raw.get("problem") or ""),
+        overview=str(raw.get("overview") or ""),
         when=tuple(str(item) for item in when),
         reject=tuple(_reject(item) for item in (raw.get("reject") or [])),
         hints=tuple(str(item) for item in hints),

@@ -135,7 +135,7 @@ def _card_payload(card) -> dict[str, Any]:
         "id": card.id,
         "title": card.title,
         "container": card.container,
-        "problem": card.problem,
+        "overview": card.overview,
         "when": list(card.when),
         "reject": [{"id": item.id, "why": item.why} for item in card.reject],
         "facets": [_facet_payload(facet) for facet in card.facets],
@@ -212,7 +212,7 @@ def _score_card(card, task_text: str, task_tokens: list[str]) -> tuple[int, str]
     title_tokens = set(_tokens(f"{card.title} {card.id.replace('_', ' ')}"))
     when_tokens = set(_tokens(" ".join(card.when)))
     hint_tokens = set(_tokens(" ".join(card.hints)))
-    problem_tokens = set(_tokens(card.problem))
+    overview_tokens = set(_tokens(card.overview))
     score = 0
     hits: list[str] = []
     lowered = task_text.lower()
@@ -227,11 +227,30 @@ def _score_card(card, task_text: str, task_tokens: list[str]) -> tuple[int, str]
         elif token in when_tokens:
             score += 2
             hits.append(token)
-        elif token in hint_tokens or token in problem_tokens:
+        elif token in hint_tokens or token in overview_tokens:
             score += 1
             hits.append(token)
-    why = hits[0] if hits else card.problem
+    why = hits[0] if hits else card.overview
     return score, why
+
+
+def _caution_for(card, task_text: str, task_tokens: list[str]) -> str | None:
+    """Reject reasons become an annotation on the card, never a second list.
+
+    A card that matches this task can also carry a known-confusion note when
+    the task text also matches one of the card's own reject reasons. This
+    never removes the card from the result -- only the calling LLM decides
+    fit, using the full set plus this hint.
+    """
+    lowered = task_text.lower()
+    for item in card.reject:
+        if not item.why:
+            continue
+        if item.why.lower() in lowered or any(
+            token in task_tokens for token in _tokens(item.why)
+        ):
+            return f"commonly confused with {item.id}: {item.why}"
+    return None
 
 
 def suggest_situations(
@@ -242,39 +261,36 @@ def suggest_situations(
     tree = tree or load_job_tree()
     text = (task_text or "").strip()
     if tree.empty:
-        return {"situations": [], "rejected": None, "note": EMPTY_SITUATIONS_NOTE}
+        return {"situations": [], "note": EMPTY_SITUATIONS_NOTE}
     if not text:
-        return {"situations": [], "rejected": None, "note": NO_SUGGEST_MATCH}
+        return {"situations": [], "note": NO_SUGGEST_MATCH}
 
     task_tokens = _tokens(text)
-    ranked: list[tuple[int, str, Any, str]] = []
     hint_cards = SURFACE_HINTS.get((surface or "").strip().lower(), ())
+    ranked: list[tuple[int, str, Any, str]] = []
     for card in tree.cards:
         score, why = _score_card(card, text, task_tokens)
         if card.id in hint_cards:
             score += 2
-        if score > 0:
-            ranked.append((score, card.id, card, why))
+        ranked.append((score, card.id, card, why))
+    # hint_score only orders the response -- it never excludes a card. The
+    # calling LLM sees every Situation Card and makes the final call, so a
+    # real answer with zero shared vocabulary with the query can never be
+    # hidden by this heuristic (see OUX-21).
     ranked.sort(key=lambda row: (-row[0], CARD_IDS.index(row[1])))
-    keep = [row for row in ranked if row[0] >= 2]
-    if not keep:
-        return {"situations": [], "rejected": None, "note": NO_SUGGEST_MATCH}
 
-    winner = keep[0][2]
-    rejected = None
-    reject_ids = {item.id: item.why for item in winner.reject}
-    for _score, card_id, card, _why in keep[1:]:
-        if card_id in reject_ids:
-            rejected = {"id": card.id, "why": reject_ids[card_id]}
-            break
-    if rejected is None and winner.reject:
-        first = winner.reject[0]
-        rejected = {"id": first.id, "why": first.why}
+    situations = []
+    for score, _cid, card, why in ranked:
+        row = {
+            "id": card.id,
+            "title": card.title,
+            "overview": card.overview,
+            "why": why,
+            "hint_score": score,
+        }
+        caution = _caution_for(card, text, task_tokens)
+        if caution:
+            row["caution"] = caution
+        situations.append(row)
 
-    return {
-        "situations": [
-            {"id": card.id, "title": card.title, "why": why}
-            for _score, _cid, card, why in keep[:5]
-        ],
-        "rejected": rejected,
-    }
+    return {"situations": situations}

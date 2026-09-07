@@ -380,7 +380,9 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             str | None,
             Field(
                 description=(
-                    "Optional words to narrow within that job. Not a substitute for jobs."
+                    "Optional words to rank within that job. Not a substitute for jobs. "
+                    "Never drops rules to zero -- reorders best matches first and falls "
+                    "back to the full job set if nothing matches."
                 )
             ),
         ] = None,

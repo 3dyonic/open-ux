@@ -128,9 +128,63 @@ def test_suggest_allowlist_only_and_empty_when_no_match(live_catalog: Path) -> N
     assert "avoid_placeholder_as_label" not in ids
     assert "checkout" not in ids
     assert "forms_and_input" not in ids
-    miss = suggest_situations("qwerty zxcvbn asdfgh", tree=tree)
-    assert miss["situations"] == []
-    assert miss["note"] == NO_SUGGEST_MATCH
+    # Empty task_text is the only case with nothing to return (see
+    # test_situation_tools_on_empty_catalog for the empty-tree case).
+    empty = suggest_situations("", tree=tree)
+    assert empty["situations"] == []
+    assert empty["note"] == NO_SUGGEST_MATCH
+
+
+def test_suggest_never_hides_a_card_behind_a_score_threshold(live_catalog: Path) -> None:
+    """OUX-21: suggest_situations returns every Card, always -- no hidden gate.
+
+    A query with no shared vocabulary against any card's `when`/`overview`
+    text used to return zero results ("No Situation Card matches this
+    task"), even when a real card answers the question. The fix is to stop
+    filtering by score entirely: the LLM calling this tool sees the full
+    allowlist and picks, the heuristic only decides display order.
+    """
+    tree = _tree(live_catalog)
+    # Genuinely nonsense text still returns the complete, ordered allowlist.
+    result = suggest_situations("qwerty zxcvbn asdfgh", tree=tree)
+    ids = [row["id"] for row in result["situations"]]
+    assert set(ids) == set(CARD_IDS)
+    assert len(ids) == len(CARD_IDS)
+    for row in result["situations"]:
+        assert "overview" in row and row["overview"]
+        assert "hint_score" in row
+
+    # A real paraphrase with zero literal token overlap against the correct
+    # card's `when` list must still surface that card somewhere in the set.
+    cluttered = suggest_situations(
+        "the dashboard feels cluttered and I don't know what to look at first",
+        tree=tree,
+    )
+    cluttered_ids = [row["id"] for row in cluttered["situations"]]
+    assert set(cluttered_ids) == set(CARD_IDS)
+    assert "compose_the_layout" in cluttered_ids
+
+
+def test_suggest_reject_is_a_caution_never_a_second_list(live_catalog: Path) -> None:
+    """OUX-21, finding #2: no card id can appear accepted and rejected at once.
+
+    There is only ever one list now. A matching reject reason is folded
+    into that same card's row as `caution`, never a separate contradicting
+    field.
+    """
+    tree = _tree(live_catalog)
+    result = suggest_situations(
+        "we split checkout into 3 screens, is that ok",
+        surface="checkout",
+        tree=tree,
+    )
+    assert "rejected" not in result
+    ids = [row["id"] for row in result["situations"]]
+    assert ids[0] == "build_a_multi_step_flow"
+    cautioned = [row["id"] for row in result["situations"] if "caution" in row]
+    # A card can carry a caution note, but it is always attached to its own
+    # row inside `situations` -- never surfaced as a contradicting sibling.
+    assert set(cautioned) <= set(ids)
 
 
 def test_suggest_surface_is_bias_not_an_id(live_catalog: Path) -> None:

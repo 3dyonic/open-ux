@@ -45,6 +45,26 @@ def _matches_query(guideline: dict[str, Any], query: str | None) -> bool:
     return q in blob
 
 
+def _rerank_by_query(
+    rows: list[dict[str, Any]], query: str | None
+) -> tuple[list[dict[str, Any]], bool]:
+    """Query narrows attention, never access: rank matches first, drop nothing.
+
+    Returns the full row set (matches before non-matches) and whether at
+    least one row actually matched -- callers use that to decide whether a
+    "query too narrow" note is warranted (see OUX-21, finding #4).
+    """
+    q = (query or "").strip()
+    if not q:
+        return rows, True
+    matched = [g for g in rows if _matches_query(g, q)]
+    if not matched:
+        return rows, False
+    matched_ids = {id(g) for g in matched}
+    unmatched = [g for g in rows if id(g) not in matched_ids]
+    return matched + unmatched, True
+
+
 def _select_by_need(catalog: Catalog, jobs: str) -> list[dict[str, Any]]:
     return select_by_jobs(catalog, jobs)
 
@@ -97,16 +117,20 @@ def audit(
         found: list[dict[str, Any]] = []
         for gid in requested:
             g = get_by_id(catalog, gid)
-            if g is not None and _matches_query(g, query):
+            if g is not None:
                 found.append(g)
-        selected = found
+        rows = found
     else:
         assert job is not None
-        selected = [g for g in _select_by_need(catalog, job) if _matches_query(g, query)]
+        rows = _select_by_need(catalog, job)
+
+    selected, query_matched = _rerank_by_query(rows, query)
 
     total = len(selected)
     capped = selected[:cap]
     note = None
     if total == 0:
         note = MISS_NOTE
+    elif not query_matched:
+        note = f"query too narrow — showing all {total} guidelines for this job"
     return _payload(capped, total=total, note=note)

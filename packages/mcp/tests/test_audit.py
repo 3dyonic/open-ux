@@ -96,17 +96,53 @@ def test_leftover_target_is_ignored(live_catalog: Path) -> None:
         _assert_pack_row(row)
 
 
-def test_query_narrows_within_job(live_catalog: Path) -> None:
-    wide = audit(_catalog(live_catalog), jobs="forms", limit=50)
+def test_query_reranks_but_never_narrows_within_job(live_catalog: Path) -> None:
+    """query is a soft re-rank, never a filter (OUX-21, finding #4).
+
+    A caller who narrows with `query` must never see fewer guidelines than
+    the same `jobs` call with no query at all -- the content exists either
+    way, only the order changes. Uses a job whose full guideline set fits
+    under `limit` so the capped output is directly comparable; a job whose
+    total exceeds `limit` legitimately has a different capped *window* once
+    reranked (the match moves to the front and displaces the previous
+    boundary item), which is expected and is not what this test checks.
+    """
+    target = "actions.action_panel"
+    wide = audit(_catalog(live_catalog), jobs="design_actions_and_ctas", limit=50)
     narrow = audit(
         _catalog(live_catalog),
-        jobs="forms",
-        query="checkbox",
+        jobs="design_actions_and_ctas",
+        query="action panel",
         limit=50,
     )
-    assert narrow["total"] < wide["total"]
-    assert narrow["total"] >= 1
-    assert any(row["id"] == VISIBLE for row in narrow["guidelines"])
+    assert wide["total"] < 50  # sanity: nothing capped away in either call
+    assert narrow["total"] == wide["total"]
+    assert {row["id"] for row in narrow["guidelines"]} == {
+        row["id"] for row in wide["guidelines"]
+    }
+    ids = [row["id"] for row in narrow["guidelines"]]
+    assert target in ids
+    assert ids.index(target) == 0
+
+
+def test_query_that_matches_nothing_falls_open(live_catalog: Path) -> None:
+    """A query with zero literal matches still returns the full job set.
+
+    This is the direct fix for finding #4: narrowing a real, non-empty
+    result down to zero via a query string is never acceptable -- a caller
+    who tries to narrow with natural phrasing must never get a worse
+    result than one who omits `query` entirely.
+    """
+    wide = audit(_catalog(live_catalog), jobs="handle_form_errors")
+    narrowed = audit(
+        _catalog(live_catalog),
+        jobs="handle_form_errors",
+        query="red border no message",
+    )
+    assert wide["total"] >= 1
+    assert narrowed["total"] == wide["total"]
+    assert narrowed["count"] == wide["count"]
+    assert narrowed["note"] and "showing all" in narrowed["note"]
 
 
 def test_limit_caps_pack(live_catalog: Path) -> None:
