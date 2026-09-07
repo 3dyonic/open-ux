@@ -499,6 +499,17 @@ def _display_name(row: dict[str, Any]) -> str:
     return _strip_house_suffix(_raw_name(row))
 
 
+def _display_id(guideline_id: str) -> str:
+    """Visible id only: drop a leading `{house}.` prefix. Href keeps the master id."""
+    text = str(guideline_id or "").strip()
+    if "." not in text:
+        return text
+    lane, rest = text.split(".", 1)
+    if rest and lane in SOURCE_HOUSES:
+        return rest
+    return text
+
+
 def _row_container(row: dict[str, Any], tree: JobTree) -> str:
     raw = str(row.get("container") or "").strip()
     if raw:
@@ -653,7 +664,7 @@ def _rows_html(
             f'<a class="catalog-row" href="{_e(_href_id(gid))}" '
             f'data-id="{_e(gid)}" data-container="{_e(cid)}" '
             f'data-search="{_e(search)}"{hidden}>'
-            f'<span class="row-id">{_e(gid)}</span>'
+            f'<span class="row-id">{_e(_display_id(gid))}</span>'
             f"{path_html}"
             f'<span class="row-name">{_e(name)}</span>'
             f'<span class="row-chevron" aria-hidden="true">›</span>'
@@ -980,7 +991,7 @@ def render_catalog_rule(
         f'<h1 class="rule-name" data-field="name">{_e(name)}</h1>'
     )
     fields.append(
-        f'<p class="rule-id" data-field="id">{_e(gid)}</p>'
+        f'<p class="rule-id" data-field="id">{_e(_display_id(gid))}</p>'
     )
     if found.get("rule"):
         fields.append(

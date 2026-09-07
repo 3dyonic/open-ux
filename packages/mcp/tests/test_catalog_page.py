@@ -24,6 +24,8 @@ LIVE_SEED = (
 )
 NNG_SEED = LIVE_SEED[0]
 MULTI_CITE_ID = "forms.fields.distinguish_optional_required"
+HOUSE_ID_FLUENT = "fluent.multistep-next-not-continue"
+HOUSE_ID_ANT = "ant.checkbox-vs-switch"
 KNOWN_BODY = "Place a clear label outside the field so users always know what information belongs there."
 FIELD_ORDER = (
     "name",
@@ -316,6 +318,14 @@ def _row_container_for(html: str, guideline_id: str) -> str:
     return match.group(1)
 
 
+def _row_id_for(html: str, guideline_id: str) -> str:
+    marker = f'data-id="{guideline_id}"'
+    start = html.index(marker)
+    chunk = html[start : html.index("</a>", start)]
+    open_tag = chunk.index('class="row-id">') + len('class="row-id">')
+    return chunk[open_tag : chunk.index("</span>", open_tag)]
+
+
 def _row_name_for(html: str, guideline_id: str) -> str:
     marker = f'data-id="{guideline_id}"'
     start = html.index(marker)
@@ -361,6 +371,43 @@ def test_catalog_human_titles_strip_house_suffix(live_catalog: Path) -> None:
     assert "NN/g — Placeholders in Form Fields Are Harmful" in rule
     assert 'data-field="citation"' in rule
     assert '<p class="cite-source">' in rule
+    for name in re.findall(r'class="row-name">([^<]*)</span>', listed):
+        assert "— NN/g" not in name
+        assert "— Fluent" not in name
+    assert "— Fluent" not in _row_name_for(listed, HOUSE_ID_FLUENT)
+    assert "— NN/g" not in h1
+
+
+def test_catalog_visible_ids_strip_house_prefix(live_catalog: Path) -> None:
+    catalog = load_catalog(Settings.load(hosted=True))
+    by_id = {row["id"] for row in catalog.index}
+    assert HOUSE_ID_FLUENT in by_id
+    assert HOUSE_ID_ANT in by_id
+    with _client() as client:
+        listed = client.get("/catalog").text
+        fluent = client.get(f"/catalog/{HOUSE_ID_FLUENT}").text
+        ant = client.get(f"/catalog/{HOUSE_ID_ANT}").text
+        seed_rule = client.get(f"/catalog/{NNG_SEED}").text
+    assert _row_id_for(listed, HOUSE_ID_FLUENT) == "multistep-next-not-continue"
+    assert _row_id_for(listed, HOUSE_ID_ANT) == "checkbox-vs-switch"
+    assert 'class="row-id">fluent.multistep-next-not-continue</span>' not in listed
+    assert 'class="row-id">ant.checkbox-vs-switch</span>' not in listed
+    assert f'href="/catalog/{HOUSE_ID_FLUENT}"' in listed
+    assert f'href="/catalog/{HOUSE_ID_ANT}"' in listed
+    assert f'data-id="{HOUSE_ID_FLUENT}"' in listed
+    assert f'data-id="{HOUSE_ID_ANT}"' in listed
+    assert 'data-field="id">multistep-next-not-continue</p>' in fluent
+    assert 'data-field="id">checkbox-vs-switch</p>' in ant
+    assert f'data-field="id">{HOUSE_ID_FLUENT}</p>' not in fluent
+    assert f'data-field="id">{HOUSE_ID_ANT}</p>' not in ant
+    assert f'href="/catalog/{HOUSE_ID_FLUENT}"' in fluent
+    assert f'href="/catalog/{HOUSE_ID_ANT}"' in ant
+    fluent_h1 = fluent.split('<h1 class="rule-name" data-field="name">', 1)[1].split(
+        "</h1>", 1
+    )[0]
+    assert "— Fluent" not in fluent_h1
+    assert _row_id_for(listed, NNG_SEED) == NNG_SEED
+    assert f'data-field="id">{NNG_SEED}</p>' in seed_rule
 
 
 def test_catalog_rule_one_cite_row_per_citation(live_catalog: Path) -> None:
