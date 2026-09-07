@@ -5,3 +5,10 @@ data
 **/*.egg-info
 .pytest_cache
 .env
+.env.*
+.cursor
+.claude
+.codex
+agent-transcripts
+*.sqlite
+*.jsonl

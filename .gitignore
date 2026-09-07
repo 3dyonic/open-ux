@@ -28,11 +28,26 @@ pnpm-debug.log*
 .env
 .env.*
 !.env.example
+*.pem
+id_rsa
+id_ed25519
+.fly/
+
+# Hosted ops live in the private repo. Copy locally to deploy; do not commit.
+/fly.toml
+/railway.toml
 
 # Local hosted store
 data/
 *.sqlite
 *.sqlite-journal
+
+# Editor / agent local (never publish chats or transcripts)
+.cursor/
+.claude/
+.codex/
+agent-transcripts/
+*.jsonl
 
 # OS / editors
 .DS_Store
