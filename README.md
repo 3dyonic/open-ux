@@ -116,7 +116,7 @@ Python package: `open-ux` · npm / plugin scope: `@3dyonic/open-ux`
 |  | Hosted HTTP | Self-host (stdio) |
 | -- | -- | -- |
 | Auth | Waitlist → invite → bearer `uxmcp_` | None |
-| Rate limits | Soft per-key limits | None |
+| Rate limits | Per-key and per-IP on `/mcp` | None |
 | Telemetry | Aggregated usage (key hash, tools, rule ids) | Off |
 
 Privacy on the hosted product: [open-ux.dev/privacy](https://open-ux.dev/privacy) (Eng constraints also in [`docs/PRIVACY.md`](docs/PRIVACY.md)).
