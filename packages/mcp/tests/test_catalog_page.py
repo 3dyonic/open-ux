@@ -394,3 +394,54 @@ def test_catalog_nav_has_pip_wordmark(live_catalog: Path) -> None:
         assert '<span class="wordmark">Open UX</span>' in html
         assert '<span class="pip" aria-hidden="true"></span>' in html
 
+
+def test_catalog_type_scale_matches_figma(live_catalog: Path) -> None:
+    with _client() as client:
+        listed = client.get("/catalog").text
+        rule = client.get(f"/catalog/{NNG_SEED}").text
+    assert re.search(r"h1 \{[^}]*font-size: 36px", listed, re.S)
+    assert re.search(r"\.row-id \{[^}]*font-size: 12px", listed, re.S)
+    assert re.search(r"\.row-dot, \.row-path \{[^}]*font-size: 12px", listed, re.S)
+    assert re.search(r"\.row-name \{[^}]*font-size: 13px", listed, re.S)
+    assert re.search(r"\.chip \{[^}]*font-size: 13px", listed, re.S)
+    assert not re.search(r"\.catalog-row \{[^}]*font-size: 12px", listed, re.S)
+    assert re.search(r"\.tree-item \{[^}]*font-size: 12px", rule, re.S)
+    assert re.search(r"\.tree-item--rule \{[^}]*font-size: 13px", rule, re.S)
+    assert re.search(r"\.rule-id \{[^}]*font-size: 12px", rule, re.S)
+
+
+def test_catalog_tree_carets_toggle_and_rules_link(live_catalog: Path) -> None:
+    catalog = load_catalog(Settings.load(hosted=True))
+    other = next(
+        g
+        for g in catalog.guidelines
+        if g.get("container") and g["container"] != "forms_and_input"
+    )
+    with _client() as client:
+        html = client.get(f"/catalog/{NNG_SEED}").text
+    assert 'id="catalog-tree"' in html
+    assert 'aria-expanded="true"' in html
+    assert 'aria-expanded="false"' in html
+    assert 'class="tree-group is-open"' in html
+    assert 'tree-item tree-item--container"' in html
+    assert 'tree-item tree-item--card"' in html
+    assert 'tree-item tree-item--facet"' in html
+    assert html.count('class="tree-caret"') >= 3
+    assert '<div class="tree-item tree-item--rule' not in html
+    rule_links = re.findall(
+        r'<a class="tree-item tree-item--rule[^"]*" href="/catalog/[^"]+"',
+        html,
+    )
+    assert len(rule_links) == len(catalog.index)
+    assert f'href="/catalog/{NNG_SEED}"' in html
+    assert f'href="/catalog/{other["id"]}"' in html
+    assert (
+        f'<a class="tree-item tree-item--rule is-active" href="/catalog/{NNG_SEED}">'
+        in html
+    )
+    assert 'closest("button.tree-item[aria-expanded]")' in html
+    assert 'classList.toggle("is-open"' in html
+    assert 'caret.textContent = next ? "▾" : "▸"' in html
+    _public_page_guards(html)
+
+

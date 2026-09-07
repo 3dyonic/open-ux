@@ -270,6 +270,13 @@ _CSS = """
       flex-direction: column;
       gap: 2px;
     }
+    .tree-group, .tree-children {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      width: 100%;
+    }
+    .tree-group:not(.is-open) > .tree-children { display: none; }
     .tree-item {
       display: flex;
       align-items: center;
@@ -277,12 +284,18 @@ _CSS = """
       min-height: 28px;
       padding: 6px 8px;
       border-radius: var(--radius);
+      font-family: inherit;
       font-size: 12px;
       color: var(--ink);
+      background: none;
+      border: none;
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
     }
     .tree-item--card { padding-left: 20px; }
     .tree-item--facet { padding-left: 32px; color: var(--muted); font-weight: 500; }
-    .tree-item--rule { padding-left: 44px; font-size: 13px; }
+    .tree-item--rule { padding-left: 44px; font-size: 13px; cursor: pointer; }
     .tree-item--container { font-weight: 600; }
     .tree-item.is-active {
       background: var(--pip-soft);
@@ -756,6 +769,37 @@ def _citations_html(guideline: dict[str, Any]) -> str:
     )
 
 
+def _tree_toggle(kind: str, title: str, open_: bool) -> str:
+    caret = "▾" if open_ else "▸"
+    expanded = "true" if open_ else "false"
+    open_cls = " is-open" if open_ else ""
+    return (
+        f'<div class="tree-group{open_cls}">'
+        f'<button type="button" class="tree-item tree-item--{kind}" '
+        f'aria-expanded="{expanded}">'
+        f'<span class="tree-caret" aria-hidden="true">{caret}</span>'
+        f"<span>{_e(title)}</span></button>"
+        f'<div class="tree-children">'
+    )
+
+
+def _tree_script() -> str:
+    return r"""
+    const tree = document.getElementById("catalog-tree");
+    if (tree) tree.addEventListener("click", (event) => {
+      const btn = event.target.closest("button.tree-item[aria-expanded]");
+      if (!btn || !tree.contains(btn)) return;
+      const group = btn.parentElement;
+      if (!group || !group.classList.contains("tree-group")) return;
+      const next = btn.getAttribute("aria-expanded") !== "true";
+      btn.setAttribute("aria-expanded", next ? "true" : "false");
+      group.classList.toggle("is-open", next);
+      const caret = btn.querySelector(".tree-caret");
+      if (caret) caret.textContent = next ? "▾" : "▸";
+    });
+"""
+
+
 def _tree_html(
     tree: JobTree,
     index: list[dict[str, Any]],
@@ -777,54 +821,37 @@ def _tree_html(
         )
         by_facet.setdefault(key, []).append(row)
 
-    parts = ['<nav class="sidebar" aria-label="Catalog tree">']
+    parts = ['<nav class="sidebar" id="catalog-tree" aria-label="Catalog tree">']
     for container in tree.containers:
         open_c = container.id == current_container
-        caret = "▾" if open_c else "▸"
-        parts.append(
-            f'<div class="tree-item tree-item--container">'
-            f'<span class="tree-caret">{caret}</span>'
-            f"<span>{_e(container.title)}</span></div>"
-        )
-        if not open_c:
-            continue
+        parts.append(_tree_toggle("container", container.title, open_c))
         for card in tree.cards:
             if card.container != container.id:
                 continue
-            open_card = card.id == current_card
-            caret = "▾" if open_card else "▸"
-            parts.append(
-                f'<div class="tree-item tree-item--card">'
-                f'<span class="tree-caret">{caret}</span>'
-                f"<span>{_e(card.title)}</span></div>"
-            )
-            if not open_card:
-                continue
+            open_card = open_c and card.id == current_card
+            parts.append(_tree_toggle("card", card.title, open_card))
             for facet in card.facets:
-                open_f = facet.id == current_facet
-                caret = "▾" if open_f else "▸"
-                parts.append(
-                    f'<div class="tree-item tree-item--facet">'
-                    f'<span class="tree-caret">{caret}</span>'
-                    f"<span>{_e(facet.title)}</span></div>"
-                )
-                if not open_f:
-                    continue
+                open_f = open_card and facet.id == current_facet
+                parts.append(_tree_toggle("facet", facet.title, open_f))
                 for row in by_facet.get((container.id, card.id, facet.id), []):
                     gid = str(row.get("id") or "")
+                    if not gid:
+                        continue
                     active = gid == current_id
                     cls = "tree-item tree-item--rule" + (" is-active" if active else "")
-                    pip = '<span class="tree-pip" aria-hidden="true"></span>' if active else ""
+                    pip = (
+                        '<span class="tree-pip" aria-hidden="true"></span>'
+                        if active
+                        else ""
+                    )
                     label = _display_name(row)
-                    if active:
-                        parts.append(
-                            f'<div class="{cls}">{pip}<span>{_e(label)}</span></div>'
-                        )
-                    else:
-                        parts.append(
-                            f'<a class="{cls}" href="{_e(_href_id(gid))}">{pip}'
-                            f"<span>{_e(label)}</span></a>"
-                        )
+                    parts.append(
+                        f'<a class="{cls}" href="{_e(_href_id(gid))}">{pip}'
+                        f"<span>{_e(label)}</span></a>"
+                    )
+                parts.append("</div></div>")
+            parts.append("</div></div>")
+        parts.append("</div></div>")
     parts.append("</nav>")
     return "".join(parts)
 
@@ -906,7 +933,7 @@ def render_catalog_rule(
     </main>
   </div>
 """
-    return _page(f"{name} · Open UX", body)
+    return _page(f"{name} · Open UX", body, _tree_script())
 
 
 def render_catalog_not_found(guideline_id: str) -> str:
