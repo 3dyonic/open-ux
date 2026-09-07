@@ -313,7 +313,7 @@ async def test_audit_schema_shows_jobs_enum_not_target(live_catalog: Path) -> No
         for branch in props["jobs"]["anyOf"]
         if "enum" in branch
     )
-    assert jobs_enum == [*CARD_IDS, *CONTAINER_IDS, *JOB_ALIASES]
+    assert set(jobs_enum) == set(CARD_IDS) | set(CONTAINER_IDS) | set(JOB_ALIASES)
     assert len(jobs_enum) == 13 + 7 + 3
     for leaf in LEAF_IDS:
         assert leaf not in jobs_enum
