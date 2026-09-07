@@ -2,4 +2,4 @@
 description: List Open UX Situation Cards or a paged guideline index.
 ---
 
-`Open-UX:list_situations` (optional container) or `Open-UX:list_guidelines`. Example: `/list forms` → Cards in the forms container. Then `/audit` a Card for the pack. Do not send a file.
+**Not a script.** Call `Open-UX:list_situations`, `Open-UX:list_guidelines`, or `Open-UX:list_inspirations`. Example: `/list forms`. Do not send a file.
