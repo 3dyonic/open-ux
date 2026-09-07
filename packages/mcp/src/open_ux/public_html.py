@@ -1,7 +1,9 @@
-"""Shared public HTML head, robots, sitemap, and favicon helpers."""
+"""Shared public HTML head, robots, sitemap, favicon, and consent/GTM helpers."""
 
 from __future__ import annotations
 
+import os
+import re
 from html import escape
 from pathlib import Path
 from typing import Any
@@ -41,6 +43,72 @@ MARK_CSS = """
       font-size: 16px;
       font-weight: 600;
       color: var(--ink);
+    }
+"""
+DEFAULT_GTM_ID = "GTM-N3BL3G9K"
+CONSENT_COOKIE = "open_ux_gtm_consent"
+CONSENT_GRANTED = "granted"
+CONSENT_DENIED = "denied"
+CONSENT_BANNER_COPY = (
+    "We use cookies for analytics (Google Tag Manager / Google Analytics) "
+    "to understand how the site is used."
+)
+PRIVACY_TITLE = "Privacy — Open UX"
+PRIVACY_DESCRIPTION = (
+    "How Open UX handles keys, telemetry, and analytics cookies."
+)
+_GTM_ID_RE = re.compile(r"^GTM-[A-Z0-9]+$")
+CONSENT_CSS = """
+    .consent {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 40;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px 48px;
+      background: var(--card, #ffffff);
+      border-top: 1px solid var(--line, #DED4C8);
+      color: var(--ink, #1F1B16);
+      font-size: 14px;
+      line-height: 20px;
+    }
+    .consent[hidden] { display: none; }
+    .consent-copy { margin: 0; flex: 1 1 280px; }
+    .consent-copy a {
+      color: var(--pip, #FF4B00);
+      text-decoration: underline;
+    }
+    .consent-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .consent-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 14px;
+      border-radius: var(--radius, 6px);
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: normal;
+      cursor: pointer;
+    }
+    .consent-btn--accept {
+      background: var(--pip, #FF4B00);
+      color: #fff;
+      border: none;
+    }
+    .consent-btn--decline {
+      background: transparent;
+      color: var(--ink, #1F1B16);
+      border: 1px solid var(--ink, #1F1B16);
     }
 """
 ROBOTS_TXT = """User-agent: *
@@ -110,6 +178,280 @@ def head_meta(*, title: str, description: str, path: str) -> str:
         f'  <meta name="twitter:title" content="{title_e}">\n'
         f'  <meta name="twitter:description" content="{desc_e}">\n'
         f'  <link rel="icon" href="{FAVICON_HREF}" type="image/svg+xml">'
+    )
+
+
+def gtm_container_id() -> str:
+    raw = os.environ.get("OPEN_UX_GTM_ID", "").strip()
+    if raw and _GTM_ID_RE.fullmatch(raw):
+        return raw
+    return DEFAULT_GTM_ID
+
+
+def consent_state(value: str | None) -> str:
+    raw = (value or "").strip()
+    if raw in {CONSENT_GRANTED, CONSENT_DENIED}:
+        return raw
+    return ""
+
+
+def consent_granted(value: str | None) -> bool:
+    return consent_state(value) == CONSENT_GRANTED
+
+
+def gtm_head_html(container_id: str | None = None) -> str:
+    cid = escape(container_id or gtm_container_id(), quote=True)
+    return (
+        "  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':\n"
+        "new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],\n"
+        "j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=\n"
+        "'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);\n"
+        f"}})(window,document,'script','dataLayer','{cid}');</script>\n"
+    )
+
+
+def gtm_noscript_html(container_id: str | None = None) -> str:
+    cid = escape(container_id or gtm_container_id(), quote=True)
+    return (
+        '  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id='
+        f'{cid}" height="0" width="0" style="display:none;visibility:hidden">'
+        "</iframe></noscript>\n"
+    )
+
+
+def public_gtm_head(consent: str | None) -> str:
+    if not consent_granted(consent):
+        return ""
+    return gtm_head_html()
+
+
+def public_gtm_noscript(consent: str | None) -> str:
+    if not consent_granted(consent):
+        return ""
+    return gtm_noscript_html()
+
+
+def consent_banner_html(*, hidden: bool = False) -> str:
+    hidden_attr = " hidden" if hidden else ""
+    return (
+        f'  <div class="consent" id="consent-banner"{hidden_attr}>\n'
+        f'    <p class="consent-copy">{escape(CONSENT_BANNER_COPY)} '
+        f'<a href="/privacy">Privacy</a></p>\n'
+        '    <div class="consent-actions">\n'
+        '      <button type="button" class="consent-btn consent-btn--accept" '
+        'id="consent-accept">Accept</button>\n'
+        '      <button type="button" class="consent-btn consent-btn--decline" '
+        'id="consent-decline">Decline</button>\n'
+        "    </div>\n"
+        "  </div>\n"
+    )
+
+
+def consent_script_html() -> str:
+    key = CONSENT_COOKIE
+    granted = CONSENT_GRANTED
+    denied = CONSENT_DENIED
+    return f"""  <script>
+    (function () {{
+      var KEY = "{key}";
+      var banner = document.getElementById("consent-banner");
+      function readFlag() {{
+        try {{
+          var ls = localStorage.getItem(KEY);
+          if (ls === "{granted}" || ls === "{denied}") return ls;
+        }} catch (e) {{}}
+        var m = document.cookie.match(new RegExp("(?:^|; )" + KEY + "=([^;]*)"));
+        return m ? decodeURIComponent(m[1]) : "";
+      }}
+      function writeFlag(value) {{
+        document.cookie = KEY + "=" + value + "; path=/; SameSite=Lax";
+        try {{ localStorage.setItem(KEY, value); }} catch (e) {{}}
+      }}
+      var flag = readFlag();
+      if (flag === "{granted}" || flag === "{denied}") {{
+        if (banner) banner.hidden = true;
+        return;
+      }}
+      if (banner) banner.hidden = false;
+      var accept = document.getElementById("consent-accept");
+      var decline = document.getElementById("consent-decline");
+      if (accept) accept.addEventListener("click", function () {{
+        writeFlag("{granted}");
+        location.reload();
+      }});
+      if (decline) decline.addEventListener("click", function () {{
+        writeFlag("{denied}");
+        if (banner) banner.hidden = true;
+      }});
+    }})();
+  </script>
+"""
+
+
+def public_consent_footer(consent: str | None = None) -> str:
+    decided = bool(consent_state(consent))
+    return consent_banner_html(hidden=decided) + consent_script_html()
+
+
+def privacy_markdown_path() -> Path:
+    here = Path(__file__).resolve()
+    for candidate in here.parents:
+        path = candidate / "docs" / "PRIVACY.md"
+        if path.is_file():
+            return path
+    return Path.cwd() / "docs" / "PRIVACY.md"
+
+
+def _inline_md(text: str) -> str:
+    escaped = escape(text)
+    escaped = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", escaped)
+    escaped = re.sub(r"`([^`]+)`", r"<code>\1</code>", escaped)
+    return escaped
+
+
+def privacy_body_html(markdown: str) -> str:
+    parts: list[str] = []
+    in_list = False
+    for raw in markdown.replace("\r\n", "\n").split("\n"):
+        line = raw.rstrip()
+        if line.startswith("# "):
+            if in_list:
+                parts.append("</ul>")
+                in_list = False
+            parts.append(f"<h1>{_inline_md(line[2:])}</h1>")
+        elif line.startswith("## "):
+            if in_list:
+                parts.append("</ul>")
+                in_list = False
+            parts.append(f"<h2>{_inline_md(line[3:])}</h2>")
+        elif line.startswith("- "):
+            if not in_list:
+                parts.append("<ul>")
+                in_list = True
+            parts.append(f"<li>{_inline_md(line[2:])}</li>")
+        elif line.strip() == "":
+            if in_list:
+                parts.append("</ul>")
+                in_list = False
+        else:
+            if in_list:
+                parts.append("</ul>")
+                in_list = False
+            parts.append(f"<p>{_inline_md(line)}</p>")
+    if in_list:
+        parts.append("</ul>")
+    return "".join(parts)
+
+
+def render_privacy_page() -> str:
+    markdown = privacy_markdown_path().read_text(encoding="utf-8")
+    body = privacy_body_html(markdown)
+    return (
+        """<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+"""
+        + head_meta(title=PRIVACY_TITLE, description=PRIVACY_DESCRIPTION, path="/privacy")
+        + """
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #F9F6F2;
+      --card: #ffffff;
+      --ink: #1F1B16;
+      --muted: #6A6056;
+      --line: #DED4C8;
+      --pip: #FF4B00;
+      --radius: 6px;
+      --sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+      --mono: "IBM Plex Mono", ui-monospace, monospace;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      line-height: 1.5;
+      color: var(--ink);
+      background: var(--paper);
+    }
+    a { color: inherit; text-decoration: none; }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 16px 48px;
+      background: var(--card);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .nav-link {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+    }
+    .main {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      width: 100%;
+      max-width: 720px;
+      padding: 40px 48px 48px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+    p, li {
+      margin: 0;
+      font-size: 15px;
+      line-height: 22px;
+      color: var(--ink);
+    }
+    ul {
+      margin: 0;
+      padding-left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    code {
+      font-family: var(--mono);
+      font-size: 13px;
+    }
+"""
+        + MARK_CSS
+        + """
+  </style>
+</head>
+<body>
+  <header class="nav">
+    """
+        + NAV_BRAND_HTML
+        + """
+    <div class="nav-actions">
+      <a class="nav-link" href="/catalog">Catalog</a>
+      <a class="nav-link" href="/">Home</a>
+    </div>
+  </header>
+  <main class="main">
+"""
+        + body
+        + """
+  </main>
+</body>
+</html>
+"""
     )
 
 

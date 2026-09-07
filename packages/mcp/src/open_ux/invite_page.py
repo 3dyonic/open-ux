@@ -6,7 +6,15 @@ Request is email-only — do not add Full name. Admin is CLI-only — not in thi
 
 from __future__ import annotations
 
-from open_ux.public_html import FAVICON_HREF, MARK_CSS, NAV_BRAND_HTML
+from open_ux.public_html import (
+    CONSENT_CSS,
+    FAVICON_HREF,
+    MARK_CSS,
+    NAV_BRAND_HTML,
+    public_consent_footer,
+    public_gtm_head,
+    public_gtm_noscript,
+)
 
 _CSS = """
     :root {
@@ -251,7 +259,16 @@ _NAV = f"""
 """
 
 
-def _page(main: str, script: str) -> str:
+def _page(
+    main: str,
+    script: str,
+    *,
+    consent_gate: bool = False,
+    consent: str | None = None,
+) -> str:
+    head_gtm = public_gtm_head(consent) if consent_gate else ""
+    body_gtm = public_gtm_noscript(consent) if consent_gate else ""
+    footer = public_consent_footer(consent) if consent_gate else ""
     return (
         """<!DOCTYPE html>
 <html lang="en">
@@ -260,6 +277,7 @@ def _page(main: str, script: str) -> str:
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Open UX</title>
 """
+        + head_gtm
         + f'  <link rel="icon" href="{FAVICON_HREF}" type="image/svg+xml">\n'
         + """  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -267,11 +285,13 @@ def _page(main: str, script: str) -> str:
   <style>
 """
         + _CSS
+        + (CONSENT_CSS if consent_gate else "")
         + """
   </style>
 </head>
 <body>
 """
+        + body_gtm
         + _NAV
         + """
   <main class="main">
@@ -284,13 +304,17 @@ def _page(main: str, script: str) -> str:
         + script
         + """
   </script>
+"""
+        + footer
+        + """
 </body>
 </html>
 """
     )
 
 
-REQUEST_HTML = _page(
+def render_invite_request(*, consent: str | None = None) -> str:
+    return _page(
     """
     <div class="card" id="request-card">
       <p class="meta"><span class="pip" aria-hidden="true"></span>Invite · waitlist, one key after approve</p>
@@ -363,7 +387,12 @@ REQUEST_HTML = _page(
       window.location.href = "/invite/requested";
     });
 """,
-)
+        consent_gate=True,
+        consent=consent,
+    )
+
+
+REQUEST_HTML = render_invite_request()
 
 REQUESTED_HTML = _page(
     """

@@ -10,10 +10,14 @@ from open_ux.catalog import SOURCE_HOUSES, Catalog, citations, get_by_id, list_i
 from open_ux.jobs import JobTree, card_by_id, empty_job_tree
 from open_ux.public_html import (
     CATALOG_TITLE,
+    CONSENT_CSS,
     LANDING_DESCRIPTION,
     MARK_CSS,
     NAV_BRAND_HTML,
     head_meta,
+    public_consent_footer,
+    public_gtm_head,
+    public_gtm_noscript,
     rule_meta_description,
     rule_meta_title,
 )
@@ -416,7 +420,7 @@ _CSS = """
       font-size: 16px;
       color: var(--muted);
     }
-""" + MARK_CSS
+""" + MARK_CSS + CONSENT_CSS
 
 
 def _e(value: Any) -> str:
@@ -537,6 +541,7 @@ def _page(
     *,
     description: str = LANDING_DESCRIPTION,
     path: str = "/catalog",
+    consent: str | None = None,
 ) -> str:
     return (
         """<!DOCTYPE html>
@@ -545,6 +550,7 @@ def _page(
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 """
+        + public_gtm_head(consent)
         + head_meta(title=title, description=description, path=path)
         + """
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -558,6 +564,7 @@ def _page(
 </head>
 <body>
 """
+        + public_gtm_noscript(consent)
         + _nav()
         + body
         + (
@@ -571,6 +578,7 @@ def _page(
             if script
             else ""
         )
+        + public_consent_footer(consent)
         + """
 </body>
 </html>
@@ -680,6 +688,7 @@ def render_catalog_list(
     container: str = "",
     query: str = "",
     page: int = 1,
+    consent: str | None = None,
 ) -> str:
     tree = tree or empty_job_tree()
     rows = _full_index(catalog)
@@ -791,7 +800,14 @@ def render_catalog_list(
     if (prev) prev.addEventListener("click", () => {{ page -= 1; apply(); }});
     if (next) next.addEventListener("click", () => {{ page += 1; apply(); }});
 """
-    return _page(CATALOG_TITLE, body, script, description=LANDING_DESCRIPTION, path="/catalog")
+    return _page(
+        CATALOG_TITLE,
+        body,
+        script,
+        description=LANDING_DESCRIPTION,
+        path="/catalog",
+        consent=consent,
+    )
 
 
 def _lines(value: Any) -> list[str]:
@@ -976,6 +992,8 @@ def render_catalog_rule(
     catalog: Catalog,
     guideline_id: str,
     tree: JobTree | None = None,
+    *,
+    consent: str | None = None,
 ) -> str | None:
     found = get_by_id(catalog, guideline_id)
     if found is None:
@@ -1029,10 +1047,11 @@ def render_catalog_rule(
         _tree_script(),
         description=rule_meta_description(found),
         path=f"/catalog/{gid}",
+        consent=consent,
     )
 
 
-def render_catalog_not_found(guideline_id: str) -> str:
+def render_catalog_not_found(guideline_id: str, *, consent: str | None = None) -> str:
     body = f"""
   <main class="main">
     <a class="back" href="/catalog">← Back to Catalog</a>
@@ -1045,4 +1064,5 @@ def render_catalog_not_found(guideline_id: str) -> str:
         body,
         description=LANDING_DESCRIPTION,
         path=f"/catalog/{guideline_id}",
+        consent=consent,
     )

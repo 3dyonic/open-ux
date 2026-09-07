@@ -3,22 +3,29 @@
 from __future__ import annotations
 
 from open_ux.public_html import (
+    CONSENT_CSS,
     LANDING_DESCRIPTION,
     LANDING_TITLE,
     MARK_CSS,
     NAV_BRAND_HTML,
     head_meta,
+    public_consent_footer,
+    public_gtm_head,
+    public_gtm_noscript,
 )
 
-LANDING_HTML = (
-    """<!DOCTYPE html>
+
+def render_landing(*, consent: str | None = None) -> str:
+    return (
+        """<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 """
-    + head_meta(title=LANDING_TITLE, description=LANDING_DESCRIPTION, path="/")
-    + """
+        + public_gtm_head(consent)
+        + head_meta(title=LANDING_TITLE, description=LANDING_DESCRIPTION, path="/")
+        + """
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -414,15 +421,19 @@ LANDING_HTML = (
       font-size: 11px;
     }
 """
-    + MARK_CSS
-    + """
+        + MARK_CSS
+        + CONSENT_CSS
+        + """
   </style>
 </head>
 <body>
+"""
+        + public_gtm_noscript(consent)
+        + """
   <header class="nav">
     """
-    + NAV_BRAND_HTML
-    + """
+        + NAV_BRAND_HTML
+        + """
     <div class="nav-actions">
       <a class="nav-catalog" href="/catalog">Catalog</a>
       <a class="nav-github" href="https://github.com/3dyonic/open-ux">GitHub</a>
@@ -513,7 +524,13 @@ LANDING_HTML = (
   <script>
     if (location.hash === '#register') location.replace('/invite');
   </script>
+"""
+        + public_consent_footer(consent)
+        + """
 </body>
 </html>
 """
-)
+    )
+
+
+LANDING_HTML = render_landing()
