@@ -14,6 +14,7 @@ from open_ux.public_html import (
     LANDING_DESCRIPTION,
     MARK_CSS,
     NAV_BRAND_HTML,
+    NAV_GITHUB_HTML,
     OSS_FOOTER_CSS,
     head_meta,
     public_consent_footer,
@@ -43,8 +44,6 @@ CONTAINER_CHIPS: tuple[tuple[str, str], ...] = (
 
 PAGE_SIZE = 25
 _CHIP_IDS = frozenset(cid for cid, _label in CONTAINER_CHIPS)
-
-GITHUB = "https://github.com/3dyonic/open-ux"
 
 _CSS = """
     :root {
@@ -529,7 +528,7 @@ def _nav() -> str:
     {NAV_BRAND_HTML}
     <div class="nav-actions">
       <a class="nav-catalog" href="/catalog">Catalog</a>
-      <a class="nav-link" href="{GITHUB}">GitHub</a>
+      {NAV_GITHUB_HTML}
       <a class="btn btn--primary" href="/invite">Get a key</a>
     </div>
   </header>

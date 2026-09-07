@@ -25,6 +25,19 @@ NAV_BRAND_HTML = (
     f'<img class="mark" src="{FAVICON_HREF}" width="20" height="20" alt="">'
     '<span class="wordmark">Open UX</span></a>'
 )
+NAV_GITHUB_HTML = (
+    '<a class="nav-github" href="https://github.com/3dyonic/open-ux" aria-label="GitHub">'
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" '
+    'fill="currentColor" aria-hidden="true">'
+    '<path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 '
+    '0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 '
+    '0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27'
+    '-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 '
+    '1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66'
+    '-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 '
+    '0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/>'
+    "</svg></a>"
+)
 MARK_CSS = """
     .nav-brand {
       display: flex;
@@ -44,8 +57,28 @@ MARK_CSS = """
       font-weight: 600;
       color: var(--ink);
     }
+    .nav-github {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      width: 24px;
+      height: 24px;
+      padding: 4px;
+      color: var(--muted);
+      text-decoration: none;
+    }
+    .nav-github svg {
+      display: block;
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+    .nav-github:hover,
+    .nav-github:focus {
+      color: var(--ink);
+    }
 """
-GITHUB_REPO_HREF = "https://github.com/3dyonic/open-ux"
 DEFAULT_GTM_ID = "GTM-N3BL3G9K"
 CONSENT_COOKIE = "open_ux_gtm_consent"
 CONSENT_GRANTED = "granted"
@@ -171,7 +204,7 @@ OSS_FOOTER_CSS = """
       justify-content: space-between;
       gap: 8px;
       width: 100%;
-      padding: 16px 48px;
+      padding: 16px 48px 24px;
       border-top: 1px solid var(--line, #DED4C8);
       background: var(--paper, #F9F6F2);
       font-size: 14px;
@@ -180,8 +213,12 @@ OSS_FOOTER_CSS = """
     }
     .footer p { margin: 0; }
     .footer a {
-      color: var(--ink, #1F1B16);
+      color: var(--muted, #6A6056);
       text-decoration: underline;
+    }
+    .footer a:hover,
+    .footer a:focus {
+      color: var(--ink, #1F1B16);
     }
 """
 ROBOTS_TXT = """User-agent: *
@@ -370,7 +407,7 @@ def public_oss_footer() -> str:
     return (
         '  <footer class="footer">\n'
         "    <p>Open UX · cited UX rules agents audit against</p>\n"
-        f'    <p><a href="{GITHUB_REPO_HREF}">GitHub</a></p>\n'
+        '    <p><a href="/privacy">Privacy</a></p>\n'
         "  </footer>\n"
     )
 
@@ -531,7 +568,9 @@ def render_privacy_page(*, consent: str | None = None) -> str:
         + """
     <div class="nav-actions">
       <a class="nav-catalog" href="/catalog">Catalog</a>
-      <a class="nav-github" href="https://github.com/3dyonic/open-ux">GitHub</a>
+      """
+        + NAV_GITHUB_HTML
+        + """
       <a class="btn btn--primary btn--nav" href="/invite">Get a key</a>
     </div>
   </header>

@@ -169,6 +169,7 @@ def test_landing_community_strip_and_hero_catalog(tmp_env: Path) -> None:
 def test_public_pages_have_oss_footer_strip(live_catalog: Path) -> None:
     strip = "Open UX · cited UX rules agents audit against"
     github = 'href="https://github.com/3dyonic/open-ux"'
+    mit = "Open UX is open source"
     public_paths = ("/", "/catalog", f"/catalog/{ANT_SEED}", "/invite", "/privacy")
     never_paths = (
         "/mcp",
@@ -180,20 +181,39 @@ def test_public_pages_have_oss_footer_strip(live_catalog: Path) -> None:
     )
     with _client() as client:
         landing = client.get("/").text
-        assert ">Join the community</h2>" in landing
+        community = landing.split('class="cta-band"', 1)[1].split('class="footer"', 1)[0]
+        footer = landing.split('class="footer"', 1)[1].split("</footer>", 1)[0]
+        assert ">Join the community</h2>" in community
+        assert "View repo →" in community
+        assert 'class="oss-link"' in community
+        assert "Browse catalog" not in community
+        assert strip in footer
+        assert '<a href="/privacy">Privacy</a>' in footer
+        assert github not in footer
+        assert "GitHub" not in footer
+        assert mit not in footer
+        assert "View repo →" not in footer
         for path in public_paths:
             html = client.get(path).text
-            assert strip in html, path
-            assert github in html, path
-            assert ">GitHub</a>" in html, path
-            assert "Open UX is open source" not in html, path
+            page_footer = html.split('class="footer"', 1)[1].split("</footer>", 1)[0]
+            assert strip in page_footer, path
+            assert '<a href="/privacy">Privacy</a>' in page_footer, path
+            assert github not in page_footer, path
+            assert "GitHub" not in page_footer, path
+            assert mit not in page_footer, path
+            assert ">MIT</a>" not in page_footer, path
+            assert 'aria-label="GitHub"' in html, path
+            assert 'class="nav-github"' in html, path
+            assert 'viewBox="0 0 16 16"' in html, path
+            assert 'fill="currentColor"' in html, path
+            assert ">GitHub</a>" not in html, path
             if path != "/":
                 assert ">Join the community</h2>" not in html, path
                 assert "View repo →" not in html, path
         for path in never_paths:
             html = client.get(path).text
             assert strip not in html, path
-            assert "Open UX is open source" not in html, path
+            assert mit not in html, path
         admin = client.get(
             "/admin/invite/waitlist",
             headers={"Authorization": "Bearer test-admin-token"},

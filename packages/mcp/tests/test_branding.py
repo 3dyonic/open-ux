@@ -72,10 +72,26 @@ def test_landing_has_figma_sections_and_register_cta(tmp_env: Path) -> None:
     assert "Browse catalog" not in community
     assert "Open catalog" not in community
     assert ">Get a key</a>" not in community
-    assert "Open UX · cited UX rules agents audit against" in html
-    assert "Open UX is open source" not in html
+    footer = html.split('class="footer"', 1)[1].split("</footer>", 1)[0]
+    assert "Open UX · cited UX rules agents audit against" in footer
+    assert '<a href="/privacy">Privacy</a>' in footer
+    assert "github.com" not in footer
+    assert "GitHub" not in footer
+    assert "Open UX is open source" not in footer
+    assert "MIT" not in footer
+    assert "View repo →" not in footer
 
-    assert html.count('href="https://github.com/3dyonic/open-ux"') >= 3
+    assert html.count('href="https://github.com/3dyonic/open-ux"') >= 2
+    assert 'class="nav-github" href="https://github.com/3dyonic/open-ux" aria-label="GitHub">' in html
+    assert 'viewBox="0 0 16 16"' in html
+    assert 'width="16" height="16"' in html
+    assert 'fill="currentColor"' in html
+    assert "width: 24px" in html
+    assert "height: 24px" in html
+    assert ".nav-github:hover" in html
+    assert ".nav-github:focus" in html
+    assert "color: var(--ink)" in html
+    assert 'class="btn btn--primary btn--nav" href="/invite">Get a key</a>' in html
     assert 'href="/invite"' in html
     assert 'href="/register"' not in html
     assert "location.hash === '#register'" in html
@@ -119,9 +135,10 @@ def test_invite_request_page_matches_figma(tmp_env: Path) -> None:
     assert '<span class="wordmark">Open UX</span>' in html
     assert "UNS-44" not in html
     assert "uns-44" not in html
-    assert ">GitHub</a>" in html
+    assert 'class="nav-github" href="https://github.com/3dyonic/open-ux" aria-label="GitHub">' in html
     assert 'href="https://github.com/3dyonic/open-ux"' in html
     assert ">Get a key</a>" in html
+    assert 'fill="currentColor"' in html
 
     assert "Invite · waitlist, one key after approve" in html
     assert ">Request access</h1>" in html

@@ -11,6 +11,7 @@ from open_ux.public_html import (
     FAVICON_HREF,
     MARK_CSS,
     NAV_BRAND_HTML,
+    NAV_GITHUB_HTML,
     OSS_FOOTER_CSS,
     public_consent_footer,
     public_gtm_head,
@@ -254,7 +255,7 @@ _NAV = f"""
   <header class="nav">
     {NAV_BRAND_HTML}
     <div class="nav-actions">
-      <a class="nav-github" href="https://github.com/3dyonic/open-ux">GitHub</a>
+      {NAV_GITHUB_HTML}
       <a class="btn btn--primary btn--nav" href="/invite">Get a key</a>
     </div>
   </header>

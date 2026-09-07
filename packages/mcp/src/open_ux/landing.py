@@ -8,6 +8,7 @@ from open_ux.public_html import (
     LANDING_TITLE,
     MARK_CSS,
     NAV_BRAND_HTML,
+    NAV_GITHUB_HTML,
     OSS_FOOTER_CSS,
     head_meta,
     public_consent_footer,
@@ -430,7 +431,9 @@ def render_landing(*, consent: str | None = None) -> str:
         + """
     <div class="nav-actions">
       <a class="nav-catalog" href="/catalog">Catalog</a>
-      <a class="nav-github" href="https://github.com/3dyonic/open-ux">GitHub</a>
+      """
+        + NAV_GITHUB_HTML
+        + """
       <a class="btn btn--primary btn--nav" href="/invite">Get a key</a>
     </div>
   </header>
