@@ -19,7 +19,7 @@ _FAVICON_FALLBACK = _STATIC_DIR / "favicon.svg"
 FAVICON_PATH = _MARK_PATH if _MARK_PATH.is_file() else _FAVICON_FALLBACK
 FAVICON_HREF = "/logo-mark.svg" if FAVICON_PATH == _MARK_PATH else "/favicon.svg"
 NAV_BRAND_HTML = (
-    '<a class="nav-brand" href="/catalog">'
+    '<a class="nav-brand" href="/">'
     f'<img class="mark" src="{FAVICON_HREF}" width="20" height="20" alt="">'
     '<span class="wordmark">Open UX</span></a>'
 )

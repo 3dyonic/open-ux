@@ -599,10 +599,10 @@ def test_catalog_nav_has_mark_wordmark(live_catalog: Path) -> None:
         listed = client.get("/catalog").text
         rule = client.get(f"/catalog/{ANT_SEED}").text
     for html in (listed, rule):
-        assert 'class="nav-brand" href="/catalog"' in html
+        assert 'class="nav-brand" href="/"' in html
         assert '<img class="mark" src="/logo-mark.svg"' in html
         assert '<span class="wordmark">Open UX</span>' in html
-        assert "class=\"nav-brand\" href=\"/catalog\"><span class=\"pip\"" not in html
+        assert "class=\"nav-brand\" href=\"/\"><span class=\"pip\"" not in html
         assert "UNS-44" not in html
         assert "uns-44" not in html
 

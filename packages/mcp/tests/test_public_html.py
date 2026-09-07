@@ -111,14 +111,14 @@ def test_public_pages_have_pack_head_and_no_mcp_or_og_image(live_catalog: Path) 
         assert "og:image" not in head.lower()
         assert "twitter:image" not in head.lower()
         assert "MCP" not in head
-    assert 'class="nav-brand" href="/catalog"' in listed
-    assert 'class="nav-brand" href="/catalog"' in rule
-    assert 'class="nav-brand" href="/catalog"' in landing
+    assert 'class="nav-brand" href="/"' in listed
+    assert 'class="nav-brand" href="/"' in rule
+    assert 'class="nav-brand" href="/"' in landing
     assert f'<img class="mark" src="{FAVICON_HREF}"' in landing
     assert f'<img class="mark" src="{FAVICON_HREF}"' in listed
     assert f'<img class="mark" src="{FAVICON_HREF}"' in rule
     assert f'<img class="mark" src="{FAVICON_HREF}"' in invite
-    assert 'class="nav-brand" href="/catalog"' in invite
+    assert 'class="nav-brand" href="/"' in invite
     assert f'<link rel="icon" href="{FAVICON_HREF}" type="image/svg+xml">' in _head(invite)
     assert "UNS-44" not in invite
     assert "uns-44" not in invite

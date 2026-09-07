@@ -46,7 +46,7 @@ def test_landing_has_figma_sections_and_register_cta(tmp_env: Path) -> None:
     assert ">Get a key</a>" in html
     assert ">Catalog</a>" in html
     assert 'href="/catalog"' in html
-    assert 'class="nav-brand" href="/catalog"' in html
+    assert 'class="nav-brand" href="/"' in html
     assert '<img class="mark" src="/logo-mark.svg"' in html
     assert '<span class="wordmark">Open UX</span>' in html
     assert ">Request access</a>" in html
@@ -108,7 +108,7 @@ def test_invite_request_page_matches_figma(tmp_env: Path) -> None:
     assert '<link rel="icon" href="/logo-mark.svg" type="image/svg+xml">' in html
     assert "og:image" not in html.lower()
 
-    assert 'class="nav-brand" href="/catalog"' in html
+    assert 'class="nav-brand" href="/"' in html
     assert '<img class="mark" src="/logo-mark.svg"' in html
     assert '<span class="wordmark">Open UX</span>' in html
     assert "UNS-44" not in html
