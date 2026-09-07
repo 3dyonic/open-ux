@@ -21,6 +21,7 @@ CONTAINER_CHIPS: tuple[tuple[str, str], ...] = (
 )
 
 PAGE_SIZE = 25
+_CHIP_IDS = frozenset(cid for cid, _label in CONTAINER_CHIPS)
 
 GITHUB = "https://github.com/3dyonic/open-ux"
 
@@ -296,7 +297,7 @@ _CSS = """
     }
     .tree-item--card { padding-left: 20px; }
     .tree-item--facet { padding-left: 32px; color: var(--muted); font-weight: 500; }
-    .tree-item--rule { padding-left: 44px; font-size: 16px; cursor: pointer; }
+    .tree-item--rule { padding-left: 44px; font-size: 14px; cursor: pointer; }
     .tree-item--container { font-weight: 600; }
     .tree-item.is-active {
       background: var(--pip-soft);
@@ -479,6 +480,11 @@ def _raw_name(row: dict[str, Any]) -> str:
     return str(row.get("name") or row.get("title") or row.get("id") or "")
 
 
+def _search_blob(row: dict[str, Any]) -> str:
+    gid = str(row.get("id") or "")
+    return f"{gid} {row.get('title') or ''} {_raw_name(row)}".lower()
+
+
 def _display_name(row: dict[str, Any]) -> str:
     """Master `name` as-is (fallback title → id). Keep a trailing ` — {house}` suffix."""
     return _raw_name(row)
@@ -554,13 +560,16 @@ def _page(title: str, body: str, script: str = "") -> str:
     )
 
 
-def _chips_html() -> str:
-    parts = [
-        '<button type="button" class="chip is-selected" data-chip="" aria-pressed="true">All</button>'
-    ]
-    for cid, label in CONTAINER_CHIPS:
+def _chips_html(selected: str = "") -> str:
+    wanted = selected if selected in _CHIP_IDS else ""
+    parts = []
+    for cid, label in (("", "All"),) + CONTAINER_CHIPS:
+        on = cid == wanted
+        cls = "chip is-selected" if on else "chip"
+        pressed = "true" if on else "false"
         parts.append(
-            f'<button type="button" class="chip" data-chip="{_e(cid)}" aria-pressed="false">{_e(label)}</button>'
+            f'<button type="button" class="{cls}" data-chip="{_e(cid)}" '
+            f'aria-pressed="{pressed}">{_e(label)}</button>'
         )
     return '<div class="chips" id="catalog-chips">' + "".join(parts) + "</div>"
 
@@ -575,30 +584,54 @@ def _pager_meta(total: int, page: int = 1, size: int = PAGE_SIZE) -> str:
     return f"{start}–{end} of {total}"
 
 
-def _pager_html(total: int) -> str:
-    if total <= 0:
+def _pager_html(total: int, page: int = 1) -> str:
+    if total < 0:
         return ""
-    prev_disabled = " disabled"
-    next_disabled = " disabled" if total <= PAGE_SIZE else ""
+    pages = max(1, (total + PAGE_SIZE - 1) // PAGE_SIZE) if total else 1
+    page = min(max(page, 1), pages)
+    prev_disabled = " disabled" if page <= 1 or total == 0 else ""
+    next_disabled = " disabled" if page >= pages or total == 0 else ""
     return (
-        '<div class="pager" id="catalog-pager">'
+        f'<div class="pager" id="catalog-pager" data-page="{page}">'
         f'<button type="button" class="btn btn--outline" id="page-prev"{prev_disabled}>Prev</button>'
-        f'<p class="pager-meta" id="page-meta">{_e(_pager_meta(total))}</p>'
+        f'<p class="pager-meta" id="page-meta">{_e(_pager_meta(total, page))}</p>'
         f'<button type="button" class="btn btn--outline" id="page-next"{next_disabled}>Next</button>'
         "</div>"
     )
 
 
-def _rows_html(rows: list[dict[str, Any]], tree: JobTree) -> str:
+def _rows_html(
+    rows: list[dict[str, Any]],
+    tree: JobTree,
+    *,
+    container: str = "",
+    query: str = "",
+    page: int = 1,
+) -> str:
     if not rows:
         return '<p class="empty">No guidelines in the catalog.</p>'
+    q = query.strip().lower()
+    matching: list[dict[str, Any]] = []
+    for row in rows:
+        cid = _row_container(row, tree)
+        if container and cid != container:
+            continue
+        if q and q not in _search_blob(row):
+            continue
+        matching.append(row)
+    pages = max(1, (len(matching) + PAGE_SIZE - 1) // PAGE_SIZE) if matching else 1
+    page = min(max(page, 1), pages)
+    start = (page - 1) * PAGE_SIZE
+    visible_ids = {
+        str(row.get("id") or "") for row in matching[start : start + PAGE_SIZE]
+    }
     parts = ['<div class="list" id="catalog-list">']
-    for i, row in enumerate(rows):
+    for row in rows:
         gid = str(row.get("id") or "")
         name = _display_name(row)
         path = _row_path(row, tree)
-        search = f"{gid} {row.get('title') or ''} {_raw_name(row)}".lower()
-        container = _row_container(row, tree)
+        search = _search_blob(row)
+        cid = _row_container(row, tree)
         path_html = ""
         if path:
             path_html = (
@@ -606,10 +639,10 @@ def _rows_html(rows: list[dict[str, Any]], tree: JobTree) -> str:
                 f'<span class="row-path">{_e(path)}</span>'
                 f'<span class="row-dot" aria-hidden="true">·</span>'
             )
-        hidden = " hidden" if i >= PAGE_SIZE else ""
+        hidden = "" if gid in visible_ids else " hidden"
         parts.append(
             f'<a class="catalog-row" href="{_e(_href_id(gid))}" '
-            f'data-id="{_e(gid)}" data-container="{_e(container)}" '
+            f'data-id="{_e(gid)}" data-container="{_e(cid)}" '
             f'data-search="{_e(search)}"{hidden}>'
             f'<span class="row-id">{_e(gid)}</span>'
             f"{path_html}"
@@ -618,29 +651,47 @@ def _rows_html(rows: list[dict[str, Any]], tree: JobTree) -> str:
             f"</a>"
         )
     parts.append("</div>")
-    parts.append(_pager_html(len(rows)))
+    parts.append(_pager_html(len(matching), page))
     return "".join(parts)
 
 
-def render_catalog_list(catalog: Catalog, tree: JobTree | None = None) -> str:
+def render_catalog_list(
+    catalog: Catalog,
+    tree: JobTree | None = None,
+    *,
+    container: str = "",
+    query: str = "",
+    page: int = 1,
+) -> str:
     tree = tree or empty_job_tree()
     rows = _full_index(catalog)
-    n = len(rows)
+    wanted = container if container in _CHIP_IDS else ""
+    q = query.strip()
+    matching_n = 0
+    q_low = q.lower()
+    for row in rows:
+        cid = _row_container(row, tree)
+        if wanted and cid != wanted:
+            continue
+        if q_low and q_low not in _search_blob(row):
+            continue
+        matching_n += 1
+    value_attr = f' value="{_e(q)}"' if q else ""
     body = f"""
   <main class="main">
     <div class="header">
       <div class="title-row">
         <h1>Catalog</h1>
-        <p class="shown" id="shown-count">{n} shown</p>
+        <p class="shown" id="shown-count">{matching_n} shown</p>
       </div>
       <p class="lede">Cited UX rules agents audit against</p>
     </div>
     <div class="field">
       <label for="catalog-search">Search</label>
-      <input class="field__input" id="catalog-search" type="search" autocomplete="off" spellcheck="false">
+      <input class="field__input" id="catalog-search" type="search" autocomplete="off" spellcheck="false"{value_attr}>
     </div>
-    {_chips_html()}
-    {_rows_html(rows, tree)}
+    {_chips_html(wanted)}
+    {_rows_html(rows, tree, container=wanted, query=q, page=page)}
   </main>
 """
     script = f"""
@@ -649,11 +700,31 @@ def render_catalog_list(catalog: Catalog, tree: JobTree | None = None) -> str:
     const chips = document.getElementById("catalog-chips");
     const rows = Array.from(document.querySelectorAll(".catalog-row"));
     const shown = document.getElementById("shown-count");
+    const pager = document.getElementById("catalog-pager");
     const prev = document.getElementById("page-prev");
     const next = document.getElementById("page-next");
     const pageMeta = document.getElementById("page-meta");
     let container = "";
-    let page = 1;
+    if (chips) {{
+      const on = chips.querySelector("[data-chip].is-selected");
+      if (on) container = on.getAttribute("data-chip") || "";
+    }}
+    let page = pager
+      ? Math.max(1, parseInt(pager.getAttribute("data-page") || "1", 10) || 1)
+      : 1;
+
+    function syncUrl() {{
+      const params = new URLSearchParams();
+      if (container) params.set("container", container);
+      const raw = (search && search.value || "").trim();
+      if (raw) params.set("q", raw);
+      if (page > 1) params.set("page", String(page));
+      const qs = params.toString();
+      const nextUrl = location.pathname + (qs ? "?" + qs : "");
+      if (nextUrl !== location.pathname + location.search) {{
+        history.replaceState(null, "", nextUrl);
+      }}
+    }}
 
     function apply() {{
       const q = (search && search.value || "").trim().toLowerCase();
@@ -680,8 +751,10 @@ def render_catalog_list(catalog: Catalog, tree: JobTree | None = None) -> str:
           ? "0 of 0"
           : (start + 1) + "–" + end + " of " + total;
       }}
+      if (pager) pager.setAttribute("data-page", String(page));
       if (prev) prev.disabled = page <= 1 || total === 0;
       if (next) next.disabled = page >= pages || total === 0;
+      syncUrl();
     }}
 
     if (search) search.addEventListener("input", () => {{ page = 1; apply(); }});

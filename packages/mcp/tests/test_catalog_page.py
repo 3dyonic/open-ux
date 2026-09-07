@@ -257,7 +257,7 @@ def _visible_row_tags(html: str) -> list[str]:
     return [
         tag
         for tag in re.findall(r"<a class=\"catalog-row\"[^>]*>", html)
-        if " hidden" not in tag
+        if not tag.endswith(" hidden>")
     ]
 
 
@@ -351,7 +351,7 @@ def test_catalog_list_paginates_filtered_set(live_catalog: Path) -> None:
     assert len(tags) == total
     visible = _visible_row_tags(html)
     assert len(visible) == PAGE_SIZE
-    assert sum(" hidden" in tag for tag in tags) == total - PAGE_SIZE
+    assert sum(tag.endswith(" hidden>") for tag in tags) == total - PAGE_SIZE
     assert 'id="catalog-pager"' in html
     assert ">Prev</button>" in html
     assert ">Next</button>" in html
@@ -360,6 +360,56 @@ def test_catalog_list_paginates_filtered_set(live_catalog: Path) -> None:
     assert f"const PAGE_SIZE = {PAGE_SIZE}" in html
     assert "page += 1" in html
     assert "page -= 1" in html
+    second = None
+    with _client() as client:
+        second = client.get("/catalog?page=2").text
+    visible2 = _visible_row_tags(second)
+    assert len(visible2) == PAGE_SIZE
+    assert _visible_row_tags(html) != visible2
+    assert f"{PAGE_SIZE + 1}–{PAGE_SIZE * 2} of {total}" in second
+    last_page = (total + PAGE_SIZE - 1) // PAGE_SIZE
+    short = total - (last_page - 1) * PAGE_SIZE
+    with _client() as client:
+        last = client.get(f"/catalog?page={last_page}").text
+    assert len(_visible_row_tags(last)) == short
+
+
+def test_catalog_query_params_keep_filter_and_search(live_catalog: Path) -> None:
+    catalog = load_catalog(Settings.load(hosted=True))
+    forms = [row for row in catalog.index if row.get("container") == "forms_and_input"]
+    assert len(forms) > PAGE_SIZE
+    with _client() as client:
+        html = client.get("/catalog?container=forms_and_input").text
+    assert f"{len(forms)} shown" in html
+    assert (
+        'class="chip is-selected" data-chip="forms_and_input" aria-pressed="true">Forms</button>'
+        in html
+    )
+    assert 'data-chip="" aria-pressed="false">All</button>' in html
+    visible = _visible_row_tags(html)
+    assert len(visible) == PAGE_SIZE
+    for tag in visible:
+        assert 'data-container="forms_and_input"' in tag
+    q = "visible"
+    anded = [
+        row
+        for row in forms
+        if q in f"{row.get('id') or ''} {row.get('title') or ''} {row.get('name') or ''}".lower()
+    ]
+    assert anded
+    with _client() as client:
+        searched = client.get("/catalog?container=forms_and_input&q=visible").text
+    assert f"{len(anded)} shown" in searched
+    assert 'value="visible"' in searched
+    found = _visible_row_tags(searched)
+    assert found
+    assert len(found) <= PAGE_SIZE
+    for tag in found:
+        assert 'data-container="forms_and_input"' in tag
+    assert "history.replaceState" in html
+    assert 'params.set("container"' in html
+    assert 'params.set("q"' in html
+    assert 'params.set("page"' in html
 
 
 def test_catalog_list_resolves_missing_container_from_tree(live_catalog: Path) -> None:
@@ -420,7 +470,8 @@ def test_catalog_type_scale_matches_figma(live_catalog: Path) -> None:
     assert re.search(r"\.rule-name \{[^}]*font-size: 28px", rule, re.S)
     assert re.search(r"\.rule-id \{[^}]*font-size: 14px", rule, re.S)
     assert re.search(r"\.tree-item \{[^}]*font-size: 14px", rule, re.S)
-    assert re.search(r"\.tree-item--rule \{[^}]*font-size: 16px", rule, re.S)
+    assert re.search(r"\.tree-item--rule \{[^}]*font-size: 14px", rule, re.S)
+    assert not re.search(r"\.tree-item--rule \{[^}]*font-size: 16px", rule, re.S)
 
 
 
