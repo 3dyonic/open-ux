@@ -3,10 +3,10 @@
 
 Not the skill path. In Claude, call Open-UX:* tools from the plugin MCP.
 
-Usage (from repo root, after ``pip install -e packages/mcp``):
+Usage (from repo root, after ``pip install open-ux`` or an editable install):
 
-    python3 clients/claude/skills/open-ux/scripts/mcp_call.py list
-    python3 clients/claude/skills/open-ux/scripts/mcp_call.py audit '{"jobs":"design_a_form"}'
+    python3 scripts/mcp_call.py list
+    python3 scripts/mcp_call.py audit '{"jobs":"design_a_form"}'
 
 Transport: OPEN_UX_TRANSPORT=http (default, https://open-ux.dev/mcp +
 OPEN_UX_API_KEY), stdio (``python -m open_ux stdio``), or inprocess (tests).

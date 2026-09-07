@@ -13,4 +13,6 @@ Contributors: clone the repo and `pip install -e "packages/mcp[dev]"`.
 
 ## Use
 
-One skill: `open-ux`. `/list` `/get` are `Open-UX:*` tools. Compose/review **must** run `clients/claude/skills/open-ux/scripts/audit.py` (`jobs=` or `guideline_ids`). Aliases `/forms` `/actions` `/feedback` pick a Card, then must audit via that script. Map and cite are MCP tools, not scripts. Surfaces (`home` / `cart` / `checkout`) are context, not ids.
+One skill: `open-ux`. Commands: `/list` `/get` `/audit`, aliases `/forms` `/actions` `/feedback` — short prompts that call `Open-UX:*` tools.
+
+Scope `Open-UX:audit` (`jobs=` or `guideline_ids`). Surfaces (`home` / `cart` / `checkout`) are context, not ids.

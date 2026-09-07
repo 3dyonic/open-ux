@@ -16,12 +16,16 @@ Pointers only. One skill: `open-ux` (`clients/claude/skills/open-ux/SKILL.md`). 
 
 ## Path
 
-| Job | How |
+| Job | Tools |
 | --- | --- |
-| compose / review | Pick a Card → `Open-UX:get_situation` → **must** run `scripts/audit.py` `jobs=<card_id>` |
-| map | `Open-UX:suggest_situations` (not a script) |
-| cite | `Open-UX:search_guidelines` / `Open-UX:get_guideline` (not a script) |
+| compose / review | Pick a Card → `Open-UX:get_situation` → `Open-UX:audit` `jobs=<card_id>` |
+| map | `Open-UX:suggest_situations` when the ask is a surface. Fallback inside the skill. |
+| cite | `Open-UX:search_guidelines` / `Open-UX:get_guideline` |
 
-Scope audit (`jobs=` or `guideline_ids`). Surfaces are context, not ids. Leaf ids are not needs.
+## Tools
 
-Slash commands `/list` `/get` stay on `Open-UX:*` tools. `/audit` plus aliases `/forms` `/actions` `/feedback` pick a Card, then must run the audit script.
+`Open-UX:list_situations`, `Open-UX:get_situation`, `Open-UX:suggest_situations`, `Open-UX:list_guidelines`, `Open-UX:search_guidelines`, `Open-UX:get_guideline`, `Open-UX:audit`.
+
+Scope `audit` (`jobs=` or `guideline_ids`). Surfaces are context, not ids. Leaf ids are not needs.
+
+Slash commands `/list` `/get` `/audit` plus aliases `/forms` `/actions` `/feedback` route into this same skill.

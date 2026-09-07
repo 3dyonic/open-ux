@@ -13,13 +13,13 @@ Contributors: clone the repo and `pip install -e "packages/mcp[dev]"`.
 
 Plugin metadata: [`clients/claude/.claude-plugin/plugin.json`](clients/claude/.claude-plugin/plugin.json) + [`clients/claude/.mcp.json`](clients/claude/.mcp.json). One skill package: `open-ux`.
 
-## Path
+## Tools
 
-Compose/review **must** run `clients/claude/skills/open-ux/scripts/audit.py` (`jobs=` / `guideline_ids` only). list/get/map/cite are MCP tools, not scripts. The host returns cited criteria, not pass or fail.
+Fully qualified: `Open-UX:list_situations`, `Open-UX:get_situation`, `Open-UX:suggest_situations`, `Open-UX:list_guidelines`, `Open-UX:search_guidelines`, `Open-UX:get_guideline`, `Open-UX:audit`.
 
-Fully qualified tools: `Open-UX:list_situations`, `Open-UX:get_situation`, `Open-UX:suggest_situations`, `Open-UX:list_guidelines`, `Open-UX:search_guidelines`, `Open-UX:get_guideline`, `Open-UX:audit`.
+Scope `audit` with `jobs=` (or `forms` / `actions` / `feedback`) or `guideline_ids`. The host returns cited criteria, not pass or fail. `/list` `/get` / map / cite stay on tools.
 
-A local helper `scripts/mcp_call.py` is available for humans and CI. Optional.
+A local helper `scripts/mcp_call.py` is available for humans and CI. The product is the hosted tools.
 
 ## One skill
 
