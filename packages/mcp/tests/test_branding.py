@@ -65,11 +65,17 @@ def test_landing_has_figma_sections_and_register_cta(tmp_env: Path) -> None:
     assert "incomplete" not in html
     assert "invented rule · no source" in html
     assert "cited rule · source attached" in html
-    assert "Join the waitlist. One key after approve and redeem — no vibes." in html
-    assert "Open UX is open source · " in html
-    assert '>GitHub</a> · <a href="https://github.com/3dyonic/open-ux/blob/master/LICENSE">MIT</a>' in html
+    assert ">Join the community</h2>" in html
+    assert "Open UX is a shared idea — cited rules anyone can fork, cite, and improve together." in html
+    assert 'class="oss-link" href="https://github.com/3dyonic/open-ux">View repo →</a>' in html
+    community = html.split('class="cta-band"', 1)[1].split('class="footer"', 1)[0]
+    assert "Browse catalog" not in community
+    assert "Open catalog" not in community
+    assert ">Get a key</a>" not in community
+    assert "Open UX · cited UX rules agents audit against" in html
+    assert "Open UX is open source" not in html
 
-    assert html.count('href="https://github.com/3dyonic/open-ux"') >= 2
+    assert html.count('href="https://github.com/3dyonic/open-ux"') >= 3
     assert 'href="/invite"' in html
     assert 'href="/register"' not in html
     assert "location.hash === '#register'" in html

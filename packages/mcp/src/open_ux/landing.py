@@ -403,8 +403,15 @@ def render_landing(*, consent: str | None = None) -> str:
     }
     .cta-copy p {
       margin: 0;
-      font-size: 13px;
+      font-size: 14px;
+      font-weight: 400;
       color: var(--muted);
+    }
+    .oss-link {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--pip);
+      text-decoration: none;
     }
 """
         + MARK_CSS
@@ -499,10 +506,10 @@ def render_landing(*, consent: str | None = None) -> str:
   </section>
   <section class="cta-band">
     <div class="cta-copy">
-      <h2>Request access</h2>
-      <p>Join the waitlist. One key after approve and redeem — no vibes.</p>
+      <h2>Join the community</h2>
+      <p>Open UX is a shared idea — cited rules anyone can fork, cite, and improve together.</p>
     </div>
-    <a class="btn btn--primary" href="/invite">Get a key</a>
+    <a class="oss-link" href="https://github.com/3dyonic/open-ux">View repo →</a>
   </section>
 """
         + public_oss_footer()

@@ -148,10 +148,27 @@ def test_public_pages_have_pack_head_and_no_mcp_or_og_image(live_catalog: Path) 
     assert "GOV.UK · labels sentence case, no colons, above" in landing
 
 
+def test_landing_community_strip_and_hero_catalog(tmp_env: Path) -> None:
+    with _client() as client:
+        html = client.get("/").text
+    hero = html.split('class="hero"', 1)[1].split('class="how"', 1)[0]
+    community = html.split('class="cta-band"', 1)[1].split('class="footer"', 1)[0]
+    assert ">Join the community</h2>" in community
+    assert (
+        "Open UX is a shared idea — cited rules anyone can fork, cite, and improve together."
+        in community
+    )
+    assert 'href="https://github.com/3dyonic/open-ux">View repo →</a>' in community
+    assert 'class="oss-link"' in community
+    assert "Browse catalog" not in community
+    assert "Open catalog" not in community
+    assert 'class="btn btn--primary" href="/catalog">Browse catalog</a>' in hero
+    assert "height: 143px" in html
+
+
 def test_public_pages_have_oss_footer_strip(live_catalog: Path) -> None:
-    strip = "Open UX is open source · "
+    strip = "Open UX · cited UX rules agents audit against"
     github = 'href="https://github.com/3dyonic/open-ux"'
-    license_href = 'href="https://github.com/3dyonic/open-ux/blob/master/LICENSE"'
     public_paths = ("/", "/catalog", f"/catalog/{ANT_SEED}", "/invite", "/privacy")
     never_paths = (
         "/mcp",
@@ -162,17 +179,21 @@ def test_public_pages_have_oss_footer_strip(live_catalog: Path) -> None:
         "/invite/requested",
     )
     with _client() as client:
+        landing = client.get("/").text
+        assert ">Join the community</h2>" in landing
         for path in public_paths:
             html = client.get(path).text
             assert strip in html, path
             assert github in html, path
             assert ">GitHub</a>" in html, path
-            assert license_href in html, path
-            assert ">MIT</a>" in html, path
+            assert "Open UX is open source" not in html, path
+            if path != "/":
+                assert ">Join the community</h2>" not in html, path
+                assert "View repo →" not in html, path
         for path in never_paths:
             html = client.get(path).text
             assert strip not in html, path
-            assert license_href not in html, path
+            assert "Open UX is open source" not in html, path
         admin = client.get(
             "/admin/invite/waitlist",
             headers={"Authorization": "Bearer test-admin-token"},

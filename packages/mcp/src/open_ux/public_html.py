@@ -46,7 +46,6 @@ MARK_CSS = """
     }
 """
 GITHUB_REPO_HREF = "https://github.com/3dyonic/open-ux"
-LICENSE_HREF = "https://github.com/3dyonic/open-ux/blob/master/LICENSE"
 DEFAULT_GTM_ID = "GTM-N3BL3G9K"
 CONSENT_COOKIE = "open_ux_gtm_consent"
 CONSENT_GRANTED = "granted"
@@ -167,7 +166,10 @@ CONSENT_CSS = """
 OSS_FOOTER_CSS = """
     .footer {
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
+      justify-content: space-between;
+      gap: 8px;
       width: 100%;
       padding: 16px 48px;
       border-top: 1px solid var(--line, #DED4C8);
@@ -178,7 +180,7 @@ OSS_FOOTER_CSS = """
     }
     .footer p { margin: 0; }
     .footer a {
-      color: inherit;
+      color: var(--ink, #1F1B16);
       text-decoration: underline;
     }
 """
@@ -367,10 +369,8 @@ def public_consent_footer(consent: str | None = None) -> str:
 def public_oss_footer() -> str:
     return (
         '  <footer class="footer">\n'
-        "    <p>Open UX is open source · "
-        f'<a href="{GITHUB_REPO_HREF}">GitHub</a>'
-        " · "
-        f'<a href="{LICENSE_HREF}">MIT</a></p>\n'
+        "    <p>Open UX · cited UX rules agents audit against</p>\n"
+        f'    <p><a href="{GITHUB_REPO_HREF}">GitHub</a></p>\n'
         "  </footer>\n"
     )
 
