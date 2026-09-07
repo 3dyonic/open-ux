@@ -33,6 +33,7 @@ from open_ux.jobs import (
     load_job_tree,
 )
 from open_ux.landing import LANDING_HTML
+from open_ux.public_html import FAVICON_PATH, ROBOTS_TXT, render_sitemap
 from open_ux.situations import (
     get_situation as run_get_situation,
     list_situations as run_list_situations,
@@ -347,6 +348,19 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         if html is None:
             return HTMLResponse(render_catalog_not_found(guideline_id), status_code=404)
         return HTMLResponse(html)
+
+    @mcp.custom_route("/robots.txt", methods=["GET"])
+    async def robots(_request: Request) -> Response:
+        return Response(ROBOTS_TXT, media_type="text/plain; charset=utf-8")
+
+    @mcp.custom_route("/sitemap.xml", methods=["GET"])
+    async def sitemap(_request: Request) -> Response:
+        ids = [str(row["id"]) for row in catalog.index if row.get("id")]
+        return Response(render_sitemap(ids), media_type="application/xml")
+
+    @mcp.custom_route("/favicon.svg", methods=["GET"])
+    async def favicon(_request: Request) -> Response:
+        return Response(FAVICON_PATH.read_bytes(), media_type="image/svg+xml")
 
     @mcp.custom_route("/health", methods=["GET"])
     async def health(_request: Request) -> Response:

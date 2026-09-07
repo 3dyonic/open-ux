@@ -2,12 +2,17 @@
 
 from __future__ import annotations
 
-LANDING_HTML = """<!DOCTYPE html>
+from open_ux.public_html import LANDING_DESCRIPTION, LANDING_TITLE, head_meta
+
+LANDING_HTML = (
+    """<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Open UX</title>
+"""
+    + head_meta(title=LANDING_TITLE, description=LANDING_DESCRIPTION, path="/")
+    + """
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -428,7 +433,7 @@ LANDING_HTML = """<!DOCTYPE html>
       <p class="sub">Cited UX rules agents audit against</p>
       <p class="hero-body">Stop inventing UX rules from memory. Open UX is a shared, cited catalog agents list, fetch, and audit against.</p>
       <div class="ctas">
-        <a class="btn btn--primary" id="get-key" href="/invite">Get a key</a>
+        <a class="btn btn--primary" href="/catalog">Browse catalog</a>
         <a class="btn btn--secondary" href="/invite">Request access</a>
       </div>
     </div>
@@ -508,3 +513,4 @@ LANDING_HTML = """<!DOCTYPE html>
 </body>
 </html>
 """
+)

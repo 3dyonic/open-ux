@@ -30,8 +30,11 @@ def test_landing_has_figma_sections_and_register_cta(tmp_env: Path) -> None:
 
     assert html.count("<h1>") == 1
     assert "@media" not in html
-    assert "favicon" not in html.lower()
+    assert '<link rel="icon" href="/favicon.svg" type="image/svg+xml">' in html
     assert "og:image" not in html.lower()
+    assert "<title>Open UX — Cited UX rules agents audit against</title>" in html
+    assert ">Browse catalog</a>" in html
+    assert 'class="btn btn--primary" href="/catalog">Browse catalog</a>' in html
 
     assert "Cited catalog · agents audit · no vibes" in html
     assert "Stop inventing UX rules from memory. Open UX is a shared, cited catalog agents list, fetch, and audit against." in html
@@ -60,7 +63,6 @@ def test_landing_has_figma_sections_and_register_cta(tmp_env: Path) -> None:
     assert "github.com/3dyonic/open-ux" in html
 
     assert html.count('href="https://github.com/3dyonic/open-ux"') >= 2
-    assert 'id="get-key"' in html
     assert 'href="/invite"' in html
     assert 'href="/register"' not in html
     assert "location.hash === '#register'" in html

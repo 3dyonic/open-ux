@@ -8,6 +8,13 @@ from typing import Any
 
 from open_ux.catalog import SOURCE_HOUSES, Catalog, citations, get_by_id, list_index
 from open_ux.jobs import JobTree, card_by_id, empty_job_tree
+from open_ux.public_html import (
+    CATALOG_TITLE,
+    LANDING_DESCRIPTION,
+    head_meta,
+    rule_meta_description,
+    rule_meta_title,
+)
 
 # Longest house label first so "Suomi.fi" wins over a shorter tail.
 _SOURCE_SUFFIXES = tuple(
@@ -529,7 +536,7 @@ def _row_container(row: dict[str, Any], tree: JobTree) -> str:
 def _nav() -> str:
     return f"""
   <header class="nav">
-    <a class="nav-brand" href="/"><span class="pip" aria-hidden="true"></span><span class="wordmark">Open UX</span></a>
+    <a class="nav-brand" href="/catalog"><span class="pip" aria-hidden="true"></span><span class="wordmark">Open UX</span></a>
     <div class="nav-actions">
       <a class="nav-catalog" href="/catalog"><span class="pip" aria-hidden="true"></span>Catalog</a>
       <a class="nav-link" href="{GITHUB}">GitHub</a>
@@ -539,16 +546,23 @@ def _nav() -> str:
 """
 
 
-def _page(title: str, body: str, script: str = "") -> str:
+def _page(
+    title: str,
+    body: str,
+    script: str = "",
+    *,
+    description: str = LANDING_DESCRIPTION,
+    path: str = "/catalog",
+) -> str:
     return (
         """<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>"""
-        + _e(title)
-        + """</title>
+"""
+        + head_meta(title=title, description=description, path=path)
+        + """
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -793,7 +807,7 @@ def render_catalog_list(
     if (prev) prev.addEventListener("click", () => {{ page -= 1; apply(); }});
     if (next) next.addEventListener("click", () => {{ page += 1; apply(); }});
 """
-    return _page("Open UX · Catalog", body, script)
+    return _page(CATALOG_TITLE, body, script, description=LANDING_DESCRIPTION, path="/catalog")
 
 
 def _lines(value: Any) -> list[str]:
@@ -1025,7 +1039,13 @@ def render_catalog_rule(
     </main>
   </div>
 """
-    return _page(f"{name} · Open UX", body, _tree_script())
+    return _page(
+        rule_meta_title(name),
+        body,
+        _tree_script(),
+        description=rule_meta_description(found),
+        path=f"/catalog/{gid}",
+    )
 
 
 def render_catalog_not_found(guideline_id: str) -> str:
@@ -1036,4 +1056,9 @@ def render_catalog_not_found(guideline_id: str) -> str:
     <p class="not-found">No guideline with id “{_e(guideline_id)}”.</p>
   </main>
 """
-    return _page("Open UX · Not found", body)
+    return _page(
+        "Not found — Open UX",
+        body,
+        description=LANDING_DESCRIPTION,
+        path=f"/catalog/{guideline_id}",
+    )

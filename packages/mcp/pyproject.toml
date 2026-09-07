@@ -27,6 +27,9 @@ open-ux = "open_ux.__main__:main"
 [tool.hatch.build.targets.wheel]
 packages = ["src/open_ux"]
 
+[tool.hatch.build.targets.wheel.force-include]
+"src/open_ux/static/favicon.svg" = "open_ux/static/favicon.svg"
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]

@@ -18,15 +18,11 @@ from open_ux.jobs import load_job_tree
 from open_ux.server import create_mcp
 from open_ux.settings import Settings
 
-LIVE_SEED = (
-    "forms.field_labels.visible_label",
-    "forms.field_labels.label_stays_visible",
-    "forms.field_labels.error_identifies_and_fixes",
-)
-NNG_SEED = LIVE_SEED[0]
-MULTI_CITE_ID = "forms.fields.distinguish_optional_required"
+ANT_SEED = "ant.checkbox-vs-switch"
+MULTI_CITE_ID = ANT_SEED
 HOUSE_ID_FLUENT = "fluent.multistep-next-not-continue"
-HOUSE_ID_ANT = "ant.checkbox-vs-switch"
+HOUSE_ID_ANT = ANT_SEED
+FORMS_LANE_ID = "forms.labels.clickable"
 KNOWN_BODY = "Place a clear label outside the field so users always know what information belongs there."
 FIELD_ORDER = (
     "name",
@@ -106,9 +102,8 @@ def test_catalog_list_is_full_live_index(live_catalog: Path) -> None:
         visible = _visible_row_tags(html)
         assert 1 <= len(visible) <= PAGE_SIZE
         assert len(visible) == min(PAGE_SIZE, len(catalog.index))
-        for gid in LIVE_SEED:
+        for gid in (ANT_SEED, HOUSE_ID_FLUENT, FORMS_LANE_ID, "govuk.date-input-only-memorable"):
             assert gid in html
-        assert "govuk.date-input-only-memorable" in html
         assert KNOWN_BODY not in html
         assert "Each input has a clear label outside the field" not in html
         assert "pass_when" not in html
@@ -127,20 +122,19 @@ def test_catalog_list_is_full_live_index(live_catalog: Path) -> None:
 def test_catalog_rule_known_id_ordered_fields(live_catalog: Path) -> None:
     catalog = load_catalog(Settings.load(hosted=True))
     tree = load_job_tree(Settings.load())
-    guideline = catalog.guidelines[0]
+    guideline = next(g for g in catalog.guidelines if g["id"] == ANT_SEED)
     gid = guideline["id"]
-    assert gid == LIVE_SEED[0]
     with _client() as client:
         response = client.get(f"/catalog/{gid}")
         assert response.status_code == 200
         html = response.text
         claim = guideline["name"]
-        assert claim == "Visible field label — NN/g"
+        assert claim == "Checkbox vs switch — Ant"
         assert (
-            '<h1 class="rule-name" data-field="name">Visible field label</h1>'
+            '<h1 class="rule-name" data-field="name">Checkbox vs switch</h1>'
             in html
         )
-        assert "— NN/g" in claim
+        assert "— Ant" in claim
         assert gid in html
         assert guideline["rule"] in html
         positions = [html.index(f'data-field="{field}"') for field in FIELD_ORDER]
@@ -160,7 +154,7 @@ def test_catalog_rule_known_id_ordered_fields(live_catalog: Path) -> None:
         assert guideline["description"] in html
         assert 'class="crumb-path"' not in html
         assert f">/catalog/{gid}<" not in html
-        assert html.count(f'data-field="id">{gid}</p>') == 1
+        assert html.count('data-field="id">checkbox-vs-switch</p>') == 1
         _public_page_guards(html)
     rendered = render_catalog_rule(catalog, gid, tree)
     assert rendered is not None
@@ -337,46 +331,46 @@ def _row_name_for(html: str, guideline_id: str) -> str:
 
 def test_catalog_list_row_title_strips_house_suffix(live_catalog: Path) -> None:
     catalog = load_catalog(Settings.load(hosted=True))
-    guideline = next(g for g in catalog.guidelines if g["id"] == NNG_SEED)
-    assert guideline["name"].endswith(" — NN/g")
+    guideline = next(g for g in catalog.guidelines if g["id"] == ANT_SEED)
+    assert guideline["name"].endswith(" — Ant")
     with _client() as client:
         html = client.get("/catalog").text
-    title = _row_name_for(html, NNG_SEED)
-    assert title == "Visible field label"
+    title = _row_name_for(html, ANT_SEED)
+    assert title == "Checkbox vs switch"
     assert "—" not in title
-    assert "NN/g" not in title
-    assert 'class="row-name">Visible field label — NN/g</span>' not in html
+    assert "Ant" not in title
+    assert 'class="row-name">Checkbox vs switch — Ant</span>' not in html
 
 
 def test_catalog_human_titles_strip_house_suffix(live_catalog: Path) -> None:
     catalog = load_catalog(Settings.load(hosted=True))
-    guideline = next(g for g in catalog.guidelines if g["id"] == NNG_SEED)
+    guideline = next(g for g in catalog.guidelines if g["id"] == ANT_SEED)
     claim = guideline["name"]
-    assert claim == "Visible field label — NN/g"
+    assert claim == "Checkbox vs switch — Ant"
     with _client() as client:
         listed = client.get("/catalog").text
-        rule = client.get(f"/catalog/{NNG_SEED}").text
-    assert _row_name_for(listed, NNG_SEED) == "Visible field label"
+        rule = client.get(f"/catalog/{ANT_SEED}").text
+    assert _row_name_for(listed, ANT_SEED) == "Checkbox vs switch"
     h1 = rule.split('<h1 class="rule-name" data-field="name">', 1)[1].split("</h1>", 1)[0]
-    assert h1 == "Visible field label"
+    assert h1 == "Checkbox vs switch"
     assert "—" not in h1
-    assert "NN/g" not in h1
-    assert ">Visible field label — NN/g</span>" not in listed
-    assert ">Visible field label — NN/g</span>" not in rule
+    assert "Ant" not in h1
+    assert ">Checkbox vs switch — Ant</span>" not in listed
+    assert ">Checkbox vs switch — Ant</span>" not in rule
     assert re.search(
         r'<a class="tree-item tree-item--rule is-active"[^>]*>'
         r'(?:<span class="tree-pip"[^>]*></span>)?'
-        r"<span>Visible field label</span></a>",
+        r"<span>Checkbox vs switch</span></a>",
         rule,
     )
-    assert "NN/g — Placeholders in Form Fields Are Harmful" in rule
+    assert "Ant Design — Data entry" in rule
     assert 'data-field="citation"' in rule
     assert '<p class="cite-source">' in rule
     for name in re.findall(r'class="row-name">([^<]*)</span>', listed):
-        assert "— NN/g" not in name
+        assert "— Ant" not in name
         assert "— Fluent" not in name
     assert "— Fluent" not in _row_name_for(listed, HOUSE_ID_FLUENT)
-    assert "— NN/g" not in h1
+    assert "— Ant" not in h1
 
 
 def test_catalog_visible_ids_strip_house_prefix(live_catalog: Path) -> None:
@@ -388,7 +382,7 @@ def test_catalog_visible_ids_strip_house_prefix(live_catalog: Path) -> None:
         listed = client.get("/catalog").text
         fluent = client.get(f"/catalog/{HOUSE_ID_FLUENT}").text
         ant = client.get(f"/catalog/{HOUSE_ID_ANT}").text
-        seed_rule = client.get(f"/catalog/{NNG_SEED}").text
+        lane_rule = client.get(f"/catalog/{FORMS_LANE_ID}").text
     assert _row_id_for(listed, HOUSE_ID_FLUENT) == "multistep-next-not-continue"
     assert _row_id_for(listed, HOUSE_ID_ANT) == "checkbox-vs-switch"
     assert 'class="row-id">fluent.multistep-next-not-continue</span>' not in listed
@@ -407,8 +401,8 @@ def test_catalog_visible_ids_strip_house_prefix(live_catalog: Path) -> None:
         "</h1>", 1
     )[0]
     assert "— Fluent" not in fluent_h1
-    assert _row_id_for(listed, NNG_SEED) == NNG_SEED
-    assert f'data-field="id">{NNG_SEED}</p>' in seed_rule
+    assert _row_id_for(listed, FORMS_LANE_ID) == FORMS_LANE_ID
+    assert f'data-field="id">{FORMS_LANE_ID}</p>' in lane_rule
 
 
 class _VisibleCatalogText(HTMLParser):
@@ -450,22 +444,22 @@ def _visible_catalog_text(html: str) -> str:
 def test_catalog_house_absent_from_visible_text(live_catalog: Path) -> None:
     with _client() as client:
         listed = client.get("/catalog").text
-        rule = client.get(f"/catalog/{NNG_SEED}").text
+        rule = client.get(f"/catalog/{ANT_SEED}").text
         fluent = client.get(f"/catalog/{HOUSE_ID_FLUENT}").text
-    assert "Visible field label — NN/g" not in listed
-    assert "Visible field label — NN/g" not in rule
+    assert "Checkbox vs switch — Ant" not in listed
+    assert "Checkbox vs switch — Ant" not in rule
     listed_text = _visible_catalog_text(listed)
     rule_text = _visible_catalog_text(rule)
     fluent_text = _visible_catalog_text(fluent)
-    assert "Visible field label — NN/g" not in listed_text
-    assert "Visible field label — NN/g" not in rule_text
-    assert "— NN/g" not in listed_text
+    assert "Checkbox vs switch — Ant" not in listed_text
+    assert "Checkbox vs switch — Ant" not in rule_text
+    assert "— Ant" not in listed_text
     assert "— Fluent" not in listed_text
     assert "— Fluent" not in fluent_text
     assert "fluent." not in listed_text
     assert "fluent." not in fluent_text
     assert _row_id_for(listed, HOUSE_ID_FLUENT) == "multistep-next-not-continue"
-    assert _row_name_for(listed, NNG_SEED) == "Visible field label"
+    assert _row_name_for(listed, ANT_SEED) == "Checkbox vs switch"
 
 
 def test_catalog_rule_one_cite_row_per_citation(live_catalog: Path) -> None:
@@ -580,8 +574,8 @@ def test_catalog_query_params_keep_filter_and_search(live_catalog: Path) -> None
 
 def test_catalog_list_resolves_missing_container_from_tree(live_catalog: Path) -> None:
     row = {
-        "id": "forms.field_labels.visible_label",
-        "name": "Visible field label — NN/g",
+        "id": "forms.labels.clickable",
+        "name": "Clickable — Vercel",
         "title": "visible label",
         "card": "design_a_form",
     }
@@ -603,9 +597,9 @@ def test_catalog_list_resolves_missing_container_from_tree(live_catalog: Path) -
 def test_catalog_nav_has_pip_wordmark(live_catalog: Path) -> None:
     with _client() as client:
         listed = client.get("/catalog").text
-        rule = client.get(f"/catalog/{NNG_SEED}").text
+        rule = client.get(f"/catalog/{ANT_SEED}").text
     for html in (listed, rule):
-        assert 'class="nav-brand"' in html
+        assert 'class="nav-brand" href="/catalog"' in html
         assert 'class="pip"' in html
         assert '<span class="wordmark">Open UX</span>' in html
         assert '<span class="pip" aria-hidden="true"></span>' in html
@@ -614,7 +608,7 @@ def test_catalog_nav_has_pip_wordmark(live_catalog: Path) -> None:
 def test_catalog_type_scale_matches_figma(live_catalog: Path) -> None:
     with _client() as client:
         listed = client.get("/catalog").text
-        rule = client.get(f"/catalog/{NNG_SEED}").text
+        rule = client.get(f"/catalog/{ANT_SEED}").text
     css = listed.split("<style>", 1)[1].split("</style>", 1)[0]
     for selector, body in re.findall(r"([^{}]+)\{([^}]+)\}", css):
         sizes = [int(n) for n in re.findall(r"font-size:\s*(\d+)px", body)]
@@ -653,7 +647,7 @@ def test_catalog_tree_carets_toggle_and_rules_link(live_catalog: Path) -> None:
         if g.get("container") and g["container"] != "forms_and_input"
     )
     with _client() as client:
-        html = client.get(f"/catalog/{NNG_SEED}").text
+        html = client.get(f"/catalog/{ANT_SEED}").text
     assert 'id="catalog-tree"' in html
     assert 'aria-expanded="true"' in html
     assert 'aria-expanded="false"' in html
@@ -668,19 +662,19 @@ def test_catalog_tree_carets_toggle_and_rules_link(live_catalog: Path) -> None:
         html,
     )
     assert len(rule_links) == len(catalog.index)
-    assert f'href="/catalog/{NNG_SEED}"' in html
+    assert f'href="/catalog/{ANT_SEED}"' in html
     assert f'href="/catalog/{other["id"]}"' in html
     assert (
-        f'<a class="tree-item tree-item--rule is-active" href="/catalog/{NNG_SEED}">'
+        f'<a class="tree-item tree-item--rule is-active" href="/catalog/{ANT_SEED}">'
         in html
     )
     assert re.search(
         r'<a class="tree-item tree-item--rule is-active"[^>]*>'
         r'(?:<span class="tree-pip"[^>]*></span>)?'
-        r"<span>Visible field label</span></a>",
+        r"<span>Checkbox vs switch</span></a>",
         html,
     )
-    assert ">Visible field label — NN/g</span>" not in html
+    assert ">Checkbox vs switch — Ant</span>" not in html
     assert "Design a form" in html
     assert 'closest("button.tree-item[aria-expanded]")' in html
     assert 'classList.toggle("is-open"' in html
