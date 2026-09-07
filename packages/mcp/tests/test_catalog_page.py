@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+from html.parser import HTMLParser
 from pathlib import Path
 
 from starlette.testclient import TestClient
@@ -408,6 +409,63 @@ def test_catalog_visible_ids_strip_house_prefix(live_catalog: Path) -> None:
     assert "— Fluent" not in fluent_h1
     assert _row_id_for(listed, NNG_SEED) == NNG_SEED
     assert f'data-field="id">{NNG_SEED}</p>' in seed_rule
+
+
+class _VisibleCatalogText(HTMLParser):
+    """Text nodes outside script/style and citation blocks."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.skip = 0
+        self.cite = 0
+        self.parts: list[str] = []
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        cls = " ".join(str(v) for k, v in attrs if k == "class" and v)
+        field = next((v for k, v in attrs if k == "data-field"), "")
+        if tag in {"script", "style"}:
+            self.skip += 1
+        if "cite-row" in cls.split() or "cite-list" in cls.split() or field == "citation":
+            self.cite += 1
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag in {"script", "style"} and self.skip:
+            self.skip -= 1
+        if tag in {"div", "section", "a", "p"} and self.cite:
+            self.cite -= 1
+
+    def handle_data(self, data: str) -> None:
+        if self.skip or self.cite:
+            return
+        if data:
+            self.parts.append(data)
+
+
+def _visible_catalog_text(html: str) -> str:
+    parser = _VisibleCatalogText()
+    parser.feed(html)
+    return "".join(parser.parts)
+
+
+def test_catalog_house_absent_from_visible_text(live_catalog: Path) -> None:
+    with _client() as client:
+        listed = client.get("/catalog").text
+        rule = client.get(f"/catalog/{NNG_SEED}").text
+        fluent = client.get(f"/catalog/{HOUSE_ID_FLUENT}").text
+    assert "Visible field label — NN/g" not in listed
+    assert "Visible field label — NN/g" not in rule
+    listed_text = _visible_catalog_text(listed)
+    rule_text = _visible_catalog_text(rule)
+    fluent_text = _visible_catalog_text(fluent)
+    assert "Visible field label — NN/g" not in listed_text
+    assert "Visible field label — NN/g" not in rule_text
+    assert "— NN/g" not in listed_text
+    assert "— Fluent" not in listed_text
+    assert "— Fluent" not in fluent_text
+    assert "fluent." not in listed_text
+    assert "fluent." not in fluent_text
+    assert _row_id_for(listed, HOUSE_ID_FLUENT) == "multistep-next-not-continue"
+    assert _row_name_for(listed, NNG_SEED) == "Visible field label"
 
 
 def test_catalog_rule_one_cite_row_per_citation(live_catalog: Path) -> None:

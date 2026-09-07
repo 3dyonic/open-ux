@@ -480,11 +480,6 @@ def _raw_name(row: dict[str, Any]) -> str:
     return str(row.get("name") or row.get("title") or row.get("id") or "")
 
 
-def _search_blob(row: dict[str, Any]) -> str:
-    gid = str(row.get("id") or "")
-    return f"{gid} {row.get('title') or ''} {_raw_name(row)}".lower()
-
-
 def _strip_house_suffix(name: str) -> str:
     """Drop a trailing ` — {house}` from human-facing rule titles."""
     text = name.strip()
@@ -508,6 +503,11 @@ def _display_id(guideline_id: str) -> str:
     if rest and lane in SOURCE_HOUSES:
         return rest
     return text
+
+
+def _search_blob(row: dict[str, Any]) -> str:
+    gid = str(row.get("id") or "")
+    return f"{_display_id(gid)} {row.get('title') or ''} {_display_name(row)}".lower()
 
 
 def _row_container(row: dict[str, Any], tree: JobTree) -> str:
