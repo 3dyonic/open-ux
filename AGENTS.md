@@ -11,15 +11,14 @@ Hosted or download the package — same tools, same Cards.
 
 Plugin metadata: [`clients/claude/.claude-plugin/plugin.json`](clients/claude/.claude-plugin/plugin.json) + [`clients/claude/.mcp.json`](clients/claude/.mcp.json). One skill package: `open-ux`.
 
-
 ## Tools
 
 Fully qualified: `Open-UX:list_situations`, `Open-UX:get_situation`, `Open-UX:suggest_situations`, `Open-UX:list_guidelines`, `Open-UX:search_guidelines`, `Open-UX:get_guideline`, `Open-UX:audit`.
 
-Scope `audit` with `jobs=` (or `forms` / `actions` / `feedback`) or `guideline_ids`. No file. The host returns cited criteria, not pass or fail.
+Scope `audit` with `jobs=` (or `forms` / `actions` / `feedback`) or `guideline_ids`. The host returns cited criteria, not pass or fail.
 
-A local helper `scripts/audit.py` is available for humans and CI. The product is the hosted tools.
+A local helper `scripts/mcp_call.py` is available for humans and CI. The product is the hosted tools.
 
-## One skill, four offerings
+## One skill
 
-`open-ux` is the only always-on skill. Compose (default), review, map, and cite are jobs inside it — not extra packages. Claude agent file: [`clients/claude/agents/open-ux.md`](clients/claude/agents/open-ux.md).
+`open-ux` is the only always-on skill. Compose and review share the pull trigger; map and cite are sections inside it. Claude agent file: [`clients/claude/agents/open-ux.md`](clients/claude/agents/open-ux.md).
