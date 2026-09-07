@@ -563,6 +563,19 @@ def _primary_source(guideline: dict) -> str:
     return blob.split(";")[0].strip()
 
 
+def _dropped_cite_label(source: str) -> bool:
+    text = source.strip()
+    if not text:
+        return False
+    for part in text.split(";"):
+        label = part.strip()
+        if label.startswith(("NN/g", "Apple HIG", "Apple —", "Nielsen Norman")):
+            return True
+        if label.lower().startswith(("nn/g", "apple hig", "nielsen norman")):
+            return True
+    return "NN/g" in text or "Apple HIG" in text
+
+
 def test_no_primary_apple_or_nng_rules_remain(live_catalog: Path) -> None:
     catalog = load_catalog(Settings.load(hosted=True))
     leftover = [
@@ -581,3 +594,27 @@ def test_no_primary_apple_or_nng_rules_remain(live_catalog: Path) -> None:
     ]
     assert house_dirs == []
     assert not any(g["id"].startswith(("nng.", "apple.")) for g in catalog.guidelines)
+    cited = []
+    named = []
+    for guideline in catalog.guidelines:
+        name = str(guideline.get("name") or "")
+        if "NN/g" in name or "Apple HIG" in name:
+            named.append(guideline["id"])
+        for row in citations(guideline):
+            source = str(row.get("source") or "")
+            url = str(row.get("url") or "")
+            if _dropped_cite_label(source) or "nngroup.com" in url.lower():
+                cited.append(guideline["id"])
+            if "developer.apple.com" in url.lower() and "design" in url.lower():
+                cited.append(guideline["id"])
+    assert named == []
+    assert cited == []
+    index = json.loads((live_catalog / "index.json").read_text(encoding="utf-8"))
+    dumped = json.dumps(index)
+    assert "NN/g" not in dumped
+    assert "Apple HIG" not in dumped
+    assert "nng." not in dumped
+    assert "apple." not in dumped
+    manifest = (live_catalog / "manifest.json").read_text(encoding="utf-8")
+    assert '"nng"' not in manifest
+    assert '"apple"' not in manifest

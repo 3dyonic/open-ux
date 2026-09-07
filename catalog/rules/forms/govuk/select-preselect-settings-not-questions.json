@@ -4,7 +4,7 @@
   "segment": "Choice",
   "title": "select preselect settings not questions",
   "name": "Select preselect settings not questions — GOV.UK",
-  "rule": "Select: pre-select for settings; do not pre-select for questions (influence). Dual-cite with NN/g always-default-radio (via explicit None) and Polar default-when-possible — not a winner.",
+  "rule": "Select: pre-select for settings; do not pre-select for questions (influence). Dual-cite with Polar default-when-possible — not a winner.",
   "citation": [
     {
       "source": "GOV.UK Design System — Select",

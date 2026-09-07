@@ -135,3 +135,11 @@ def test_public_pages_have_pack_head_and_no_mcp_or_og_image(live_catalog: Path) 
     assert "uns-44" not in listed
     assert "UNS-44" not in rule
     assert "uns-44" not in rule
+    assert "NN/g" not in landing
+    assert "Apple HIG" not in landing
+    assert "nngroup.com" not in landing
+    assert "GOV.UK · labels sentence case, no colons, above" in landing
+    assert "NN/g" not in listed
+    assert "Apple HIG" not in listed
+    assert "NN/g" not in rule
+    assert "Apple HIG" not in rule

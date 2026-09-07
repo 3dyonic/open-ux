@@ -472,7 +472,7 @@ def render_landing(*, consent: str | None = None) -> str:
         <span class="clay-quote"></span>
         <div>
           <p class="cite-kicker">citation</p>
-          <p class="cite-copy">NN/g · field labels stay visible while typing</p>
+          <p class="cite-copy">GOV.UK · labels sentence case, no colons, above</p>
         </div>
       </div>
       <div class="chips">

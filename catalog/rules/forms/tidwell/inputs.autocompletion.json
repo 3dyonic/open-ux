@@ -7,8 +7,8 @@
   "rule": "As the user types a value with a known set of completions, suggest and complete matches.",
   "citation": [
     {
-      "source": "Designing Interfaces 3e ch. Getting Input — Autocompletion (Tidwell, Brewer, Valencia); NN/g — A Checklist for Designing Mobile Input Fields",
-      "url": "https://www.nngroup.com/articles/mobile-input-checklist/"
+      "source": "Designing Interfaces 3e ch. Getting Input — Autocompletion (Tidwell, Brewer, Valencia)",
+      "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
     }
   ],
   "check": "llm_judgment",

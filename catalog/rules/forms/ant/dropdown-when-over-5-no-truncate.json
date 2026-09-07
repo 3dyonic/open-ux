@@ -4,7 +4,7 @@
   "segment": "Choice",
   "title": "dropdown when over 5 no truncate",
   "name": "Dropdown over 5, no truncate — Ant",
-  "rule": "Dropdown when >5 — logical sort; option text fully displayed. Dual-cite NN/g dropdown band; this is Ant's cutoff + no-truncate.",
+  "rule": "Dropdown when >5 — logical sort; option text fully displayed. This is Ant's cutoff + no-truncate.",
   "citation": [
     {
       "source": "Ant Design — Data entry",

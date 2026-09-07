@@ -4,7 +4,7 @@
   "segment": "Confirmation",
   "title": "prefer undo or popconfirm over modal",
   "name": "Prefer undo or popconfirm over modal — Ant",
-  "rule": "Prefer undo (or Popconfirm) over Modal double-confirm — delete → success + Undo (message+undo gone after one minute or on Undo). If undo is invalid, use Popconfirm next to the control. Abusing Modal drops context and blocks undo. Dual-cite Primer \"never warning when you mean undo\" / NN/g undo; Ant names Popconfirm vs Modal.",
+  "rule": "Prefer undo (or Popconfirm) over Modal double-confirm — delete → success + Undo (message+undo gone after one minute or on Undo). If undo is invalid, use Popconfirm next to the control. Abusing Modal drops context and blocks undo. Dual-cite Primer \"never warning when you mean undo\"; Ant names Popconfirm vs Modal.",
   "citation": [
     {
       "source": "Ant Design — Feedback spec",
@@ -27,6 +27,6 @@
   "apply_when": "Protecting a delete or similar reversible destructive action.",
   "not_when": "Irreversible high-stakes commits where undo is truly invalid by design.",
   "agent_hint": "After delete, offer success plus Undo, or Popconfirm beside the control.",
-  "description": "Ant prefers undo (or Popconfirm) over a blocking Modal double-confirm. Delete should surface success with Undo (message and undo gone after one minute or on Undo); when undo is invalid, place Popconfirm next to the control. Abusing Modal drops context and blocks undo. Dual-cite Primer/NN/g undo guidance; Ant names Popconfirm versus Modal. Fail Modal double-confirm where undo is valid, or delete with neither undo nor Popconfirm.",
+  "description": "Ant prefers undo (or Popconfirm) over a blocking Modal double-confirm. Delete should surface success with Undo (message and undo gone after one minute or on Undo); when undo is invalid, place Popconfirm next to the control. Abusing Modal drops context and blocks undo. Dual-cite Primer undo guidance; Ant names Popconfirm versus Modal. Fail Modal double-confirm where undo is valid, or delete with neither undo nor Popconfirm.",
   "do_not_claim": "Deleting `actions.confirm.serious_or_undo`; a house one-minute as law outside this cite. Overlap with Actions 40: `actions.confirm.serious_or_undo`. Overlap with extra 73: `nng.support-undo-discoverable`."
 }
