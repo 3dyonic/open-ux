@@ -226,6 +226,10 @@ def test_connect_offers_hosted_or_package() -> None:
     for path in paths:
         text = path.read_text(encoding="utf-8")
         assert "https://open-ux.dev/mcp" in text
-        assert "github.com/3dyonic/open-ux" in text
+        assert "pip install open-ux" in text
         assert "python -m open_ux stdio" in text
-        assert "download" in text.lower() or "package" in text.lower()
+        assert "uxmcp_" in text or "OPEN_UX_API_KEY" in text
+        assert "package" in text.lower() or "pip install" in text.lower()
+    skill = SKILL.read_text(encoding="utf-8")
+    assert 'pip install -e "packages/mcp[dev]"' not in skill
+    assert "clone" not in skill.lower()

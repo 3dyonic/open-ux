@@ -9,10 +9,10 @@ Pointers only. One skill: `open-ux` (`clients/claude/skills/open-ux/SKILL.md`). 
 
 ## Connect
 
-Hosted or download the package — same tools, same Cards.
+`pip install` the package, or hosted — same tools, same Cards.
 
+- **Package** (local): `pip install open-ux`, then `python -m open_ux stdio` (console script: `open-ux`). Same catalog. No invite. Telemetry off.
 - **Hosted** (shared live catalog): `https://open-ux.dev/mcp` with bearer `uxmcp_` (`OPEN_UX_API_KEY`). Invite at [open-ux.dev/invite](https://open-ux.dev/invite).
-- **Package** (local): clone [github.com/3dyonic/open-ux](https://github.com/3dyonic/open-ux) (MIT), `pip install -e "packages/mcp[dev]"`, then `python -m open_ux stdio`. Same catalog. No invite. Telemetry off.
 
 ## Path
 
