@@ -1,11 +1,5 @@
 ---
-description: Audit the forms container (fields, labels, validation, sign-in) via the open-ux skill.
+description: Forms container — fields, labels, validation, sign-in.
 ---
 
-Same skill (`open-ux`). Default Card: `design_a_form`. `$ARGUMENTS` may be `handle_form_errors`, `compose_sign_in`, or `forms`.
-
-```
-python3 skills/open-ux/scripts/audit.py --jobs ${ARGUMENTS:-design_a_form}
-```
-
-No file. No pass/fail. Do not load an `open-ux-forms` package.
+Same `open-ux` skill. Example: signup fields → `design_a_form` then `Open-UX:audit` with `jobs=design_a_form`. Validation → `handle_form_errors`. Login → `compose_sign_in`. We return the pack. Do not send a file.
