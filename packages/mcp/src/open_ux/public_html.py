@@ -138,10 +138,11 @@ PRIVACY_SECTIONS: tuple[tuple[str, str | None, tuple[str, ...]], ...] = (
     ),
     (
         "Contact",
-        "Questions about privacy: use the email on your waitlist request, or contact the operator of this deployment.",
+        None,
         (),
     ),
 )
+PRIVACY_CONTACT_EMAIL = "contact@open-ux.dev"
 _GTM_ID_RE = re.compile(r"^GTM-[A-Z0-9]+$")
 CONSENT_CSS = """
     .consent {
@@ -420,7 +421,14 @@ def privacy_content_html() -> str:
     for heading, paragraph, bullets in PRIVACY_SECTIONS:
         parts.append("    <section>\n")
         parts.append(f"      <h2>{escape(heading)}</h2>\n")
-        if paragraph:
+        if heading == "Contact":
+            email = PRIVACY_CONTACT_EMAIL
+            email_e = escape(email)
+            parts.append(
+                "      <p>Privacy questions: "
+                f'<a href="mailto:{escape(email, quote=True)}">{email_e}</a>.</p>\n'
+            )
+        elif paragraph:
             parts.append(f"      <p>{escape(paragraph)}</p>\n")
         if bullets:
             parts.append("      <ul>\n")
@@ -543,6 +551,10 @@ def render_privacy_page(*, consent: str | None = None) -> str:
       font-size: 15px;
       line-height: 22px;
       color: var(--ink);
+    }
+    .main a {
+      color: inherit;
+      text-decoration: underline;
     }
     ul {
       margin: 0;

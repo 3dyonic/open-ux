@@ -122,6 +122,13 @@ def test_privacy_page_is_po_html_not_eng_sot(tmp_env: Path) -> None:
     assert "Eng Done fails" not in html
     assert "OPEN_UX_DATA_DIR" not in html
     assert "Never persist" not in html
+    assert "<h2>Contact</h2>" in html
+    assert (
+        'Privacy questions: <a href="mailto:contact@open-ux.dev">'
+        "contact@open-ux.dev</a>."
+    ) in html
+    assert "Questions about privacy: use the email on your waitlist request" not in html
+    assert "operator of this deployment" not in html
 
 
 def test_gtm_id_from_env(live_catalog: Path, monkeypatch) -> None:
