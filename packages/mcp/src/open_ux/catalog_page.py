@@ -297,7 +297,7 @@ _CSS = """
     }
     .tree-item--card { padding-left: 20px; }
     .tree-item--facet { padding-left: 32px; color: var(--muted); font-weight: 500; }
-    .tree-item--rule { padding-left: 44px; font-size: 14px; cursor: pointer; }
+    .tree-item--rule { padding-left: 44px; font-size: 16px; cursor: pointer; }
     .tree-item--container { font-weight: 600; }
     .tree-item.is-active {
       background: var(--pip-soft);
