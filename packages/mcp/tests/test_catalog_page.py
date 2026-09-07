@@ -348,7 +348,13 @@ def test_catalog_rule_h1_strips_house_suffix(live_catalog: Path) -> None:
     assert "—" not in h1
     assert "NN/g" not in h1
     assert 'class="row-name">Visible field label — NN/g</span>' not in html
-    assert ">Visible field label — NN/g</span>" in html
+    assert ">Visible field label — NN/g</span>" not in html
+    assert re.search(
+        r'<a class="tree-item tree-item--rule is-active"[^>]*>'
+        r'(?:<span class="tree-pip"[^>]*></span>)?'
+        r"<span>Visible field label</span></a>",
+        html,
+    )
 
 
 def test_catalog_rule_one_cite_row_per_citation(live_catalog: Path) -> None:
@@ -557,6 +563,14 @@ def test_catalog_tree_carets_toggle_and_rules_link(live_catalog: Path) -> None:
         f'<a class="tree-item tree-item--rule is-active" href="/catalog/{NNG_SEED}">'
         in html
     )
+    assert re.search(
+        r'<a class="tree-item tree-item--rule is-active"[^>]*>'
+        r'(?:<span class="tree-pip"[^>]*></span>)?'
+        r"<span>Visible field label</span></a>",
+        html,
+    )
+    assert ">Visible field label — NN/g</span>" not in html
+    assert "Design a form" in html
     assert 'closest("button.tree-item[aria-expanded]")' in html
     assert 'classList.toggle("is-open"' in html
     assert 'caret.textContent = next ? "▾" : "▸"' in html

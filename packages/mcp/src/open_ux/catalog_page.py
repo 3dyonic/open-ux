@@ -927,7 +927,7 @@ def _tree_html(
                         if active
                         else ""
                     )
-                    label = _display_name(row)
+                    label = _strip_house_suffix(_display_name(row))
                     parts.append(
                         f'<a class="{cls}" href="{_e(_href_id(gid))}">{pip}'
                         f"<span>{_e(label)}</span></a>"
