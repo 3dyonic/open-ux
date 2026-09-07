@@ -5,6 +5,10 @@ Subtitle: cited UX rules agents audit against / shared cited guidelines
 
 Do not put “MCP” in the marketplace / plugin title or landing H1.
 
-Thursday: **URL + key in client settings**. Registry listing is after proof.
+Connect: hosted `https://open-ux.dev/mcp` + `uxmcp_` bearer (`OPEN_UX_API_KEY`), or stdio. Registry listing is after proof.
 
-Skill is a pointer only — no duplicate guideline bodies.
+One skill package: `skills/open-ux`. Offerings compose / review / map / cite live in that skill — not `open-ux-forms` / `open-ux-actions` / `open-ux-feedback`.
+
+Commands: `/list` `/get` `/audit` plus aliases `/forms` `/actions` `/feedback` (container aliases). Agent pointers: `agents/open-ux.md`.
+
+Skill and commands are pointers only — no duplicate guideline bodies.

@@ -2,7 +2,7 @@
   "mcpServers": {
     "open-ux": {
       "type": "http",
-      "url": "${OPEN_UX_URL}",
+      "url": "https://open-ux.dev/mcp",
       "headers": {
         "Authorization": "Bearer ${OPEN_UX_API_KEY}"
       }
