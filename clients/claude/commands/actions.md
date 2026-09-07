@@ -1,11 +1,5 @@
 ---
-description: Audit the actions container (CTAs, destructive, leave) via the open-ux skill.
+description: Actions container — CTAs, delete, leave.
 ---
 
-Same skill (`open-ux`). Default Card: `design_actions_and_ctas`. `$ARGUMENTS` may be `protect_destructive_and_leave` or `actions`.
-
-```
-python3 skills/open-ux/scripts/audit.py --jobs ${ARGUMENTS:-design_actions_and_ctas}
-```
-
-No file. No pass/fail. Do not load an `open-ux-actions` package.
+Same `open-ux` skill. Example: delete confirm → `protect_destructive_and_leave` then `Open-UX:audit` with `jobs=protect_destructive_and_leave`. Button labels → `design_actions_and_ctas`. We return the pack. Do not send a file.
