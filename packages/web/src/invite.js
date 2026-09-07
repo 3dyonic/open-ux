@@ -1,0 +1,246 @@
+import { shell } from "./chrome.js";
+import { escapeHtml, setTitle } from "./util.js";
+
+const EMAIL_RE =
+  /^[a-z0-9](?:[a-z0-9._+-]{0,62}[a-z0-9])?@(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}$/;
+const TOKEN_RE = /^inv_[A-Za-z0-9_-]{16,64}$/;
+const MASK = "uxmcp_" + "\u2022".repeat(16);
+
+const CARD = "invite-card";
+const CARD_ERROR = "invite-card invite-card-error";
+
+function setBusy(button, busy, idleLabel, busyLabel) {
+  button.disabled = busy;
+  button.setAttribute("aria-busy", busy ? "true" : "false");
+  button.classList.toggle("btn-busy", busy);
+  button.textContent = busy ? busyLabel : idleLabel;
+}
+
+function setFieldError(card, input, sub, error) {
+  card.className = CARD_ERROR;
+  input.setAttribute("aria-invalid", "true");
+  input.setAttribute("aria-describedby", sub.id);
+  sub.className = "invite-sub invite-sub-error";
+  sub.textContent = error;
+  input.focus();
+}
+
+function clearFieldError(card, input, sub, supporting) {
+  card.className = CARD;
+  input.removeAttribute("aria-invalid");
+  input.removeAttribute("aria-describedby");
+  sub.className = "invite-sub";
+  sub.textContent = supporting;
+}
+
+export function renderInvite(root) {
+  setTitle("Request access — Open UX");
+  const supporting = "Join the waitlist. We email a one-time redeem when you are approved.";
+  const invalidEmail = "Enter a valid email to request an invite";
+  const requestFailed = "We couldn’t add you to the waitlist. Check the email and try again.";
+  root.innerHTML = shell(
+    `
+  <main class="page page-invite">
+    <div class="${CARD}" id="request-card">
+      <p class="invite-meta"><span class="pip" aria-hidden="true"></span>Invite · waitlist, one key after approve</p>
+      <h1 class="invite-title">Request access</h1>
+      <p class="invite-sub" id="request-sub">${supporting}</p>
+      <form id="invite-request" class="contents" method="post" action="/invite/request" novalidate>
+        <div class="field-invite">
+          <label class="label-invite" for="email">Email</label>
+          <input class="input input-invite" id="email" name="email" type="email" autocomplete="email" inputmode="email" maxlength="254" spellcheck="false" autocapitalize="none" placeholder="you@studio.com">
+        </div>
+        <button class="btn btn-primary" type="submit" id="request-submit">Request access</button>
+        <a class="invite-link" href="/invite/redeem">Already have a token? Redeem it.</a>
+        <p class="foot" id="request-foot">No key yet — approval issues a one-time invite link.</p>
+      </form>
+    </div>
+  </main>`,
+    { catalog: false },
+  );
+
+  const form = document.getElementById("invite-request");
+  const card = document.getElementById("request-card");
+  const emailInput = document.getElementById("email");
+  const sub = document.getElementById("request-sub");
+  const submit = document.getElementById("request-submit");
+  const footEl = document.getElementById("request-foot");
+
+  function isValidEmail(value) {
+    const email = value.trim().toLowerCase();
+    return EMAIL_RE.test(email) && email.length <= 254;
+  }
+
+  function showError(message) {
+    setBusy(submit, false, "Request access", "Requesting…");
+    setFieldError(card, emailInput, sub, message);
+    footEl.hidden = true;
+  }
+
+  function clearError() {
+    clearFieldError(card, emailInput, sub, supporting);
+    footEl.hidden = false;
+  }
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const email = emailInput.value.trim().toLowerCase();
+    if (!isValidEmail(email)) {
+      showError(invalidEmail);
+      return;
+    }
+    clearError();
+    setBusy(submit, true, "Request access", "Requesting…");
+    try {
+      const res = await fetch("/invite/request", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      await res.json();
+      if (!res.ok) {
+        showError(requestFailed);
+        return;
+      }
+      window.location.href = "/invite/requested";
+    } catch {
+      showError(requestFailed);
+    }
+  });
+}
+
+export function renderRequested(root) {
+  setTitle("You’re on the list — Open UX");
+  root.innerHTML = shell(
+    `
+  <main class="page page-invite">
+    <div class="${CARD}" id="requested-card">
+      <p class="invite-meta"><span class="pip" aria-hidden="true"></span>Invite · waitlist</p>
+      <h1 class="invite-title">You’re on the list</h1>
+      <p class="invite-sub">Thanks — we’ll email a one-time invite when your request is approved.</p>
+      <p class="foot">Already have an invite? Open the link from your email to redeem.</p>
+      <p class="foot foot-meta">No key on this screen — key appears only after a real redeem.</p>
+    </div>
+  </main>`,
+    { catalog: false },
+  );
+}
+
+export function renderRedeem(root) {
+  setTitle("Redeem invite — Open UX");
+  const supporting = "Paste your invite token, or open the link from your email.";
+  const invalidToken = "This invite isn’t valid. It may be used, expired, or mistyped.";
+  root.innerHTML = shell(
+    `
+  <main class="page page-invite">
+    <div class="${CARD}" id="redeem-card">
+      <p class="invite-meta"><span class="pip" aria-hidden="true"></span>Invite · redeem once</p>
+      <h1 class="invite-title">Redeem invite</h1>
+      <p class="invite-sub" id="redeem-sub">${supporting}</p>
+      <form id="invite-redeem" class="contents" method="post" action="/invite/redeem" novalidate>
+        <div class="field-invite">
+          <label class="label-invite" for="token">Invite token</label>
+          <input class="input input-invite" id="token" name="token" type="text" autocomplete="off" spellcheck="false" autocapitalize="none" maxlength="68" placeholder="inv_••••••••••••">
+        </div>
+        <button class="btn btn-primary" type="submit" id="redeem-submit">Redeem</button>
+        <p class="foot" id="redeem-foot">Redeeming burns the invite and mints your uxmcp_ key once.</p>
+      </form>
+    </div>
+    <div class="${CARD}" id="success-card" hidden>
+      <p class="invite-meta"><span class="pip" aria-hidden="true"></span>Redeemed · key once</p>
+      <h1 class="invite-title">Your key</h1>
+      <p class="invite-sub">Invite redeemed. Copy your key — we won’t show it in full again.</p>
+      <div class="key-box" id="key-text"></div>
+      <button class="btn btn-primary" type="button" id="copy-key">Copy</button>
+      <p class="foot">Use as bearer on /mcp. Self-host stdio needs no auth.</p>
+    </div>
+  </main>`,
+    { catalog: false },
+  );
+
+  let issuedKey = "";
+  const form = document.getElementById("invite-redeem");
+  const tokenInput = document.getElementById("token");
+  const sub = document.getElementById("redeem-sub");
+  const submit = document.getElementById("redeem-submit");
+  const footEl = document.getElementById("redeem-foot");
+  const redeemCard = document.getElementById("redeem-card");
+  const successCard = document.getElementById("success-card");
+  const keyText = document.getElementById("key-text");
+  const params = new URLSearchParams(location.search);
+  const q = params.get("token");
+  if (q) tokenInput.value = q;
+
+  function hideSuccess() {
+    issuedKey = "";
+    keyText.textContent = "";
+    successCard.hidden = true;
+    setTitle("Redeem invite — Open UX");
+  }
+
+  function showError() {
+    hideSuccess();
+    redeemCard.hidden = false;
+    setBusy(submit, false, "Redeem", "Redeeming…");
+    setFieldError(redeemCard, tokenInput, sub, invalidToken);
+    footEl.hidden = true;
+  }
+
+  function clearError() {
+    clearFieldError(redeemCard, tokenInput, sub, supporting);
+    footEl.hidden = false;
+  }
+
+  function maskKey(key) {
+    if (key.startsWith("uxmcp_")) return MASK;
+    return "\u2022".repeat(16);
+  }
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const token = tokenInput.value.trim();
+    if (!TOKEN_RE.test(token)) {
+      showError();
+      return;
+    }
+    clearError();
+    setBusy(submit, true, "Redeem", "Redeeming…");
+    try {
+      const res = await fetch("/invite/redeem", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ token }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.key) {
+        showError();
+        return;
+      }
+      issuedKey = data.key;
+      keyText.textContent = maskKey(issuedKey);
+      redeemCard.hidden = true;
+      successCard.hidden = false;
+      setTitle("Your key — Open UX");
+    } catch {
+      showError();
+    }
+  });
+
+  document.getElementById("copy-key").addEventListener("click", () => {
+    if (!issuedKey || !navigator.clipboard) return;
+    navigator.clipboard.writeText(issuedKey);
+  });
+}
+
+export function renderNotFound(root, guidelineId) {
+  setTitle("Not found — Open UX");
+  root.innerHTML = shell(
+    `
+  <main class="page">
+    <a class="back" href="/catalog">← Back to Catalog</a>
+    <h1 class="page-title">Not found</h1>
+    <p class="lede">No guideline with id “${escapeHtml(guidelineId)}”.</p>
+  </main>`,
+    { catalogActive: true, paper: true },
+  );
+}

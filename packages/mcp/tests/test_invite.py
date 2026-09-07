@@ -216,20 +216,24 @@ def test_invite_request_rate_limited(tmp_env: Path) -> None:
         assert statuses[5] == 429
 
 
-def test_invite_pages_send_security_headers(tmp_env: Path) -> None:
+def test_invite_pages_send_security_headers(tmp_env: Path, monkeypatch) -> None:
+    dist = tmp_env / "web-dist"
+    dist.mkdir()
+    (dist / "index.html").write_text(
+        "<!DOCTYPE html><html><body>open-ux-shell</body></html>",
+        encoding="utf-8",
+    )
+    monkeypatch.setenv("OPEN_UX_WEB_DIST", str(dist))
     with _hosted_client(tmp_env) as client:
         for path in ("/invite", "/invite/requested", "/invite/redeem"):
             response = client.get(path)
+            assert response.status_code == 200, path
             assert response.headers["x-content-type-options"] == "nosniff"
             assert response.headers["x-frame-options"] == "DENY"
             assert (
                 response.headers["referrer-policy"]
                 == "strict-origin-when-cross-origin"
             )
-            csp = response.headers["content-security-policy"]
-            assert "object-src 'none'" in csp
-            assert "form-action 'self'" in csp
-            assert "base-uri 'self'" in csp
 
 
 def test_expired_invite_cannot_redeem(tmp_env: Path) -> None:
@@ -255,32 +259,7 @@ def test_approve_invite_cli(tmp_env: Path, capsys: pytest.CaptureFixture[str]) -
     assert "/invite/redeem?token=" in out["redeem_url"]
 
 
-def test_redeem_get_hides_success_until_minted_key(tmp_env: Path) -> None:
-    with _hosted_client(tmp_env) as client:
-        html = client.get("/invite/redeem").text
-
-    assert '<div class="card" id="redeem-card">' in html
-    assert '<div class="card" id="success-card" hidden>' in html
-    assert ".card[hidden]" in html
-    assert 'class="key" id="key-text"></div>' in html
-    assert "uxmcp_" + "\u2022" * 16 not in html.split('<div class="key"', 1)[1].split("</div>", 1)[0]
-    assert "function hideSuccess" in html
-    assert "successCard.hidden = true" in html
-    show_success = html.split("issuedKey = data.key", 1)[1]
-    assert "successCard.hidden = false" in show_success
-    error_branch = html.split("if (!res.ok || !data.key)", 1)[1].split("issuedKey = data.key", 1)[0]
-    assert "showError()" in error_branch
-    assert "successCard.hidden = false" not in error_branch
-
-
 def test_admin_approve_is_json_only_no_html(tmp_env: Path) -> None:
-    from open_ux import invite_page
-
-    assert not hasattr(invite_page, "ADMIN_HTML")
-    assert "Approve" not in invite_page.REQUEST_HTML
-    assert "Approve" not in invite_page.REQUESTED_HTML
-    assert "Approve" not in invite_page.REDEEM_HTML
-
     with _hosted_client(tmp_env) as client:
         get = client.get("/admin/invite/approve")
         assert get.status_code != 200

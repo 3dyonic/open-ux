@@ -1,0 +1,344 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #F9F6F2;
+  --color-card: #ffffff;
+  --color-ink: #1F1B16;
+  --color-muted: #6A6056;
+  --color-line: #DED4C8;
+  --color-pip: #FF4B00;
+  --color-pip-soft: #FFECE0;
+  --color-clay: #ecdcca;
+  --color-clay-back: #d6bea6;
+  --color-danger: #B82A2A;
+  --color-danger-bg: #fdecec;
+  --color-success: #1A7F37;
+  --color-success-bg: #e7f6ec;
+  --color-success-soft: #DAFBE1;
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --radius-sm: 6px;
+}
+
+@layer base {
+  html,
+  body,
+  #app {
+    min-height: 100%;
+  }
+
+  body {
+    @apply m-0 bg-paper font-sans text-base leading-normal text-ink;
+  }
+
+  #app {
+    @apply flex min-h-dvh flex-col;
+  }
+
+  main {
+    @apply flex-1;
+  }
+
+  a {
+    @apply text-inherit no-underline;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex cursor-pointer items-center justify-center rounded-sm border-0 px-4 py-2.5 font-sans text-sm font-medium leading-normal no-underline disabled:cursor-default disabled:opacity-40;
+  }
+  .btn-primary {
+    @apply bg-pip text-white;
+  }
+  .btn-nav {
+    @apply px-3.5 py-2 text-[13px];
+  }
+  .btn-secondary {
+    @apply border border-ink bg-transparent text-ink;
+  }
+  .btn-outline {
+    @apply border border-line bg-card font-semibold text-ink;
+  }
+  .btn-busy {
+    @apply relative cursor-wait;
+  }
+  .btn-busy::before {
+    content: "";
+    @apply mr-2 inline-block size-3 shrink-0 animate-spin rounded-full border-2 border-current border-t-transparent;
+  }
+
+  .pip {
+    @apply inline-block size-2 shrink-0 rounded-full bg-pip;
+  }
+  .pip-pass {
+    @apply bg-success;
+  }
+  .pip-fail {
+    @apply bg-danger;
+  }
+
+  .nav {
+    @apply flex w-full items-center justify-between border-b border-line bg-card px-5 py-4 md:px-12;
+  }
+  .nav-paper {
+    @apply bg-paper;
+  }
+  .nav-brand {
+    @apply flex items-center gap-2.5 text-inherit no-underline;
+  }
+  .nav-actions {
+    @apply flex items-center gap-4;
+  }
+  .nav-link {
+    @apply text-[13px] font-medium text-muted;
+  }
+  .nav-catalog {
+    @apply flex items-center gap-1.5 text-sm font-medium text-pip;
+  }
+  .nav-github {
+    @apply inline-flex size-6 items-center justify-center p-1 text-muted hover:text-ink focus:text-ink;
+  }
+
+  .footer {
+    @apply flex w-full flex-wrap items-center justify-between gap-2 border-t border-line bg-paper px-5 py-4 pb-6 text-sm leading-5 text-muted md:px-12;
+  }
+  .footer a {
+    @apply text-muted underline hover:text-ink focus:text-ink;
+  }
+
+  .page {
+    @apply flex w-full flex-1 flex-col gap-7 px-5 py-10 pb-12 md:px-12;
+  }
+  .page-privacy {
+    @apply max-w-[720px] gap-6;
+  }
+  .page-invite {
+    @apply items-center justify-center px-5 py-12 pb-14 md:px-12;
+  }
+  .page-title {
+    @apply m-0 text-[28px] font-bold leading-normal text-ink;
+  }
+  .lede {
+    @apply m-0 text-base text-muted;
+  }
+  .kicker {
+    @apply m-0 flex items-center gap-2 font-mono text-[11px] font-normal text-muted;
+  }
+  .back {
+    @apply text-sm font-medium text-pip underline;
+  }
+
+  .field {
+    @apply flex w-full flex-col gap-2;
+  }
+  .field-invite {
+    @apply flex w-full flex-col items-start gap-1.5;
+  }
+  .label {
+    @apply text-sm font-medium text-ink;
+  }
+  .label-invite {
+    @apply text-xs font-medium text-ink;
+  }
+  .input {
+    @apply w-full rounded-sm border border-line bg-card px-3.5 py-3 font-sans text-sm text-ink placeholder:text-muted;
+  }
+  .input-invite {
+    @apply px-3 py-2.5;
+  }
+  .shown {
+    @apply m-0 font-mono text-sm text-muted;
+  }
+  .pip-tiny {
+    @apply inline-block size-[7px] shrink-0 rounded-full bg-success;
+  }
+  .pip-tiny-danger {
+    @apply bg-danger;
+  }
+  .pip-tiny-muted {
+    @apply bg-muted;
+  }
+
+  .chips {
+    @apply flex flex-wrap gap-2;
+  }
+  .chip {
+    @apply cursor-pointer rounded-full border border-line bg-card px-3 py-1.5 font-sans text-sm font-medium text-ink;
+  }
+  .chip-on {
+    @apply border-pip bg-pip-soft text-pip;
+  }
+
+  .invite-card {
+    @apply flex w-[480px] max-w-full flex-col items-start gap-4 rounded-sm border border-line bg-card p-8;
+  }
+  .invite-card-error {
+    @apply border-danger;
+  }
+  .invite-title {
+    @apply m-0 text-[28px] font-semibold leading-[34px] text-ink;
+  }
+  .invite-sub {
+    @apply m-0 text-sm font-normal leading-5 text-muted;
+  }
+  .invite-sub-error {
+    @apply text-danger;
+  }
+  .invite-meta {
+    @apply m-0 flex items-center gap-2 font-mono text-[11px] font-normal text-muted;
+  }
+  .invite-link {
+    @apply m-0 text-[13px] font-medium text-pip no-underline;
+  }
+  .foot {
+    @apply m-0 text-xs font-normal text-muted;
+  }
+  .foot-meta {
+    @apply font-mono text-[11px];
+  }
+  .key-box {
+    @apply w-full rounded-sm border border-pip bg-pip-soft p-3 font-mono text-sm font-medium text-pip;
+  }
+
+  .status-chip {
+    @apply inline-flex items-center gap-1.5 whitespace-nowrap rounded-sm border border-success bg-success-soft px-2.5 py-1 font-mono text-xs font-medium text-success;
+  }
+  .status-chip-bad {
+    @apply border-danger bg-danger-bg text-danger;
+  }
+  .status-chip-neutral {
+    @apply border-line bg-card text-muted;
+  }
+
+  .list {
+    @apply w-full overflow-hidden rounded-sm border border-line bg-card;
+  }
+  .catalog-row {
+    @apply flex w-full flex-col items-start gap-1 border-b border-line px-5 py-3.5 text-inherit last:border-b-0;
+  }
+  .row-line {
+    @apply flex w-full items-center gap-2 overflow-hidden whitespace-nowrap;
+  }
+  .row-name {
+    @apply min-w-0 flex-[0_1_auto] overflow-hidden text-ellipsis text-base font-medium text-pip;
+  }
+  .row-path {
+    @apply shrink-0 text-sm text-muted;
+  }
+  .row-rule {
+    @apply w-full overflow-hidden text-ellipsis whitespace-nowrap text-sm text-ink;
+  }
+  .pager {
+    @apply flex w-full items-center justify-between gap-4;
+  }
+  .pager-meta {
+    @apply m-0 font-mono text-sm text-muted;
+  }
+
+  .rule-shell {
+    @apply flex w-full flex-1 items-start;
+  }
+  .sidebar {
+    @apply flex w-[260px] shrink-0 flex-col gap-0.5 border-r border-line py-10 pr-3 pl-5;
+  }
+  .tree-group {
+    @apply flex w-full flex-col gap-0.5;
+  }
+  .tree-children {
+    @apply flex w-full flex-col gap-0.5;
+  }
+  .tree-group:not(.is-open) > .tree-children {
+    @apply hidden;
+  }
+  .tree-item {
+    @apply flex min-h-7 w-full cursor-pointer items-center gap-1.5 rounded-sm border-0 bg-transparent px-2 py-1.5 text-left font-sans text-sm text-ink;
+  }
+  .tree-item-container {
+    @apply font-semibold;
+  }
+  .tree-item-card {
+    @apply pl-5;
+  }
+  .tree-item-facet {
+    @apply pl-8 font-medium text-muted;
+  }
+  .tree-item-rule {
+    @apply pl-11;
+  }
+  .tree-item-on {
+    @apply bg-pip-soft font-medium;
+  }
+  .tree-caret {
+    @apply w-2.5 shrink-0 text-[10px] text-muted;
+  }
+  .tree-pip {
+    @apply size-[5px] shrink-0 rounded-full bg-pip;
+  }
+  .content {
+    @apply flex min-w-0 flex-1 flex-col gap-7 px-5 py-10 pb-12 md:px-12 md:pl-10;
+  }
+  .block {
+    @apply flex flex-col gap-2;
+  }
+  .block-label {
+    @apply m-0 text-base font-semibold text-muted;
+  }
+  .block-use {
+    @apply text-success;
+  }
+  .block-not {
+    @apply text-danger;
+  }
+  .block-body {
+    @apply m-0 text-base leading-6 text-ink;
+  }
+  .example-pass {
+    @apply flex flex-col gap-2 rounded-sm border border-line bg-success-bg p-4;
+  }
+  .example-fail {
+    @apply flex flex-col gap-2 rounded-sm border border-line bg-danger-bg p-4;
+  }
+  .badge-pass {
+    @apply inline-flex rounded-full bg-success px-2.5 py-1 text-sm font-medium text-white;
+  }
+  .badge-fail {
+    @apply inline-flex rounded-full bg-danger px-2.5 py-1 text-sm font-medium text-white;
+  }
+  .cite-list {
+    @apply flex flex-col gap-3;
+  }
+  .cite-row {
+    @apply flex flex-col gap-1;
+  }
+  .cite-source {
+    @apply m-0 text-sm font-medium text-ink;
+  }
+  .cite-url {
+    @apply m-0 break-all font-mono text-sm text-pip;
+  }
+  .when-stack {
+    @apply flex flex-col gap-6;
+  }
+  .examples {
+    @apply flex flex-col gap-3;
+  }
+  .eyebrow {
+    @apply flex flex-wrap items-center justify-between gap-3;
+  }
+  .eyebrow-path {
+    @apply m-0 text-sm text-muted;
+  }
+  .severity {
+    @apply rounded-full border border-line bg-card px-2.5 py-1 font-mono text-xs font-medium text-ink;
+  }
+  .rule-name {
+    @apply m-0 text-[28px] font-semibold leading-8 text-ink;
+  }
+  .rule-id {
+    @apply m-0 font-mono text-sm text-muted;
+  }
+  .rule-text {
+    @apply m-0 text-lg leading-7 text-ink;
+  }
+}

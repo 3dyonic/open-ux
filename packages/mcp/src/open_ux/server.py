@@ -1,13 +1,16 @@
 from __future__ import annotations
 
+import os
 import secrets
+from pathlib import Path
 from typing import Annotated, Any
 
 from fastmcp import FastMCP
 from fastmcp.server.dependencies import get_access_token
 from pydantic import Field
 from starlette.requests import Request
-from starlette.responses import HTMLResponse, JSONResponse, RedirectResponse, Response
+from starlette.responses import FileResponse, JSONResponse, RedirectResponse, Response
+from starlette.staticfiles import StaticFiles
 
 from open_ux.audit import audit as run_audit
 from open_ux.auth import (
@@ -21,28 +24,16 @@ from open_ux.auth import (
 )
 from open_ux import __version__
 from open_ux.catalog import EMPTY_NOTE, get_by_id, list_index, load_catalog
-from open_ux.catalog_page import (
-    render_catalog_list,
-    render_catalog_not_found,
-    render_catalog_rule,
-)
-from open_ux.invite_page import REQUESTED_HTML, REDEEM_HTML, render_invite_request
+from open_ux.health import health_payload
 from open_ux.jobs import (
     DEFAULT_LIMIT,
     JOB_FIELD_DESCRIPTION,
     JobId,
+    JobTree,
     MAX_LIMIT,
     load_job_tree,
 )
-from open_ux.health_page import health_payload, render_health_page, wants_health_html
-from open_ux.landing import render_landing
-from open_ux.public_html import (
-    CONSENT_COOKIE,
-    FAVICON_PATH,
-    ROBOTS_TXT,
-    render_privacy_page,
-    render_sitemap,
-)
+from open_ux.public_html import FAVICON_PATH, ROBOTS_TXT, render_sitemap
 from open_ux.situations import (
     get_situation as run_get_situation,
     list_situations as run_list_situations,
@@ -57,27 +48,69 @@ from open_ux.settings import (
 )
 from open_ux.store import get_store
 
-INVITE_HTML_HEADERS = {
+SPA_HEADERS = {
     "X-Content-Type-Options": "nosniff",
     "X-Frame-Options": "DENY",
     "Referrer-Policy": "strict-origin-when-cross-origin",
-    "Content-Security-Policy": (
-        "default-src 'self'; "
-        "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; "
-        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
-        "font-src https://fonts.gstatic.com; "
-        "img-src 'self' https://www.googletagmanager.com; "
-        "connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com; "
-        "frame-src https://www.googletagmanager.com; "
-        "object-src 'none'; "
-        "base-uri 'self'; "
-        "form-action 'self'"
-    ),
+    "Cache-Control": "no-cache",
 }
 
 
-def _invite_html(content: str, *, status_code: int = 200) -> HTMLResponse:
-    return HTMLResponse(content, status_code=status_code, headers=INVITE_HTML_HEADERS)
+def web_dist() -> Path | None:
+    raw = os.environ.get("OPEN_UX_WEB_DIST", "").strip()
+    path = Path(raw) if raw else Path(__file__).resolve().parents[2].parent / "web" / "dist"
+    if (path / "index.html").is_file():
+        return path
+    return None
+
+
+def _app_page() -> Response:
+    dist = web_dist()
+    if dist is None:
+        return JSONResponse({"error": "Not found."}, status_code=404)
+    return FileResponse(
+        dist / "index.html",
+        media_type="text/html; charset=utf-8",
+        headers=SPA_HEADERS,
+    )
+
+
+def _jobs_payload(tree: JobTree) -> dict[str, Any]:
+    return {
+        "version": tree.version,
+        "containers": [{"id": c.id, "title": c.title} for c in tree.containers],
+        "cards": [
+            {
+                "id": card.id,
+                "title": card.title,
+                "container": card.container,
+                "facets": [{"id": facet.id, "title": facet.title} for facet in card.facets],
+            }
+            for card in tree.cards
+        ],
+    }
+
+
+def _catalog_index_payload(catalog, job_tree: JobTree) -> dict[str, Any]:
+    items, total = list_index(catalog, limit=max(len(catalog.index), 1))
+    bodies = {str(row.get("id") or ""): row for row in catalog.guidelines}
+    guidelines: list[dict[str, Any]] = []
+    for item in items:
+        row = dict(item)
+        body = bodies.get(str(row.get("id") or ""))
+        if body is not None and body.get("rule") is not None:
+            row["rule"] = str(body["rule"]).strip()
+        guidelines.append(row)
+    return {
+        "guidelines": guidelines,
+        "total": total,
+        "catalog": {
+            "status": "empty" if catalog.empty else "ok",
+            "guideline_count": len(catalog.guidelines),
+            "version": catalog.version,
+        },
+        "jobs": _jobs_payload(job_tree),
+    }
 
 
 def _client_ip(request: Request) -> str:
@@ -99,10 +132,6 @@ def _invite_allowed(
         per_day=per_day,
     )
     return ok
-
-
-def _consent_cookie(request: Request) -> str | None:
-    return request.cookies.get(CONSENT_COOKIE)
 
 
 def _key_hash_or_none() -> str | None:
@@ -183,6 +212,7 @@ def create_mcp(*, hosted: bool) -> FastMCP:
     store = get_store(settings)
     catalog = load_catalog(settings)
     job_tree = load_job_tree(settings)
+    dist = web_dist()
 
     auth = HashedKeyVerifier(settings, store) if hosted else None
     mcp = FastMCP(
@@ -390,40 +420,49 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         )
         return result
 
+    @mcp.custom_route("/api/catalog", methods=["GET"])
+    async def catalog_index(_request: Request) -> Response:
+        return JSONResponse(_catalog_index_payload(catalog, job_tree))
+
+    @mcp.custom_route("/api/catalog/{guideline_id}", methods=["GET"])
+    async def catalog_item(request: Request) -> Response:
+        guideline_id = str(request.path_params.get("guideline_id") or "")
+        found = get_by_id(catalog, guideline_id)
+        if found is None:
+            return JSONResponse({"found": False, "id": guideline_id}, status_code=404)
+        return JSONResponse(found)
+
+    @mcp.custom_route("/health.json", methods=["GET"])
+    async def health_json(_request: Request) -> Response:
+        return JSONResponse(health_payload(catalog, hosted=hosted))
+
     @mcp.custom_route("/", methods=["GET"])
-    async def landing(request: Request) -> Response:
-        return HTMLResponse(render_landing(consent=_consent_cookie(request)))
+    async def landing(_request: Request) -> Response:
+        return _app_page()
 
     @mcp.custom_route("/catalog", methods=["GET"])
-    async def catalog_list(request: Request) -> Response:
-        container = str(request.query_params.get("container") or "")
-        query = str(request.query_params.get("q") or "")
-        try:
-            page = int(str(request.query_params.get("page") or "1"))
-        except ValueError:
-            page = 1
-        return HTMLResponse(
-            render_catalog_list(
-                catalog,
-                job_tree,
-                container=container,
-                query=query,
-                page=page,
-                consent=_consent_cookie(request),
-            )
-        )
+    async def catalog_list(_request: Request) -> Response:
+        return _app_page()
 
     @mcp.custom_route("/catalog/{guideline_id}", methods=["GET"])
-    async def catalog_rule(request: Request) -> Response:
-        guideline_id = str(request.path_params.get("guideline_id") or "")
-        consent = _consent_cookie(request)
-        html = render_catalog_rule(catalog, guideline_id, job_tree, consent=consent)
-        if html is None:
-            return HTMLResponse(
-                render_catalog_not_found(guideline_id, consent=consent),
-                status_code=404,
-            )
-        return HTMLResponse(html)
+    async def catalog_rule(_request: Request) -> Response:
+        return _app_page()
+
+    @mcp.custom_route("/health", methods=["GET"])
+    async def health_page(_request: Request) -> Response:
+        return _app_page()
+
+    @mcp.custom_route("/privacy", methods=["GET"])
+    async def privacy(_request: Request) -> Response:
+        return _app_page()
+
+    @mcp.custom_route("/invite", methods=["GET"])
+    async def invite_request_page(_request: Request) -> Response:
+        return _app_page()
+
+    @mcp.custom_route("/invite/requested", methods=["GET"])
+    async def invite_requested_page(_request: Request) -> Response:
+        return _app_page()
 
     @mcp.custom_route("/robots.txt", methods=["GET"])
     async def robots(_request: Request) -> Response:
@@ -442,20 +481,13 @@ def create_mcp(*, hosted: bool) -> FastMCP:
     async def favicon(_request: Request) -> Response:
         return Response(FAVICON_PATH.read_bytes(), media_type="image/svg+xml")
 
-    @mcp.custom_route("/health", methods=["GET"])
-    async def health(request: Request) -> Response:
-        payload = health_payload(catalog, hosted=hosted)
-        if wants_health_html(request):
-            return HTMLResponse(render_health_page(payload))
-        return JSONResponse(payload)
+    if dist is not None and (dist / "assets").is_dir():
+        static_assets = StaticFiles(directory=dist / "assets")
 
-    @mcp.custom_route("/privacy", methods=["GET"])
-    async def privacy(request: Request) -> Response:
-        return HTMLResponse(render_privacy_page(consent=_consent_cookie(request)))
-
-    @mcp.custom_route("/invite", methods=["GET"])
-    async def invite_request_page(request: Request) -> Response:
-        return _invite_html(render_invite_request(consent=_consent_cookie(request)))
+        @mcp.custom_route("/assets/{path:path}", methods=["GET"])
+        async def web_assets(request: Request) -> Response:
+            rel = str(request.path_params.get("path") or "")
+            return await static_assets.get_response(rel, request.scope)
 
     @mcp.custom_route("/invite/request", methods=["POST"])
     async def invite_request_route(request: Request) -> Response:
@@ -466,14 +498,10 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             )
         return await _waitlist_request(request, settings=settings, store=store)
 
-    @mcp.custom_route("/invite/requested", methods=["GET"])
-    async def invite_requested_page(_request: Request) -> Response:
-        return _invite_html(REQUESTED_HTML)
-
     @mcp.custom_route("/invite/redeem", methods=["GET", "POST"])
     async def invite_redeem_route(request: Request) -> Response:
         if request.method == "GET":
-            return _invite_html(REDEEM_HTML)
+            return _app_page()
         if not hosted:
             return JSONResponse(
                 {"error": "Invites are hosted-only. Self-host stdio needs no key."},
