@@ -5,12 +5,18 @@ from starlette.requests import Request
 from starlette.responses import JSONResponse, Response
 
 from open_ux.auth import KEY_PREFIX, hash_key
-from open_ux.settings import Settings
+from open_ux.settings import MCP_IP_PER_DAY, MCP_IP_PER_MINUTE, Settings
 from open_ux.store import Store
 
 
+def client_ip(request: Request) -> str:
+    """Peer address after uvicorn proxy_headers. Do not parse X-Forwarded-For."""
+    client = request.client
+    return client.host if client and client.host else "unknown"
+
+
 class RateLimitMiddleware(BaseHTTPMiddleware):
-    """Soft hosted limits: ~60/min and ~1k/day per key_hash."""
+    """Hosted /mcp: per-IP first, then per-key if the bearer is known."""
 
     def __init__(self, app, settings: Settings, store: Store) -> None:
         super().__init__(app)
@@ -20,6 +26,16 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next) -> Response:
         if request.url.path.rstrip("/") != "/mcp":
             return await call_next(request)
+        ok, window = self.store.consume_rate(
+            f"mcp:ip:{client_ip(request)}",
+            per_minute=MCP_IP_PER_MINUTE,
+            per_day=MCP_IP_PER_DAY,
+        )
+        if not ok:
+            return JSONResponse(
+                {"error": "rate_limited", "window": window},
+                status_code=429,
+            )
         header = request.headers.get("authorization") or ""
         if not header.lower().startswith("bearer "):
             return await call_next(request)

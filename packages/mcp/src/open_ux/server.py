@@ -46,6 +46,7 @@ from open_ux.settings import (
     INVITE_REQUEST_RATE_PER_MINUTE,
     Settings,
 )
+from open_ux.rate_limit import client_ip
 from open_ux.store import get_store
 
 SPA_HEADERS = {
@@ -113,11 +114,6 @@ def _catalog_index_payload(catalog, job_tree: JobTree) -> dict[str, Any]:
     }
 
 
-def _client_ip(request: Request) -> str:
-    client = request.client
-    return client.host if client and client.host else "unknown"
-
-
 def _invite_allowed(
     request: Request,
     store,
@@ -127,7 +123,7 @@ def _invite_allowed(
     per_day: int,
 ) -> bool:
     ok, _window = store.consume_rate(
-        f"{bucket}:{_client_ip(request)}",
+        f"{bucket}:{client_ip(request)}",
         per_minute=per_minute,
         per_day=per_day,
     )
