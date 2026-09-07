@@ -26,17 +26,15 @@ Use the hosted endpoint (request an invite, redeem for an API key) or self-host 
 
 ## v1 scope
 
-**Category:** Forms  
-**Segment:** Field labels  
-**Three cited rules:**
+**Category:** Forms and the locked containers. Primary Apple HIG and NN/g rules were dropped (UNS-93); **200** cited rules remain.
 
 | id | Rule | Citation |
 | --- | --- | --- |
-| `forms.field_labels.visible_label` | Every input has a visible label. Placeholder text alone is not enough. | [Apple HIG — Text fields](https://developer.apple.com/design/human-interface-guidelines/text-fields), Material |
-| `forms.field_labels.label_stays_visible` | The field label remains visible while the field has a value (floating or persistent — not replaced by the value alone). | [Material 3 — Text fields](https://m3.material.io/components/text-fields/guidelines) |
-| `forms.field_labels.error_identifies_and_fixes` | Error text identifies the field and tells the user how to fix it. | [NN/g — Error-Message Guidelines](https://www.nngroup.com/articles/error-message-guidelines/) |
+| `ant.checkbox-vs-switch` | Switch takes effect immediately; a checkbox in a submitted form waits for submit. | [Ant Design — Data entry](https://ant.design/docs/spec/data-entry), [Suomi.fi — Toggle](https://designsystem.suomi.fi/components/toggle/) |
+| `forms.labels.clickable` | Labels are clickable (`htmlFor` or wrapping the control). | [Vercel Web Interface Guidelines — Forms](https://github.com/vercel-labs/web-interface-guidelines/blob/main/command.md) |
+| `govuk.error-summary-plus-per-field` | Error summary plus per-field errors, with the summary focused and each item linked to the answer. | [GOV.UK Design System — Error summary](https://design-system.service.gov.uk/components/error-summary/) |
 
-Those ids are the Designer LIVE seed (UNS-44), kept first in the generated index. Files live under [`catalog/rules/{category}/{source}/`](catalog/rules/). How the catalog is laid out, and which harvest rows are not files, is in [`catalog/README.md`](catalog/README.md). The generated index is [`catalog/index.json`](catalog/index.json). The skill-facing map is [`catalog/MANIFEST.md`](catalog/MANIFEST.md). The tree is [`catalog/jobs.json`](catalog/jobs.json).
+Files live under [`catalog/rules/{category}/{source}/`](catalog/rules/). How the catalog is laid out, and which harvest rows are not files, is in [`catalog/README.md`](catalog/README.md). The generated index is [`catalog/index.json`](catalog/index.json). The skill-facing map is [`catalog/MANIFEST.md`](catalog/MANIFEST.md). The tree is [`catalog/jobs.json`](catalog/jobs.json).
 
 **Out of v1:** other form segments, screenshots, search, suggest-fixes, bulk ingest, inventing look, a server LLM grader.
 

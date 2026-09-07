@@ -71,7 +71,7 @@ def test_expand_need_cards_not_leaves(live_catalog: Path) -> None:
     assert "chart_has_a_story" in display.tags
     assert "nsw.charts-start-with-story" in display.guideline_ids
     overlay = resolve_need("choose_an_overlay", tree)
-    assert "nng.modal-and-nonmodal-dialogs" in overlay.guideline_ids
+    assert "mui.non-modal-dialogs-allowed" in overlay.guideline_ids
     steps = resolve_need("build_a_multi_step_flow", tree)
     assert "nl.step-n-of-m-in-title-and-above-form" in steps.guideline_ids
     assert resolve_need("avoid_placeholder_as_label", tree).empty

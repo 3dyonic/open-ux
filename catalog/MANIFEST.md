@@ -6,7 +6,7 @@ Layout: `catalog/rules/{category}/{source}/{file}.json`. The harvest prefix is i
 
 Read this map when you need to see what exists. Then call `Open-UX:get_guideline` or open that one file. Do not copy guideline ids into SKILL.md.
 
-295 rules.
+200 rules.
 
 ## Actions
 
@@ -21,13 +21,6 @@ Read this map when you need to see what exists. Then call `Open-UX:get_guideline
 - [OK/Cancel default vs explicit verb — Ant](rules/actions/ant/ok-cancel-default-vs-explicit-verb.json) — `ant.ok-cancel-default-vs-explicit-verb` · `design_actions_and_ctas`
 - [One CTA per screen — Ant](rules/actions/ant/one-cta-per-screen.json) — `ant.one-cta-per-screen` · `design_actions_and_ctas`
 - [Prefer undo or popconfirm over modal — Ant](rules/actions/ant/prefer-undo-or-popconfirm-over-modal.json) — `ant.prefer-undo-or-popconfirm-over-modal` · `protect_destructive_and_leave`
-
-### Apple
-
-- [Frequent items first — Apple](rules/actions/apple/menus.frequent_items_first.json) — `actions.menus.frequent_items_first` · `design_actions_and_ctas`
-- [Press state — Apple](rules/actions/apple/buttons.press_state.json) — `actions.buttons.press_state` · `design_actions_and_ctas`
-- [Style, not size — Apple](rules/actions/apple/buttons.style_not_size.json) — `actions.buttons.style_not_size` · `design_actions_and_ctas`
-- [Unavailable state — Apple](rules/actions/apple/menus.unavailable_state.json) — `actions.menus.unavailable_state` · `design_actions_and_ctas`
 
 ### Canada.ca
 
@@ -56,36 +49,6 @@ Read this map when you need to see what exists. Then call `Open-UX:get_guideline
 ### MUI
 
 - [Button variant roles — MUI](rules/actions/mui/button-variant-roles.json) — `mui.button-variant-roles` · `design_actions_and_ctas`
-
-### NN/g
-
-- [Adjectives for appearance — NN/g](rules/actions/nng/copy.adjectives_for_appearance.json) — `actions.copy.adjectives_for_appearance` · `design_actions_and_ctas`
-- [Always-visible text label — NN/g](rules/actions/nng/icons.always_visible_text_label.json) — `actions.icons.always_visible_text_label` · `design_actions_and_ctas`
-- [Avoid vague names — NN/g](rules/actions/nng/copy.avoid_vague_names.json) — `actions.copy.avoid_vague_names` · `design_actions_and_ctas`
-- [Bypass educational — NN/g](rules/actions/nng/confirm.bypass_educational.json) — `actions.confirm.bypass_educational` · `protect_destructive_and_leave`
-- [Close saves; Cancel is separate — NN/g](rules/actions/nng/close_saves_separate_cancel.json) — `actions.close_saves_separate_cancel` · `protect_destructive_and_leave`
-- [Consequent state — NN/g](rules/actions/nng/copy.consequent_state.json) — `actions.copy.consequent_state` · `design_actions_and_ctas`
-- [Consistent words — NN/g](rules/actions/nng/copy.consistent_words.json) — `actions.copy.consistent_words` · `design_actions_and_ctas`
-- [Default is not destructive — NN/g](rules/actions/nng/buttons.default_not_destructive.json) — `actions.buttons.default_not_destructive` · `protect_destructive_and_leave`
-- [Distinguishable states — NN/g](rules/actions/nng/buttons.distinguishable_states.json) — `actions.buttons.distinguishable_states` · `design_actions_and_ctas`
-- [Ellipsis means more input — NN/g](rules/actions/nng/copy.ellipsis_needs_more_input.json) — `actions.copy.ellipsis_needs_more_input` · `design_actions_and_ctas`
-- [Explicit verb, not OK — NN/g](rules/actions/nng/copy.explicit_verb_not_ok.json) — `actions.copy.explicit_verb_not_ok` · `design_actions_and_ctas`
-- [Follow the platform OK/Cancel order — NN/g](rules/actions/nng/buttons.follow_platform_ok_cancel_order.json) — `actions.buttons.follow_platform_ok_cancel_order` · `design_actions_and_ctas`
-- [Limit branded terms — NN/g](rules/actions/nng/copy.limit_branded_terms.json) — `actions.copy.limit_branded_terms` · `design_actions_and_ctas`
-- [Loading on button — NN/g](rules/actions/nng/buttons.loading_on_button.json) — `actions.buttons.loading_on_button` · `design_actions_and_ctas`
-- [Nonstandard for extreme — NN/g](rules/actions/nng/confirm.nonstandard_for_extreme.json) — `actions.confirm.nonstandard_for_extreme` · `protect_destructive_and_leave`
-- [Not routine — NN/g](rules/actions/nng/confirm.not_routine.json) — `actions.confirm.not_routine` · `protect_destructive_and_leave`
-- [One primary action — NN/g](rules/actions/nng/buttons.one_primary.json) — `actions.buttons.one_primary` · `design_actions_and_ctas`
-- [Progressive disclosure — NN/g](rules/actions/nng/confirm.progressive_disclosure.json) — `actions.confirm.progressive_disclosure` · `protect_destructive_and_leave`
-- [Redundant visual signals — NN/g](rules/actions/nng/proximity.redundant_visual_signals.json) — `actions.proximity.redundant_visual_signals` · `protect_destructive_and_leave`
-- [Response summarizes outcome — NN/g](rules/actions/nng/confirm.response_summarizes_outcome.json) — `actions.confirm.response_summarizes_outcome` · `protect_destructive_and_leave`
-- [Separate consequential — NN/g](rules/actions/nng/proximity.separate_consequential.json) — `actions.proximity.separate_consequential` · `protect_destructive_and_leave`
-- [Serious or undo — NN/g](rules/actions/nng/confirm.serious_or_undo.json) — `actions.confirm.serious_or_undo` · `protect_destructive_and_leave`
-- [Short clear sentence case — NN/g](rules/actions/nng/copy.short_clear_sentence_case.json) — `actions.copy.short_clear_sentence_case` · `design_actions_and_ctas`
-- [Specific consequences — NN/g](rules/actions/nng/confirm.specific_consequences.json) — `actions.confirm.specific_consequences` · `protect_destructive_and_leave`
-- [Support undo discoverable — NN/g](rules/actions/nng/support-undo-discoverable.json) — `nng.support-undo-discoverable` · `protect_destructive_and_leave`
-- [Tooltips clarify outcomes — NN/g](rules/actions/nng/copy.tooltips_clarify_outcomes.json) — `actions.copy.tooltips_clarify_outcomes` · `design_actions_and_ctas`
-- [Verbs for actions — NN/g](rules/actions/nng/copy.verbs_for_actions.json) — `actions.copy.verbs_for_actions` · `design_actions_and_ctas`
 
 ### Polaris
 
@@ -167,10 +130,6 @@ Read this map when you need to see what exists. Then call `Open-UX:get_guideline
 - [Most alerts don't need titles — MUI](rules/dialogs/mui/most-alerts-dont-need-titles.json) — `mui.most-alerts-dont-need-titles` · `compose_feedback`
 - [Non modal dialogs allowed — MUI](rules/dialogs/mui/non-modal-dialogs-allowed.json) — `mui.non-modal-dialogs-allowed` · `choose_an_overlay`
 
-### NN/g
-
-- [Modal and nonmodal dialogs — NN/g](rules/dialogs/nng/modal-and-nonmodal-dialogs.json) — `nng.modal-and-nonmodal-dialogs` · `choose_an_overlay`
-
 ### Polaris
 
 - [Don't use modals for complex forms — Polaris](rules/dialogs/polar/dont-use-modals-for-complex-forms.json) — `polar.dont-use-modals-for-complex-forms` · `choose_an_overlay`
@@ -232,15 +191,6 @@ Read this map when you need to see what exists. Then call `Open-UX:get_guideline
 - [Settings mode and grouping thresholds — Ant](rules/forms/ant/settings-mode-and-grouping-thresholds.json) — `ant.settings-mode-and-grouping-thresholds` · `design_a_form`
 - [Slider intensity grade — Ant](rules/forms/ant/slider-intensity-grade.json) — `ant.slider-intensity-grade` · `design_a_form`
 
-### Apple
-
-- [Clear button — Apple](rules/forms/apple/inputs.clear_button.json) — `forms.inputs.clear_button` · `design_a_form`
-- [Combo box — Apple](rules/forms/apple/inputs.combo_box.json) — `forms.inputs.combo_box` · `design_a_form`
-- [Get from system — Apple](rules/forms/apple/inputs.get_from_system.json) — `forms.inputs.get_from_system` · `design_a_form`
-- [Never prepopulate password — Apple](rules/forms/apple/inputs.never_prepopulate_password.json) — `forms.inputs.never_prepopulate_password` · `compose_sign_in`
-- [Offer choices not only text — Apple](rules/forms/apple/inputs.offer_choices_not_only_text.json) — `forms.inputs.offer_choices_not_only_text` · `design_a_form`
-- [Required before proceed — Apple](rules/forms/apple/fields.required_before_proceed.json) — `forms.fields.required_before_proceed` · `design_a_form`
-
 ### Canada.ca
 
 - [Interactive questions max 7 same place — Canada.ca](rules/forms/canada/interactive-questions-max-7-same-place.json) — `canada.interactive-questions-max-7-same-place` · `design_a_form`
@@ -300,66 +250,6 @@ Read this map when you need to see what exists. Then call `Open-UX:get_guideline
 - [No select multiple — NL](rules/forms/nl/no-select-multiple.json) — `nl.no-select-multiple` · `design_a_form`
 - [Privacy terms link outside label — NL](rules/forms/nl/privacy-terms-link-outside-label.json) — `nl.privacy-terms-link-outside-label` · `write_the_interface`
 - [Step n of m in the title and above the form — NL](rules/forms/nl/step-n-of-m-in-title-and-above-form.json) — `nl.step-n-of-m-in-title-and-above-form` · `build_a_multi_step_flow`
-
-### NN/g
-
-- [Allow paste and drag — NN/g](rules/forms/nng/inputs.allow_paste_and_drag.json) — `forms.inputs.allow_paste_and_drag` · `design_a_form`
-- [Alt registration and biometric login — NN/g](rules/forms/nng/alt-registration-and-biometric-login.json) — `nng.alt-registration-and-biometric-login` · `compose_sign_in`
-- [Always select one radio by default — NN/g](rules/forms/nng/always-select-one-radio-by-default.json) — `nng.always-select-one-radio-by-default` · `design_a_form`
-- [Avoid cascading dropdowns — NN/g](rules/forms/nng/avoid-cascading-dropdowns.json) — `nng.avoid-cascading-dropdowns` · `design_a_form`
-- [Avoid reset clear — NN/g](rules/forms/nng/actions.avoid_reset_clear.json) — `forms.actions.avoid_reset_clear` · `design_actions_and_ctas`
-- [Cart easy remove no extra update — NN/g](rules/forms/nng/cart-easy-remove-no-extra-update.json) — `nng.cart-easy-remove-no-extra-update` · `build_a_multi_step_flow`
-- [Checkboxes multi radios exclusive — NN/g](rules/forms/nng/checkboxes-multi-radios-exclusive.json) — `nng.checkboxes-multi-radios-exclusive` · `design_a_form`
-- [Compute from other info — NN/g](rules/forms/nng/inputs.compute_from_other_info.json) — `forms.inputs.compute_from_other_info` · `design_a_form`
-- [Distinguish optional required — NN/g](rules/forms/nng/fields.distinguish_optional_required.json) — `forms.fields.distinguish_optional_required` · `design_a_form`
-- [Don't repeat password or email fields — NN/g](rules/forms/nng/dont-repeat-password-email-fields.json) — `nng.dont-repeat-password-email-fields` · `compose_sign_in`
-- [Dropdown OK narrow middle — NN/g](rules/forms/nng/dropdown-ok-narrow-middle.json) — `nng.dropdown-ok-narrow-middle` · `design_a_form`
-- [Error identifies and fixes — NN/g](rules/forms/nng/field_labels.error_identifies_and_fixes.json) — `forms.field_labels.error_identifies_and_fixes` · `handle_form_errors`
-- [Explain format upfront — NN/g](rules/forms/nng/fields.explain_format_upfront.json) — `forms.fields.explain_format_upfront` · `design_a_form`
-- [Familiar values type not dropdown — NN/g](rules/forms/nng/familiar-values-type-not-dropdown.json) — `nng.familiar-values-type-not-dropdown` · `design_a_form`
-- [Forgiving format, autoformat — NN/g](rules/forms/nng/inputs.forgiving_format_autoformat.json) — `forms.inputs.forgiving_format_autoformat` · `design_a_form`
-- [Forgot password link — NN/g](rules/forms/nng/forgot-password-link.json) — `nng.forgot-password-link` · `compose_sign_in`
-- [Group related labels fields — NN/g](rules/forms/nng/layout.group_related_labels_fields.json) — `forms.layout.group_related_labels_fields` · `design_a_form`
-- [Helpful constraints — NN/g](rules/forms/nng/inputs.helpful_constraints.json) — `forms.inputs.helpful_constraints` · `design_a_form`
-- [Inline after complete — NN/g](rules/forms/nng/errors.inline_after_complete.json) — `forms.errors.inline_after_complete` · `handle_form_errors`
-- [Keep short — NN/g](rules/forms/nng/length.keep_short.json) — `forms.length.keep_short` · `design_a_form`
-- [Keyboard typeahead in dropdowns — NN/g](rules/forms/nng/keyboard-typeahead-in-dropdowns.json) — `nng.keyboard-typeahead-in-dropdowns` · `design_a_form`
-- [Label stays visible — NN/g](rules/forms/nng/field_labels.label_stays_visible.json) — `forms.field_labels.label_stays_visible` · `design_a_form`
-- [Listbox vs dropdown — NN/g](rules/forms/nng/listbox-vs-dropdown.json) — `nng.listbox-vs-dropdown` · `design_a_form`
-- [Logical sequence — NN/g](rules/forms/nng/layout.logical_sequence.json) — `forms.layout.logical_sequence` · `design_a_form`
-- [Login mask plus show password — NN/g](rules/forms/nng/login-mask-plus-show-password.json) — `nng.login-mask-plus-show-password` · `compose_sign_in`
-- [Match control and size — NN/g](rules/forms/nng/inputs.match_control_and_size.json) — `forms.inputs.match_control_and_size` · `design_a_form`
-- [Matching keyboard and type — NN/g](rules/forms/nng/inputs.matching_keyboard_and_type.json) — `forms.inputs.matching_keyboard_and_type` · `design_a_form`
-- [Mobile friendly payment options — NN/g](rules/forms/nng/mobile-friendly-payment-options.json) — `nng.mobile-friendly-payment-options` · `build_a_multi_step_flow`
-- [Modal is not the only copy — NN/g](rules/forms/nng/errors.modal_not_only_copy.json) — `forms.errors.modal_not_only_copy` · `handle_form_errors`
-- [Next to the field, not summary only — NN/g](rules/forms/nng/errors.next_to_field_not_summary_only.json) — `forms.errors.next_to_field_not_summary_only` · `handle_form_errors`
-- [No autocorrect identity fields — NN/g](rules/forms/nng/inputs.no_autocorrect_identity_fields.json) — `forms.inputs.no_autocorrect_identity_fields` · `design_a_form`
-- [No double-barreled questions — NN/g](rules/forms/nng/copy.no_double_barreled.json) — `forms.copy.no_double_barreled` · `write_the_interface`
-- [Not color only — NN/g](rules/forms/nng/errors.not_color_only.json) — `forms.errors.not_color_only` · `handle_form_errors`
-- [Not tooltip only — NN/g](rules/forms/nng/errors.not_tooltip_only.json) — `forms.errors.not_tooltip_only` · `handle_form_errors`
-- [Open field state and card expiry — NN/g](rules/forms/nng/open-field-state-and-card-expiry.json) — `nng.open-field-state-and-card-expiry` · `build_a_multi_step_flow`
-- [Order summary easy to find mobile — NN/g](rules/forms/nng/order-summary-easy-to-find-mobile.json) — `nng.order-summary-easy-to-find-mobile` · `build_a_multi_step_flow`
-- [Placeholder hint conflict — NN/g](rules/forms/nng/field_labels.placeholder_hint_conflict.json) — `forms.field_labels.placeholder_hint_conflict` · `design_a_form`
-- [Plain language — NN/g](rules/forms/nng/copy.plain_language.json) — `forms.copy.plain_language` · `write_the_interface`
-- [Positive wording — NN/g](rules/forms/nng/copy.positive_wording.json) — `forms.copy.positive_wording` · `write_the_interface`
-- [Prefer radios over dropdowns when visible — NN/g](rules/forms/nng/prefer-radios-over-dropdowns-when-visible.json) — `nng.prefer-radios-over-dropdowns-when-visible` · `design_a_form`
-- [Progress on long forms — NN/g](rules/forms/nng/transparency.progress_on_long_forms.json) — `forms.transparency.progress_on_long_forms` · `build_a_multi_step_flow`
-- [Progressive disclosure — NN/g](rules/forms/nng/structure.progressive_disclosure.json) — `forms.structure.progressive_disclosure` · `choose_an_overlay`
-- [Radio set comprehensive other type in — NN/g](rules/forms/nng/radio-set-comprehensive-other-type-in.json) — `nng.radio-set-comprehensive-other-type-in` · `design_a_form`
-- [Repeated extra help — NN/g](rules/forms/nng/errors.repeated_extra_help.json) — `forms.errors.repeated_extra_help` · `handle_form_errors`
-- [Requirements before start — NN/g](rules/forms/nng/transparency.requirements_before_start.json) — `forms.transparency.requirements_before_start` · `design_a_form`
-- [Show the input password creation — NN/g](rules/forms/nng/show-the-input-password-creation.json) — `nng.show-the-input-password-creation` · `compose_sign_in`
-- [Show the rules — NN/g](rules/forms/nng/show-the-rules.json) — `nng.show-the-rules` · `handle_form_errors`
-- [Single column — NN/g](rules/forms/nng/layout.single_column.json) — `forms.layout.single_column` · `design_a_form`
-- [Standard visuals checkbox square radio circle — NN/g](rules/forms/nng/standard-visuals-checkbox-square-radio-circle.json) — `nng.standard-visuals-checkbox-square-radio-circle` · `design_a_form`
-- [Success complex fields — NN/g](rules/forms/nng/errors.success_complex_fields.json) — `forms.errors.success_complex_fields` · `handle_form_errors`
-- [Too few options: radios, not dropdown — NN/g](rules/forms/nng/too-few-options-radios-not-dropdown.json) — `nng.too-few-options-radios-not-dropdown` · `design_a_form`
-- [Too many: combobox, not a long dropdown — NN/g](rules/forms/nng/too-many-combobox-not-long-dropdown.json) — `nng.too-many-combobox-not-long-dropdown` · `design_a_form`
-- [Use device features — NN/g](rules/forms/nng/inputs.use_device_features.json) — `forms.inputs.use_device_features` · `design_a_form`
-- [Users rarely change defaults — NN/g](rules/forms/nng/users-rarely-change-defaults.json) — `nng.users-rarely-change-defaults` · `design_a_form`
-- [Vertical one choice per line — NN/g](rules/forms/nng/vertical-one-choice-per-line.json) — `nng.vertical-one-choice-per-line` · `design_a_form`
-- [Visible field label — NN/g](rules/forms/nng/field_labels.visible_label.json) — `forms.field_labels.visible_label` · `design_a_form`
-- [Visible with keyboard — NN/g](rules/forms/nng/mobile.visible_with_keyboard.json) — `forms.mobile.visible_with_keyboard` · `design_a_form`
 
 ### Polaris
 

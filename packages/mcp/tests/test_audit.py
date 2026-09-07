@@ -7,8 +7,10 @@ from open_ux.catalog import EMPTY_NOTE, load_catalog, select_by_jobs
 from open_ux.jobs import DEFAULT_LIMIT, MISS_NOTE
 from open_ux.settings import Settings
 
-VISIBLE = "forms.field_labels.visible_label"
-ERROR = "forms.field_labels.error_identifies_and_fixes"
+VISIBLE = "ant.checkbox-vs-switch"
+ERROR = "govuk.error-summary-plus-per-field"
+OVERLAY = "mui.non-modal-dialogs-allowed"
+DENSE = "forms.labels.clickable"
 
 
 def _catalog(_live_catalog: Path):
@@ -99,7 +101,7 @@ def test_query_narrows_within_job(live_catalog: Path) -> None:
     narrow = audit(
         _catalog(live_catalog),
         jobs="forms",
-        query="visible label",
+        query="checkbox",
         limit=50,
     )
     assert narrow["total"] < wide["total"]
@@ -127,7 +129,7 @@ def test_live_seeds_resolve_through_their_cards(live_catalog: Path) -> None:
     form_ids = {row["id"] for row in form["guidelines"]}
     error_ids = {row["id"] for row in errors["guidelines"]}
     assert VISIBLE in form_ids
-    assert "forms.field_labels.label_stays_visible" in form_ids
+    assert "forms.labels.clickable" in form_ids
     assert ERROR in error_ids
     assert VISIBLE not in error_ids
 
@@ -140,7 +142,7 @@ def test_cluster_only_cards_return_pointer_criteria(live_catalog: Path) -> None:
     overlay_ids = {row["id"] for row in overlay["guidelines"]}
     step_ids = {row["id"] for row in steps["guidelines"]}
     assert "nsw.charts-start-with-story" in display_ids
-    assert "nng.modal-and-nonmodal-dialogs" in overlay_ids
+    assert OVERLAY in overlay_ids
     assert "nl.step-n-of-m-in-title-and-above-form" in step_ids
     assert display["count"] >= 1
     assert "verdict" not in display
@@ -158,7 +160,7 @@ def test_dense_card_includes_cluster_pointers(live_catalog: Path) -> None:
     selected = select_by_jobs(_catalog(live_catalog), "design_a_form")
     ids = {row["id"] for row in selected}
     assert VISIBLE in ids
-    assert "forms.inputs.helpful_constraints" in ids
+    assert DENSE in ids
 
 
 def test_empty_catalog_is_honest(tmp_env: Path) -> None:
