@@ -13,10 +13,11 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[3]
 HELPER = ROOT / "scripts" / "mcp_call.py"
+SKILL_AUDIT = ROOT / "clients" / "claude" / "skills" / "open-ux" / "scripts" / "audit.py"
 
 
-def _load() -> ModuleType:
-    spec = importlib.util.spec_from_file_location("open_ux_mcp_call", HELPER)
+def _load(path: Path, name: str) -> ModuleType:
+    spec = importlib.util.spec_from_file_location(name, path)
     assert spec is not None and spec.loader is not None
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
@@ -25,7 +26,12 @@ def _load() -> ModuleType:
 
 @pytest.fixture()
 def helper() -> ModuleType:
-    return _load()
+    return _load(HELPER, "open_ux_mcp_call")
+
+
+@pytest.fixture()
+def audit_mod() -> ModuleType:
+    return _load(SKILL_AUDIT, "open_ux_skill_audit")
 
 
 def test_hosted_http_requires_key(helper: ModuleType, monkeypatch: pytest.MonkeyPatch) -> None:
@@ -83,3 +89,50 @@ def test_helper_never_imports_catalog() -> None:
     assert "load_catalog" not in source
     assert "tools/list" in source
     assert "tools/call" in source
+
+
+def test_audit_script_requires_jobs_or_ids(
+    audit_mod: ModuleType, capsys: pytest.CaptureFixture[str]
+) -> None:
+    assert audit_mod.main([]) == 2
+    err = capsys.readouterr().err
+    assert "jobs" in err or "guideline" in err
+
+
+@pytest.mark.parametrize(
+    "argv",
+    (
+        ["--file", "form.html"],
+        ["--content", "<form></form>"],
+        ["--target", "ui.png"],
+        ["--verdict", "fail"],
+        ["--upload", "ui.png"],
+    ),
+)
+def test_audit_script_rejects_file_and_verdict(
+    audit_mod: ModuleType, argv: list[str], capsys: pytest.CaptureFixture[str]
+) -> None:
+    assert audit_mod.main(argv) == 2
+    err = capsys.readouterr().err.lower()
+    assert "file" in err or "verdict" in err or "content" in err or "target" in err
+
+
+def test_audit_script_prints_pack(
+    live_catalog: Path,
+    audit_mod: ModuleType,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    assert audit_mod.main(["--jobs", "design_a_form"]) == 0
+    payload = json.loads(capsys.readouterr().out)
+    assert payload["count"] >= 1
+    assert "verdict" not in payload
+    row = payload["guidelines"][0]
+    assert {"id", "title", "name", "rule", "pass_when", "fail_when"} <= set(row)
+
+
+def test_audit_script_uses_shared_helper() -> None:
+    source = SKILL_AUDIT.read_text(encoding="utf-8")
+    assert "from open_ux.audit import audit" in source
+    assert "load_catalog" in source
+    assert "--jobs" in source
+    assert "--guideline-ids" in source
