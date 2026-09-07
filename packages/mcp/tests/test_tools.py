@@ -7,6 +7,7 @@ import pytest
 from fastmcp import Client
 
 from open_ux.catalog import EMPTY_NOTE, citations
+from open_ux.jobs import CARD_IDS, CONTAINER_IDS, JOB_ALIASES, LEAF_IDS
 from open_ux.server import create_mcp
 
 REMAINING_SEED = (
@@ -312,13 +313,16 @@ async def test_audit_schema_shows_jobs_enum_not_target(live_catalog: Path) -> No
         for branch in props["jobs"]["anyOf"]
         if "enum" in branch
     )
-    assert "design_a_form" in jobs_enum
-    assert "forms_and_input" in jobs_enum
-    assert "forms" in jobs_enum
-    assert "avoid_placeholder_as_label" not in jobs_enum
+    assert jobs_enum == [*CARD_IDS, *CONTAINER_IDS, *JOB_ALIASES]
+    assert len(jobs_enum) == 13 + 7 + 3
+    for leaf in LEAF_IDS:
+        assert leaf not in jobs_enum
     assert "checkout" not in jobs_enum
-    assert "Does not take a file" in (audit_tool.description or "")
-    assert "Does not return pass or fail" in (audit_tool.description or "")
+    description = audit_tool.description or ""
+    assert "Situation Card or container" in description
+    assert "Does not take a file" in description
+    assert "Does not return pass or fail" in description
+    assert "Leaf ids are not needs" in description
 
 
 @pytest.mark.asyncio
