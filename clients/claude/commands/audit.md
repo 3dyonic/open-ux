@@ -2,4 +2,4 @@
 description: Fetch a cited UX criteria pack for a Situation Card.
 ---
 
-Prefer `python3 scripts/audit.py --jobs <card_id>` so you don't invent args. `Open-UX:audit` with `jobs=` / `guideline_ids` is equally valid. Example: `/audit design_a_form`. Do not send a file.
+**Must** run `clients/claude/skills/open-ux/scripts/audit.py` with `--jobs` or `--guideline-ids`. Do not improvise the wire. Criteria pack only. No file. No host pass or fail. Host narrates. Example: `/audit design_a_form`. Do not send a file.

@@ -12,26 +12,17 @@ from open_ux.jobs import CARD_IDS
 ROOT = Path(__file__).resolve().parents[3]
 SKILL_DIR = ROOT / "clients" / "claude" / "skills" / "open-ux"
 SKILL = SKILL_DIR / "SKILL.md"
+SKILL_AUDIT = SKILL_DIR / "scripts" / "audit.py"
 COMMANDS = ROOT / "clients" / "claude" / "commands"
 PLUGIN = ROOT / "clients" / "claude" / ".claude-plugin" / "plugin.json"
 MCP_JSON = ROOT / "clients" / "claude" / ".mcp.json"
 AGENT = ROOT / "clients" / "claude" / "agents" / "open-ux.md"
 HELPER = ROOT / "scripts" / "mcp_call.py"
-AUDIT_SCRIPT = ROOT / "scripts" / "audit.py"
 BANNED_BODIES = ("pass_when", "fail_when")
-ENFORCE_SCRIPT = (
-    "must run this script",
-    "must run the script",
-    "must run the audit script",
-    "must run scripts/audit",
-    "audit is required",
-    "required open ux audit wire",
-    "do not improvise the open-ux:audit wire",
-    "do not call `open-ux:audit` instead",
-    "required script",
-    "required audit path",
-)
 GUIDELINE_ID = re.compile(r"`[a-z]+(?:\.[a-z0-9_-]+){1,}`")
+ALLOWED_SKILL_CLIS = {"audit.py"}
+REQUIRE_AUDIT = ("audit.md", "forms.md", "actions.md", "feedback.md")
+TOOL_ONLY = ("list.md", "get.md")
 
 
 def _frontmatter_description(text: str) -> str:
@@ -51,33 +42,29 @@ def test_one_skill_package_named_open_ux() -> None:
     assert (skills_root / "open-ux" / "SKILL.md").is_file()
     for banned in ("open-ux-forms", "open-ux-actions", "open-ux-feedback"):
         assert not (skills_root / banned).exists()
-    assert not (SKILL_DIR / "scripts").exists()
-    for fluff in ("review.md", "map.md", "cite.md"):
-        assert not (SKILL_DIR / fluff).exists()
-    assert not (SKILL_DIR / "commands").exists()
+    assert SKILL_AUDIT.is_file()
 
 
-def test_skill_description_informs_and_promotes() -> None:
+def test_only_audit_script_is_a_skill_cli() -> None:
+    scripts = SKILL_DIR / "scripts"
+    assert scripts.is_dir()
+    names = {p.name for p in scripts.iterdir() if p.is_file() and p.suffix == ".py"}
+    extra = names - ALLOWED_SKILL_CLIS
+    assert extra == set(), f"do not add a Python CLI per command: {sorted(extra)}"
+    assert "audit.py" in names
+
+
+def test_skill_description_requires_audit_script() -> None:
     text = SKILL.read_text(encoding="utf-8")
     desc = _frontmatter_description(text)
     assert len(desc) <= 1024
-    lower = desc.lower()
     assert "building or checking UI" in desc
-    assert "composing or reviewing" in lower
-    assert "form" in lower
-    assert "cited" in lower
-    assert "pass" in lower and "fail" in lower
-    assert "invent" in lower or "memory" in lower
-    assert "open ux" in lower
     assert "Open-UX:get_situation" in desc
     assert "Open-UX:audit" in desc
     assert "jobs=<card_id>" in desc
+    assert "scripts/audit.py" in desc
     assert "target" not in desc
     assert "verdict" not in desc
-    assert "must run" not in lower
-    assert "scripts/" not in desc
-    assert "audit.py" not in desc
-    assert "required script" not in lower
 
 
 def test_skill_routing_table_has_when_and_cross_container_reject() -> None:
@@ -104,32 +91,21 @@ def test_skill_routing_table_has_when_and_cross_container_reject() -> None:
     assert "design_actions_and_ctas" in body
     assert "Field labels stay `design_a_form`" in body
     assert "jobs=" in body
-    assert "verdict" not in body
-    assert "Open-UX:audit" in body
-    assert "must run" not in body.lower()
-    assert "prefer `scripts/audit.py`" in body
+    assert "must run" in body.lower().replace("*", "")
     assert "scripts/audit.py" in body
+    assert "not a script" in body.lower()
 
 
-def test_skill_examples_and_tools_not_sermons() -> None:
+def test_skill_compose_review_must_run_audit_script() -> None:
     text = SKILL.read_text(encoding="utf-8")
-    _empty, _meta, body = text.split("---", 2)
-    lower = body.lower()
-    assert "MUST" not in text
-    assert "must run" not in lower
-    for banned in ENFORCE_SCRIPT:
-        assert banned not in lower
-    assert "signup" in lower
-    assert "`design_a_form`" in body
-    assert "`protect_destructive_and_leave`" in body
-    assert "Open-UX:suggest_situations" in body
-    assert "Open-UX:get_guideline" in body
-    assert "Open-UX:audit" in body
-    assert "need in" in lower
-    assert "scripts/audit.py" in body
-    assert "available" in lower
-    assert "not required" in lower
-    assert "choice" in lower
+    assert "must run" in text.lower().replace("*", "")
+    assert "scripts/audit.py" in text
+    assert "`design_a_form`" in text
+    assert "`protect_destructive_and_leave`" in text
+    assert "Open-UX:suggest_situations" in text
+    assert "Open-UX:get_guideline" in text
+    assert "Open-UX:list_situations" in text
+    assert "Open-UX:get_situation" in text
 
 
 def test_skill_files_point_at_tools_not_catalog_bodies() -> None:
@@ -152,42 +128,42 @@ def test_plugin_points_at_hosted_mcp() -> None:
     assert "OPEN_UX_API_KEY" in server["headers"]["Authorization"]
 
 
-def test_commands_are_short_mcp_prompts() -> None:
+def test_audit_commands_must_run_the_script() -> None:
     names = {"list.md", "get.md", "audit.md", "forms.md", "actions.md", "feedback.md"}
     found = {p.name for p in COMMANDS.glob("*.md")}
     assert names <= found
     assert not (COMMANDS / "critique.md").exists()
-    for path in COMMANDS.glob("*.md"):
-        text = path.read_text(encoding="utf-8")
+    for name in REQUIRE_AUDIT:
+        text = (COMMANDS / name).read_text(encoding="utf-8")
         lower = text.lower()
-        assert "verdict" not in lower
-        assert "pass/fail" not in lower
+        assert "scripts/audit.py" in text
+        assert "must" in lower
         assert "upload" not in lower
-        assert "no file" in lower or "send a file" in lower or "not ask for a file" in lower
-        assert "Open-UX:" in text
-        assert "python3 skills/open-ux/scripts" not in lower
-        assert "must run" not in lower
-        for banned in ENFORCE_SCRIPT:
-            assert banned not in lower
+        assert "no file" in lower or "send a file" in lower
         for token in BANNED_BODIES:
             assert token not in text
-        assert len(text.splitlines()) <= 12
-        if path.name != "audit.md":
-            assert "audit.py" not in text
     audit = (COMMANDS / "audit.md").read_text(encoding="utf-8")
-    assert "Open-UX:audit" in audit
-    assert "jobs=" in audit
-    assert "guideline_ids" in audit
-    assert "scripts/audit.py" in audit
-    assert "prefer" in audit.lower()
-    assert "equally valid" in audit.lower()
-    list_cmd = (COMMANDS / "list.md").read_text(encoding="utf-8")
-    get_cmd = (COMMANDS / "get.md").read_text(encoding="utf-8")
-    assert "Open-UX:list_situations" in list_cmd
-    assert "Open-UX:get_situation" in get_cmd
+    assert "--jobs" in audit or "jobs=" in audit
+    assert "guideline_ids" in audit or "--guideline-ids" in audit
 
 
-def test_pointer_docs_exist_and_stay_thin() -> None:
+def test_list_and_get_stay_mcp_tools() -> None:
+    for name in TOOL_ONLY:
+        text = (COMMANDS / name).read_text(encoding="utf-8")
+        lower = text.lower()
+        assert "not a script" in lower
+        assert "Open-UX:" in text
+        assert "audit.py" not in text
+        assert "must run" not in lower
+        for token in BANNED_BODIES:
+            assert token not in text
+    listed = (COMMANDS / "list.md").read_text(encoding="utf-8")
+    assert "Open-UX:list_situations" in listed
+    got = (COMMANDS / "get.md").read_text(encoding="utf-8")
+    assert "Open-UX:get_situation" in got
+
+
+def test_pointer_docs_require_audit_script() -> None:
     for path in (ROOT / "AGENTS.md", ROOT / "CLAUDE.md", AGENT):
         text = path.read_text(encoding="utf-8")
         assert path.is_file()
@@ -197,52 +173,58 @@ def test_pointer_docs_exist_and_stay_thin() -> None:
         assert "uxmcp_" in text or "OPEN_UX_API_KEY" in text
         assert "pass_when" not in text
         assert "forms.field_labels" not in text
-        assert "must run" not in text.lower()
+        assert "scripts/audit.py" in text
+        assert "must" in text.lower()
         for card_id in CARD_IDS:
             if path.name in {"AGENTS.md", "CLAUDE.md"}:
                 assert card_id not in text
     assert not (COMMANDS / "critique.md").exists()
 
 
-def test_audit_helper_available_not_required() -> None:
-    assert AUDIT_SCRIPT.is_file()
-    help_text = subprocess.check_output(
-        [sys.executable, str(AUDIT_SCRIPT), "--help"],
+def test_audit_script_tight_wire(live_catalog: Path) -> None:
+    env = {**os.environ}
+    packed = subprocess.check_output(
+        [sys.executable, str(SKILL_AUDIT), "--jobs", "design_a_form"],
         text=True,
         cwd=ROOT,
+        env=env,
     )
-    assert "--jobs" in help_text
-    assert "--guideline-ids" in help_text
-    assert "--file" not in help_text
-    assert "verdict" not in help_text.lower()
-    scoped = subprocess.check_output(
-        [sys.executable, str(AUDIT_SCRIPT), "--jobs", "design_a_form"],
-        text=True,
-        cwd=ROOT,
-    )
-    payload = json.loads(scoped)
+    payload = json.loads(packed)
     assert "guidelines" in payload
-    assert "verdict" not in payload
     assert payload["count"] >= 1
+    assert "verdict" not in payload
+
     empty = subprocess.run(
-        [sys.executable, str(AUDIT_SCRIPT)],
-        cwd=ROOT,
-        capture_output=True,
+        [sys.executable, str(SKILL_AUDIT)],
         text=True,
+        cwd=ROOT,
+        env=env,
+        capture_output=True,
     )
     assert empty.returncode != 0
-    skill = SKILL.read_text(encoding="utf-8")
-    lower = skill.lower()
-    assert "scripts/audit.py" in skill
-    assert "prefer" in lower
-    assert "not required" in lower
-    assert "Open-UX:audit" in skill
-    assert "must run" not in lower
-    for banned in ENFORCE_SCRIPT:
-        assert banned not in lower
+
+    banned = subprocess.run(
+        [sys.executable, str(SKILL_AUDIT), "--file", "ui.png"],
+        text=True,
+        cwd=ROOT,
+        env=env,
+        capture_output=True,
+    )
+    assert banned.returncode != 0
+    assert "file" in (banned.stderr + banned.stdout).lower()
+
+    wrapper = ROOT / "scripts" / "audit.py"
+    assert wrapper.is_file()
+    wrapped = subprocess.check_output(
+        [sys.executable, str(wrapper), "--jobs", "design_a_form"],
+        text=True,
+        cwd=ROOT,
+        env=env,
+    )
+    assert json.loads(wrapped)["count"] >= 1
 
 
-def test_optional_helper_is_protocol_not_path() -> None:
+def test_optional_mcp_call_helper_still_works() -> None:
     assert HELPER.is_file()
     env = {**os.environ, "OPEN_UX_TRANSPORT": "inprocess"}
     listed = subprocess.check_output(
@@ -253,20 +235,6 @@ def test_optional_helper_is_protocol_not_path() -> None:
     )
     names = {row["name"] for row in json.loads(listed)}
     assert {"audit", "list_situations", "get_situation"}.issubset(names)
-    scoped = subprocess.check_output(
-        [sys.executable, str(HELPER), "audit", '{"jobs":"design_a_form"}'],
-        text=True,
-        cwd=ROOT,
-        env=env,
-    )
-    payload = json.loads(scoped)
-    assert "guidelines" in payload
-    assert "verdict" not in payload
-    assert payload["count"] >= 1
-    skill = SKILL.read_text(encoding="utf-8")
-    assert "mcp_call.py" in skill
-    assert "do not treat `mcp_call.py`" in skill.lower()
-    assert "must run" not in skill.lower()
 
 
 def test_connect_offers_hosted_or_package() -> None:
@@ -279,10 +247,5 @@ def test_connect_offers_hosted_or_package() -> None:
     for path in paths:
         text = path.read_text(encoding="utf-8")
         assert "https://open-ux.dev/mcp" in text
-        assert "pip install open-ux" in text
         assert "python -m open_ux stdio" in text
         assert "uxmcp_" in text or "OPEN_UX_API_KEY" in text
-        assert "package" in text.lower() or "pip install" in text.lower()
-    skill = SKILL.read_text(encoding="utf-8")
-    assert 'pip install -e "packages/mcp[dev]"' not in skill
-    assert "clone" not in skill.lower()

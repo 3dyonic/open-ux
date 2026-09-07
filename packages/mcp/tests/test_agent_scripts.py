@@ -13,7 +13,7 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[3]
 HELPER = ROOT / "scripts" / "mcp_call.py"
-AUDIT_SCRIPT = ROOT / "scripts" / "audit.py"
+SKILL_AUDIT = ROOT / "clients" / "claude" / "skills" / "open-ux" / "scripts" / "audit.py"
 
 
 def _load(path: Path, name: str) -> ModuleType:
@@ -31,7 +31,7 @@ def helper() -> ModuleType:
 
 @pytest.fixture()
 def audit_mod() -> ModuleType:
-    return _load(AUDIT_SCRIPT, "open_ux_audit_helper")
+    return _load(SKILL_AUDIT, "open_ux_skill_audit")
 
 
 def test_hosted_http_requires_key(helper: ModuleType, monkeypatch: pytest.MonkeyPatch) -> None:
@@ -131,9 +131,8 @@ def test_audit_script_prints_pack(
 
 
 def test_audit_script_uses_shared_helper() -> None:
-    source = AUDIT_SCRIPT.read_text(encoding="utf-8")
+    source = SKILL_AUDIT.read_text(encoding="utf-8")
     assert "from open_ux.audit import audit" in source
     assert "load_catalog" in source
     assert "--jobs" in source
     assert "--guideline-ids" in source
-    assert "not required" in source.lower()

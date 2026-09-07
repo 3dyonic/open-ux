@@ -9,6 +9,6 @@ Connect: `pip install open-ux` then `python -m open_ux stdio` (no key; same cata
 
 One skill package: `skills/open-ux`. Compose and review share the pull trigger. Map and cite are sections in that skill — not extra packages.
 
-Commands are short slash prompts that call `Open-UX:*` tools: `/list` `/get` `/audit`, plus aliases `/forms` `/actions` `/feedback`. Agent pointers: `agents/open-ux.md`.
+Commands: `/list` `/get` are `Open-UX:*` tools. `/audit` plus aliases `/forms` `/actions` `/feedback` pick a Card, then **must** run `skills/open-ux/scripts/audit.py`. Agent pointers: `agents/open-ux.md`.
 
-Optional without a Claude session: repo-root `scripts/mcp_call.py` (`tools/list` / `tools/call`). Not the skill path.
+Optional without a Claude session: repo-root `scripts/mcp_call.py` (`tools/list` / `tools/call`). Not a substitute for the required audit script.
