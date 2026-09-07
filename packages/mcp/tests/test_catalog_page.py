@@ -10,11 +10,12 @@ from open_ux.catalog import Catalog, citations, load_catalog
 from open_ux.catalog_page import (
     CONTAINER_CHIPS,
     PAGE_SIZE,
+    _rows_html,
     render_catalog_list,
     render_catalog_not_found,
     render_catalog_rule,
 )
-from open_ux.jobs import load_job_tree
+from open_ux.jobs import empty_job_tree, load_job_tree
 from open_ux.server import create_mcp
 from open_ux.settings import Settings
 
@@ -195,6 +196,114 @@ def test_catalog_rule_severity_chip_only_when_present() -> None:
     assert 'data-field="overview"' not in html
     assert "Overview text." not in html
     assert 'data-field="description"' in html
+
+
+_LIST_ROW_CLASSES = frozenset(
+    {
+        "catalog-row",
+        "row-id",
+        "row-dot",
+        "row-path",
+        "row-name",
+        "row-chevron",
+    }
+)
+_SEVERITY_CHIP_LABELS = ("Blocker", "Major", "Minor", "Info")
+
+
+def _catalog_row_chunks(html: str) -> list[str]:
+    return re.findall(r'<a class="catalog-row"[^>]*>.*?</a>', html, re.S)
+
+
+def _assert_list_row_has_no_severity(row: str) -> None:
+    classes: set[str] = set()
+    for raw in re.findall(r'class="([^"]+)"', row):
+        classes.update(raw.split())
+    extra = classes - _LIST_ROW_CLASSES
+    assert not extra, extra
+    assert "severity" not in classes
+    assert 'data-field="severity"' not in row
+    for label in _SEVERITY_CHIP_LABELS:
+        assert f">{label}</span>" not in row
+        assert f">{label}<" not in row
+
+
+def test_catalog_list_rows_have_no_severity_chip(live_catalog: Path) -> None:
+    catalog = load_catalog(Settings.load(hosted=True))
+    with_severity = [g for g in catalog.guidelines if g.get("severity")]
+    assert with_severity
+    assert any(g.get("severity") == "major" for g in with_severity)
+    with _client() as client:
+        listed = client.get("/catalog").text
+        rule = client.get(f"/catalog/{ANT_SEED}").text
+    rows = _catalog_row_chunks(listed)
+    assert rows
+    assert len(rows) == len(catalog.index)
+    for row in rows:
+        _assert_list_row_has_no_severity(row)
+    assert 'class="severity"' not in listed
+    assert 'data-field="severity"' not in listed
+    seed = next(g for g in catalog.guidelines if g["id"] == ANT_SEED)
+    assert seed["severity"] == "major"
+    assert 'data-field="severity"' in rule
+    assert ">Major</span>" in rule
+
+
+def test_catalog_list_row_omits_severity_even_when_index_has_it() -> None:
+    row = {
+        "id": "demo.severity_on_list",
+        "name": "Keep labels visible — Ant",
+        "title": "keep labels visible",
+        "severity": "major",
+        "container": "forms_and_input",
+        "card": "design_a_form",
+        "facet": "field_has_no_lasting_name",
+        "rule": "A rule.",
+        "description": "Desc.",
+        "apply_when": "Apply.",
+        "not_when": "Not.",
+        "agent_hint": "Hint.",
+        "pass_when": ["Pass this."],
+        "fail_when": ["Fail this."],
+        "citation": [
+            {
+                "source": "Fluent 2 — Button usage",
+                "url": "https://fluent2.microsoft.design/",
+            }
+        ],
+    }
+    catalog = Catalog(
+        version="0.3.0",
+        guidelines=[row],
+        jobs=[],
+        patterns=[],
+        size_bytes=0,
+        path=Path("."),
+        index=[
+            {
+                "id": row["id"],
+                "name": row["name"],
+                "title": row["title"],
+                "container": row["container"],
+                "card": row["card"],
+                "severity": row["severity"],
+            }
+        ],
+    )
+    listed = render_catalog_list(catalog)
+    for chunk in _catalog_row_chunks(listed):
+        _assert_list_row_has_no_severity(chunk)
+    assert 'class="severity"' not in listed
+    assert 'data-field="severity"' not in listed
+    forced = _rows_html([row], empty_job_tree())
+    for chunk in _catalog_row_chunks(forced):
+        _assert_list_row_has_no_severity(chunk)
+        assert "Keep labels visible" in chunk
+        assert "row-chevron" in chunk
+    detail = render_catalog_rule(catalog, row["id"])
+    assert detail is not None
+    assert 'data-field="severity"' in detail
+    assert ">Major</span>" in detail
 
 
 def test_catalog_rule_omits_overview_and_empty_description() -> None:

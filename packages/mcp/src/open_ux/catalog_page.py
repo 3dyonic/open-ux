@@ -666,6 +666,7 @@ def _rows_html(
                 f'<span class="row-dot" aria-hidden="true">·</span>'
             )
         hidden = "" if gid in visible_ids else " hidden"
+        # Figma 36:22: id · category · one-liner · chevron. No severity chip.
         parts.append(
             f'<a class="catalog-row" href="{_e(_href_id(gid))}" '
             f'data-id="{_e(gid)}" data-container="{_e(cid)}" '
@@ -964,6 +965,20 @@ def _tree_html(
     return "".join(parts)
 
 
+def _severity_chip(guideline: dict[str, Any]) -> str:
+    """Rule-page chip only (Figma 78:26). List rows (36:22) never call this."""
+    severity = guideline.get("severity")
+    if not severity:
+        return ""
+    label = str(severity).strip()
+    if not label:
+        return ""
+    return (
+        f'<span class="severity" data-field="severity">'
+        f"{_e(label[:1].upper() + label[1:])}</span>"
+    )
+
+
 def _eyebrow(guideline: dict[str, Any], tree: JobTree) -> str:
     category = str(guideline.get("category") or "").strip()
     segment = str(guideline.get("segment") or "").strip()
@@ -973,15 +988,7 @@ def _eyebrow(guideline: dict[str, Any], tree: JobTree) -> str:
         path = category
     else:
         path = _row_path(guideline, tree)
-    severity = guideline.get("severity")
-    chip = ""
-    if severity:
-        label = str(severity).strip()
-        if label:
-            chip = (
-                f'<span class="severity" data-field="severity">'
-                f"{_e(label[:1].upper() + label[1:])}</span>"
-            )
+    chip = _severity_chip(guideline)
     path_html = f'<p class="eyebrow-path">{_e(path)}</p>' if path else ""
     if not path_html and not chip:
         return ""
