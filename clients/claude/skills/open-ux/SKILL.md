@@ -7,7 +7,7 @@ description: >-
   multi-step flow). Open UX is a cited UX catalog for agents: pick one
   Situation Card, then call Open-UX:get_situation and Open-UX:audit with
   jobs=<card_id>. Don't invent UX rules from memory; apply the cited pack
-  to work already in hand. Returns cited criteria, not pass or fail.
+  to work already in hand. Returns cited criteria, not pass or fail. Hosted (live catalog) or download the package (stdio, no key).
 ---
 
 # Open UX
@@ -24,6 +24,13 @@ When you need a map of what exists — by **category**, then **source** — read
 - **Review a delete confirm.** Card `protect_destructive_and_leave`.
 - **Vague checkout.** `Open-UX:suggest_situations` with the task text, then pick a Card (often `build_a_multi_step_flow` or `design_a_form`) and audit that.
 - **Already have a guideline id.** `Open-UX:get_guideline` for that one cited body.
+
+## Connect
+
+Hosted or download the package — same tools, same Cards.
+
+- **Hosted** (shared live catalog): `https://open-ux.dev/mcp` + bearer `uxmcp_` (`OPEN_UX_API_KEY`). Request an invite at `/invite` (landing **Get a key**).
+- **Package** (local): clone [github.com/3dyonic/open-ux](https://github.com/3dyonic/open-ux) (MIT), `pip install -e "packages/mcp[dev]"`, then `python -m open_ux stdio`. Same catalog. No invite. Telemetry off. Optional: `python -m open_ux validate-catalog`.
 
 ## Situation Cards
 
@@ -60,4 +67,3 @@ Use fully qualified `Open-UX:*` names. `/list` `/get` / map / cite stay on tools
 
 We don't take a file and we don't return pass or fail.
 
-Hosted: `https://open-ux.dev/mcp` with a `uxmcp_` bearer. Self-host: `python -m open_ux stdio`. Invite: [open-ux.dev/invite](https://open-ux.dev/invite).
