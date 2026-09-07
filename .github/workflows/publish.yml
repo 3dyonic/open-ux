@@ -1,0 +1,50 @@
+name: publish
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "Publish target"
+        type: choice
+        default: testpypi
+        options:
+          - testpypi
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: ${{ github.event_name == 'workflow_dispatch' && 'testpypi' || 'pypi' }}
+    permissions:
+      id-token: write
+      contents: read
+    defaults:
+      run:
+        working-directory: packages/mcp
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install build
+        run: python -m pip install build
+      - name: Build
+        run: python -m build
+      - name: Smoke from wheel
+        run: |
+          python -m pip install dist/*.whl
+          python -m open_ux validate-catalog
+      - name: Publish to PyPI
+        if: github.event_name == 'push'
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: packages/mcp/dist
+      - name: Publish to TestPyPI
+        if: github.event_name == 'workflow_dispatch'
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: packages/mcp/dist
+          repository-url: https://test.pypi.org/legacy/

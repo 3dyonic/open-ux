@@ -1,8 +1,11 @@
 # Open UX server
 
-Python FastMCP process for the Open UX catalog.
+Python FastMCP process for the Open UX catalog. Package name: `open-ux`.
 
-- **Hosted HTTP:** invite required (`uxmcp_` bearer). Tools 401 without a key.
-- **Self-host stdio:** no auth, no hosted telemetry, no invite.
+```bash
+pip install open-ux
+python -m open_ux validate-catalog
+python -m open_ux stdio
+```
 
-See the root README for product copy and install path.
+PyPI long description is the root README (wired at build). See that file for product copy.

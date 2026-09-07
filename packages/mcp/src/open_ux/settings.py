@@ -15,12 +15,32 @@ RATE_PER_DAY = 1000
 RETENTION_DAYS = 30
 
 
-def _repo_root() -> Path:
+def _repo_root() -> Path | None:
     here = Path(__file__).resolve()
     for candidate in here.parents:
         if (candidate / "catalog" / "schema.json").is_file():
             return candidate
-    return Path.cwd()
+    return None
+
+
+def _packaged_catalog() -> Path | None:
+    packaged = Path(__file__).resolve().parent / "data" / "catalog"
+    if (packaged / "schema.json").is_file():
+        return packaged
+    return None
+
+
+def _default_catalog() -> Path:
+    env = os.environ.get("OPEN_UX_CATALOG")
+    if env:
+        return Path(env)
+    root = _repo_root()
+    if root is not None:
+        return root / "catalog"
+    packaged = _packaged_catalog()
+    if packaged is not None:
+        return packaged
+    return Path.cwd() / "catalog"
 
 
 @dataclass(frozen=True)
@@ -36,12 +56,12 @@ class Settings:
 
     @classmethod
     def load(cls, *, hosted: bool | None = None) -> Settings:
-        root = _repo_root()
+        root = _repo_root() or Path.cwd()
         if hosted is None:
             hosted = os.environ.get("OPEN_UX_MODE", "stdio") == "hosted" or os.environ.get(
                 "OPEN_UX_HOSTED", ""
             ).lower() in {"1", "true", "yes"}
-        catalog = Path(os.environ.get("OPEN_UX_CATALOG", root / "catalog"))
+        catalog = _default_catalog()
         schema_default = (
             catalog / "schema.json" if catalog.is_dir() else catalog.parent / "schema.json"
         )
