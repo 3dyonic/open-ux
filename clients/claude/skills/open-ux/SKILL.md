@@ -4,41 +4,36 @@ description: >-
   Use when building or checking UI — composing or reviewing a form, field
   labels, input choice, validation, buttons or CTAs, delete/unsaved confirm,
   empty or error states, navigation, a table or dashboard, a modal, or a
-  multi-step flow. Open UX is a cited UX catalog for agents. Pick one
-  Situation Card, then call Open-UX:get_situation and Open-UX:audit with
-  jobs=<card_id>. Don't invent UX rules from memory; apply the cited pack
-  to work already in hand. Returns cited criteria, not pass or fail.
-  home/cart/checkout are context, not ids. Use Open-UX:suggest_situations
-  only if the task is a vague surface or pasted UI. Cite via
-  Open-UX:search_guidelines or Open-UX:get_guideline. Hosted (live catalog)
-  or download the package (stdio, no key).
+  multi-step flow. Open UX is a cited UX catalog for agents. Compose (default)
+  and review: pick one Situation Card, then run scripts/audit.py
+  --jobs=<card_id>. Never a file. Never scores. Returns cited criteria, not
+  pass or fail. home/cart/checkout are context, not ids. Map fallback:
+  scripts/suggest.py. Cite: scripts/get.py. Hosted: uxmcp_ bearer
+  (OPEN_UX_API_KEY). Self-host: OPEN_UX_URL or stdio.
 ---
 
 # Open UX
 
-Need in → cited criteria pack out. You already have the UI. We hand you the matching cited rules so you don't invent UX from memory.
+Cited UX rules. The catalog is the source of truth. No rule bodies or guideline ids in this file.
 
-Compose and review share this one trigger. Pick a Situation Card, call `Open-UX:get_situation`, then `Open-UX:audit` with `jobs=<card_id>`. Surfaces (`home`, `cart`, `checkout`) are context, not Cards. Container aliases `forms` / `actions` / `feedback` work as a broad first scope.
+One package: `open-ux`. Do not load `open-ux-forms` / `open-ux-actions` / `open-ux-feedback`.
 
-When you need a map of what exists — by **category**, then **source** — read [`catalog/MANIFEST.md`](../../../../catalog/MANIFEST.md). Then fetch one id.
+Connect: hosted `https://open-ux.dev/mcp` + `OPEN_UX_API_KEY` (`uxmcp_`). Self-host: `OPEN_UX_URL` or `OPEN_UX_TRANSPORT=stdio`. If hosted 401s, send the human to `/invite`. Do not invent a key.
 
-## Examples
+Need is a **Situation Card** or container alias (`forms` / `actions` / `feedback`). Leaf ids are not needs. Surfaces are not ids. Reject **crosses containers** — pick the Card the ask actually is.
 
-- **Signup / settings fields.** Card `design_a_form`. Pack via `jobs=design_a_form`. Same if you are reviewing that form.
-- **Review a delete confirm.** Card `protect_destructive_and_leave`.
-- **Vague checkout.** `Open-UX:suggest_situations` with the task text, then pick a Card (often `build_a_multi_step_flow` or `design_a_form`) and audit that.
-- **Already have a guideline id.** `Open-UX:get_guideline` for that one cited body.
+| Job | Script |
+| --- | --- |
+| **compose** / **review** | `scripts/audit.py --jobs design_a_form` (or `--guideline-ids`). Optional `--query`, `--limit`. You judge. |
+| **map** | `scripts/suggest.py "task text"` then audit that Card |
+| **cite** | `scripts/get.py <guideline_id>` · index `scripts/list.py --guidelines` |
+| **index** | `scripts/list.py` · `scripts/get.py <card_id>` |
 
-## Connect
+Always `jobs=` or `--guideline-ids`. Never a file. Never pass or fail from the host. If empty, say so. Do not invent rules.
 
-Hosted or download the package — same tools, same Cards.
+Catalog map (category, then source): [`catalog/MANIFEST.md`](../../../../catalog/MANIFEST.md).
 
-- **Hosted** (shared live catalog): `https://open-ux.dev/mcp` + bearer `uxmcp_` (`OPEN_UX_API_KEY`). Request an invite at `/invite` (landing **Get a key**).
-- **Package** (local): clone [github.com/3dyonic/open-ux](https://github.com/3dyonic/open-ux) (MIT), `pip install -e "packages/mcp[dev]"`, then `python -m open_ux stdio`. Same catalog. No invite. Telemetry off. Optional: `python -m open_ux validate-catalog`.
-
-## Situation Cards
-
-Reject **crosses containers** — pick the Card the ask actually is.
+## Cards
 
 | Container | Card | When | Reject (use this instead) |
 | --- | --- | --- | --- |
@@ -56,18 +51,4 @@ Reject **crosses containers** — pick the Card the ask actually is.
 | Overlays & content structure | `choose_an_overlay` | Modal vs accordion; tooltip vs inline help; hide advanced options; side panel | Destructive decision inside a dialog → `protect_destructive_and_leave`. Fields inside a modal → `design_a_form`. Page layout → `compose_the_layout` |
 | Multi-step flows | `build_a_multi_step_flow` | Checkout *flow*; split a long form into steps; progress indicator; leave mid-flow; onboarding *sequence* | Single form on one screen → `design_a_form`. Site-level nav chrome → `orient_in_the_place`. Leave-warn as the only ask → `protect_destructive_and_leave` |
 
-`checkout` / `home` / `cart` are not Cards.
-
-## Tools
-
-Fully qualified `Open-UX:*` names. Card pick is the table above (judgment).
-
-- `Open-UX:get_situation` — Card when / reject / pointers (not rule bodies)
-- `Open-UX:audit` — `jobs=<card_id>` or `guideline_ids`. The pack.
-- `Open-UX:list_situations` — Card index; optional `container`
-- `Open-UX:suggest_situations` — vague surface or pasted UI
-- `Open-UX:get_guideline` / `Open-UX:search_guidelines` / `Open-UX:list_guidelines` — cite
-
-Empty pack → say so. We don't return pass or fail.
-
-Without a Claude session, [`scripts/mcp_call.py`](../../../../scripts/mcp_call.py) speaks `tools/list` and `tools/call`. In Claude, call the tools. Do not treat the script as the skill path.
+`checkout` / `home` / `cart` are not Cards. Decompose them.
