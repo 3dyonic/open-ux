@@ -24,6 +24,7 @@ MULTI_CITE_ID = ANT_SEED
 HOUSE_ID_FLUENT = "fluent.multistep-next-not-continue"
 HOUSE_ID_ANT = ANT_SEED
 FORMS_LANE_ID = "forms.labels.clickable"
+TOAST_ID = "spectrum.toast-no-redundant-dismiss"
 KNOWN_BODY = "Place a clear label outside the field so users always know what information belongs there."
 FIELD_ORDER = (
     "name",
@@ -105,6 +106,8 @@ def test_catalog_list_is_full_live_index(live_catalog: Path) -> None:
         assert len(visible) == min(PAGE_SIZE, len(catalog.index))
         for gid in (ANT_SEED, HOUSE_ID_FLUENT, FORMS_LANE_ID, "govuk.date-input-only-memorable"):
             assert gid in html
+        toast = next(g for g in catalog.guidelines if g["id"] == TOAST_ID)
+        assert toast["rule"] in html
         assert KNOWN_BODY not in html
         assert "Each input has a clear label outside the field" not in html
         assert "pass_when" not in html
@@ -201,11 +204,11 @@ def test_catalog_rule_severity_chip_only_when_present() -> None:
 _LIST_ROW_CLASSES = frozenset(
     {
         "catalog-row",
-        "row-id",
+        "row-line",
         "row-dot",
         "row-path",
         "row-name",
-        "row-chevron",
+        "row-rule",
     }
 )
 _SEVERITY_CHIP_LABELS = ("Blocker", "Major", "Minor", "Info")
@@ -299,7 +302,10 @@ def test_catalog_list_row_omits_severity_even_when_index_has_it() -> None:
     for chunk in _catalog_row_chunks(forced):
         _assert_list_row_has_no_severity(chunk)
         assert "Keep labels visible" in chunk
-        assert "row-chevron" in chunk
+        assert "row-rule" in chunk
+        assert "A rule." in chunk
+        assert "row-id" not in chunk
+        assert "row-chevron" not in chunk
     detail = render_catalog_rule(catalog, row["id"])
     assert detail is not None
     assert 'data-field="severity"' in detail
@@ -370,6 +376,8 @@ def test_catalog_pages_escape_text() -> None:
     listed = render_catalog_list(catalog)
     assert "<script>alert(1)</script>" not in listed
     assert "&lt;script&gt;alert(1)&lt;/script&gt;" in listed
+    assert "<img src=x" not in listed
+    assert "&lt;img src=x onerror=alert(1)&gt;" in listed
     detail = render_catalog_rule(catalog, nasty["id"])
     assert detail is not None
     assert "<script>alert(1)</script>" not in detail
@@ -422,20 +430,57 @@ def _row_container_for(html: str, guideline_id: str) -> str:
     return match.group(1)
 
 
-def _row_id_for(html: str, guideline_id: str) -> str:
+def _row_chunk_for(html: str, guideline_id: str) -> str:
     marker = f'data-id="{guideline_id}"'
     start = html.index(marker)
-    chunk = html[start : html.index("</a>", start)]
-    open_tag = chunk.index('class="row-id">') + len('class="row-id">')
-    return chunk[open_tag : chunk.index("</span>", open_tag)]
+    return html[start : html.index("</a>", start)]
 
 
 def _row_name_for(html: str, guideline_id: str) -> str:
-    marker = f'data-id="{guideline_id}"'
-    start = html.index(marker)
-    chunk = html[start : html.index("</a>", start)]
+    chunk = _row_chunk_for(html, guideline_id)
     open_tag = chunk.index('class="row-name">') + len('class="row-name">')
     return chunk[open_tag : chunk.index("</span>", open_tag)]
+
+
+def _row_rule_for(html: str, guideline_id: str) -> str:
+    chunk = _row_chunk_for(html, guideline_id)
+    open_tag = chunk.index('class="row-rule">') + len('class="row-rule">')
+    return chunk[open_tag : chunk.index("</span>", open_tag)]
+
+
+def test_catalog_list_row_chrome_name_path_rule(live_catalog: Path) -> None:
+    catalog = load_catalog(Settings.load(hosted=True))
+    tree = load_job_tree(Settings.load())
+    guideline = next(g for g in catalog.guidelines if g["id"] == TOAST_ID)
+    assert guideline["name"].endswith(" — Spectrum")
+    assert guideline["rule"]
+    assert guideline["title"] != guideline["name"]
+    with _client() as client:
+        listed = client.get("/catalog").text
+        detail = client.get(f"/catalog/{TOAST_ID}")
+    assert detail.status_code == 200
+    row = next(c for c in _catalog_row_chunks(listed) if f'data-id="{TOAST_ID}"' in c)
+    assert _row_name_for(listed, TOAST_ID) == "Toast no redundant dismiss"
+    assert "— Spectrum" not in _row_name_for(listed, TOAST_ID)
+    assert _row_name_for(listed, TOAST_ID) != guideline["title"]
+    assert _row_rule_for(listed, TOAST_ID) == guideline["rule"]
+    assert _row_rule_for(listed, TOAST_ID) != guideline["title"]
+    assert _row_rule_for(listed, TOAST_ID) != guideline["name"]
+    assert "Feedback &amp; status / Compose feedback" in row or (
+        "Feedback & status / Compose feedback" in row
+    )
+    visible = _visible_catalog_text(row)
+    assert TOAST_ID not in visible
+    assert "toast-no-redundant-dismiss" not in visible
+    assert "spectrum." not in visible
+    assert "Major" not in visible
+    assert 'class="row-id"' not in row
+    assert 'class="row-chevron"' not in row
+    assert 'class="severity"' not in row
+    assert f'href="/catalog/{TOAST_ID}"' in listed
+    assert f'data-id="{TOAST_ID}"' in listed
+    rendered = render_catalog_list(catalog, tree)
+    assert _row_rule_for(rendered, TOAST_ID) == guideline["rule"]
 
 
 def test_catalog_list_row_title_strips_house_suffix(live_catalog: Path) -> None:
@@ -492,10 +537,13 @@ def test_catalog_visible_ids_strip_house_prefix(live_catalog: Path) -> None:
         fluent = client.get(f"/catalog/{HOUSE_ID_FLUENT}").text
         ant = client.get(f"/catalog/{HOUSE_ID_ANT}").text
         lane_rule = client.get(f"/catalog/{FORMS_LANE_ID}").text
-    assert _row_id_for(listed, HOUSE_ID_FLUENT) == "multistep-next-not-continue"
-    assert _row_id_for(listed, HOUSE_ID_ANT) == "checkbox-vs-switch"
-    assert 'class="row-id">fluent.multistep-next-not-continue</span>' not in listed
-    assert 'class="row-id">ant.checkbox-vs-switch</span>' not in listed
+    assert 'class="row-id"' not in listed
+    fluent_row = next(c for c in _catalog_row_chunks(listed) if f'data-id="{HOUSE_ID_FLUENT}"' in c)
+    ant_row = next(c for c in _catalog_row_chunks(listed) if f'data-id="{HOUSE_ID_ANT}"' in c)
+    forms_row = next(c for c in _catalog_row_chunks(listed) if f'data-id="{FORMS_LANE_ID}"' in c)
+    assert "multistep-next-not-continue" not in _visible_catalog_text(fluent_row)
+    assert "checkbox-vs-switch" not in _visible_catalog_text(ant_row)
+    assert FORMS_LANE_ID not in _visible_catalog_text(forms_row)
     assert f'href="/catalog/{HOUSE_ID_FLUENT}"' in listed
     assert f'href="/catalog/{HOUSE_ID_ANT}"' in listed
     assert f'data-id="{HOUSE_ID_FLUENT}"' in listed
@@ -510,7 +558,6 @@ def test_catalog_visible_ids_strip_house_prefix(live_catalog: Path) -> None:
         "</h1>", 1
     )[0]
     assert "— Fluent" not in fluent_h1
-    assert _row_id_for(listed, FORMS_LANE_ID) == FORMS_LANE_ID
     assert f'data-field="id">{FORMS_LANE_ID}</p>' in lane_rule
 
 
@@ -562,12 +609,14 @@ def test_catalog_house_absent_from_visible_text(live_catalog: Path) -> None:
     fluent_text = _visible_catalog_text(fluent)
     assert "Checkbox vs switch — Ant" not in listed_text
     assert "Checkbox vs switch — Ant" not in rule_text
-    assert "— Ant" not in listed_text
-    assert "— Fluent" not in listed_text
+    for name in re.findall(r'class="row-name">([^<]*)</span>', listed):
+        assert "— Ant" not in name
+        assert "— Fluent" not in name
+        assert "— Spectrum" not in name
     assert "— Fluent" not in fluent_text
     assert "fluent." not in listed_text
     assert "fluent." not in fluent_text
-    assert _row_id_for(listed, HOUSE_ID_FLUENT) == "multistep-next-not-continue"
+    assert 'class="row-id"' not in listed
     assert _row_name_for(listed, ANT_SEED) == "Checkbox vs switch"
 
 
@@ -734,7 +783,7 @@ def test_catalog_type_scale_matches_figma(live_catalog: Path) -> None:
             assert n >= 14, f"{selector.strip()} font-size {n}px is below floor 14"
     assert re.search(r"h1 \{[^}]*font-size: 28px", listed, re.S)
     assert re.search(r"\.row-name \{[^}]*font-size: 16px", listed, re.S)
-    assert re.search(r"\.row-id \{[^}]*font-size: 14px", listed, re.S)
+    assert re.search(r"\.row-rule \{[^}]*font-size: 14px", listed, re.S)
     assert re.search(r"\.row-dot, \.row-path \{[^}]*font-size: 14px", listed, re.S)
     assert re.search(r"\.chip \{[^}]*font-size: 14px", listed, re.S)
     assert re.search(r"\.lede \{[^}]*font-size: 16px", listed, re.S)

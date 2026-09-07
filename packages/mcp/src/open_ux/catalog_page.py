@@ -1,4 +1,4 @@
-"""Public `/catalog` HTML: F3 list (36:22) and rule (78:26). HTTP-only."""
+"""Public `/catalog` HTML: F3 list (36:22) + row chrome (100:33) and rule (78:26). HTTP-only."""
 
 from __future__ import annotations
 
@@ -211,10 +211,11 @@ _CSS = """
     }
     .catalog-row {
       display: flex;
-      align-items: center;
-      gap: 10px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
       width: 100%;
-      padding: 12px 20px;
+      padding: 14px 20px;
       border-bottom: 1px solid var(--line);
       color: inherit;
     }
@@ -233,13 +234,13 @@ _CSS = """
       font-size: 14px;
       color: var(--muted);
     }
-    .row-id {
-      font-family: var(--mono);
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--pip);
-      text-decoration: underline;
-      flex-shrink: 0;
+    .row-line {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
     }
     .row-dot, .row-path {
       font-size: 14px;
@@ -247,19 +248,21 @@ _CSS = """
       flex-shrink: 0;
     }
     .row-name {
-      flex: 1 1 auto;
+      flex: 0 1 auto;
       min-width: 0;
       overflow: hidden;
       text-overflow: ellipsis;
-      white-space: nowrap;
-      font-size: 16px;
-      color: var(--ink);
-    }
-    .row-chevron {
       font-size: 16px;
       font-weight: 500;
-      color: var(--muted);
-      flex-shrink: 0;
+      color: var(--pip);
+    }
+    .row-rule {
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 14px;
+      color: var(--ink);
     }
     .rule-shell {
       display: flex;
@@ -507,6 +510,24 @@ def _search_blob(row: dict[str, Any]) -> str:
     return f"{_display_id(gid)} {row.get('title') or ''} {_display_name(row)}".lower()
 
 
+def _bodies_by_id(catalog: Catalog | None) -> dict[str, dict[str, Any]]:
+    if catalog is None:
+        return {}
+    return {str(g.get("id") or ""): g for g in catalog.guidelines}
+
+
+def _row_rule(row: dict[str, Any], bodies: dict[str, dict[str, Any]]) -> str:
+    """JSON `rule` only — never title or id Title Case."""
+    gid = str(row.get("id") or "")
+    body = bodies.get(gid, row)
+    raw = body.get("rule")
+    if raw is None and body is not row:
+        raw = row.get("rule")
+    if raw is None:
+        return ""
+    return str(raw).strip()
+
+
 def _row_container(row: dict[str, Any], tree: JobTree) -> str:
     raw = str(row.get("container") or "").strip()
     if raw:
@@ -633,12 +654,14 @@ def _rows_html(
     rows: list[dict[str, Any]],
     tree: JobTree,
     *,
+    catalog: Catalog | None = None,
     container: str = "",
     query: str = "",
     page: int = 1,
 ) -> str:
     if not rows:
         return '<p class="empty">No guidelines in the catalog.</p>'
+    bodies = _bodies_by_id(catalog)
     q = query.strip().lower()
     matching: list[dict[str, Any]] = []
     for row in rows:
@@ -661,23 +684,22 @@ def _rows_html(
         path = _row_path(row, tree)
         search = _search_blob(row)
         cid = _row_container(row, tree)
-        path_html = ""
+        rule = _row_rule(row, bodies)
+        line = f'<span class="row-name">{_e(name)}</span>'
         if path:
-            path_html = (
+            line += (
                 f'<span class="row-dot" aria-hidden="true">·</span>'
                 f'<span class="row-path">{_e(path)}</span>'
-                f'<span class="row-dot" aria-hidden="true">·</span>'
             )
+        rule_html = f'<span class="row-rule">{_e(rule)}</span>' if rule else ""
         hidden = "" if gid in visible_ids else " hidden"
-        # Figma 36:22: id · category · one-liner · chevron. No severity chip.
+        # Figma 100:33: name · category path / rule. Id stays in href + data-id.
         parts.append(
             f'<a class="catalog-row" href="{_e(_href_id(gid))}" '
             f'data-id="{_e(gid)}" data-container="{_e(cid)}" '
             f'data-search="{_e(search)}"{hidden}>'
-            f'<span class="row-id">{_e(_display_id(gid))}</span>'
-            f"{path_html}"
-            f'<span class="row-name">{_e(name)}</span>'
-            f'<span class="row-chevron" aria-hidden="true">›</span>'
+            f'<span class="row-line">{line}</span>'
+            f"{rule_html}"
             f"</a>"
         )
     parts.append("</div>")
@@ -722,7 +744,7 @@ def render_catalog_list(
       <input class="field__input" id="catalog-search" type="search" autocomplete="off" spellcheck="false"{value_attr}>
     </div>
     {_chips_html(wanted)}
-    {_rows_html(rows, tree, container=wanted, query=q, page=page)}
+    {_rows_html(rows, tree, catalog=catalog, container=wanted, query=q, page=page)}
   </main>
 """
     script = f"""
