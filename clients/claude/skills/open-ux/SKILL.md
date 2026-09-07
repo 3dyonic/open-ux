@@ -10,8 +10,8 @@ description: >-
   to work already in hand. Returns cited criteria, not pass or fail.
   home/cart/checkout are context, not ids. Use Open-UX:suggest_situations
   only if the task is a vague surface or pasted UI. Cite via
-  Open-UX:search_guidelines or Open-UX:get_guideline. Hosted (live catalog)
-  or download the package (stdio, no key).
+  Open-UX:search_guidelines or Open-UX:get_guideline. pip install open-ux
+  (stdio, no key) or hosted (live catalog).
 ---
 
 # Open UX
@@ -31,10 +31,10 @@ When you need a map of what exists — by **category**, then **source** — read
 
 ## Connect
 
-Hosted or download the package — same tools, same Cards.
+`pip install` the package, or hosted — same tools, same Cards.
 
+- **Package** (local): `pip install open-ux`, then `python -m open_ux stdio` (console script: `open-ux`). Same catalog. No invite. Telemetry off.
 - **Hosted** (shared live catalog): `https://open-ux.dev/mcp` + bearer `uxmcp_` (`OPEN_UX_API_KEY`). Request an invite at `/invite` (landing **Get a key**).
-- **Package** (local): clone [github.com/3dyonic/open-ux](https://github.com/3dyonic/open-ux) (MIT), `pip install -e "packages/mcp[dev]"`, then `python -m open_ux stdio`. Same catalog. No invite. Telemetry off. Optional: `python -m open_ux validate-catalog`.
 
 ## Situation Cards
 
