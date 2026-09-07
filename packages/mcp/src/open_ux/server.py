@@ -34,6 +34,7 @@ from open_ux.jobs import (
     MAX_LIMIT,
     load_job_tree,
 )
+from open_ux.health_page import health_payload, render_health_page, wants_health_html
 from open_ux.landing import render_landing
 from open_ux.public_html import (
     CONSENT_COOKIE,
@@ -442,19 +443,11 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         return Response(FAVICON_PATH.read_bytes(), media_type="image/svg+xml")
 
     @mcp.custom_route("/health", methods=["GET"])
-    async def health(_request: Request) -> Response:
-        return JSONResponse(
-            {
-                "ok": True,
-                "name": "Open UX",
-                "hosted": hosted,
-                "catalog": {
-                    "status": "empty" if catalog.empty else "ok",
-                    "guideline_count": len(catalog.guidelines),
-                    "version": catalog.version,
-                },
-            }
-        )
+    async def health(request: Request) -> Response:
+        payload = health_payload(catalog, hosted=hosted)
+        if wants_health_html(request):
+            return HTMLResponse(render_health_page(payload))
+        return JSONResponse(payload)
 
     @mcp.custom_route("/privacy", methods=["GET"])
     async def privacy(request: Request) -> Response:
