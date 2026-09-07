@@ -312,8 +312,8 @@ def create_mcp(*, hosted: bool) -> FastMCP:
     ) -> dict[str, Any]:
         """Say the UX need as one Situation Card or container.
 
-        Returns cited rule criteria. Does not take a file. Does not return
-        pass or fail. Required: jobs or guideline_ids. Leaf ids are not needs.
+        Returns cited rule criteria. Does not take a file. Does not return pass or fail.
+        Required: jobs or guideline_ids. Leaf ids are not needs.
         """
         result = run_audit(
             catalog,
