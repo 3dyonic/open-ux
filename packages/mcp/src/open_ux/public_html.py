@@ -55,7 +55,58 @@ CONSENT_BANNER_COPY = (
 )
 PRIVACY_TITLE = "Privacy — Open UX"
 PRIVACY_DESCRIPTION = (
-    "How Open UX handles keys, telemetry, and analytics cookies."
+    "How Open UX handles waitlist email, API keys, analytics, and agent "
+    "usage on the hosted service."
+)
+PRIVACY_H1 = "Privacy"
+PRIVACY_LEDE = (
+    "How Open UX handles information on the hosted service at open-ux.dev."
+)
+# Exact PO copy for GET /privacy. Do not invent; do not render docs/PRIVACY.md.
+PRIVACY_SECTIONS: tuple[tuple[str, str | None, tuple[str, ...]], ...] = (
+    (
+        "What this product is",
+        "Open UX is a shared, cited catalog of UX rules. Agents connect with an API key. People can browse the public catalog pages and request access.",
+        (),
+    ),
+    (
+        "Analytics (this website)",
+        "On public pages (home, catalog, invite request, and this privacy page) we may use Google Tag Manager and Google Analytics to understand traffic.",
+        (
+            "These load only after you Accept the cookie banner.",
+            "If you Decline, we do not load them for that choice.",
+            "We do not put analytics on the agent API (/mcp) or admin tools.",
+        ),
+    ),
+    (
+        "Waitlist and API keys",
+        None,
+        (
+            "If you request access, we store the email you give us to approve and issue an invite.",
+            "After you redeem, you get an API key (uxmcp_…). We store a hash of the key, not the secret itself. The full key is shown once at redeem.",
+            "Invite tokens are one-time and stored as hashes with expiry.",
+        ),
+    ),
+    (
+        "What we do not store from agent use",
+        "When agents call the tools, we do not store UI files, prompts, or other raw content you send for review. Hosted logs may keep high-level usage (for example which tools ran and which rule ids were involved), keyed by a hash of your API key — not by the secret key itself.",
+        (),
+    ),
+    (
+        "Retention",
+        "Hosted account and usage records are kept only as long as needed to run the service (on the order of weeks, not forever). You can ask us to delete your waitlist email and keys.",
+        (),
+    ),
+    (
+        "Self-host",
+        "If you run Open UX yourself, this hosted privacy page does not apply — your process, your logs. Analytics and waitlist are hosted-only.",
+        (),
+    ),
+    (
+        "Contact",
+        "Questions about privacy: use the email on your waitlist request, or contact the operator of this deployment.",
+        (),
+    ),
 )
 _GTM_ID_RE = re.compile(r"^GTM-[A-Z0-9]+$")
 CONSENT_CSS = """
@@ -293,59 +344,26 @@ def public_consent_footer(consent: str | None = None) -> str:
     return consent_banner_html(hidden=decided) + consent_script_html()
 
 
-def privacy_markdown_path() -> Path:
-    here = Path(__file__).resolve()
-    for candidate in here.parents:
-        path = candidate / "docs" / "PRIVACY.md"
-        if path.is_file():
-            return path
-    return Path.cwd() / "docs" / "PRIVACY.md"
-
-
-def _inline_md(text: str) -> str:
-    escaped = escape(text)
-    escaped = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", escaped)
-    escaped = re.sub(r"`([^`]+)`", r"<code>\1</code>", escaped)
-    return escaped
-
-
-def privacy_body_html(markdown: str) -> str:
-    parts: list[str] = []
-    in_list = False
-    for raw in markdown.replace("\r\n", "\n").split("\n"):
-        line = raw.rstrip()
-        if line.startswith("# "):
-            if in_list:
-                parts.append("</ul>")
-                in_list = False
-            parts.append(f"<h1>{_inline_md(line[2:])}</h1>")
-        elif line.startswith("## "):
-            if in_list:
-                parts.append("</ul>")
-                in_list = False
-            parts.append(f"<h2>{_inline_md(line[3:])}</h2>")
-        elif line.startswith("- "):
-            if not in_list:
-                parts.append("<ul>")
-                in_list = True
-            parts.append(f"<li>{_inline_md(line[2:])}</li>")
-        elif line.strip() == "":
-            if in_list:
-                parts.append("</ul>")
-                in_list = False
-        else:
-            if in_list:
-                parts.append("</ul>")
-                in_list = False
-            parts.append(f"<p>{_inline_md(line)}</p>")
-    if in_list:
-        parts.append("</ul>")
+def privacy_content_html() -> str:
+    parts = [
+        f"    <h1>{escape(PRIVACY_H1)}</h1>\n",
+        f'    <p class="lede">{escape(PRIVACY_LEDE)}</p>\n',
+    ]
+    for heading, paragraph, bullets in PRIVACY_SECTIONS:
+        parts.append("    <section>\n")
+        parts.append(f"      <h2>{escape(heading)}</h2>\n")
+        if paragraph:
+            parts.append(f"      <p>{escape(paragraph)}</p>\n")
+        if bullets:
+            parts.append("      <ul>\n")
+            for item in bullets:
+                parts.append(f"        <li>{escape(item)}</li>\n")
+            parts.append("      </ul>\n")
+        parts.append("    </section>\n")
     return "".join(parts)
 
 
-def render_privacy_page() -> str:
-    markdown = privacy_markdown_path().read_text(encoding="utf-8")
-    body = privacy_body_html(markdown)
+def render_privacy_page(*, consent: str | None = None) -> str:
     return (
         """<!DOCTYPE html>
 <html lang="en">
@@ -353,6 +371,7 @@ def render_privacy_page() -> str:
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 """
+        + public_gtm_head(consent)
         + head_meta(title=PRIVACY_TITLE, description=PRIVACY_DESCRIPTION, path="/privacy")
         + """
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -393,15 +412,37 @@ def render_privacy_page() -> str:
       align-items: center;
       gap: 16px;
     }
-    .nav-link {
+    .nav-catalog, .nav-github {
       font-size: 13px;
       font-weight: 500;
       color: var(--muted);
     }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 16px;
+      border-radius: var(--radius);
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: normal;
+      cursor: pointer;
+      text-decoration: none;
+      border: none;
+    }
+    .btn--primary {
+      background: var(--pip);
+      color: #fff;
+    }
+    .btn--nav {
+      padding: 8px 14px;
+      font-size: 13px;
+    }
     .main {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 24px;
       width: 100%;
       max-width: 720px;
       padding: 40px 48px 48px;
@@ -409,6 +450,23 @@ def render_privacy_page() -> str:
     h1 {
       margin: 0;
       font-size: 28px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .lede {
+      margin: 0;
+      font-size: 16px;
+      line-height: 24px;
+      color: var(--muted);
+    }
+    section {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    h2 {
+      margin: 0;
+      font-size: 16px;
       font-weight: 600;
       color: var(--ink);
     }
@@ -425,30 +483,34 @@ def render_privacy_page() -> str:
       flex-direction: column;
       gap: 10px;
     }
-    code {
-      font-family: var(--mono);
-      font-size: 13px;
-    }
 """
         + MARK_CSS
+        + CONSENT_CSS
         + """
   </style>
 </head>
 <body>
+"""
+        + public_gtm_noscript(consent)
+        + """
   <header class="nav">
     """
         + NAV_BRAND_HTML
         + """
     <div class="nav-actions">
-      <a class="nav-link" href="/catalog">Catalog</a>
-      <a class="nav-link" href="/">Home</a>
+      <a class="nav-catalog" href="/catalog">Catalog</a>
+      <a class="nav-github" href="https://github.com/3dyonic/open-ux">GitHub</a>
+      <a class="btn btn--primary btn--nav" href="/invite">Get a key</a>
     </div>
   </header>
   <main class="main">
 """
-        + body
+        + privacy_content_html()
         + """
   </main>
+"""
+        + public_consent_footer(consent)
+        + """
 </body>
 </html>
 """

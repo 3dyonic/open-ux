@@ -12,6 +12,8 @@ from open_ux.public_html import (
     FAVICON_PATH,
     LANDING_DESCRIPTION,
     LANDING_TITLE,
+    PRIVACY_DESCRIPTION,
+    PRIVACY_TITLE,
     ROBOTS_TXT,
     canonical_url,
     rule_meta_description,
@@ -88,10 +90,12 @@ def test_public_pages_have_pack_head_and_no_mcp_or_og_image(live_catalog: Path) 
         listed = client.get("/catalog").text
         rule = client.get(f"/catalog/{ANT_SEED}").text
         invite = client.get("/invite").text
+        privacy = client.get("/privacy").text
     for html, title, description, path in (
         (landing, LANDING_TITLE, LANDING_DESCRIPTION, "/"),
         (listed, CATALOG_TITLE, LANDING_DESCRIPTION, "/catalog"),
         (rule, rule_title, rule_desc, f"/catalog/{ANT_SEED}"),
+        (privacy, PRIVACY_TITLE, PRIVACY_DESCRIPTION, "/privacy"),
     ):
         head = _head(html)
         title_e = escape(title, quote=True)
@@ -120,6 +124,11 @@ def test_public_pages_have_pack_head_and_no_mcp_or_og_image(live_catalog: Path) 
     assert f'<img class="mark" src="{FAVICON_HREF}"' in invite
     assert 'class="nav-brand" href="/"' in invite
     assert f'<link rel="icon" href="{FAVICON_HREF}" type="image/svg+xml">' in _head(invite)
+    assert 'class="nav-brand" href="/"' in privacy
+    assert f'<img class="mark" src="{FAVICON_HREF}"' in privacy
+    assert f'<link rel="icon" href="{FAVICON_HREF}" type="image/svg+xml">' in _head(privacy)
+    assert "UNS-44" not in privacy
+    assert "uns-44" not in privacy
     assert "UNS-44" not in invite
     assert "uns-44" not in invite
     assert ">Get a key</a>" in listed
