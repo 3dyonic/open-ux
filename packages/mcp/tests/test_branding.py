@@ -255,7 +255,13 @@ def test_readme_embeds_relative_hero() -> None:
     assert "MCP" not in readme.split("\n", 1)[0]
     assert "![Open UX](docs/readme-hero.svg)" in readme
     assert "[docs/LANDING.md](docs/LANDING.md)" not in readme
+    assert "pip install open-ux" in readme
+    assert "python -m open_ux stdio" in readme
+    assert "OPEN_UX_MODE=hosted python -m open_ux http" in readme
     assert "pip install -e \"packages/mcp[dev]\"" in readme
+    assert readme.index("pip install open-ux") < readme.index(
+        "pip install -e \"packages/mcp[dev]\""
+    )
     assert "python -m pytest" in readme
     assert "open-ux.dev" in readme
     assert "list_guidelines" in readme
