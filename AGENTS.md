@@ -4,9 +4,17 @@ Connect and tools only. The routing table lives in [`clients/claude/skills/open-
 
 ## Connect
 
-`pip install` the package, or hosted — same tools, same Cards.
+`pip install` the package, or hosted — same tools, same Cards. Package name: `open-ux`. Console script: `open-ux`.
 
-- **Package** (local): `pip install open-ux`, then `python -m open_ux stdio` (console script: `open-ux`) or `OPEN_UX_MODE=hosted python -m open_ux http`. Same catalog. No invite. Telemetry off.
+```bash
+pip install open-ux
+python -m open_ux validate-catalog
+python -m open_ux stdio
+OPEN_UX_MODE=hosted python -m open_ux http
+```
+
+Same catalog. No invite. Telemetry off. Point MCP clients at local stdio.
+
 - **Hosted** (shared live catalog): `https://open-ux.dev/mcp` with bearer `uxmcp_` (`OPEN_UX_API_KEY`). Invite at [open-ux.dev/invite](https://open-ux.dev/invite).
 
 Contributors: clone the repo and `pip install -e "packages/mcp[dev]"`.

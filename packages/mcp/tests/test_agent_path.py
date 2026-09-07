@@ -283,6 +283,7 @@ def test_connect_offers_hosted_or_package() -> None:
         text = path.read_text(encoding="utf-8")
         assert "https://open-ux.dev/mcp" in text
         assert "pip install open-ux" in text
+        assert "python -m open_ux validate-catalog" in text
         assert "python -m open_ux stdio" in text
         assert "OPEN_UX_MODE=hosted python -m open_ux http" in text
         assert "uxmcp_" in text or "OPEN_UX_API_KEY" in text
