@@ -33,6 +33,14 @@ def _tree(live_catalog: Path):
 
 @pytest.mark.parametrize("row", ROWS, ids=[r["query"][:40] for r in ROWS])
 def test_expected_card_present(live_catalog: Path, row: dict) -> None:
+    """Completeness lock, not a routing-quality test.
+
+    Under the current contract every query returns all 13 cards, so this
+    can only fail if a filter is reintroduced (or a card is dropped from
+    the catalog) -- it does not check ranking quality, caution noise, or
+    that the expected card is findable near the top. That is intentional:
+    OUX-21's fix is "never hide a real answer," not "always rank it #1."
+    """
     tree = _tree(live_catalog)
     result = suggest_situations(row["query"], row.get("surface"), tree=tree)
     ids = [item["id"] for item in result["situations"]]
@@ -40,6 +48,24 @@ def test_expected_card_present(live_catalog: Path, row: dict) -> None:
         f"{row['expected_card']!r} missing for {row['query']!r} "
         f"({row['note']}) -- got {ids}"
     )
+
+
+def test_caution_is_phrase_match_not_token_overlap(live_catalog: Path) -> None:
+    """caution must not fire on generic single-word overlap (PR #45 review).
+
+    design_a_form rejects compose_a_data_display for "table or dashboard,
+    not a form" -- any query containing the bare word "form" used to
+    annotate design_a_form as commonly confused with compose_a_data_display
+    under token-any matching, even though nothing about the query actually
+    suggests that confusion. caution must only fire on an actual phrase
+    match against a reject reason.
+    """
+    tree = _tree(live_catalog)
+    result = suggest_situations(
+        "design a signup form and label these fields", tree=tree
+    )
+    by_id = {row["id"]: row for row in result["situations"]}
+    assert "caution" not in by_id["design_a_form"]
 
 
 def test_no_accept_reject_contradiction_is_possible(live_catalog: Path) -> None:

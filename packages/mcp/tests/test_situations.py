@@ -152,7 +152,10 @@ def test_suggest_never_hides_a_card_behind_a_score_threshold(live_catalog: Path)
     assert len(ids) == len(CARD_IDS)
     for row in result["situations"]:
         assert "overview" in row and row["overview"]
-        assert "hint_score" in row
+        # No numeric score is exposed -- it's a rough ordering aid, not a
+        # confidence value, and surfacing it invites the same over-trust
+        # that used to hide cards outright (see PR review on OUX-21).
+        assert "hint_score" not in row
 
     # A real paraphrase with zero literal token overlap against the correct
     # card's `when` list must still surface that card somewhere in the set.

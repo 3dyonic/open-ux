@@ -246,9 +246,7 @@ def _caution_for(card, task_text: str, task_tokens: list[str]) -> str | None:
     for item in card.reject:
         if not item.why:
             continue
-        if item.why.lower() in lowered or any(
-            token in task_tokens for token in _tokens(item.why)
-        ):
+        if item.why.lower() in lowered:
             return f"commonly confused with {item.id}: {item.why}"
     return None
 
@@ -273,20 +271,21 @@ def suggest_situations(
         if card.id in hint_cards:
             score += 2
         ranked.append((score, card.id, card, why))
-    # hint_score only orders the response -- it never excludes a card. The
-    # calling LLM sees every Situation Card and makes the final call, so a
-    # real answer with zero shared vocabulary with the query can never be
-    # hidden by this heuristic (see OUX-21).
+    # The score only orders the response -- it never excludes a card, and is
+    # not exposed on the row: it's a rough heuristic, not a confidence value,
+    # and surfacing it as a number invites the same over-trust that used to
+    # hide cards outright. The calling LLM sees every Situation Card and
+    # makes the final call, so a real answer with zero shared vocabulary
+    # with the query can never be hidden by this heuristic (see OUX-21).
     ranked.sort(key=lambda row: (-row[0], CARD_IDS.index(row[1])))
 
     situations = []
-    for score, _cid, card, why in ranked:
+    for _score, _cid, card, why in ranked:
         row = {
             "id": card.id,
             "title": card.title,
             "overview": card.overview,
             "why": why,
-            "hint_score": score,
         }
         caution = _caution_for(card, text, task_tokens)
         if caution:

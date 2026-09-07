@@ -13,8 +13,17 @@ jobs:
     env:
       OPEN_UX_CATALOG: ${{ github.workspace }}/catalog
       OPEN_UX_SCHEMA: ${{ github.workspace }}/catalog/schema.json
+      OPEN_UX_WEB_DIST: ${{ github.workspace }}/packages/web/dist
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Build web
+        working-directory: packages/web
+        run: |
+          npm ci
+          npm run build
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"

@@ -132,5 +132,5 @@ def audit(
     if total == 0:
         note = MISS_NOTE
     elif not query_matched:
-        note = f"query too narrow — showing all {total} guidelines for this job"
+        note = f"query too narrow — showing all {total} guidelines in scope"
     return _payload(capped, total=total, note=note)
