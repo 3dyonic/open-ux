@@ -18,7 +18,7 @@ description: >-
 
 Need in → cited criteria pack out. You already have the UI. We hand you the matching cited rules so you don't invent UX from memory.
 
-Compose and review share this one trigger. Pick a Situation Card, call `Open-UX:get_situation`, then `Open-UX:audit` with `jobs=<card_id>`. Surfaces (`home`, `cart`, `checkout`) are context, not Cards. Container aliases `forms` / `actions` / `feedback` work as a broad first scope.
+Compose and review share this one trigger. Pick a Situation Card, call `Open-UX:get_situation`, then fetch the pack — prefer `scripts/audit.py` so you don't invent args, or call `Open-UX:audit` with `jobs=<card_id>`. Surfaces (`home`, `cart`, `checkout`) are context, not Cards. Container aliases `forms` / `actions` / `feedback` work as a broad first scope.
 
 When you need a map of what exists — by **category**, then **source** — read [`catalog/MANIFEST.md`](../../../../catalog/MANIFEST.md). Then fetch one id.
 
@@ -60,14 +60,15 @@ Reject **crosses containers** — pick the Card the ask actually is.
 
 ## Tools
 
-Fully qualified `Open-UX:*` names. Card pick is the table above (judgment).
+Fully qualified `Open-UX:*` names. `/list` `/get` / map / cite stay on tools. Card pick is the table above (judgment).
 
 - `Open-UX:get_situation` — Card when / reject / pointers (not rule bodies)
-- `Open-UX:audit` — `jobs=<card_id>` or `guideline_ids`. The pack.
+- `Open-UX:audit` — `jobs=<card_id>` or `guideline_ids`. The pack. First-class; equally valid to call this instead of the helper.
+- Helper (available, not required): `python3 scripts/audit.py --jobs <card_id>` or `--guideline-ids`. Prefer the script when composing or reviewing so you don't invent args. Your choice.
 - `Open-UX:list_situations` — Card index; optional `container`
 - `Open-UX:suggest_situations` — vague surface or pasted UI
 - `Open-UX:get_guideline` / `Open-UX:search_guidelines` / `Open-UX:list_guidelines` — cite
 
 Empty pack → say so. We don't return pass or fail.
 
-Without a Claude session, [`scripts/mcp_call.py`](../../../../scripts/mcp_call.py) speaks `tools/list` and `tools/call`. In Claude, call the tools. Do not treat the script as the skill path.
+Without a Claude session, [`scripts/mcp_call.py`](../../../../scripts/mcp_call.py) speaks `tools/list` and `tools/call`. In Claude, call the tools. Do not treat `mcp_call.py` as the skill path.

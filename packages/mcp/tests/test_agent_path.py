@@ -17,6 +17,7 @@ PLUGIN = ROOT / "clients" / "claude" / ".claude-plugin" / "plugin.json"
 MCP_JSON = ROOT / "clients" / "claude" / ".mcp.json"
 AGENT = ROOT / "clients" / "claude" / "agents" / "open-ux.md"
 HELPER = ROOT / "scripts" / "mcp_call.py"
+AUDIT_SCRIPT = ROOT / "scripts" / "audit.py"
 BANNED_BODIES = ("pass_when", "fail_when")
 ENFORCE_SCRIPT = (
     "must run this script",
@@ -26,6 +27,8 @@ ENFORCE_SCRIPT = (
     "audit is required",
     "required open ux audit wire",
     "do not improvise the open-ux:audit wire",
+    "do not call `open-ux:audit` instead",
+    "required script",
 )
 GUIDELINE_ID = re.compile(r"`[a-z]+(?:\.[a-z0-9_-]+){1,}`")
 
@@ -101,8 +104,8 @@ def test_skill_routing_table_has_when_and_cross_container_reject() -> None:
     assert "verdict" not in body
     assert "Open-UX:audit" in body
     assert "must run" not in body.lower()
-    assert "prefer `scripts/audit.py`" not in body
-    assert "prefer `python3 scripts/audit.py`" not in body
+    assert "prefer `scripts/audit.py`" in body
+    assert "scripts/audit.py" in body
 
 
 def test_skill_examples_and_tools_not_sermons() -> None:
@@ -120,6 +123,10 @@ def test_skill_examples_and_tools_not_sermons() -> None:
     assert "Open-UX:get_guideline" in body
     assert "Open-UX:audit" in body
     assert "need in" in lower
+    assert "scripts/audit.py" in body
+    assert "available" in lower
+    assert "not required" in lower
+    assert "choice" in lower
 
 
 def test_skill_files_point_at_tools_not_catalog_bodies() -> None:
@@ -155,17 +162,26 @@ def test_commands_are_short_mcp_prompts() -> None:
         assert "upload" not in lower
         assert "no file" in lower or "send a file" in lower or "not ask for a file" in lower
         assert "Open-UX:" in text
-        assert "audit.py" not in text
+        assert "python3 skills/open-ux/scripts" not in lower
         assert "must run" not in lower
         for banned in ENFORCE_SCRIPT:
             assert banned not in lower
         for token in BANNED_BODIES:
             assert token not in text
         assert len(text.splitlines()) <= 12
+        if path.name != "audit.md":
+            assert "audit.py" not in text
     audit = (COMMANDS / "audit.md").read_text(encoding="utf-8")
     assert "Open-UX:audit" in audit
     assert "jobs=" in audit
     assert "guideline_ids" in audit
+    assert "scripts/audit.py" in audit
+    assert "prefer" in audit.lower()
+    assert "equally valid" in audit.lower()
+    list_cmd = (COMMANDS / "list.md").read_text(encoding="utf-8")
+    get_cmd = (COMMANDS / "get.md").read_text(encoding="utf-8")
+    assert "Open-UX:list_situations" in list_cmd
+    assert "Open-UX:get_situation" in get_cmd
 
 
 def test_pointer_docs_exist_and_stay_thin() -> None:
@@ -186,9 +202,46 @@ def test_pointer_docs_exist_and_stay_thin() -> None:
     assert not (COMMANDS / "critique.md").exists()
 
 
+def test_audit_helper_available_not_required() -> None:
+    assert AUDIT_SCRIPT.is_file()
+    help_text = subprocess.check_output(
+        [sys.executable, str(AUDIT_SCRIPT), "--help"],
+        text=True,
+        cwd=ROOT,
+    )
+    assert "--jobs" in help_text
+    assert "--guideline-ids" in help_text
+    assert "--file" not in help_text
+    assert "verdict" not in help_text.lower()
+    scoped = subprocess.check_output(
+        [sys.executable, str(AUDIT_SCRIPT), "--jobs", "design_a_form"],
+        text=True,
+        cwd=ROOT,
+    )
+    payload = json.loads(scoped)
+    assert "guidelines" in payload
+    assert "verdict" not in payload
+    assert payload["count"] >= 1
+    empty = subprocess.run(
+        [sys.executable, str(AUDIT_SCRIPT)],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+    )
+    assert empty.returncode != 0
+    skill = SKILL.read_text(encoding="utf-8")
+    lower = skill.lower()
+    assert "scripts/audit.py" in skill
+    assert "prefer" in lower
+    assert "not required" in lower
+    assert "Open-UX:audit" in skill
+    assert "must run" not in lower
+    for banned in ENFORCE_SCRIPT:
+        assert banned not in lower
+
+
 def test_optional_helper_is_protocol_not_path() -> None:
     assert HELPER.is_file()
-    assert not (ROOT / "scripts" / "audit.py").exists()
     env = {**os.environ, "OPEN_UX_TRANSPORT": "inprocess"}
     listed = subprocess.check_output(
         [sys.executable, str(HELPER), "list"],
@@ -210,7 +263,7 @@ def test_optional_helper_is_protocol_not_path() -> None:
     assert payload["count"] >= 1
     skill = SKILL.read_text(encoding="utf-8")
     assert "mcp_call.py" in skill
-    assert "do not treat the script" in skill.lower()
+    assert "do not treat `mcp_call.py`" in skill.lower()
     assert "must run" not in skill.lower()
     for banned in ENFORCE_SCRIPT:
         assert banned not in skill.lower()

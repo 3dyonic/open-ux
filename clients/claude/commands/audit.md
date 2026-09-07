@@ -1,5 +1,5 @@
 ---
-description: Call Open-UX:audit for a Situation Card or known guideline ids.
+description: Fetch a cited UX criteria pack for a Situation Card.
 ---
 
-Call `Open-UX:audit` with `$ARGUMENTS`. Card or alias (`forms` / `actions` / `feedback`) → `jobs=<id>`. Known ids → `guideline_ids`. Example: `/audit design_a_form`. Do not send a file.
+Prefer `python3 scripts/audit.py --jobs <card_id>` so you don't invent args. `Open-UX:audit` with `jobs=` / `guideline_ids` is equally valid. Example: `/audit design_a_form`. Do not send a file.
