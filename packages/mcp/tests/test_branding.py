@@ -253,10 +253,15 @@ def test_readme_embeds_relative_hero() -> None:
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
     assert readme.startswith("# Open UX\n")
     assert "MCP" not in readme.split("\n", 1)[0]
-    assert "![Open UX: catalog to audit flow](docs/readme-hero.svg)" in readme
+    assert "![Open UX](docs/readme-hero.svg)" in readme
     assert "[docs/LANDING.md](docs/LANDING.md)" not in readme
     assert "pip install -e \"packages/mcp[dev]\"" in readme
     assert "python -m pytest" in readme
+    assert "open-ux.dev" in readme
+    assert "list_guidelines" in readme
+    assert "[MIT](LICENSE)" in readme
+    assert "UNS-" not in readme
+    assert "Apple HIG" not in readme
 
 
 def test_designer_landing_craft_is_not_in_the_public_repo() -> None:
