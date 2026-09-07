@@ -174,8 +174,8 @@ OSS_FOOTER_CSS = """
       padding: 16px 48px;
       border-top: 1px solid var(--line, #DED4C8);
       background: var(--paper, #F9F6F2);
-      font-size: 12px;
-      line-height: 16px;
+      font-size: 14px;
+      line-height: 20px;
       color: var(--muted, #6A6056);
     }
     .footer p { margin: 0; }

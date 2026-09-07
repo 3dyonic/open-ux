@@ -738,6 +738,7 @@ def test_catalog_type_scale_matches_figma(live_catalog: Path) -> None:
     assert re.search(r"\.row-dot, \.row-path \{[^}]*font-size: 14px", listed, re.S)
     assert re.search(r"\.chip \{[^}]*font-size: 14px", listed, re.S)
     assert re.search(r"\.lede \{[^}]*font-size: 16px", listed, re.S)
+    assert re.search(r"\.footer \{[^}]*font-size: 14px", listed, re.S)
     assert re.search(r"\.rule-name \{[^}]*font-size: 28px", rule, re.S)
     assert re.search(r"\.rule-id \{[^}]*font-size: 14px", rule, re.S)
     assert re.search(r"\.block-body \{[^}]*font-size: 16px", rule, re.S)
