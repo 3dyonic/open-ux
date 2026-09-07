@@ -6,14 +6,8 @@ from html import escape
 from urllib.parse import quote
 from typing import Any
 
-from open_ux.catalog import SOURCE_HOUSES, Catalog, citations, get_by_id, list_index
+from open_ux.catalog import Catalog, citations, get_by_id, list_index
 from open_ux.jobs import JobTree, card_by_id, empty_job_tree
-
-# Longest house label first so "Suomi.fi" wins over a shorter tail.
-_SOURCE_SUFFIXES = tuple(
-    f" — {label}"
-    for label in sorted(SOURCE_HOUSES.values(), key=len, reverse=True)
-)
 
 # Figma 36:22 chip labels for the locked seven containers.
 CONTAINER_CHIPS: tuple[tuple[str, str], ...] = (
@@ -25,6 +19,8 @@ CONTAINER_CHIPS: tuple[tuple[str, str], ...] = (
     ("overlays_and_content_structure", "Overlays"),
     ("multi_step_flows", "Multi-step"),
 )
+
+PAGE_SIZE = 25
 
 GITHUB = "https://github.com/3dyonic/open-ux"
 
@@ -75,6 +71,8 @@ _CSS = """
       display: flex;
       align-items: center;
       gap: 10px;
+    }
+    .wordmark {
       font-size: 16px;
       font-weight: 600;
       color: var(--ink);
@@ -114,6 +112,15 @@ _CSS = """
     .btn--primary {
       background: var(--pip);
       color: #FFECDC;
+    }
+    .btn--outline {
+      background: var(--card);
+      color: var(--ink);
+      border: 1px solid var(--line);
+    }
+    .btn:disabled {
+      opacity: 0.4;
+      cursor: default;
     }
     .main {
       display: flex;
@@ -207,6 +214,20 @@ _CSS = """
       color: inherit;
     }
     .catalog-row:last-child { border-bottom: none; }
+    .catalog-row[hidden] { display: none; }
+    .pager {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      width: 100%;
+    }
+    .pager-meta {
+      margin: 0;
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--muted);
+    }
     .row-id {
       font-family: var(--mono);
       font-size: 12px;
@@ -433,7 +454,7 @@ def _facet_title(tree: JobTree, card_id: str | None, facet_id: str | None) -> st
 
 
 def _row_path(row: dict[str, Any], tree: JobTree) -> str:
-    left = _container_title(tree, row.get("container"))
+    left = _container_title(tree, _row_container(row, tree) or row.get("container"))
     right = _card_title(tree, row.get("card"))
     if left and right:
         return f"{left} / {right}"
@@ -444,24 +465,31 @@ def _raw_name(row: dict[str, Any]) -> str:
     return str(row.get("name") or row.get("title") or row.get("id") or "")
 
 
-def _strip_source_suffix(name: str) -> str:
-    """Drop a trailing ` — {house}` so HTML titles stay name-only."""
-    text = name.strip()
-    for suffix in _SOURCE_SUFFIXES:
-        if text.endswith(suffix):
-            return text[: -len(suffix)].rstrip()
-    return text
-
-
 def _display_name(row: dict[str, Any]) -> str:
-    """Claim title for list rows and the rule H1 — no citation-source suffix."""
-    return _strip_source_suffix(_raw_name(row))
+    """Master `name` as-is (fallback title → id). Keep a trailing ` — {house}` suffix."""
+    return _raw_name(row)
+
+
+def _row_container(row: dict[str, Any], tree: JobTree) -> str:
+    raw = str(row.get("container") or "").strip()
+    if raw:
+        return raw
+    card = card_by_id(tree, str(row.get("card") or ""))
+    if card is not None and card.container:
+        return str(card.container)
+    facet_id = str(row.get("facet") or "")
+    if facet_id:
+        for card in tree.cards:
+            for facet in card.facets:
+                if facet.id == facet_id:
+                    return str(card.container)
+    return ""
 
 
 def _nav() -> str:
     return f"""
   <header class="nav">
-    <a class="nav-brand" href="/"><span class="pip" aria-hidden="true"></span>Open UX</a>
+    <a class="nav-brand" href="/"><span class="pip" aria-hidden="true"></span><span class="wordmark">Open UX</span></a>
     <div class="nav-actions">
       <a class="nav-catalog" href="/catalog"><span class="pip" aria-hidden="true"></span>Catalog</a>
       <a class="nav-link" href="{GITHUB}">GitHub</a>
@@ -523,16 +551,40 @@ def _chips_html() -> str:
     return '<div class="chips" id="catalog-chips">' + "".join(parts) + "</div>"
 
 
+def _pager_meta(total: int, page: int = 1, size: int = PAGE_SIZE) -> str:
+    if total <= 0:
+        return "0 of 0"
+    pages = max(1, (total + size - 1) // size)
+    page = min(max(page, 1), pages)
+    start = (page - 1) * size + 1
+    end = min(page * size, total)
+    return f"{start}–{end} of {total}"
+
+
+def _pager_html(total: int) -> str:
+    if total <= 0:
+        return ""
+    prev_disabled = " disabled"
+    next_disabled = " disabled" if total <= PAGE_SIZE else ""
+    return (
+        '<div class="pager" id="catalog-pager">'
+        f'<button type="button" class="btn btn--outline" id="page-prev"{prev_disabled}>Prev</button>'
+        f'<p class="pager-meta" id="page-meta">{_e(_pager_meta(total))}</p>'
+        f'<button type="button" class="btn btn--outline" id="page-next"{next_disabled}>Next</button>'
+        "</div>"
+    )
+
+
 def _rows_html(rows: list[dict[str, Any]], tree: JobTree) -> str:
     if not rows:
         return '<p class="empty">No guidelines in the catalog.</p>'
     parts = ['<div class="list" id="catalog-list">']
-    for row in rows:
+    for i, row in enumerate(rows):
         gid = str(row.get("id") or "")
         name = _display_name(row)
         path = _row_path(row, tree)
         search = f"{gid} {row.get('title') or ''} {_raw_name(row)}".lower()
-        container = str(row.get("container") or "")
+        container = _row_container(row, tree)
         path_html = ""
         if path:
             path_html = (
@@ -540,10 +592,11 @@ def _rows_html(rows: list[dict[str, Any]], tree: JobTree) -> str:
                 f'<span class="row-path">{_e(path)}</span>'
                 f'<span class="row-dot" aria-hidden="true">·</span>'
             )
+        hidden = " hidden" if i >= PAGE_SIZE else ""
         parts.append(
             f'<a class="catalog-row" href="{_e(_href_id(gid))}" '
             f'data-id="{_e(gid)}" data-container="{_e(container)}" '
-            f'data-search="{_e(search)}">'
+            f'data-search="{_e(search)}"{hidden}>'
             f'<span class="row-id">{_e(gid)}</span>'
             f"{path_html}"
             f'<span class="row-name">{_e(name)}</span>'
@@ -551,6 +604,7 @@ def _rows_html(rows: list[dict[str, Any]], tree: JobTree) -> str:
             f"</a>"
         )
     parts.append("</div>")
+    parts.append(_pager_html(len(rows)))
     return "".join(parts)
 
 
@@ -575,39 +629,62 @@ def render_catalog_list(catalog: Catalog, tree: JobTree | None = None) -> str:
     {_rows_html(rows, tree)}
   </main>
 """
-    script = r"""
+    script = f"""
+    const PAGE_SIZE = {PAGE_SIZE};
     const search = document.getElementById("catalog-search");
     const chips = document.getElementById("catalog-chips");
     const rows = Array.from(document.querySelectorAll(".catalog-row"));
     const shown = document.getElementById("shown-count");
+    const prev = document.getElementById("page-prev");
+    const next = document.getElementById("page-next");
+    const pageMeta = document.getElementById("page-meta");
     let container = "";
+    let page = 1;
 
-    function apply() {
+    function apply() {{
       const q = (search && search.value || "").trim().toLowerCase();
-      let n = 0;
-      for (const row of rows) {
+      const matched = [];
+      for (const row of rows) {{
         const matchC = !container || row.getAttribute("data-container") === container;
         const blob = row.getAttribute("data-search") || "";
         const matchQ = !q || blob.indexOf(q) !== -1;
-        const on = matchC && matchQ;
-        row.hidden = !on;
-        if (on) n += 1;
-      }
-      if (shown) shown.textContent = n + " shown";
-    }
+        if (matchC && matchQ) matched.push(row);
+        else row.hidden = true;
+      }}
+      const total = matched.length;
+      const pages = Math.max(1, Math.ceil(total / PAGE_SIZE) || 1);
+      if (page > pages) page = pages;
+      if (page < 1) page = 1;
+      const start = (page - 1) * PAGE_SIZE;
+      const end = Math.min(start + PAGE_SIZE, total);
+      matched.forEach((row, i) => {{
+        row.hidden = i < start || i >= end;
+      }});
+      if (shown) shown.textContent = total + " shown";
+      if (pageMeta) {{
+        pageMeta.textContent = total === 0
+          ? "0 of 0"
+          : (start + 1) + "–" + end + " of " + total;
+      }}
+      if (prev) prev.disabled = page <= 1 || total === 0;
+      if (next) next.disabled = page >= pages || total === 0;
+    }}
 
-    if (search) search.addEventListener("input", apply);
-    if (chips) chips.addEventListener("click", (event) => {
+    if (search) search.addEventListener("input", () => {{ page = 1; apply(); }});
+    if (chips) chips.addEventListener("click", (event) => {{
       const btn = event.target.closest("[data-chip]");
       if (!btn) return;
       container = btn.getAttribute("data-chip") || "";
-      for (const chip of chips.querySelectorAll("[data-chip]")) {
+      for (const chip of chips.querySelectorAll("[data-chip]")) {{
         const on = chip === btn;
         chip.classList.toggle("is-selected", on);
         chip.setAttribute("aria-pressed", on ? "true" : "false");
-      }
+      }}
+      page = 1;
       apply();
-    });
+    }});
+    if (prev) prev.addEventListener("click", () => {{ page -= 1; apply(); }});
+    if (next) next.addEventListener("click", () => {{ page += 1; apply(); }});
 """
     return _page("Open UX · Catalog", body, script)
 

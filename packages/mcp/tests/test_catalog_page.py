@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from pathlib import Path
 
 from starlette.testclient import TestClient
@@ -7,7 +8,7 @@ from starlette.testclient import TestClient
 from open_ux.catalog import Catalog, citations, load_catalog
 from open_ux.catalog_page import (
     CONTAINER_CHIPS,
-    _strip_source_suffix,
+    PAGE_SIZE,
     render_catalog_list,
     render_catalog_not_found,
     render_catalog_rule,
@@ -56,13 +57,6 @@ def _public_page_guards(html: str) -> None:
     assert "OPEN_UX_PEPPER" not in html
 
 
-def test_strip_source_suffix_drops_known_houses() -> None:
-    assert _strip_source_suffix("Visible field label — NN/g") == "Visible field label"
-    assert _strip_source_suffix("One toast at a time — Spectrum") == "One toast at a time"
-    assert _strip_source_suffix("No suffix") == "No suffix"
-    assert _strip_source_suffix("<script>alert(1)</script>") == "<script>alert(1)</script>"
-
-
 def test_seven_container_chips() -> None:
     assert len(CONTAINER_CHIPS) == 7
     assert [cid for cid, _label in CONTAINER_CHIPS] == [
@@ -107,6 +101,9 @@ def test_catalog_list_is_full_live_index(live_catalog: Path) -> None:
         html = response.text
         assert html.count('class="catalog-row"') == len(catalog.index)
         assert f"{len(catalog.index)} shown" in html
+        visible = _visible_row_tags(html)
+        assert 1 <= len(visible) <= PAGE_SIZE
+        assert len(visible) == min(PAGE_SIZE, len(catalog.index))
         for gid in LIVE_SEED:
             assert gid in html
         assert "govuk.date-input-only-memorable" in html
@@ -135,9 +132,9 @@ def test_catalog_rule_known_id_ordered_fields(live_catalog: Path) -> None:
         response = client.get(f"/catalog/{gid}")
         assert response.status_code == 200
         html = response.text
-        claim = _strip_source_suffix(guideline["name"])
+        claim = guideline["name"]
         assert f'<h1 class="rule-name" data-field="name">{claim}</h1>' in html
-        assert guideline["name"] != claim
+        assert "— NN/g" in claim
         assert gid in html
         assert guideline["rule"] in html
         positions = [html.index(f'data-field="{field}"') for field in FIELD_ORDER]
@@ -256,6 +253,23 @@ def test_landing_catalog_link(tmp_env: Path) -> None:
         assert ">Catalog</a>" in html
 
 
+def _visible_row_tags(html: str) -> list[str]:
+    return [
+        tag
+        for tag in re.findall(r"<a class=\"catalog-row\"[^>]*>", html)
+        if " hidden" not in tag
+    ]
+
+
+def _row_container_for(html: str, guideline_id: str) -> str:
+    marker = f'data-id="{guideline_id}"'
+    start = html.rfind("<a ", 0, html.index(marker))
+    tag = html[start : html.index(">", start) + 1]
+    match = re.search(r'data-container="([^"]*)"', tag)
+    assert match is not None
+    return match.group(1)
+
+
 def _row_name_for(html: str, guideline_id: str) -> str:
     marker = f'data-id="{guideline_id}"'
     start = html.index(marker)
@@ -264,31 +278,28 @@ def _row_name_for(html: str, guideline_id: str) -> str:
     return chunk[open_tag : chunk.index("</span>", open_tag)]
 
 
-def test_catalog_list_row_title_is_name_without_source(live_catalog: Path) -> None:
+def test_catalog_list_row_title_keeps_house_suffix(live_catalog: Path) -> None:
     catalog = load_catalog(Settings.load(hosted=True))
     guideline = next(g for g in catalog.guidelines if g["id"] == NNG_SEED)
     assert guideline["name"].endswith(" — NN/g")
     with _client() as client:
         html = client.get("/catalog").text
     title = _row_name_for(html, NNG_SEED)
-    assert title == _strip_source_suffix(guideline["name"])
-    assert title == "Visible field label"
-    assert "— NN/g" not in title
-    assert "— Spectrum" not in title
-    assert title != guideline["name"]
+    assert title == guideline["name"]
+    assert title == "Visible field label — NN/g"
+    assert "— NN/g" in title
 
 
-def test_catalog_rule_h1_is_name_field_without_source(live_catalog: Path) -> None:
+def test_catalog_rule_h1_keeps_house_suffix(live_catalog: Path) -> None:
     catalog = load_catalog(Settings.load(hosted=True))
     guideline = next(g for g in catalog.guidelines if g["id"] == NNG_SEED)
-    claim = _strip_source_suffix(guideline["name"])
-    assert claim == "Visible field label"
+    claim = guideline["name"]
+    assert claim == "Visible field label — NN/g"
     with _client() as client:
         html = client.get(f"/catalog/{NNG_SEED}").text
     h1 = html.split('<h1 class="rule-name" data-field="name">', 1)[1].split("</h1>", 1)[0]
     assert h1 == claim
-    assert "— NN/g" not in h1
-    assert h1 != guideline["name"]
+    assert "— NN/g" in h1
 
 
 def test_catalog_rule_one_cite_row_per_citation(live_catalog: Path) -> None:
@@ -307,3 +318,79 @@ def test_catalog_rule_one_cite_row_per_citation(live_catalog: Path) -> None:
         assert f'<div class="cite-row">' in html
         assert f'<p class="cite-source">{source}</p>' in html
         assert f'<a class="cite-url" href="{url}">{url}</a>' in html
+
+
+def test_catalog_list_chip_forms_filters_container(live_catalog: Path) -> None:
+    catalog = load_catalog(Settings.load(hosted=True))
+    chip_ids = {cid for cid, _label in CONTAINER_CHIPS}
+    with _client() as client:
+        html = client.get("/catalog").text
+    assert 'data-chip="forms_and_input"' in html
+    assert ">Forms</button>" in html
+    assert 'data-chip="" aria-pressed="true">All</button>' in html
+    assert 'aria-pressed="false">Forms</button>' in html
+    assert "matchC && matchQ" in html
+    forms = 0
+    for row in catalog.index:
+        cid = _row_container_for(html, row["id"])
+        assert cid in chip_ids
+        assert cid == row["container"]
+        if cid == "forms_and_input":
+            forms += 1
+    assert forms >= 1
+    assert html.count('data-container="forms_and_input"') == forms
+
+
+def test_catalog_list_paginates_filtered_set(live_catalog: Path) -> None:
+    catalog = load_catalog(Settings.load(hosted=True))
+    total = len(catalog.index)
+    assert total > PAGE_SIZE
+    with _client() as client:
+        html = client.get("/catalog").text
+    tags = re.findall(r"<a class=\"catalog-row\"[^>]*>", html)
+    assert len(tags) == total
+    visible = _visible_row_tags(html)
+    assert len(visible) == PAGE_SIZE
+    assert sum(" hidden" in tag for tag in tags) == total - PAGE_SIZE
+    assert 'id="catalog-pager"' in html
+    assert ">Prev</button>" in html
+    assert ">Next</button>" in html
+    assert f"1–{PAGE_SIZE} of {total}" in html
+    assert "btn--outline" in html
+    assert f"const PAGE_SIZE = {PAGE_SIZE}" in html
+    assert "page += 1" in html
+    assert "page -= 1" in html
+
+
+def test_catalog_list_resolves_missing_container_from_tree(live_catalog: Path) -> None:
+    row = {
+        "id": "forms.field_labels.visible_label",
+        "name": "Visible field label — NN/g",
+        "title": "visible label",
+        "card": "design_a_form",
+    }
+    catalog = Catalog(
+        version="0.3.0",
+        guidelines=[row],
+        jobs=[],
+        patterns=[],
+        size_bytes=0,
+        path=Path("."),
+        index=[row],
+    )
+    tree = load_job_tree(Settings.load())
+    html = render_catalog_list(catalog, tree)
+    assert 'data-container="forms_and_input"' in html
+    assert 'data-chip="forms_and_input"' in html
+
+
+def test_catalog_nav_has_pip_wordmark(live_catalog: Path) -> None:
+    with _client() as client:
+        listed = client.get("/catalog").text
+        rule = client.get(f"/catalog/{NNG_SEED}").text
+    for html in (listed, rule):
+        assert 'class="nav-brand"' in html
+        assert 'class="pip"' in html
+        assert '<span class="wordmark">Open UX</span>' in html
+        assert '<span class="pip" aria-hidden="true"></span>' in html
+
