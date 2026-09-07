@@ -594,15 +594,17 @@ def test_catalog_list_resolves_missing_container_from_tree(live_catalog: Path) -
     assert 'data-chip="forms_and_input"' in html
 
 
-def test_catalog_nav_has_pip_wordmark(live_catalog: Path) -> None:
+def test_catalog_nav_has_mark_wordmark(live_catalog: Path) -> None:
     with _client() as client:
         listed = client.get("/catalog").text
         rule = client.get(f"/catalog/{ANT_SEED}").text
     for html in (listed, rule):
         assert 'class="nav-brand" href="/catalog"' in html
-        assert 'class="pip"' in html
+        assert '<img class="mark" src="/logo-mark.svg"' in html
         assert '<span class="wordmark">Open UX</span>' in html
-        assert '<span class="pip" aria-hidden="true"></span>' in html
+        assert "class=\"nav-brand\" href=\"/catalog\"><span class=\"pip\"" not in html
+        assert "UNS-44" not in html
+        assert "uns-44" not in html
 
 
 def test_catalog_type_scale_matches_figma(live_catalog: Path) -> None:

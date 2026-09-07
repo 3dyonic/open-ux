@@ -2,7 +2,13 @@
 
 from __future__ import annotations
 
-from open_ux.public_html import LANDING_DESCRIPTION, LANDING_TITLE, head_meta
+from open_ux.public_html import (
+    LANDING_DESCRIPTION,
+    LANDING_TITLE,
+    MARK_CSS,
+    NAV_BRAND_HTML,
+    head_meta,
+)
 
 LANDING_HTML = (
     """<!DOCTYPE html>
@@ -62,14 +68,6 @@ LANDING_HTML = (
       padding: 16px 48px;
       background: var(--card);
       border-bottom: 1px solid var(--line);
-    }
-    .nav-brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--ink);
     }
     .nav-actions {
       display: flex;
@@ -415,11 +413,16 @@ LANDING_HTML = (
       font-family: var(--mono);
       font-size: 11px;
     }
+"""
+    + MARK_CSS
+    + """
   </style>
 </head>
 <body>
   <header class="nav">
-    <span class="nav-brand"><span class="pip" aria-hidden="true"></span>Open UX</span>
+    """
+    + NAV_BRAND_HTML
+    + """
     <div class="nav-actions">
       <a class="nav-catalog" href="/catalog">Catalog</a>
       <a class="nav-github" href="https://github.com/3dyonic/open-ux">GitHub</a>
@@ -446,7 +449,7 @@ LANDING_HTML = (
           </span>
           topic · forms
         </div>
-        <span class="ill-id">uns-44</span>
+        <span class="ill-id">forms.field-labels</span>
       </div>
       <div class="ill-jobs">
         <p class="ill-jobs-label">jobs</p>

@@ -11,6 +11,8 @@ from open_ux.jobs import JobTree, card_by_id, empty_job_tree
 from open_ux.public_html import (
     CATALOG_TITLE,
     LANDING_DESCRIPTION,
+    MARK_CSS,
+    NAV_BRAND_HTML,
     head_meta,
     rule_meta_description,
     rule_meta_title,
@@ -65,14 +67,6 @@ _CSS = """
       background: var(--paper);
     }
     a { color: inherit; text-decoration: none; }
-    .pip {
-      display: inline-block;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--pip);
-      flex-shrink: 0;
-    }
     .nav {
       display: flex;
       align-items: center;
@@ -81,16 +75,6 @@ _CSS = """
       padding: 16px 48px;
       background: var(--paper);
       border-bottom: 1px solid var(--line);
-    }
-    .nav-brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .wordmark {
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--ink);
     }
     .nav-actions {
       display: flex;
@@ -432,7 +416,7 @@ _CSS = """
       font-size: 16px;
       color: var(--muted);
     }
-"""
+""" + MARK_CSS
 
 
 def _e(value: Any) -> str:
@@ -536,9 +520,9 @@ def _row_container(row: dict[str, Any], tree: JobTree) -> str:
 def _nav() -> str:
     return f"""
   <header class="nav">
-    <a class="nav-brand" href="/catalog"><span class="pip" aria-hidden="true"></span><span class="wordmark">Open UX</span></a>
+    {NAV_BRAND_HTML}
     <div class="nav-actions">
-      <a class="nav-catalog" href="/catalog"><span class="pip" aria-hidden="true"></span>Catalog</a>
+      <a class="nav-catalog" href="/catalog">Catalog</a>
       <a class="nav-link" href="{GITHUB}">GitHub</a>
       <a class="btn btn--primary" href="/invite">Get a key</a>
     </div>

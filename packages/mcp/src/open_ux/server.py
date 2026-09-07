@@ -358,6 +358,10 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         ids = [str(row["id"]) for row in catalog.index if row.get("id")]
         return Response(render_sitemap(ids), media_type="application/xml")
 
+    @mcp.custom_route("/logo-mark.svg", methods=["GET"])
+    async def logo_mark(_request: Request) -> Response:
+        return Response(FAVICON_PATH.read_bytes(), media_type="image/svg+xml")
+
     @mcp.custom_route("/favicon.svg", methods=["GET"])
     async def favicon(_request: Request) -> Response:
         return Response(FAVICON_PATH.read_bytes(), media_type="image/svg+xml")

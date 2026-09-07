@@ -30,7 +30,7 @@ def test_landing_has_figma_sections_and_register_cta(tmp_env: Path) -> None:
 
     assert html.count("<h1>") == 1
     assert "@media" not in html
-    assert '<link rel="icon" href="/favicon.svg" type="image/svg+xml">' in html
+    assert '<link rel="icon" href="/logo-mark.svg" type="image/svg+xml">' in html
     assert "og:image" not in html.lower()
     assert "<title>Open UX — Cited UX rules agents audit against</title>" in html
     assert ">Browse catalog</a>" in html
@@ -46,7 +46,14 @@ def test_landing_has_figma_sections_and_register_cta(tmp_env: Path) -> None:
     assert ">Get a key</a>" in html
     assert ">Catalog</a>" in html
     assert 'href="/catalog"' in html
+    assert 'class="nav-brand" href="/catalog"' in html
+    assert '<img class="mark" src="/logo-mark.svg"' in html
+    assert '<span class="wordmark">Open UX</span>' in html
     assert ">Request access</a>" in html
+    hero = html.split('class="hero"', 1)[1].split('class="how"', 1)[0]
+    assert ">Get a key</a>" not in hero
+    assert "UNS-44" not in html
+    assert "uns-44" not in html
     assert ">How it works</h2>" in html
     assert ">Connect</h3>" in html
     assert "Install the Claude client (or any MCP client) and paste your key." in html
@@ -98,11 +105,14 @@ def test_invite_request_page_matches_figma(tmp_env: Path) -> None:
 
     assert "MCP" not in html.split("<title>", 1)[1].split("</title>", 1)[0]
     assert "@media" not in html
-    assert "favicon" not in html.lower()
+    assert '<link rel="icon" href="/logo-mark.svg" type="image/svg+xml">' in html
     assert "og:image" not in html.lower()
 
-    assert 'class="pip"' in html
+    assert 'class="nav-brand" href="/catalog"' in html
+    assert '<img class="mark" src="/logo-mark.svg"' in html
     assert '<span class="wordmark">Open UX</span>' in html
+    assert "UNS-44" not in html
+    assert "uns-44" not in html
     assert ">GitHub</a>" in html
     assert 'href="https://github.com/3dyonic/open-ux"' in html
     assert ">Get a key</a>" in html

@@ -13,8 +13,36 @@ LANDING_DESCRIPTION = (
     "agents list, fetch, and audit against."
 )
 CATALOG_TITLE = "Catalog — Open UX"
-FAVICON_HREF = "/favicon.svg"
-FAVICON_PATH = Path(__file__).resolve().parent / "static" / "favicon.svg"
+_STATIC_DIR = Path(__file__).resolve().parent / "static"
+_MARK_PATH = _STATIC_DIR / "logo-mark.svg"
+_FAVICON_FALLBACK = _STATIC_DIR / "favicon.svg"
+FAVICON_PATH = _MARK_PATH if _MARK_PATH.is_file() else _FAVICON_FALLBACK
+FAVICON_HREF = "/logo-mark.svg" if FAVICON_PATH == _MARK_PATH else "/favicon.svg"
+NAV_BRAND_HTML = (
+    '<a class="nav-brand" href="/catalog">'
+    f'<img class="mark" src="{FAVICON_HREF}" width="20" height="20" alt="">'
+    '<span class="wordmark">Open UX</span></a>'
+)
+MARK_CSS = """
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: inherit;
+      text-decoration: none;
+    }
+    .mark {
+      display: block;
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+    .wordmark {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+"""
 ROBOTS_TXT = """User-agent: *
 Allow: /
 Allow: /catalog

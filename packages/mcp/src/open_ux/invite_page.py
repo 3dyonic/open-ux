@@ -6,6 +6,8 @@ Request is email-only — do not add Full name. Admin is CLI-only — not in thi
 
 from __future__ import annotations
 
+from open_ux.public_html import FAVICON_HREF, MARK_CSS, NAV_BRAND_HTML
+
 _CSS = """
     :root {
       --paper: #F9F6F2;
@@ -50,16 +52,6 @@ _CSS = """
       padding: 16px 48px;
       background: var(--card);
       border-bottom: 1px solid var(--line);
-    }
-    .nav-brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .wordmark {
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--ink);
     }
     .nav-actions {
       display: flex;
@@ -246,14 +238,11 @@ _CSS = """
       font-weight: 500;
       color: var(--pip);
     }
-"""
+""" + MARK_CSS
 
-_NAV = """
+_NAV = f"""
   <header class="nav">
-    <div class="nav-brand">
-      <span class="pip" aria-hidden="true"></span>
-      <span class="wordmark">Open UX</span>
-    </div>
+    {NAV_BRAND_HTML}
     <div class="nav-actions">
       <a class="nav-github" href="https://github.com/3dyonic/open-ux">GitHub</a>
       <a class="btn btn--primary btn--nav" href="/invite">Get a key</a>
@@ -270,7 +259,9 @@ def _page(main: str, script: str) -> str:
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Open UX</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+"""
+        + f'  <link rel="icon" href="{FAVICON_HREF}" type="image/svg+xml">\n'
+        + """  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>

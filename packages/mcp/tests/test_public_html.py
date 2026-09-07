@@ -8,6 +8,7 @@ from starlette.testclient import TestClient
 from open_ux.catalog import load_catalog
 from open_ux.public_html import (
     CATALOG_TITLE,
+    FAVICON_HREF,
     FAVICON_PATH,
     LANDING_DESCRIPTION,
     LANDING_TITLE,
@@ -60,12 +61,20 @@ def test_sitemap_lists_landing_catalog_and_remaining_ids(live_catalog: Path) -> 
 
 def test_favicon_svg_is_served(tmp_env: Path) -> None:
     assert FAVICON_PATH.is_file()
+    assert FAVICON_PATH.name == "logo-mark.svg"
+    assert FAVICON_HREF == "/logo-mark.svg"
+    mark = FAVICON_PATH.read_bytes()
+    assert b'viewBox="0 0 32 32"' in mark
+    assert b'fill="#FF4B00"' in mark
+    assert b'fill="#FFECE0"' in mark
     with _client() as client:
-        response = client.get("/favicon.svg")
-    assert response.status_code == 200
-    assert response.headers["content-type"].startswith("image/svg+xml")
-    assert response.content == FAVICON_PATH.read_bytes()
-    assert b"#FF4B00" in response.content
+        preferred = client.get("/logo-mark.svg")
+        alias = client.get("/favicon.svg")
+    for response in (preferred, alias):
+        assert response.status_code == 200
+        assert response.headers["content-type"].startswith("image/svg+xml")
+        assert response.content == mark
+    assert b"#FF4B00" in preferred.content
 
 
 def test_public_pages_have_pack_head_and_no_mcp_or_og_image(live_catalog: Path) -> None:
@@ -78,6 +87,7 @@ def test_public_pages_have_pack_head_and_no_mcp_or_og_image(live_catalog: Path) 
         landing = client.get("/").text
         listed = client.get("/catalog").text
         rule = client.get(f"/catalog/{ANT_SEED}").text
+        invite = client.get("/invite").text
     for html, title, description, path in (
         (landing, LANDING_TITLE, LANDING_DESCRIPTION, "/"),
         (listed, CATALOG_TITLE, LANDING_DESCRIPTION, "/catalog"),
@@ -97,14 +107,31 @@ def test_public_pages_have_pack_head_and_no_mcp_or_og_image(live_catalog: Path) 
         assert '<meta name="twitter:card" content="summary">' in head
         assert f'<meta name="twitter:title" content="{title_e}">' in head
         assert f'<meta name="twitter:description" content="{desc_e}">' in head
-        assert '<link rel="icon" href="/favicon.svg" type="image/svg+xml">' in head
+        assert f'<link rel="icon" href="{FAVICON_HREF}" type="image/svg+xml">' in head
         assert "og:image" not in head.lower()
         assert "twitter:image" not in head.lower()
         assert "MCP" not in head
     assert 'class="nav-brand" href="/catalog"' in listed
     assert 'class="nav-brand" href="/catalog"' in rule
+    assert 'class="nav-brand" href="/catalog"' in landing
+    assert f'<img class="mark" src="{FAVICON_HREF}"' in landing
+    assert f'<img class="mark" src="{FAVICON_HREF}"' in listed
+    assert f'<img class="mark" src="{FAVICON_HREF}"' in rule
+    assert f'<img class="mark" src="{FAVICON_HREF}"' in invite
+    assert 'class="nav-brand" href="/catalog"' in invite
+    assert f'<link rel="icon" href="{FAVICON_HREF}" type="image/svg+xml">' in _head(invite)
+    assert "UNS-44" not in invite
+    assert "uns-44" not in invite
     assert ">Get a key</a>" in listed
     assert 'href="/invite"' in listed
     assert ">Browse catalog</a>" in landing
     assert 'class="btn btn--primary" href="/catalog">Browse catalog</a>' in landing
     assert 'class="btn btn--primary btn--nav" href="/invite">Get a key</a>' in landing
+    hero = landing.split('class="hero"', 1)[1].split('class="how"', 1)[0]
+    assert ">Get a key</a>" not in hero
+    assert "UNS-44" not in landing
+    assert "uns-44" not in landing
+    assert "UNS-44" not in listed
+    assert "uns-44" not in listed
+    assert "UNS-44" not in rule
+    assert "uns-44" not in rule
