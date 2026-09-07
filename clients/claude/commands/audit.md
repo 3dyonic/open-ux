@@ -2,4 +2,4 @@
 description: Fetch a cited UX criteria pack for a Situation Card.
 ---
 
-`Open-UX:audit` with `jobs=<card_id>` (or `guideline_ids`). Example: `/audit design_a_form` → pack for signup or settings fields. We return cited criteria, not a score. Do not send a file.
+Prefer `python3 scripts/audit.py --jobs <card_id>` so you don't invent args. `Open-UX:audit` with `jobs=` / `guideline_ids` is equally valid. Example: `/audit design_a_form`. Do not send a file.

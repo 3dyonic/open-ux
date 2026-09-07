@@ -4,10 +4,11 @@ Same connect as [`AGENTS.md`](AGENTS.md). Skill and commands live in `clients/cl
 
 ## Connect
 
-- Hosted MCP: `https://open-ux.dev/mcp` + `Authorization: Bearer uxmcp_…` (`OPEN_UX_API_KEY`).
-- Stdio: `python -m open_ux stdio` (no key).
+Hosted or download the package — same tools, same Cards.
 
-If hosted returns 401, point the human at `/invite`. Do not mint a key.
+- **Hosted** (shared live catalog): `https://open-ux.dev/mcp` + `Authorization: Bearer uxmcp_…` (`OPEN_UX_API_KEY`). Invite at `/invite`.
+- **Package** (local): clone [github.com/3dyonic/open-ux](https://github.com/3dyonic/open-ux) (MIT), `pip install -e "packages/mcp[dev]"`, then `python -m open_ux stdio`. Same catalog. No invite. Telemetry off.
+
 
 ## Use
 

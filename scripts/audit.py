@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Thin audit helper: jobs= or guideline_ids in, criteria pack out.
 
-Same wire as Open-UX:audit. Pack only. No file. No host pass or fail.
+Same tight wire as Open-UX:audit. Pack only. No file. No host pass or fail.
 
-Available for humans and CI. Optional — the product is the hosted tools.
+Available and preferred when composing or reviewing so you do not invent
+args. Not required — Open-UX:audit stays first-class.
 
 Usage (from repo root, after ``pip install -e packages/mcp``):
 
@@ -45,7 +46,7 @@ def main(argv: list[str] | None = None) -> int:
         "--guideline-ids",
         nargs="+",
         metavar="ID",
-        help="Known guideline ids.",
+        help="Known guideline ids. Prefer a Card on --jobs when composing.",
     )
     parser.add_argument("--query", help="Optional text filter inside the pack.")
     parser.add_argument(

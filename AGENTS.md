@@ -4,10 +4,13 @@ Connect and tools only. The routing table lives in [`clients/claude/skills/open-
 
 ## Connect
 
-- **Hosted:** `https://open-ux.dev/mcp` with bearer `uxmcp_` (`OPEN_UX_API_KEY`). Request a key at [open-ux.dev/invite](https://open-ux.dev/invite). Do not invent a key.
-- **Self-host:** `python -m open_ux stdio` from this repo (no key).
+Hosted or download the package — same tools, same Cards.
+
+- **Hosted** (shared live catalog): `https://open-ux.dev/mcp` with bearer `uxmcp_` (`OPEN_UX_API_KEY`). Invite at [open-ux.dev/invite](https://open-ux.dev/invite).
+- **Package** (local): clone [github.com/3dyonic/open-ux](https://github.com/3dyonic/open-ux) (MIT), `pip install -e "packages/mcp[dev]"`, then `python -m open_ux stdio`. Same catalog. No invite. Telemetry off.
 
 Plugin metadata: [`clients/claude/.claude-plugin/plugin.json`](clients/claude/.claude-plugin/plugin.json) + [`clients/claude/.mcp.json`](clients/claude/.mcp.json). One skill package: `open-ux`.
+
 
 ## Tools
 
