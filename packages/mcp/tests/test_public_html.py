@@ -230,6 +230,7 @@ def test_public_pages_have_oss_footer_strip(live_catalog: Path) -> None:
 def test_public_pages_pin_footer_stack(live_catalog: Path) -> None:
     public_paths = ("/", "/catalog", f"/catalog/{ANT_SEED}", "/invite", "/privacy")
     assert "min-height: 100vh" in PAGE_SHELL_CSS
+    assert "min-height: 100dvh" in PAGE_SHELL_CSS
     assert "display: flex" in PAGE_SHELL_CSS
     assert "flex-direction: column" in PAGE_SHELL_CSS
     assert "flex: 1" in PAGE_SHELL_CSS

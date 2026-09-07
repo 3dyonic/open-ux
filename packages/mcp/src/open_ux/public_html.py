@@ -227,6 +227,7 @@ OSS_FOOTER_CSS = """
 PAGE_SHELL_CSS = """
     body {
       min-height: 100vh;
+      min-height: 100dvh;
       display: flex;
       flex-direction: column;
     }
