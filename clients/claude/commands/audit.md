@@ -1,11 +1,5 @@
 ---
-description: Fetch cited UX criteria for a Card or guideline ids. Always scoped. No file. No pass/fail from the host.
+description: Call Open-UX:audit for a Situation Card or known guideline ids.
 ---
 
-`$ARGUMENTS` is a Card id, `jobs=<card_id>`, container alias, or `--guideline-ids`.
-
-```
-python3 skills/open-ux/scripts/audit.py $ARGUMENTS
-```
-
-No file. No pass/fail. Print the criteria pack. If empty, say so. Do not invent rules.
+Call `Open-UX:audit` with `$ARGUMENTS`. Card or alias (`forms` / `actions` / `feedback`) → `jobs=<id>`. Known ids → `guideline_ids`. Example: `/audit design_a_form`. Do not send a file.
