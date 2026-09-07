@@ -365,8 +365,11 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             ),
         ] = None,
     ) -> dict[str, Any]:
-        """Rank Situation Cards from a vague task or pasted UI. Allowlist only.
+        """Return every Situation Card, ordered from a vague task or pasted UI.
 
+        Always returns the complete 13-card allowlist -- never a filtered
+        subset. Order is a heuristic hint, not a verdict: pick the fitting
+        Card yourself from the full set rather than trusting position alone.
         Surface is ranking bias, never returned as an id. No server LLM.
         """
         result = run_suggest_situations(task_text, surface, job_tree)
@@ -380,7 +383,9 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             str | None,
             Field(
                 description=(
-                    "Optional words to narrow within that job. Not a substitute for jobs."
+                    "Optional words to rank within that job. Not a substitute for jobs. "
+                    "Never drops rules to zero -- reorders best matches first and falls "
+                    "back to the full set already in scope if nothing matches."
                 )
             ),
         ] = None,

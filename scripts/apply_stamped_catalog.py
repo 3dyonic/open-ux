@@ -169,7 +169,7 @@ def main() -> int:
                 "id": "design_a_form",
                 "title": "Design a form",
                 "container": "forms_and_input",
-                "problem": "Compose the fields: names, controls, grouping, helpers.",
+                "overview": "Compose the fields: names, controls, grouping, helpers.",
                 "when": [
                     "design or build signup, settings, or checkout fields",
                     "label these fields",
@@ -237,7 +237,7 @@ def main() -> int:
                 "id": "handle_form_errors",
                 "title": "Handle form errors",
                 "container": "forms_and_input",
-                "problem": "Compose validation and recover from a rejected form submit.",
+                "overview": "Compose validation and recover from a rejected form submit.",
                 "when": [
                     "composing validation",
                     "inline or summary errors",
@@ -278,7 +278,7 @@ def main() -> int:
                 "id": "compose_sign_in",
                 "title": "Compose sign-in",
                 "container": "forms_and_input",
-                "problem": "Compose credential entry so people can get in.",
+                "overview": "Compose credential entry so people can get in.",
                 "when": [
                     "login or sign-in fields",
                     "show password",
@@ -302,7 +302,7 @@ def main() -> int:
                 "id": "design_actions_and_ctas",
                 "title": "Design actions and CTAs",
                 "container": "actions_and_decisions",
-                "problem": "Make the next step obvious and hittable.",
+                "overview": "Make the next step obvious and hittable.",
                 "when": [
                     "primary vs secondary",
                     "label this submit or continue",
@@ -366,7 +366,7 @@ def main() -> int:
                 "id": "protect_destructive_and_leave",
                 "title": "Protect destructive and leave",
                 "container": "actions_and_decisions",
-                "problem": "Stop destroy or discard from being one easy click.",
+                "overview": "Stop destroy or discard from being one easy click.",
                 "when": [
                     "add a delete confirmation",
                     "discard",
@@ -408,7 +408,7 @@ def main() -> int:
                 "id": "compose_feedback",
                 "title": "Compose feedback",
                 "container": "feedback_and_status",
-                "problem": "Say what happened, what is happening, or that there is nothing here.",
+                "overview": "Say what happened, what is happening, or that there is nothing here.",
                 "when": [
                     "toast after save",
                     "loading state",
@@ -456,7 +456,7 @@ def main() -> int:
                 "id": "orient_in_the_place",
                 "title": "Orient in the place",
                 "container": "navigation_and_wayfinding",
-                "problem": "Know where you are and how to move between places.",
+                "overview": "Know where you are and how to move between places.",
                 "when": [
                     "design the sidebar",
                     "add breadcrumbs",
@@ -489,7 +489,7 @@ def main() -> int:
                 "id": "compose_search",
                 "title": "Compose search",
                 "container": "navigation_and_wayfinding",
-                "problem": "Place and compose search so people can find it and use it.",
+                "overview": "Place and compose search so people can find it and use it.",
                 "when": [
                     "header or homepage search",
                     "search box vs search link",
@@ -514,7 +514,7 @@ def main() -> int:
                 "id": "compose_a_data_display",
                 "title": "Compose a data display",
                 "container": "layout_and_data_display",
-                "problem": "Arrange data so it can be scanned — table, grid, chart.",
+                "overview": "Arrange data so it can be scanned — table, grid, chart.",
                 "when": [
                     "table or card grid for this data",
                     "compose a dashboard",
@@ -542,7 +542,7 @@ def main() -> int:
                 "id": "compose_the_layout",
                 "title": "Compose the layout",
                 "container": "layout_and_data_display",
-                "problem": "Give the page a scan path.",
+                "overview": "Give the page a scan path.",
                 "when": [
                     "page structure and headings",
                     "inverted pyramid",
@@ -565,7 +565,7 @@ def main() -> int:
                 "id": "write_the_interface",
                 "title": "Write the interface",
                 "container": "layout_and_data_display",
-                "problem": "Word the interface so it talks to the person and names destinations.",
+                "overview": "Word the interface so it talks to the person and names destinations.",
                 "when": [
                     "link text",
                     "you / your voice",
@@ -599,7 +599,7 @@ def main() -> int:
                 "id": "choose_an_overlay",
                 "title": "Choose an overlay",
                 "container": "overlays_and_content_structure",
-                "problem": "Pick the layer that holds the content.",
+                "overview": "Pick the layer that holds the content.",
                 "when": [
                     "modal vs accordion",
                     "tooltip or inline help",
@@ -641,7 +641,7 @@ def main() -> int:
                 "id": "build_a_multi_step_flow",
                 "title": "Build a multi-step flow",
                 "container": "multi_step_flows",
-                "problem": "Split one task across steps and keep the user oriented.",
+                "overview": "Split one task across steps and keep the user oriented.",
                 "when": [
                     "build a checkout flow",
                     "split this long form into steps",
@@ -706,7 +706,7 @@ def main() -> int:
         if gid in LIVE_AGENT:
             data.update(LIVE_AGENT[gid])
         else:
-            data["overview"] = row["problem"]
+            data["overview"] = row["overview"]
             data["apply_when"] = row["apply_when"]
             data["not_when"] = row["not_when"]
             data["agent_hint"] = row["agent_hint"]
