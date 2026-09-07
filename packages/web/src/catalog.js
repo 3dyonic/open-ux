@@ -125,7 +125,7 @@ function chipsHtml(selected) {
   const items = [["", "All"], ...CONTAINER_CHIPS]
     .map(([id, label]) => {
       const on = id === wanted;
-      return `<button type="button" class="${on ? "chip is-selected" : "chip"}" data-chip="${escapeHtml(id)}" aria-pressed="${on ? "true" : "false"}">${escapeHtml(label)}</button>`;
+      return `<button type="button" class="${on ? "chip chip-on" : "chip"}" data-chip="${escapeHtml(id)}" aria-pressed="${on ? "true" : "false"}">${escapeHtml(label)}</button>`;
     })
     .join("");
   return `<div class="chips" id="catalog-chips">${items}</div>`;
@@ -140,7 +140,7 @@ function rowHtml(row, jobs, hidden) {
   const rule = String(row.rule || "").trim();
   let line = `<span class="row-name">${escapeHtml(name)}</span>`;
   if (path) {
-    line += `<span class="row-dot" aria-hidden="true">·</span><span class="row-path">${escapeHtml(path)}</span>`;
+    line += `<span class="row-path" aria-hidden="true">·</span><span class="row-path">${escapeHtml(path)}</span>`;
   }
   const ruleHtml = rule ? `<span class="row-rule">${escapeHtml(rule)}</span>` : "";
   return `<a class="catalog-row" href="${escapeHtml(hrefId(gid))}" data-id="${escapeHtml(gid)}" data-container="${escapeHtml(cid)}" data-search="${escapeHtml(search)}"${hidden ? " hidden" : ""}><span class="row-line">${line}</span>${ruleHtml}</a>`;
@@ -157,7 +157,7 @@ function bindCatalog(rows, jobs) {
   const pageMeta = document.getElementById("page-meta");
   let container = "";
   if (chips) {
-    const on = chips.querySelector("[data-chip].is-selected");
+    const on = chips.querySelector('[data-chip][aria-pressed="true"]');
     if (on) container = on.getAttribute("data-chip") || "";
   }
   let page = pager
@@ -216,10 +216,10 @@ function bindCatalog(rows, jobs) {
       const btn = event.target.closest("[data-chip]");
       if (!btn) return;
       container = btn.getAttribute("data-chip") || "";
-      for (const chip of chips.querySelectorAll("[data-chip]")) {
-        const on = chip === btn;
-        chip.classList.toggle("is-selected", on);
-        chip.setAttribute("aria-pressed", on ? "true" : "false");
+      for (const btnChip of chips.querySelectorAll("[data-chip]")) {
+        const on = btnChip === btn;
+        btnChip.className = on ? "chip chip-on" : "chip";
+        btnChip.setAttribute("aria-pressed", on ? "true" : "false");
       }
       page = 1;
       apply();
@@ -244,18 +244,27 @@ export async function renderCatalog(root) {
   let page = parseInt(params.get("page") || "1", 10);
   if (!Number.isFinite(page) || page < 1) page = 1;
   root.innerHTML = shell(
-    `<main class="main"><p class="lede">Loading catalog…</p></main>`,
+    `<main class="page"><p class="lede">Loading catalog…</p></main>`,
     { catalogActive: true, paper: true },
   );
   let data;
   try {
     const res = await fetch("/api/catalog");
+    if (!res.ok) throw new Error("catalog");
     data = await res.json();
   } catch {
     root.innerHTML = shell(
-      `<main class="main"><h1>Catalog</h1><p class="empty">Could not load the catalog.</p></main>`,
+      `
+  <main class="page">
+    <h1 class="page-title">Catalog</h1>
+    <p class="lede">Could not load the catalog. Check your connection and try again.</p>
+    <button type="button" class="btn btn-outline" id="catalog-retry">Try again</button>
+  </main>`,
       { catalogActive: true, paper: true },
     );
+    document.getElementById("catalog-retry")?.addEventListener("click", () => {
+      renderCatalog(root);
+    });
     return;
   }
   const rows = data.guidelines || [];
@@ -263,24 +272,24 @@ export async function renderCatalog(root) {
   const valueAttr = query ? ` value="${escapeHtml(query)}"` : "";
   root.innerHTML = shell(
     `
-  <main class="main">
-    <div class="header">
-      <div class="title-row">
-        <h1>Catalog</h1>
+  <main class="page">
+    <div class="flex flex-col gap-2">
+      <div class="flex items-center justify-between gap-4">
+        <h1 class="page-title">Catalog</h1>
         <p class="shown" id="shown-count">${rows.length} shown</p>
       </div>
       <p class="lede">Cited UX rules agents audit against</p>
     </div>
     <div class="field">
-      <label for="catalog-search">Search</label>
-      <input class="field__input" id="catalog-search" type="search" autocomplete="off" spellcheck="false"${valueAttr}>
+      <label class="label" for="catalog-search">Search</label>
+      <input class="input" id="catalog-search" type="search" autocomplete="off" spellcheck="false"${valueAttr}>
     </div>
     ${chipsHtml(container)}
     <div class="list" id="catalog-list"></div>
     <div class="pager" id="catalog-pager" data-page="${page}">
-      <button type="button" class="btn btn--outline" id="page-prev">Prev</button>
+      <button type="button" class="btn btn-outline" id="page-prev">Prev</button>
       <p class="pager-meta" id="page-meta"></p>
-      <button type="button" class="btn btn--outline" id="page-next">Next</button>
+      <button type="button" class="btn btn-outline" id="page-next">Next</button>
     </div>
   </main>`,
     { catalogActive: true, paper: true },
@@ -307,7 +316,7 @@ function example(field, kind, label, value) {
   const items = lines(value);
   if (!items.length) return "";
   const bodies = items.map((line) => `<p class="block-body">${escapeHtml(line)}</p>`).join("");
-  return `<div class="example example--${kind}" data-field="${escapeHtml(field)}"><span class="badge badge--${kind}">${escapeHtml(label)}</span>${bodies}</div>`;
+  return `<div class="example-${kind}" data-field="${escapeHtml(field)}"><span class="badge-${kind}">${escapeHtml(label)}</span>${bodies}</div>`;
 }
 
 function citationsHtml(guideline) {
@@ -333,7 +342,7 @@ function citationsHtml(guideline) {
 
 function treeToggle(kind, title, open) {
   const caret = open ? "▾" : "▸";
-  return `<div class="tree-group${open ? " is-open" : ""}"><button type="button" class="tree-item tree-item--${kind}" aria-expanded="${open ? "true" : "false"}"><span class="tree-caret" aria-hidden="true">${caret}</span><span>${escapeHtml(title)}</span></button><div class="tree-children">`;
+  return `<div class="tree-group${open ? " is-open" : ""}"><button type="button" class="tree-item tree-item-${kind}" aria-expanded="${open ? "true" : "false"}"><span class="tree-caret" aria-hidden="true">${caret}</span><span>${escapeHtml(title)}</span></button><div class="tree-children">`;
 }
 
 function treeHtml(jobs, index, current) {
@@ -363,7 +372,7 @@ function treeHtml(jobs, index, current) {
           const gid = String(row.id || "");
           if (!gid) continue;
           const active = gid === currentId;
-          const cls = "tree-item tree-item--rule" + (active ? " is-active" : "");
+          const cls = "tree-item tree-item-rule" + (active ? " tree-item-on" : "");
           const pip = active ? `<span class="tree-pip" aria-hidden="true"></span>` : "";
           parts.push(
             `<a class="${cls}" href="${escapeHtml(hrefId(gid))}">${pip}<span>${escapeHtml(displayName(row))}</span></a>`,
@@ -450,9 +459,9 @@ export async function renderRule(root, guidelineId) {
   if (found.rule) {
     fields.push(`<p class="rule-text" data-field="rule">${escapeHtml(found.rule)}</p>`);
   }
-  const header = `<div class="header" data-field="header">${eyebrow(found, jobs)}${fields.join("")}</div>`;
-  const when = block("apply_when", "When to use", found.apply_when, "block-label--use");
-  const notWhen = block("not_when", "Not when", found.not_when, "block-label--not");
+  const header = `<div class="flex flex-col gap-2" data-field="header">${eyebrow(found, jobs)}${fields.join("")}</div>`;
+  const when = block("apply_when", "When to use", found.apply_when, "block-use");
+  const notWhen = block("not_when", "Not when", found.not_when, "block-not");
   const stack = [
     header,
     block("description", "Description", found.description),

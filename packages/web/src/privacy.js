@@ -48,22 +48,22 @@ const CONTACT = "contact@open-ux.dev";
 function sectionHtml([heading, paragraph, bullets]) {
   let body = "";
   if (heading === "Contact") {
-    body = `<p>Privacy questions: <a href="mailto:${CONTACT}">${escapeHtml(CONTACT)}</a>.</p>`;
+    body = `<p class="m-0 text-[15px] leading-[22px] text-ink">Privacy questions: <a class="underline" href="mailto:${CONTACT}">${escapeHtml(CONTACT)}</a>.</p>`;
   } else if (paragraph) {
-    body = `<p>${escapeHtml(paragraph)}</p>`;
+    body = `<p class="m-0 text-[15px] leading-[22px] text-ink">${escapeHtml(paragraph)}</p>`;
   }
   const list = bullets.length
-    ? `<ul>${bullets.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`
+    ? `<ul class="m-0 flex flex-col gap-2.5 pl-5">${bullets.map((item) => `<li class="m-0 text-[15px] leading-[22px] text-ink">${escapeHtml(item)}</li>`).join("")}</ul>`
     : "";
-  return `<section><h2>${escapeHtml(heading)}</h2>${body}${list}</section>`;
+  return `<section class="flex flex-col gap-3"><h2 class="m-0 text-base font-semibold text-ink">${escapeHtml(heading)}</h2>${body}${list}</section>`;
 }
 
 export function renderPrivacy(root) {
   setTitle("Privacy — Open UX");
   root.innerHTML = shell(
     `
-  <main class="main main--privacy">
-    <h1>Privacy</h1>
+  <main class="page page-privacy">
+    <h1 class="page-title">Privacy</h1>
     <p class="lede">How Open UX handles information on the hosted service at open-ux.dev.</p>
     ${SECTIONS.map(sectionHtml).join("")}
   </main>`,

@@ -7,19 +7,14 @@ export function navHtml({
   paper = false,
 } = {}) {
   const catalogLink = catalog
-    ? catalogActive
-      ? `<a class="nav-catalog" href="/catalog">Catalog</a>`
-      : `<a class="nav-catalog nav-link" href="/catalog">Catalog</a>`
+    ? `<a class="${catalogActive ? "nav-catalog" : "nav-link"}" href="/catalog">Catalog</a>`
     : "";
-  const keyBtn = key
-    ? `<a class="btn btn--primary btn--nav" href="/invite">Get a key</a>`
-    : "";
-  const navClass = paper ? "nav nav--paper" : "nav";
+  const keyBtn = key ? `<a class="btn btn-primary btn-nav" href="/invite">Request access</a>` : "";
   return `
-  <header class="${navClass}">
+  <header class="nav${paper ? " nav-paper" : ""}">
     <a class="nav-brand" href="/">
-      <img class="mark" src="/logo-mark.svg" width="20" height="20" alt="">
-      <span class="wordmark">Open UX</span>
+      <img class="block size-5 shrink-0" src="/logo-mark.svg" width="20" height="20" alt="">
+      <span class="text-base font-semibold text-ink">Open UX</span>
     </a>
     <div class="nav-actions">
       ${catalogLink}
@@ -32,8 +27,8 @@ export function navHtml({
 export function footerHtml() {
   return `
   <footer class="footer">
-    <p>Open UX · cited UX rules agents audit against</p>
-    <p><a href="/privacy">Privacy</a></p>
+    <p class="m-0">Open UX · cited UX rules agents audit against</p>
+    <p class="m-0"><a href="/privacy">Privacy</a></p>
   </footer>`;
 }
 
