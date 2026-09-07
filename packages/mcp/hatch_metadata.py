@@ -12,7 +12,6 @@ _PYPI_LINKS = (
     ("](LICENSE)", f"]({_REPO}/blob/master/LICENSE)"),
     ("](catalog/README.md)", f"]({_REPO}/blob/master/catalog/README.md)"),
     ("](clients/claude)", f"]({_REPO}/tree/master/clients/claude)"),
-    ("](docs/DEPLOY.md)", f"]({_REPO}/blob/master/docs/DEPLOY.md)"),
     ("](docs/PRIVACY.md)", f"]({_REPO}/blob/master/docs/PRIVACY.md)"),
 )
 

@@ -106,7 +106,7 @@ Rules are never forked per tenant. Soft size budget ~50–100 KB; hard ceiling ~
 packages/mcp      Python server (FastMCP)
 catalog/          shared rules + schema
 clients/claude    thin Claude plugin
-docs/             privacy, deploy, assets
+docs/             privacy, assets
 ```
 
 Python package: `open-ux` · npm / plugin scope: `@3dyonic/open-ux`
@@ -119,7 +119,7 @@ Python package: `open-ux` · npm / plugin scope: `@3dyonic/open-ux`
 | Rate limits | Soft per-key limits | None |
 | Telemetry | Aggregated usage (key hash, tools, rule ids) | Off |
 
-Deploy notes: [`docs/DEPLOY.md`](docs/DEPLOY.md). Privacy on the hosted product: [open-ux.dev/privacy](https://open-ux.dev/privacy) (Eng constraints also in [`docs/PRIVACY.md`](docs/PRIVACY.md)).
+Privacy on the hosted product: [open-ux.dev/privacy](https://open-ux.dev/privacy) (Eng constraints also in [`docs/PRIVACY.md`](docs/PRIVACY.md)).
 
 ## Contributing
 
