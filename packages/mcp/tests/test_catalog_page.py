@@ -29,11 +29,10 @@ FIELD_ORDER = (
     "name",
     "id",
     "rule",
-    "overview",
+    "description",
     "apply_when",
     "not_when",
     "agent_hint",
-    "description",
     "pass_when",
     "fail_when",
     "citation",
@@ -133,7 +132,11 @@ def test_catalog_rule_known_id_ordered_fields(live_catalog: Path) -> None:
         assert response.status_code == 200
         html = response.text
         claim = guideline["name"]
-        assert f'<h1 class="rule-name" data-field="name">{claim}</h1>' in html
+        assert claim == "Visible field label — NN/g"
+        assert (
+            '<h1 class="rule-name" data-field="name">Visible field label</h1>'
+            in html
+        )
         assert "— NN/g" in claim
         assert gid in html
         assert guideline["rule"] in html
@@ -147,6 +150,14 @@ def test_catalog_rule_known_id_ordered_fields(live_catalog: Path) -> None:
         assert 'href="/catalog"' in html
         assert "cited style" not in html
         assert "invented anti-pattern" not in html
+        assert 'data-field="overview"' not in html
+        assert ">Overview</p>" not in html
+        assert guideline["overview"] not in html
+        assert 'data-field="description"' in html
+        assert guideline["description"] in html
+        assert 'class="crumb-path"' not in html
+        assert f">/catalog/{gid}<" not in html
+        assert html.count(f'data-field="id">{gid}</p>') == 1
         _public_page_guards(html)
     rendered = render_catalog_rule(catalog, gid, tree)
     assert rendered is not None
@@ -184,6 +195,41 @@ def test_catalog_rule_severity_chip_only_when_present() -> None:
     assert html is not None
     assert 'data-field="severity"' not in html
     assert "Major" not in html
+    assert 'data-field="overview"' not in html
+    assert "Overview text." not in html
+    assert 'data-field="description"' in html
+
+
+def test_catalog_rule_omits_overview_and_empty_description() -> None:
+    guideline = {
+        "id": "demo.no_description",
+        "name": "No description",
+        "title": "no description",
+        "rule": "A rule.",
+        "overview": "Overview must not appear.",
+        "apply_when": "Apply.",
+        "not_when": "Not.",
+        "agent_hint": "Hint.",
+        "pass_when": ["Pass this."],
+        "fail_when": ["Fail this."],
+        "citation": [{"source": "NN/g", "url": "https://www.nngroup.com/"}],
+    }
+    catalog = Catalog(
+        version="0.3.0",
+        guidelines=[guideline],
+        jobs=[],
+        patterns=[],
+        size_bytes=0,
+        path=Path("."),
+        index=[{"id": guideline["id"], "name": guideline["name"], "title": guideline["title"]}],
+    )
+    html = render_catalog_rule(catalog, guideline["id"])
+    assert html is not None
+    assert 'data-field="overview"' not in html
+    assert ">Overview</p>" not in html
+    assert "Overview must not appear." not in html
+    assert 'data-field="description"' not in html
+    assert ">Description</p>" not in html
 
 
 def test_catalog_pages_escape_text() -> None:
@@ -290,7 +336,7 @@ def test_catalog_list_row_title_keeps_house_suffix(live_catalog: Path) -> None:
     assert "— NN/g" in title
 
 
-def test_catalog_rule_h1_keeps_house_suffix(live_catalog: Path) -> None:
+def test_catalog_rule_h1_strips_house_suffix(live_catalog: Path) -> None:
     catalog = load_catalog(Settings.load(hosted=True))
     guideline = next(g for g in catalog.guidelines if g["id"] == NNG_SEED)
     claim = guideline["name"]
@@ -298,8 +344,11 @@ def test_catalog_rule_h1_keeps_house_suffix(live_catalog: Path) -> None:
     with _client() as client:
         html = client.get(f"/catalog/{NNG_SEED}").text
     h1 = html.split('<h1 class="rule-name" data-field="name">', 1)[1].split("</h1>", 1)[0]
-    assert h1 == claim
-    assert "— NN/g" in h1
+    assert h1 == "Visible field label"
+    assert "—" not in h1
+    assert "NN/g" not in h1
+    assert 'class="row-name">Visible field label — NN/g</span>' not in html
+    assert ">Visible field label — NN/g</span>" in html
 
 
 def test_catalog_rule_one_cite_row_per_citation(live_catalog: Path) -> None:
@@ -470,7 +519,8 @@ def test_catalog_type_scale_matches_figma(live_catalog: Path) -> None:
     assert re.search(r"\.rule-name \{[^}]*font-size: 28px", rule, re.S)
     assert re.search(r"\.rule-id \{[^}]*font-size: 14px", rule, re.S)
     assert re.search(r"\.tree-item \{[^}]*font-size: 14px", rule, re.S)
-    assert re.search(r"\.tree-item--rule \{[^}]*font-size: 16px", rule, re.S)
+    assert re.search(r"\.tree-item--rule \{[^}]*font-size: 14px", rule, re.S)
+    assert not re.search(r"\.tree-item--rule \{[^}]*font-size: 16px", rule, re.S)
 
 
 

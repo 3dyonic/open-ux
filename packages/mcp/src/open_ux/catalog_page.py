@@ -6,8 +6,14 @@ from html import escape
 from urllib.parse import quote
 from typing import Any
 
-from open_ux.catalog import Catalog, citations, get_by_id, list_index
+from open_ux.catalog import SOURCE_HOUSES, Catalog, citations, get_by_id, list_index
 from open_ux.jobs import JobTree, card_by_id, empty_job_tree
+
+# Longest house label first so "Suomi.fi" wins over a shorter tail.
+_SOURCE_SUFFIXES = tuple(
+    f" — {label}"
+    for label in sorted(SOURCE_HOUSES.values(), key=len, reverse=True)
+)
 
 # Figma 36:22 chip labels for the locked seven containers.
 CONTAINER_CHIPS: tuple[tuple[str, str], ...] = (
@@ -297,7 +303,7 @@ _CSS = """
     }
     .tree-item--card { padding-left: 20px; }
     .tree-item--facet { padding-left: 32px; color: var(--muted); font-weight: 500; }
-    .tree-item--rule { padding-left: 44px; font-size: 16px; cursor: pointer; }
+    .tree-item--rule { padding-left: 44px; font-size: 14px; cursor: pointer; }
     .tree-item--container { font-weight: 600; }
     .tree-item.is-active {
       background: var(--pip-soft);
@@ -330,12 +336,6 @@ _CSS = """
       font-weight: 500;
       color: var(--pip);
       text-decoration: underline;
-    }
-    .crumb-path {
-      margin: 0;
-      font-family: var(--mono);
-      font-size: 14px;
-      color: var(--muted);
     }
     .eyebrow {
       display: flex;
@@ -483,6 +483,15 @@ def _raw_name(row: dict[str, Any]) -> str:
 def _search_blob(row: dict[str, Any]) -> str:
     gid = str(row.get("id") or "")
     return f"{gid} {row.get('title') or ''} {_raw_name(row)}".lower()
+
+
+def _strip_house_suffix(name: str) -> str:
+    """Drop a trailing ` — {house}` from the rule H1 only."""
+    text = name.strip()
+    for suffix in _SOURCE_SUFFIXES:
+        if text.endswith(suffix):
+            return text[: -len(suffix)].rstrip()
+    return text
 
 
 def _display_name(row: dict[str, Any]) -> str:
@@ -965,10 +974,11 @@ def render_catalog_rule(
     tree = tree or empty_job_tree()
     index = _full_index(catalog)
     name = _display_name(found)
+    title = _strip_house_suffix(name)
     gid = str(found.get("id") or guideline_id)
     fields: list[str] = []
     fields.append(
-        f'<h1 class="rule-name" data-field="name">{_e(name)}</h1>'
+        f'<h1 class="rule-name" data-field="name">{_e(title)}</h1>'
     )
     fields.append(
         f'<p class="rule-id" data-field="id">{_e(gid)}</p>'
@@ -984,13 +994,12 @@ def render_catalog_rule(
         + "</div>"
     )
     stack = [header]
-    stack.append(_block("overview", "Overview", found.get("overview")))
+    stack.append(_block("description", "Description", found.get("description")))
     when = _block("apply_when", "When to use", found.get("apply_when"), label_class="block-label--use")
     not_when = _block("not_when", "Not when", found.get("not_when"), label_class="block-label--not")
     if when or not_when:
         stack.append(f'<div class="when-stack">{when}{not_when}</div>')
     stack.append(_block("agent_hint", "Agent hint", found.get("agent_hint")))
-    stack.append(_block("description", "Description", found.get("description")))
     examples = _example("pass_when", "pass", "Pass", found.get("pass_when")) + _example(
         "fail_when", "fail", "Fail", found.get("fail_when")
     )
@@ -1002,12 +1011,11 @@ def render_catalog_rule(
     {_tree_html(tree, index, found)}
     <main class="content">
       <a class="back" href="/catalog">← Back to Catalog</a>
-      <p class="crumb-path">{_e("/catalog/" + gid)}</p>
       {"".join(stack)}
     </main>
   </div>
 """
-    return _page(f"{name} · Open UX", body, _tree_script())
+    return _page(f"{title} · Open UX", body, _tree_script())
 
 
 def render_catalog_not_found(guideline_id: str) -> str:
