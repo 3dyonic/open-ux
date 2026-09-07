@@ -6,13 +6,13 @@ from html import escape
 from urllib.parse import quote
 from typing import Any
 
-from open_ux.catalog import SOURCE_HOUSES, Catalog, citations, get_by_id, list_index
-from open_ux.jobs import JobTree, card_by_id, empty_job_tree
-
-# Longest house label first so "Suomi.fi" wins over a shorter tail.
-_SOURCE_SUFFIXES = tuple(
-    f" — {label}"
-    for label in sorted(SOURCE_HOUSES.values(), key=len, reverse=True)
+from open_ux.catalog import Catalog, citations, get_by_id, list_index
+from open_ux.jobs import (
+    CONTAINER_IDS,
+    JobTree,
+    card_by_id,
+    empty_job_tree,
+    pointers_for_card,
 )
 
 # Figma 36:22 chip labels for the locked seven containers.
@@ -25,6 +25,8 @@ CONTAINER_CHIPS: tuple[tuple[str, str], ...] = (
     ("overlays_and_content_structure", "Overlays"),
     ("multi_step_flows", "Multi-step"),
 )
+_CHIP_IDS = {cid for cid, _label in CONTAINER_CHIPS}
+PAGE_SIZE = 25
 
 GITHUB = "https://github.com/3dyonic/open-ux"
 
@@ -79,6 +81,11 @@ _CSS = """
       font-weight: 600;
       color: var(--ink);
     }
+    .wordmark {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ink);
+    }
     .nav-actions {
       display: flex;
       align-items: center;
@@ -114,6 +121,15 @@ _CSS = """
     .btn--primary {
       background: var(--pip);
       color: #FFECDC;
+    }
+    .btn--outline {
+      background: var(--paper);
+      color: var(--ink);
+      border: 1px solid var(--line);
+    }
+    .btn--outline:disabled {
+      opacity: 0.45;
+      cursor: default;
     }
     .main {
       display: flex;
@@ -206,7 +222,23 @@ _CSS = """
       border-bottom: 1px solid var(--line);
       color: inherit;
     }
-    .catalog-row:last-child { border-bottom: none; }
+    .catalog-row[hidden] { display: none; }
+    .pager {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      width: 100%;
+      padding: 12px 20px;
+      border-top: 1px solid var(--line);
+    }
+    .pager-meta {
+      margin: 0;
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .pager-actions { display: flex; gap: 8px; }
     .row-id {
       font-family: var(--mono);
       font-size: 12px;
@@ -444,24 +476,48 @@ def _raw_name(row: dict[str, Any]) -> str:
     return str(row.get("name") or row.get("title") or row.get("id") or "")
 
 
-def _strip_source_suffix(name: str) -> str:
-    """Drop a trailing ` — {house}` so HTML titles stay name-only."""
-    text = name.strip()
-    for suffix in _SOURCE_SUFFIXES:
-        if text.endswith(suffix):
-            return text[: -len(suffix)].rstrip()
-    return text
-
-
 def _display_name(row: dict[str, Any]) -> str:
-    """Claim title for list rows and the rule H1 — no citation-source suffix."""
-    return _strip_source_suffix(_raw_name(row))
+    """Claim title for list rows and the rule H1 — master name as-is."""
+    return _raw_name(row)
+
+
+def _search_blob(row: dict[str, Any]) -> str:
+    return f"{row.get('id') or ''} {row.get('title') or ''} {_raw_name(row)}".lower()
+
+
+def _row_container(
+    row: dict[str, Any],
+    tree: JobTree,
+    catalog: Catalog | None = None,
+) -> str:
+    """Chip id for a list row. Prefer guideline container; else jobs tree."""
+    raw = str(row.get("container") or "").strip()
+    if raw in CONTAINER_IDS:
+        return raw
+    gid = str(row.get("id") or "")
+    card_id = str(row.get("card") or "").strip()
+    if catalog is not None and gid:
+        found = get_by_id(catalog, gid)
+        if found is not None:
+            gcont = str(found.get("container") or "").strip()
+            if gcont in CONTAINER_IDS:
+                return gcont
+            card_id = str(found.get("card") or card_id).strip()
+    if card_id:
+        card = card_by_id(tree, card_id)
+        if card is not None and card.container in CONTAINER_IDS:
+            return card.container
+    if gid:
+        for card in tree.cards:
+            if gid in pointers_for_card(card) and card.container in CONTAINER_IDS:
+                return card.container
+    return raw
 
 
 def _nav() -> str:
     return f"""
   <header class="nav">
-    <a class="nav-brand" href="/"><span class="pip" aria-hidden="true"></span>Open UX</a>
+    <a class="nav-brand" href="/"><span class="pip" aria-hidden="true"></span><span class="wordmark">Open UX</span></a>
     <div class="nav-actions">
       <a class="nav-catalog" href="/catalog"><span class="pip" aria-hidden="true"></span>Catalog</a>
       <a class="nav-link" href="{GITHUB}">GitHub</a>
@@ -512,27 +568,78 @@ def _page(title: str, body: str, script: str = "") -> str:
     )
 
 
-def _chips_html() -> str:
-    parts = [
-        '<button type="button" class="chip is-selected" data-chip="" aria-pressed="true">All</button>'
-    ]
-    for cid, label in CONTAINER_CHIPS:
+def _chips_html(selected: str = "") -> str:
+    wanted = selected if selected in _CHIP_IDS else ""
+    parts: list[str] = []
+    for cid, label in (("", "All"),) + CONTAINER_CHIPS:
+        on = cid == wanted
+        cls = "chip is-selected" if on else "chip"
+        pressed = "true" if on else "false"
         parts.append(
-            f'<button type="button" class="chip" data-chip="{_e(cid)}" aria-pressed="false">{_e(label)}</button>'
+            f'<button type="button" class="{cls}" data-chip="{_e(cid)}" '
+            f'aria-pressed="{pressed}">{_e(label)}</button>'
         )
     return '<div class="chips" id="catalog-chips">' + "".join(parts) + "</div>"
 
 
-def _rows_html(rows: list[dict[str, Any]], tree: JobTree) -> str:
+def _pager_meta(matching: int, page: int) -> tuple[str, int, bool, bool]:
+    pages = max(1, (matching + PAGE_SIZE - 1) // PAGE_SIZE) if matching else 1
+    page = min(max(page, 1), pages)
+    if matching == 0:
+        return "0 of 0", page, True, True
+    start = (page - 1) * PAGE_SIZE + 1
+    end = min(page * PAGE_SIZE, matching)
+    return f"{start}–{end} of {matching}", page, page <= 1, page >= pages
+
+
+def _pager_html(matching: int, page: int) -> str:
+    meta, page, prev_off, next_off = _pager_meta(matching, page)
+    prev = " disabled" if prev_off else ""
+    nxt = " disabled" if next_off else ""
+    return (
+        f'<div class="pager" id="catalog-pager" data-page="{page}">'
+        f'<p class="pager-meta" id="pager-meta">{_e(meta)}</p>'
+        f'<div class="pager-actions">'
+        f'<button type="button" class="btn btn--outline" id="pager-prev"{prev}>Prev</button>'
+        f'<button type="button" class="btn btn--outline" id="pager-next"{nxt}>Next</button>'
+        f"</div></div>"
+    )
+
+
+def _rows_html(
+    rows: list[dict[str, Any]],
+    tree: JobTree,
+    catalog: Catalog | None = None,
+    *,
+    container: str = "",
+    query: str = "",
+    page: int = 1,
+) -> str:
     if not rows:
         return '<p class="empty">No guidelines in the catalog.</p>'
+    q = query.strip().lower()
+    matching: list[dict[str, Any]] = []
+    resolved: dict[str, str] = {}
+    for row in rows:
+        gid = str(row.get("id") or "")
+        cid = _row_container(row, tree, catalog)
+        resolved[gid] = cid
+        if container and cid != container:
+            continue
+        if q and q not in _search_blob(row):
+            continue
+        matching.append(row)
+    _meta, page, _prev, _nxt = _pager_meta(len(matching), page)
+    start = (page - 1) * PAGE_SIZE
+    visible = {str(row.get("id") or "") for row in matching[start : start + PAGE_SIZE]}
     parts = ['<div class="list" id="catalog-list">']
     for row in rows:
         gid = str(row.get("id") or "")
         name = _display_name(row)
-        path = _row_path(row, tree)
-        search = f"{gid} {row.get('title') or ''} {_raw_name(row)}".lower()
-        container = str(row.get("container") or "")
+        search = _search_blob(row)
+        cid = resolved.get(gid) or _row_container(row, tree, catalog)
+        path = _row_path({**row, "container": cid}, tree)
+        hidden = "" if gid in visible else " hidden"
         path_html = ""
         if path:
             path_html = (
@@ -541,8 +648,8 @@ def _rows_html(rows: list[dict[str, Any]], tree: JobTree) -> str:
                 f'<span class="row-dot" aria-hidden="true">·</span>'
             )
         parts.append(
-            f'<a class="catalog-row" href="{_e(_href_id(gid))}" '
-            f'data-id="{_e(gid)}" data-container="{_e(container)}" '
+            f'<a class="catalog-row"{hidden} href="{_e(_href_id(gid))}" '
+            f'data-id="{_e(gid)}" data-container="{_e(cid)}" '
             f'data-search="{_e(search)}">'
             f'<span class="row-id">{_e(gid)}</span>'
             f"{path_html}"
@@ -550,14 +657,33 @@ def _rows_html(rows: list[dict[str, Any]], tree: JobTree) -> str:
             f'<span class="row-chevron" aria-hidden="true">›</span>'
             f"</a>"
         )
+    parts.append(_pager_html(len(matching), page))
     parts.append("</div>")
     return "".join(parts)
 
 
-def render_catalog_list(catalog: Catalog, tree: JobTree | None = None) -> str:
+def render_catalog_list(
+    catalog: Catalog,
+    tree: JobTree | None = None,
+    *,
+    container: str = "",
+    query: str = "",
+    page: int = 1,
+) -> str:
     tree = tree or empty_job_tree()
     rows = _full_index(catalog)
-    n = len(rows)
+    wanted = container if container in _CHIP_IDS else ""
+    q = query.strip()
+    matching_n = 0
+    for row in rows:
+        cid = _row_container(row, tree, catalog)
+        if wanted and cid != wanted:
+            continue
+        if q and q.lower() not in _search_blob(row):
+            continue
+        matching_n += 1
+    n = matching_n
+    value_attr = f' value="{_e(q)}"' if q else ""
     body = f"""
   <main class="main">
     <div class="header">
@@ -569,38 +695,76 @@ def render_catalog_list(catalog: Catalog, tree: JobTree | None = None) -> str:
     </div>
     <div class="field">
       <label for="catalog-search">Search</label>
-      <input class="field__input" id="catalog-search" type="search" autocomplete="off" spellcheck="false">
+      <input class="field__input" id="catalog-search" type="search" autocomplete="off" spellcheck="false"{value_attr}>
     </div>
-    {_chips_html()}
-    {_rows_html(rows, tree)}
+    {_chips_html(wanted)}
+    {_rows_html(rows, tree, catalog, container=wanted, query=q, page=page)}
   </main>
 """
     script = r"""
+    const PAGE_SIZE = 25;
     const search = document.getElementById("catalog-search");
     const chips = document.getElementById("catalog-chips");
     const rows = Array.from(document.querySelectorAll(".catalog-row"));
     const shown = document.getElementById("shown-count");
+    const pager = document.getElementById("catalog-pager");
+    const pagerMeta = document.getElementById("pager-meta");
+    const prevBtn = document.getElementById("pager-prev");
+    const nextBtn = document.getElementById("pager-next");
     let container = "";
+    if (chips) {
+      const on = chips.querySelector("[data-chip].is-selected");
+      if (on) container = on.getAttribute("data-chip") || "";
+    }
+    let page = pager ? Math.max(1, parseInt(pager.getAttribute("data-page") || "1", 10) || 1) : 1;
+
+    function syncUrl() {
+      const params = new URLSearchParams();
+      if (container) params.set("container", container);
+      const q = (search && search.value || "").trim();
+      if (q) params.set("q", q);
+      if (page > 1) params.set("page", String(page));
+      const qs = params.toString();
+      const next = location.pathname + (qs ? "?" + qs : "");
+      if (next !== location.pathname + location.search) {
+        history.replaceState(null, "", next);
+      }
+    }
 
     function apply() {
       const q = (search && search.value || "").trim().toLowerCase();
-      let n = 0;
+      const matched = [];
       for (const row of rows) {
         const matchC = !container || row.getAttribute("data-container") === container;
         const blob = row.getAttribute("data-search") || "";
         const matchQ = !q || blob.indexOf(q) !== -1;
-        const on = matchC && matchQ;
-        row.hidden = !on;
-        if (on) n += 1;
+        if (matchC && matchQ) matched.push(row);
+        else row.hidden = true;
       }
-      if (shown) shown.textContent = n + " shown";
+      const pages = Math.max(1, Math.ceil(matched.length / PAGE_SIZE) || 1);
+      if (page > pages) page = pages;
+      if (page < 1) page = 1;
+      const start = (page - 1) * PAGE_SIZE;
+      const end = Math.min(start + PAGE_SIZE, matched.length);
+      matched.forEach((row, i) => { row.hidden = i < start || i >= end; });
+      if (shown) shown.textContent = matched.length + " shown";
+      if (pagerMeta) {
+        pagerMeta.textContent = matched.length === 0
+          ? "0 of 0"
+          : (start + 1) + "–" + end + " of " + matched.length;
+      }
+      if (pager) pager.setAttribute("data-page", String(page));
+      if (prevBtn) prevBtn.disabled = page <= 1;
+      if (nextBtn) nextBtn.disabled = page >= pages || matched.length === 0;
+      syncUrl();
     }
 
-    if (search) search.addEventListener("input", apply);
+    if (search) search.addEventListener("input", () => { page = 1; apply(); });
     if (chips) chips.addEventListener("click", (event) => {
       const btn = event.target.closest("[data-chip]");
       if (!btn) return;
       container = btn.getAttribute("data-chip") || "";
+      page = 1;
       for (const chip of chips.querySelectorAll("[data-chip]")) {
         const on = chip === btn;
         chip.classList.toggle("is-selected", on);
@@ -608,6 +772,8 @@ def render_catalog_list(catalog: Catalog, tree: JobTree | None = None) -> str:
       }
       apply();
     });
+    if (prevBtn) prevBtn.addEventListener("click", () => { if (page > 1) { page -= 1; apply(); } });
+    if (nextBtn) nextBtn.addEventListener("click", () => { page += 1; apply(); });
 """
     return _page("Open UX · Catalog", body, script)
 

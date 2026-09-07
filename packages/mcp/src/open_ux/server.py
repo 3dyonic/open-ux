@@ -323,8 +323,22 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         return HTMLResponse(LANDING_HTML)
 
     @mcp.custom_route("/catalog", methods=["GET"])
-    async def catalog_list(_request: Request) -> Response:
-        return HTMLResponse(render_catalog_list(catalog, job_tree))
+    async def catalog_list(request: Request) -> Response:
+        container = str(request.query_params.get("container") or "")
+        query = str(request.query_params.get("q") or "")
+        try:
+            page = int(str(request.query_params.get("page") or "1"))
+        except ValueError:
+            page = 1
+        return HTMLResponse(
+            render_catalog_list(
+                catalog,
+                job_tree,
+                container=container,
+                query=query,
+                page=page,
+            )
+        )
 
     @mcp.custom_route("/catalog/{guideline_id}", methods=["GET"])
     async def catalog_rule(request: Request) -> Response:
