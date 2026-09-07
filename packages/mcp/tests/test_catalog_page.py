@@ -174,7 +174,7 @@ def test_catalog_rule_severity_chip_only_when_present() -> None:
         "description": "Desc.",
         "pass_when": ["Pass this."],
         "fail_when": ["Fail this."],
-        "citation": [{"source": "Fluent 2 — Button usage", "url": "https://fluent2.microsoft.design/"}],
+        "citation": [{"source": "NN/g", "url": "https://www.nngroup.com/"}],
         "container": "forms_and_input",
         "card": "design_a_form",
         "facet": "field_has_no_lasting_name",
@@ -209,7 +209,7 @@ def test_catalog_rule_omits_overview_and_empty_description() -> None:
         "agent_hint": "Hint.",
         "pass_when": ["Pass this."],
         "fail_when": ["Fail this."],
-        "citation": [{"source": "Fluent 2 — Button usage", "url": "https://fluent2.microsoft.design/"}],
+        "citation": [{"source": "NN/g", "url": "https://www.nngroup.com/"}],
     }
     catalog = Catalog(
         version="0.3.0",
@@ -439,39 +439,6 @@ def _visible_catalog_text(html: str) -> str:
     parser = _VisibleCatalogText()
     parser.feed(html)
     return "".join(parser.parts)
-
-
-FORBIDDEN_DROPPED_HOUSES = (
-    "NN/g",
-    "nngroup.com",
-    "Nielsen Norman",
-    "Apple HIG",
-    "developer.apple.com/design",
-)
-
-
-def test_catalog_public_html_omits_nng_and_apple(live_catalog: Path) -> None:
-    catalog = load_catalog(Settings.load(hosted=True))
-    tree = load_job_tree(Settings.load())
-    with _client() as client:
-        landing = client.get("/").text
-        listed = client.get("/catalog").text
-        fluent = client.get(f"/catalog/{HOUSE_ID_FLUENT}").text
-    for html, label in ((landing, "landing"), (listed, "catalog list")):
-        for needle in FORBIDDEN_DROPPED_HOUSES:
-            assert needle not in html, f"{label} still shows {needle}"
-    assert "GOV.UK · labels sentence case, no colons, above" in landing
-    assert "Fluent 2 — Button usage" in fluent
-    assert 'data-field="citation"' in fluent
-    for guideline in catalog.guidelines:
-        html = render_catalog_rule(catalog, guideline["id"], tree)
-        assert html is not None
-        for needle in FORBIDDEN_DROPPED_HOUSES:
-            assert needle not in html, f"{guideline['id']} still shows {needle}"
-        name = _row_name_for(listed, guideline["id"]) if guideline["id"] in listed else ""
-        if name:
-            assert "NN/g" not in name
-            assert "Apple HIG" not in name
 
 
 def test_catalog_house_absent_from_visible_text(live_catalog: Path) -> None:

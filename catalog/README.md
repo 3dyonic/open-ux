@@ -9,7 +9,7 @@ catalog/rules/{category}/{source}/{file}.json
 Example: `copy/polar/dont-duplicate-content.json` still has `"id": "polar.dont-duplicate-content"`. The folders are browse layout. The `id` field is the key.
 
 - **Category** (Actions, Forms, Content, …) is the kind of problem on the rule. It is not a Situation Card and not a container. `content/` on disk is just that field.
-- **Source** (Ant, Polaris, Fluent, …) is who is cited. Actions is a category; Ant is a source.
+- **Source** (Ant, NN/g, Polaris, …) is who is cited. Actions is a category; Ant is a source.
 - **Filename** is the `id` without the harvest prefix.
 
 `citation` is always an array of one or many `{source, url}`. Extra URLs are more sources for this one claim, not more claims.

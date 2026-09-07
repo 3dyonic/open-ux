@@ -7,8 +7,8 @@
   "rule": "Prefill with good defaults and smart values the user can accept or edit.",
   "citation": [
     {
-      "source": "Designing Interfaces 3e ch. Getting Input — Good Defaults and Smart Prefills (Tidwell, Brewer, Valencia)",
-      "url": "https://www.oreilly.com/library/view/designing-interfaces/9781492051961/"
+      "source": "Designing Interfaces 3e ch. Getting Input — Good Defaults and Smart Prefills (Tidwell, Brewer, Valencia); NN/g — A Checklist for Designing Mobile Input Fields",
+      "url": "https://www.nngroup.com/articles/mobile-input-checklist/"
     }
   ],
   "check": "llm_judgment",

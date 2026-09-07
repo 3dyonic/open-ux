@@ -4,7 +4,7 @@
   "segment": "Validation",
   "title": "validation icon when format valid",
   "name": "Validation icon when format valid — Spectrum",
-  "rule": "For email/card/password-rules fields, show the valid icon as soon as the typed value matches the format. This is the format-as-you-type icon, not a spam-success on required-filled.",
+  "rule": "For email/card/password-rules fields, show the valid icon as soon as the typed value matches the format. Dual-cite NN/g success-for-complex; this is the format-as-you-type icon, not a spam-success on required-filled.",
   "citation": [
     {
       "source": "Spectrum — Text field",
@@ -27,6 +27,6 @@
   "apply_when": "Email, card, or password-rule fields that validate format as the user types.",
   "not_when": "Plain required fields that only need any non-empty value, not format success.",
   "agent_hint": "Show the valid icon when format matches; never for merely filling a required field.",
-  "description": "For email, card, and password-rule fields, Spectrum shows the valid icon as soon as the typed value matches the format. This is format-as-you-type feedback, not a spam success state on any filled required field. Showing valid for any characters, or omitting it when the format already matches, misses the intent. Reserve the icon for real format match.",
+  "description": "For email, card, and password-rule fields, Spectrum shows the valid icon as soon as the typed value matches the format. This is format-as-you-type feedback, dual-cited with NN/g success-for-complex guidance, not a spam success state on any filled required field. Showing valid for any characters, or omitting it when the format already matches, misses the intent. Reserve the icon for real format match.",
   "do_not_claim": "Generic error identifies-and-fixes; success spam on every required. Overlap with Forms 54: `forms.errors.success_complex_fields`."
 }

@@ -4,7 +4,7 @@
   "segment": "Picker",
   "title": "picker ghost text placeholder",
   "name": "Picker ghost text placeholder — Spectrum",
-  "rule": "Picker placeholder (\"ghost text\") is allowed — prompts selection and disappears once a value is chosen. CONFLICT with Spectrum text-field \"don't use placeholder\". Dual-cite; picker-only. Do not pick a winner.",
+  "rule": "Picker placeholder (\"ghost text\") is allowed — prompts selection and disappears once a value is chosen. CONFLICT with Spectrum text-field \"don't use placeholder\" and NN/g placeholders. Dual-cite; picker-only. Do not pick a winner.",
   "citation": [
     {
       "source": "Spectrum — Picker ; Spectrum — Text field",
@@ -27,6 +27,6 @@
   "apply_when": "Spectrum pickers that prompt an unset choice with temporary ghost text.",
   "not_when": "Text fields using disappearing placeholder as the only label.",
   "agent_hint": "Allow picker ghost text only; keep a visible lasting label on text fields.",
-  "description": "Spectrum pickers may show ghost-text placeholders that prompt selection and disappear once a value is chosen. That picker-only allowance conflicts with Spectrum text-field guidance against placeholder-as-label, so do not treat picker ghost text as a pass for text inputs. Text fields still need a lasting visible label; an in-field hint is extra, never the only name. Dual-cite both sources and keep the split by control type rather than picking a house winner.",
+  "description": "Spectrum pickers may show ghost-text placeholders that prompt selection and disappear once a value is chosen. That picker-only allowance conflicts with Spectrum text-field and NN/g guidance against placeholder-as-label, so do not treat picker ghost text as a pass for text inputs. Text fields still need a lasting visible label; an in-field hint is extra, never the only name. Dual-cite both sources and keep the split by control type rather than picking a house winner.",
   "do_not_claim": "A winner that bans picker ghost-text or legalizes placeholder-as-only-label on text fields. Overlap with Forms 54: `forms.field_labels.visible_label` / `forms.field_labels.placeholder_hint_conflict`. Extra 73 skipped Polar/Fluent placeholder-as-hint."
 }
