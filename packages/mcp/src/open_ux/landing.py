@@ -2,12 +2,34 @@
 
 from __future__ import annotations
 
-LANDING_HTML = """<!DOCTYPE html>
+from open_ux.public_html import (
+    CONSENT_CSS,
+    LANDING_DESCRIPTION,
+    LANDING_TITLE,
+    MARK_CSS,
+    NAV_BRAND_HTML,
+    NAV_GITHUB_HTML,
+    OSS_FOOTER_CSS,
+    PAGE_SHELL_CSS,
+    head_meta,
+    public_consent_footer,
+    public_gtm_head,
+    public_gtm_noscript,
+    public_oss_footer,
+)
+
+
+def render_landing(*, consent: str | None = None) -> str:
+    return (
+        """<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Open UX</title>
+"""
+        + public_gtm_head(consent)
+        + head_meta(title=LANDING_TITLE, description=LANDING_DESCRIPTION, path="/")
+        + """
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -57,14 +79,6 @@ LANDING_HTML = """<!DOCTYPE html>
       padding: 16px 48px;
       background: var(--card);
       border-bottom: 1px solid var(--line);
-    }
-    .nav-brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--ink);
     }
     .nav-actions {
       display: flex;
@@ -391,36 +405,41 @@ LANDING_HTML = """<!DOCTYPE html>
     }
     .cta-copy p {
       margin: 0;
-      font-size: 13px;
+      font-size: 14px;
+      font-weight: 400;
       color: var(--muted);
     }
-    .footer {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      width: 100%;
-      padding: 16px 48px 24px;
-      font-size: 12px;
-      color: var(--muted);
+    .oss-link {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--pip);
+      text-decoration: none;
     }
-    .footer p { margin: 0; }
-    .footer-repo {
-      font-family: var(--mono);
-      font-size: 11px;
-    }
+"""
+        + MARK_CSS
+        + CONSENT_CSS
+        + OSS_FOOTER_CSS
+        + PAGE_SHELL_CSS
+        + """
   </style>
 </head>
 <body>
+"""
+        + public_gtm_noscript(consent)
+        + """
   <header class="nav">
-    <span class="nav-brand"><span class="pip" aria-hidden="true"></span>Open UX</span>
+    """
+        + NAV_BRAND_HTML
+        + """
     <div class="nav-actions">
       <a class="nav-catalog" href="/catalog">Catalog</a>
-      <a class="nav-github" href="https://github.com/3dyonic/open-ux">GitHub</a>
+      """
+        + NAV_GITHUB_HTML
+        + """
       <a class="btn btn--primary btn--nav" href="/invite">Get a key</a>
     </div>
   </header>
+  <main>
   <section class="hero">
     <div class="hero-copy">
       <p class="kicker"><span class="pip" aria-hidden="true"></span>Cited catalog · agents audit · no vibes</p>
@@ -428,7 +447,7 @@ LANDING_HTML = """<!DOCTYPE html>
       <p class="sub">Cited UX rules agents audit against</p>
       <p class="hero-body">Stop inventing UX rules from memory. Open UX is a shared, cited catalog agents list, fetch, and audit against.</p>
       <div class="ctas">
-        <a class="btn btn--primary" id="get-key" href="/invite">Get a key</a>
+        <a class="btn btn--primary" href="/catalog">Browse catalog</a>
         <a class="btn btn--secondary" href="/invite">Request access</a>
       </div>
     </div>
@@ -441,7 +460,7 @@ LANDING_HTML = """<!DOCTYPE html>
           </span>
           topic · forms
         </div>
-        <span class="ill-id">uns-44</span>
+        <span class="ill-id">forms.field-labels</span>
       </div>
       <div class="ill-jobs">
         <p class="ill-jobs-label">jobs</p>
@@ -453,7 +472,7 @@ LANDING_HTML = """<!DOCTYPE html>
         <span class="clay-quote"></span>
         <div>
           <p class="cite-kicker">citation</p>
-          <p class="cite-copy">NN/g · field labels stay visible while typing</p>
+          <p class="cite-copy">GOV.UK · labels sentence case, no colons, above</p>
         </div>
       </div>
       <div class="chips">
@@ -491,20 +510,27 @@ LANDING_HTML = """<!DOCTYPE html>
       </article>
     </div>
   </section>
+  </main>
   <section class="cta-band">
     <div class="cta-copy">
-      <h2>Request access</h2>
-      <p>Join the waitlist. One key after approve and redeem — no vibes.</p>
+      <h2>Join the community</h2>
+      <p>Open UX is a shared idea — cited rules anyone can fork, cite, and improve together.</p>
     </div>
-    <a class="btn btn--primary" href="/invite">Get a key</a>
+    <a class="oss-link" href="https://github.com/3dyonic/open-ux">View repo →</a>
   </section>
-  <footer class="footer">
-    <p>Open UX · cited UX rules agents audit against</p>
-    <p class="footer-repo"><a href="https://github.com/3dyonic/open-ux">github.com/3dyonic/open-ux</a></p>
-  </footer>
+"""
+        + public_oss_footer()
+        + """
   <script>
     if (location.hash === '#register') location.replace('/invite');
   </script>
+"""
+        + public_consent_footer(consent)
+        + """
 </body>
 </html>
 """
+    )
+
+
+LANDING_HTML = render_landing()

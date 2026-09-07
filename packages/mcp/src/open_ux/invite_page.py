@@ -6,6 +6,20 @@ Request is email-only — do not add Full name. Admin is CLI-only — not in thi
 
 from __future__ import annotations
 
+from open_ux.public_html import (
+    CONSENT_CSS,
+    FAVICON_HREF,
+    MARK_CSS,
+    NAV_BRAND_HTML,
+    NAV_GITHUB_HTML,
+    OSS_FOOTER_CSS,
+    PAGE_SHELL_CSS,
+    public_consent_footer,
+    public_gtm_head,
+    public_gtm_noscript,
+    public_oss_footer,
+)
+
 _CSS = """
     :root {
       --paper: #F9F6F2;
@@ -25,9 +39,6 @@ _CSS = """
     html, body { height: 100%; }
     body {
       margin: 0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
       font-family: var(--sans);
       line-height: 1.5;
       color: var(--ink);
@@ -51,16 +62,6 @@ _CSS = """
       background: var(--card);
       border-bottom: 1px solid var(--line);
     }
-    .nav-brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .wordmark {
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--ink);
-    }
     .nav-actions {
       display: flex;
       align-items: center;
@@ -73,7 +74,6 @@ _CSS = """
       text-decoration: none;
     }
     .main {
-      flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -246,23 +246,30 @@ _CSS = """
       font-weight: 500;
       color: var(--pip);
     }
-"""
+""" + MARK_CSS
 
-_NAV = """
+_NAV = f"""
   <header class="nav">
-    <div class="nav-brand">
-      <span class="pip" aria-hidden="true"></span>
-      <span class="wordmark">Open UX</span>
-    </div>
+    {NAV_BRAND_HTML}
     <div class="nav-actions">
-      <a class="nav-github" href="https://github.com/3dyonic/open-ux">GitHub</a>
+      {NAV_GITHUB_HTML}
       <a class="btn btn--primary btn--nav" href="/invite">Get a key</a>
     </div>
   </header>
 """
 
 
-def _page(main: str, script: str) -> str:
+def _page(
+    main: str,
+    script: str,
+    *,
+    consent_gate: bool = False,
+    consent: str | None = None,
+) -> str:
+    head_gtm = public_gtm_head(consent) if consent_gate else ""
+    body_gtm = public_gtm_noscript(consent) if consent_gate else ""
+    oss = public_oss_footer() if consent_gate else ""
+    footer = public_consent_footer(consent) if consent_gate else ""
     return (
         """<!DOCTYPE html>
 <html lang="en">
@@ -270,17 +277,24 @@ def _page(main: str, script: str) -> str:
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Open UX</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+"""
+        + head_gtm
+        + f'  <link rel="icon" href="{FAVICON_HREF}" type="image/svg+xml">\n'
+        + """  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
 """
         + _CSS
+        + PAGE_SHELL_CSS
+        + (CONSENT_CSS if consent_gate else "")
+        + (OSS_FOOTER_CSS if consent_gate else "")
         + """
   </style>
 </head>
 <body>
 """
+        + body_gtm
         + _NAV
         + """
   <main class="main">
@@ -293,13 +307,18 @@ def _page(main: str, script: str) -> str:
         + script
         + """
   </script>
+"""
+        + oss
+        + footer
+        + """
 </body>
 </html>
 """
     )
 
 
-REQUEST_HTML = _page(
+def render_invite_request(*, consent: str | None = None) -> str:
+    return _page(
     """
     <div class="card" id="request-card">
       <p class="meta"><span class="pip" aria-hidden="true"></span>Invite · waitlist, one key after approve</p>
@@ -372,7 +391,12 @@ REQUEST_HTML = _page(
       window.location.href = "/invite/requested";
     });
 """,
-)
+        consent_gate=True,
+        consent=consent,
+    )
+
+
+REQUEST_HTML = render_invite_request()
 
 REQUESTED_HTML = _page(
     """

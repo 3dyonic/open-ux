@@ -9,24 +9,26 @@ from fastmcp import Client
 from open_ux.catalog import EMPTY_NOTE, citations
 from open_ux.server import create_mcp
 
-LIVE_SEED = (
-    "forms.field_labels.visible_label",
-    "forms.field_labels.label_stays_visible",
-    "forms.field_labels.error_identifies_and_fixes",
+REMAINING_SEED = (
+    "ant.checkbox-vs-switch",
+    "ant.one-cta-per-screen",
+    "fluent.multistep-next-not-continue",
+    "govuk.date-input-only-memorable",
 )
+FORM_SEED = "ant.checkbox-vs-switch"
 INDEX_KEYS = {"id", "title", "name", "jobs", "lane", "container", "card", "facet", "leaf"}
 BODY_KEYS = {"pass_when", "fail_when", "rule", "citation", "check"}
 EXTRA_SAMPLE = "govuk.date-input-only-memorable"
-CATALOG_COUNT = 295
-FORM_COUNT = 53
-EXTRA_COUNT = 69
+CATALOG_COUNT = 200
+FORM_COUNT = 14
+EXTRA_COUNT = 43
 HARVEST3_COUNT = 56
 HARVEST4_COUNT = 43
 HARVEST5_COUNT = 34
 HARVEST3_SAMPLE = "spectrum.quiet-vs-standard-background"
 HARVEST4_SAMPLE = "uswds.filled-next-outline-this-page"
 HARVEST5_SAMPLE = "gold.consistent-not-uniform"
-EXTRA_PREFIXES = ("govuk.", "nng.", "fluent.", "polar.")
+EXTRA_PREFIXES = ("govuk.", "fluent.", "polar.")
 HARVEST3_PREFIXES = ("spectrum.", "ant.", "mui.")
 HARVEST4_PREFIXES = ("uswds.", "canada.", "nsw.")
 HARVEST5_PREFIXES = ("gold.", "nl.", "suomi.")
@@ -87,7 +89,7 @@ async def test_list_index_has_no_rule_bodies(live_catalog: Path) -> None:
         assert data["total"] == CATALOG_COUNT
         _assert_index_rows(data["guidelines"])
         ids = {row["id"] for row in data["guidelines"]}
-        for seed in LIVE_SEED:
+        for seed in REMAINING_SEED:
             assert seed in ids
         extra = [row for row in data["guidelines"] if row["id"].startswith(EXTRA_PREFIXES)]
         harvest3 = [
@@ -119,13 +121,13 @@ async def test_get_guideline_returns_full_body(live_catalog: Path) -> None:
     mcp = create_mcp(hosted=False)
     async with Client(mcp) as client:
         got = await client.call_tool(
-            "get_guideline", {"id": "forms.field_labels.visible_label"}
+            "get_guideline", {"id": FORM_SEED}
         )
         body = got.data
         assert body["found"] is True
         g = body["guideline"]
-        assert g["id"] == "forms.field_labels.visible_label"
-        assert g["name"] == "Visible field label — NN/g"
+        assert g["id"] == FORM_SEED
+        assert g["name"] == "Checkbox vs switch — Ant"
         assert "lane" not in g
         assert g["rule"]
         assert g["pass_when"]
@@ -164,8 +166,7 @@ async def test_search_lane_forms_only(live_catalog: Path) -> None:
         _assert_index_rows(data["guidelines"])
         assert all(row["lane"] == "forms" for row in data["guidelines"])
         assert all(row["id"].startswith("forms.") for row in data["guidelines"])
-        for seed in LIVE_SEED:
-            assert seed in {row["id"] for row in data["guidelines"]}
+        assert "forms.labels.clickable" in {row["id"] for row in data["guidelines"]}
 
 
 @pytest.mark.asyncio
@@ -279,7 +280,7 @@ async def test_audit_guideline_ids_only_those_rules(live_catalog: Path) -> None:
             "audit",
             {
                 "guideline_ids": [
-                    "forms.field_labels.visible_label",
+                    FORM_SEED,
                     "actions.button_groups",
                 ],
             },
@@ -287,7 +288,7 @@ async def test_audit_guideline_ids_only_those_rules(live_catalog: Path) -> None:
         result = audited.data
         ids = [row["id"] for row in result["guidelines"]]
         assert ids == [
-            "forms.field_labels.visible_label",
+            FORM_SEED,
             "actions.button_groups",
         ]
         assert "error" not in result

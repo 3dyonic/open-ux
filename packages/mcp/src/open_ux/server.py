@@ -24,7 +24,7 @@ from open_ux.catalog_page import (
     render_catalog_not_found,
     render_catalog_rule,
 )
-from open_ux.invite_page import REQUEST_HTML, REQUESTED_HTML, REDEEM_HTML
+from open_ux.invite_page import REQUESTED_HTML, REDEEM_HTML, render_invite_request
 from open_ux.jobs import (
     DEFAULT_LIMIT,
     JOB_FIELD_DESCRIPTION,
@@ -32,7 +32,14 @@ from open_ux.jobs import (
     MAX_LIMIT,
     load_job_tree,
 )
-from open_ux.landing import LANDING_HTML
+from open_ux.landing import render_landing
+from open_ux.public_html import (
+    CONSENT_COOKIE,
+    FAVICON_PATH,
+    ROBOTS_TXT,
+    render_privacy_page,
+    render_sitemap,
+)
 from open_ux.situations import (
     get_situation as run_get_situation,
     list_situations as run_list_situations,
@@ -40,6 +47,10 @@ from open_ux.situations import (
 )
 from open_ux.settings import Settings
 from open_ux.store import get_store
+
+
+def _consent_cookie(request: Request) -> str | None:
+    return request.cookies.get(CONSENT_COOKIE)
 
 
 def _key_hash_or_none() -> str | None:
@@ -319,20 +330,56 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         return result
 
     @mcp.custom_route("/", methods=["GET"])
-    async def landing(_request: Request) -> Response:
-        return HTMLResponse(LANDING_HTML)
+    async def landing(request: Request) -> Response:
+        return HTMLResponse(render_landing(consent=_consent_cookie(request)))
 
     @mcp.custom_route("/catalog", methods=["GET"])
-    async def catalog_list(_request: Request) -> Response:
-        return HTMLResponse(render_catalog_list(catalog, job_tree))
+    async def catalog_list(request: Request) -> Response:
+        container = str(request.query_params.get("container") or "")
+        query = str(request.query_params.get("q") or "")
+        try:
+            page = int(str(request.query_params.get("page") or "1"))
+        except ValueError:
+            page = 1
+        return HTMLResponse(
+            render_catalog_list(
+                catalog,
+                job_tree,
+                container=container,
+                query=query,
+                page=page,
+                consent=_consent_cookie(request),
+            )
+        )
 
     @mcp.custom_route("/catalog/{guideline_id}", methods=["GET"])
     async def catalog_rule(request: Request) -> Response:
         guideline_id = str(request.path_params.get("guideline_id") or "")
-        html = render_catalog_rule(catalog, guideline_id, job_tree)
+        consent = _consent_cookie(request)
+        html = render_catalog_rule(catalog, guideline_id, job_tree, consent=consent)
         if html is None:
-            return HTMLResponse(render_catalog_not_found(guideline_id), status_code=404)
+            return HTMLResponse(
+                render_catalog_not_found(guideline_id, consent=consent),
+                status_code=404,
+            )
         return HTMLResponse(html)
+
+    @mcp.custom_route("/robots.txt", methods=["GET"])
+    async def robots(_request: Request) -> Response:
+        return Response(ROBOTS_TXT, media_type="text/plain; charset=utf-8")
+
+    @mcp.custom_route("/sitemap.xml", methods=["GET"])
+    async def sitemap(_request: Request) -> Response:
+        ids = [str(row["id"]) for row in catalog.index if row.get("id")]
+        return Response(render_sitemap(ids), media_type="application/xml")
+
+    @mcp.custom_route("/logo-mark.svg", methods=["GET"])
+    async def logo_mark(_request: Request) -> Response:
+        return Response(FAVICON_PATH.read_bytes(), media_type="image/svg+xml")
+
+    @mcp.custom_route("/favicon.svg", methods=["GET"])
+    async def favicon(_request: Request) -> Response:
+        return Response(FAVICON_PATH.read_bytes(), media_type="image/svg+xml")
 
     @mcp.custom_route("/health", methods=["GET"])
     async def health(_request: Request) -> Response:
@@ -349,9 +396,13 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             }
         )
 
+    @mcp.custom_route("/privacy", methods=["GET"])
+    async def privacy(request: Request) -> Response:
+        return HTMLResponse(render_privacy_page(consent=_consent_cookie(request)))
+
     @mcp.custom_route("/invite", methods=["GET"])
-    async def invite_request_page(_request: Request) -> Response:
-        return HTMLResponse(REQUEST_HTML)
+    async def invite_request_page(request: Request) -> Response:
+        return HTMLResponse(render_invite_request(consent=_consent_cookie(request)))
 
     @mcp.custom_route("/invite/request", methods=["POST"])
     async def invite_request_route(request: Request) -> Response:

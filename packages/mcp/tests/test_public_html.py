@@ -1,0 +1,260 @@
+from __future__ import annotations
+
+from html import escape
+from pathlib import Path
+
+from starlette.testclient import TestClient
+
+from open_ux.catalog import load_catalog
+from open_ux.public_html import (
+    CATALOG_TITLE,
+    FAVICON_HREF,
+    FAVICON_PATH,
+    LANDING_DESCRIPTION,
+    LANDING_TITLE,
+    PAGE_SHELL_CSS,
+    PRIVACY_DESCRIPTION,
+    PRIVACY_TITLE,
+    ROBOTS_TXT,
+    canonical_url,
+    rule_meta_description,
+    rule_meta_title,
+)
+from open_ux.server import create_mcp
+from open_ux.settings import Settings
+
+ANT_SEED = "ant.checkbox-vs-switch"
+
+
+def _client() -> TestClient:
+    mcp = create_mcp(hosted=True)
+    app = mcp.http_app(path="/mcp", stateless_http=True, transport="http")
+    return TestClient(app)
+
+
+def _head(html: str) -> str:
+    return html.split("</head>", 1)[0]
+
+
+def test_robots_txt_is_exact(tmp_env: Path) -> None:
+    with _client() as client:
+        response = client.get("/robots.txt")
+    assert response.status_code == 200
+    assert response.text == ROBOTS_TXT
+    assert "Disallow: /mcp" in response.text
+    assert "Sitemap: https://open-ux.dev/sitemap.xml" in response.text
+
+
+def test_sitemap_lists_landing_catalog_and_remaining_ids(live_catalog: Path) -> None:
+    catalog = load_catalog(Settings.load(hosted=True))
+    ids = [str(row["id"]) for row in catalog.index]
+    with _client() as client:
+        response = client.get("/sitemap.xml")
+    assert response.status_code == 200
+    body = response.text
+    assert 'xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"' in body
+    assert "<loc>https://open-ux.dev/</loc>" in body
+    assert "<loc>https://open-ux.dev/catalog</loc>" in body
+    for gid in ids:
+        assert f"<loc>https://open-ux.dev/catalog/{gid}</loc>" in body
+    assert "nng." not in body
+    assert "apple." not in body
+    assert body.count("<url>") == 2 + len(ids)
+
+
+def test_favicon_svg_is_served(tmp_env: Path) -> None:
+    assert FAVICON_PATH.is_file()
+    assert FAVICON_PATH.name == "logo-mark.svg"
+    assert FAVICON_HREF == "/logo-mark.svg"
+    mark = FAVICON_PATH.read_bytes()
+    assert b'viewBox="0 0 32 32"' in mark
+    assert b'fill="#FF4B00"' in mark
+    assert b'fill="#FFECE0"' in mark
+    with _client() as client:
+        preferred = client.get("/logo-mark.svg")
+        alias = client.get("/favicon.svg")
+    for response in (preferred, alias):
+        assert response.status_code == 200
+        assert response.headers["content-type"].startswith("image/svg+xml")
+        assert response.content == mark
+    assert b"#FF4B00" in preferred.content
+
+
+def test_public_pages_have_pack_head_and_no_mcp_or_og_image(live_catalog: Path) -> None:
+    catalog = load_catalog(Settings.load(hosted=True))
+    guideline = next(g for g in catalog.guidelines if g["id"] == ANT_SEED)
+    display = "Checkbox vs switch"
+    rule_title = rule_meta_title(display)
+    rule_desc = rule_meta_description(guideline)
+    with _client() as client:
+        landing = client.get("/").text
+        listed = client.get("/catalog").text
+        rule = client.get(f"/catalog/{ANT_SEED}").text
+        invite = client.get("/invite").text
+        privacy = client.get("/privacy").text
+    for html, title, description, path in (
+        (landing, LANDING_TITLE, LANDING_DESCRIPTION, "/"),
+        (listed, CATALOG_TITLE, LANDING_DESCRIPTION, "/catalog"),
+        (rule, rule_title, rule_desc, f"/catalog/{ANT_SEED}"),
+        (privacy, PRIVACY_TITLE, PRIVACY_DESCRIPTION, "/privacy"),
+    ):
+        head = _head(html)
+        title_e = escape(title, quote=True)
+        desc_e = escape(description, quote=True)
+        url_e = escape(canonical_url(path), quote=True)
+        assert f"<title>{title_e}</title>" in head
+        assert f'<meta name="description" content="{desc_e}">' in head
+        assert f'<link rel="canonical" href="{url_e}">' in head
+        assert f'<meta property="og:title" content="{title_e}">' in head
+        assert f'<meta property="og:description" content="{desc_e}">' in head
+        assert f'<meta property="og:url" content="{url_e}">' in head
+        assert '<meta property="og:type" content="website">' in head
+        assert '<meta name="twitter:card" content="summary">' in head
+        assert f'<meta name="twitter:title" content="{title_e}">' in head
+        assert f'<meta name="twitter:description" content="{desc_e}">' in head
+        assert f'<link rel="icon" href="{FAVICON_HREF}" type="image/svg+xml">' in head
+        assert "og:image" not in head.lower()
+        assert "twitter:image" not in head.lower()
+        assert "MCP" not in head
+    assert 'class="nav-brand" href="/"' in listed
+    assert 'class="nav-brand" href="/"' in rule
+    assert 'class="nav-brand" href="/"' in landing
+    assert f'<img class="mark" src="{FAVICON_HREF}"' in landing
+    assert f'<img class="mark" src="{FAVICON_HREF}"' in listed
+    assert f'<img class="mark" src="{FAVICON_HREF}"' in rule
+    assert f'<img class="mark" src="{FAVICON_HREF}"' in invite
+    assert 'class="nav-brand" href="/"' in invite
+    assert f'<link rel="icon" href="{FAVICON_HREF}" type="image/svg+xml">' in _head(invite)
+    assert 'class="nav-brand" href="/"' in privacy
+    assert f'<img class="mark" src="{FAVICON_HREF}"' in privacy
+    assert f'<link rel="icon" href="{FAVICON_HREF}" type="image/svg+xml">' in _head(privacy)
+    assert "UNS-44" not in privacy
+    assert "uns-44" not in privacy
+    assert "UNS-44" not in invite
+    assert "uns-44" not in invite
+    assert ">Get a key</a>" in listed
+    assert 'href="/invite"' in listed
+    assert ">Browse catalog</a>" in landing
+    assert 'class="btn btn--primary" href="/catalog">Browse catalog</a>' in landing
+    assert 'class="btn btn--primary btn--nav" href="/invite">Get a key</a>' in landing
+    hero = landing.split('class="hero"', 1)[1].split('class="how"', 1)[0]
+    assert ">Get a key</a>" not in hero
+    assert "UNS-44" not in landing
+    assert "uns-44" not in landing
+    assert "UNS-44" not in listed
+    assert "uns-44" not in listed
+    assert "UNS-44" not in rule
+    assert "uns-44" not in rule
+    assert "NN/g · field labels stay visible while typing" not in landing
+    assert "GOV.UK · labels sentence case, no colons, above" in landing
+
+
+def test_landing_community_strip_and_hero_catalog(tmp_env: Path) -> None:
+    with _client() as client:
+        html = client.get("/").text
+    hero = html.split('class="hero"', 1)[1].split('class="how"', 1)[0]
+    community = html.split('class="cta-band"', 1)[1].split('class="footer"', 1)[0]
+    assert ">Join the community</h2>" in community
+    assert (
+        "Open UX is a shared idea — cited rules anyone can fork, cite, and improve together."
+        in community
+    )
+    assert 'href="https://github.com/3dyonic/open-ux">View repo →</a>' in community
+    assert 'class="oss-link"' in community
+    assert "Browse catalog" not in community
+    assert "Open catalog" not in community
+    assert 'class="btn btn--primary" href="/catalog">Browse catalog</a>' in hero
+    assert "height: 143px" in html
+
+
+def test_public_pages_have_oss_footer_strip(live_catalog: Path) -> None:
+    strip = "Open UX · cited UX rules agents audit against"
+    github = 'href="https://github.com/3dyonic/open-ux"'
+    mit = "Open UX is open source"
+    public_paths = ("/", "/catalog", f"/catalog/{ANT_SEED}", "/invite", "/privacy")
+    never_paths = (
+        "/mcp",
+        "/admin/invite/waitlist",
+        "/invite/redeem",
+        "/account/delete",
+        "/health",
+        "/invite/requested",
+    )
+    with _client() as client:
+        landing = client.get("/").text
+        community = landing.split('class="cta-band"', 1)[1].split('class="footer"', 1)[0]
+        footer = landing.split('class="footer"', 1)[1].split("</footer>", 1)[0]
+        assert ">Join the community</h2>" in community
+        assert "View repo →" in community
+        assert 'class="oss-link"' in community
+        assert "Browse catalog" not in community
+        assert strip in footer
+        assert '<a href="/privacy">Privacy</a>' in footer
+        assert github not in footer
+        assert "GitHub" not in footer
+        assert mit not in footer
+        assert "View repo →" not in footer
+        for path in public_paths:
+            html = client.get(path).text
+            page_footer = html.split('class="footer"', 1)[1].split("</footer>", 1)[0]
+            assert strip in page_footer, path
+            assert '<a href="/privacy">Privacy</a>' in page_footer, path
+            assert github not in page_footer, path
+            assert "GitHub" not in page_footer, path
+            assert mit not in page_footer, path
+            assert ">MIT</a>" not in page_footer, path
+            assert 'aria-label="GitHub"' in html, path
+            assert 'class="nav-github"' in html, path
+            assert 'viewBox="0 0 16 16"' in html, path
+            assert 'fill="currentColor"' in html, path
+            assert ">GitHub</a>" not in html, path
+            if path != "/":
+                assert ">Join the community</h2>" not in html, path
+                assert "View repo →" not in html, path
+        for path in never_paths:
+            html = client.get(path).text
+            assert strip not in html, path
+            assert mit not in html, path
+        admin = client.get(
+            "/admin/invite/waitlist",
+            headers={"Authorization": "Bearer test-admin-token"},
+        )
+        assert strip not in admin.text
+        account = client.post(
+            "/account/delete",
+            json={"email": "ada@example.com", "key": "uxmcp_nope"},
+        )
+        assert strip not in account.text
+
+
+def test_public_pages_pin_footer_stack(live_catalog: Path) -> None:
+    public_paths = ("/", "/catalog", f"/catalog/{ANT_SEED}", "/invite", "/privacy")
+    assert "min-height: 100vh" in PAGE_SHELL_CSS
+    assert "min-height: 100dvh" in PAGE_SHELL_CSS
+    assert "display: flex" in PAGE_SHELL_CSS
+    assert "flex-direction: column" in PAGE_SHELL_CSS
+    assert "flex: 1" in PAGE_SHELL_CSS
+    with _client() as client:
+        for path in public_paths:
+            html = client.get(path).text
+            css = html.split("<style>", 1)[1].split("</style>", 1)[0]
+            assert PAGE_SHELL_CSS in css, path
+            assert "<main" in html, path
+            assert "</main>" in html, path
+            assert 'class="footer"' in html, path
+            main_end = html.index("</main>")
+            footer_at = html.index('class="footer"')
+            assert main_end < footer_at, path
+            footer_css = css.split(".footer {", 1)[1].split("}", 1)[0]
+            assert "position: fixed" not in footer_css, path
+            if path == "/":
+                community_at = html.index('class="cta-band"')
+                assert main_end < community_at < footer_at
+                between = html[community_at:footer_at]
+                assert ">Join the community</h2>" in between
+                assert "View repo →" in between
+                assert 'class="hero"' not in between
+            else:
+                assert 'class="cta-band"' not in html, path
+                after_main = html[main_end:footer_at]
+                assert ">Join the community</h2>" not in after_main, path

@@ -18,7 +18,7 @@ Example: `copy/polar/dont-duplicate-content.json` still has `"id": "polar.dont-d
 
 | File | Role |
 | --- | --- |
-| `rules/` | 295 guideline files |
+| `rules/` | 200 guideline files |
 | `jobs.json` | 7 containers, 13 Situation Cards, Facet → Leaf map. Pointers only |
 | `index.json` | Generated `{id,title,name,jobs,lane,container,card,facet,leaf?}` |
 | `manifest.json` / `MANIFEST.md` | Generated category → source map for agents. No rule bodies |
@@ -48,7 +48,7 @@ The picker is a Card — one compose job. Containers are how the skill lists the
 
 ## Harvest rows that are not files
 
-The harvest had 309 rows. 295 files are published. The other 14 are listed here so a missing id is explained, not silent.
+The harvest had 309 rows. 200 files are published after dropping primary Apple HIG and NN/g cites. The other 14 harvest rows were never files; they are listed here so a missing id is explained, not silent.
 
 ### No published file
 

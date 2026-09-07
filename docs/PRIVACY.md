@@ -9,5 +9,6 @@ Eng Done fails if any of these are violated.
 - **Hosted telemetry** (purpose: improve the catalog): unique callers, tool mix, rule ids.
 - **Retention ≤ 30 days.** Account delete (`POST /account/delete` with email + key) wipes keys and logs for that account.
 - **Self-host stdio:** no hosted telemetry, no invite flow.
+- **Public analytics (after consent):** Public pages (`/`, `/catalog`, `/catalog/{id}`, `/invite`) load Google Tag Manager and Google Analytics only after you Accept the cookie banner. Decline or dismiss keeps analytics off for that session. The container id comes from `OPEN_UX_GTM_ID` (default `GTM-N3BL3G9K`). No analytics on `/mcp`, `/admin`, `/invite/redeem`, `/account`, or `/health`.
 
 SQLite lives only on the `OPEN_UX_DATA_DIR` volume (waitlist, hashed invites, hashed keys, telemetry). It is not a dump of UI snippets. Never commit the database.

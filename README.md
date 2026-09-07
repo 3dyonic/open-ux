@@ -1,133 +1,128 @@
 # Open UX
 
-![Open UX: catalog to audit flow](docs/readme-hero.svg)
+![Open UX](docs/readme-hero.svg)
 
-**Cited UX rules agents audit against.**
+**Cited UX rules agents can list, fetch, and audit against.**
 
-Stop inventing UX rules from memory. Open UX is a shared, cited catalog agents list, fetch, and audit against. v1: Forms → field labels. Request an invite on the hosted service; self-host without our cloud. Telemetry improves the shared catalog — we never store your UI payloads.
+Stop inventing UX guidance from memory. Open UX is a shared, open-source catalog of UX rules with citations, plus tools so an agent can find the right criteria and apply them to work it already has.
+
+**Hosted:** [open-ux.dev](https://open-ux.dev) · **License:** [MIT](LICENSE)
 
 ## What it is
 
-A curated, machine-readable store of UX guidelines plus tools so an agent can:
+A curated, machine-readable store of UX guidelines and a small tool surface so an agent can:
 
-1. **Find** a Situation Card for the compose job
-2. **Fetch** cited rule criteria for that Card
-3. **Apply** those criteria (`rule` / `pass_when` / `fail_when`) to the work already in hand
+1. **Browse situations** — pick a compose job (Situation Card) that matches the work
+2. **Fetch criteria** — get cited rules for that job (`rule`, `pass_when`, `fail_when`)
+3. **Apply locally** — the client judges the artifact; the host never takes the file and never returns pass/fail
 
-The host does not take the file and does not return pass or fail. The client applies those criteria to the work it already has. There is no server-side LLM.
+There is no server-side LLM. One shared catalog for every caller — an account unlocks the hosted API; it does not give you a private rulebook.
 
-Use the hosted endpoint (request an invite, redeem for an API key) or self-host the same catalog and tools. Open source, MIT.
+## What it is not
 
-## What it isn’t
+* A generative design copilot or “does this look good?” scorer
+* A WCAG / accessibility compliance checker (we do not claim conformance, contrast audits, or screen-reader naming)
+* A closed corpus — the catalog and server are open source; you can self-host the same tools
 
-- A generative design copilot, redesign product, or “does this look good?” scorer
-- Everyone shares the same guidelines. Creating an account only lets you use the service — it doesn’t give you a private rulebook.
-- An accessibility or **WCAG compliance** checker — we do not claim WCAG conformance, contrast, or screen-reader names
+## Features
 
-## v1 scope
-
-**Category:** Forms  
-**Segment:** Field labels  
-**Three cited rules:**
-
-| id | Rule | Citation |
-| --- | --- | --- |
-| `forms.field_labels.visible_label` | Every input has a visible label. Placeholder text alone is not enough. | [Apple HIG — Text fields](https://developer.apple.com/design/human-interface-guidelines/text-fields), Material |
-| `forms.field_labels.label_stays_visible` | The field label remains visible while the field has a value (floating or persistent — not replaced by the value alone). | [Material 3 — Text fields](https://m3.material.io/components/text-fields/guidelines) |
-| `forms.field_labels.error_identifies_and_fixes` | Error text identifies the field and tells the user how to fix it. | [NN/g — Error-Message Guidelines](https://www.nngroup.com/articles/error-message-guidelines/) |
-
-Those ids are the Designer LIVE seed (UNS-44), kept first in the generated index. Files live under [`catalog/rules/{category}/{source}/`](catalog/rules/). How the catalog is laid out, and which harvest rows are not files, is in [`catalog/README.md`](catalog/README.md). The generated index is [`catalog/index.json`](catalog/index.json). The skill-facing map is [`catalog/MANIFEST.md`](catalog/MANIFEST.md). The tree is [`catalog/jobs.json`](catalog/jobs.json).
-
-**Out of v1:** other form segments, screenshots, search, suggest-fixes, bulk ingest, inventing look, a server LLM grader.
-
-## Tools
-
-| Tool | Input | Output |
-| --- | --- | --- |
-| `list_situations` | optional `container`, `limit`, `offset` | Paged Situation Cards (id, title, container) |
-| `get_situation` | Card `id` | Card + facets + leaf / rule pointers. Fails on a Leaf id |
-| `suggest_situations` | `task_text`, optional `surface` | Ranked Card ids from the allowlist. Fallback only |
-| `list_guidelines` | `limit`, `offset` | Paged index: id, title, jobs, lane, placement |
-| `search_guidelines` | `query` and/or `jobs` and/or `lane` | Same index shape |
-| `get_guideline` | `id` | Full rule body |
-| `audit` | `jobs` (one Card or container) or `guideline_ids`; optional `query`, `limit` | `{ guidelines: [{ id, title, rule, pass_when, fail_when }], count, total }` |
-
-`jobs` is a Card id or container id (plus legacy `forms` / `actions` / `feedback` aliases). Leaf ids are not needs. Default `limit` 10, max 50. No `target`. No host `verdict`. If nothing matches: empty list + note. The tree lives in [`catalog/jobs.json`](catalog/jobs.json).
-
-## Catalog
-
-One file per rule in [`catalog/rules/{category}/{source}/`](catalog/rules/) (`id` on the rule; filename drops the harvest prefix). Generated index: [`catalog/index.json`](catalog/index.json). Skill map: [`catalog/MANIFEST.md`](catalog/MANIFEST.md). Schema: [`catalog/schema.json`](catalog/schema.json). Tree: [`catalog/jobs.json`](catalog/jobs.json). Never forked per tenant.
-
-Soft size ~50–100 KB. Hard ceiling ~384 KB.
-
-## Hosted vs self-host
-
-| | Hosted HTTP | Self-host stdio |
-| --- | --- | --- |
-| Auth | Waitlist → redeem invite → bearer `uxmcp_`. Tools **401** without a key. | No auth |
-| Limits | Soft ~60/min and ~1k/day per key | None |
-| Telemetry | Callers (key_hash), tool mix, rule ids | Off |
-
-See [docs/PRIVACY.md](docs/PRIVACY.md) and [docs/DEPLOY.md](docs/DEPLOY.md). Display name is **Open UX**. Do not put “MCP” in the H1 or marketplace title.
-
-## Layout
-
-```
-packages/mcp     Python FastMCP server
-catalog/         shared rules JSON + schema
-clients/claude   thin Claude plugin / install craft (no duplicate rule bodies)
-docs/            LANDING.md + readme-hero.svg (designer craft), PRIVACY.md, DEPLOY.md
-packs/           honest imp.* / eor.e* notes for this scaffold
-```
-
-Package name: `@3dyonic/open-ux` (Claude plugin / npm scope). Python distribution: `open-ux`.
+* **Cited catalog** — one JSON file per rule, with sources you can follow
+* **Public catalog site** — browse rules in the browser at [`/catalog`](https://open-ux.dev/catalog)
+* **Agent tools** — list / search / get guidelines; suggest situations; audit by need (job or ids)
+* **Hosted or self-host** — waitlist + API key on the hosted service, or stdio locally with no auth
+* **Privacy-minded hosted mode** — we do not store UI payloads or prompts; see [Privacy](https://open-ux.dev/privacy)
 
 ## Quick start
 
-**Connect → key → list → one audit.** Thursday: URL + key in client settings. Plugin registry comes after that proof.
-
 ### Hosted
 
-1. Request an invite on `/invite` (`POST /invite/request`). When approved, redeem the one-time `inv_…` token (`POST /invite/redeem`) → bearer API key (`uxmcp_…`).
-2. Point your client at the hosted `/mcp` URL (deploy your own; no public URL in this repo yet).
-3. Call `list_guidelines`, then `audit` with a `jobs` template (no file).
+1. Request access at [open-ux.dev/invite](https://open-ux.dev/invite)
+2. After approval, redeem your invite for a bearer API key (`uxmcp_…`)
+3. Point your MCP client at the hosted `/mcp` endpoint with that key
+4. Call `list_guidelines` or `audit` with a job (no file upload)
 
-Hosted tools return 401 without a key. One shared catalog for every caller.
+Tools return **401** without a key.
 
-### Claude plugin
-
-Thin install from [`clients/claude`](clients/claude). Connect → list rules → one audit. The plugin does not ship a second copy of the catalog.
-
-### Self-host / run locally
-
-Same tools from `packages/mcp` over stdio. No invite step. Same catalog as hosted.
+### Run locally
 
 ```bash
 python -m venv .venv && source .venv/bin/activate
 pip install -e "packages/mcp[dev]"
 python -m open_ux validate-catalog
-python -m open_ux stdio          # self-host, no auth
-OPEN_UX_MODE=hosted python -m open_ux http   # http://127.0.0.1:8080
+python -m open_ux stdio
+OPEN_UX_MODE=hosted python -m open_ux http
 ```
 
-Tests (no LLM):
+Browse the local site at `http://127.0.0.1:8080/catalog`.
+
+### Tests
 
 ```bash
 cd packages/mcp && python -m pytest
 ```
 
-## Privacy
+### Claude plugin
 
-On the hosted service:
+Thin client in [`clients/claude`](clients/claude). It connects to the catalog; it does not ship a second copy of the rules.
 
-- **Never stored:** file contents, prompts, or other UI / PII bodies
-- **Telemetry:** callers, tool mix, rule ids
+## Agent tools
 
-Self-host: your process, your logs. Telemetry off.
+| Tool | Purpose |
+| -- | -- |
+| `list_situations` | Page Situation Cards (optional container filter) |
+| `get_situation` | One Card plus facets / rule pointers |
+| `suggest_situations` | Rank Cards from task text (allowlisted) |
+| `list_guidelines` | Paged catalog index |
+| `search_guidelines` | Filter index by query / jobs / lane |
+| `get_guideline` | Full rule body by id |
+| `audit` | Say the need (`jobs` Card/container or `guideline_ids`); get matching criteria |
 
-## Status
+`audit` accepts optional `query` and `limit` (default 10, max 50). It does **not** take a file target and does **not** return a host verdict. If nothing matches, you get an empty list and a note.
 
-Early. v1 is the three Forms → field-labels rules above; the catalog file is still a stub until Designer UNS-44 lands. Merge of this scaffold is held for Architect review.
+## Catalog layout
+
+```
+catalog/
+  rules/{category}/{source}/   one JSON file per rule
+  index.json                   generated index
+  jobs.json                    Situation tree
+  schema.json                  rule schema
+  MANIFEST.md                  human map (no rule bodies)
+```
+
+Rules are never forked per tenant. Soft size budget ~50–100 KB; hard ceiling ~384 KB. Details: [`catalog/README.md`](catalog/README.md).
+
+## Repository layout
+
+```
+packages/mcp      Python server (FastMCP)
+catalog/          shared rules + schema
+clients/claude    thin Claude plugin
+docs/             privacy, deploy, assets
+```
+
+Python package: `open-ux` · npm / plugin scope: `@3dyonic/open-ux`
+
+## Hosted vs self-host
+
+|  | Hosted HTTP | Self-host (stdio) |
+| -- | -- | -- |
+| Auth | Waitlist → invite → bearer `uxmcp_` | None |
+| Rate limits | Soft per-key limits | None |
+| Telemetry | Aggregated usage (key hash, tools, rule ids) | Off |
+
+Deploy notes: [`docs/DEPLOY.md`](docs/DEPLOY.md). Privacy on the hosted product: [open-ux.dev/privacy](https://open-ux.dev/privacy) (Eng constraints also in [`docs/PRIVACY.md`](docs/PRIVACY.md)).
+
+## Contributing
+
+Issues and pull requests are welcome. Keep the catalog cited — every rule should point at a real source. Prefer small, reviewable PRs: one concern per change (catalog rows, server behavior, or docs).
+
+Before opening a PR:
+
+```bash
+python -m open_ux validate-catalog
+cd packages/mcp && python -m pytest
+```
 
 ## License
 

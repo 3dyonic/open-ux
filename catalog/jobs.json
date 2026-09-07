@@ -100,9 +100,6 @@
               "id": "avoid_placeholder_as_label",
               "guideline_ids": [
                 "fluent.disabled-field-label-stays-perceivable",
-                "forms.field_labels.label_stays_visible",
-                "forms.field_labels.placeholder_hint_conflict",
-                "forms.field_labels.visible_label",
                 "spectrum.picker-ghost-text-placeholder"
               ]
             },
@@ -131,11 +128,8 @@
                 "ant.dropdown-when-over-5-no-truncate",
                 "ant.radio-count-2-to-5",
                 "ant.slider-intensity-grade",
-                "forms.inputs.combo_box",
                 "forms.inputs.dropdown_chooser",
                 "forms.inputs.list_builder",
-                "forms.inputs.match_control_and_size",
-                "forms.inputs.offer_choices_not_only_text",
                 "gold.avoid-select-except-long-lists",
                 "govuk.calendar-control-when",
                 "govuk.date-input-only-memorable",
@@ -146,20 +140,6 @@
                 "govuk.select-preselect-settings-not-questions",
                 "mui.dont-type-number",
                 "nl.no-select-multiple",
-                "nng.always-select-one-radio-by-default",
-                "nng.avoid-cascading-dropdowns",
-                "nng.checkboxes-multi-radios-exclusive",
-                "nng.dropdown-ok-narrow-middle",
-                "nng.familiar-values-type-not-dropdown",
-                "nng.keyboard-typeahead-in-dropdowns",
-                "nng.listbox-vs-dropdown",
-                "nng.prefer-radios-over-dropdowns-when-visible",
-                "nng.radio-set-comprehensive-other-type-in",
-                "nng.standard-visuals-checkbox-square-radio-circle",
-                "nng.too-few-options-radios-not-dropdown",
-                "nng.too-many-combobox-not-long-dropdown",
-                "nng.users-rarely-change-defaults",
-                "nng.vertical-one-choice-per-line",
                 "polar.default-option-selected-when-possible",
                 "polar.select-4plus-choice-list-under-4",
                 "suomi.radio-extras-hidden-then-indented",
@@ -169,20 +149,11 @@
             {
               "id": "use_familiar_control",
               "guideline_ids": [
-                "forms.inputs.allow_paste_and_drag",
-                "forms.inputs.forgiving_format_autoformat",
                 "forms.inputs.autocompletion",
-                "forms.inputs.clear_button",
-                "forms.inputs.compute_from_other_info",
                 "forms.inputs.fill_in_the_blanks",
-                "forms.inputs.get_from_system",
                 "forms.inputs.good_defaults_smart_prefills",
                 "forms.inputs.html_autocomplete_and_name",
-                "forms.inputs.matching_keyboard_and_type",
-                "forms.inputs.no_autocorrect_identity_fields",
                 "forms.inputs.structured_format",
-                "forms.inputs.use_device_features",
-                "forms.mobile.visible_with_keyboard",
                 "govuk.dob-autocomplete-tokens",
                 "govuk.example-dates-unambiguous-order",
                 "govuk.never-auto-tab-date-fields",
@@ -218,10 +189,6 @@
                 "ant.settings-mode-and-grouping-thresholds",
                 "canada.interactive-questions-max-7-same-place",
                 "canada.lists-max-7-or-split",
-                "forms.layout.group_related_labels_fields",
-                "forms.layout.logical_sequence",
-                "forms.layout.single_column",
-                "forms.length.keep_short",
                 "govuk.character-count-fieldset-legend",
                 "uswds.character-count-brevity-or-legal",
                 "uswds.forms-simple-vertical-stack"
@@ -237,11 +204,6 @@
               "id": "mark_requirements_up_front",
               "guideline_ids": [
                 "fluent.helper-text-below",
-                "forms.fields.distinguish_optional_required",
-                "forms.fields.explain_format_upfront",
-                "forms.fields.required_before_proceed",
-                "forms.inputs.helpful_constraints",
-                "forms.transparency.requirements_before_start",
                 "spectrum.asterisk-is-icon-not-label-text"
               ]
             }
@@ -298,11 +260,6 @@
             {
               "id": "explain_failure_next_to_cause",
               "guideline_ids": [
-                "forms.errors.modal_not_only_copy",
-                "forms.errors.next_to_field_not_summary_only",
-                "forms.errors.not_color_only",
-                "forms.errors.not_tooltip_only",
-                "forms.field_labels.error_identifies_and_fixes",
                 "govuk.error-summary-plus-per-field",
                 "polar.long-form-errors-banner-plus-inline",
                 "spectrum.error-icon-overrides-validation-icon",
@@ -321,14 +278,10 @@
                 "ant.inline-input-feedback-does-not-auto-dismiss",
                 "fluent.validation-messages-brief-no-end-punctuation",
                 "forms.errors.focus_first_error",
-                "forms.errors.inline_after_complete",
-                "forms.errors.repeated_extra_help",
                 "forms.errors.replace_supporting_text",
-                "forms.errors.success_complex_fields",
                 "forms.inputs.password_strength_meter",
                 "mui.helper-text-changes-field-height",
                 "nl.native-required-bubbles-not-error-ui",
-                "nng.show-the-rules",
                 "polar.validate-after-finished-interacting",
                 "suomi.static-validation-on-submit-default"
               ]
@@ -372,14 +325,7 @@
           "leaves": [
             {
               "id": "show_the_password",
-              "guideline_ids": [
-                "forms.inputs.never_prepopulate_password",
-                "nng.alt-registration-and-biometric-login",
-                "nng.dont-repeat-password-email-fields",
-                "nng.forgot-password-link",
-                "nng.login-mask-plus-show-password",
-                "nng.show-the-input-password-creation"
-              ]
+              "guideline_ids": []
             }
           ]
         }
@@ -431,9 +377,6 @@
               "id": "pick_primary_action",
               "guideline_ids": [
                 "actions.button_groups",
-                "actions.buttons.follow_platform_ok_cancel_order",
-                "actions.buttons.one_primary",
-                "actions.buttons.style_not_size",
                 "actions.prominent_done_or_assumed_next",
                 "ant.conversation-vs-navigation-order",
                 "ant.footer-buttons-when-body-cannot-carry",
@@ -444,7 +387,6 @@
                 "fluent.end-of-task-labels-named",
                 "fluent.ios-chrome-back-done-cancel",
                 "fluent.split-button-dont-repeat-primary",
-                "forms.actions.avoid_reset_clear",
                 "forms.submit.enabled_until_request",
                 "gold.next-primary-save-progress-secondary",
                 "gold.visual-loudness-primary-secondary-tertiary",
@@ -467,17 +409,6 @@
             {
               "id": "word_the_action",
               "guideline_ids": [
-                "actions.copy.adjectives_for_appearance",
-                "actions.copy.avoid_vague_names",
-                "actions.copy.consequent_state",
-                "actions.copy.consistent_words",
-                "actions.copy.ellipsis_needs_more_input",
-                "actions.copy.explicit_verb_not_ok",
-                "actions.copy.limit_branded_terms",
-                "actions.copy.short_clear_sentence_case",
-                "actions.copy.tooltips_clarify_outcomes",
-                "actions.copy.verbs_for_actions",
-                "actions.icons.always_visible_text_label",
                 "ant.ok-cancel-default-vs-explicit-verb",
                 "fluent.apply-versus-save-prefer-autosave",
                 "fluent.create-labels-new-thing"
@@ -495,8 +426,6 @@
                 "actions.action_panel",
                 "actions.command_history",
                 "actions.macros",
-                "actions.menus.frequent_items_first",
-                "actions.menus.unavailable_state",
                 "actions.preview",
                 "actions.smart_menu_items"
               ]
@@ -509,11 +438,7 @@
           "leaves": [
             {
               "id": "show_action_state",
-              "guideline_ids": [
-                "actions.buttons.distinguishable_states",
-                "actions.buttons.loading_on_button",
-                "actions.buttons.press_state"
-              ]
+              "guideline_ids": []
             }
           ]
         },
@@ -571,21 +496,10 @@
             {
               "id": "disable_or_confirm_destructive",
               "guideline_ids": [
-                "actions.buttons.default_not_destructive",
-                "actions.confirm.bypass_educational",
-                "actions.confirm.nonstandard_for_extreme",
-                "actions.confirm.not_routine",
-                "actions.confirm.progressive_disclosure",
-                "actions.confirm.response_summarizes_outcome",
-                "actions.confirm.serious_or_undo",
-                "actions.confirm.specific_consequences",
                 "actions.multilevel_undo",
-                "actions.proximity.redundant_visual_signals",
-                "actions.proximity.separate_consequential",
                 "ant.danger-cancel-primary-when-not-recommended",
                 "ant.prefer-undo-or-popconfirm-over-modal",
-                "mui.avoid-apologies-alarm-ambiguity-in-dialog-titles",
-                "nng.support-undo-discoverable"
+                "mui.avoid-apologies-alarm-ambiguity-in-dialog-titles"
               ]
             }
           ]
@@ -598,7 +512,6 @@
               "id": "warn_before_leave",
               "guideline_ids": [
                 "actions.cancelability",
-                "actions.close_saves_separate_cancel",
                 "forms.navigation.warn_unsaved",
                 "mui.confirmation-cancel-discards"
               ]
@@ -973,10 +886,7 @@
             {
               "id": "write_to_you",
               "guideline_ids": [
-                "canada.you-your-never-i-my",
-                "forms.copy.no_double_barreled",
-                "forms.copy.plain_language",
-                "forms.copy.positive_wording"
+                "canada.you-your-never-i-my"
               ]
             }
           ]
@@ -1028,7 +938,6 @@
                 "ant.dialog-feedback-only-important-actionable",
                 "ant.form-in-modal-lifecycle",
                 "mui.non-modal-dialogs-allowed",
-                "nng.modal-and-nonmodal-dialogs",
                 "polar.dont-use-modals-for-complex-forms",
                 "spectrum.toast-vs-dialog"
               ]
@@ -1039,7 +948,6 @@
                 "actions.hover_or_popup_tools",
                 "ant.hover-detail-overlay-timing",
                 "ant.input-overlay-click-outside-preserves",
-                "forms.structure.progressive_disclosure",
                 "gold.accordion-find-in-page-misses-collapsed",
                 "govuk.conditionally-reveal-related-question"
               ]
@@ -1091,14 +999,9 @@
               "id": "show_step_progress",
               "guideline_ids": [
                 "fluent.multistep-next-not-continue",
-                "forms.transparency.progress_on_long_forms",
                 "gold.progress-indicator-out-of-order-returnable",
                 "govuk.question-pages-continue-back-no-sliders",
-                "nl.step-n-of-m-in-title-and-above-form",
-                "nng.cart-easy-remove-no-extra-update",
-                "nng.mobile-friendly-payment-options",
-                "nng.open-field-state-and-card-expiry",
-                "nng.order-summary-easy-to-find-mobile"
+                "nl.step-n-of-m-in-title-and-above-form"
               ]
             }
           ]

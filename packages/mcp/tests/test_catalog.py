@@ -29,15 +29,16 @@ from open_ux.jobs import (
 )
 from open_ux.settings import HARD_CATALOG_BYTES, Settings
 
-LIVE_SEED = (
-    "forms.field_labels.visible_label",
-    "forms.field_labels.label_stays_visible",
-    "forms.field_labels.error_identifies_and_fixes",
+REMAINING_SEED = (
+    "ant.checkbox-vs-switch",
+    "ant.one-cta-per-screen",
+    "fluent.multistep-next-not-continue",
+    "govuk.date-input-only-memorable",
 )
 INDEX_REQUIRED = {"id", "title", "name", "jobs", "lane", "container", "card", "facet"}
 INDEX_OPTIONAL = {"leaf"}
 BODY_KEYS = {"pass_when", "fail_when", "rule", "citation", "check"}
-EXTRA_PREFIXES = ("govuk.", "nng.", "fluent.", "polar.")
+EXTRA_PREFIXES = ("govuk.", "fluent.", "polar.")
 HARVEST3_PREFIXES = ("spectrum.", "ant.", "mui.")
 HARVEST4_PREFIXES = ("uswds.", "canada.", "nsw.")
 HARVEST5_PREFIXES = ("gold.", "nl.", "suomi.")
@@ -78,8 +79,6 @@ FOLDED_IDS = {
     "suomi.toggle-button-immediate-input-submit",
 }
 UNWOUND_IDS = {
-    "nng.too-few-options-radios-not-dropdown",
-    "nng.prefer-radios-over-dropdowns-when-visible",
     "gold.avoid-select-except-long-lists",
     "govuk.select-last-resort",
     "polar.select-4plus-choice-list-under-4",
@@ -90,14 +89,12 @@ UNWOUND_IDS = {
     "polar.default-option-selected-when-possible",
 }
 MULTI_CITE_KEEPS = {
-    "forms.inputs.forgiving_format_autoformat",
-    "forms.fields.distinguish_optional_required",
     "ant.checkbox-vs-switch",
 }
-CATALOG_COUNT = 295
-ACTION_COUNT = 40
-FORM_COUNT = 53
-EXTRA_COUNT = 69
+CATALOG_COUNT = 200
+ACTION_COUNT = 10
+FORM_COUNT = 14
+EXTRA_COUNT = 43
 HARVEST3_COUNT = 56
 HARVEST4_COUNT = 43
 HARVEST5_COUNT = 34
@@ -186,9 +183,8 @@ def test_rules_load_harvest_counts_after_same_claim_fold(live_catalog: Path) -> 
     assert set(ids) == set(action_ids) | set(form_ids) | set(extra_ids) | set(
         harvest3_ids
     ) | set(harvest4_ids) | set(harvest5_ids)
-    for seed in LIVE_SEED:
-        assert seed in form_ids
-    assert ids[:3] == list(LIVE_SEED)
+    for seed in REMAINING_SEED:
+        assert seed in ids
     by_id = {g["id"]: g for g in catalog.guidelines}
     for gid in extra_ids + harvest3_ids + harvest4_ids + harvest5_ids:
         assert INVENTED_FIELDS.isdisjoint(by_id[gid])
@@ -251,7 +247,7 @@ def test_on_disk_index_has_no_rule_bodies(live_catalog: Path) -> None:
         assert "do_not_claim" not in dumped
     catalog = load_catalog(Settings.load(hosted=True))
     assert [row["id"] for row in catalog.index] == [g["id"] for g in catalog.guidelines]
-    for seed in LIVE_SEED:
+    for seed in REMAINING_SEED:
         assert seed in {row["id"] for row in catalog.index}
 
 
@@ -279,27 +275,26 @@ def test_every_rule_has_one_home(live_catalog: Path) -> None:
             unmapped.append(guideline["id"])
     assert unmapped == []
     by_id = {g["id"]: g for g in catalog.guidelines}
-    assert by_id["nng.modal-and-nonmodal-dialogs"]["leaf"] == "pick_modal_only_when_blocking"
+    assert by_id["mui.non-modal-dialogs-allowed"]["leaf"] == "pick_modal_only_when_blocking"
     assert by_id["nl.step-n-of-m-in-title-and-above-form"]["leaf"] == "show_step_progress"
     assert by_id["nsw.charts-start-with-story"]["leaf"] == "chart_has_a_story"
     assert UNMAPPED_DROPPED.isdisjoint(by_id)
     assert FOLDED_IDS.isdisjoint(by_id)
 
 
-def test_live_seeds_keep_locked_homes_and_agent_fields(live_catalog: Path) -> None:
+def test_remaining_seeds_keep_locked_homes_and_agent_fields(live_catalog: Path) -> None:
     catalog = load_catalog(Settings.load(hosted=True))
     by_id = {g["id"]: g for g in catalog.guidelines}
-    visible = by_id["forms.field_labels.visible_label"]
-    assert visible["card"] == "design_a_form"
-    assert visible["leaf"] == "avoid_placeholder_as_label"
-    assert visible["name"] == "Visible field label — NN/g"
-    assert visible["overview"].startswith("A lasting label")
-    stays = by_id["forms.field_labels.label_stays_visible"]
-    assert stays["card"] == "design_a_form"
-    assert stays["leaf"] == "avoid_placeholder_as_label"
-    error = by_id["forms.field_labels.error_identifies_and_fixes"]
+    checkbox = by_id["ant.checkbox-vs-switch"]
+    assert checkbox["card"] == "design_a_form"
+    assert checkbox["leaf"] == "choose_control_for_choice"
+    assert checkbox["name"] == "Checkbox vs switch — Ant"
+    assert checkbox["overview"].startswith("Switches apply immediately")
+    cta = by_id["ant.one-cta-per-screen"]
+    assert cta["card"] == "design_actions_and_ctas"
+    assert cta["leaf"] == "pick_primary_action"
+    error = by_id["govuk.error-summary-plus-per-field"]
     assert error["card"] == "handle_form_errors"
-    assert error["leaf"] == "explain_failure_next_to_cause"
 
 
 def test_schema_citation_is_array_of_one_or_many(live_catalog: Path) -> None:
@@ -474,18 +469,13 @@ def test_distinct_claims_are_not_folded(live_catalog: Path) -> None:
     catalog = load_catalog(Settings.load(hosted=True))
     ids = {g["id"] for g in catalog.guidelines}
     by_id = {g["id"]: g for g in catalog.guidelines}
-    assert "nng.dropdown-ok-narrow-middle" in ids
-    assert "nng.too-many-combobox-not-long-dropdown" in ids
     assert "forms.inputs.dropdown_chooser" in ids
-    assert "forms.inputs.offer_choices_not_only_text" in ids
     assert "spectrum.asterisk-is-icon-not-label-text" in ids
-    assert "nng.always-select-one-radio-by-default" in ids
     assert "govuk.select-preselect-settings-not-questions" in ids
     assert UNWOUND_IDS <= ids
     for gid in (
-        "forms.inputs.match_control_and_size",
         "govuk.four-date-types",
-        "nng.users-rarely-change-defaults",
+        "forms.inputs.dropdown_chooser",
     ):
         assert len(citations(by_id[gid])) == 1
 
@@ -519,15 +509,15 @@ def test_names_are_claim_then_source_and_folders_follow_category(
 ) -> None:
     catalog = load_catalog(Settings.load(hosted=True))
     by_id = {g["id"]: g for g in catalog.guidelines}
-    visible = by_id["forms.field_labels.visible_label"]
-    assert visible["name"] == "Visible field label — NN/g"
-    assert visible["category"] == "Forms"
-    assert (live_catalog / "rules" / "forms" / "nng" / "field_labels.visible_label.json").is_file()
+    checkbox = by_id["ant.checkbox-vs-switch"]
+    assert checkbox["name"] == "Checkbox vs switch — Ant"
+    assert checkbox["category"] == "Forms"
+    assert (live_catalog / "rules" / "forms" / "ant" / "checkbox-vs-switch.json").is_file()
 
-    primary = by_id["actions.buttons.one_primary"]
-    assert primary["name"] == "One primary action — NN/g"
-    assert primary["category"] == "Actions"
-    assert (live_catalog / "rules" / "actions" / "nng" / "buttons.one_primary.json").is_file()
+    clickable = by_id["forms.labels.clickable"]
+    assert clickable["name"] == "Clickable — Vercel"
+    assert clickable["category"] == "Forms"
+    assert (live_catalog / "rules" / "forms" / "vercel" / "labels.clickable.json").is_file()
 
     ant = by_id["ant.one-cta-per-screen"]
     assert ant["name"] == "One CTA per screen — Ant"
@@ -554,7 +544,40 @@ def test_manifest_is_category_then_source_without_bodies(live_catalog: Path) -> 
     actions = next(item for item in data["categories"] if item["id"] == "actions")
     sources = {item["id"] for item in actions["sources"]}
     assert "ant" in sources
-    assert "nng" in sources
+    assert "nng" not in sources
+    assert "apple" not in sources
     assert "actions" not in sources
     assert "One CTA per screen — Ant" in markdown
     assert "catalog/rules/{category}/{source}/{file}.json" in markdown
+
+
+def _primary_source(guideline: dict) -> str:
+    cites = guideline.get("citation") or []
+    if not cites:
+        return ""
+    first = cites[0] if isinstance(cites, list) else cites
+    if isinstance(first, dict):
+        blob = str(first.get("source") or "")
+    else:
+        blob = str(first)
+    return blob.split(";")[0].strip()
+
+
+def test_no_primary_apple_or_nng_rules_remain(live_catalog: Path) -> None:
+    catalog = load_catalog(Settings.load(hosted=True))
+    leftover = [
+        g["id"]
+        for g in catalog.guidelines
+        if _primary_source(g).startswith("Apple HIG")
+        or _primary_source(g).startswith("NN/g")
+    ]
+    assert leftover == []
+    assert not list((live_catalog / "rules").rglob("nng/*.json"))
+    assert not list((live_catalog / "rules").rglob("apple/*.json"))
+    house_dirs = [
+        path
+        for path in (live_catalog / "rules").rglob("*")
+        if path.is_dir() and path.name in {"apple", "nng"}
+    ]
+    assert house_dirs == []
+    assert not any(g["id"].startswith(("nng.", "apple.")) for g in catalog.guidelines)

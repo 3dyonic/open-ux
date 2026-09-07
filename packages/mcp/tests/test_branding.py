@@ -30,8 +30,11 @@ def test_landing_has_figma_sections_and_register_cta(tmp_env: Path) -> None:
 
     assert html.count("<h1>") == 1
     assert "@media" not in html
-    assert "favicon" not in html.lower()
+    assert '<link rel="icon" href="/logo-mark.svg" type="image/svg+xml">' in html
     assert "og:image" not in html.lower()
+    assert "<title>Open UX — Cited UX rules agents audit against</title>" in html
+    assert ">Browse catalog</a>" in html
+    assert 'class="btn btn--primary" href="/catalog">Browse catalog</a>' in html
 
     assert "Cited catalog · agents audit · no vibes" in html
     assert "Stop inventing UX rules from memory. Open UX is a shared, cited catalog agents list, fetch, and audit against." in html
@@ -43,7 +46,14 @@ def test_landing_has_figma_sections_and_register_cta(tmp_env: Path) -> None:
     assert ">Get a key</a>" in html
     assert ">Catalog</a>" in html
     assert 'href="/catalog"' in html
+    assert 'class="nav-brand" href="/"' in html
+    assert '<img class="mark" src="/logo-mark.svg"' in html
+    assert '<span class="wordmark">Open UX</span>' in html
     assert ">Request access</a>" in html
+    hero = html.split('class="hero"', 1)[1].split('class="how"', 1)[0]
+    assert ">Get a key</a>" not in hero
+    assert "UNS-44" not in html
+    assert "uns-44" not in html
     assert ">How it works</h2>" in html
     assert ">Connect</h3>" in html
     assert "Install the Claude client (or any MCP client) and paste your key." in html
@@ -55,12 +65,33 @@ def test_landing_has_figma_sections_and_register_cta(tmp_env: Path) -> None:
     assert "incomplete" not in html
     assert "invented rule · no source" in html
     assert "cited rule · source attached" in html
-    assert "Join the waitlist. One key after approve and redeem — no vibes." in html
-    assert "Open UX · cited UX rules agents audit against" in html
-    assert "github.com/3dyonic/open-ux" in html
+    assert ">Join the community</h2>" in html
+    assert "Open UX is a shared idea — cited rules anyone can fork, cite, and improve together." in html
+    assert 'class="oss-link" href="https://github.com/3dyonic/open-ux">View repo →</a>' in html
+    community = html.split('class="cta-band"', 1)[1].split('class="footer"', 1)[0]
+    assert "Browse catalog" not in community
+    assert "Open catalog" not in community
+    assert ">Get a key</a>" not in community
+    footer = html.split('class="footer"', 1)[1].split("</footer>", 1)[0]
+    assert "Open UX · cited UX rules agents audit against" in footer
+    assert '<a href="/privacy">Privacy</a>' in footer
+    assert "github.com" not in footer
+    assert "GitHub" not in footer
+    assert "Open UX is open source" not in footer
+    assert "MIT" not in footer
+    assert "View repo →" not in footer
 
     assert html.count('href="https://github.com/3dyonic/open-ux"') >= 2
-    assert 'id="get-key"' in html
+    assert 'class="nav-github" href="https://github.com/3dyonic/open-ux" aria-label="GitHub">' in html
+    assert 'viewBox="0 0 16 16"' in html
+    assert 'width="16" height="16"' in html
+    assert 'fill="currentColor"' in html
+    assert "width: 24px" in html
+    assert "height: 24px" in html
+    assert ".nav-github:hover" in html
+    assert ".nav-github:focus" in html
+    assert "color: var(--ink)" in html
+    assert 'class="btn btn--primary btn--nav" href="/invite">Get a key</a>' in html
     assert 'href="/invite"' in html
     assert 'href="/register"' not in html
     assert "location.hash === '#register'" in html
@@ -96,14 +127,18 @@ def test_invite_request_page_matches_figma(tmp_env: Path) -> None:
 
     assert "MCP" not in html.split("<title>", 1)[1].split("</title>", 1)[0]
     assert "@media" not in html
-    assert "favicon" not in html.lower()
+    assert '<link rel="icon" href="/logo-mark.svg" type="image/svg+xml">' in html
     assert "og:image" not in html.lower()
 
-    assert 'class="pip"' in html
+    assert 'class="nav-brand" href="/"' in html
+    assert '<img class="mark" src="/logo-mark.svg"' in html
     assert '<span class="wordmark">Open UX</span>' in html
-    assert ">GitHub</a>" in html
+    assert "UNS-44" not in html
+    assert "uns-44" not in html
+    assert 'class="nav-github" href="https://github.com/3dyonic/open-ux" aria-label="GitHub">' in html
     assert 'href="https://github.com/3dyonic/open-ux"' in html
     assert ">Get a key</a>" in html
+    assert 'fill="currentColor"' in html
 
     assert "Invite · waitlist, one key after approve" in html
     assert ">Request access</h1>" in html
@@ -218,10 +253,15 @@ def test_readme_embeds_relative_hero() -> None:
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
     assert readme.startswith("# Open UX\n")
     assert "MCP" not in readme.split("\n", 1)[0]
-    assert "![Open UX: catalog to audit flow](docs/readme-hero.svg)" in readme
+    assert "![Open UX](docs/readme-hero.svg)" in readme
     assert "[docs/LANDING.md](docs/LANDING.md)" not in readme
     assert "pip install -e \"packages/mcp[dev]\"" in readme
     assert "python -m pytest" in readme
+    assert "open-ux.dev" in readme
+    assert "list_guidelines" in readme
+    assert "[MIT](LICENSE)" in readme
+    assert "UNS-" not in readme
+    assert "Apple HIG" not in readme
 
 
 def test_designer_landing_craft_is_not_in_the_public_repo() -> None:
