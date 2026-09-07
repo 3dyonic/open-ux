@@ -121,10 +121,10 @@ def test_pointer_docs_exist_and_stay_thin() -> None:
         assert "https://open-ux.dev/mcp" in text
         assert "jobs=" in text
         assert "uxmcp_" in text or "OPEN_UX_API_KEY" in text
-        assert "/critique" not in text
         assert "pass_when" not in text
         assert "forms.field_labels" not in text
         for card_id in CARD_IDS:
             # Root pointers must not duplicate the full routing table.
             if path.name in {"AGENTS.md", "CLAUDE.md"}:
                 assert card_id not in text
+    assert not (COMMANDS / "critique.md").exists()
