@@ -18,6 +18,7 @@ from open_ux.auth import (
     redeem_invite,
     request_invite,
 )
+from open_ux import __version__
 from open_ux.catalog import EMPTY_NOTE, get_by_id, list_index, load_catalog
 from open_ux.catalog_page import (
     render_catalog_list,
@@ -136,7 +137,7 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             "Leaf ids and Surfaces are not needs. "
             "If the catalog is empty, return empty; do not invent rules."
         ),
-        version="0.1.0",
+        version=__version__,
         website_url="https://github.com/3dyonic/open-ux",
         auth=auth,
     )

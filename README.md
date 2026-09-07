@@ -43,17 +43,25 @@ There is no server-side LLM. One shared catalog for every caller — an account 
 
 Tools return **401** without a key.
 
-### Run locally
+### Self-host
+
+```bash
+pip install open-ux
+python -m open_ux validate-catalog
+python -m open_ux stdio
+OPEN_UX_MODE=hosted python -m open_ux http
+```
+
+Browse the local site at `http://127.0.0.1:8080/catalog`. Point MCP clients at local stdio, or at hosted `/mcp` with a `uxmcp_` key.
+
+### Contribute from this repo
 
 ```bash
 python -m venv .venv && source .venv/bin/activate
 pip install -e "packages/mcp[dev]"
 python -m open_ux validate-catalog
 python -m open_ux stdio
-OPEN_UX_MODE=hosted python -m open_ux http
 ```
-
-Browse the local site at `http://127.0.0.1:8080/catalog`.
 
 ### Tests
 
