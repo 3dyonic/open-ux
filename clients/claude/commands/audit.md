@@ -1,5 +1,11 @@
 ---
-description: Fetch a cited UX criteria pack for a Situation Card.
+description: Fetch cited UX criteria for a Card or guideline ids. Always scoped. No file. No pass/fail from the host.
 ---
 
-**Must** run `clients/claude/skills/open-ux/scripts/audit.py` with `--jobs` or `--guideline-ids`. Do not improvise the wire. Criteria pack only. No file. No host pass or fail. Host narrates. Example: `/audit design_a_form`. Do not send a file.
+`$ARGUMENTS` is a Card id, `jobs=<card_id>`, container alias, or `--guideline-ids`.
+
+```
+python3 skills/open-ux/scripts/audit.py $ARGUMENTS
+```
+
+No file. No pass/fail. Print the criteria pack. If empty, say so. Do not invent rules.

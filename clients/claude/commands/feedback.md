@@ -1,5 +1,11 @@
 ---
-description: Feedback container — toast, empty, 404, hard error.
+description: Audit the feedback container (toast, empty, 404, hard error) via the open-ux skill.
 ---
 
-Pick `compose_feedback` from the skill routing table (not a script). Then **must** audit via `clients/claude/skills/open-ux/scripts/audit.py --jobs compose_feedback`. Do not send a file.
+Same skill (`open-ux`). Default Card: `compose_feedback`. `$ARGUMENTS` may be `feedback`.
+
+```
+python3 skills/open-ux/scripts/audit.py --jobs ${ARGUMENTS:-compose_feedback}
+```
+
+No file. No pass/fail. Do not load an `open-ux-feedback` package.
