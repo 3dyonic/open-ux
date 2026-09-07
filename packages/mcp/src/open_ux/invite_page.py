@@ -328,7 +328,7 @@ def render_invite_request(*, consent: str | None = None) -> str:
       <form id="invite-request" method="post" action="/invite/request" novalidate>
         <div class="field">
           <label for="email">Email</label>
-          <input class="field__input" id="email" name="email" type="email" autocomplete="email" placeholder="you@studio.com" aria-describedby="email-error">
+          <input class="field__input" id="email" name="email" type="email" autocomplete="email" inputmode="email" maxlength="254" spellcheck="false" autocapitalize="none" placeholder="you@studio.com" aria-describedby="email-error">
         </div>
         <p class="helper" id="email-error">Enter a valid email to request an invite.</p>
         <button class="btn btn--primary" type="submit">Request access</button>
@@ -338,7 +338,7 @@ def render_invite_request(*, consent: str | None = None) -> str:
     </div>
 """,
     r"""
-    const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+    const EMAIL_RE = /^[a-z0-9](?:[a-z0-9._+-]{0,62}[a-z0-9])?@(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}$/;
     const DEFAULT_SUB = "Join the waitlist. We email a one-time redeem when you are approved.";
     const ERROR_SUB = "We couldn’t add you to the waitlist. Check the email and try again.";
 
@@ -372,7 +372,7 @@ def render_invite_request(*, consent: str | None = None) -> str:
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const email = emailInput.value;
+      const email = emailInput.value.trim().toLowerCase();
       if (!isValidEmail(email)) {
         showError();
         return;
@@ -421,7 +421,7 @@ REDEEM_HTML = _page(
       <form id="invite-redeem" method="post" action="/invite/redeem" novalidate>
         <div class="field">
           <label for="token">Invite token</label>
-          <input class="field__input" id="token" name="token" type="text" autocomplete="off" spellcheck="false" placeholder="inv_••••••••••••" aria-describedby="token-error">
+          <input class="field__input" id="token" name="token" type="text" autocomplete="off" spellcheck="false" autocapitalize="none" maxlength="68" placeholder="inv_••••••••••••" aria-describedby="token-error">
         </div>
         <p class="helper" id="token-error">Invite invalid or already used. Request a new one if needed.</p>
         <button class="btn btn--primary" type="submit">Redeem</button>
@@ -439,6 +439,7 @@ REDEEM_HTML = _page(
     </div>
 """,
     r"""
+    const TOKEN_RE = /^inv_[A-Za-z0-9_-]{16,64}$/;
     const MASK = "uxmcp_" + "\u2022".repeat(16);
     const DEFAULT_SUB = "Paste your invite token, or open the link from your email.";
     const ERROR_SUB = "This invite isn’t valid. It may be used, expired, or mistyped.";
@@ -489,7 +490,7 @@ REDEEM_HTML = _page(
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       const token = tokenInput.value.trim();
-      if (!token) {
+      if (!TOKEN_RE.test(token)) {
         showError();
         return;
       }

@@ -15,6 +15,7 @@ from open_ux.auth import (
     HashedKeyVerifier,
     approve_invite,
     hash_key,
+    normalize_email,
     redeem_invite,
     request_invite,
 )
@@ -46,8 +47,57 @@ from open_ux.situations import (
     list_situations as run_list_situations,
     suggest_situations as run_suggest_situations,
 )
-from open_ux.settings import Settings
+from open_ux.settings import (
+    INVITE_REDEEM_RATE_PER_DAY,
+    INVITE_REDEEM_RATE_PER_MINUTE,
+    INVITE_REQUEST_RATE_PER_DAY,
+    INVITE_REQUEST_RATE_PER_MINUTE,
+    Settings,
+)
 from open_ux.store import get_store
+
+INVITE_HTML_HEADERS = {
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Content-Security-Policy": (
+        "default-src 'self'; "
+        "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; "
+        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+        "font-src https://fonts.gstatic.com; "
+        "img-src 'self' https://www.googletagmanager.com; "
+        "connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com; "
+        "frame-src https://www.googletagmanager.com; "
+        "object-src 'none'; "
+        "base-uri 'self'; "
+        "form-action 'self'"
+    ),
+}
+
+
+def _invite_html(content: str, *, status_code: int = 200) -> HTMLResponse:
+    return HTMLResponse(content, status_code=status_code, headers=INVITE_HTML_HEADERS)
+
+
+def _client_ip(request: Request) -> str:
+    client = request.client
+    return client.host if client and client.host else "unknown"
+
+
+def _invite_allowed(
+    request: Request,
+    store,
+    bucket: str,
+    *,
+    per_minute: int,
+    per_day: int,
+) -> bool:
+    ok, _window = store.consume_rate(
+        f"{bucket}:{_client_ip(request)}",
+        per_minute=per_minute,
+        per_day=per_day,
+    )
+    return ok
 
 
 def _consent_cookie(request: Request) -> str | None:
@@ -101,13 +151,22 @@ def _admin_authorized(request: Request, settings: Settings) -> bool:
 
 
 async def _waitlist_request(request: Request, *, settings: Settings, store) -> Response:
+    if not _invite_allowed(
+        request,
+        store,
+        "invite:request",
+        per_minute=INVITE_REQUEST_RATE_PER_MINUTE,
+        per_day=INVITE_REQUEST_RATE_PER_DAY,
+    ):
+        return JSONResponse(
+            {"error": "Enter a valid email to request an invite."},
+            status_code=429,
+        )
     try:
         body = await request.json()
     except Exception:
         body = {}
-    email = ""
-    if isinstance(body, dict):
-        email = str(body.get("email") or "")
+    email = body.get("email") if isinstance(body, dict) else ""
     try:
         normalized = request_invite(email, settings=settings, store=store)
     except AuthError:
@@ -403,7 +462,7 @@ def create_mcp(*, hosted: bool) -> FastMCP:
 
     @mcp.custom_route("/invite", methods=["GET"])
     async def invite_request_page(request: Request) -> Response:
-        return HTMLResponse(render_invite_request(consent=_consent_cookie(request)))
+        return _invite_html(render_invite_request(consent=_consent_cookie(request)))
 
     @mcp.custom_route("/invite/request", methods=["POST"])
     async def invite_request_route(request: Request) -> Response:
@@ -416,24 +475,33 @@ def create_mcp(*, hosted: bool) -> FastMCP:
 
     @mcp.custom_route("/invite/requested", methods=["GET"])
     async def invite_requested_page(_request: Request) -> Response:
-        return HTMLResponse(REQUESTED_HTML)
+        return _invite_html(REQUESTED_HTML)
 
     @mcp.custom_route("/invite/redeem", methods=["GET", "POST"])
     async def invite_redeem_route(request: Request) -> Response:
         if request.method == "GET":
-            return HTMLResponse(REDEEM_HTML)
+            return _invite_html(REDEEM_HTML)
         if not hosted:
             return JSONResponse(
                 {"error": "Invites are hosted-only. Self-host stdio needs no key."},
                 status_code=400,
             )
+        if not _invite_allowed(
+            request,
+            store,
+            "invite:redeem",
+            per_minute=INVITE_REDEEM_RATE_PER_MINUTE,
+            per_day=INVITE_REDEEM_RATE_PER_DAY,
+        ):
+            return JSONResponse(
+                {"error": "Invite invalid or already used. Request a new one if needed."},
+                status_code=429,
+            )
         try:
             body = await request.json()
         except Exception:
             body = {}
-        token = ""
-        if isinstance(body, dict):
-            token = str(body.get("token") or "")
+        token = body.get("token") if isinstance(body, dict) else ""
         try:
             issued = redeem_invite(token, settings=settings, store=store)
         except AuthError as exc:
@@ -465,9 +533,7 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             body = await request.json()
         except Exception:
             body = {}
-        email = ""
-        if isinstance(body, dict):
-            email = str(body.get("email") or "")
+        email = body.get("email") if isinstance(body, dict) else ""
         try:
             issued = approve_invite(email, settings=settings, store=store)
         except AuthError as exc:
@@ -501,14 +567,14 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             body = await request.json()
         except Exception:
             body = {}
-        email = str((body or {}).get("email") or "")
-        key = str((body or {}).get("key") or "")
-        from open_ux.auth import hash_key, normalize_email
-
+        email = body.get("email") if isinstance(body, dict) else ""
+        key = body.get("key") if isinstance(body, dict) else ""
         try:
             normalized = normalize_email(email)
         except AuthError as exc:
             return JSONResponse({"error": str(exc)}, status_code=400)
+        if not isinstance(key, str):
+            return JSONResponse({"error": "Email and key do not match."}, status_code=401)
         digest = hash_key(key, settings.pepper)
         row = store.lookup_key(digest)
         if not row or row["email"] != normalized:
