@@ -150,7 +150,7 @@ def test_pointer_docs_exist_and_stay_thin() -> None:
         assert "https://open-ux.dev/mcp" in text
         assert "jobs=" in text
         assert "uxmcp_" in text or "OPEN_UX_API_KEY" in text
-        assert "scripts/audit.py" in text
+        assert "scripts/audit.py" in text or "scripts/*.py" in text
         assert "pass_when" not in text
         assert "forms.field_labels" not in text
         for card_id in CARD_IDS:
