@@ -4,10 +4,12 @@ Connect and tools only. The routing table lives in [`clients/claude/skills/open-
 
 ## Connect
 
-Hosted or download the package — same tools, same Cards.
+`pip install` the package, or hosted — same tools, same Cards.
 
+- **Package** (local): `pip install open-ux`, then `python -m open_ux stdio` (console script: `open-ux`). Same catalog. No invite. Telemetry off.
 - **Hosted** (shared live catalog): `https://open-ux.dev/mcp` with bearer `uxmcp_` (`OPEN_UX_API_KEY`). Invite at [open-ux.dev/invite](https://open-ux.dev/invite).
-- **Package** (local): clone [github.com/3dyonic/open-ux](https://github.com/3dyonic/open-ux) (MIT), `pip install -e "packages/mcp[dev]"`, then `python -m open_ux stdio`. Same catalog. No invite. Telemetry off.
+
+Contributors: clone the repo and `pip install -e "packages/mcp[dev]"`.
 
 Plugin metadata: [`clients/claude/.claude-plugin/plugin.json`](clients/claude/.claude-plugin/plugin.json) + [`clients/claude/.mcp.json`](clients/claude/.mcp.json). One skill package: `open-ux`.
 
@@ -15,7 +17,7 @@ Plugin metadata: [`clients/claude/.claude-plugin/plugin.json`](clients/claude/.c
 
 Fully qualified: `Open-UX:list_situations`, `Open-UX:get_situation`, `Open-UX:suggest_situations`, `Open-UX:list_guidelines`, `Open-UX:search_guidelines`, `Open-UX:get_guideline`, `Open-UX:audit`.
 
-Scope `audit` with `jobs=` (or `forms` / `actions` / `feedback`) or `guideline_ids`. The host returns cited criteria, not pass or fail.
+Scope `audit` with `jobs=` (or `forms` / `actions` / `feedback`) or `guideline_ids`. The host returns cited criteria, not pass or fail. `/list` `/get` / map / cite stay on tools.
 
 A local helper `scripts/mcp_call.py` is available for humans and CI. The product is the hosted tools.
 
