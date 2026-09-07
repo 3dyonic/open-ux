@@ -128,3 +128,18 @@ def test_pointer_docs_exist_and_stay_thin() -> None:
             if path.name in {"AGENTS.md", "CLAUDE.md"}:
                 assert card_id not in text
     assert not (COMMANDS / "critique.md").exists()
+
+
+def test_connect_offers_hosted_or_package() -> None:
+    paths = (
+        SKILL,
+        ROOT / "AGENTS.md",
+        ROOT / "CLAUDE.md",
+        ROOT / "clients" / "claude" / "README.md",
+    )
+    for path in paths:
+        text = path.read_text(encoding="utf-8")
+        assert "https://open-ux.dev/mcp" in text
+        assert "github.com/3dyonic/open-ux" in text
+        assert "python -m open_ux stdio" in text
+        assert "download" in text.lower() or "package" in text.lower()

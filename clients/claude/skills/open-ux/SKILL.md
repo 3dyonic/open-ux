@@ -10,8 +10,7 @@ description: >-
   do not send a file. Returns cited criteria, not pass or fail.
   home/cart/checkout are context, not ids. Use Open-UX:suggest_situations only
   if the task is a vague surface or pasted UI. Cite via
-  Open-UX:search_guidelines or Open-UX:get_guideline. Hosted: uxmcp_ bearer.
-  Self-host stdio: no key.
+  Open-UX:search_guidelines or Open-UX:get_guideline. Hosted (live catalog): uxmcp_ bearer. Or download the package (stdio, no key).
 ---
 
 # Open UX
@@ -37,8 +36,10 @@ Sibling files cost nothing until you read them.
 
 ## Connect
 
-1. Hosted: `https://open-ux.dev/mcp` + bearer `uxmcp_` in client settings (`OPEN_UX_API_KEY`). Self-host stdio needs no key (`python -m open_ux stdio`).
-2. If hosted and unauthenticated, tell the human to request an invite on the hosted `/invite` page (landing **Get a key**). Do not invent a key.
+Hosted or download the package — same tools, same Cards.
+
+- **Hosted** (shared live catalog): `https://open-ux.dev/mcp` + bearer `uxmcp_` (`OPEN_UX_API_KEY`). Request an invite at `/invite` (landing **Get a key**).
+- **Package** (local): clone [github.com/3dyonic/open-ux](https://github.com/3dyonic/open-ux) (MIT), `pip install -e "packages/mcp[dev]"`, then `python -m open_ux stdio`. Same catalog. No invite. Telemetry off. Optional: `python -m open_ux validate-catalog`.
 
 ## Compose path
 

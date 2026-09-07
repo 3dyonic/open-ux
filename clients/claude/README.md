@@ -5,7 +5,7 @@ Subtitle: cited UX rules agents audit against / shared cited guidelines
 
 Do not put “MCP” in the marketplace / plugin title or landing H1.
 
-Connect: hosted `https://open-ux.dev/mcp` + `uxmcp_` bearer (`OPEN_UX_API_KEY`), or stdio. Registry listing is after proof.
+Connect: hosted `https://open-ux.dev/mcp` + `uxmcp_` bearer (`OPEN_UX_API_KEY`) for the shared live catalog, or download the package from [github.com/3dyonic/open-ux](https://github.com/3dyonic/open-ux) and run `python -m open_ux stdio` (no key). Registry listing is after proof.
 
 One skill package: `skills/open-ux`. Offerings compose / review / map / cite live in that skill — not `open-ux-forms` / `open-ux-actions` / `open-ux-feedback`.
 
