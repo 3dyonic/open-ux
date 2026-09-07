@@ -4,13 +4,15 @@ Same connect as [`AGENTS.md`](AGENTS.md). Skill and commands live in `clients/cl
 
 ## Connect
 
-- Hosted MCP: `https://open-ux.dev/mcp` + `Authorization: Bearer uxmcp_…` (`OPEN_UX_API_KEY`).
-- Self-host: `OPEN_UX_URL` or `python -m open_ux stdio` (no key).
+`pip install` the package, or hosted — same tools, same Cards.
 
-If hosted returns 401, point the human at `/invite`. Do not mint a key.
+- **Package** (local): `pip install open-ux`, then `python -m open_ux stdio` (console script: `open-ux`). Same catalog. No invite. Telemetry off.
+- **Hosted** (shared live catalog): `https://open-ux.dev/mcp` + `Authorization: Bearer uxmcp_…` (`OPEN_UX_API_KEY`). Invite at `/invite`.
+
+Contributors: clone the repo and `pip install -e "packages/mcp[dev]"`.
 
 ## Use
 
-One skill: `open-ux`. Commands: `/list` `/get` `/audit`, aliases `/forms` `/actions` `/feedback`. They run `skills/open-ux/scripts/audit.py` (and get/list/suggest) against MCP.
+One skill: `open-ux`. Commands: `/list` `/get` `/audit`, aliases `/forms` `/actions` `/feedback` — short prompts that call `Open-UX:*` tools.
 
-Always scope `audit` (`jobs=` or `--guideline-ids`). No file. No host pass/fail. Surfaces (`home` / `cart` / `checkout`) are context, not ids.
+Scope `Open-UX:audit` (`jobs=` or `guideline_ids`). Surfaces (`home` / `cart` / `checkout`) are context, not ids.
