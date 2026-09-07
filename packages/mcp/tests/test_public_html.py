@@ -12,6 +12,7 @@ from open_ux.public_html import (
     FAVICON_PATH,
     LANDING_DESCRIPTION,
     LANDING_TITLE,
+    PAGE_SHELL_CSS,
     PRIVACY_DESCRIPTION,
     PRIVACY_TITLE,
     ROBOTS_TXT,
@@ -224,3 +225,35 @@ def test_public_pages_have_oss_footer_strip(live_catalog: Path) -> None:
             json={"email": "ada@example.com", "key": "uxmcp_nope"},
         )
         assert strip not in account.text
+
+
+def test_public_pages_pin_footer_stack(live_catalog: Path) -> None:
+    public_paths = ("/", "/catalog", f"/catalog/{ANT_SEED}", "/invite", "/privacy")
+    assert "min-height: 100vh" in PAGE_SHELL_CSS
+    assert "display: flex" in PAGE_SHELL_CSS
+    assert "flex-direction: column" in PAGE_SHELL_CSS
+    assert "flex: 1" in PAGE_SHELL_CSS
+    with _client() as client:
+        for path in public_paths:
+            html = client.get(path).text
+            css = html.split("<style>", 1)[1].split("</style>", 1)[0]
+            assert PAGE_SHELL_CSS in css, path
+            assert "<main" in html, path
+            assert "</main>" in html, path
+            assert 'class="footer"' in html, path
+            main_end = html.index("</main>")
+            footer_at = html.index('class="footer"')
+            assert main_end < footer_at, path
+            footer_css = css.split(".footer {", 1)[1].split("}", 1)[0]
+            assert "position: fixed" not in footer_css, path
+            if path == "/":
+                community_at = html.index('class="cta-band"')
+                assert main_end < community_at < footer_at
+                between = html[community_at:footer_at]
+                assert ">Join the community</h2>" in between
+                assert "View repo →" in between
+                assert 'class="hero"' not in between
+            else:
+                assert 'class="cta-band"' not in html, path
+                after_main = html[main_end:footer_at]
+                assert ">Join the community</h2>" not in after_main, path

@@ -16,6 +16,7 @@ from open_ux.public_html import (
     NAV_BRAND_HTML,
     NAV_GITHUB_HTML,
     OSS_FOOTER_CSS,
+    PAGE_SHELL_CSS,
     head_meta,
     public_consent_footer,
     public_gtm_head,
@@ -421,7 +422,7 @@ _CSS = """
       font-size: 16px;
       color: var(--muted);
     }
-""" + MARK_CSS + CONSENT_CSS + OSS_FOOTER_CSS
+""" + MARK_CSS + CONSENT_CSS + OSS_FOOTER_CSS + PAGE_SHELL_CSS
 
 
 def _e(value: Any) -> str:

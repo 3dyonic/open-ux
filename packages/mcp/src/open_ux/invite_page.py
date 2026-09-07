@@ -13,6 +13,7 @@ from open_ux.public_html import (
     NAV_BRAND_HTML,
     NAV_GITHUB_HTML,
     OSS_FOOTER_CSS,
+    PAGE_SHELL_CSS,
     public_consent_footer,
     public_gtm_head,
     public_gtm_noscript,
@@ -38,9 +39,6 @@ _CSS = """
     html, body { height: 100%; }
     body {
       margin: 0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
       font-family: var(--sans);
       line-height: 1.5;
       color: var(--ink);
@@ -76,7 +74,6 @@ _CSS = """
       text-decoration: none;
     }
     .main {
-      flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -289,6 +286,7 @@ def _page(
   <style>
 """
         + _CSS
+        + PAGE_SHELL_CSS
         + (CONSENT_CSS if consent_gate else "")
         + (OSS_FOOTER_CSS if consent_gate else "")
         + """

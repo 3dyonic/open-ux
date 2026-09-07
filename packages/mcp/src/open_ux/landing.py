@@ -10,6 +10,7 @@ from open_ux.public_html import (
     NAV_BRAND_HTML,
     NAV_GITHUB_HTML,
     OSS_FOOTER_CSS,
+    PAGE_SHELL_CSS,
     head_meta,
     public_consent_footer,
     public_gtm_head,
@@ -418,6 +419,7 @@ def render_landing(*, consent: str | None = None) -> str:
         + MARK_CSS
         + CONSENT_CSS
         + OSS_FOOTER_CSS
+        + PAGE_SHELL_CSS
         + """
   </style>
 </head>
@@ -437,6 +439,7 @@ def render_landing(*, consent: str | None = None) -> str:
       <a class="btn btn--primary btn--nav" href="/invite">Get a key</a>
     </div>
   </header>
+  <main>
   <section class="hero">
     <div class="hero-copy">
       <p class="kicker"><span class="pip" aria-hidden="true"></span>Cited catalog · agents audit · no vibes</p>
@@ -507,6 +510,7 @@ def render_landing(*, consent: str | None = None) -> str:
       </article>
     </div>
   </section>
+  </main>
   <section class="cta-band">
     <div class="cta-copy">
       <h2>Join the community</h2>

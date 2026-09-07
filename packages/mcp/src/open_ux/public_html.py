@@ -222,6 +222,18 @@ OSS_FOOTER_CSS = """
       color: var(--ink, #1F1B16);
     }
 """
+# Sticky footer: short pages pin the footer stack to the viewport bottom.
+# Empty space lives in main (above the stack), never below the footer.
+PAGE_SHELL_CSS = """
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    main {
+      flex: 1;
+    }
+"""
 ROBOTS_TXT = """User-agent: *
 Allow: /
 Allow: /catalog
@@ -567,6 +579,7 @@ def render_privacy_page(*, consent: str | None = None) -> str:
         + MARK_CSS
         + CONSENT_CSS
         + OSS_FOOTER_CSS
+        + PAGE_SHELL_CSS
         + """
   </style>
 </head>
