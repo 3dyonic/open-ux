@@ -399,15 +399,29 @@ def test_catalog_type_scale_matches_figma(live_catalog: Path) -> None:
     with _client() as client:
         listed = client.get("/catalog").text
         rule = client.get(f"/catalog/{NNG_SEED}").text
-    assert re.search(r"h1 \{[^}]*font-size: 36px", listed, re.S)
-    assert re.search(r"\.row-id \{[^}]*font-size: 12px", listed, re.S)
-    assert re.search(r"\.row-dot, \.row-path \{[^}]*font-size: 12px", listed, re.S)
-    assert re.search(r"\.row-name \{[^}]*font-size: 13px", listed, re.S)
-    assert re.search(r"\.chip \{[^}]*font-size: 13px", listed, re.S)
-    assert not re.search(r"\.catalog-row \{[^}]*font-size: 12px", listed, re.S)
-    assert re.search(r"\.tree-item \{[^}]*font-size: 12px", rule, re.S)
-    assert re.search(r"\.tree-item--rule \{[^}]*font-size: 13px", rule, re.S)
-    assert re.search(r"\.rule-id \{[^}]*font-size: 12px", rule, re.S)
+    css = listed.split("<style>", 1)[1].split("</style>", 1)[0]
+    for selector, body in re.findall(r"([^{}]+)\{([^}]+)\}", css):
+        sizes = [int(n) for n in re.findall(r"font-size:\s*(\d+)px", body)]
+        if not sizes:
+            continue
+        decorative = any(
+            token in selector for token in (".pip", ".tree-pip", ".tree-caret")
+        )
+        if decorative:
+            continue
+        for n in sizes:
+            assert n >= 14, f"{selector.strip()} font-size {n}px is below floor 14"
+    assert re.search(r"h1 \{[^}]*font-size: 28px", listed, re.S)
+    assert re.search(r"\.row-name \{[^}]*font-size: 16px", listed, re.S)
+    assert re.search(r"\.row-id \{[^}]*font-size: 14px", listed, re.S)
+    assert re.search(r"\.row-dot, \.row-path \{[^}]*font-size: 14px", listed, re.S)
+    assert re.search(r"\.chip \{[^}]*font-size: 14px", listed, re.S)
+    assert re.search(r"\.lede \{[^}]*font-size: 16px", listed, re.S)
+    assert re.search(r"\.rule-name \{[^}]*font-size: 28px", rule, re.S)
+    assert re.search(r"\.rule-id \{[^}]*font-size: 14px", rule, re.S)
+    assert re.search(r"\.tree-item \{[^}]*font-size: 14px", rule, re.S)
+    assert re.search(r"\.tree-item--rule \{[^}]*font-size: 16px", rule, re.S)
+
 
 
 def test_catalog_tree_carets_toggle_and_rules_link(live_catalog: Path) -> None:

@@ -45,6 +45,7 @@ _CSS = """
     body {
       margin: 0;
       font-family: var(--sans);
+      font-size: 16px;
       line-height: 1.5;
       color: var(--ink);
       background: var(--paper);
@@ -138,7 +139,7 @@ _CSS = """
     }
     h1 {
       margin: 0;
-      font-size: 36px;
+      font-size: 28px;
       font-weight: 700;
       line-height: normal;
       color: var(--ink);
@@ -146,7 +147,7 @@ _CSS = """
     .shown {
       margin: 0;
       font-family: var(--mono);
-      font-size: 13px;
+      font-size: 14px;
       color: var(--muted);
     }
     .lede {
@@ -161,7 +162,7 @@ _CSS = """
       width: 100%;
     }
     .field label {
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 500;
       color: var(--ink);
     }
@@ -188,7 +189,7 @@ _CSS = """
       background: var(--card);
       color: var(--ink);
       font-family: inherit;
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 500;
       cursor: pointer;
     }
@@ -225,19 +226,19 @@ _CSS = """
     .pager-meta {
       margin: 0;
       font-family: var(--mono);
-      font-size: 13px;
+      font-size: 14px;
       color: var(--muted);
     }
     .row-id {
       font-family: var(--mono);
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 500;
       color: var(--pip);
       text-decoration: underline;
       flex-shrink: 0;
     }
     .row-dot, .row-path {
-      font-size: 12px;
+      font-size: 14px;
       color: var(--muted);
       flex-shrink: 0;
     }
@@ -247,7 +248,7 @@ _CSS = """
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      font-size: 13px;
+      font-size: 16px;
       color: var(--ink);
     }
     .row-chevron {
@@ -285,7 +286,7 @@ _CSS = """
       padding: 6px 8px;
       border-radius: var(--radius);
       font-family: inherit;
-      font-size: 12px;
+      font-size: 14px;
       color: var(--ink);
       background: none;
       border: none;
@@ -295,7 +296,7 @@ _CSS = """
     }
     .tree-item--card { padding-left: 20px; }
     .tree-item--facet { padding-left: 32px; color: var(--muted); font-weight: 500; }
-    .tree-item--rule { padding-left: 44px; font-size: 13px; cursor: pointer; }
+    .tree-item--rule { padding-left: 44px; font-size: 16px; cursor: pointer; }
     .tree-item--container { font-weight: 600; }
     .tree-item.is-active {
       background: var(--pip-soft);
@@ -324,7 +325,7 @@ _CSS = """
       padding: 40px 48px 48px 40px;
     }
     .back {
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 500;
       color: var(--pip);
       text-decoration: underline;
@@ -332,7 +333,7 @@ _CSS = """
     .crumb-path {
       margin: 0;
       font-family: var(--mono);
-      font-size: 11px;
+      font-size: 14px;
       color: var(--muted);
     }
     .eyebrow {
@@ -342,7 +343,7 @@ _CSS = """
     }
     .eyebrow-path {
       margin: 0;
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 500;
       color: var(--muted);
     }
@@ -350,20 +351,20 @@ _CSS = """
       padding: 3px 8px;
       border: 1px solid var(--line);
       border-radius: 999px;
-      font-size: 11px;
+      font-size: 14px;
       font-weight: 500;
       color: var(--muted);
     }
     .rule-name {
       margin: 0;
-      font-size: 24px;
+      font-size: 28px;
       font-weight: 600;
       color: var(--ink);
     }
     .rule-id {
       margin: 0;
       font-family: var(--mono);
-      font-size: 12px;
+      font-size: 14px;
       color: var(--muted);
     }
     .rule-text {
@@ -374,7 +375,7 @@ _CSS = """
     .block { display: flex; flex-direction: column; gap: 8px; }
     .block-label {
       margin: 0;
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 500;
       color: var(--muted);
     }
@@ -382,7 +383,7 @@ _CSS = """
     .block-label--not { color: var(--danger); }
     .block-body {
       margin: 0;
-      font-size: 15px;
+      font-size: 16px;
       line-height: 24px;
       color: var(--ink);
     }
@@ -402,7 +403,7 @@ _CSS = """
       display: inline-flex;
       padding: 4px 10px;
       border-radius: 999px;
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 500;
       color: #fff;
     }
@@ -410,17 +411,17 @@ _CSS = """
     .badge--fail { background: var(--danger); }
     .cite-list { display: flex; flex-direction: column; gap: 10px; }
     .cite-row { display: flex; flex-direction: column; gap: 2px; }
-    .cite-source { margin: 0; font-size: 13px; color: var(--ink); }
+    .cite-source { margin: 0; font-size: 16px; color: var(--ink); }
     .cite-url {
       margin: 0;
       font-family: var(--mono);
-      font-size: 11px;
+      font-size: 14px;
       color: var(--pip);
       word-break: break-all;
     }
     .empty, .not-found {
       margin: 0;
-      font-size: 15px;
+      font-size: 16px;
       color: var(--muted);
     }
 """
