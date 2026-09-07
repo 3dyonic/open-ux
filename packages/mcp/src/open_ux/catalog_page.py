@@ -376,8 +376,8 @@ _CSS = """
     .block { display: flex; flex-direction: column; gap: 8px; }
     .block-label {
       margin: 0;
-      font-size: 14px;
-      font-weight: 500;
+      font-size: 16px;
+      font-weight: 600;
       color: var(--muted);
     }
     .block-label--use { color: var(--success); }
