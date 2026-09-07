@@ -2,4 +2,4 @@
 description: Forms container — fields, labels, validation, sign-in.
 ---
 
-Pick the Card from the skill routing table (not a script): `design_a_form`, `handle_form_errors`, or `compose_sign_in`. Then **must** audit via `clients/claude/skills/open-ux/scripts/audit.py --jobs <card_id>`. Do not send a file.
+Same `open-ux` skill. Example: signup fields → `design_a_form` then `Open-UX:audit` with `jobs=design_a_form`. Validation → `handle_form_errors`. Login → `compose_sign_in`. We return the pack. Do not send a file.
