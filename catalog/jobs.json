@@ -325,7 +325,11 @@
           "leaves": [
             {
               "id": "show_the_password",
-              "guideline_ids": []
+              "guideline_ids": [
+                "govuk.hide-password-by-default-show-toggle",
+                "govuk.avoid-confirm-password-field",
+                "govuk.allow-copy-paste-in-password-fields"
+              ]
             }
           ]
         }

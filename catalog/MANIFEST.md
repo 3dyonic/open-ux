@@ -6,7 +6,7 @@ Layout: `catalog/rules/{category}/{source}/{file}.json`. The harvest prefix is i
 
 Read this map when you need to see what exists. Then call `Open-UX:get_guideline` or open that one file. Do not copy guideline ids into SKILL.md.
 
-200 rules.
+203 rules.
 
 ## Actions
 
@@ -209,6 +209,8 @@ Read this map when you need to see what exists. Then call `Open-UX:get_guideline
 
 ### GOV.UK
 
+- [Allow copy and paste in password fields — GOV.UK](rules/forms/govuk/allow-copy-paste-in-password-fields.json) — `govuk.allow-copy-paste-in-password-fields` · `compose_sign_in`
+- [Avoid a confirm-password field — GOV.UK](rules/forms/govuk/avoid-confirm-password-field.json) — `govuk.avoid-confirm-password-field` · `compose_sign_in`
 - [Calendar control when — GOV.UK](rules/forms/govuk/calendar-control-when.json) — `govuk.calendar-control-when` · `design_a_form`
 - [Character count fieldset legend — GOV.UK](rules/forms/govuk/character-count-fieldset-legend.json) — `govuk.character-count-fieldset-legend` · `design_a_form`
 - [Conditionally reveal related question — GOV.UK](rules/forms/govuk/conditionally-reveal-related-question.json) — `govuk.conditionally-reveal-related-question` · `choose_an_overlay`
@@ -219,6 +221,7 @@ Read this map when you need to see what exists. Then call `Open-UX:get_guideline
 - [Example dates unambiguous order — GOV.UK](rules/forms/govuk/example-dates-unambiguous-order.json) — `govuk.example-dates-unambiguous-order` · `design_a_form`
 - [File upload reuse already uploaded — GOV.UK](rules/forms/govuk/file-upload-reuse-already-uploaded.json) — `govuk.file-upload-reuse-already-uploaded` · `design_a_form`
 - [Four date types — GOV.UK](rules/forms/govuk/four-date-types.json) — `govuk.four-date-types` · `design_a_form`
+- [Hide password by default; show toggle — GOV.UK](rules/forms/govuk/hide-password-by-default-show-toggle.json) — `govuk.hide-password-by-default-show-toggle` · `compose_sign_in`
 - [Item hints one sentence — GOV.UK](rules/forms/govuk/item-hints-one-sentence.json) — `govuk.item-hints-one-sentence` · `design_a_form`
 - [Labels sentence case no colons above — GOV.UK](rules/forms/govuk/labels-sentence-case-no-colons-above.json) — `govuk.labels-sentence-case-no-colons-above` · `design_a_form`
 - [Never auto tab date fields — GOV.UK](rules/forms/govuk/never-auto-tab-date-fields.json) — `govuk.never-auto-tab-date-fields` · `design_a_form`

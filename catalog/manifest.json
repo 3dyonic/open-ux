@@ -1,6 +1,6 @@
 {
   "version": "0.3.0",
-  "count": 200,
+  "count": 203,
   "note": "Auto-generated. Category folder, then source folder. No rule bodies. Agents read this map, then fetch one id.",
   "categories": [
     {
@@ -747,7 +747,7 @@
     {
       "id": "forms",
       "title": "Forms",
-      "count": 93,
+      "count": 96,
       "sources": [
         {
           "id": "ant",
@@ -888,8 +888,20 @@
         {
           "id": "govuk",
           "title": "GOV.UK",
-          "count": 19,
+          "count": 22,
           "rules": [
+            {
+              "id": "govuk.allow-copy-paste-in-password-fields",
+              "name": "Allow copy and paste in password fields — GOV.UK",
+              "card": "compose_sign_in",
+              "path": "rules/forms/govuk/allow-copy-paste-in-password-fields.json"
+            },
+            {
+              "id": "govuk.avoid-confirm-password-field",
+              "name": "Avoid a confirm-password field — GOV.UK",
+              "card": "compose_sign_in",
+              "path": "rules/forms/govuk/avoid-confirm-password-field.json"
+            },
             {
               "id": "govuk.calendar-control-when",
               "name": "Calendar control when — GOV.UK",
@@ -949,6 +961,12 @@
               "name": "Four date types — GOV.UK",
               "card": "design_a_form",
               "path": "rules/forms/govuk/four-date-types.json"
+            },
+            {
+              "id": "govuk.hide-password-by-default-show-toggle",
+              "name": "Hide password by default; show toggle — GOV.UK",
+              "card": "compose_sign_in",
+              "path": "rules/forms/govuk/hide-password-by-default-show-toggle.json"
             },
             {
               "id": "govuk.item-hints-one-sentence",

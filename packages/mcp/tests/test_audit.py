@@ -374,3 +374,15 @@ def test_stratify_facets_exceed_cap_drops_later_facets() -> None:
     assert [row["facet"] for row in head] == [f"f{i}" for i in range(10)]
     assert "f10" not in {row["facet"] for row in head}
     assert "f11" not in {row["facet"] for row in head}
+
+
+def test_compose_sign_in_returns_cited_show_password(live_catalog: Path) -> None:
+    result = audit(_catalog(live_catalog), jobs="compose_sign_in")
+    assert result["total"] >= 1
+    assert result["count"] >= 1
+    ids = {row["id"] for row in result["guidelines"]}
+    assert "govuk.hide-password-by-default-show-toggle" in ids
+    assert "forms.inputs.password_strength_meter" not in ids
+    for row in result["guidelines"]:
+        _assert_pack_row(row)
+        assert row["facet"] == "credentials_are_hard_to_enter"
