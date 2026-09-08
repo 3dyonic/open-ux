@@ -218,8 +218,9 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             "Find a Situation Card with list_situations, get_situation, or "
             "suggest_situations, then get_guideline or audit. "
             "No server LLM. "
-            "audit: say one Card or container as jobs; returns cited rule "
-            "criteria. Does not take a file. Does not return pass or fail. "
+            "audit: say one Card or container as jobs; returns a stratified "
+            "sample of cited rule criteria. query is optional attention. "
+            "Does not take a file. Does not return pass or fail. "
             "Leaf ids and Surfaces are not needs. "
             "If the catalog is empty, return empty; do not invent rules."
         ),
@@ -404,7 +405,8 @@ def create_mcp(*, hosted: bool) -> FastMCP:
     ) -> dict[str, Any]:
         """Say the UX need as one Situation Card or container.
 
-        Returns cited rule criteria. Does not take a file. Does not return pass or fail.
+        jobs= is a stratified Card sample, not every rule. query is optional
+        attention. Returns cited rule criteria. Does not take a file. Does not return pass or fail.
         Required: jobs or guideline_ids. Leaf ids are not needs.
         """
         result = run_audit(

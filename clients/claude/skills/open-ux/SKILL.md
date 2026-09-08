@@ -71,7 +71,7 @@ Reject **crosses containers** — pick the Card the ask actually is.
 Fully qualified `Open-UX:*` names. `/list` `/get` / map / cite stay on tools. Card pick is the table above (judgment).
 
 - `Open-UX:get_situation` — Card when / reject / pointers (not rule bodies)
-- `Open-UX:audit` — `jobs=<card_id>` or `guideline_ids`. The pack.
+- `Open-UX:audit` — `jobs=<card_id>` or `guideline_ids`. Stratified Card sample (not every rule); `query` is optional attention. The pack.
 - Same wire (available, not required): `open-ux audit --jobs <card_id>` or `python3 scripts/audit.py --jobs <card_id>` / `--guideline-ids`. Your choice — the tool or this helper.
 - `Open-UX:list_situations` — Card index; optional `container`
 - `Open-UX:suggest_situations` — vague surface or pasted UI

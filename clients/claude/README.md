@@ -44,7 +44,7 @@ No key; same catalog. Point MCP clients at local stdio, or hosted `https://open-
 
 Compose, review, map, and cite are jobs in `skills/open-ux` — not extra packages.
 
-- **Compose / review** — pick a Card, `Open-UX:get_situation`, then `Open-UX:audit` with `jobs=`
+- **Compose / review** — pick a Card, `Open-UX:get_situation`, then `Open-UX:audit` with `jobs=` (stratified sample; `query` is optional attention)
 - **Map** — `Open-UX:suggest_situations` when the ask is a vague surface
 - **Cite** — `Open-UX:search_guidelines` / `Open-UX:get_guideline`
 

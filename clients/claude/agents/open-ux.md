@@ -50,6 +50,6 @@ Same catalog. No invite. Telemetry off. Point MCP clients at local stdio.
 
 `Open-UX:list_situations`, `Open-UX:get_situation`, `Open-UX:suggest_situations`, `Open-UX:list_guidelines`, `Open-UX:search_guidelines`, `Open-UX:get_guideline`, `Open-UX:audit`.
 
-Scope `audit` (`jobs=` or `guideline_ids`). Surfaces are context, not ids. Leaf ids are not needs.
+Scope `audit` (`jobs=` or `guideline_ids`). `jobs=` is a stratified Card sample; `query` is optional attention. Surfaces are context, not ids. Leaf ids are not needs.
 
 Slash commands `/list` `/get` `/audit` plus aliases `/forms` `/actions` `/feedback` route into this same skill.

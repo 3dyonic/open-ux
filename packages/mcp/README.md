@@ -13,7 +13,7 @@ python -m open_ux stdio
 OPEN_UX_MODE=hosted python -m open_ux http
 ```
 
-The wheel includes the catalog. `validate-catalog` and stdio work without a git checkout.
+The wheel includes the catalog. `validate-catalog` and stdio work without a git checkout. Hosted and pip are the same cited rules after a catalog or package-source change on `master` publishes a patch.
 
 | | Hosted HTTP | Self-host (stdio) |
 | -- | -- | -- |

@@ -333,6 +333,7 @@ async def test_audit_schema_shows_jobs_enum_not_target(live_catalog: Path) -> No
     assert "Does not take a file" in description
     assert "Does not return pass or fail" in description
     assert "Leaf ids are not needs" in description
+    assert "stratified" in description.lower()
 
 
 @pytest.mark.asyncio

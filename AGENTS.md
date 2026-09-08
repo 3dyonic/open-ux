@@ -25,7 +25,7 @@ The authored plugin pack is [`clients/claude/`](clients/claude/). `.cursor` and 
 
 Fully qualified: `Open-UX:list_situations`, `Open-UX:get_situation`, `Open-UX:suggest_situations`, `Open-UX:list_guidelines`, `Open-UX:search_guidelines`, `Open-UX:get_guideline`, `Open-UX:audit`.
 
-Scope `audit` with `jobs=` (or `forms` / `actions` / `feedback`) or `guideline_ids`. The host returns cited criteria, not pass or fail. `/list` `/get` / map / cite stay on tools.
+Scope `audit` with `jobs=` (or `forms` / `actions` / `feedback`) or `guideline_ids`. `jobs=` is a stratified Card sample; `query` is optional attention. The host returns cited criteria, not pass or fail. `/list` `/get` / map / cite stay on tools.
 
 Same wire without a session: `open-ux audit --jobs …` or `scripts/mcp_call.py`. Available, not required. The product is the hosted tools.
 

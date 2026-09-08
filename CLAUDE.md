@@ -25,4 +25,4 @@ Install from this repo: `claude plugin marketplace add 3dyonic/open-ux` then `cl
 
 One skill: `open-ux`. Commands: `/list` `/get` `/audit`, aliases `/forms` `/actions` `/feedback` — short prompts that call `Open-UX:*` tools.
 
-Scope `Open-UX:audit` (`jobs=` or `guideline_ids`). Surfaces (`home` / `cart` / `checkout`) are context, not ids.
+Scope `Open-UX:audit` (`jobs=` or `guideline_ids`). `jobs=` is a stratified Card sample; `query` is optional attention. Surfaces (`home` / `cart` / `checkout`) are context, not ids.

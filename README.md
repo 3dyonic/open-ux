@@ -96,7 +96,7 @@ Cursor uses the same pack (`.cursor-plugin/` + `mcp.json`). Set `OPEN_UX_API_KEY
 | `get_guideline` | Full rule body by id |
 | `audit` | Say the need (`jobs` Card/container or `guideline_ids`); get matching criteria |
 
-`audit` accepts optional `query` and `limit` (default 10, max 50). It does **not** take a file target and does **not** return a host verdict. If nothing matches, you get an empty list and a note.
+`audit` with `jobs=` returns a **stratified sample** of that Card (default 10, max 50) — not every rule on the Card. `query` is optional attention (reorders, never hides the Card). `guideline_ids=` is unchanged. It does **not** take a file and does **not** return a host verdict. An unknown need is empty plus a note; a query that matches nothing still returns the scoped pack.
 
 ## Catalog layout
 
@@ -109,7 +109,7 @@ catalog/
   MANIFEST.md                  human map (no rule bodies)
 ```
 
-Rules are never forked per tenant. Soft size budget ~50–100 KB; hard ceiling ~384 KB. Details: [`catalog/README.md`](catalog/README.md).
+Rules are never forked per tenant. Soft size ~256 KB; hard ceiling ~768 KB. Details: [`catalog/README.md`](catalog/README.md).
 
 ## Repository layout
 

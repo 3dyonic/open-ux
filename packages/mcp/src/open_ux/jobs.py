@@ -122,6 +122,8 @@ JOB_FIELD_DESCRIPTION = (
 
 AUDIT_TOOL_DESCRIPTION = (
     "Say the UX need as one Situation Card or container. "
+    "jobs= is a stratified Card sample, not every rule. "
+    "query is optional attention. "
     "Returns cited rule criteria. "
     "Does not take a file. Does not return pass or fail. "
     "Required: jobs or guideline_ids."

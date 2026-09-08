@@ -119,6 +119,8 @@ def test_skill_routing_table_has_when_and_cross_container_reject() -> None:
     assert "jobs=" in body
     assert "verdict" not in body
     assert "Open-UX:audit" in body
+    assert "stratified Card sample" in body
+    assert "optional attention" in body
     assert "must run" not in body.lower()
     assert "prefer `scripts/audit.py`" not in body
 
@@ -318,3 +320,6 @@ def test_connect_offers_hosted_or_package() -> None:
     assert readme.index("pip install open-ux") < readme.index(
         'pip install -e "packages/mcp[dev]"'
     )
+    assert "stratified" in readme.lower()
+    agents = (ROOT / "AGENTS.md").read_text(encoding="utf-8")
+    assert "stratified Card sample" in agents
