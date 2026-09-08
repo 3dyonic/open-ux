@@ -139,6 +139,11 @@ def test_get_situation_rejects_leaf_and_container(live_catalog: Path) -> None:
     leaf = get_situation("avoid_placeholder_as_label", _tree(live_catalog))
     assert leaf["found"] is False
     assert "Leaf" in leaf["error"]
+    assert "design_a_form" in leaf["error"]
+    step = get_situation("show_step_progress", _tree(live_catalog))
+    assert step["found"] is False
+    assert "build_a_multi_step_flow" in step["error"]
+    assert "design_a_form" not in step["error"]
     container = get_situation("forms_and_input", _tree(live_catalog))
     assert container["found"] is False
     assert "container" in container["error"]
@@ -239,6 +244,7 @@ async def test_situation_tools_live(live_catalog: Path) -> None:
         )
         assert got.data["found"] is False
         assert "Leaf" in got.data["error"]
+        assert "design_a_form" in got.data["error"]
         suggested = await client.call_tool(
             "suggest_situations",
             {"task_text": "add a delete confirmation"},
