@@ -1,11 +1,20 @@
 from __future__ import annotations
 
+from collections import defaultdict
 from typing import Any
 
 from open_ux.catalog import EMPTY_NOTE, Catalog, get_by_id, select_by_jobs
-from open_ux.jobs import DEFAULT_LIMIT, MAX_LIMIT, MISS_NOTE
+from open_ux.jobs import (
+    CARD_IDS,
+    DEFAULT_LIMIT,
+    MAX_LIMIT,
+    MISS_NOTE,
+    JobTree,
+    card_by_id,
+    load_job_tree,
+)
 
-PACK_KEYS = ("id", "title", "name", "rule", "pass_when", "fail_when")
+PACK_KEYS = ("id", "title", "name", "rule", "pass_when", "fail_when", "facet")
 NEED_ERROR = "audit requires jobs or guideline_ids; the full catalog is never run."
 
 
@@ -25,14 +34,12 @@ def _pack(guideline: dict[str, Any]) -> dict[str, Any]:
         "rule": guideline.get("rule") or "",
         "pass_when": list(guideline.get("pass_when") or []),
         "fail_when": list(guideline.get("fail_when") or []),
+        "facet": guideline.get("facet") or "",
     }
 
 
-def _matches_query(guideline: dict[str, Any], query: str | None) -> bool:
-    q = (query or "").strip().lower()
-    if not q:
-        return True
-    blob = " ".join(
+def _query_blob(guideline: dict[str, Any]) -> str:
+    return " ".join(
         [
             str(guideline.get("id") or ""),
             str(guideline.get("title") or ""),
@@ -42,7 +49,21 @@ def _matches_query(guideline: dict[str, Any], query: str | None) -> bool:
             " ".join(guideline.get("fail_when") or []),
         ]
     ).lower()
-    return q in blob
+
+
+def _query_tokens(query: str) -> list[str]:
+    return [part for part in query.strip().lower().split() if len(part) > 1]
+
+
+def _matches_query(guideline: dict[str, Any], query: str | None) -> bool:
+    q = (query or "").strip().lower()
+    if not q:
+        return True
+    blob = _query_blob(guideline)
+    if q in blob:
+        return True
+    tokens = _query_tokens(q)
+    return bool(tokens) and any(token in blob for token in tokens)
 
 
 def _rerank_by_query(
@@ -50,19 +71,112 @@ def _rerank_by_query(
 ) -> tuple[list[dict[str, Any]], bool]:
     """Query narrows attention, never access: rank matches first, drop nothing.
 
-    Returns the full row set (matches before non-matches) and whether at
-    least one row actually matched -- callers use that to decide whether a
-    "query too narrow" note is warranted (see OUX-21, finding #4).
+    Phrase hits (full query in the blob) stay ahead of token-any hits so a
+    two-word query like "action panel" still surfaces that rule first.
+    Token-any is recall for multi-word queries that have no phrase hit
+    (OUX-24). Zero hits fail open (OUX-21).
     """
     q = (query or "").strip()
     if not q:
         return rows, True
-    matched = [g for g in rows if _matches_query(g, q)]
-    if not matched:
+    needle = q.lower()
+    phrase: list[dict[str, Any]] = []
+    token_only: list[dict[str, Any]] = []
+    unmatched: list[dict[str, Any]] = []
+    for row in rows:
+        blob = _query_blob(row)
+        if needle in blob:
+            phrase.append(row)
+        elif _matches_query(row, q):
+            token_only.append(row)
+        else:
+            unmatched.append(row)
+    if not phrase and not token_only:
         return rows, False
-    matched_ids = {id(g) for g in matched}
-    unmatched = [g for g in rows if id(g) not in matched_ids]
-    return matched + unmatched, True
+    return phrase + token_only + unmatched, True
+
+
+def _facet_keys(tree: JobTree) -> list[tuple[str, str]]:
+    keys: list[tuple[str, str]] = []
+    for card_id in CARD_IDS:
+        card = card_by_id(tree, card_id)
+        if card is None:
+            continue
+        for facet in card.facets:
+            keys.append((card.id, facet.id))
+    return keys
+
+
+def _stratify_by_facet(
+    rows: list[dict[str, Any]],
+    tree: JobTree,
+    cap: int,
+) -> list[dict[str, Any]]:
+    """Reorder a Card/container pack so the first `cap` rows cover facets.
+
+    Round-robin: quota pass, then fill in Card facet order (not catalog-file
+    order). Known scaling limit: when len(F) >= cap, take 1 from each of the
+    first `cap` facets; later facets get zero rows in that window (OUX-24).
+    Returns the full set: stratified sample first, leftover in facet order.
+    """
+    if not rows:
+        return []
+    by_key: dict[tuple[str, str], list[dict[str, Any]]] = defaultdict(list)
+    for row in rows:
+        by_key[(str(row.get("card") or ""), str(row.get("facet") or ""))].append(row)
+
+    ordered: list[tuple[str, str]] = []
+    seen: set[tuple[str, str]] = set()
+    for key in _facet_keys(tree):
+        if by_key.get(key) and key not in seen:
+            ordered.append(key)
+            seen.add(key)
+    for key in by_key:
+        if key not in seen:
+            ordered.append(key)
+            seen.add(key)
+
+    facet_count = len(ordered)
+    if facet_count == 0:
+        return list(rows)
+
+    taken: set[int] = set()
+    head: list[dict[str, Any]] = []
+
+    if facet_count >= cap:
+        for key in ordered[:cap]:
+            row = by_key[key][0]
+            head.append(row)
+            taken.add(id(row))
+    else:
+        quota = max(1, cap // facet_count)
+        for key in ordered:
+            take = 0
+            for row in by_key[key]:
+                if take >= quota or len(head) >= cap:
+                    break
+                head.append(row)
+                taken.add(id(row))
+                take += 1
+            if len(head) >= cap:
+                break
+        for key in ordered:
+            if len(head) >= cap:
+                break
+            for row in by_key[key]:
+                if id(row) in taken:
+                    continue
+                head.append(row)
+                taken.add(id(row))
+                if len(head) >= cap:
+                    break
+
+    tail: list[dict[str, Any]] = []
+    for key in ordered:
+        for row in by_key[key]:
+            if id(row) not in taken:
+                tail.append(row)
+    return head + tail
 
 
 def _select_by_need(catalog: Catalog, jobs: str) -> list[dict[str, Any]]:
@@ -122,7 +236,7 @@ def audit(
         rows = found
     else:
         assert job is not None
-        rows = _select_by_need(catalog, job)
+        rows = _stratify_by_facet(_select_by_need(catalog, job), load_job_tree(), cap)
 
     selected, query_matched = _rerank_by_query(rows, query)
 

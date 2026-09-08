@@ -295,7 +295,15 @@ async def test_audit_guideline_ids_only_those_rules(live_catalog: Path) -> None:
         assert "error" not in result
         assert "verdict" not in result
         for row in result["guidelines"]:
-            assert set(row) == {"id", "title", "name", "rule", "pass_when", "fail_when"}
+            assert set(row) == {
+                "id",
+                "title",
+                "name",
+                "rule",
+                "pass_when",
+                "fail_when",
+                "facet",
+            }
 
 
 @pytest.mark.asyncio
@@ -339,4 +347,12 @@ async def test_audit_jobs_returns_criteria(live_catalog: Path) -> None:
         assert "verdict" not in result
         assert "summary" not in result
         row = result["guidelines"][0]
-        assert set(row) == {"id", "title", "name", "rule", "pass_when", "fail_when"}
+        assert set(row) == {
+            "id",
+            "title",
+            "name",
+            "rule",
+            "pass_when",
+            "fail_when",
+            "facet",
+        }
