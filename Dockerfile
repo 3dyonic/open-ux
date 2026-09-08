@@ -3,6 +3,10 @@ WORKDIR /web
 COPY packages/web/package.json packages/web/package-lock.json ./
 RUN npm ci
 COPY packages/web/ ./
+# Vite copies public/. Overlay the package mark so the image does not depend on
+# git symlinks whose targets sit outside this stage.
+COPY packages/mcp/src/open_ux/static/logo-mark.svg ./public/logo-mark.svg
+COPY packages/mcp/src/open_ux/static/logo-mark.svg ./public/favicon.svg
 RUN npm run build
 
 FROM python:3.12-slim AS python-build

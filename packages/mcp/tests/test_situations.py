@@ -247,3 +247,24 @@ async def test_situation_tools_live(live_catalog: Path) -> None:
         assert "protect_destructive_and_leave" in ids
         assert ids == list(CARD_IDS)
         assert not set(ids) & set(LEAF_IDS)
+
+
+@pytest.mark.asyncio
+async def test_suggest_situations_tool_does_not_claim_ranking(
+    live_catalog: Path,
+) -> None:
+    mcp = create_mcp(hosted=False)
+    async with Client(mcp) as client:
+        tool = next(t for t in await client.list_tools() if t.name == "suggest_situations")
+    desc = tool.description or ""
+    lower = desc.lower()
+    assert "heuristic" not in lower
+    assert "not a verdict" not in lower
+    assert "ranking bias" not in lower
+    assert "catalog map" in lower
+    assert "no ranking" in lower
+    assert "lock order" in lower
+    schema = getattr(tool, "input_schema", None) or getattr(tool, "inputSchema")
+    blob = str(schema).lower()
+    assert "ranking" not in blob
+    assert "heuristic" not in blob

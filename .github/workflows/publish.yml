@@ -72,7 +72,12 @@ jobs:
           last="$(git describe --tags --abbrev=0)"
           ver="${last#v}"
           IFS=. read -r maj min pat <<< "$ver"
-          new="v${maj}.${min}.$((pat + 1))"
+          subject="$(git log -1 --format=%s)"
+          if echo "$subject" | grep -Eqi '(^|[[:space:]])BREAKING([:]|[[:space:]])|BREAKING CHANGE'; then
+            new="v${maj}.$((min + 1)).0"
+          else
+            new="v${maj}.${min}.$((pat + 1))"
+          fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git tag -a "$new" -m "open-ux $new"

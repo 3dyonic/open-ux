@@ -13,7 +13,7 @@ def test_marketplace_points_at_pack() -> None:
     market = json.loads((ROOT / ".claude-plugin" / "marketplace.json").read_text())
     plugin = market["plugins"][0]
     assert plugin["source"] == "./clients/claude"
-    assert plugin["version"] == "1.0.0"
+    assert plugin["version"] == "1.1.0"
     assert plugin.get("homepage") == "https://open-ux.dev"
 
 
@@ -21,7 +21,7 @@ def test_cursor_marketplace_points_at_same_pack() -> None:
     market = json.loads((ROOT / ".cursor-plugin" / "marketplace.json").read_text())
     plugin = market["plugins"][0]
     assert plugin["source"] == "./clients/claude"
-    assert plugin["version"] == "1.0.0"
+    assert plugin["version"] == "1.1.0"
     assert plugin.get("homepage") == "https://open-ux.dev"
     assert plugin.get("logo") == "assets/icon.svg"
     assert ".." not in plugin["source"]
