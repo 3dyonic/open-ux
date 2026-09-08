@@ -219,7 +219,7 @@ def _tool_payload(
         return "list_situations", payload
     if command == "get":
         hint = _validate_need(args.card_id)
-        if hint and args.card_id not in CARD_IDS:
+        if hint:
             _err(hint, color=color)
             return 2
         return "get_situation", {"id": args.card_id}

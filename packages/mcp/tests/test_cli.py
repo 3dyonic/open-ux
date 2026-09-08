@@ -32,6 +32,15 @@ def test_cli_unknown_job_lists_cards(
         assert card_id in err
 
 
+def test_cli_unknown_get_lists_cards(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    assert main(["get", "not_a_card"]) == 2
+    err = capsys.readouterr().err
+    assert "unknown" in err.lower()
+    assert "design_a_form" in err
+
+
 def test_cli_cards_lists_situations(
     live_catalog: Path, capsys: pytest.CaptureFixture[str]
 ) -> None:
