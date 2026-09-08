@@ -60,3 +60,21 @@ def test_favicon_svg_is_served(tmp_env: Path) -> None:
         assert response.headers["content-type"].startswith("image/svg+xml")
         assert response.content == mark
     assert b"#FF4B00" in preferred.content
+
+
+def test_web_public_mark_symlinks_to_package_static() -> None:
+    root = Path(__file__).resolve().parents[3]
+    mark = (root / "packages" / "mcp" / "src" / "open_ux" / "static" / "logo-mark.svg").resolve()
+    public = root / "packages" / "web" / "public"
+    for name in ("logo-mark.svg", "favicon.svg"):
+        path = public / name
+        assert path.is_symlink(), name
+        assert path.resolve() == mark
+        assert path.read_bytes() == mark.read_bytes()
+
+
+def test_dockerfile_overlays_web_public_mark() -> None:
+    text = (Path(__file__).resolve().parents[3] / "Dockerfile").read_text()
+    src = "COPY packages/mcp/src/open_ux/static/logo-mark.svg"
+    assert f"{src} ./public/logo-mark.svg" in text
+    assert f"{src} ./public/favicon.svg" in text
