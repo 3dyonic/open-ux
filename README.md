@@ -52,6 +52,8 @@ python -m open_ux stdio
 OPEN_UX_MODE=hosted python -m open_ux http
 ```
 
+The wheel includes the catalog. A change to `catalog/` or the package source on `master` publishes a new PyPI patch so pip and hosted carry the same rules.
+
 Browse the local site at `http://127.0.0.1:8080/catalog`. Point MCP clients at local stdio, or at hosted `/mcp` with a `uxmcp_` key.
 
 ### Contribute from this repo
