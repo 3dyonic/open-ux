@@ -35,11 +35,13 @@ def test_sitemap_lists_landing_catalog_and_remaining_ids(live_catalog: Path) -> 
     assert 'xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"' in body
     assert "<loc>https://open-ux.dev/</loc>" in body
     assert "<loc>https://open-ux.dev/catalog</loc>" in body
+    assert "<loc>https://open-ux.dev/privacy</loc>" in body
+    assert "<loc>https://open-ux.dev/sources</loc>" in body
     for gid in ids:
         assert f"<loc>https://open-ux.dev/catalog/{gid}</loc>" in body
     assert "nng." not in body
     assert "apple." not in body
-    assert body.count("<url>") == 2 + len(ids)
+    assert body.count("<url>") == 4 + len(ids)
 
 
 def test_favicon_svg_is_served(tmp_env: Path) -> None:

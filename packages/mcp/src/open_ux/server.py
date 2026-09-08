@@ -457,6 +457,10 @@ def create_mcp(*, hosted: bool) -> FastMCP:
     async def privacy(_request: Request) -> Response:
         return _app_page()
 
+    @mcp.custom_route("/sources", methods=["GET"])
+    async def sources(_request: Request) -> Response:
+        return _app_page()
+
     @mcp.custom_route("/invite", methods=["GET"])
     async def invite_request_page(_request: Request) -> Response:
         return _app_page()

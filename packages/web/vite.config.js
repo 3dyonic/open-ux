@@ -22,8 +22,6 @@ export default defineConfig({
           if (req.method === "GET") return "/index.html";
         },
       },
-      "/logo-mark.svg": backend,
-      "/favicon.svg": backend,
     },
   },
 });
