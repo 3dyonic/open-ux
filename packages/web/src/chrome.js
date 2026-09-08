@@ -28,7 +28,7 @@ export function footerHtml() {
   return `
   <footer class="footer">
     <p class="m-0">Open UX · cited UX rules agents audit against</p>
-    <p class="m-0"><a href="/privacy">Privacy</a></p>
+    <p class="m-0"><a href="/privacy">Privacy</a> · <a href="/sources">Sources</a></p>
   </footer>`;
 }
 

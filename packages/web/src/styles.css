@@ -110,7 +110,8 @@
   .page {
     @apply flex w-full flex-1 flex-col gap-7 px-5 py-10 pb-12 md:px-12;
   }
-  .page-privacy {
+  .page-privacy,
+  .page-sources {
     @apply max-w-[720px] gap-6;
   }
   .page-invite {

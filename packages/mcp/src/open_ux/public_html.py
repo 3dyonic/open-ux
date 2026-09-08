@@ -46,7 +46,7 @@ PRIVACY_SECTIONS: tuple[tuple[str, str | None, tuple[str, ...]], ...] = (
     ),
     (
         "Analytics (this website)",
-        "On public pages (home, catalog, invite request, and this privacy page) we may use Google Tag Manager and Google Analytics to understand traffic.",
+        "On public pages (home, catalog, invite request, this privacy page, and sources) we may use Google Tag Manager and Google Analytics to understand traffic.",
         (
             "These load only after you Accept the cookie banner.",
             "If you Decline, we do not load them for that choice.",
@@ -332,7 +332,12 @@ def public_consent_footer(consent: str | None = None) -> str:
 
 
 def render_sitemap(guideline_ids: list[str]) -> str:
-    locs = [canonical_url("/"), canonical_url("/catalog")]
+    locs = [
+        canonical_url("/"),
+        canonical_url("/catalog"),
+        canonical_url("/privacy"),
+        canonical_url("/sources"),
+    ]
     locs.extend(canonical_url(f"/catalog/{gid}") for gid in guideline_ids)
     lines = [
         '<?xml version="1.0" encoding="UTF-8"?>',

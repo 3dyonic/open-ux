@@ -98,6 +98,7 @@ def test_no_dist_is_json_only_no_shell(tmp_env: Path, monkeypatch) -> None:
             f"/catalog/{ANT_SEED}",
             "/health",
             "/privacy",
+            "/sources",
             "/invite",
             "/invite/requested",
             "/invite/redeem",
@@ -120,6 +121,7 @@ def test_dist_serves_shell_on_page_routes_only(
             f"/catalog/{ANT_SEED}",
             "/health",
             "/privacy",
+            "/sources",
             "/invite",
             "/invite/requested",
             "/invite/redeem",
@@ -155,6 +157,27 @@ def test_mcp_and_account_are_not_swallowed(tmp_env: Path, monkeypatch) -> None:
         )
         assert deleted.status_code in {400, 401}
         assert "open-ux-shell" not in deleted.text
+
+
+def test_sources_is_a_vite_tailwind_page() -> None:
+    root = Path(__file__).resolve().parents[3]
+    main = (root / "packages" / "web" / "src" / "main.js").read_text(encoding="utf-8")
+    sources = (root / "packages" / "web" / "src" / "sources.js").read_text(
+        encoding="utf-8"
+    )
+    chrome = (root / "packages" / "web" / "src" / "chrome.js").read_text(
+        encoding="utf-8"
+    )
+    assert 'from "./sources.js"' in main
+    assert 'path === "/sources"' in main
+    assert "return renderSources(root)" in main
+    assert 'class="page page-sources"' in sources
+    assert "flex flex-col gap-3" in sources
+    assert "text-[15px] leading-[22px] text-ink" in sources
+    assert "contact@open-ux.dev" in sources
+    assert "Nielsen" not in sources
+    assert "NN/g" not in sources
+    assert 'href="/sources"' in chrome
 
 
 def test_register_still_redirects_to_invite(tmp_env: Path) -> None:

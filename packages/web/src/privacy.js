@@ -9,7 +9,7 @@ const SECTIONS = [
   ],
   [
     "Analytics (this website)",
-    "On public pages (home, catalog, invite request, and this privacy page) we may use Google Tag Manager and Google Analytics to understand traffic.",
+    "On public pages (home, catalog, invite request, this privacy page, and sources) we may use Google Tag Manager and Google Analytics to understand traffic.",
     [
       "These load only after you Accept the cookie banner.",
       "If you Decline, we do not load them for that choice.",
@@ -48,7 +48,7 @@ const CONTACT = "contact@open-ux.dev";
 function sectionHtml([heading, paragraph, bullets]) {
   let body = "";
   if (heading === "Contact") {
-    body = `<p class="m-0 text-[15px] leading-[22px] text-ink">Privacy questions: <a class="underline" href="mailto:${CONTACT}">${escapeHtml(CONTACT)}</a>.</p>`;
+    body = `<p class="m-0 text-[15px] leading-[22px] text-ink">Privacy questions: <a class="underline" href="mailto:${CONTACT}">${escapeHtml(CONTACT)}</a>. To ask us to drop a catalog rule, see <a class="underline" href="/sources">Sources</a>.</p>`;
   } else if (paragraph) {
     body = `<p class="m-0 text-[15px] leading-[22px] text-ink">${escapeHtml(paragraph)}</p>`;
   }

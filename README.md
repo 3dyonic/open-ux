@@ -30,7 +30,7 @@ There is no server-side LLM. One shared catalog for every caller — an account 
 * **Public catalog site** — browse rules in the browser at [`/catalog`](https://open-ux.dev/catalog)
 * **Agent tools** — list / search / get guidelines; suggest situations; audit by need (job or ids)
 * **Hosted or self-host** — waitlist + API key on the hosted service, or stdio locally with no auth
-* **Privacy-minded hosted mode** — we do not store UI payloads or prompts; see [Privacy](https://open-ux.dev/privacy)
+* **Privacy-minded hosted mode** — we do not store UI payloads or prompts; see [Privacy](https://open-ux.dev/privacy). How we cite rules: [Sources](https://open-ux.dev/sources)
 
 ## Quick start
 
@@ -128,7 +128,7 @@ Python package: `open-ux` · npm / plugin scope: `@3dyonic/open-ux`
 | Rate limits | Per-key and per-IP on `/mcp` | None |
 | Telemetry | Aggregated usage (key hash, tools, rule ids) | Off |
 
-Privacy on the hosted product: [open-ux.dev/privacy](https://open-ux.dev/privacy) (Eng constraints also in [`docs/PRIVACY.md`](docs/PRIVACY.md)).
+Privacy on the hosted product: [open-ux.dev/privacy](https://open-ux.dev/privacy) (Eng constraints also in [`docs/PRIVACY.md`](docs/PRIVACY.md)). How we write and cite catalog rules, and how to ask us to change or remove one: [open-ux.dev/sources](https://open-ux.dev/sources).
 
 ## Contributing
 
