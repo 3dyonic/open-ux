@@ -90,7 +90,7 @@ Cursor uses the same pack (`.cursor-plugin/` + `mcp.json`). Set `OPEN_UX_API_KEY
 | -- | -- |
 | `list_situations` | Page Situation Cards (optional `container` returns that kind's specs) |
 | `get_situation` | One Card plus facets / rule pointers |
-| `suggest_situations` | Catalog map: lock-order Card overviews (does not pick a Card) |
+| `suggest_situations` | Catalog map: `{containers: [{situations: [...]}]}` in lock order (does not pick a Card; no `why`, not ranked) |
 | `list_guidelines` | Paged catalog index |
 | `search_guidelines` | Scope by jobs / lane; BM25-order by query; no rule bodies |
 | `get_guideline` | Full rule body by id |

@@ -352,13 +352,13 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             ),
         ] = None,
     ) -> dict[str, Any]:
-        """Return the catalog map: every Situation Card, lock order.
+        """Catalog map: every Situation Card in lock order. No ranking.
 
         Always returns the complete 13-card allowlist grouped by container —
-        never a filtered subset and never a ranked winner. task_text requests
-        the map; it does not reorder. Pick a container or a Card, then
-        get_situation, then audit with jobs=<card_id>. Surface is not an id.
-        No server LLM.
+        never a filtered subset and never a ranked winner. Order is the catalog
+        lock, not a hint. task_text requests the map; it does not reorder. Pick
+        a container or a Card, then get_situation, then audit with
+        jobs=<card_id>. Surface is not an id. No server LLM.
         """
         result = run_suggest_situations(task_text, surface, job_tree)
         _maybe_telemetry(settings, tool="suggest_situations")
