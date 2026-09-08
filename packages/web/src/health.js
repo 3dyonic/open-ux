@@ -34,7 +34,7 @@ function render(root, payload) {
     ? "Running on the hosted service."
     : "Running locally, not on the hosted service.";
   const catalogLine = systemsOk
-    ? `${catalog.guideline_count} cited rules, version ${catalog.version}`
+    ? `${catalog.guideline_count} cited rules`
     : "No cited rules loaded yet.";
   root.innerHTML = shell(
     `
