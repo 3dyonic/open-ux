@@ -214,7 +214,9 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             "suggest_situations (catalog map), then audit. "
             "No server LLM. "
             "audit: say one Card or container as jobs; returns cited rule "
-            "criteria. Does not take a file. Does not return pass or fail. "
+            "criteria so you can make a better decision — the decision is yours. "
+            "Does not take a file. Does not return pass or fail. "
+            "Page with limit/offset; follow next_offset. "
             "Leaf ids and Surfaces are not needs. "
             "If the catalog is empty, return empty; do not invent rules."
         ),
@@ -386,13 +388,21 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             Field(
                 ge=1,
                 le=MAX_LIMIT,
-                description="Max rules to return. Default 10. Never the whole catalog.",
+                description="Page size. Default 10. Clamps one page, not how far offset may walk.",
             ),
         ] = DEFAULT_LIMIT,
+        offset: Annotated[
+            int,
+            Field(
+                ge=0,
+                description="Skip this many in-scope rows. Follow next_offset until it is absent.",
+            ),
+        ] = 0,
     ) -> dict[str, Any]:
         """Say the UX need as one Situation Card or container.
 
-        Returns cited rule criteria. Does not take a file. Does not return pass or fail.
+        Returns cited rule criteria so you can make a better decision; the
+        decision is yours. Does not take a file. Does not return pass or fail.
         Required: jobs or guideline_ids. Leaf ids are not needs.
         """
         result = run_audit(
@@ -401,6 +411,7 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             query=query,
             guideline_ids=guideline_ids,
             limit=limit,
+            offset=offset,
         )
         _maybe_telemetry(
             settings,

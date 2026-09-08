@@ -96,7 +96,7 @@ Cursor uses the same pack (`.cursor-plugin/` + `mcp.json`). Set `OPEN_UX_API_KEY
 | `get_guideline` | Full rule body by id |
 | `audit` | Say the need (`jobs` Card/container or `guideline_ids`); get matching criteria |
 
-`audit` accepts optional `query` (orders the pack) and `limit` (default 10, max 50). It does **not** take a file target and does **not** return a host verdict. If nothing matches, you get an empty list and a note.
+`audit` accepts optional `query` (orders the shelf), `limit` (page size, default 10), and `offset`. Follow `next_offset` until it is absent. It does **not** take a file target and does **not** return a host verdict (`host: "citations_only"`). Cited criteria help you decide; the decision is yours. If a query matches nothing, `query_fallback` is true and you still see the unfiltered shelf, paged.
 
 ## Catalog layout
 

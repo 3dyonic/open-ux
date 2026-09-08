@@ -41,6 +41,7 @@ def test_recorded_smoke_call_is_audit_jobs_design_a_form() -> None:
     result = audit(_catalog(), jobs="design_a_form")
     assert "error" not in result
     assert "verdict" not in result
+    assert result["host"] == "citations_only"
     assert result["count"] >= 1
     for row in result["guidelines"]:
         assert set(row) == set(PACK_KEYS)
