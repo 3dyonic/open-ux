@@ -136,7 +136,9 @@ def test_audit_script_prints_pack(
     assert payload["count"] >= 1
     assert "verdict" not in payload
     row = payload["guidelines"][0]
-    assert {"id", "title", "name", "rule", "pass_when", "fail_when"} <= set(row)
+    assert {"id", "title", "name", "overview", "rule", "facet"} <= set(row)
+    assert "pass_when" not in row
+    assert "fail_when" not in row
 
 
 def test_audit_script_uses_shared_helper() -> None:
