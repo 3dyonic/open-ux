@@ -8,18 +8,24 @@ Homepage: [open-ux.dev](https://open-ux.dev)
 
 Do not put “MCP” in the marketplace / plugin title or landing H1.
 
+Logo (Cursor `logo` field): [assets/icon.svg](assets/icon.svg). Listing art: [assets/hero.svg](assets/hero.svg), [assets/offerings.svg](assets/offerings.svg).
+
 ## Install
+
+Invite: [open-ux.dev/invite](https://open-ux.dev/invite) → `uxmcp_`. Then enable. See [SETUP.md](SETUP.md).
+
+### Claude
 
 ```bash
 claude plugin marketplace add 3dyonic/open-ux
 claude plugin install open-ux@open-ux
 ```
 
-Then enable and paste your key. Invite: [open-ux.dev/invite](https://open-ux.dev/invite) → `uxmcp_`. See [SETUP.md](SETUP.md).
+Paste the key when prompted (`api_key`). Submit: [platform.claude.com/plugins/submit](https://platform.claude.com/plugins/submit). Validate: `claude plugin validate . --strict` (repo marketplace) or `claude plugin validate ./clients/claude --strict`.
 
-Cursor uses the same pack (`.cursor-plugin/` + `mcp.json`). Set `OPEN_UX_API_KEY` under **Plugins → Configure**. Submit: [cursor.com/marketplace/publish](https://cursor.com/marketplace/publish).
+### Cursor
 
-Claude submit: [platform.claude.com/plugins/submit](https://platform.claude.com/plugins/submit). Validate: `claude plugin validate . --strict` (repo marketplace) or `claude plugin validate ./clients/claude --strict`.
+Same pack (`.cursor-plugin/` + `mcp.json`). Set `OPEN_UX_API_KEY` under **Plugins → Configure**. Submit: [cursor.com/marketplace/publish](https://cursor.com/marketplace/publish).
 
 ## Connect
 

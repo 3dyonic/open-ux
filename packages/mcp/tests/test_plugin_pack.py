@@ -40,6 +40,8 @@ def test_listing_assets_and_setup_exist() -> None:
     assert "https://open-ux.dev" in readme
     assert "claude plugin marketplace add 3dyonic/open-ux" in readme
     assert "assets/hero.svg" in readme
+    assert "assets/icon.svg" in readme
+    assert "assets/offerings.svg" in readme
     assert "cursor.com/marketplace/publish" in readme
     assert "OPEN_UX_API_KEY" in readme
 
