@@ -8,7 +8,7 @@
   "citation": [
     {
       "source": "Vercel Web Interface Guidelines — Forms",
-      "url": "https://github.com/vercel-labs/web-interface-guidelines/blob/main/command.md"
+      "url": "https://github.com/vercel-labs/web-interface-guidelines/blob/main/README.md#forms"
     }
   ],
   "check": "deterministic",

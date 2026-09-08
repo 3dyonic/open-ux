@@ -531,6 +531,35 @@ def test_names_are_claim_then_source_and_folders_follow_category(
         assert not guideline["name"].endswith(" — Forms")
 
 
+TIDWELL_BOOK = (
+    "https://www.oreilly.com/library/view/designing-interfaces-3rd/9781492051954/"
+)
+VERCEL_FORMS = (
+    "https://github.com/vercel-labs/web-interface-guidelines/blob/main/README.md#forms"
+)
+MATERIAL_TEXT_FIELDS = "https://m3.material.io/components/text-fields/guidelines"
+HOUSE_CITE_URLS = {
+    "tidwell": TIDWELL_BOOK,
+    "vercel": VERCEL_FORMS,
+    "material": MATERIAL_TEXT_FIELDS,
+}
+
+
+def test_tidwell_vercel_material_cite_the_house_page(live_catalog: Path) -> None:
+    catalog = load_catalog(Settings.load(hosted=True))
+    seen = {slug: [] for slug in HOUSE_CITE_URLS}
+    for guideline in catalog.guidelines:
+        slug, _label = source_house(guideline)
+        if slug not in HOUSE_CITE_URLS:
+            continue
+        urls = [cite["url"] for cite in citations(guideline)]
+        assert urls == [HOUSE_CITE_URLS[slug]], guideline["id"]
+        seen[slug].append(guideline["id"])
+    assert len(seen["tidwell"]) == 17
+    assert len(seen["vercel"]) == 6
+    assert seen["material"] == ["forms.errors.replace_supporting_text"]
+
+
 def test_manifest_is_category_then_source_without_bodies(live_catalog: Path) -> None:
     catalog = load_catalog(Settings.load(hosted=True))
     data = json.loads((live_catalog / "manifest.json").read_text(encoding="utf-8"))
@@ -581,6 +610,20 @@ def test_no_primary_apple_or_nng_rules_remain(live_catalog: Path) -> None:
     ]
     assert house_dirs == []
     assert not any(g["id"].startswith(("nng.", "apple.")) for g in catalog.guidelines)
+    nng_urls = []
+    nng_cite_names = []
+    for g in catalog.guidelines:
+        for cite in g.get("citation") or []:
+            if not isinstance(cite, dict):
+                continue
+            url = str(cite.get("url") or "").lower()
+            source = str(cite.get("source") or "")
+            if "nngroup.com" in url:
+                nng_urls.append(g["id"])
+            if "NN/g" in source or "nngroup" in source.lower() or "Nielsen" in source:
+                nng_cite_names.append(g["id"])
+    assert nng_urls == []
+    assert nng_cite_names == []
 
 
 EMPTY_LEAVES = {
