@@ -1,8 +1,1 @@
----
-description: Open UX — cited UX criteria, not a second catalog
-alwaysApply: true
----
-
-Open UX pointers: [`AGENTS.md`](AGENTS.md). Card table: [`clients/claude/skills/open-ux/SKILL.md`](clients/claude/skills/open-ux/SKILL.md) (this folder is a mount).
-
-One skill. Compose and review share `Open-UX:audit` with `jobs=`. Host returns cited criteria, not pass or fail. Do not send a file. Do not copy the Card table here.
+../../clients/claude/rules/open-ux.mdc

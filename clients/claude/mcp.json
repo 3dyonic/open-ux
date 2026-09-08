@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "open-ux": {
+      "url": "https://open-ux.dev/mcp",
+      "headers": {
+        "Authorization": "Bearer ${OPEN_UX_API_KEY}"
+      }
+    }
+  }
+}

@@ -17,7 +17,9 @@ claude plugin install open-ux@open-ux
 
 Then enable and paste your key. Invite: [open-ux.dev/invite](https://open-ux.dev/invite) → `uxmcp_`. See [SETUP.md](SETUP.md).
 
-Submit: [platform.claude.com/plugins/submit](https://platform.claude.com/plugins/submit). Validate: `claude plugin validate . --strict` (repo marketplace) or `claude plugin validate ./clients/claude --strict`.
+Cursor uses the same pack (`.cursor-plugin/` + `mcp.json`). Set `OPEN_UX_API_KEY` under **Plugins → Configure**. Submit: [cursor.com/marketplace/publish](https://cursor.com/marketplace/publish).
+
+Claude submit: [platform.claude.com/plugins/submit](https://platform.claude.com/plugins/submit). Validate: `claude plugin validate . --strict` (repo marketplace) or `claude plugin validate ./clients/claude --strict`.
 
 ## Connect
 
