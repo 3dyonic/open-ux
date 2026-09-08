@@ -1,15 +1,24 @@
 {
   "name": "open-ux",
   "displayName": "Open UX",
-  "version": "0.1.0",
-  "description": "cited UX rules agents audit against / shared cited guidelines",
+  "version": "1.0.0",
+  "description": "Cited UX rules agents audit against. Pick a Situation Card, then get a criteria pack.",
   "author": {
     "name": "3dyonic",
     "url": "https://github.com/3dyonic"
   },
-  "homepage": "https://github.com/3dyonic/open-ux",
+  "homepage": "https://open-ux.dev",
   "repository": "https://github.com/3dyonic/open-ux",
   "license": "MIT",
-  "keywords": ["ux", "guidelines", "audit"],
-  "mcpServers": "./.mcp.json"
+  "keywords": ["ux", "guidelines", "audit", "forms", "actions"],
+  "mcpServers": "./.mcp.json",
+  "userConfig": {
+    "api_key": {
+      "type": "string",
+      "title": "Open UX API key",
+      "description": "Bearer key from https://open-ux.dev/invite (starts with uxmcp_). Required for the hosted catalog.",
+      "sensitive": true,
+      "required": true
+    }
+  }
 }

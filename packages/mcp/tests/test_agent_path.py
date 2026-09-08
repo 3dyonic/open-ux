@@ -10,6 +10,7 @@ from pathlib import Path
 from open_ux.jobs import CARD_IDS
 
 ROOT = Path(__file__).resolve().parents[3]
+SRC = ROOT / "packages" / "mcp" / "src"
 SKILL_DIR = ROOT / "clients" / "claude" / "skills" / "open-ux"
 SKILL = SKILL_DIR / "SKILL.md"
 COMMANDS = ROOT / "clients" / "claude" / "commands"
@@ -46,6 +47,14 @@ def _frontmatter_description(text: str) -> str:
 
 def _skill_files() -> list[Path]:
     return sorted(SKILL_DIR.glob("*.md"))
+
+
+def _script_env(**extra: str) -> dict[str, str]:
+    env = {**os.environ, **extra}
+    existing = env.get("PYTHONPATH", "")
+    src = str(SRC)
+    env["PYTHONPATH"] = src if not existing else f"{src}{os.pathsep}{existing}"
+    return env
 
 
 def test_one_skill_package_named_open_ux() -> None:
@@ -152,7 +161,11 @@ def test_plugin_points_at_hosted_mcp() -> None:
     assert "MCP" not in plugin["displayName"]
     server = mcp["mcpServers"]["open-ux"]
     assert server["url"] == "https://open-ux.dev/mcp"
-    assert "OPEN_UX_API_KEY" in server["headers"]["Authorization"]
+    assert "${user_config.api_key}" in server["headers"]["Authorization"]
+    user_config = plugin.get("userConfig") or {}
+    assert user_config["api_key"]["sensitive"] is True
+    assert user_config["api_key"]["required"] is True
+    assert plugin.get("homepage") == "https://open-ux.dev"
 
 
 def test_commands_are_short_mcp_prompts() -> None:
@@ -214,6 +227,7 @@ def test_audit_helper_available_not_required() -> None:
         [sys.executable, str(AUDIT_SCRIPT), "--help"],
         text=True,
         cwd=ROOT,
+        env=_script_env(),
     )
     assert "--jobs" in help_text
     assert "--guideline-ids" in help_text
@@ -223,6 +237,7 @@ def test_audit_helper_available_not_required() -> None:
         [sys.executable, str(AUDIT_SCRIPT), "--jobs", "design_a_form"],
         text=True,
         cwd=ROOT,
+        env=_script_env(),
     )
     payload = json.loads(scoped)
     assert "guidelines" in payload
@@ -233,6 +248,7 @@ def test_audit_helper_available_not_required() -> None:
         cwd=ROOT,
         capture_output=True,
         text=True,
+        env=_script_env(),
     )
     assert empty.returncode != 0
     skill = SKILL.read_text(encoding="utf-8")
@@ -246,7 +262,7 @@ def test_audit_helper_available_not_required() -> None:
 
 def test_optional_helper_is_protocol_not_path() -> None:
     assert HELPER.is_file()
-    env = {**os.environ, "OPEN_UX_TRANSPORT": "inprocess"}
+    env = _script_env(OPEN_UX_TRANSPORT="inprocess")
     listed = subprocess.check_output(
         [sys.executable, str(HELPER), "list"],
         text=True,

@@ -57,6 +57,9 @@ def test_readme_hero_svg_is_parseable_and_complete() -> None:
     assert "Catalog" in text
     assert "Agent tools" in text
     assert "Criteria" in text
+    assert "Pip" in text or "pipReadme" in text
     assert "Verdict" not in text
     assert "Pass / fail" not in text
     assert "Cited UX rules agents audit against" in text
+    assert "#FF4B00" in text
+    assert "#F9F6F2" in text

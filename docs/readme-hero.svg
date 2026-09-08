@@ -1,42 +1,61 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="420" viewBox="0 0 1280 420" role="img" aria-label="Open UX: catalog to audit flow">
-  <!-- F3: paper / ink / muted / line / accent -->
+  <defs>
+    <filter id="pipReadme" x="-50%" y="-50%" width="200%" height="200%" color-interpolation-filters="sRGB">
+      <feOffset dy="10" in="SourceAlpha" result="off"/>
+      <feGaussianBlur stdDeviation="9" in="off" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.12 0 0 0 0 0.1 0 0 0 0 0.08 0 0 0 0.14 0" result="shadow"/>
+      <feBlend in="SourceGraphic" in2="shadow" result="shape"/>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset dy="4"/>
+      <feGaussianBlur stdDeviation="5"/>
+      <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.35 0"/>
+      <feBlend in2="shape"/>
+    </filter>
+  </defs>
   <rect width="1280" height="420" fill="#F9F6F2"/>
   <rect x="0" y="0" width="1280" height="4" fill="#FF4B00"/>
-  <!-- Catalog -->
   <rect x="64" y="88" width="280" height="244" rx="6" fill="#FFFFFF" stroke="#DED4C8" stroke-width="1"/>
-  <text x="84" y="124" font-family="Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="18" font-weight="600" fill="#1F1C1A">Catalog</text>
-  <text x="84" y="152" font-family="Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="14" fill="#6A6056">Cited rules · one file</text>
-  <rect x="84" y="176" width="240" height="36" rx="6" fill="#FFECE0" stroke="#FF4B00" stroke-width="1"/>
-  <text x="96" y="198" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace" font-size="13" fill="#FF4B00">forms.field_labels…</text>
-  <rect x="84" y="224" width="240" height="36" rx="6" fill="#F9F6F2" stroke="#DED4C8"/>
-  <text x="96" y="246" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace" font-size="13" fill="#6A6056">jobs[] · patterns[]</text>
-  <rect x="84" y="272" width="240" height="36" rx="6" fill="#F9F6F2" stroke="#DED4C8"/>
-  <text x="96" y="294" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace" font-size="13" fill="#6A6056">citation · check</text>
-  <!-- Arrow 1 -->
+  <text x="84" y="124" font-family="IBM Plex Sans, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="18" font-weight="600" fill="#1F1B16">Catalog</text>
+  <text x="84" y="152" font-family="IBM Plex Sans, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="14" fill="#6A6056">Cited rules, one file</text>
+  <rect x="84" y="176" width="240" height="36" rx="6" fill="#FFECE0"/>
+  <text x="96" y="198" font-family="IBM Plex Mono, ui-monospace, SF Mono, Menlo, Consolas, monospace" font-size="13" fill="#FF4B00">forms.field_labels</text>
+  <rect x="84" y="224" width="240" height="10" rx="4" fill="#ECDCCA"/>
+  <rect x="84" y="246" width="188" height="10" rx="4" fill="#ECDCCA"/>
+  <rect x="84" y="268" width="210" height="10" rx="4" fill="#ECDCCA"/>
   <path d="M360 210 H460" stroke="#6A6056" stroke-width="2" fill="none"/>
   <path d="M448 202 L460 210 L448 218" stroke="#6A6056" stroke-width="2" fill="none"/>
-  <!-- Tools -->
   <rect x="476" y="88" width="280" height="244" rx="6" fill="#FFFFFF" stroke="#DED4C8" stroke-width="1"/>
-  <text x="496" y="124" font-family="Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="18" font-weight="600" fill="#1F1C1A">Agent tools</text>
-  <text x="496" y="152" font-family="Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="14" fill="#6A6056">list · get · audit</text>
+  <text x="496" y="124" font-family="IBM Plex Sans, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="18" font-weight="600" fill="#1F1B16">Agent tools</text>
+  <text x="496" y="152" font-family="IBM Plex Sans, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="14" fill="#6A6056">list, get, audit</text>
   <rect x="496" y="176" width="240" height="40" rx="6" fill="#F9F6F2" stroke="#DED4C8"/>
-  <text x="512" y="200" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace" font-size="14" fill="#1F1C1A">list_guidelines</text>
+  <text x="512" y="200" font-family="IBM Plex Mono, ui-monospace, SF Mono, Menlo, Consolas, monospace" font-size="14" fill="#1F1B16">list_guidelines</text>
   <rect x="496" y="228" width="240" height="40" rx="6" fill="#F9F6F2" stroke="#DED4C8"/>
-  <text x="512" y="252" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace" font-size="14" fill="#1F1C1A">get_guideline</text>
-  <rect x="496" y="280" width="240" height="40" rx="6" fill="#FFECE0" stroke="#FF4B00"/>
-  <text x="512" y="304" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace" font-size="14" fill="#FF4B00">audit</text>
-  <!-- Arrow 2 -->
+  <text x="512" y="252" font-family="IBM Plex Mono, ui-monospace, SF Mono, Menlo, Consolas, monospace" font-size="14" fill="#1F1B16">get_guideline</text>
+  <rect x="496" y="280" width="240" height="40" rx="6" fill="#FFECE0"/>
+  <text x="512" y="304" font-family="IBM Plex Mono, ui-monospace, SF Mono, Menlo, Consolas, monospace" font-size="14" fill="#FF4B00">audit</text>
   <path d="M772 210 H872" stroke="#6A6056" stroke-width="2" fill="none"/>
   <path d="M860 202 L872 210 L860 218" stroke="#6A6056" stroke-width="2" fill="none"/>
-  <!-- Result -->
   <rect x="888" y="88" width="328" height="244" rx="6" fill="#FFFFFF" stroke="#DED4C8" stroke-width="1"/>
-  <text x="908" y="124" font-family="Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="18" font-weight="600" fill="#1F1C1A">Criteria</text>
-  <text x="908" y="152" font-family="Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="14" fill="#6A6056">Need in · cited rules out</text>
-  <rect x="908" y="184" width="288" height="52" rx="6" fill="#FFECE0" stroke="#FF4B00"/>
-  <text x="924" y="214" font-family="Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#FF4B00">visible label outside the field</text>
+  <text x="908" y="124" font-family="IBM Plex Sans, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="18" font-weight="600" fill="#1F1B16">Criteria</text>
+  <text x="908" y="152" font-family="IBM Plex Sans, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="14" fill="#6A6056">Need in, cited rules out</text>
+  <rect x="908" y="184" width="288" height="52" rx="6" fill="#FFECE0"/>
+  <text x="924" y="214" font-family="IBM Plex Sans, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#FF4B00">visible label outside the field</text>
   <rect x="908" y="252" width="288" height="52" rx="6" fill="#F9F6F2" stroke="#DED4C8"/>
-  <text x="924" y="282" font-family="Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="14" fill="#1F1C1A">placeholder is not the only name</text>
-  <!-- Footer title -->
-  <text x="64" y="380" font-family="Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="22" font-weight="600" fill="#1F1C1A">Open UX</text>
-  <text x="180" y="380" font-family="Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="16" fill="#6A6056">Cited UX rules agents audit against</text>
+  <text x="924" y="282" font-family="IBM Plex Sans, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="14" fill="#1F1B16">placeholder is not the only name</text>
+  <g id="Pip" transform="translate(1008 22) scale(0.48)">
+    <ellipse cx="160" cy="209" rx="75" ry="11" fill="#D6BEA6" fill-opacity="0.45"/>
+    <circle cx="160" cy="121" r="59" fill="#FF4B00" filter="url(#pipReadme)"/>
+    <ellipse cx="147" cy="95" rx="23" ry="11" fill="#FFC79E" fill-opacity="0.55"/>
+    <ellipse cx="91.9" cy="121" rx="18" ry="9" transform="rotate(-18 91.9 121)" fill="#ECDCCA" filter="url(#pipReadme)"/>
+    <ellipse cx="224.2" cy="127.5" rx="19" ry="9" transform="rotate(22 224.2 127.5)" fill="#ECDCCA" filter="url(#pipReadme)"/>
+    <rect x="228" y="78" width="54" height="68" rx="6" fill="#FFFFFF" stroke="#DED4C8" filter="url(#pipReadme)"/>
+    <rect x="240" y="94" width="30" height="6" rx="3" fill="#ECDCCA"/>
+    <rect x="240" y="106" width="22" height="6" rx="3" fill="#D6BEA6"/>
+    <ellipse cx="142" cy="117" rx="4" ry="5" fill="#1F1B16"/>
+    <ellipse cx="172" cy="117" rx="4" ry="5" fill="#1F1B16"/>
+    <ellipse cx="158" cy="136" rx="8" ry="4" fill="#B8330D" fill-opacity="0.7"/>
+  </g>
+  <text x="64" y="380" font-family="IBM Plex Sans, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="22" font-weight="600" fill="#1F1B16">Open UX</text>
+  <text x="180" y="380" font-family="IBM Plex Sans, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="16" fill="#6A6056">Cited UX rules agents audit against</text>
 </svg>

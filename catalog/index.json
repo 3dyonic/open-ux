@@ -2600,6 +2600,45 @@
       "card": "compose_feedback",
       "facet": "system_stayed_quiet_after_change",
       "leaf": "announce_system_status"
+    },
+    {
+      "id": "govuk.allow-copy-paste-in-password-fields",
+      "title": "allow copy paste in password fields",
+      "name": "Allow copy and paste in password fields — GOV.UK",
+      "jobs": [
+        "show_the_password"
+      ],
+      "lane": "govuk",
+      "container": "forms_and_input",
+      "card": "compose_sign_in",
+      "facet": "credentials_are_hard_to_enter",
+      "leaf": "show_the_password"
+    },
+    {
+      "id": "govuk.avoid-confirm-password-field",
+      "title": "avoid confirm password field",
+      "name": "Avoid a confirm-password field — GOV.UK",
+      "jobs": [
+        "show_the_password"
+      ],
+      "lane": "govuk",
+      "container": "forms_and_input",
+      "card": "compose_sign_in",
+      "facet": "credentials_are_hard_to_enter",
+      "leaf": "show_the_password"
+    },
+    {
+      "id": "govuk.hide-password-by-default-show-toggle",
+      "title": "hide password by default show toggle",
+      "name": "Hide password by default; show toggle — GOV.UK",
+      "jobs": [
+        "show_the_password"
+      ],
+      "lane": "govuk",
+      "container": "forms_and_input",
+      "card": "compose_sign_in",
+      "facet": "credentials_are_hard_to_enter",
+      "leaf": "show_the_password"
     }
   ]
 }

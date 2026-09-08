@@ -18,7 +18,7 @@ description: >-
 
 Need in → cited criteria pack out. You already have the UI. We hand you the matching cited rules so you don't invent UX from memory.
 
-Compose and review share this one trigger. Pick a Situation Card, call `Open-UX:get_situation`, then `Open-UX:audit` with `jobs=<card_id>`. Surfaces (`home`, `cart`, `checkout`) are context, not Cards. Container aliases `forms` / `actions` / `feedback` work as a broad first scope.
+Compose and review share this one trigger. Pick a Situation Card, call `Open-UX:get_situation`, then `Open-UX:audit` with `jobs=<card_id>`. `jobs=` is a stratified Card sample (not every rule on the Card); `query` is optional attention, not required. Surfaces (`home`, `cart`, `checkout`) are context, not Cards. Container aliases `forms` / `actions` / `feedback` work as a broad first scope.
 
 When you need a map of what exists — by **category**, then **source** — read [`catalog/MANIFEST.md`](../../../../catalog/MANIFEST.md). Then fetch one id.
 
@@ -72,7 +72,7 @@ Fully qualified `Open-UX:*` names. `/list` `/get` / map / cite stay on tools. Ca
 
 - `Open-UX:get_situation` — Card when / reject / pointers (not rule bodies)
 - `Open-UX:audit` — `jobs=<card_id>` or `guideline_ids`. The pack.
-- Helper (available, not required): `python3 scripts/audit.py --jobs <card_id>` or `--guideline-ids`. Your choice — the tool or this helper.
+- Same wire (available, not required): `open-ux audit --jobs <card_id>` or `python3 scripts/audit.py --jobs <card_id>` / `--guideline-ids`. Your choice — the tool or this helper.
 - `Open-UX:list_situations` — Card index; optional `container`
 - `Open-UX:suggest_situations` — vague surface or pasted UI
 - `Open-UX:get_guideline` / `Open-UX:search_guidelines` / `Open-UX:list_guidelines` — cite

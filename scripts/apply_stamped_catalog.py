@@ -4,6 +4,9 @@
 Drops 7 UNMAPPED leftovers. Regenerates jobs.json, rules/{category}/{source}/*.json, index.json, manifest.
 Then folds the three verified same-claim families. Citation is always
 an array of one or many {source, url}.
+
+Fails closed unless --rewrite-tree is passed (OUX-25): a bare run would
+overwrite live jobs.json, including cited leaves filled after the stamp.
 """
 
 from __future__ import annotations
@@ -23,7 +26,7 @@ from open_ux.catalog import find_rule_file, iter_rule_files, rule_dest  # noqa: 
 
 CATALOG = ROOT / "catalog"
 RULES = CATALOG / "rules"
-CSV_PATH = Path(sys.argv[1]) if len(sys.argv) > 1 else None
+REWRITE_FLAG = "--rewrite-tree"
 LIVE_SEED = (
     "forms.field_labels.visible_label",
     "forms.field_labels.label_stays_visible",
@@ -132,10 +135,30 @@ def _leaf(leaf_id: str, ids: list[str]) -> dict:
     return {"id": leaf_id, "guideline_ids": ids}
 
 
-def main() -> int:
-    if CSV_PATH is None or not CSV_PATH.is_file():
-        raise SystemExit("usage: apply_stamped_catalog.py <consolidated-309.csv>")
-    with CSV_PATH.open(encoding="utf-8", newline="") as handle:
+def _parse_args(argv: list[str] | None = None) -> tuple[Path | None, bool]:
+    args = list(sys.argv[1:] if argv is None else argv)
+    rewrite = REWRITE_FLAG in args
+    rest = [item for item in args if item != REWRITE_FLAG]
+    csv_path = Path(rest[0]) if rest else None
+    return csv_path, rewrite
+
+
+def main(argv: list[str] | None = None) -> int:
+    csv_path, rewrite = _parse_args(argv)
+    if not rewrite:
+        print(
+            "apply_stamped_catalog.py rewrites jobs.json from the harvest CSV. "
+            "Refusing without --rewrite-tree (OUX-25).",
+            file=sys.stderr,
+        )
+        return 2
+    if csv_path is None or not csv_path.is_file():
+        print(
+            "usage: apply_stamped_catalog.py --rewrite-tree <consolidated-309.csv>",
+            file=sys.stderr,
+        )
+        return 2
+    with csv_path.open(encoding="utf-8", newline="") as handle:
         rows = list(csv.DictReader(handle))
     if len(rows) != 309:
         raise SystemExit(f"expected 309 CSV rows, got {len(rows)}")

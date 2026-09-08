@@ -19,6 +19,8 @@ Same catalog. No invite. Telemetry off. Point MCP clients at local stdio.
 
 Contributors: clone the repo and `pip install -e "packages/mcp[dev]"`.
 
+Install from this repo: `claude plugin marketplace add 3dyonic/open-ux` then `claude plugin install open-ux@open-ux`. Validate: `claude plugin validate . --strict`.
+
 ## Use
 
 One skill: `open-ux`. Commands: `/list` `/get` `/audit`, aliases `/forms` `/actions` `/feedback` — short prompts that call `Open-UX:*` tools.

@@ -1,11 +1,35 @@
-# Claude plugin (thin)
+# Open UX
 
-Display name: **Open UX**  
-Subtitle: cited UX rules agents audit against / shared cited guidelines
+![Open UX](assets/hero.svg)
+
+Cited UX rules agents audit against. Pick a Situation Card, then get a criteria pack.
+
+Homepage: [open-ux.dev](https://open-ux.dev)
 
 Do not put “MCP” in the marketplace / plugin title or landing H1.
 
-Connect: package name `open-ux` (console script `open-ux`), or hosted. Same tools, same Cards.
+Logo (Cursor `logo` field): [assets/icon.svg](assets/icon.svg). Listing art: [assets/hero.svg](assets/hero.svg), [assets/offerings.svg](assets/offerings.svg).
+
+## Install
+
+Invite: [open-ux.dev/invite](https://open-ux.dev/invite) → `uxmcp_`. Then enable. See [SETUP.md](SETUP.md).
+
+### Claude
+
+```bash
+claude plugin marketplace add 3dyonic/open-ux
+claude plugin install open-ux@open-ux
+```
+
+Paste the key when prompted (`api_key`). Submit: [platform.claude.com/plugins/submit](https://platform.claude.com/plugins/submit). Validate: `claude plugin validate . --strict` (repo marketplace) or `claude plugin validate ./clients/claude --strict`.
+
+### Cursor
+
+Same pack (`.cursor-plugin/` + `mcp.json`). Set `OPEN_UX_API_KEY` under **Plugins → Configure**. Submit: [cursor.com/marketplace/publish](https://cursor.com/marketplace/publish).
+
+## Connect
+
+`pip install` the package, or hosted — same tools, same Cards. Package name: `open-ux`. Console script: `open-ux`.
 
 ```bash
 pip install open-ux
@@ -14,10 +38,16 @@ python -m open_ux stdio
 OPEN_UX_MODE=hosted python -m open_ux http
 ```
 
-No key; same catalog. Point MCP clients at local stdio, or hosted `https://open-ux.dev/mcp` + `uxmcp_` bearer (`OPEN_UX_API_KEY`) for the shared live catalog. Contributors: clone the repo and `pip install -e "packages/mcp[dev]"`. Registry listing is after proof.
+No key; same catalog. Point MCP clients at local stdio, or hosted `https://open-ux.dev/mcp` + `uxmcp_` bearer (`OPEN_UX_API_KEY`) for the shared live catalog. Contributors: clone the repo and `pip install -e "packages/mcp[dev]"`.
 
-One skill package: `skills/open-ux`. Compose and review share the pull trigger. Map and cite are sections in that skill — not extra packages.
+## Offerings (one skill)
 
-Commands are short slash prompts that call `Open-UX:*` tools: `/list` `/get` `/audit`, plus aliases `/forms` `/actions` `/feedback`. Agent pointers: `agents/open-ux.md`.
+Compose, review, map, and cite are jobs in `skills/open-ux` — not extra packages.
 
-Optional without a Claude session: repo-root `scripts/mcp_call.py` (`tools/list` / `tools/call`). Not the skill path.
+- **Compose / review** — pick a Card, `Open-UX:get_situation`, then `Open-UX:audit` with `jobs=`
+- **Map** — `Open-UX:suggest_situations` when the ask is a vague surface
+- **Cite** — `Open-UX:search_guidelines` / `Open-UX:get_guideline`
+
+Commands: `/list` `/get` `/audit`, plus aliases `/forms` `/actions` `/feedback`. Agent pointers: `agents/open-ux.md`.
+
+Same wire without a session: `open-ux audit --jobs …`. Repo helper `scripts/mcp_call.py` (`tools/list` / `tools/call`) is available, not required. Not the skill path.

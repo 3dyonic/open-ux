@@ -20,9 +20,9 @@ FORM_SEED = "ant.checkbox-vs-switch"
 INDEX_KEYS = {"id", "title", "name", "jobs", "lane", "container", "card", "facet", "leaf"}
 BODY_KEYS = {"pass_when", "fail_when", "rule", "citation", "check"}
 EXTRA_SAMPLE = "govuk.date-input-only-memorable"
-CATALOG_COUNT = 200
+CATALOG_COUNT = 203
 FORM_COUNT = 14
-EXTRA_COUNT = 43
+EXTRA_COUNT = 46
 HARVEST3_COUNT = 56
 HARVEST4_COUNT = 43
 HARVEST5_COUNT = 34
@@ -295,7 +295,15 @@ async def test_audit_guideline_ids_only_those_rules(live_catalog: Path) -> None:
         assert "error" not in result
         assert "verdict" not in result
         for row in result["guidelines"]:
-            assert set(row) == {"id", "title", "name", "rule", "pass_when", "fail_when"}
+            assert set(row) == {
+                "id",
+                "title",
+                "name",
+                "rule",
+                "pass_when",
+                "fail_when",
+                "facet",
+            }
 
 
 @pytest.mark.asyncio
@@ -304,7 +312,9 @@ async def test_audit_schema_shows_jobs_enum_not_target(live_catalog: Path) -> No
     async with Client(mcp) as client:
         tools = await client.list_tools()
     audit_tool = next(t for t in tools if t.name == "audit")
-    schema = audit_tool.input_schema
+    schema = getattr(audit_tool, "input_schema", None) or getattr(
+        audit_tool, "inputSchema"
+    )
     props = schema["properties"]
     assert "target" not in props
     assert "content" not in props
@@ -337,4 +347,12 @@ async def test_audit_jobs_returns_criteria(live_catalog: Path) -> None:
         assert "verdict" not in result
         assert "summary" not in result
         row = result["guidelines"][0]
-        assert set(row) == {"id", "title", "name", "rule", "pass_when", "fail_when"}
+        assert set(row) == {
+            "id",
+            "title",
+            "name",
+            "rule",
+            "pass_when",
+            "fail_when",
+            "facet",
+        }

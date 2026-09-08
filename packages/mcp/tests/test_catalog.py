@@ -91,10 +91,10 @@ UNWOUND_IDS = {
 MULTI_CITE_KEEPS = {
     "ant.checkbox-vs-switch",
 }
-CATALOG_COUNT = 200
+CATALOG_COUNT = 203
 ACTION_COUNT = 10
 FORM_COUNT = 14
-EXTRA_COUNT = 43
+EXTRA_COUNT = 46
 HARVEST3_COUNT = 56
 HARVEST4_COUNT = 43
 HARVEST5_COUNT = 34
@@ -581,3 +581,23 @@ def test_no_primary_apple_or_nng_rules_remain(live_catalog: Path) -> None:
     ]
     assert house_dirs == []
     assert not any(g["id"].startswith(("nng.", "apple.")) for g in catalog.guidelines)
+
+
+EMPTY_LEAVES = {
+    "show_action_state": "design_actions_and_ctas",
+    "write_empty_state": "compose_feedback",
+}
+
+
+def test_unpublished_empty_leaves_stay_empty() -> None:
+    tree = load_job_tree()
+    found: dict[str, tuple[str, tuple[str, ...]]] = {}
+    for card in tree.cards:
+        for facet in card.facets:
+            for leaf in facet.leaves:
+                if leaf.id in EMPTY_LEAVES:
+                    found[leaf.id] = (card.id, leaf.guideline_ids)
+    assert set(found) == set(EMPTY_LEAVES)
+    for leaf_id, (card_id, ids) in found.items():
+        assert card_id == EMPTY_LEAVES[leaf_id]
+        assert ids == ()

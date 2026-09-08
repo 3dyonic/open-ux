@@ -1,0 +1,26 @@
+{
+  "name": "open-ux",
+  "owner": {
+    "name": "3dyonic"
+  },
+  "metadata": {
+    "description": "Open UX — cited UX rules agents audit against",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "open-ux",
+      "source": "./clients/claude",
+      "description": "Cited UX rules agents audit against. Pick a Situation Card, then get a criteria pack.",
+      "version": "1.0.0",
+      "author": {
+        "name": "3dyonic"
+      },
+      "homepage": "https://open-ux.dev",
+      "repository": "https://github.com/3dyonic/open-ux",
+      "license": "MIT",
+      "keywords": ["ux", "guidelines", "audit", "forms", "actions"],
+      "logo": "assets/icon.svg"
+    }
+  ]
+}

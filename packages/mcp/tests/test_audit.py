@@ -2,9 +2,24 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from open_ux.audit import NEED_ERROR, PACK_KEYS, audit
-from open_ux.catalog import EMPTY_NOTE, load_catalog, select_by_jobs
-from open_ux.jobs import DEFAULT_LIMIT, MISS_NOTE
+from open_ux.audit import (
+    NEED_ERROR,
+    PACK_KEYS,
+    _matches_query,
+    _rerank_by_query,
+    _stratify_by_facet,
+    audit,
+)
+from open_ux.catalog import EMPTY_NOTE, get_by_id, load_catalog, select_by_jobs
+from open_ux.jobs import (
+    CARD_IDS,
+    DEFAULT_LIMIT,
+    MISS_NOTE,
+    Card,
+    Facet,
+    JobTree,
+    load_job_tree,
+)
 from open_ux.settings import Settings
 
 VISIBLE = "ant.checkbox-vs-switch"
@@ -137,11 +152,14 @@ def test_query_that_matches_nothing_falls_open(live_catalog: Path) -> None:
     narrowed = audit(
         _catalog(live_catalog),
         jobs="handle_form_errors",
-        query="red border no message",
+        query="zxqv-not-a-guideline-token",
     )
     assert wide["total"] >= 1
     assert narrowed["total"] == wide["total"]
     assert narrowed["count"] == wide["count"]
+    assert [row["id"] for row in narrowed["guidelines"]] == [
+        row["id"] for row in wide["guidelines"]
+    ]
     assert narrowed["note"] and "showing all" in narrowed["note"]
 
 
@@ -205,3 +223,166 @@ def test_empty_catalog_is_honest(tmp_env: Path) -> None:
     assert result["guidelines"] == []
     assert result["note"] == EMPTY_NOTE
     assert "verdict" not in result
+
+
+def _nonempty_facets(catalog, job: str) -> set[str]:
+    return {
+        str(row.get("facet") or "")
+        for row in select_by_jobs(catalog, job)
+        if row.get("facet")
+    }
+
+
+def test_design_a_form_default_covers_every_nonempty_facet(live_catalog: Path) -> None:
+    catalog = _catalog(live_catalog)
+    result = audit(catalog, jobs="design_a_form")
+    ids = {row["id"] for row in result["guidelines"]}
+    assert "fluent.helper-text-below" in ids
+    assert "spectrum.asterisk-is-icon-not-label-text" in ids
+    window = {row["facet"] for row in result["guidelines"]}
+    assert _nonempty_facets(catalog, "design_a_form") <= window
+    for row in result["guidelines"]:
+        assert row["facet"]
+
+
+def test_design_actions_default_covers_every_nonempty_facet(live_catalog: Path) -> None:
+    catalog = _catalog(live_catalog)
+    result = audit(catalog, jobs="design_actions_and_ctas")
+    window = {row["facet"] for row in result["guidelines"]}
+    assert _nonempty_facets(catalog, "design_actions_and_ctas") <= window
+
+
+def test_query_phrase_token_any_does_not_fail_open(live_catalog: Path) -> None:
+    catalog = _catalog(live_catalog)
+    wide = audit(catalog, jobs="design_a_form")
+    narrowed = audit(
+        catalog,
+        jobs="design_a_form",
+        query="label required helper optional",
+    )
+    assert narrowed["total"] == wide["total"]
+    assert not (narrowed.get("note") and "showing all" in narrowed["note"])
+
+
+def test_query_helper_reorders_stratified_not_catalog(live_catalog: Path) -> None:
+    catalog = _catalog(live_catalog)
+    cap = DEFAULT_LIMIT
+    stratified = _stratify_by_facet(
+        select_by_jobs(catalog, "design_a_form"),
+        load_job_tree(),
+        cap,
+    )
+    ranked, matched = _rerank_by_query(stratified, "helper")
+    assert matched
+    expected = [row["id"] for row in ranked][:cap]
+    result = audit(catalog, jobs="design_a_form", query="helper")
+    assert [row["id"] for row in result["guidelines"]] == expected
+
+
+def test_token_any_required_false_positive_is_accepted(live_catalog: Path) -> None:
+    """query='required' matches ant.slider-intensity-grade ('precise number is required').
+
+    OUX-24: token-any is recall, not precision. Do not treat that match as a regression.
+    """
+    catalog = _catalog(live_catalog)
+    slider = get_by_id(catalog, "ant.slider-intensity-grade")
+    assert slider is not None
+    assert _matches_query(slider, "required")
+    result = audit(catalog, jobs="design_a_form", query="required")
+    assert not (result.get("note") and "showing all" in result["note"])
+
+
+def test_live_max_nonempty_facets_under_default_limit(live_catalog: Path) -> None:
+    """Scaling limit: len(F) >= cap drops later facets. Today's Cards stay under cap."""
+    catalog = _catalog(live_catalog)
+    counts = [len(_nonempty_facets(catalog, cid)) for cid in CARD_IDS]
+    assert max(counts) < DEFAULT_LIMIT
+
+
+def _synthetic_tree(facet_ids: list[str]) -> JobTree:
+    facets = tuple(Facet(id=fid, title=fid) for fid in facet_ids)
+    card = Card(
+        id="design_a_form",
+        title="Design a form",
+        container="forms_and_input",
+        overview="",
+        when=(),
+        reject=(),
+        hints=(),
+        facets=facets,
+    )
+    return JobTree(containers=(), cards=(card,))
+
+
+def _synthetic_rows(facet_ids: list[str], per: int) -> list[dict]:
+    rows = []
+    for fid in facet_ids:
+        for index in range(per):
+            rows.append(
+                {
+                    "id": f"{fid}-{index}",
+                    "card": "design_a_form",
+                    "facet": fid,
+                }
+            )
+    return rows
+
+
+def test_stratify_even_five_facets_cap_ten() -> None:
+    facets = [f"f{i}" for i in range(5)]
+    ordered = _stratify_by_facet(_synthetic_rows(facets, 3), _synthetic_tree(facets), 10)
+    head = ordered[:10]
+    counts = {fid: 0 for fid in facets}
+    for row in head:
+        counts[row["facet"]] += 1
+    assert counts == {fid: 2 for fid in facets}
+
+
+def test_stratify_uneven_four_facets_cap_ten() -> None:
+    facets = [f"f{i}" for i in range(4)]
+    ordered = _stratify_by_facet(_synthetic_rows(facets, 3), _synthetic_tree(facets), 10)
+    head = ordered[:10]
+    counts = {fid: 0 for fid in facets}
+    for row in head:
+        counts[row["facet"]] += 1
+    assert counts == {"f0": 3, "f1": 3, "f2": 2, "f3": 2}
+
+
+def test_stratify_seven_facets_quota_then_fill() -> None:
+    facets = [f"f{i}" for i in range(7)]
+    ordered = _stratify_by_facet(_synthetic_rows(facets, 2), _synthetic_tree(facets), 10)
+    head = ordered[:10]
+    counts = {fid: 0 for fid in facets}
+    for row in head:
+        counts[row["facet"]] += 1
+    assert counts == {
+        "f0": 2,
+        "f1": 2,
+        "f2": 2,
+        "f3": 1,
+        "f4": 1,
+        "f5": 1,
+        "f6": 1,
+    }
+
+
+def test_stratify_facets_exceed_cap_drops_later_facets() -> None:
+    """Known scaling limit (OUX-24): len(F) >= cap → 1 from each of the first cap only."""
+    facets = [f"f{i}" for i in range(12)]
+    ordered = _stratify_by_facet(_synthetic_rows(facets, 1), _synthetic_tree(facets), 10)
+    head = ordered[:10]
+    assert [row["facet"] for row in head] == [f"f{i}" for i in range(10)]
+    assert "f10" not in {row["facet"] for row in head}
+    assert "f11" not in {row["facet"] for row in head}
+
+
+def test_compose_sign_in_returns_cited_show_password(live_catalog: Path) -> None:
+    result = audit(_catalog(live_catalog), jobs="compose_sign_in")
+    assert result["total"] >= 1
+    assert result["count"] >= 1
+    ids = {row["id"] for row in result["guidelines"]}
+    assert "govuk.hide-password-by-default-show-toggle" in ids
+    assert "forms.inputs.password_strength_meter" not in ids
+    for row in result["guidelines"]:
+        _assert_pack_row(row)
+        assert row["facet"] == "credentials_are_hard_to_enter"

@@ -18,7 +18,7 @@ Example: `copy/polar/dont-duplicate-content.json` still has `"id": "polar.dont-d
 
 | File | Role |
 | --- | --- |
-| `rules/` | 200 guideline files |
+| `rules/` | 203 guideline files |
 | `jobs.json` | 7 containers, 13 Situation Cards, Facet → Leaf map. Pointers only |
 | `index.json` | Generated `{id,title,name,jobs,lane,container,card,facet,leaf?}` |
 | `manifest.json` / `MANIFEST.md` | Generated category → source map for agents. No rule bodies |
@@ -48,7 +48,7 @@ The picker is a Card — one compose job. Containers are how the skill lists the
 
 ## Harvest rows that are not files
 
-The harvest had 309 rows. 200 files are published after dropping primary Apple HIG and NN/g cites. The other 14 harvest rows were never files; they are listed here so a missing id is explained, not silent.
+The harvest had 309 rows. 200 files were published after dropping primary Apple HIG and NN/g cites. Three GOV.UK password-input claims were added later for `compose_sign_in` (OUX-25), so 203 files are on disk. The other 14 harvest rows were never files; they are listed here so a missing id is explained, not silent.
 
 ### No published file
 
@@ -75,3 +75,12 @@ These seven rows support the same pass/fail as an existing rule. Their URLs live
 | `ant.checkbox-vs-switch` | `suomi.toggle-button-immediate-input-submit` |
 
 Adjacent claims (select cutoffs, date-type slices, default-when-possible) stay as their own files.
+
+## Empty leaves
+
+These Leaves exist on the tree so agents can route, but they have no published cited files. Do not invent criteria for them.
+
+| leaf | Card | Why |
+| --- | --- | --- |
+| `show_action_state` | `design_actions_and_ctas` | No cited source row yet for in-control loading / pressed state |
+| `write_empty_state` | `compose_feedback` | No cited source row yet for empty / dead-end next step |
