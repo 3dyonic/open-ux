@@ -3,6 +3,13 @@ on:
   push:
     tags:
       - "v*"
+    branches: [master, main]
+    paths:
+      - "catalog/**"
+      - "packages/mcp/src/**"
+      - "packages/mcp/pyproject.toml"
+      - "packages/mcp/hatch_build.py"
+      - "packages/mcp/hatch_metadata.py"
   workflow_dispatch:
     inputs:
       target:
@@ -12,33 +19,87 @@ on:
         options:
           - testpypi
 
+concurrency:
+  group: pypi-publish
+  cancel-in-progress: false
+
 jobs:
   publish:
     runs-on: ubuntu-latest
     environment: ${{ github.event_name == 'workflow_dispatch' && 'testpypi' || 'pypi' }}
     permissions:
       id-token: write
-      contents: read
-    defaults:
-      run:
-        working-directory: packages/mcp
+      contents: write
+    outputs:
+      skip: ${{ steps.prep.outputs.skip }}
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Prepare version
+        id: prep
+        run: |
+          set -euo pipefail
+          if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+            echo "publish_pypi=true" >> "$GITHUB_OUTPUT"
+            echo "push_tag=" >> "$GITHUB_OUTPUT"
+            echo "tag ${GITHUB_REF_NAME}"
+            exit 0
+          fi
+          if [[ "${GITHUB_EVENT_NAME}" == workflow_dispatch ]]; then
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+            echo "publish_pypi=false" >> "$GITHUB_OUTPUT"
+            echo "push_tag=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          before="${{ github.event.before }}"
+          if [[ "$before" =~ ^0+$ ]]; then
+            changed="$(git diff --name-only "${GITHUB_SHA}^!" || git ls-files)"
+          else
+            changed="$(git diff --name-only "$before" "$GITHUB_SHA")"
+          fi
+          echo "$changed"
+          if ! echo "$changed" | grep -Eq '^(catalog/|packages/mcp/src/|packages/mcp/pyproject.toml|packages/mcp/hatch_build.py|packages/mcp/hatch_metadata.py)'; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "publish_pypi=false" >> "$GITHUB_OUTPUT"
+            echo "push_tag=" >> "$GITHUB_OUTPUT"
+            echo "no catalog/package source change; skip"
+            exit 0
+          fi
+
+          last="$(git describe --tags --abbrev=0)"
+          ver="${last#v}"
+          IFS=. read -r maj min pat <<< "$ver"
+          new="v${maj}.${min}.$((pat + 1))"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a "$new" -m "open-ux $new"
+          echo "skip=false" >> "$GITHUB_OUTPUT"
+          echo "publish_pypi=true" >> "$GITHUB_OUTPUT"
+          echo "push_tag=$new" >> "$GITHUB_OUTPUT"
+          echo "next $new (from $last)"
       - uses: actions/setup-python@v5
+        if: steps.prep.outputs.skip != 'true'
         with:
           python-version: "3.12"
       - name: Install build
+        if: steps.prep.outputs.skip != 'true'
+        working-directory: packages/mcp
         run: python -m pip install build
       - name: Build
+        if: steps.prep.outputs.skip != 'true'
+        working-directory: packages/mcp
         run: python -m build
       - name: Smoke from wheel
+        if: steps.prep.outputs.skip != 'true'
+        working-directory: packages/mcp
         run: |
           python -m pip install dist/*.whl
           python -m open_ux validate-catalog
       - name: Publish to PyPI
-        if: github.event_name == 'push'
+        if: github.event_name == 'push' && steps.prep.outputs.publish_pypi == 'true'
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           packages-dir: packages/mcp/dist
@@ -48,3 +109,6 @@ jobs:
         with:
           packages-dir: packages/mcp/dist
           repository-url: https://test.pypi.org/legacy/
+      - name: Push version tag
+        if: steps.prep.outputs.push_tag != ''
+        run: git push origin "${{ steps.prep.outputs.push_tag }}"
