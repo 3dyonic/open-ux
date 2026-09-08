@@ -1,5 +1,4 @@
 {
-  "version": "0.3.0",
   "containers": [
     {
       "id": "forms_and_input",
@@ -55,7 +54,8 @@
         "pick a control for a choice",
         "group related inputs",
         "mark required",
-        "helper text"
+        "helper text",
+        "suggestions as you type"
       ],
       "reject": [
         {
@@ -89,7 +89,10 @@
         "dropdown",
         "checkbox",
         "radio",
-        "fieldset"
+        "fieldset",
+        "typeahead",
+        "autocomplete",
+        "suggestions as you type"
       ],
       "facets": [
         {
@@ -250,7 +253,8 @@
         "invalid",
         "inline error",
         "form error",
-        "fix this field"
+        "fix this field",
+        "which field is wrong"
       ],
       "facets": [
         {
@@ -471,7 +475,9 @@
         "add a delete confirmation",
         "discard",
         "navigate away from unsaved work",
-        "confirm or undo"
+        "confirm or undo",
+        "remove a teammate or member",
+        "cancel a subscription"
       ],
       "reject": [
         {
@@ -490,7 +496,11 @@
         "unsaved",
         "confirm",
         "undo",
-        "leave"
+        "leave",
+        "teammate",
+        "member",
+        "subscription",
+        "cancel"
       ],
       "facets": [
         {
@@ -688,7 +698,8 @@
       "when": [
         "header or homepage search",
         "search box vs search link",
-        "place the search control"
+        "place the search control",
+        "narrow a large search result list"
       ],
       "reject": [
         {
@@ -704,7 +715,9 @@
         "search",
         "find",
         "query",
-        "magnifying"
+        "magnifying",
+        "narrow results",
+        "filter results"
       ],
       "facets": [
         {
@@ -756,7 +769,9 @@
         "chart",
         "grid",
         "scannable",
-        "density"
+        "density",
+        "compare rows",
+        "filter"
       ],
       "facets": [
         {
@@ -798,7 +813,8 @@
       "when": [
         "page structure and headings",
         "inverted pyramid",
-        "keep the page scannable"
+        "keep the page scannable",
+        "important action buried below the fold"
       ],
       "reject": [
         {
@@ -815,7 +831,9 @@
         "scan",
         "heading",
         "h1",
-        "pyramid"
+        "pyramid",
+        "below the fold",
+        "buried"
       ],
       "facets": [
         {
@@ -842,7 +860,8 @@
       "when": [
         "link text",
         "you / your voice",
-        "page copy that is not a button or field label"
+        "page copy that is not a button or field label",
+        "instructions written like a legal document"
       ],
       "reject": [
         {
@@ -863,7 +882,9 @@
         "click here",
         "you",
         "your",
-        "plain language"
+        "plain language",
+        "legal document",
+        "jargon"
       ],
       "facets": [
         {
@@ -906,7 +927,9 @@
         "modal vs accordion",
         "tooltip or inline help",
         "hide advanced options",
-        "design this side panel"
+        "design this side panel",
+        "extra info that should not interrupt",
+        "open in a new page or stay on top"
       ],
       "reject": [
         {
@@ -929,7 +952,10 @@
         "tooltip",
         "disclosure",
         "side panel",
-        "drawer"
+        "drawer",
+        "interrupt",
+        "stay on top",
+        "new page vs overlay"
       ],
       "facets": [
         {
@@ -970,6 +996,8 @@
         "split this long form into steps",
         "add a progress indicator",
         "what happens if they leave mid-flow",
+        "go back to an earlier step",
+        "change a previous answer",
         "design the onboarding sequence"
       ],
       "reject": [
@@ -992,7 +1020,10 @@
         "onboarding",
         "checkout flow",
         "progress",
-        "sequence"
+        "sequence",
+        "go back",
+        "earlier step",
+        "previous answer"
       ],
       "facets": [
         {

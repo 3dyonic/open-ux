@@ -319,7 +319,6 @@ def main() -> int:
         gid for gid in by_id if gid not in LIVE_SEED
     )
     index = {
-        "version": "0.3.0",
         "guidelines": [_index_row(by_id[gid]) for gid in ordered_ids],
     }
     (CATALOG / "index.json").write_text(

@@ -280,9 +280,10 @@ def test_query_helper_reorders_stratified_not_catalog(live_catalog: Path) -> Non
 
 
 def test_token_any_required_false_positive_is_accepted(live_catalog: Path) -> None:
-    """query='required' matches ant.slider-intensity-grade ('precise number is required').
+    """query='required' still matches ant.slider-intensity-grade ('precise number is required').
 
-    OUX-24: token-any is recall, not precision. Do not treat that match as a regression.
+    OUX-24 accepted this as recall not precision. BM25 (OUX-26) does not
+    promise to drop it either.
     """
     catalog = _catalog(live_catalog)
     slider = get_by_id(catalog, "ant.slider-intensity-grade")

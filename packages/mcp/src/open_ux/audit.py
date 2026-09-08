@@ -3,6 +3,7 @@ from __future__ import annotations
 from collections import defaultdict
 from typing import Any
 
+from open_ux.bm25 import guideline_blob, rank_blobs
 from open_ux.catalog import EMPTY_NOTE, Catalog, get_by_id, select_by_jobs
 from open_ux.jobs import (
     CARD_IDS,
@@ -38,62 +39,30 @@ def _pack(guideline: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def _query_blob(guideline: dict[str, Any]) -> str:
-    return " ".join(
-        [
-            str(guideline.get("id") or ""),
-            str(guideline.get("title") or ""),
-            str(guideline.get("name") or ""),
-            str(guideline.get("rule") or ""),
-            " ".join(guideline.get("pass_when") or []),
-            " ".join(guideline.get("fail_when") or []),
-        ]
-    ).lower()
-
-
-def _query_tokens(query: str) -> list[str]:
-    return [part for part in query.strip().lower().split() if len(part) > 1]
-
-
 def _matches_query(guideline: dict[str, Any], query: str | None) -> bool:
-    q = (query or "").strip().lower()
+    q = (query or "").strip()
     if not q:
         return True
-    blob = _query_blob(guideline)
-    if q in blob:
-        return True
-    tokens = _query_tokens(q)
-    return bool(tokens) and any(token in blob for token in tokens)
+    _order, matched = rank_blobs(q, [guideline_blob(guideline)])
+    return matched
 
 
 def _rerank_by_query(
     rows: list[dict[str, Any]], query: str | None
 ) -> tuple[list[dict[str, Any]], bool]:
-    """Query narrows attention, never access: rank matches first, drop nothing.
+    """Query orders the pack, never drops access: rank matches first.
 
-    Phrase hits (full query in the blob) stay ahead of token-any hits so a
-    two-word query like "action panel" still surfaces that rule first.
-    Token-any is recall for multi-word queries that have no phrase hit
-    (OUX-24). Zero hits fail open (OUX-21).
+    In-process BM25 over pack JSON. Phrase hits still lead via a
+    substring bonus (OUX-24). Zero hits fail open (OUX-21).
     """
     q = (query or "").strip()
     if not q:
         return rows, True
-    needle = q.lower()
-    phrase: list[dict[str, Any]] = []
-    token_only: list[dict[str, Any]] = []
-    unmatched: list[dict[str, Any]] = []
-    for row in rows:
-        blob = _query_blob(row)
-        if needle in blob:
-            phrase.append(row)
-        elif _matches_query(row, q):
-            token_only.append(row)
-        else:
-            unmatched.append(row)
-    if not phrase and not token_only:
+    blobs = [guideline_blob(row) for row in rows]
+    order, matched = rank_blobs(q, blobs)
+    if not matched:
         return rows, False
-    return phrase + token_only + unmatched, True
+    return [rows[i] for i in order], True
 
 
 def _facet_keys(tree: JobTree) -> list[tuple[str, str]]:

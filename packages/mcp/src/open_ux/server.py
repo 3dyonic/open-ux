@@ -23,7 +23,7 @@ from open_ux.auth import (
     request_invite,
 )
 from open_ux import __version__
-from open_ux.catalog import EMPTY_NOTE, get_by_id, list_index, load_catalog
+from open_ux.catalog import EMPTY_NOTE, catalog_status, get_by_id, list_index, load_catalog
 from open_ux.health import health_payload
 from open_ux.jobs import (
     DEFAULT_LIMIT,
@@ -78,7 +78,6 @@ def _app_page() -> Response:
 
 def _jobs_payload(tree: JobTree) -> dict[str, Any]:
     return {
-        "version": tree.version,
         "containers": [{"id": c.id, "title": c.title} for c in tree.containers],
         "cards": [
             {
@@ -105,11 +104,7 @@ def _catalog_index_payload(catalog, job_tree: JobTree) -> dict[str, Any]:
     return {
         "guidelines": guidelines,
         "total": total,
-        "catalog": {
-            "status": "empty" if catalog.empty else "ok",
-            "guideline_count": len(catalog.guidelines),
-            "version": catalog.version,
-        },
+        "catalog": catalog_status(catalog),
         "jobs": _jobs_payload(job_tree),
     }
 
@@ -216,7 +211,7 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         instructions=(
             "Open UX: cited UX rules agents audit against. "
             "Find a Situation Card with list_situations, get_situation, or "
-            "suggest_situations, then get_guideline or audit. "
+            "suggest_situations (catalog map), then audit. "
             "No server LLM. "
             "audit: say one Card or container as jobs; returns cited rule "
             "criteria. Does not take a file. Does not return pass or fail. "
@@ -242,11 +237,7 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             "total": total,
             "limit": limit,
             "offset": offset,
-            "catalog": {
-                "status": "empty" if catalog.empty else "ok",
-                "guideline_count": len(catalog.guidelines),
-                "version": catalog.version,
-            },
+            "catalog": catalog_status(catalog),
         }
         if catalog.empty:
             payload["note"] = EMPTY_NOTE
@@ -260,7 +251,7 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         limit: int = 50,
         offset: int = 0,
     ) -> dict[str, Any]:
-        """Search the paged index by query and/or jobs and/or lane. No rule bodies."""
+        """Scope the paged index by jobs / lane. Query BM25-orders; does not filter. No rule bodies."""
         items, total = list_index(
             catalog,
             query=query,
@@ -276,11 +267,7 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             "total": total,
             "limit": limit,
             "offset": offset,
-            "catalog": {
-                "status": "empty" if catalog.empty else "ok",
-                "guideline_count": len(catalog.guidelines),
-                "version": catalog.version,
-            },
+            "catalog": catalog_status(catalog),
         }
         if catalog.empty:
             payload["note"] = EMPTY_NOTE
@@ -322,7 +309,7 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         limit: int = 20,
         offset: int = 0,
     ) -> dict[str, Any]:
-        """List Situation Cards — the compose jobs you pick. No rule bodies."""
+        """List Situation Cards. With container=, return that kind's specs (when / reject). Unscoped is the index. No rule bodies."""
         result = run_list_situations(
             job_tree, container=container, limit=limit, offset=offset
         )
@@ -351,7 +338,7 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             Field(
                 description=(
                     "What you are composing, in task language. "
-                    "Fallback when you cannot pick a Card from the skill table."
+                    "Returns the catalog map. Does not pick a Card."
                 )
             ),
         ],
@@ -360,17 +347,18 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             Field(
                 description=(
                     "Optional page/flow context (home, cart, checkout). "
-                    "Ranking bias only. Never an id."
+                    "Never an id. Does not reorder the map."
                 )
             ),
         ] = None,
     ) -> dict[str, Any]:
-        """Return every Situation Card, ordered from a vague task or pasted UI.
+        """Return the catalog map: every Situation Card, lock order.
 
-        Always returns the complete 13-card allowlist -- never a filtered
-        subset. Order is a heuristic hint, not a verdict: pick the fitting
-        Card yourself from the full set rather than trusting position alone.
-        Surface is ranking bias, never returned as an id. No server LLM.
+        Always returns the complete 13-card allowlist grouped by container —
+        never a filtered subset and never a ranked winner. task_text requests
+        the map; it does not reorder. Pick a container or a Card, then
+        get_situation, then audit with jobs=<card_id>. Surface is not an id.
+        No server LLM.
         """
         result = run_suggest_situations(task_text, surface, job_tree)
         _maybe_telemetry(settings, tool="suggest_situations")
@@ -383,9 +371,9 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             str | None,
             Field(
                 description=(
-                    "Optional words to rank within that job. Not a substitute for jobs. "
-                    "Never drops rules to zero -- reorders best matches first and falls "
-                    "back to the full set already in scope if nothing matches."
+                    "Optional words to order the pack within that job. Not a substitute "
+                    "for jobs. Never drops rules to zero -- reorders best matches first "
+                    "and falls back to the full set already in scope if nothing matches."
                 )
             ),
         ] = None,

@@ -43,8 +43,8 @@ def test_health_json_is_always_json(live_catalog: Path) -> None:
         assert body.status_code == 200
         assert body.headers["content-type"].startswith("application/json")
         assert body.json() == expected
-        assert set(body.json()) == {"ok", "name", "hosted", "catalog"}
-        assert set(body.json()["catalog"]) == {"status", "guideline_count", "version"}
+        assert set(body.json()) == {"ok", "name", "hosted", "version", "catalog"}
+        assert set(body.json()["catalog"]) == {"status", "guideline_count"}
 
 
 def test_catalog_api_index_includes_rule_and_jobs(live_catalog: Path) -> None:
@@ -58,6 +58,8 @@ def test_catalog_api_index_includes_rule_and_jobs(live_catalog: Path) -> None:
     assert len(body["guidelines"]) == len(catalog.index)
     assert body["catalog"]["status"] == "ok"
     assert body["catalog"]["guideline_count"] == len(catalog.guidelines)
+    assert "version" not in body["catalog"]
+    assert "version" not in body["jobs"]
     assert {row["id"] for row in body["jobs"]["containers"]} == {
         "forms_and_input",
         "actions_and_decisions",

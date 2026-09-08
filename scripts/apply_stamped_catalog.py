@@ -183,7 +183,6 @@ def main(argv: list[str] | None = None) -> int:
         return sorted(by_leaf.get(leaf_id, []))
 
     jobs = {
-        "version": "0.3.0",
         "containers": json.loads((CATALOG / "jobs.json").read_text(encoding="utf-8"))[
             "containers"
         ],
@@ -219,6 +218,9 @@ def main(argv: list[str] | None = None) -> int:
                     "checkbox",
                     "radio",
                     "fieldset",
+                    "typeahead",
+                    "autocomplete",
+                    "suggestions as you type",
                 ],
                 "facets": [
                     {
@@ -408,6 +410,10 @@ def main(argv: list[str] | None = None) -> int:
                     "confirm",
                     "undo",
                     "leave",
+                    "teammate",
+                    "member",
+                    "subscription",
+                    "cancel",
                 ],
                 "facets": [
                     {
@@ -670,6 +676,8 @@ def main(argv: list[str] | None = None) -> int:
                     "split this long form into steps",
                     "add a progress indicator",
                     "what happens if they leave mid-flow",
+                    "go back to an earlier step",
+                    "change a previous answer",
                     "design the onboarding sequence",
                 ],
                 "reject": [
@@ -684,6 +692,9 @@ def main(argv: list[str] | None = None) -> int:
                     "checkout flow",
                     "progress",
                     "sequence",
+                    "go back",
+                    "earlier step",
+                    "previous answer",
                 ],
                 "facets": [
                     {
@@ -755,7 +766,7 @@ def main(argv: list[str] | None = None) -> int:
 
     by_id = {item["id"]: item for item in written}
     ordered_ids = list(LIVE_SEED) + sorted(gid for gid in by_id if gid not in LIVE_SEED)
-    index = {"version": "0.3.0", "guidelines": [_index_row(by_id[gid]) for gid in ordered_ids]}
+    index = {"guidelines": [_index_row(by_id[gid]) for gid in ordered_ids]}
     (CATALOG / "index.json").write_text(
         json.dumps(index, indent=2, ensure_ascii=False) + "\n",
         encoding="utf-8",

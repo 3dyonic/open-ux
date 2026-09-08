@@ -21,6 +21,8 @@ def test_health_json_empty_catalog(tmp_env: Path) -> None:
     expected = health_payload(catalog, hosted=True)
     assert expected["catalog"]["status"] == "empty"
     assert expected["catalog"]["guideline_count"] == 0
+    assert "version" not in expected["catalog"]
+    assert expected["version"]
     with _client() as client:
         response = client.get("/health.json")
         html_accept = client.get(

@@ -43,7 +43,7 @@ Same catalog. No invite. Telemetry off. Point MCP clients at local stdio.
 | Job | Tools |
 | --- | --- |
 | compose / review | Pick a Card → `Open-UX:get_situation` → `Open-UX:audit` `jobs=<card_id>` |
-| map | `Open-UX:suggest_situations` when the ask is a surface. Fallback inside the skill. |
+| map | `Open-UX:suggest_situations` when the ask is a surface (catalog map). Pick a Card, then get_situation. The catalog stays open after a pack. |
 | cite | `Open-UX:search_guidelines` / `Open-UX:get_guideline` |
 
 ## Tools

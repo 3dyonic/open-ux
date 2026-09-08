@@ -1,15 +1,7 @@
-"""Regression fixture for OUX-21 (suggest_situations retrieval fix).
+"""OUX-21 completeness for suggest_situations.
 
-Runs the exact queries from the stress-test session that surfaced the
-original findings, plus a few known-passing queries as regression guards,
-and asserts the acceptance criteria from OUX-21:
-
-  * expected_card is present *somewhere* in the returned set -- the tool's
-    job is to never hide a real answer, not to guess it outright (the
-    calling LLM makes the final call).
-  * there is no separate "rejected" list any card id could contradict --
-    reject is folded into a same-row `caution` annotation, so the
-    accept/reject contradiction (finding #2) is structurally impossible.
+The fixture asserts the expected Card is on the catalog map. It does not
+assert #1: the tool is a lock-order map, not a ranker.
 """
 
 from __future__ import annotations
@@ -19,9 +11,9 @@ from pathlib import Path
 
 import pytest
 
-from open_ux.jobs import CARD_IDS, load_job_tree
+from open_ux.jobs import CARD_IDS, CONTAINER_IDS, load_job_tree
 from open_ux.settings import Settings
-from open_ux.situations import suggest_situations
+from open_ux.situations import suggest_card_ids, suggest_situations
 
 FIXTURE = Path(__file__).parent / "fixtures" / "situation_queries.json"
 ROWS = json.loads(FIXTURE.read_text(encoding="utf-8"))
@@ -31,57 +23,48 @@ def _tree(live_catalog: Path):
     return load_job_tree(Settings.load())
 
 
+def _row_by_id(result: dict, card_id: str) -> dict:
+    for container in result["containers"]:
+        for row in container["situations"]:
+            if row["id"] == card_id:
+                return row
+    raise AssertionError(f"{card_id} missing from menu")
+
+
 @pytest.mark.parametrize("row", ROWS, ids=[r["query"][:40] for r in ROWS])
 def test_expected_card_present(live_catalog: Path, row: dict) -> None:
-    """Completeness lock, not a routing-quality test.
-
-    Under the current contract every query returns all 13 cards, so this
-    can only fail if a filter is reintroduced (or a card is dropped from
-    the catalog) -- it does not check ranking quality, caution noise, or
-    that the expected card is findable near the top. That is intentional:
-    OUX-21's fix is "never hide a real answer," not "always rank it #1."
-    """
     tree = _tree(live_catalog)
     result = suggest_situations(row["query"], row.get("surface"), tree=tree)
-    ids = [item["id"] for item in result["situations"]]
+    ids = suggest_card_ids(result)
     assert row["expected_card"] in ids, (
         f"{row['expected_card']!r} missing for {row['query']!r} "
         f"({row['note']}) -- got {ids}"
     )
+    _row_by_id(result, row["expected_card"])
 
 
-def test_caution_is_phrase_match_not_token_overlap(live_catalog: Path) -> None:
-    """caution must not fire on generic single-word overlap (PR #45 review).
-
-    design_a_form rejects compose_a_data_display for "table or dashboard,
-    not a form" -- any query containing the bare word "form" used to
-    annotate design_a_form as commonly confused with compose_a_data_display
-    under token-any matching, even though nothing about the query actually
-    suggests that confusion. caution must only fire on an actual phrase
-    match against a reject reason.
-    """
+def test_menu_order_is_catalog_lock(live_catalog: Path) -> None:
     tree = _tree(live_catalog)
-    result = suggest_situations(
-        "design a signup form and label these fields", tree=tree
-    )
-    by_id = {row["id"]: row for row in result["situations"]}
-    assert "caution" not in by_id["design_a_form"]
+    a = suggest_situations("qwerty zxcvbn asdfgh", tree=tree)
+    b = suggest_situations("can they go back and change an earlier answer", tree=tree)
+    assert suggest_card_ids(a) == list(CARD_IDS)
+    assert suggest_card_ids(b) == list(CARD_IDS)
+    assert [c["id"] for c in a["containers"]] == list(CONTAINER_IDS)
 
 
 def test_no_accept_reject_contradiction_is_possible(live_catalog: Path) -> None:
-    """There is exactly one list; a card id cannot appear twice or be
-    simultaneously 'accepted' and 'rejected' because that second list no
-    longer exists."""
     tree = _tree(live_catalog)
     for row in ROWS:
         result = suggest_situations(row["query"], row.get("surface"), tree=tree)
         assert "rejected" not in result
-        ids = [item["id"] for item in result["situations"]]
+        ids = suggest_card_ids(result)
         assert len(ids) == len(set(ids))
         assert set(ids) == set(CARD_IDS)
+        dumped = str(result)
+        assert "caution" not in dumped
 
 
 def test_fixture_covers_every_card_at_least_once() -> None:
     covered = {row["expected_card"] for row in ROWS}
-    assert covered  # sanity: fixture is not empty
+    assert covered
     assert covered <= set(CARD_IDS)

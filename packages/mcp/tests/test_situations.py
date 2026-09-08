@@ -5,13 +5,17 @@ from pathlib import Path
 import pytest
 from fastmcp import Client
 
-from open_ux.jobs import CARD_IDS, LEAF_IDS, expand_need, load_job_tree, resolve_need
+from open_ux.jobs import CARD_IDS, CONTAINER_IDS, LEAF_IDS, expand_need, load_job_tree, resolve_need
 from open_ux.server import create_mcp
 from open_ux.settings import Settings
 from open_ux.situations import (
+    MAP_ROW_KEYS,
     NO_SUGGEST_MATCH,
+    SPEC_ROW_KEYS,
+    SUGGEST_MENU_NOTE,
     get_situation,
     list_situations,
+    suggest_card_ids,
     suggest_situations,
 )
 
@@ -91,6 +95,21 @@ def test_list_situations_filters_container_alias(live_catalog: Path) -> None:
     result = list_situations(_tree(live_catalog), container="forms")
     ids = [row["id"] for row in result["situations"]]
     assert ids == ["design_a_form", "handle_form_errors", "compose_sign_in"]
+    for row in result["situations"]:
+        assert set(row) == set(SPEC_ROW_KEYS)
+        assert row["overview"]
+        assert row["when"]
+        assert row["reject"]
+    form = next(row for row in result["situations"] if row["id"] == "design_a_form")
+    assert any(item["id"] == "handle_form_errors" for item in form["reject"])
+
+
+def test_unscoped_list_stays_index(live_catalog: Path) -> None:
+    result = list_situations(_tree(live_catalog))
+    for row in result["situations"]:
+        assert "when" not in row
+        assert "reject" not in row
+        assert "overview" not in row
 
 
 def test_get_situation_returns_pointers_not_bodies(live_catalog: Path) -> None:
@@ -107,6 +126,15 @@ def test_get_situation_returns_pointers_not_bodies(live_catalog: Path) -> None:
     assert "Place a clear label" not in dumped
 
 
+def test_get_situation_multi_step_has_go_back_and_leave_warn(live_catalog: Path) -> None:
+    result = get_situation("build_a_multi_step_flow", _tree(live_catalog))
+    assert result["found"] is True
+    card = result["situation"]
+    when = " ".join(card["when"]).lower()
+    assert "go back" in when
+    assert any(item["id"] == "protect_destructive_and_leave" for item in card["reject"])
+
+
 def test_get_situation_rejects_leaf_and_container(live_catalog: Path) -> None:
     leaf = get_situation("avoid_placeholder_as_label", _tree(live_catalog))
     assert leaf["found"] is False
@@ -121,60 +149,45 @@ def test_get_situation_rejects_leaf_and_container(live_catalog: Path) -> None:
 def test_suggest_allowlist_only_and_empty_when_no_match(live_catalog: Path) -> None:
     tree = _tree(live_catalog)
     hit = suggest_situations("design a signup form and label these fields", tree=tree)
-    ids = [row["id"] for row in hit["situations"]]
+    ids = suggest_card_ids(hit)
     assert ids
-    assert ids[0] == "design_a_form"
     assert set(ids) <= set(CARD_IDS)
+    assert ids == list(CARD_IDS)
     assert "avoid_placeholder_as_label" not in ids
     assert "checkout" not in ids
-    assert "forms_and_input" not in ids
-    # Empty task_text is the only case with nothing to return (see
-    # test_situation_tools_on_empty_catalog for the empty-tree case).
     empty = suggest_situations("", tree=tree)
-    assert empty["situations"] == []
+    assert empty["containers"] == []
     assert empty["note"] == NO_SUGGEST_MATCH
 
 
-def test_suggest_never_hides_a_card_behind_a_score_threshold(live_catalog: Path) -> None:
-    """OUX-21: suggest_situations returns every Card, always -- no hidden gate.
-
-    A query with no shared vocabulary against any card's `when`/`overview`
-    text used to return zero results ("No Situation Card matches this
-    task"), even when a real card answers the question. The fix is to stop
-    filtering by score entirely: the LLM calling this tool sees the full
-    allowlist and picks, the heuristic only decides display order.
-    """
+def test_suggest_is_a_lock_order_map(live_catalog: Path) -> None:
+    """Same grouping for any non-empty query. Never hide. No Card BM25 flag."""
     tree = _tree(live_catalog)
-    # Genuinely nonsense text still returns the complete, ordered allowlist.
-    result = suggest_situations("qwerty zxcvbn asdfgh", tree=tree)
-    ids = [row["id"] for row in result["situations"]]
-    assert set(ids) == set(CARD_IDS)
-    assert len(ids) == len(CARD_IDS)
-    for row in result["situations"]:
-        assert "overview" in row and row["overview"]
-        # No numeric score is exposed -- it's a rough ordering aid, not a
-        # confidence value, and surfacing it invites the same over-trust
-        # that used to hide cards outright (see PR review on OUX-21).
-        assert "hint_score" not in row
-
-    # A real paraphrase with zero literal token overlap against the correct
-    # card's `when` list must still surface that card somewhere in the set.
+    nonsense = suggest_situations("qwerty zxcvbn asdfgh", tree=tree)
+    real = suggest_situations(
+        "can they go back and change an earlier answer", tree=tree
+    )
+    assert [c["id"] for c in nonsense["containers"]] == list(CONTAINER_IDS)
+    assert [c["id"] for c in real["containers"]] == list(CONTAINER_IDS)
+    assert suggest_card_ids(nonsense) == list(CARD_IDS)
+    assert suggest_card_ids(real) == list(CARD_IDS)
+    assert nonsense["note"] == SUGGEST_MENU_NOTE
+    for container in nonsense["containers"] + real["containers"]:
+        for row in container["situations"]:
+            assert set(row) == set(MAP_ROW_KEYS)
+            assert row["overview"]
+            assert "attention" not in row
+            assert "why" not in row
+            assert "hint_score" not in row
+            assert "caution" not in row
     cluttered = suggest_situations(
         "the dashboard feels cluttered and I don't know what to look at first",
         tree=tree,
     )
-    cluttered_ids = [row["id"] for row in cluttered["situations"]]
-    assert set(cluttered_ids) == set(CARD_IDS)
-    assert "compose_the_layout" in cluttered_ids
+    assert "compose_the_layout" in suggest_card_ids(cluttered)
 
 
-def test_suggest_reject_is_a_caution_never_a_second_list(live_catalog: Path) -> None:
-    """OUX-21, finding #2: no card id can appear accepted and rejected at once.
-
-    There is only ever one list now. A matching reject reason is folded
-    into that same card's row as `caution`, never a separate contradicting
-    field.
-    """
+def test_suggest_has_no_rejected_list(live_catalog: Path) -> None:
     tree = _tree(live_catalog)
     result = suggest_situations(
         "we split checkout into 3 screens, is that ok",
@@ -182,25 +195,21 @@ def test_suggest_reject_is_a_caution_never_a_second_list(live_catalog: Path) -> 
         tree=tree,
     )
     assert "rejected" not in result
-    ids = [row["id"] for row in result["situations"]]
-    assert ids[0] == "build_a_multi_step_flow"
-    cautioned = [row["id"] for row in result["situations"] if "caution" in row]
-    # A card can carry a caution note, but it is always attached to its own
-    # row inside `situations` -- never surfaced as a contradicting sibling.
-    assert set(cautioned) <= set(ids)
+    assert "build_a_multi_step_flow" in suggest_card_ids(result)
+    dumped = str(result)
+    assert "caution" not in dumped
 
 
-def test_suggest_surface_is_bias_not_an_id(live_catalog: Path) -> None:
+def test_suggest_surface_is_not_an_id(live_catalog: Path) -> None:
     tree = _tree(live_catalog)
     result = suggest_situations(
         "split this long form into steps for checkout",
         surface="checkout",
         tree=tree,
     )
-    ids = [row["id"] for row in result["situations"]]
-    assert "build_a_multi_step_flow" in ids
+    assert "build_a_multi_step_flow" in suggest_card_ids(result)
     dumped = str(result)
-    assert '"checkout"' not in dumped or result["situations"][0]["id"] != "checkout"
+    assert '"id": "checkout"' not in dumped
 
 
 @pytest.mark.asyncio
@@ -214,7 +223,7 @@ async def test_situation_tools_on_empty_catalog(tmp_env: Path) -> None:
         suggested = await client.call_tool(
             "suggest_situations", {"task_text": "design a form"}
         )
-        assert suggested.data["situations"] == []
+        assert suggested.data["containers"] == []
 
 
 @pytest.mark.asyncio
@@ -234,7 +243,7 @@ async def test_situation_tools_live(live_catalog: Path) -> None:
             "suggest_situations",
             {"task_text": "add a delete confirmation"},
         )
-        ids = [row["id"] for row in suggested.data["situations"]]
-        assert ids[0] == "protect_destructive_and_leave"
-        assert set(ids) <= set(CARD_IDS)
+        ids = suggest_card_ids(suggested.data)
+        assert "protect_destructive_and_leave" in ids
+        assert ids == list(CARD_IDS)
         assert not set(ids) & set(LEAF_IDS)

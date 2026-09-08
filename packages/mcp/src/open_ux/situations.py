@@ -1,10 +1,9 @@
 from __future__ import annotations
 
-import re
 from typing import Any
 
 from open_ux.jobs import (
-    CARD_IDS,
+    CONTAINER_IDS,
     LEAF_IDS,
     JobTree,
     card_by_id,
@@ -29,74 +28,22 @@ NO_SUGGEST_MATCH = (
     "Pick from list_situations or name a compose job "
     "(form, actions, feedback, nav, overlay, steps)."
 )
-
-# Surface is ranking bias only. Never returned as an id.
-SURFACE_HINTS: dict[str, tuple[str, ...]] = {
-    "checkout": (
-        "build_a_multi_step_flow",
-        "design_a_form",
-        "protect_destructive_and_leave",
-    ),
-    "home": (
-        "orient_in_the_place",
-        "compose_a_data_display",
-        "compose_feedback",
-    ),
-    "cart": (
-        "design_actions_and_ctas",
-        "protect_destructive_and_leave",
-        "compose_feedback",
-    ),
-}
-
-_STOP = frozenset(
-    {
-        "a",
-        "an",
-        "the",
-        "to",
-        "for",
-        "of",
-        "and",
-        "or",
-        "in",
-        "on",
-        "this",
-        "that",
-        "these",
-        "those",
-        "is",
-        "are",
-        "be",
-        "with",
-        "from",
-        "as",
-        "at",
-        "vs",
-        "it",
-        "its",
-        "into",
-        "am",
-        "i",
-        "me",
-        "my",
-        "we",
-        "our",
-        "you",
-        "your",
-        "they",
-        "their",
-    }
+SUGGEST_MENU_NOTE = (
+    "Catalog map. Pick a container with list_situations, or a Card with "
+    "get_situation. Then audit with jobs=<card_id>."
 )
-_TOKEN_RE = re.compile(r"[a-z0-9]+")
 
-
-def _tokens(text: str) -> list[str]:
-    return [
-        token
-        for token in _TOKEN_RE.findall(text.lower())
-        if token not in _STOP and len(token) > 1
-    ]
+MAP_ROW_KEYS = ("id", "title", "overview", "hints")
+SPEC_ROW_KEYS = (
+    "id",
+    "title",
+    "container",
+    "overview",
+    "when",
+    "reject",
+    "facet_count",
+    "provisional",
+)
 
 
 def _index_row(card) -> dict[str, Any]:
@@ -106,6 +53,32 @@ def _index_row(card) -> dict[str, Any]:
         "container": card.container,
         "facet_count": len(card.facets),
         "provisional": card.provisional,
+    }
+
+
+def _reject_payload(card) -> list[dict[str, str]]:
+    return [{"id": item.id, "why": item.why} for item in card.reject]
+
+
+def _spec_row(card) -> dict[str, Any]:
+    return {
+        "id": card.id,
+        "title": card.title,
+        "container": card.container,
+        "overview": card.overview,
+        "when": list(card.when),
+        "reject": _reject_payload(card),
+        "facet_count": len(card.facets),
+        "provisional": card.provisional,
+    }
+
+
+def _map_row(card) -> dict[str, Any]:
+    return {
+        "id": card.id,
+        "title": card.title,
+        "overview": card.overview,
+        "hints": list(card.hints),
     }
 
 
@@ -137,7 +110,7 @@ def _card_payload(card) -> dict[str, Any]:
         "container": card.container,
         "overview": card.overview,
         "when": list(card.when),
-        "reject": [{"id": item.id, "why": item.why} for item in card.reject],
+        "reject": _reject_payload(card),
         "facets": [_facet_payload(facet) for facet in card.facets],
         "provisional": card.provisional,
     }
@@ -156,6 +129,7 @@ def list_situations(
     if offset < 0:
         offset = 0
     cards = list(tree.cards)
+    scoped = False
     if container and container.strip():
         wanted = container_by_id_or_alias(tree, container.strip())
         if wanted is None:
@@ -168,10 +142,12 @@ def list_situations(
                 "note": f"Unknown container {container.strip()!r}.",
             }
         cards = [card for card in cards if card.container == wanted.id]
+        scoped = True
     total = len(cards)
     page = cards[offset : offset + limit]
+    rows = [_spec_row(card) if scoped else _index_row(card) for card in page]
     payload: dict[str, Any] = {
-        "situations": [_index_row(card) for card in page],
+        "situations": rows,
         "count": len(page),
         "total": total,
         "limit": limit,
@@ -208,47 +184,12 @@ def get_situation(
     return {"found": True, "situation": _card_payload(card)}
 
 
-def _score_card(card, task_text: str, task_tokens: list[str]) -> tuple[int, str]:
-    title_tokens = set(_tokens(f"{card.title} {card.id.replace('_', ' ')}"))
-    when_tokens = set(_tokens(" ".join(card.when)))
-    hint_tokens = set(_tokens(" ".join(card.hints)))
-    overview_tokens = set(_tokens(card.overview))
-    score = 0
-    hits: list[str] = []
-    lowered = task_text.lower()
-    for phrase in card.when:
-        if phrase.lower() in lowered:
-            score += 4
-            hits.append(phrase)
-    for token in task_tokens:
-        if token in title_tokens:
-            score += 3
-            hits.append(token)
-        elif token in when_tokens:
-            score += 2
-            hits.append(token)
-        elif token in hint_tokens or token in overview_tokens:
-            score += 1
-            hits.append(token)
-    why = hits[0] if hits else card.overview
-    return score, why
-
-
-def _caution_for(card, task_text: str, task_tokens: list[str]) -> str | None:
-    """Reject reasons become an annotation on the card, never a second list.
-
-    A card that matches this task can also carry a known-confusion note when
-    the task text also matches one of the card's own reject reasons. This
-    never removes the card from the result -- only the calling LLM decides
-    fit, using the full set plus this hint.
-    """
-    lowered = task_text.lower()
-    for item in card.reject:
-        if not item.why:
-            continue
-        if item.why.lower() in lowered:
-            return f"commonly confused with {item.id}: {item.why}"
-    return None
+def suggest_card_ids(result: dict[str, Any]) -> list[str]:
+    ids: list[str] = []
+    for container in result.get("containers") or []:
+        for row in container.get("situations") or []:
+            ids.append(row["id"])
+    return ids
 
 
 def suggest_situations(
@@ -259,37 +200,26 @@ def suggest_situations(
     tree = tree or load_job_tree()
     text = (task_text or "").strip()
     if tree.empty:
-        return {"situations": [], "note": EMPTY_SITUATIONS_NOTE}
+        return {"containers": [], "note": EMPTY_SITUATIONS_NOTE}
     if not text:
-        return {"situations": [], "note": NO_SUGGEST_MATCH}
+        return {"containers": [], "note": NO_SUGGEST_MATCH}
 
-    task_tokens = _tokens(text)
-    hint_cards = SURFACE_HINTS.get((surface or "").strip().lower(), ())
-    ranked: list[tuple[int, str, Any, str]] = []
+    by_container: dict[str, list] = {cid: [] for cid in CONTAINER_IDS}
     for card in tree.cards:
-        score, why = _score_card(card, text, task_tokens)
-        if card.id in hint_cards:
-            score += 2
-        ranked.append((score, card.id, card, why))
-    # The score only orders the response -- it never excludes a card, and is
-    # not exposed on the row: it's a rough heuristic, not a confidence value,
-    # and surfacing it as a number invites the same over-trust that used to
-    # hide cards outright. The calling LLM sees every Situation Card and
-    # makes the final call, so a real answer with zero shared vocabulary
-    # with the query can never be hidden by this heuristic (see OUX-21).
-    ranked.sort(key=lambda row: (-row[0], CARD_IDS.index(row[1])))
+        by_container.setdefault(card.container, []).append(card)
 
-    situations = []
-    for _score, _cid, card, why in ranked:
-        row = {
-            "id": card.id,
-            "title": card.title,
-            "overview": card.overview,
-            "why": why,
-        }
-        caution = _caution_for(card, text, task_tokens)
-        if caution:
-            row["caution"] = caution
-        situations.append(row)
-
-    return {"situations": situations}
+    containers = []
+    title_by_id = {item.id: item.title for item in tree.containers}
+    for cid in CONTAINER_IDS:
+        cards = by_container.get(cid) or []
+        if not cards:
+            continue
+        containers.append(
+            {
+                "id": cid,
+                "title": title_by_id.get(cid, cid),
+                "situations": [_map_row(card) for card in cards],
+            }
+        )
+    _ = surface  # accepted for old callers; never an id; never an order key
+    return {"containers": containers, "note": SUGGEST_MENU_NOTE}

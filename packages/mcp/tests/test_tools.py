@@ -171,6 +171,20 @@ async def test_search_lane_forms_only(live_catalog: Path) -> None:
 
 
 @pytest.mark.asyncio
+async def test_search_query_orders_without_filtering(live_catalog: Path) -> None:
+    mcp = create_mcp(hosted=False)
+    async with Client(mcp) as client:
+        wide = await client.call_tool("search_guidelines", {"limit": 50, "offset": 0})
+        ranked = await client.call_tool(
+            "search_guidelines",
+            {"query": "helper text", "limit": 50, "offset": 0},
+        )
+        assert ranked.data["total"] == wide.data["total"]
+        ranked_ids = [row["id"] for row in ranked.data["guidelines"]]
+        assert "fluent.helper-text-below" in ranked_ids[:10]
+
+
+@pytest.mark.asyncio
 async def test_get_extra_harvest_guideline_returns_full_body(live_catalog: Path) -> None:
     mcp = create_mcp(hosted=False)
     async with Client(mcp) as client:
