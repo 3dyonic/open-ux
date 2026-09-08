@@ -18,7 +18,7 @@ description: >-
 
 Need in → cited criteria pack out. You already have the UI. We hand you the matching cited rules so you don't invent UX from memory.
 
-Compose and review share this one trigger. Pick a Situation Card, call `Open-UX:get_situation`, then `Open-UX:audit` with `jobs=<card_id>`. `jobs=` is a stratified Card sample (not every rule on the Card); `query` is optional attention, not required. Surfaces (`home`, `cart`, `checkout`) are context, not Cards. Container aliases `forms` / `actions` / `feedback` work as a broad first scope.
+Compose and review share this one trigger. Pick a Situation Card, call `Open-UX:get_situation`, then `Open-UX:audit` with `jobs=<card_id>`. `jobs=` is a stratified Card sample (not every rule on the Card); `query` orders that pack and is not required. Surfaces (`home`, `cart`, `checkout`) are context, not Cards. Container aliases `forms` / `actions` / `feedback` work as a broad first scope. The catalog stays open: after a pack you can take another Card or call the map again.
 
 When you need a map of what exists — by **category**, then **source** — read [`catalog/MANIFEST.md`](../../../../catalog/MANIFEST.md). Then fetch one id.
 
@@ -26,7 +26,7 @@ When you need a map of what exists — by **category**, then **source** — read
 
 - **Signup / settings fields.** Card `design_a_form`. Pack via `jobs=design_a_form`. Same if you are reviewing that form.
 - **Review a delete confirm.** Card `protect_destructive_and_leave`.
-- **Vague checkout.** `Open-UX:suggest_situations` with the task text, then pick a Card (often `build_a_multi_step_flow` or `design_a_form`) and audit that.
+- **Vague checkout.** `Open-UX:suggest_situations` with the task text. Read the catalog map, pick a Card (or `list_situations` with a container), `Open-UX:get_situation`, then `Open-UX:audit` with `jobs=<card_id>`.
 - **Already have a guideline id.** `Open-UX:get_guideline` for that one cited body.
 
 ## Connect
@@ -62,7 +62,7 @@ Reject **crosses containers** — pick the Card the ask actually is.
 | Layout & data display | `compose_the_layout` | Page structure and headings; inverted pyramid; keep the page scannable | Table / chart / map → `compose_a_data_display`. Voice or link wording → `write_the_interface` |
 | Layout & data display | `write_the_interface` | Link destination text; you/your voice; page copy that is not a button or field label | Button / command verbs → `design_actions_and_ctas`. Field labels stay `design_a_form`. Section chrome → `orient_in_the_place` |
 | Overlays & content structure | `choose_an_overlay` | Modal vs accordion; tooltip vs inline help; hide advanced options; side panel | Destructive decision inside a dialog → `protect_destructive_and_leave`. Fields inside a modal → `design_a_form`. Page layout → `compose_the_layout` |
-| Multi-step flows | `build_a_multi_step_flow` | Checkout *flow*; split a long form into steps; progress indicator; leave mid-flow; onboarding *sequence* | Single form on one screen → `design_a_form`. Site-level nav chrome → `orient_in_the_place`. Leave-warn as the only ask → `protect_destructive_and_leave` |
+| Multi-step flows | `build_a_multi_step_flow` | Checkout *flow*; split a long form into steps; progress indicator; go back to an earlier step; change a previous answer; leave mid-flow; onboarding *sequence* | Single form on one screen → `design_a_form`. Site-level nav chrome → `orient_in_the_place`. Leave-warn as the only ask → `protect_destructive_and_leave` |
 
 `checkout` / `home` / `cart` are not Cards.
 
@@ -73,8 +73,8 @@ Fully qualified `Open-UX:*` names. `/list` `/get` / map / cite stay on tools. Ca
 - `Open-UX:get_situation` — Card when / reject / pointers (not rule bodies)
 - `Open-UX:audit` — `jobs=<card_id>` or `guideline_ids`. The pack.
 - Same wire (available, not required): `open-ux audit --jobs <card_id>` or `python3 scripts/audit.py --jobs <card_id>` / `--guideline-ids`. Your choice — the tool or this helper.
-- `Open-UX:list_situations` — Card index; optional `container`
-- `Open-UX:suggest_situations` — vague surface or pasted UI
+- `Open-UX:list_situations` — Card index; with `container=` that kind's specs (`when` / `reject`)
+- `Open-UX:suggest_situations` — catalog map (lock-order overviews). Vague surface or pasted UI. Does not pick a Card.
 - `Open-UX:get_guideline` / `Open-UX:search_guidelines` / `Open-UX:list_guidelines` — cite
 
 Empty pack → say so. We don't return pass or fail.

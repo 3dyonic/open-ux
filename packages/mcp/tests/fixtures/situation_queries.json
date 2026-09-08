@@ -3,66 +3,66 @@
     "query": "we split checkout into 3 screens, is that ok",
     "surface": "checkout",
     "expected_card": "build_a_multi_step_flow",
-    "note": "finding #2 -- previously accepted AND rejected the same card id"
+    "note": "expected Card on the map (completeness)"
   },
   {
     "query": "signup wizard across multiple steps",
     "expected_card": "design_a_form",
-    "note": "finding #2 -- previously accepted AND rejected the same card id"
+    "note": "expected Card on the map (completeness)"
   },
   {
     "query": "small popup or tooltip for a button",
     "expected_card": "design_actions_and_ctas",
-    "note": "finding #2 -- previously accepted AND rejected the same card id"
+    "note": "expected Card on the map (completeness)"
   },
   {
     "query": "keep this 40 column table scannable",
     "expected_card": "compose_the_layout",
-    "note": "finding #2 -- previously accepted AND rejected the same card id"
+    "note": "expected Card on the map (completeness)"
   },
   {
     "query": "disabling a security control like turning off 2FA",
     "expected_card": "protect_destructive_and_leave",
-    "note": "finding #3 -- true coverage gap, wrong or absent card"
+    "note": "expected Card on the map (completeness)"
   },
   {
     "query": "nothing shows up when someone searches and filters and gets zero matches",
     "expected_card": "compose_feedback",
-    "note": "finding #3 -- previously returned zero cards at all"
+    "note": "expected Card on the map (completeness)"
   },
   {
     "query": "a small popup near the button that explains what a field does when you hover it",
     "expected_card": "choose_an_overlay",
-    "note": "finding #3 -- textbook tooltip case, previously absent"
+    "note": "expected Card on the map (completeness)"
   },
   {
     "query": "the dashboard feels cluttered and I don't know what to look at first",
     "expected_card": "compose_the_layout",
-    "note": "finding #3 -- zero token overlap with the card's own purpose text"
+    "note": "expected Card on the map (completeness)"
   },
   {
     "query": "the email field just shows a red border with no explanation of what's wrong",
     "expected_card": "handle_form_errors",
-    "note": "finding #3 -- most common real-world query, previously unroutable"
+    "note": "expected Card on the map (completeness)"
   },
   {
     "query": "arrange this data as a table or chart so it can be scanned",
     "expected_card": "compose_a_data_display",
-    "note": "regression guard -- already passed before the fix"
+    "note": "expected Card on the map (completeness)"
   },
   {
     "query": "compose the sign in form with password and forgot password link",
     "expected_card": "compose_sign_in",
-    "note": "regression guard -- already passed before the fix"
+    "note": "expected Card on the map (completeness)"
   },
   {
     "query": "design a signup form and label these fields",
     "expected_card": "design_a_form",
-    "note": "regression guard -- already passed before the fix"
+    "note": "expected Card on the map (completeness)"
   },
   {
     "query": "add a delete confirmation before removing this item",
     "expected_card": "protect_destructive_and_leave",
-    "note": "regression guard -- already passed before the fix"
+    "note": "expected Card on the map (completeness)"
   }
 ]

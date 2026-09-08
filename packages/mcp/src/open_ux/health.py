@@ -4,7 +4,8 @@ from __future__ import annotations
 
 from typing import Any
 
-from open_ux.catalog import Catalog
+from open_ux import __version__
+from open_ux.catalog import Catalog, catalog_status
 
 
 def health_payload(catalog: Catalog, *, hosted: bool) -> dict[str, Any]:
@@ -12,9 +13,6 @@ def health_payload(catalog: Catalog, *, hosted: bool) -> dict[str, Any]:
         "ok": True,
         "name": "Open UX",
         "hosted": hosted,
-        "catalog": {
-            "status": "empty" if catalog.empty else "ok",
-            "guideline_count": len(catalog.guidelines),
-            "version": catalog.version,
-        },
+        "version": __version__,
+        "catalog": catalog_status(catalog),
     }

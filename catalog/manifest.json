@@ -1,5 +1,4 @@
 {
-  "version": "0.3.0",
   "count": 203,
   "note": "Auto-generated. Category folder, then source folder. No rule bodies. Agents read this map, then fetch one id.",
   "categories": [

@@ -163,8 +163,7 @@ def _run_server(command: str, args: argparse.Namespace) -> int:
 
         catalog = load_catalog()
         print(
-            f"catalog ok version={catalog.version} "
-            f"guidelines={len(catalog.guidelines)} bytes={catalog.size_bytes}"
+            f"catalog ok guidelines={len(catalog.guidelines)} bytes={catalog.size_bytes}"
         )
         return 0
 

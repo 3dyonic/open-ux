@@ -8,6 +8,7 @@ from typing import Any
 
 import jsonschema
 
+from open_ux.bm25 import guideline_blob, rank_blobs
 from open_ux.jobs import (
     CARD_IDS,
     CONTAINER_IDS,
@@ -27,7 +28,6 @@ INDEX_KEYS = ("id", "title", "name", "jobs", "lane", "container", "card", "facet
 ROOT_SKIP = frozenset({"schema.json", "index.json", "guidelines.json", "jobs.json"})
 BODY_KEYS = frozenset({"pass_when", "fail_when", "rule", "citation", "check", "severity"})
 AGENT_KEYS = ("overview", "apply_when", "not_when", "agent_hint", "description")
-CATALOG_VERSION = "0.3.0"
 
 # Id prefixes that are sources. `actions` and `forms` are categories, not sources.
 SOURCE_HOUSES: dict[str, str] = {
@@ -205,7 +205,6 @@ def _check_rule_path(path: Path, data: dict[str, Any]) -> None:
 
 @dataclass(frozen=True)
 class Catalog:
-    version: str
     guidelines: list[dict[str, Any]]
     jobs: list[str]
     patterns: list[str]
@@ -216,6 +215,13 @@ class Catalog:
     @property
     def empty(self) -> bool:
         return len(self.guidelines) == 0
+
+
+def catalog_status(catalog: Catalog) -> dict[str, Any]:
+    return {
+        "status": "empty" if catalog.empty else "ok",
+        "guideline_count": len(catalog.guidelines),
+    }
 
 
 def _validate_size(n: int) -> None:
@@ -284,7 +290,6 @@ def build_manifest(guidelines: list[dict[str, Any]]) -> dict[str, Any]:
         )
         cat["count"] += len(rows)
     return {
-        "version": CATALOG_VERSION,
         "count": sum(item["count"] for item in categories.values()),
         "note": (
             "Auto-generated. Category folder, then source folder. "
@@ -360,17 +365,15 @@ def _index_from_guidelines(guidelines: list[dict[str, Any]]) -> list[dict[str, A
     return out
 
 
-def _load_on_disk_index(index_path: Path) -> tuple[str, list[dict[str, Any]]]:
+def _load_on_disk_index(index_path: Path) -> list[dict[str, Any]]:
     data = json.loads(index_path.read_text(encoding="utf-8"))
     if isinstance(data, dict):
-        version = str(data.get("version") or CATALOG_VERSION)
         rows = data.get("guidelines")
     else:
-        version = CATALOG_VERSION
         rows = data
     if not isinstance(rows, list):
         raise CatalogError("catalog/index.json must be a list or {guidelines: [...]}.")
-    return version, [_index_entry(row) for row in rows]
+    return [_index_entry(row) for row in rows]
 
 
 def _load_one(path: Path, schema: dict[str, Any]) -> dict[str, Any]:
@@ -396,9 +399,8 @@ def _load_one(path: Path, schema: dict[str, Any]) -> dict[str, Any]:
 def _empty_wrapper_schema() -> dict[str, Any]:
     return {
         "type": "object",
-        "required": ["version", "guidelines"],
+        "required": ["guidelines"],
         "properties": {
-            "version": {"type": "string"},
             "guidelines": {"type": "array", "maxItems": 0},
             "jobs": {"type": "array"},
             "patterns": {"type": "array"},
@@ -482,7 +484,6 @@ def load_catalog(settings: Settings | None = None) -> Catalog:
     guidelines: list[dict[str, Any]] = []
     jobs: list[str] = []
     patterns: list[str] = []
-    version = CATALOG_VERSION
     size_bytes = 0
 
     for path in files:
@@ -514,7 +515,7 @@ def load_catalog(settings: Settings | None = None) -> Catalog:
         else catalog_path.parent / "index.json"
     )
     if catalog_path.is_dir() and index_path.is_file() and guidelines:
-        version, index = _load_on_disk_index(index_path)
+        index = _load_on_disk_index(index_path)
         catalog_ids = [g["id"] for g in guidelines]
         index_ids = [row["id"] for row in index]
         if sorted(catalog_ids) != sorted(index_ids):
@@ -530,7 +531,6 @@ def load_catalog(settings: Settings | None = None) -> Catalog:
         index = _index_from_guidelines(guidelines)
 
     return Catalog(
-        version=version,
         guidelines=guidelines,
         jobs=jobs,
         patterns=patterns,
@@ -556,7 +556,7 @@ def list_index(
     scope = resolve_need_scope(jobs)
     if jobs is not None and scope is not None and scope.empty:
         return [], 0
-    q = (query or "").strip().lower()
+    q = (query or "").strip()
     out: list[dict[str, Any]] = []
     for row in catalog.index:
         entry = {k: row.get(k) for k in INDEX_KEYS if k in row}
@@ -569,14 +569,13 @@ def list_index(
             continue
         if lane and entry.get("lane") != lane:
             continue
-        if q:
-            blob = (
-                f"{entry.get('id') or ''} {entry.get('title') or ''} "
-                f"{entry.get('name') or ''}"
-            ).lower()
-            if q not in blob:
-                continue
         out.append(entry)
+    if q:
+        bodies = {g.get("id"): g for g in catalog.guidelines}
+        blobs = [guideline_blob(bodies.get(entry.get("id")) or entry) for entry in out]
+        order, matched = rank_blobs(q, blobs)
+        if matched:
+            out = [out[i] for i in order]
     if limit < 1:
         raise CatalogError("limit must be >= 1")
     if offset < 0:

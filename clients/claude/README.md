@@ -45,7 +45,7 @@ No key; same catalog. Point MCP clients at local stdio, or hosted `https://open-
 Compose, review, map, and cite are jobs in `skills/open-ux` — not extra packages.
 
 - **Compose / review** — pick a Card, `Open-UX:get_situation`, then `Open-UX:audit` with `jobs=`
-- **Map** — `Open-UX:suggest_situations` when the ask is a vague surface
+- **Map** — `Open-UX:suggest_situations` when the ask is a vague surface (catalog map, then pick a Card). The catalog stays open after a pack.
 - **Cite** — `Open-UX:search_guidelines` / `Open-UX:get_guideline`
 
 Commands: `/list` `/get` `/audit`, plus aliases `/forms` `/actions` `/feedback`. Agent pointers: `agents/open-ux.md`.

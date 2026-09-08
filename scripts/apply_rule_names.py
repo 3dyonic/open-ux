@@ -242,7 +242,6 @@ def main() -> int:
     by_id = {item["id"]: item for item in written}
     ordered_ids = list(LIVE_SEED) + sorted(gid for gid in by_id if gid not in LIVE_SEED)
     index = {
-        "version": "0.3.0",
         "guidelines": [_index_row(by_id[gid]) for gid in ordered_ids],
     }
     INDEX.write_text(json.dumps(index, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")

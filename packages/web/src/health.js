@@ -107,7 +107,7 @@ export async function renderHealth(root) {
     render(root, {
       ok: false,
       hosted: false,
-      catalog: { status: "empty", guideline_count: 0, version: "" },
+      catalog: { status: "empty", guideline_count: 0 },
     });
   }
 }

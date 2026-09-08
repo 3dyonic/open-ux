@@ -11,7 +11,6 @@ if str(ROOT / "packages" / "mcp" / "src") not in sys.path:
     sys.path.insert(0, str(ROOT / "packages" / "mcp" / "src"))
 
 from open_ux.catalog import (  # noqa: E402
-    CATALOG_VERSION,
     build_manifest,
     iter_rule_files,
     render_manifest_markdown,
@@ -132,7 +131,6 @@ def main() -> int:
     INDEX.write_text(
         json.dumps(
             {
-                "version": CATALOG_VERSION,
                 "guidelines": [_index_row(row) for row in kept],
             },
             indent=2,

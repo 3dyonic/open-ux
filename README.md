@@ -88,15 +88,15 @@ Cursor uses the same pack (`.cursor-plugin/` + `mcp.json`). Set `OPEN_UX_API_KEY
 
 | Tool | Purpose |
 | -- | -- |
-| `list_situations` | Page Situation Cards (optional container filter) |
+| `list_situations` | Page Situation Cards (optional `container` returns that kind's specs) |
 | `get_situation` | One Card plus facets / rule pointers |
-| `suggest_situations` | Rank Cards from task text (allowlisted) |
+| `suggest_situations` | Catalog map: lock-order Card overviews (does not pick a Card) |
 | `list_guidelines` | Paged catalog index |
-| `search_guidelines` | Filter index by query / jobs / lane |
+| `search_guidelines` | Scope by jobs / lane; BM25-order by query; no rule bodies |
 | `get_guideline` | Full rule body by id |
 | `audit` | Say the need (`jobs` Card/container or `guideline_ids`); get matching criteria |
 
-`audit` accepts optional `query` and `limit` (default 10, max 50). It does **not** take a file target and does **not** return a host verdict. If nothing matches, you get an empty list and a note.
+`audit` accepts optional `query` (orders the pack) and `limit` (default 10, max 50). It does **not** take a file target and does **not** return a host verdict. If nothing matches, you get an empty list and a note.
 
 ## Catalog layout
 

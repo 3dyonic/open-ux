@@ -115,7 +115,7 @@ JOB_FIELD_DESCRIPTION = (
     "compose_the_layout — Page scan path. "
     "write_the_interface — Link text and page voice. "
     "choose_an_overlay — Modal, accordion, tooltip, side panel. "
-    "build_a_multi_step_flow — Wizard, checkout sequence, steps. "
+    "build_a_multi_step_flow — Wizard, checkout sequence, steps, go back to an earlier answer. "
     "A container id browses every Card in that kind of work. "
     "forms / actions / feedback — legacy aliases for the first three containers."
 )
@@ -176,7 +176,6 @@ class Container:
 class JobTree:
     containers: tuple[Container, ...]
     cards: tuple[Card, ...]
-    version: str = "0.0.0"
 
     @property
     def empty(self) -> bool:
@@ -290,7 +289,6 @@ def parse_job_tree(data: dict[str, Any]) -> JobTree:
     return JobTree(
         containers=containers,
         cards=cards,
-        version=str(data.get("version") or "0.0.0"),
     )
 
 
