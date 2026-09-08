@@ -5,7 +5,7 @@ from starlette.requests import Request
 from starlette.responses import JSONResponse, Response
 
 from open_ux.auth import KEY_PREFIX, hash_key
-from open_ux.settings import MCP_IP_PER_DAY, MCP_IP_PER_MINUTE, Settings
+from open_ux.settings import MCP_IP_PER_DAY, MCP_IP_PER_MINUTE, RATE_PER_MINUTE, Settings
 from open_ux.store import Store
 
 
@@ -13,6 +13,26 @@ def client_ip(request: Request) -> str:
     """Peer address after uvicorn proxy_headers. Do not parse X-Forwarded-For."""
     client = request.client
     return client.host if client and client.host else "unknown"
+
+
+def rate_limited_response(window: str | None) -> JSONResponse:
+    label = window or "minute"
+    seconds = 60 if label == "minute" else 86400
+    message = (
+        f"Hosted /mcp rate limit ({label}). "
+        f"{MCP_IP_PER_MINUTE}/min per IP, {RATE_PER_MINUTE}/min per key. "
+        f"Retry after {seconds}s."
+    )
+    return JSONResponse(
+        {
+            "error": "rate_limited",
+            "window": label,
+            "message": message,
+            "retry_after_seconds": seconds,
+        },
+        status_code=429,
+        headers={"Retry-After": str(seconds)},
+    )
 
 
 class RateLimitMiddleware(BaseHTTPMiddleware):
@@ -32,10 +52,7 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
             per_day=MCP_IP_PER_DAY,
         )
         if not ok:
-            return JSONResponse(
-                {"error": "rate_limited", "window": window},
-                status_code=429,
-            )
+            return rate_limited_response(window)
         header = request.headers.get("authorization") or ""
         if not header.lower().startswith("bearer "):
             return await call_next(request)
@@ -47,8 +64,5 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
             return await call_next(request)
         ok, window = self.store.consume_rate(digest)
         if not ok:
-            return JSONResponse(
-                {"error": "rate_limited", "window": window},
-                status_code=429,
-            )
+            return rate_limited_response(window)
         return await call_next(request)

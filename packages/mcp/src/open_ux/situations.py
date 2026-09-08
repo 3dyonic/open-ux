@@ -7,6 +7,7 @@ from open_ux.jobs import (
     LEAF_IDS,
     JobTree,
     card_by_id,
+    card_id_for_leaf,
     container_by_id_or_alias,
     load_job_tree,
 )
@@ -16,8 +17,12 @@ EMPTY_SITUATIONS_NOTE = (
 )
 UNKNOWN_SITUATION = "No Situation Card with id {id!r}."
 LEAF_NOT_CARD = (
-    "{id!r} is a Leaf, not a Card. Expand it from a Card "
-    "(for example design_a_form). Do not pass a Leaf as the need."
+    "{id!r} is a Leaf, not a Card. Expand it from {card}. "
+    "Do not pass a Leaf as the need."
+)
+LEAF_NOT_CARD_NO_PARENT = (
+    "{id!r} is a Leaf, not a Card. Expand it from its Card. "
+    "Do not pass a Leaf as the need."
 )
 CONTAINER_NOT_CARD = (
     "{id!r} is a container, not a Card. "
@@ -167,7 +172,13 @@ def get_situation(
     if not wanted:
         return {"found": False, "id": wanted, "error": UNKNOWN_SITUATION.format(id=wanted)}
     if wanted in LEAF_IDS:
-        return {"found": False, "id": wanted, "error": LEAF_NOT_CARD.format(id=wanted)}
+        parent = card_id_for_leaf(tree, wanted)
+        error = (
+            LEAF_NOT_CARD.format(id=wanted, card=parent)
+            if parent
+            else LEAF_NOT_CARD_NO_PARENT.format(id=wanted)
+        )
+        return {"found": False, "id": wanted, "error": error}
     if container_by_id_or_alias(tree, wanted) is not None or wanted in {
         "forms",
         "actions",

@@ -337,6 +337,13 @@ def leaves_for_card(card: Card) -> tuple[str, ...]:
     return tuple(out)
 
 
+def card_id_for_leaf(tree: JobTree, leaf_id: str) -> str | None:
+    for card in tree.cards:
+        if leaf_id in leaves_for_card(card):
+            return card.id
+    return None
+
+
 def pointers_for_card(card: Card) -> tuple[str, ...]:
     """Cluster and leaf guideline_id pointers. Not rule bodies."""
     out: list[str] = []

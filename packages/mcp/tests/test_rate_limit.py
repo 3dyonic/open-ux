@@ -24,7 +24,11 @@ def test_unauthenticated_mcp_ip_rate_limited(tmp_env: Path) -> None:
         limited = client.post("/mcp", json={})
     assert statuses == [401] * MCP_IP_PER_MINUTE
     assert limited.status_code == 429
-    assert limited.json()["error"] == "rate_limited"
+    body = limited.json()
+    assert body["error"] == "rate_limited"
+    assert body["window"] == "minute"
+    assert "Retry after" in body["message"]
+    assert limited.headers["retry-after"] == "60"
 
 
 def test_valid_key_hits_per_key_limit(tmp_env: Path) -> None:
@@ -42,6 +46,8 @@ def test_valid_key_hits_per_key_limit(tmp_env: Path) -> None:
     assert first.status_code != 429
     assert second.status_code == 429
     assert second.json()["error"] == "rate_limited"
+    assert "Retry after" in second.json()["message"]
+    assert second.headers["retry-after"] == "60"
 
 
 def test_health_is_not_rate_limited(tmp_env: Path) -> None:
