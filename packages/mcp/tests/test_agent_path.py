@@ -62,6 +62,7 @@ def test_one_skill_package_named_open_ux() -> None:
     packages = [p.name for p in skills_root.iterdir() if p.is_dir()]
     assert packages == ["open-ux"]
     assert (skills_root / "open-ux" / "SKILL.md").is_file()
+    assert (skills_root / "open-ux" / "guideline.md").is_file()
     for banned in ("open-ux-forms", "open-ux-actions", "open-ux-feedback"):
         assert not (skills_root / banned).exists()
     assert not (SKILL_DIR / "scripts").exists()
@@ -147,10 +148,13 @@ def test_skill_examples_and_tools_not_sermons() -> None:
 def test_skill_files_point_at_tools_not_catalog_bodies() -> None:
     for path in _skill_files():
         text = path.read_text(encoding="utf-8")
-        for token in BANNED_BODIES:
-            assert token not in text, f"{path.name} must not contain {token}"
         leaked = GUIDELINE_ID.findall(text)
         assert leaked == [], f"{path.name} must not embed guideline ids {leaked}"
+        if path.name == "guideline.md":
+            assert "overview" in text
+            continue
+        for token in BANNED_BODIES:
+            assert token not in text, f"{path.name} must not contain {token}"
 
 
 def test_plugin_points_at_hosted_mcp() -> None:

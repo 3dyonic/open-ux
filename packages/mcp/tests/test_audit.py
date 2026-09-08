@@ -38,9 +38,10 @@ def _assert_pack_row(row: dict) -> None:
     assert row["id"]
     assert row["title"]
     assert row["name"]
+    assert row["overview"]
     assert row["rule"]
-    assert row["pass_when"]
-    assert row["fail_when"]
+    assert "pass_when" not in row
+    assert "fail_when" not in row
     assert "verdict" not in row
     assert "reasons" not in row
 

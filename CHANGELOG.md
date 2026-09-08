@@ -2,11 +2,12 @@
 
 ## Unreleased
 
-OUX-32: `audit` lazy-loads pages of 10.
+- `audit` browse row includes `overview` and omits `pass_when` / `fail_when` (those stay on `get_guideline`).
+- Skill pack: browse orientation on `SKILL.md`; full-record field guide in `guideline.md`.
 
-- `offset` plus `omitted` / `next_offset` / `omitted_hint` until the in-scope shelf is empty. `limit` max 50 is one page, not a shelf ceiling.
-- `query_fallback: true` when fail-open (OUX-21).
-- Always `host: "citations_only"`. Cited criteria help you decide; the decision is yours.
+## 0.2.2
+
+OUX-32: `audit` pages at 10 with `offset` / `omitted` / `next_offset`. `query_fallback` when fail-open. `host: "citations_only"`.
 
 ## 0.2.0
 

@@ -314,9 +314,8 @@ async def test_audit_guideline_ids_only_those_rules(live_catalog: Path) -> None:
                 "id",
                 "title",
                 "name",
+                "overview",
                 "rule",
-                "pass_when",
-                "fail_when",
                 "facet",
             }
 
@@ -367,8 +366,7 @@ async def test_audit_jobs_returns_criteria(live_catalog: Path) -> None:
             "id",
             "title",
             "name",
+            "overview",
             "rule",
-            "pass_when",
-            "fail_when",
             "facet",
         }

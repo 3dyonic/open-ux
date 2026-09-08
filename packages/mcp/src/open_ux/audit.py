@@ -15,7 +15,7 @@ from open_ux.jobs import (
     load_job_tree,
 )
 
-PACK_KEYS = ("id", "title", "name", "rule", "pass_when", "fail_when", "facet")
+PACK_KEYS = ("id", "title", "name", "overview", "rule", "facet")
 NEED_ERROR = "audit requires jobs or guideline_ids; the full catalog is never run."
 HOST_CITATIONS_ONLY = "citations_only"
 
@@ -39,9 +39,8 @@ def _pack(guideline: dict[str, Any]) -> dict[str, Any]:
         "id": guideline["id"],
         "title": guideline.get("title") or "",
         "name": guideline.get("name") or guideline.get("title") or "",
+        "overview": guideline.get("overview") or "",
         "rule": guideline.get("rule") or "",
-        "pass_when": list(guideline.get("pass_when") or []),
-        "fail_when": list(guideline.get("fail_when") or []),
         "facet": guideline.get("facet") or "",
     }
 

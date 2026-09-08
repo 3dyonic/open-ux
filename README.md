@@ -13,7 +13,7 @@ Stop inventing UX guidance from memory. Open UX is a shared, open-source catalog
 A curated, machine-readable store of UX guidelines and a small tool surface so an agent can:
 
 1. **Browse situations** — pick a compose job (Situation Card) that matches the work
-2. **Fetch criteria** — get cited rules for that job (`rule`, `pass_when`, `fail_when`)
+2. **Fetch criteria** — get cited rules for that job (`overview`, `name`, `rule`)
 3. **Apply locally** — the client judges the artifact; the host never takes the file and never returns pass/fail
 
 There is no server-side LLM. One shared catalog for every caller — an account unlocks the hosted API; it does not give you a private rulebook.

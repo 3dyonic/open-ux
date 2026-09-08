@@ -6,9 +6,12 @@ description: >-
   empty or error states, navigation, a table or dashboard, a modal, or a
   multi-step flow. Open UX is a cited UX catalog for agents. Pick one
   Situation Card, then call Open-UX:get_situation and Open-UX:audit with
-  jobs=<card_id>. Don't invent UX rules from memory; apply the cited
-  criteria to work already in hand. Cited criteria help you decide; the
-  decision is yours. Returns citations, not pass or fail.
+  jobs=<card_id>. A browse catalog. Expect pages; loop next_offset;
+  go in and out of a cite. Start from overview — short definition,
+  the fast grab. Don't invent UX rules from memory; use the cited
+  records on work already in hand.
+  We are a catalog; they choose what to take. Cited criteria help
+  you decide; the decision is yours. Returns citations, not pass or fail.
   home/cart/checkout are context, not ids. Use Open-UX:suggest_situations
   only if the task is a vague surface or pasted UI. Cite via
   Open-UX:search_guidelines or Open-UX:get_guideline. pip install open-ux
@@ -17,15 +20,43 @@ description: >-
 
 # Open UX
 
-Need in → cited criteria out. Cited criteria so you can make a better decision. The decision is yours. You already have the UI. We hand you the matching cited rules so you don't invent UX from memory.
+Need in → cited criteria out. We are a catalog. They choose what to take. You already have the UI. We hand you a page of matching cited rules so you don't invent UX from memory. Cited criteria help you decide. The decision is yours.
 
-Compose and review share this one trigger. Pick a Situation Card, call `Open-UX:get_situation`, then `Open-UX:audit` with `jobs=<card_id>`. Pages of 10; if `next_offset` is set, call again with that offset before you apply. If `query_fallback` is set, you are on the unfiltered shelf, not a narrowed hit list. `query` orders the shelf and is not required. Surfaces (`home`, `cart`, `checkout`) are context, not Cards. Container aliases `forms` / `actions` / `feedback` work as a broad first scope. The catalog stays open: after a Card you can take another or call the map again.
+Compose and review share this one trigger. Pick a Situation Card, call `Open-UX:get_situation`, then `Open-UX:audit` with `jobs=<card_id>`.
+
+`audit` is the shelf. Expect pagination: pages of 10. Use this page. If `next_offset` is set, more of the catalog is there — call again with that `offset` if you want more. You choose what to take. `query` orders the shelf. If `query_fallback` is set, you are on the unfiltered shelf.
+
+Go in and out. `Open-UX:get_guideline` opens one full record; then come back to the shelf, another page, or another Card. Cross-reference similar rules — same `facet`, `Open-UX:search_guidelines`, or the Reject column for the Card that ask actually is. Two houses on one Card can disagree; say both.
+
+## Shapes
+
+**`overview`** is the short definition — what this cite *is*. Start there. Fast confidence. Not a grade.
+
+`audit` is a page, not the Card:
+
+```json
+{
+  "guidelines": [{ "id": "", "name": "", "overview": "", "rule": "", "facet": "" }],
+  "count": 10,
+  "total": 13,
+  "host": "citations_only",
+  "next_offset": 10
+}
+```
+
+Read `overview`. If `next_offset` is set, loop. `id` opens `get_guideline` for the rest of that cite — then come back to the shelf.
+
+One Card is many houses. That is the catalog. The host will not pick.
+
+This is a catalog, not a judge. `host` is `citations_only`. Do not write a score as if we graded. The decision is yours.
+
+Surfaces (`home`, `cart`, `checkout`) are context, not Cards. Container aliases `forms` / `actions` / `feedback` work as a broad first scope. The catalog stays open: after a Card you can take another or call the map again.
 
 When you need a map of what exists — by **category**, then **source** — read [`catalog/MANIFEST.md`](../../../../catalog/MANIFEST.md). Then fetch one id.
 
 ## Examples
 
-- **Signup / settings fields.** Card `design_a_form`. Browse via `jobs=design_a_form`. Same if you are reviewing that form.
+- **Signup / settings fields.** Card `design_a_form`. Browse via `jobs=design_a_form`. Loop `next_offset`. Open one id with `get_guideline`, then back to the page. Same if you are reviewing that form.
 - **Review a delete confirm.** Card `protect_destructive_and_leave`.
 - **Vague checkout.** `Open-UX:suggest_situations` with the task text. Read the catalog map, pick a Card (or `list_situations` with a container), `Open-UX:get_situation`, then `Open-UX:audit` with `jobs=<card_id>`.
 - **Already have a guideline id.** `Open-UX:get_guideline` for that one cited body.
@@ -72,12 +103,12 @@ Reject **crosses containers** — pick the Card the ask actually is.
 Fully qualified `Open-UX:*` names. `/list` `/get` / map / cite stay on tools. Card pick is the table above (judgment).
 
 - `Open-UX:get_situation` — Card when / reject / pointers (not rule bodies)
-- `Open-UX:audit` — `jobs=<card_id>` or `guideline_ids`. Cited criteria; follow `next_offset`. The decision is yours.
+- `Open-UX:audit` — `jobs=<card_id>` or `guideline_ids`. Browse. Start from `overview`. Loop `next_offset`. Go in and out. The decision is yours.
 - Same wire (available, not required): `open-ux audit --jobs <card_id>` or `python3 scripts/audit.py --jobs <card_id>` / `--guideline-ids`. Your choice — the tool or this helper.
 - `Open-UX:list_situations` — Card index; with `container=` that kind's specs (`when` / `reject`)
 - `Open-UX:suggest_situations` — catalog map (lock-order overviews). Vague surface or pasted UI. Does not pick a Card.
-- `Open-UX:get_guideline` / `Open-UX:search_guidelines` / `Open-UX:list_guidelines` — cite
+- `Open-UX:get_guideline` / `Open-UX:search_guidelines` / `Open-UX:list_guidelines` — cite. Full-record fields: [guideline.md](guideline.md).
 
-Empty shelf → say so. Cited criteria help you decide; the decision is yours. We don't return pass or fail.
+Empty shelf → say so. We are a catalog. They choose what to take. Cited criteria help you decide; the decision is yours. We don't return pass or fail.
 
 Without a Claude session, [`scripts/mcp_call.py`](../../../../scripts/mcp_call.py) speaks `tools/list` and `tools/call`. In Claude, call the tools. Do not treat `mcp_call.py` as the skill path.
