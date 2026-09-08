@@ -1,23 +1,50 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 280" width="960" height="280" role="img" aria-label="Open UX offerings: compose, review, map, cite">
-  <rect width="960" height="280" fill="#F9F6F2"/>
-  <rect x="24" y="40" width="210" height="200" rx="6" fill="#FFFFFF" stroke="#1F1C1A" stroke-width="2"/>
-  <rect x="24" y="40" width="210" height="8" rx="6" fill="#FF4B00"/>
-  <text x="44" y="96" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22" fill="#1F1C1A">Compose</text>
-  <text x="44" y="136" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15" fill="#1F1C1A">Build the UI. Same</text>
-  <text x="44" y="158" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15" fill="#1F1C1A">Card. Same audit.</text>
-  <rect x="258" y="40" width="210" height="200" rx="6" fill="#FFFFFF" stroke="#1F1C1A" stroke-width="2"/>
-  <rect x="258" y="40" width="210" height="8" rx="6" fill="#FF4B00"/>
-  <text x="278" y="96" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22" fill="#1F1C1A">Review</text>
-  <text x="278" y="136" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15" fill="#1F1C1A">Check work in hand.</text>
-  <text x="278" y="158" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15" fill="#1F1C1A">jobs= still. No file.</text>
-  <rect x="492" y="40" width="210" height="200" rx="6" fill="#FFFFFF" stroke="#1F1C1A" stroke-width="2"/>
-  <rect x="492" y="40" width="210" height="8" rx="6" fill="#FF4B00"/>
-  <text x="512" y="96" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22" fill="#1F1C1A">Map</text>
-  <text x="512" y="136" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15" fill="#1F1C1A">Vague surface? Suggest</text>
-  <text x="512" y="158" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15" fill="#1F1C1A">a Card, then audit.</text>
-  <rect x="726" y="40" width="210" height="200" rx="6" fill="#FFECE0" stroke="#1F1C1A" stroke-width="2"/>
-  <rect x="726" y="40" width="210" height="8" rx="6" fill="#FF4B00"/>
-  <text x="746" y="96" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22" fill="#1F1C1A">Cite</text>
-  <text x="746" y="136" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15" fill="#1F1C1A">One guideline body</text>
-  <text x="746" y="158" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15" fill="#1F1C1A">by id. Search first.</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="672" viewBox="0 0 1280 672" role="img" aria-label="Open UX: use validated guidelines">
+  <defs>
+    <filter id="clayVol" x="-50%" y="-50%" width="200%" height="200%" color-interpolation-filters="sRGB">
+      <feOffset dy="8" in="SourceAlpha" result="off"/>
+      <feGaussianBlur stdDeviation="7" in="off" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.12 0 0 0 0 0.1 0 0 0 0 0.08 0 0 0 0.14 0" result="shadow"/>
+      <feBlend in="SourceGraphic" in2="shadow" result="shape"/>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset dy="3"/>
+      <feGaussianBlur stdDeviation="4"/>
+      <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.32 0"/>
+      <feBlend in2="shape"/>
+    </filter>
+  </defs>
+  <rect width="1280" height="672" rx="6" fill="#F9F6F2"/>
+  <rect width="1280" height="4" fill="#FF4B00"/>
+  <text x="56" y="100" font-family="IBM Plex Sans, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="32" font-weight="600" fill="#1F1B16">Validated guidelines</text>
+  <text x="56" y="136" font-family="IBM Plex Sans, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="18" fill="#6A6056">Cited UX rules agents audit against</text>
+  <text x="56" y="196" font-family="IBM Plex Sans, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="40" font-weight="600" fill="#1F1B16">We help LLMs apply cited UX rules</text>
+  <text x="56" y="244" font-family="IBM Plex Sans, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="40" font-weight="600" fill="#1F1B16">instead of inventing them.</text>
+  <g transform="translate(922 -3) scale(2.4)">
+    <ellipse cx="70" cy="88" rx="36" ry="6" fill="#D6BEA6" fill-opacity="0.45"/>
+    <circle cx="70" cy="56" r="28" fill="#FF4B00" filter="url(#clayVol)"/>
+    <ellipse cx="64" cy="40.5" rx="10" ry="4.5" fill="#FFC79E" fill-opacity="0.55"/>
+    <ellipse cx="61" cy="51.5" rx="3" ry="3.5" fill="#1F1B16"/>
+    <ellipse cx="75" cy="51.5" rx="3" ry="3.5" fill="#1F1B16"/>
+    <rect x="90" y="38" width="22" height="28" rx="4" fill="#FFFFFF" stroke="#DED4C8" filter="url(#clayVol)"/>
+  </g>
+
+  <rect x="56" y="308" width="576" height="164" rx="6" fill="#FFFFFF" stroke="#DED4C8"/>
+  <text x="84" y="348" font-family="IBM Plex Sans, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="22" font-weight="600" fill="#1F1B16">Compose</text>
+  <text x="84" y="388" font-family="IBM Plex Sans, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="16" fill="#1F1B16">You are building the UI.</text>
+  <text x="84" y="416" font-family="IBM Plex Sans, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="16" fill="#1F1B16">Pick the situation. Get the matching rules.</text>
+
+  <rect x="648" y="308" width="576" height="164" rx="6" fill="#FFFFFF" stroke="#DED4C8"/>
+  <text x="676" y="348" font-family="IBM Plex Sans, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="22" font-weight="600" fill="#1F1B16">Review</text>
+  <text x="676" y="388" font-family="IBM Plex Sans, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="16" fill="#1F1B16">The screen is already built.</text>
+  <text x="676" y="416" font-family="IBM Plex Sans, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="16" fill="#1F1B16">Same situation. Same rules.</text>
+
+  <rect x="56" y="488" width="576" height="164" rx="6" fill="#FFFFFF" stroke="#DED4C8"/>
+  <text x="84" y="528" font-family="IBM Plex Sans, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="22" font-weight="600" fill="#1F1B16">Map</text>
+  <text x="84" y="568" font-family="IBM Plex Sans, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="16" fill="#1F1B16">A vague surface, or a pasted UI.</text>
+  <text x="84" y="596" font-family="IBM Plex Sans, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="16" fill="#1F1B16">Find the Card, then audit.</text>
+
+  <rect x="648" y="488" width="576" height="164" rx="6" fill="#FFFFFF" stroke="#DED4C8"/>
+  <text x="676" y="528" font-family="IBM Plex Sans, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="22" font-weight="600" fill="#1F1B16">Cite</text>
+  <text x="676" y="568" font-family="IBM Plex Sans, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="16" fill="#1F1B16">You already know the id.</text>
+  <text x="676" y="596" font-family="IBM Plex Sans, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="16" fill="#1F1B16">Search, then open that guideline.</text>
 </svg>

@@ -1,21 +1,55 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 420" width="1280" height="420" role="img" aria-label="Open UX: Card to get_situation to audit">
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="420" viewBox="0 0 1280 420" role="img" aria-label="Open UX: Card to get_situation to audit">
+  <defs>
+    <filter id="pipHero" x="-50%" y="-50%" width="200%" height="200%" color-interpolation-filters="sRGB">
+      <feOffset dy="10" in="SourceAlpha" result="off"/>
+      <feGaussianBlur stdDeviation="9" in="off" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.12 0 0 0 0 0.1 0 0 0 0 0.08 0 0 0 0.14 0" result="shadow"/>
+      <feBlend in="SourceGraphic" in2="shadow" result="shape"/>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset dy="4"/>
+      <feGaussianBlur stdDeviation="5"/>
+      <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.35 0"/>
+      <feBlend in2="shape"/>
+    </filter>
+  </defs>
   <rect width="1280" height="420" fill="#F9F6F2"/>
-  <text x="64" y="72" font-family="Georgia, 'Times New Roman', serif" font-size="36" fill="#1F1C1A">Open UX</text>
-  <text x="64" y="112" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18" fill="#1F1C1A">Cited UX rules agents audit against</text>
-  <rect x="64" y="168" width="280" height="160" rx="6" fill="#FFFFFF" stroke="#1F1C1A" stroke-width="2"/>
-  <text x="88" y="208" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#FF4B00">1 · Card</text>
-  <text x="88" y="248" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22" fill="#1F1C1A">Pick the job</text>
-  <text x="88" y="284" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#1F1C1A">Situation you are composing</text>
-  <path d="M360 248 H424" stroke="#FF4B00" stroke-width="3"/>
-  <polygon points="424,242 440,248 424,254" fill="#FF4B00"/>
-  <rect x="456" y="168" width="320" height="160" rx="6" fill="#FFFFFF" stroke="#1F1C1A" stroke-width="2"/>
-  <text x="480" y="208" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#FF4B00">2 · get_situation</text>
-  <text x="480" y="248" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22" fill="#1F1C1A">When / reject</text>
-  <text x="480" y="284" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#1F1C1A">Pointers, not rule bodies</text>
-  <path d="M792 248 H856" stroke="#FF4B00" stroke-width="3"/>
-  <polygon points="856,242 872,248 856,254" fill="#FF4B00"/>
-  <rect x="888" y="168" width="328" height="160" rx="6" fill="#FFECE0" stroke="#1F1C1A" stroke-width="2"/>
-  <text x="912" y="208" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#FF4B00">3 · audit · jobs=</text>
-  <text x="912" y="248" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22" fill="#1F1C1A">Criteria pack</text>
-  <text x="912" y="284" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#1F1C1A">Cited rules. No file. No verdict.</text>
+  <rect x="0" y="0" width="1280" height="4" fill="#FF4B00"/>
+  <text x="64" y="56" font-family="IBM Plex Sans, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="22" font-weight="600" fill="#1F1B16">Open UX</text>
+  <text x="180" y="56" font-family="IBM Plex Sans, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="16" fill="#6A6056">Cited UX rules agents audit against</text>
+  <rect x="64" y="88" width="280" height="244" rx="6" fill="#FFFFFF" stroke="#DED4C8" stroke-width="1"/>
+  <text x="84" y="124" font-family="IBM Plex Sans, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="18" font-weight="600" fill="#FF4B00">1 Card</text>
+  <text x="84" y="168" font-family="IBM Plex Sans, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="20" font-weight="600" fill="#1F1B16">Pick the job</text>
+  <text x="84" y="204" font-family="IBM Plex Sans, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="14" fill="#6A6056">Situation you are composing</text>
+  <rect x="84" y="236" width="240" height="40" rx="6" fill="#FFECE0"/>
+  <text x="100" y="262" font-family="IBM Plex Mono, ui-monospace, SF Mono, Menlo, Consolas, monospace" font-size="14" fill="#FF4B00">design_a_form</text>
+  <path d="M360 210 H460" stroke="#6A6056" stroke-width="2" fill="none"/>
+  <path d="M448 202 L460 210 L448 218" stroke="#6A6056" stroke-width="2" fill="none"/>
+  <rect x="476" y="88" width="280" height="244" rx="6" fill="#FFFFFF" stroke="#DED4C8" stroke-width="1"/>
+  <text x="496" y="124" font-family="IBM Plex Sans, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="18" font-weight="600" fill="#FF4B00">2 get_situation</text>
+  <text x="496" y="168" font-family="IBM Plex Sans, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="20" font-weight="600" fill="#1F1B16">When / reject</text>
+  <text x="496" y="204" font-family="IBM Plex Sans, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="14" fill="#6A6056">Pointers, not rule bodies</text>
+  <rect x="496" y="236" width="240" height="40" rx="6" fill="#F9F6F2" stroke="#DED4C8"/>
+  <text x="512" y="262" font-family="IBM Plex Mono, ui-monospace, SF Mono, Menlo, Consolas, monospace" font-size="14" fill="#1F1B16">Open-UX:get_situation</text>
+  <path d="M772 210 H872" stroke="#6A6056" stroke-width="2" fill="none"/>
+  <path d="M860 202 L872 210 L860 218" stroke="#6A6056" stroke-width="2" fill="none"/>
+  <rect x="888" y="88" width="328" height="244" rx="6" fill="#FFFFFF" stroke="#DED4C8" stroke-width="1"/>
+  <text x="908" y="124" font-family="IBM Plex Sans, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="18" font-weight="600" fill="#FF4B00">3 audit</text>
+  <text x="908" y="168" font-family="IBM Plex Sans, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="20" font-weight="600" fill="#1F1B16">Criteria pack</text>
+  <text x="908" y="204" font-family="IBM Plex Sans, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="14" fill="#6A6056">Cited rules. No file.</text>
+  <rect x="908" y="236" width="288" height="40" rx="6" fill="#FFECE0"/>
+  <text x="924" y="262" font-family="IBM Plex Mono, ui-monospace, SF Mono, Menlo, Consolas, monospace" font-size="14" fill="#FF4B00">jobs=design_a_form</text>
+  <g id="Pip" transform="translate(1008 22) scale(0.48)">
+    <ellipse cx="160" cy="209" rx="75" ry="11" fill="#D6BEA6" fill-opacity="0.45"/>
+    <circle cx="160" cy="121" r="59" fill="#FF4B00" filter="url(#pipHero)"/>
+    <ellipse cx="147" cy="95" rx="23" ry="11" fill="#FFC79E" fill-opacity="0.55"/>
+    <ellipse cx="91.9" cy="121" rx="18" ry="9" transform="rotate(-18 91.9 121)" fill="#ECDCCA" filter="url(#pipHero)"/>
+    <ellipse cx="224.2" cy="127.5" rx="19" ry="9" transform="rotate(22 224.2 127.5)" fill="#ECDCCA" filter="url(#pipHero)"/>
+    <rect x="228" y="78" width="54" height="68" rx="6" fill="#FFFFFF" stroke="#DED4C8" filter="url(#pipHero)"/>
+    <rect x="240" y="94" width="30" height="6" rx="3" fill="#ECDCCA"/>
+    <rect x="240" y="106" width="22" height="6" rx="3" fill="#D6BEA6"/>
+    <ellipse cx="142" cy="117" rx="4" ry="5" fill="#1F1B16"/>
+    <ellipse cx="172" cy="117" rx="4" ry="5" fill="#1F1B16"/>
+    <ellipse cx="158" cy="136" rx="8" ry="4" fill="#B8330D" fill-opacity="0.7"/>
+  </g>
 </svg>
