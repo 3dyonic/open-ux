@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-"""Thin audit helper: jobs= or guideline_ids in, criteria pack out.
+"""Thin audit helper: jobs= or guideline_ids in, cited criteria out.
 
-Same tight wire as Open-UX:audit. Pack only. No file. No host pass or fail.
+Same tight wire as Open-UX:audit. No file. No host pass or fail.
+Cited criteria help you decide; the decision is yours.
 
 Available, not required — Open-UX:audit stays first-class. Your choice.
 

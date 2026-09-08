@@ -112,7 +112,7 @@ def _build_parser() -> argparse.ArgumentParser:
 
     audit = sub.add_parser(
         "audit",
-        help="Open-UX:audit — cited pack",
+        help="Open-UX:audit — cited criteria (decision is yours)",
         epilog=_known_needs_hint(),
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
@@ -131,7 +131,13 @@ def _build_parser() -> argparse.ArgumentParser:
         "--limit",
         type=int,
         default=DEFAULT_LIMIT,
-        help=f"Max rows (default {DEFAULT_LIMIT}).",
+        help=f"Page size (default {DEFAULT_LIMIT}).",
+    )
+    audit.add_argument(
+        "--offset",
+        type=int,
+        default=0,
+        help="Skip this many in-scope rows.",
     )
 
     cite = sub.add_parser("cite", help="get_guideline — one cited body")
@@ -239,6 +245,8 @@ def _tool_payload(
         if args.query:
             body["query"] = args.query
         body["limit"] = args.limit
+        if args.offset:
+            body["offset"] = args.offset
         return "audit", body
     if command == "cite":
         return "get_guideline", {"id": args.guideline_id}

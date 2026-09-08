@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+OUX-32: `audit` lazy-loads pages of 10.
+
+- `offset` plus `omitted` / `next_offset` / `omitted_hint` until the in-scope shelf is empty. `limit` max 50 is one page, not a shelf ceiling.
+- `query_fallback: true` when fail-open (OUX-21).
+- Always `host: "citations_only"`. Cited criteria help you decide; the decision is yours.
+
 ## 0.2.0
 
 Breaking: `suggest_situations` is a catalog map, not a ranked list.

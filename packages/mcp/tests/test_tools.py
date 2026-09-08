@@ -57,6 +57,7 @@ async def test_empty_catalog_tools_are_honest(tmp_env: Path) -> None:
         assert "requires jobs or guideline_ids" in result["error"]
         assert EMPTY_NOTE in result["note"]
         assert "verdict" not in result
+        assert result["host"] == "citations_only"
         assert "summary" not in result
 
 
@@ -360,6 +361,7 @@ async def test_audit_jobs_returns_criteria(live_catalog: Path) -> None:
         assert result["count"] >= 1
         assert "verdict" not in result
         assert "summary" not in result
+        assert result["host"] == "citations_only"
         row = result["guidelines"][0]
         assert set(row) == {
             "id",

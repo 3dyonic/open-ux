@@ -17,6 +17,7 @@ from open_ux.jobs import (
 
 PACK_KEYS = ("id", "title", "name", "rule", "pass_when", "fail_when", "facet")
 NEED_ERROR = "audit requires jobs or guideline_ids; the full catalog is never run."
+HOST_CITATIONS_ONLY = "citations_only"
 
 
 def _clamp_limit(limit: int) -> int:
@@ -25,6 +26,12 @@ def _clamp_limit(limit: int) -> int:
     if limit > MAX_LIMIT:
         return MAX_LIMIT
     return limit
+
+
+def _clamp_offset(offset: int) -> int:
+    if offset < 0:
+        return 0
+    return offset
 
 
 def _pack(guideline: dict[str, Any]) -> dict[str, Any]:
@@ -81,13 +88,12 @@ def _stratify_by_facet(
     tree: JobTree,
     cap: int,
 ) -> list[dict[str, Any]]:
-    """Reorder a Card/container pack so the first `cap` rows cover facets.
+    """Full-set facet round-robin (OUX-32). `cap` is unused; callers slice.
 
-    Round-robin: quota pass, then fill in Card facet order (not catalog-file
-    order). Known scaling limit: when len(F) >= cap, take 1 from each of the
-    first `cap` facets; later facets get zero rows in that window (OUX-24).
-    Returns the full set: stratified sample first, leftover in facet order.
+    One row per facet per pass, Card facet order, then leftover keys.
+    Page windows stay facet-balanced without reshuffling later offsets.
     """
+    del cap
     if not rows:
         return []
     by_key: dict[tuple[str, str], list[dict[str, Any]]] = defaultdict(list)
@@ -105,47 +111,21 @@ def _stratify_by_facet(
             ordered.append(key)
             seen.add(key)
 
-    facet_count = len(ordered)
-    if facet_count == 0:
+    if not ordered:
         return list(rows)
 
-    taken: set[int] = set()
-    head: list[dict[str, Any]] = []
-
-    if facet_count >= cap:
-        for key in ordered[:cap]:
-            row = by_key[key][0]
-            head.append(row)
-            taken.add(id(row))
-    else:
-        quota = max(1, cap // facet_count)
+    queues = {key: list(by_key[key]) for key in ordered}
+    out: list[dict[str, Any]] = []
+    while True:
+        progressed = False
         for key in ordered:
-            take = 0
-            for row in by_key[key]:
-                if take >= quota or len(head) >= cap:
-                    break
-                head.append(row)
-                taken.add(id(row))
-                take += 1
-            if len(head) >= cap:
-                break
-        for key in ordered:
-            if len(head) >= cap:
-                break
-            for row in by_key[key]:
-                if id(row) in taken:
-                    continue
-                head.append(row)
-                taken.add(id(row))
-                if len(head) >= cap:
-                    break
-
-    tail: list[dict[str, Any]] = []
-    for key in ordered:
-        for row in by_key[key]:
-            if id(row) not in taken:
-                tail.append(row)
-    return head + tail
+            bucket = queues[key]
+            if bucket:
+                out.append(bucket.pop(0))
+                progressed = True
+        if not progressed:
+            break
+    return out
 
 
 def _select_by_need(catalog: Catalog, jobs: str) -> list[dict[str, Any]]:
@@ -156,15 +136,32 @@ def _payload(
     rows: list[dict[str, Any]],
     *,
     total: int,
+    limit: int,
+    offset: int,
     note: str | None = None,
     error: str | None = None,
+    query_fallback: bool = False,
 ) -> dict[str, Any]:
     packed = [_pack(g) for g in rows]
+    count = len(packed)
     out: dict[str, Any] = {
         "guidelines": packed,
-        "count": len(packed),
+        "count": count,
         "total": total,
+        "limit": limit,
+        "offset": offset,
+        "host": HOST_CITATIONS_ONLY,
     }
+    omitted = max(0, total - offset - count)
+    if omitted:
+        next_offset = offset + count
+        out["omitted"] = omitted
+        out["next_offset"] = next_offset
+        out["omitted_hint"] = (
+            f"{omitted} more not shown; pass offset={next_offset}"
+        )
+    if query_fallback:
+        out["query_fallback"] = True
     if note:
         out["note"] = note
     if error:
@@ -179,6 +176,7 @@ def audit(
     query: str | None = None,
     guideline_ids: list[str] | None = None,
     limit: int = DEFAULT_LIMIT,
+    offset: int = 0,
     target: Any = None,
     content: Any = None,
     target_type: str | None = None,
@@ -186,15 +184,18 @@ def audit(
     """Need in, matching rule criteria out. Leftover target/content are ignored."""
     del target, content, target_type
     cap = _clamp_limit(limit)
+    skip = _clamp_offset(offset)
     requested = [gid for gid in (guideline_ids or []) if gid]
     job = (jobs or "").strip() or None
 
     if not requested and not job:
         note = EMPTY_NOTE if catalog.empty else None
-        return _payload([], total=0, note=note, error=NEED_ERROR)
+        return _payload(
+            [], total=0, limit=cap, offset=skip, note=note, error=NEED_ERROR
+        )
 
     if catalog.empty:
-        return _payload([], total=0, note=EMPTY_NOTE)
+        return _payload([], total=0, limit=cap, offset=skip, note=EMPTY_NOTE)
 
     if requested:
         found: list[dict[str, Any]] = []
@@ -205,15 +206,25 @@ def audit(
         rows = found
     else:
         assert job is not None
-        rows = _stratify_by_facet(_select_by_need(catalog, job), load_job_tree(), cap)
+        scoped = _select_by_need(catalog, job)
+        rows = _stratify_by_facet(scoped, load_job_tree(), len(scoped) or 1)
 
     selected, query_matched = _rerank_by_query(rows, query)
 
     total = len(selected)
-    capped = selected[:cap]
+    page = selected[skip : skip + cap]
     note = None
+    query_fallback = False
     if total == 0:
         note = MISS_NOTE
     elif not query_matched:
         note = f"query too narrow — showing all {total} guidelines in scope"
-    return _payload(capped, total=total, note=note)
+        query_fallback = True
+    return _payload(
+        page,
+        total=total,
+        limit=cap,
+        offset=skip,
+        note=note,
+        query_fallback=query_fallback,
+    )

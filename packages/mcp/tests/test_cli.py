@@ -18,6 +18,7 @@ def test_cli_audit_prints_pack(
     payload = json.loads(capsys.readouterr().out)
     assert payload["count"] >= 1
     assert "verdict" not in payload
+    assert payload["host"] == "citations_only"
     assert "guidelines" in payload
 
 

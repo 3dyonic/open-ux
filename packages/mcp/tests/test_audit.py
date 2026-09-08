@@ -3,6 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from open_ux.audit import (
+    HOST_CITATIONS_ONLY,
     NEED_ERROR,
     PACK_KEYS,
     _matches_query,
@@ -44,11 +45,16 @@ def _assert_pack_row(row: dict) -> None:
     assert "reasons" not in row
 
 
+def _assert_contract(result: dict) -> None:
+    assert result["host"] == HOST_CITATIONS_ONLY
+    assert "verdict" not in result
+    assert "summary" not in result
+
+
 def test_jobs_card_returns_criteria_without_content(live_catalog: Path) -> None:
     result = audit(_catalog(live_catalog), jobs="design_a_form")
     assert "error" not in result
-    assert "verdict" not in result
-    assert "summary" not in result
+    _assert_contract(result)
     assert result["count"] == len(result["guidelines"])
     assert result["total"] >= result["count"]
     assert result["count"] >= 1
@@ -161,12 +167,15 @@ def test_query_that_matches_nothing_falls_open(live_catalog: Path) -> None:
         row["id"] for row in wide["guidelines"]
     ]
     assert narrowed["note"] and "showing all" in narrowed["note"]
+    assert narrowed["query_fallback"] is True
 
 
 def test_limit_caps_pack(live_catalog: Path) -> None:
     result = audit(_catalog(live_catalog), jobs="forms", limit=3)
     assert result["count"] == 3
     assert result["total"] > 3
+    assert result["omitted"] == result["total"] - 3
+    assert result["next_offset"] == 3
 
 
 def test_leaf_id_is_not_a_need(live_catalog: Path) -> None:
@@ -199,7 +208,7 @@ def test_cluster_only_cards_return_pointer_criteria(live_catalog: Path) -> None:
     assert OVERLAY in overlay_ids
     assert "nl.step-n-of-m-in-title-and-above-form" in step_ids
     assert display["count"] >= 1
-    assert "verdict" not in display
+    _assert_contract(display)
     for row in display["guidelines"]:
         _assert_pack_row(row)
 
@@ -267,11 +276,8 @@ def test_query_phrase_token_any_does_not_fail_open(live_catalog: Path) -> None:
 def test_query_helper_reorders_stratified_not_catalog(live_catalog: Path) -> None:
     catalog = _catalog(live_catalog)
     cap = DEFAULT_LIMIT
-    stratified = _stratify_by_facet(
-        select_by_jobs(catalog, "design_a_form"),
-        load_job_tree(),
-        cap,
-    )
+    scoped = select_by_jobs(catalog, "design_a_form")
+    stratified = _stratify_by_facet(scoped, load_job_tree(), len(scoped) or 1)
     ranked, matched = _rerank_by_query(stratified, "helper")
     assert matched
     expected = [row["id"] for row in ranked][:cap]
@@ -387,3 +393,65 @@ def test_compose_sign_in_returns_cited_show_password(live_catalog: Path) -> None
     for row in result["guidelines"]:
         _assert_pack_row(row)
         assert row["facet"] == "credentials_are_hard_to_enter"
+
+
+def test_data_display_lazy_loads_white_canvas(live_catalog: Path) -> None:
+    catalog = _catalog(live_catalog)
+    first = audit(catalog, jobs="compose_a_data_display")
+    _assert_contract(first)
+    assert first["count"] == 10
+    assert first["total"] == 13
+    assert first["omitted"] == 3
+    assert first["next_offset"] == 10
+    assert first["limit"] == 10
+    assert first["offset"] == 0
+    assert "3 more not shown" in first["omitted_hint"]
+    assert "offset=10" in first["omitted_hint"]
+    page1 = {row["id"] for row in first["guidelines"]}
+    second = audit(catalog, jobs="compose_a_data_display", offset=10)
+    _assert_contract(second)
+    assert second["count"] == 3
+    assert second["total"] == 13
+    assert "omitted" not in second
+    assert "next_offset" not in second
+    page2 = {row["id"] for row in second["guidelines"]}
+    assert page1.isdisjoint(page2)
+    assert "nsw.white-canvas-single-colour-when-labelled" in page1 | page2
+
+
+def test_design_a_form_walks_every_page(live_catalog: Path) -> None:
+    catalog = _catalog(live_catalog)
+    seen: list[str] = []
+    offset = 0
+    total = None
+    pages = 0
+    while True:
+        result = audit(catalog, jobs="design_a_form", offset=offset)
+        _assert_contract(result)
+        if total is None:
+            total = result["total"]
+            assert total > DEFAULT_LIMIT
+        assert result["total"] == total
+        ids = [row["id"] for row in result["guidelines"]]
+        assert not set(ids) & set(seen)
+        seen.extend(ids)
+        pages += 1
+        nxt = result.get("next_offset")
+        if nxt is None:
+            break
+        offset = nxt
+    assert len(seen) == total
+    assert pages >= 2
+    assert offset >= DEFAULT_LIMIT
+
+
+def test_query_fallback_stays_paged(live_catalog: Path) -> None:
+    result = audit(
+        _catalog(live_catalog),
+        jobs="design_a_form",
+        query="zxqv-not-a-guideline-token",
+    )
+    assert result["query_fallback"] is True
+    assert result["count"] == DEFAULT_LIMIT
+    assert result["omitted"] == result["total"] - DEFAULT_LIMIT
+    assert result["next_offset"] == DEFAULT_LIMIT
