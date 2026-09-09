@@ -185,6 +185,21 @@ def test_dist_serves_shell_on_page_routes_only(
         assert invite_post.json()["ok"] is True
 
 
+def test_html_rereads_dist_after_rebuild(tmp_env: Path, monkeypatch) -> None:
+    dist = _write_dist(tmp_env)
+    monkeypatch.setenv("OPEN_UX_WEB_DIST", str(dist))
+    with _client() as client:
+        first = client.get("/")
+        assert "open-ux-shell" in first.text
+        (dist / "index.html").write_text(
+            "<!DOCTYPE html><html><body>rebuilt-shell</body></html>",
+            encoding="utf-8",
+        )
+        second = client.get("/")
+    assert "rebuilt-shell" in second.text
+    assert "open-ux-shell" not in second.text
+
+
 def test_mcp_and_account_are_not_swallowed(tmp_env: Path, monkeypatch) -> None:
     dist = _write_dist(tmp_env)
     monkeypatch.setenv("OPEN_UX_WEB_DIST", str(dist))
@@ -239,6 +254,8 @@ def test_sources_is_a_vite_tailwind_page() -> None:
     assert "min-h-11" in styles
     assert "content.innerHTML = ruleContentHtml" in catalog_js
     assert "markActiveRule(tree" in catalog_js
+    assert "button.tree-item-card" in catalog_js
+    assert ".tree-group:has(> .tree-children > .tree-group.is-open) > .tree-item-card" in styles
 
 
 def test_vite_owns_consent_banner_and_gtm() -> None:
@@ -302,6 +319,8 @@ def test_catalog_rule_page_embeds_rule_for_fetchers(
     assert 'class="sidebar"' in body
     assert "rule-shell" in body
     assert 'data-ssr-page="rule"' in body
+    assert "tree-item-card tree-item-on" in body
+    assert 'aria-current="page"' in body
     assert "Stop inventing UX rules from memory" not in body
     assert home.status_code == 200
     assert "<title>Open UX — Cited UX rules agents audit against</title>" in home.text

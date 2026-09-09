@@ -362,9 +362,10 @@ function citationsHtml(guideline) {
   return `<section class="block" data-field="citation"><p class="block-label">Citations</p><div class="cite-list">${items.join("")}</div></section>`;
 }
 
-function treeToggle(kind, title, open) {
+function treeToggle(kind, title, open, current = false) {
   const caret = open ? "▾" : "▸";
-  return `<div class="tree-group${open ? " is-open" : ""}"><button type="button" class="tree-item tree-item-${kind}" aria-expanded="${open ? "true" : "false"}"><span class="tree-caret" aria-hidden="true">${caret}</span><span>${escapeHtml(title)}</span></button><div class="tree-children">`;
+  const on = current ? " tree-item-on" : "";
+  return `<div class="tree-group${open ? " is-open" : ""}"><button type="button" class="tree-item tree-item-${kind}${on}" aria-expanded="${open ? "true" : "false"}"><span class="tree-caret" aria-hidden="true">${caret}</span><span>${escapeHtml(title)}</span></button><div class="tree-children">`;
 }
 
 function treeHtml(jobs, index, current) {
@@ -386,7 +387,7 @@ function treeHtml(jobs, index, current) {
     for (const card of jobs.cards || []) {
       if (card.container !== container.id) continue;
       const openCard = openC && card.id === currentCard;
-      parts.push(treeToggle("card", card.title, openCard));
+      parts.push(treeToggle("card", card.title, openCard, openCard));
       for (const facet of card.facets || []) {
         const openF = openCard && facet.id === currentFacet;
         parts.push(treeToggle("facet", facet.title, openF));
@@ -396,8 +397,9 @@ function treeHtml(jobs, index, current) {
           const active = gid === currentId;
           const cls = "tree-item tree-item-rule" + (active ? " tree-item-on" : "");
           const pip = active ? `<span class="tree-pip" aria-hidden="true"></span>` : "";
+          const current = active ? ' aria-current="page"' : "";
           parts.push(
-            `<a class="${cls}" href="${escapeHtml(hrefId(gid))}" data-id="${escapeHtml(gid)}">${pip}<span>${escapeHtml(displayName(row))}</span></a>`,
+            `<a class="${cls}" href="${escapeHtml(hrefId(gid))}" data-id="${escapeHtml(gid)}"${current}>${pip}<span>${escapeHtml(displayName(row))}</span></a>`,
           );
         }
         parts.push("</div></div>");
@@ -471,14 +473,25 @@ function ruleContentHtml(found, jobs) {
 
 function markActiveRule(tree, guidelineId) {
   const want = String(guidelineId || "");
+  for (const el of tree.querySelectorAll("button.tree-item-card")) {
+    el.classList.remove("tree-item-on");
+  }
   for (const el of tree.querySelectorAll(".tree-item-rule")) {
     const on = el.getAttribute("data-id") === want;
     el.classList.toggle("tree-item-on", on);
+    if (on) el.setAttribute("aria-current", "page");
+    else el.removeAttribute("aria-current");
     const pip = el.querySelector(".tree-pip");
     if (on && !pip) {
       el.insertAdjacentHTML("afterbegin", '<span class="tree-pip" aria-hidden="true"></span>');
     } else if (!on && pip) {
       pip.remove();
+    }
+    if (on) {
+      const facetGroup = el.closest(".tree-group");
+      const cardGroup = facetGroup?.parentElement?.closest(".tree-group");
+      const cardBtn = cardGroup?.querySelector(":scope > button.tree-item-card");
+      if (cardBtn) cardBtn.classList.add("tree-item-on");
     }
   }
 }

@@ -66,7 +66,7 @@ ASSET_HEADERS = {
     "Cache-Control": "public, max-age=31536000, immutable",
     "X-Content-Type-Options": "nosniff",
 }
-_SHELL_CACHE: dict[str, str] = {}
+_SHELL_CACHE: dict[str, tuple[float, str]] = {}
 _SAFE_ID = re.compile(r"^[A-Za-z0-9._-]+$")
 _PAGE_FILES = {
     "/": "index.html",
@@ -103,11 +103,13 @@ def _read_dist(rel: str) -> str | None:
     if path is None:
         return None
     key = str(path)
+    mtime = path.stat().st_mtime
     cached = _SHELL_CACHE.get(key)
-    if cached is None:
-        cached = path.read_text(encoding="utf-8")
-        _SHELL_CACHE[key] = cached
-    return cached
+    if cached is None or cached[0] != mtime:
+        text = path.read_text(encoding="utf-8")
+        _SHELL_CACHE[key] = (mtime, text)
+        return text
+    return cached[1]
 
 
 def _html_file(

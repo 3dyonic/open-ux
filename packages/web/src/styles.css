@@ -320,6 +320,9 @@
   .tree-item-on {
     @apply bg-pip-soft font-medium;
   }
+  .tree-group:has(> .tree-children > .tree-group.is-open) > .tree-item-card {
+    @apply bg-pip-soft font-medium;
+  }
   .tree-caret {
     @apply w-2.5 shrink-0 text-[10px] text-muted;
   }
