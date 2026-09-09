@@ -228,9 +228,17 @@ def test_sources_is_a_vite_tailwind_page() -> None:
     assert "canReuse" in catalog_js
     assert "history.pushState" in main
     assert "popstate" in main
+    assert 'if (path === "/") return renderLanding(root)' in main
     assert "overflow-y-auto" in styles
     assert "#app:has(.rule-shell)" in styles
+    assert "#app > [data-ssr-page]" in styles
+    assert "#app:has(.rule-shell) > [data-ssr-page]" in styles
+    assert "md:max-h-full" in styles
+    assert "md:min-h-0" in styles
+    assert ".sidebar" in styles
     assert "min-h-11" in styles
+    assert "content.innerHTML = ruleContentHtml" in catalog_js
+    assert "markActiveRule(tree" in catalog_js
 
 
 def test_catalog_rule_page_embeds_rule_for_fetchers(
@@ -251,6 +259,10 @@ def test_catalog_rule_page_embeds_rule_for_fetchers(
     body = response.text
     assert "<title>Button groups — Open UX</title>" in body
     assert found["rule"] in body
+    assert 'id="catalog-tree"' in body
+    assert 'class="sidebar"' in body
+    assert "rule-shell" in body
+    assert 'data-ssr-page="rule"' in body
     assert "Stop inventing UX rules from memory" not in body
     assert home.status_code == 200
     assert "<title>Open UX — Cited UX rules agents audit against</title>" in home.text

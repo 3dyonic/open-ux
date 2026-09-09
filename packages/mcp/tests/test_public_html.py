@@ -11,8 +11,6 @@ from open_ux.public_html import (
     ROBOTS_TXT,
     guideline_display_id,
     guideline_display_name,
-    rule_meta_description,
-    rule_meta_title,
 )
 from open_ux.server import create_mcp
 from open_ux.settings import Settings
@@ -97,13 +95,3 @@ def test_guideline_display_strips_house_and_keeps_category_ids() -> None:
     assert guideline_display_name({"title": "button groups"}) == "button groups"
     assert guideline_display_id("actions.button_groups") == "actions.button_groups"
     assert guideline_display_id("ant.checkbox-vs-switch") == "checkbox-vs-switch"
-
-
-def test_rule_meta_uses_rule_body_not_site_tagline() -> None:
-    title = rule_meta_title("Button groups")
-    desc = rule_meta_description(
-        {"rule": "Present related actions as a small cluster of buttons."}
-    )
-    assert title == "Button groups — Open UX"
-    assert desc.startswith("Present related actions")
-    assert "Stop inventing UX rules" not in desc
