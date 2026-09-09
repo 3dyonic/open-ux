@@ -35,6 +35,10 @@
     @apply flex min-h-dvh flex-col;
   }
 
+  #app:has(.rule-shell) {
+    @apply h-dvh overflow-hidden;
+  }
+
   main {
     @apply flex-1;
   }
@@ -238,10 +242,10 @@
   }
 
   .rule-shell {
-    @apply flex w-full flex-1 items-start;
+    @apply flex w-full min-h-0 flex-1 flex-col items-stretch md:flex-row md:overflow-hidden;
   }
   .sidebar {
-    @apply flex w-[260px] shrink-0 flex-col gap-0.5 border-r border-line py-10 pr-3 pl-5;
+    @apply flex max-h-[36vh] w-full shrink-0 flex-col gap-0.5 overflow-y-auto border-b border-line px-5 py-4 md:max-h-none md:h-full md:w-[260px] md:border-b-0 md:border-r md:py-10 md:pr-3 md:pl-5;
   }
   .tree-group {
     @apply flex w-full flex-col gap-0.5;
@@ -253,7 +257,7 @@
     @apply hidden;
   }
   .tree-item {
-    @apply flex min-h-7 w-full cursor-pointer items-center gap-1.5 rounded-sm border-0 bg-transparent px-2 py-1.5 text-left font-sans text-sm text-ink;
+    @apply flex min-h-11 w-full cursor-pointer items-center gap-1.5 rounded-sm border-0 bg-transparent px-2 py-2 text-left font-sans text-sm text-ink;
   }
   .tree-item-container {
     @apply font-semibold;
@@ -277,7 +281,7 @@
     @apply size-[5px] shrink-0 rounded-full bg-pip;
   }
   .content {
-    @apply flex min-w-0 flex-1 flex-col gap-7 px-5 py-10 pb-12 md:px-12 md:pl-10;
+    @apply flex min-h-0 min-w-0 flex-1 flex-col gap-7 overflow-y-auto px-5 py-10 pb-12 md:px-12 md:pl-10;
   }
   .block {
     @apply flex flex-col gap-2;

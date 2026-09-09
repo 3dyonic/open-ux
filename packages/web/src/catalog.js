@@ -39,6 +39,29 @@ export const CONTAINER_CHIPS = [
 const CHIP_IDS = new Set(CONTAINER_CHIPS.map(([id]) => id));
 export const PAGE_SIZE = 25;
 
+let indexCache = null;
+let indexPending = null;
+let ruleGen = 0;
+
+function loadIndex() {
+  if (indexCache) return Promise.resolve(indexCache);
+  if (!indexPending) {
+    indexPending = fetch("/api/catalog")
+      .then((res) => {
+        if (!res.ok) throw new Error("catalog");
+        return res.json();
+      })
+      .then((data) => {
+        indexCache = data;
+        return data;
+      })
+      .finally(() => {
+        indexPending = null;
+      });
+  }
+  return indexPending;
+}
+
 function stripHouseSuffix(name) {
   let text = String(name || "").trim();
   for (const suffix of SOURCE_SUFFIXES) {
@@ -195,9 +218,8 @@ function bindCatalog(rows, jobs) {
     if (page < 1) page = 1;
     const start = (page - 1) * PAGE_SIZE;
     const end = Math.min(start + PAGE_SIZE, total);
-    const visible = new Set(matched.slice(start, end).map((row) => String(row.id || "")));
     if (list) {
-      list.innerHTML = rows.map((row) => rowHtml(row, jobs, !visible.has(String(row.id || "")))).join("");
+      list.innerHTML = matched.slice(start, end).map((row) => rowHtml(row, jobs, false)).join("");
     }
     if (shown) shown.textContent = total + " shown";
     if (pageMeta) pageMeta.textContent = pagerMeta(total, page);
@@ -249,9 +271,7 @@ export async function renderCatalog(root) {
   );
   let data;
   try {
-    const res = await fetch("/api/catalog");
-    if (!res.ok) throw new Error("catalog");
-    data = await res.json();
+    data = await loadIndex();
   } catch {
     root.innerHTML = shell(
       `
@@ -375,7 +395,7 @@ function treeHtml(jobs, index, current) {
           const cls = "tree-item tree-item-rule" + (active ? " tree-item-on" : "");
           const pip = active ? `<span class="tree-pip" aria-hidden="true"></span>` : "";
           parts.push(
-            `<a class="${cls}" href="${escapeHtml(hrefId(gid))}">${pip}<span>${escapeHtml(displayName(row))}</span></a>`,
+            `<a class="${cls}" href="${escapeHtml(hrefId(gid))}" data-id="${escapeHtml(gid)}">${pip}<span>${escapeHtml(displayName(row))}</span></a>`,
           );
         }
         parts.push("</div></div>");
@@ -420,42 +440,9 @@ function eyebrow(guideline, jobs) {
   return `<div class="eyebrow">${pathHtml}${chip}</div>`;
 }
 
-export async function renderRule(root, guidelineId) {
-  const prerendered = root.querySelector("[data-ssr-rule]");
-  const hasSsr = prerendered && prerendered.getAttribute("data-ssr-rule") === guidelineId;
-  if (!hasSsr) {
-    setTitle("Catalog — Open UX");
-    root.innerHTML = shell(
-      `<div class="rule-shell"><main class="content"><p class="lede">Loading rule…</p></main></div>`,
-      { catalogActive: true, paper: true },
-    );
-  }
-  let indexData;
-  let found;
-  try {
-    const [indexRes, itemRes] = await Promise.all([
-      fetch("/api/catalog"),
-      fetch("/api/catalog/" + encodeURIComponent(guidelineId)),
-    ]);
-    indexData = await indexRes.json();
-    if (itemRes.status === 404) {
-      renderNotFound(root, guidelineId);
-      return;
-    }
-    found = await itemRes.json();
-  } catch {
-    renderNotFound(root, guidelineId);
-    return;
-  }
-  if (!found || found.found === false) {
-    renderNotFound(root, guidelineId);
-    return;
-  }
-  const jobs = indexData.jobs || { containers: [], cards: [] };
-  const index = indexData.guidelines || [];
+function ruleContentHtml(found, jobs) {
   const name = displayName(found);
-  const gid = String(found.id || guidelineId);
-  setTitle(`${name} — Open UX`);
+  const gid = String(found.id || "");
   const fields = [
     `<h1 class="rule-name" data-field="name">${escapeHtml(name)}</h1>`,
     `<p class="rule-id" data-field="id">${escapeHtml(displayId(gid))}</p>`,
@@ -477,16 +464,138 @@ export async function renderRule(root, guidelineId) {
     example("fail_when", "fail", "Fail", found.fail_when);
   if (examples) stack.push(`<div class="examples">${examples}</div>`);
   stack.push(citationsHtml(found));
+  return `<a class="back" href="/catalog">← Back to Catalog</a>${stack.join("")}`;
+}
+
+function markActiveRule(tree, guidelineId) {
+  const want = String(guidelineId || "");
+  for (const el of tree.querySelectorAll(".tree-item-rule")) {
+    const on = el.getAttribute("data-id") === want;
+    el.classList.toggle("tree-item-on", on);
+    const pip = el.querySelector(".tree-pip");
+    if (on && !pip) {
+      el.insertAdjacentHTML("afterbegin", '<span class="tree-pip" aria-hidden="true"></span>');
+    } else if (!on && pip) {
+      pip.remove();
+    }
+  }
+}
+
+function revealActiveRule(tree, guidelineId) {
+  const want = String(guidelineId || "");
+  const link = [...tree.querySelectorAll(".tree-item-rule")].find(
+    (el) => el.getAttribute("data-id") === want,
+  );
+  if (!link) return;
+  let node = link.parentElement;
+  while (node && node !== tree) {
+    if (node.classList.contains("tree-group")) {
+      node.classList.add("is-open");
+      const btn = node.querySelector(":scope > button.tree-item[aria-expanded]");
+      if (btn) {
+        btn.setAttribute("aria-expanded", "true");
+        const caret = btn.querySelector(".tree-caret");
+        if (caret) caret.textContent = "▾";
+      }
+    }
+    node = node.parentElement;
+  }
+}
+
+function paintRulePage(root, found, indexData) {
+  const jobs = indexData.jobs || { containers: [], cards: [] };
+  const index = indexData.guidelines || [];
   root.innerHTML = shell(
     `
   <div class="rule-shell">
     ${treeHtml(jobs, index, found)}
     <main class="content">
-      <a class="back" href="/catalog">← Back to Catalog</a>
-      ${stack.join("")}
+      ${ruleContentHtml(found, jobs)}
     </main>
   </div>`,
     { catalogActive: true, paper: true },
   );
   bindTree();
+}
+
+async function fetchGuideline(guidelineId) {
+  const itemRes = await fetch("/api/catalog/" + encodeURIComponent(guidelineId));
+  if (itemRes.status === 404) return null;
+  const found = await itemRes.json();
+  if (!found || found.found === false) return null;
+  return found;
+}
+
+export async function renderRule(root, guidelineId) {
+  const gen = ++ruleGen;
+  const prerendered = root.querySelector("[data-ssr-rule]");
+  const hasSsr = prerendered && prerendered.getAttribute("data-ssr-rule") === guidelineId;
+  const tree = root.querySelector("#catalog-tree");
+  const content = root.querySelector("main.content");
+  const canReuse = Boolean(tree && content && root.querySelector(".rule-shell"));
+
+  if (canReuse) {
+    let found;
+    try {
+      found = await fetchGuideline(guidelineId);
+    } catch {
+      if (gen !== ruleGen) return;
+      renderNotFound(root, guidelineId);
+      return;
+    }
+    if (gen !== ruleGen) return;
+    if (!found) {
+      renderNotFound(root, guidelineId);
+      return;
+    }
+    const jobs = (indexCache && indexCache.jobs) || { containers: [], cards: [] };
+    setTitle(`${displayName(found)} — Open UX`);
+    content.innerHTML = ruleContentHtml(found, jobs);
+    markActiveRule(tree, String(found.id || guidelineId));
+    revealActiveRule(tree, String(found.id || guidelineId));
+    return;
+  }
+
+  if (!hasSsr) {
+    setTitle("Catalog — Open UX");
+    root.innerHTML = shell(
+      `<div class="rule-shell"><main class="content"><p class="lede">Loading rule…</p></main></div>`,
+      { catalogActive: true, paper: true },
+    );
+  }
+
+  let found;
+  try {
+    found = await fetchGuideline(guidelineId);
+  } catch {
+    if (gen !== ruleGen) return;
+    renderNotFound(root, guidelineId);
+    return;
+  }
+  if (gen !== ruleGen) return;
+  if (!found) {
+    renderNotFound(root, guidelineId);
+    return;
+  }
+
+  const jobs = (indexCache && indexCache.jobs) || { containers: [], cards: [] };
+  setTitle(`${displayName(found)} — Open UX`);
+  if (indexCache) {
+    paintRulePage(root, found, indexCache);
+    return;
+  }
+
+  const liveContent = root.querySelector("main.content");
+  if (liveContent) {
+    liveContent.innerHTML = ruleContentHtml(found, jobs);
+  }
+
+  let indexData;
+  try {
+    indexData = await loadIndex();
+  } catch {
+    return;
+  }
+  if (gen !== ruleGen) return;
+  paintRulePage(root, found, indexData);
 }

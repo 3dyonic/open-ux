@@ -180,6 +180,20 @@ def test_sources_is_a_vite_tailwind_page() -> None:
     assert "Nielsen" not in sources
     assert "NN/g" not in sources
     assert 'href="/sources"' in chrome
+    catalog_js = (root / "packages" / "web" / "src" / "catalog.js").read_text(
+        encoding="utf-8"
+    )
+    styles = (root / "packages" / "web" / "src" / "styles.css").read_text(
+        encoding="utf-8"
+    )
+    assert "function loadIndex()" in catalog_js
+    assert "matched.slice(start, end)" in catalog_js
+    assert "canReuse" in catalog_js
+    assert "history.pushState" in main
+    assert "popstate" in main
+    assert "overflow-y-auto" in styles
+    assert "#app:has(.rule-shell)" in styles
+    assert "min-h-11" in styles
 
 
 def test_catalog_rule_page_embeds_rule_for_fetchers(

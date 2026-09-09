@@ -22,4 +22,32 @@ function route() {
   return renderNotFound(root, path);
 }
 
+function catalogPath(url) {
+  const path = url.pathname.replace(/\/+$/, "") || "/";
+  return path === "/catalog" || path.startsWith("/catalog/");
+}
+
+document.addEventListener("click", (event) => {
+  if (event.defaultPrevented || event.button !== 0) return;
+  if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+  const link = event.target.closest("a[href]");
+  if (!link || link.target === "_blank" || link.hasAttribute("download")) return;
+  let url;
+  try {
+    url = new URL(link.href, location.origin);
+  } catch {
+    return;
+  }
+  if (url.origin !== location.origin || !catalogPath(url)) return;
+  event.preventDefault();
+  const next = url.pathname + url.search;
+  const here = location.pathname + location.search;
+  if (next !== here) history.pushState(null, "", next);
+  route();
+});
+
+window.addEventListener("popstate", () => {
+  route();
+});
+
 route();
