@@ -5,8 +5,9 @@ import os
 import uvicorn
 from starlette.middleware import Middleware
 
+from open_ux.health import HealthErrorMiddleware
 from open_ux.rate_limit import RateLimitMiddleware
-from open_ux.server import create_mcp
+from open_ux.server import create_mcp, server_error_response
 from open_ux.settings import Settings
 from open_ux.store import get_store
 
@@ -21,6 +22,11 @@ def build_app():
         transport="http",
         middleware=[
             Middleware(RateLimitMiddleware, settings=settings, store=store),
+            Middleware(
+                HealthErrorMiddleware,
+                state=mcp.health_state,
+                render_500=server_error_response,
+            ),
         ],
     )
 

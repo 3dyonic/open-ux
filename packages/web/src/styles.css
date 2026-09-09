@@ -121,6 +121,21 @@
   .page-invite {
     @apply items-center justify-center px-5 py-12 pb-14 md:px-12;
   }
+  .page-error {
+    @apply items-center justify-center gap-10 px-5 py-16 text-center;
+  }
+  .error-pip {
+    @apply h-[220px] w-[280px];
+  }
+  .error-copy {
+    @apply flex max-w-[520px] flex-col items-center gap-4 px-6 py-6;
+  }
+  .error-title {
+    @apply text-[36px] leading-10;
+  }
+  .error-id {
+    @apply m-0 rounded-sm border border-line bg-card px-2.5 py-1.5 font-mono text-xs text-pip;
+  }
   .page-title {
     @apply m-0 text-[28px] font-bold leading-normal text-ink;
   }

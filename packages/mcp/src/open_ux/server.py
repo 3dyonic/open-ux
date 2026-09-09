@@ -24,7 +24,7 @@ from open_ux.auth import (
 )
 from open_ux import __version__
 from open_ux.catalog import EMPTY_NOTE, catalog_status, get_by_id, list_index, load_catalog
-from open_ux.health import health_payload
+from open_ux.health import HealthState, health_payload
 from open_ux.jobs import (
     DEFAULT_LIMIT,
     JOB_FIELD_DESCRIPTION,
@@ -43,7 +43,11 @@ from open_ux.public_html import (
     INVITE_TITLE,
     LANDING_DESCRIPTION,
     LANDING_TITLE,
+    NOT_FOUND_DESCRIPTION,
+    NOT_FOUND_RULE_DESCRIPTION,
     NOT_FOUND_TITLE,
+    SERVER_ERROR_DESCRIPTION,
+    SERVER_ERROR_TITLE,
     PRIVACY_DESCRIPTION,
     PRIVACY_TITLE,
     REDEEM_DESCRIPTION,
@@ -60,6 +64,7 @@ from open_ux.public_html import (
     render_invite_article,
     render_landing_article,
     render_not_found_article,
+    render_server_error_article,
     render_privacy_article,
     render_redeem_article,
     render_requested_article,
@@ -123,10 +128,18 @@ def _html_page(
     description: str,
     path: str,
     article: str,
+    status_code: int = 200,
 ) -> Response:
     shell = _shell_html()
     if shell is None:
-        return JSONResponse({"error": "Not found."}, status_code=404)
+        if status_code < 400:
+            status_code = 404
+        message = (
+            "This page could not be loaded."
+            if status_code >= 500
+            else "Not found."
+        )
+        return JSONResponse({"error": message}, status_code=status_code)
     html = apply_spa_shell(
         shell,
         title=title,
@@ -134,7 +147,41 @@ def _html_page(
         path=path,
         article=article,
     )
-    return Response(html, media_type="text/html; charset=utf-8", headers=SPA_HEADERS)
+    return Response(
+        html,
+        status_code=status_code,
+        media_type="text/html; charset=utf-8",
+        headers=SPA_HEADERS,
+    )
+
+
+def server_error_response(path: str = "/") -> Response:
+    clean = path or "/"
+    if clean.startswith(("/api", "/mcp", "/admin", "/account")):
+        return JSONResponse(
+            {"error": "This page could not be loaded."},
+            status_code=500,
+        )
+    return _html_page(
+        title=SERVER_ERROR_TITLE,
+        description=SERVER_ERROR_DESCRIPTION,
+        path=clean,
+        article=render_server_error_article(path=clean),
+        status_code=500,
+    )
+
+
+def not_found_response(*, kind: str = "page", detail: str = "", path: str = "/") -> Response:
+    description = (
+        NOT_FOUND_RULE_DESCRIPTION if kind == "rule" else NOT_FOUND_DESCRIPTION
+    )
+    return _html_page(
+        title=NOT_FOUND_TITLE,
+        description=description,
+        path=path or "/",
+        article=render_not_found_article(kind=kind, detail=detail),
+        status_code=404,
+    )
 
 
 def _rule_page(guideline: dict[str, Any]) -> Response:
@@ -273,6 +320,7 @@ def create_mcp(*, hosted: bool) -> FastMCP:
     settings = Settings.load(hosted=hosted)
     store = get_store(settings)
     catalog = load_catalog(settings)
+    health_state = HealthState()
     job_tree = load_job_tree(settings)
     dist = web_dist()
     catalog_index = _catalog_index_payload(catalog, job_tree)
@@ -280,6 +328,9 @@ def create_mcp(*, hosted: bool) -> FastMCP:
     sitemap_xml = render_sitemap(
         [str(row["id"]) for row in catalog.index if row.get("id")]
     )
+
+    def current_health() -> dict[str, Any]:
+        return health_payload(catalog, hosted=hosted, state=health_state)
 
     auth = HashedKeyVerifier(settings, store) if hosted else None
     mcp = FastMCP(
@@ -300,6 +351,7 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         website_url="https://github.com/3dyonic/open-ux",
         auth=auth,
     )
+    mcp.health_state = health_state
 
     @mcp.tool
     def list_guidelines(
@@ -510,7 +562,7 @@ def create_mcp(*, hosted: bool) -> FastMCP:
 
     @mcp.custom_route("/health.json", methods=["GET"])
     async def health_json(_request: Request) -> Response:
-        return JSONResponse(health_payload(catalog, hosted=hosted))
+        return JSONResponse(current_health())
 
     @mcp.custom_route("/", methods=["GET"])
     async def landing(_request: Request) -> Response:
@@ -535,11 +587,10 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         guideline_id = str(request.path_params.get("guideline_id") or "")
         found = get_by_id(catalog, guideline_id)
         if found is None:
-            return _html_page(
-                title=NOT_FOUND_TITLE,
-                description="No guideline with that id.",
+            return not_found_response(
+                kind="rule",
+                detail=guideline_id,
                 path=f"/catalog/{guideline_id}",
-                article=render_not_found_article(guideline_id),
             )
         return _rule_page(found)
 
@@ -549,7 +600,7 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             title=HEALTH_TITLE,
             description=HEALTH_DESCRIPTION,
             path="/health",
-            article=render_health_article(health_payload(catalog, hosted=hosted)),
+            article=render_health_article(current_health()),
         )
 
     @mcp.custom_route("/privacy", methods=["GET"])
@@ -733,5 +784,13 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             return JSONResponse({"error": "Email and key do not match."}, status_code=401)
         store.delete_account(normalized)
         return JSONResponse({"deleted": True, "email": normalized})
+
+    @mcp.custom_route("/{path:path}", methods=["GET"])
+    async def public_not_found(request: Request) -> Response:
+        raw = str(request.path_params.get("path") or "")
+        path = f"/{raw}" if raw else "/"
+        if path.startswith(("/api", "/mcp", "/admin", "/account")):
+            return JSONResponse({"error": "Not found."}, status_code=404)
+        return not_found_response(kind="page", detail=path, path=path)
 
     return mcp

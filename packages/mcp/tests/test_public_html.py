@@ -12,7 +12,9 @@ from open_ux.public_html import (
     apply_rule_shell,
     guideline_display_id,
     guideline_display_name,
+    render_not_found_article,
     render_rule_article,
+    render_server_error_article,
     rule_meta_description,
     rule_meta_title,
 )
@@ -51,6 +53,8 @@ def test_sitemap_lists_landing_catalog_and_remaining_ids(live_catalog: Path) -> 
         assert f"<loc>https://open-ux.dev/catalog/{gid}</loc>" in body
     assert "nng." not in body
     assert "apple." not in body
+    assert "/404" not in body
+    assert "/500" not in body
     assert body.count("<url>") == 4 + len(ids)
 
 
@@ -147,6 +151,28 @@ def test_apply_rule_shell_rewrites_the_vite_index() -> None:
         "Stop inventing UX rules from memory. Open UX is a shared, cited catalog "
         "agents list, fetch, and audit against."
     ) not in html
+
+
+def test_error_articles_embed_copy_for_fetchers() -> None:
+    missing_rule = render_not_found_article(kind="rule", detail="does.not.exist")
+    assert 'data-ssr-page="not-found"' in missing_rule
+    assert 'data-ssr-kind="rule"' in missing_rule
+    assert 'data-ssr-detail="does.not.exist"' in missing_rule
+    assert "<h1>Not found</h1>" in missing_rule
+    assert "This id is not in the catalog" in missing_rule
+    assert "does.not.exist" in missing_rule
+    assert 'href="/catalog">Browse catalog</a>' in missing_rule
+    missing_page = render_not_found_article(kind="page", detail="/nope")
+    assert 'data-ssr-kind="page"' in missing_page
+    assert "This page is not here" in missing_page
+    assert "/nope" in missing_page
+    failed = render_server_error_article(path="/catalog/actions.button_groups")
+    assert 'data-ssr-page="server-error"' in failed
+    assert "<h1>This page could not be loaded</h1>" in failed
+    assert "Try again in a moment." in failed
+    assert 'href="/catalog/actions.button_groups">Try again</a>' in failed
+    assert "/catalog\">Browse catalog" not in failed
+    assert "/health" not in failed
 
 
 def test_rule_meta_uses_rule_body_not_site_tagline() -> None:

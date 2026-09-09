@@ -1,6 +1,7 @@
 import { renderCatalog, renderRule } from "./catalog.js";
 import { renderHealth } from "./health.js";
-import { renderInvite, renderNotFound, renderRedeem, renderRequested } from "./invite.js";
+import { renderNotFound, renderServerError } from "./errors.js";
+import { renderInvite, renderRedeem, renderRequested } from "./invite.js";
 import { renderLanding } from "./landing.js";
 import { renderPrivacy } from "./privacy.js";
 import { renderSources } from "./sources.js";
@@ -8,6 +9,15 @@ import "./styles.css";
 
 function route() {
   const root = document.getElementById("app");
+  if (root.querySelector('[data-ssr-page="server-error"]')) {
+    return renderServerError(root, location.pathname || "/");
+  }
+  const prerendered404 = root.querySelector('[data-ssr-page="not-found"]');
+  if (prerendered404) {
+    const kind = prerendered404.getAttribute("data-ssr-kind") || "page";
+    const detail = prerendered404.getAttribute("data-ssr-detail") || location.pathname;
+    return renderNotFound(root, detail, { kind });
+  }
   const path = location.pathname.replace(/\/+$/, "") || "/";
   if (path === "/") return renderLanding(root);
   if (path === "/catalog") return renderCatalog(root);

@@ -232,15 +232,3 @@ export function renderRedeem(root) {
   });
 }
 
-export function renderNotFound(root, guidelineId) {
-  setTitle("Not found — Open UX");
-  root.innerHTML = shell(
-    `
-  <main class="page">
-    <a class="back" href="/catalog">← Back to Catalog</a>
-    <h1 class="page-title">Not found</h1>
-    <p class="lede">No guideline with id “${escapeHtml(guidelineId)}”.</p>
-  </main>`,
-    { catalogActive: true, paper: true },
-  );
-}

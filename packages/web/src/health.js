@@ -19,23 +19,31 @@ function chip(label, tone = "ok") {
 
 function render(root, payload) {
   const catalog = payload.catalog || {};
-  const systemsOk = Boolean(payload.ok) && catalog.status === "ok";
+  const catalogOk = catalog.status === "ok";
+  const error = payload.error && typeof payload.error === "object" ? payload.error : null;
+  const systemsOk = Boolean(payload.ok) && !error && catalogOk;
   const hosted = Boolean(payload.hosted);
-  const statusTitle = systemsOk
+  const statusTitle = payload.title || (systemsOk
     ? "Success: host and catalog are up"
-    : "Error: catalog is not loaded";
-  const statusBody = systemsOk
+    : "Error: catalog is not loaded");
+  const statusBody = payload.body || (systemsOk
     ? "The hosted service is running. The catalog is loaded."
-    : "The host is up. The catalog has no cited rules yet. Browse the catalog when rules land.";
+    : "The host is up. The catalog has no cited rules yet. Browse the catalog when rules land.");
   const pipCls = systemsOk
     ? "size-2.5 shrink-0 rounded-full bg-success"
     : "size-2.5 shrink-0 rounded-full bg-danger";
   const hostedLine = hosted
     ? "Running on the hosted service."
     : "Running locally, not on the hosted service.";
-  const catalogLine = systemsOk
+  const catalogLine = catalogOk
     ? `${catalog.guideline_count} cited rules`
     : "No cited rules loaded yet.";
+  const apiLine = error
+    ? `A request returned ${error.status}.${error.path ? ` ${error.path}` : ""}`
+    : "The service answers requests.";
+  const bannerChip = error
+    ? chip("Error", "bad")
+    : chip(systemsOk ? "Operational" : "Not loaded", systemsOk ? "ok" : "bad");
   root.innerHTML = shell(
     `
   <main class="page">
@@ -47,7 +55,7 @@ function render(root, payload) {
         <p class="m-0 font-mono text-xs text-muted">${escapeHtml(statusBody)}</p>
       </div>
       <span class="flex-1"></span>
-      ${chip(systemsOk ? "Operational" : "Not loaded", systemsOk ? "ok" : "bad")}
+      ${bannerChip}
     </div>
     <div class="flex flex-col gap-3">
       <h1 class="page-title font-semibold">Health</h1>
@@ -60,9 +68,9 @@ function render(root, payload) {
         <div class="flex w-full items-center justify-between gap-4 border-b border-line p-4">
           <div class="flex min-w-0 flex-col gap-1">
             <p class="m-0 text-base font-medium text-ink">API</p>
-            <p class="m-0 font-mono text-[13px] text-muted">The service answers requests.</p>
+            <p class="m-0 font-mono text-[13px] text-muted">${escapeHtml(apiLine)}</p>
           </div>
-          ${chip("Operational")}
+          ${chip(error ? "Error" : "Operational", error ? "bad" : "ok")}
         </div>
         <div class="flex w-full items-center justify-between gap-4 border-b border-line p-4">
           <div class="flex min-w-0 flex-col gap-1">
@@ -76,7 +84,7 @@ function render(root, payload) {
             <p class="m-0 text-base font-medium text-ink">Catalog</p>
             <p class="m-0 font-mono text-[13px] text-muted">${escapeHtml(String(catalogLine))}</p>
           </div>
-          ${chip(systemsOk ? "Operational" : "Not loaded", systemsOk ? "ok" : "bad")}
+          ${chip(catalogOk ? "Operational" : "Not loaded", catalogOk ? "ok" : "bad")}
         </div>
       </div>
     </section>
@@ -109,6 +117,9 @@ export async function renderHealth(root) {
     render(root, {
       ok: false,
       hosted: false,
+      title: "Error: status could not be loaded",
+      body: "Try this page again.",
+      error: { status: 500, path: "/health.json" },
       catalog: { status: "empty", guideline_count: 0 },
     });
   }

@@ -6,7 +6,7 @@ from starlette.testclient import TestClient
 
 from open_ux.catalog import get_by_id, load_catalog
 from open_ux.health import health_payload
-from open_ux.server import create_mcp, web_dist
+from open_ux.server import create_mcp, server_error_response, web_dist
 from open_ux.settings import Settings
 
 ANT_SEED = "ant.checkbox-vs-switch"
@@ -43,7 +43,19 @@ def test_health_json_is_always_json(live_catalog: Path) -> None:
         assert body.status_code == 200
         assert body.headers["content-type"].startswith("application/json")
         assert body.json() == expected
-        assert set(body.json()) == {"ok", "name", "hosted", "version", "catalog"}
+        assert set(body.json()) == {
+            "ok",
+            "name",
+            "hosted",
+            "version",
+            "catalog",
+            "error",
+            "title",
+            "body",
+        }
+        assert body.json()["ok"] is True
+        assert body.json()["error"] is None
+        assert body.json()["title"] == "Success: host and catalog are up"
         assert set(body.json()["catalog"]) == {"status", "guideline_count"}
 
 
@@ -82,11 +94,22 @@ def test_catalog_api_get_returns_guideline_or_404(live_catalog: Path) -> None:
     with _client() as client:
         ok = client.get(f"/api/catalog/{ANT_SEED}")
         missing = client.get("/api/catalog/does.not.exist")
+        unknown_api = client.get("/api/nope")
     assert ok.status_code == 200
     assert ok.json()["id"] == ANT_SEED
     assert ok.json()["rule"] == found["rule"]
     assert missing.status_code == 404
     assert missing.json() == {"found": False, "id": "does.not.exist"}
+    assert unknown_api.status_code == 404
+    assert unknown_api.headers["content-type"].startswith("application/json")
+    assert unknown_api.json() == {"error": "Not found."}
+
+
+def test_server_error_response_stays_json_on_api_paths() -> None:
+    api = server_error_response("/api/catalog/x")
+    assert api.status_code == 500
+    assert api.headers["content-type"].startswith("application/json")
+    assert b"This page could not be loaded." in api.body
 
 
 def test_no_dist_is_json_only_no_shell(tmp_env: Path, monkeypatch) -> None:
@@ -104,6 +127,7 @@ def test_no_dist_is_json_only_no_shell(tmp_env: Path, monkeypatch) -> None:
             "/invite",
             "/invite/requested",
             "/invite/redeem",
+            "/nope",
         ):
             response = client.get(path)
             assert response.status_code == 404, path
@@ -215,6 +239,7 @@ def test_catalog_rule_page_embeds_rule_for_fetchers(
         response = client.get("/catalog/actions.button_groups")
         home = client.get("/")
         missing = client.get("/catalog/does.not.exist")
+        unknown = client.get("/nope")
     assert response.status_code == 200
     assert response.headers["content-type"].startswith("text/html")
     body = response.text
@@ -224,15 +249,25 @@ def test_catalog_rule_page_embeds_rule_for_fetchers(
     assert home.status_code == 200
     assert "<title>Open UX — Cited UX rules agents audit against</title>" in home.text
     assert found["rule"] not in home.text
-    assert missing.status_code == 200
+    assert missing.status_code == 404
     assert found["rule"] not in missing.text
     assert "<title>Not found — Open UX</title>" in missing.text
+    assert "This id is not in the catalog" in missing.text
+    assert 'data-ssr-page="not-found"' in missing.text
+    assert 'data-ssr-kind="rule"' in missing.text
+    assert unknown.status_code == 404
+    assert "<title>Not found — Open UX</title>" in unknown.text
+    assert "This page is not here" in unknown.text
     catalog_js = (root / "packages" / "web" / "src" / "catalog.js").read_text(
         encoding="utf-8"
     )
+    main_js = (root / "packages" / "web" / "src" / "main.js").read_text(encoding="utf-8")
     assert "data-ssr-rule" in catalog_js
     assert "hasSsr" in catalog_js
     assert 'data-ssr-page="catalog"' in catalog_js
+    assert 'data-ssr-page="server-error"' in main_js
+    assert 'data-ssr-page="not-found"' in main_js
+    assert 'from "./errors.js"' in main_js
 
 
 def test_public_pages_embed_copy_for_fetchers(

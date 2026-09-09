@@ -1,5 +1,5 @@
 import { shell } from "./chrome.js";
-import { renderNotFound } from "./invite.js";
+import { renderNotFound, renderServerError } from "./errors.js";
 import { escapeHtml, setTitle } from "./util.js";
 
 const SOURCE_HOUSES = {
@@ -523,6 +523,7 @@ function paintRulePage(root, found, indexData) {
 async function fetchGuideline(guidelineId) {
   const itemRes = await fetch("/api/catalog/" + encodeURIComponent(guidelineId));
   if (itemRes.status === 404) return null;
+  if (!itemRes.ok) throw new Error("guideline");
   const found = await itemRes.json();
   if (!found || found.found === false) return null;
   return found;
@@ -542,12 +543,12 @@ export async function renderRule(root, guidelineId) {
       found = await fetchGuideline(guidelineId);
     } catch {
       if (gen !== ruleGen) return;
-      renderNotFound(root, guidelineId);
+      renderServerError(root);
       return;
     }
     if (gen !== ruleGen) return;
     if (!found) {
-      renderNotFound(root, guidelineId);
+      renderNotFound(root, guidelineId, { kind: "rule" });
       return;
     }
     const jobs = (indexCache && indexCache.jobs) || { containers: [], cards: [] };
@@ -571,12 +572,12 @@ export async function renderRule(root, guidelineId) {
     found = await fetchGuideline(guidelineId);
   } catch {
     if (gen !== ruleGen) return;
-    renderNotFound(root, guidelineId);
+    renderServerError(root);
     return;
   }
   if (gen !== ruleGen) return;
   if (!found) {
-    renderNotFound(root, guidelineId);
+    renderNotFound(root, guidelineId, { kind: "rule" });
     return;
   }
 

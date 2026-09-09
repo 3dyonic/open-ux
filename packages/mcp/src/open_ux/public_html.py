@@ -41,6 +41,12 @@ REQUESTED_DESCRIPTION = (
 REDEEM_TITLE = "Redeem invite — Open UX"
 REDEEM_DESCRIPTION = "Paste your invite token, or open the link from your email."
 NOT_FOUND_TITLE = "Not found — Open UX"
+NOT_FOUND_DESCRIPTION = "This page is not here. Open the catalog to pick a rule."
+NOT_FOUND_RULE_DESCRIPTION = (
+    "This id is not in the catalog. Open the catalog to pick another."
+)
+SERVER_ERROR_TITLE = "This page could not be loaded — Open UX"
+SERVER_ERROR_DESCRIPTION = "Try again in a moment."
 _STATIC_DIR = Path(__file__).resolve().parent / "static"
 _MARK_PATH = _STATIC_DIR / "logo-mark.svg"
 _FAVICON_FALLBACK = _STATIC_DIR / "favicon.svg"
@@ -383,8 +389,13 @@ def render_rule_article(guideline: dict[str, Any]) -> str:
     return "".join(parts)
 
 
-def _ssr(page: str, inner: str) -> str:
-    return f'<div data-ssr-page="{escape(page, quote=True)}">{inner}</div>'
+def _ssr(page: str, inner: str, *, detail: str | None = None, kind: str | None = None) -> str:
+    extras = ""
+    if detail:
+        extras += f' data-ssr-detail="{escape(detail, quote=True)}"'
+    if kind:
+        extras += f' data-ssr-kind="{escape(kind, quote=True)}"'
+    return f'<div data-ssr-page="{escape(page, quote=True)}"{extras}>{inner}</div>'
 
 
 def _mailto(email: str) -> str:
@@ -492,25 +503,27 @@ def render_health_article(payload: dict[str, Any]) -> str:
     catalog = payload.get("catalog") if isinstance(payload, dict) else None
     if not isinstance(catalog, dict):
         catalog = {}
-    ok = bool(payload.get("ok")) and catalog.get("status") == "ok"
+    catalog_ok = catalog.get("status") == "ok"
+    error = payload.get("error") if isinstance(payload.get("error"), dict) else None
     hosted = bool(payload.get("hosted"))
-    status_title = (
-        "Success: host and catalog are up"
-        if ok
-        else "Error: catalog is not loaded"
-    )
-    status_body = (
-        "The hosted service is running. The catalog is loaded."
-        if ok
-        else "The host is up. The catalog has no cited rules yet. Browse the catalog when rules land."
-    )
+    status_title = str(payload.get("title") or "")
+    status_body = str(payload.get("body") or "")
     hosted_line = (
         "Running on the hosted service."
         if hosted
         else "Running locally, not on the hosted service."
     )
     count = catalog.get("guideline_count")
-    catalog_line = f"{count} cited rules" if ok else "No cited rules loaded yet."
+    catalog_line = (
+        f"{count} cited rules" if catalog_ok else "No cited rules loaded yet."
+    )
+    if error:
+        api_line = f"A request returned {error.get('status')}."
+        err_path = str(error.get("path") or "")
+        if err_path:
+            api_line = f"{api_line} {err_path}"
+    else:
+        api_line = "The service answers requests."
     return _ssr(
         "health",
         "<main>"
@@ -520,7 +533,7 @@ def render_health_article(payload: dict[str, Any]) -> str:
         f"<p>{escape(HEALTH_DESCRIPTION)}</p>"
         '<p><a href="/catalog">Browse catalog</a></p>'
         "<h2>Components</h2>"
-        "<p>API — The service answers requests.</p>"
+        f"<p>API — {escape(api_line)}</p>"
         f"<p>Hosted service — {escape(hosted_line)}</p>"
         f"<p>Catalog — {escape(str(catalog_line))}</p>"
         "</main>",
@@ -569,15 +582,79 @@ def render_redeem_article() -> str:
     )
 
 
-def render_not_found_article(guideline_id: str) -> str:
-    gid = (guideline_id or "").strip() or "unknown"
+def _pip_hold_svg() -> str:
+    return (
+        '<svg class="error-pip" xmlns="http://www.w3.org/2000/svg" width="280" height="220" '
+        'viewBox="0 0 280 220" aria-hidden="true">'
+        '<ellipse cx="123" cy="199" rx="75" ry="11" fill="#D6BEA6" fill-opacity="0.55"/>'
+        '<ellipse cx="62" cy="127" rx="20" ry="9" transform="rotate(22 62 127)" fill="#ECDCCA"/>'
+        '<circle cx="123" cy="107" r="59" fill="#FF4B00"/>'
+        '<ellipse cx="109" cy="81" rx="23" ry="11" fill="#FFC79E" fill-opacity="0.7"/>'
+        '<ellipse cx="104" cy="103" rx="4" ry="5" fill="#1F1B16"/>'
+        '<ellipse cx="134" cy="103" rx="4" ry="5" fill="#1F1B16"/>'
+        '<ellipse cx="121" cy="123" rx="8" ry="2.5" fill="#B8330D"/>'
+        '<ellipse cx="189" cy="117" rx="21" ry="9" transform="rotate(-22 189 117)" fill="#ECDCCA"/>'
+        '<rect x="168" y="58" width="54" height="68" rx="6" fill="#FFFFFF" stroke="#DED4C8"/>'
+        "</svg>"
+    )
+
+
+def _pip_look_svg() -> str:
+    return (
+        '<svg class="error-pip" xmlns="http://www.w3.org/2000/svg" width="280" height="220" '
+        'viewBox="0 0 280 220" aria-hidden="true">'
+        '<ellipse cx="140" cy="199" rx="75" ry="11" fill="#D6BEA6" fill-opacity="0.55"/>'
+        '<rect x="178" y="142" width="54" height="68" rx="6" fill="#FFFFFF" stroke="#DED4C8" '
+        'transform="rotate(-22 205 176)"/>'
+        '<ellipse cx="72" cy="139" rx="18" ry="9" transform="rotate(10 72 139)" fill="#ECDCCA"/>'
+        '<circle cx="140" cy="101" r="59" fill="#FF4B00"/>'
+        '<ellipse cx="126" cy="75" rx="23" ry="11" fill="#FFC79E" fill-opacity="0.7"/>'
+        '<ellipse cx="122" cy="109" rx="4" ry="5" fill="#1F1B16"/>'
+        '<ellipse cx="152" cy="113" rx="4" ry="5" fill="#1F1B16"/>'
+        '<ellipse cx="140" cy="126" rx="6" ry="2" fill="#B8330D"/>'
+        '<ellipse cx="196" cy="133" rx="18" ry="9" transform="rotate(-8 196 133)" fill="#ECDCCA"/>'
+        "</svg>"
+    )
+
+
+def render_not_found_article(*, kind: str = "page", detail: str = "") -> str:
+    label = (detail or "").strip()
+    if kind == "rule":
+        kicker = "Missing rule"
+        lede = NOT_FOUND_RULE_DESCRIPTION
+        chip = label or "unknown.id"
+    else:
+        kicker = "Not found"
+        lede = NOT_FOUND_DESCRIPTION
+        chip = label
+    chip_html = f"<p><code>{escape(chip)}</code></p>" if chip else ""
     return _ssr(
         "not-found",
         "<main>"
-        '<p><a href="/catalog">← Back to Catalog</a></p>'
+        f"{_pip_hold_svg()}"
+        f"<p>{escape(kicker)}</p>"
         "<h1>Not found</h1>"
-        f"<p>No guideline with id “{escape(gid)}”.</p>"
+        f"<p>{escape(lede)}</p>"
+        f"{chip_html}"
+        '<p><a href="/catalog">Browse catalog</a></p>'
         "</main>",
+        detail=label or None,
+        kind=kind,
+    )
+
+
+def render_server_error_article(*, path: str = "/") -> str:
+    href = escape(path or "/", quote=True)
+    return _ssr(
+        "server-error",
+        "<main>"
+        f"{_pip_look_svg()}"
+        "<p>Error</p>"
+        "<h1>This page could not be loaded</h1>"
+        f"<p>{escape(SERVER_ERROR_DESCRIPTION)}</p>"
+        f'<p><a href="{href}">Try again</a></p>'
+        "</main>",
+        detail=path or "/",
     )
 
 
