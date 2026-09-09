@@ -4,6 +4,7 @@
 
 - OUX-37: `/health` and `/health.json`: `ok` is computed (catalog loaded, no recorded 5xx). Payload adds `error`, `title`, and `body`. HTTP stays 200.
 - OUX-37: Public 404 and 500 pages are prerendered into the SPA shell. Missing catalog ids and unknown paths return 404. Unhandled errors return the 500 page.
+- OUX-37: Vite writes public HTML at build. Python serves the files and status codes; it does not write page markup.
 - `audit` browse row includes `overview` and omits `pass_when` / `fail_when` (those stay on `get_guideline`).
 - Skill pack: browse orientation on `SKILL.md`; full-record field guide in `guideline.md`.
 

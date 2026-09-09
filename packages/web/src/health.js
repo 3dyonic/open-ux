@@ -1,5 +1,5 @@
 import { shell } from "./chrome.js";
-import { escapeHtml, setTitle } from "./util.js";
+import { escapeHtml, setTitle, ssr } from "./util.js";
 
 function chip(label, tone = "ok") {
   const cls =
@@ -99,6 +99,25 @@ function render(root, payload) {
   </main>`,
     { paper: true, key: false },
   );
+}
+
+export function healthPage() {
+  return {
+    title: "Health — Open UX",
+    description: "Whether the hosted service is up, and whether the catalog is loaded.",
+    body: ssr(
+      "health",
+      shell(
+        `
+  <main class="page">
+    <p class="kicker"><span class="pip" aria-hidden="true"></span>Status</p>
+    <h1 class="page-title font-semibold">Health</h1>
+    <p class="lede">Whether the hosted service is up, and whether the catalog is loaded.</p>
+  </main>`,
+        { paper: true, key: false },
+      ),
+    ),
+  };
 }
 
 export async function renderHealth(root) {

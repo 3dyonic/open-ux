@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
+import pytest
 from starlette.testclient import TestClient
 
 from open_ux.catalog import get_by_id, load_catalog
@@ -16,6 +18,16 @@ def _client() -> TestClient:
     mcp = create_mcp(hosted=True)
     app = mcp.http_app(path="/mcp", stateless_http=True, transport="http")
     return TestClient(app)
+
+
+def _use_prerendered_dist(monkeypatch) -> Path:
+    root = Path(__file__).resolve().parents[3]
+    raw = os.environ.get("OPEN_UX_WEB_DIST", "").strip()
+    dist = Path(raw) if raw else root / "packages" / "web" / "dist"
+    if not (dist / "404.html").is_file() or not (dist / "catalog" / "index.html").is_file():
+        pytest.skip("web dist is not prerendered; run npm run build in packages/web")
+    monkeypatch.setenv("OPEN_UX_WEB_DIST", str(dist))
+    return dist
 
 
 def _write_dist(tmp_path: Path) -> Path:
@@ -222,16 +234,10 @@ def test_sources_is_a_vite_tailwind_page() -> None:
 
 
 def test_catalog_rule_page_embeds_rule_for_fetchers(
-    tmp_env: Path, monkeypatch, live_catalog: Path
+    monkeypatch, live_catalog: Path
 ) -> None:
     root = Path(__file__).resolve().parents[3]
-    dist = tmp_env / "web-dist"
-    dist.mkdir()
-    (dist / "index.html").write_text(
-        (root / "packages" / "web" / "index.html").read_text(encoding="utf-8"),
-        encoding="utf-8",
-    )
-    monkeypatch.setenv("OPEN_UX_WEB_DIST", str(dist))
+    _use_prerendered_dist(monkeypatch)
     catalog = load_catalog(Settings.load(hosted=True))
     found = get_by_id(catalog, "actions.button_groups")
     assert found is not None
@@ -262,25 +268,22 @@ def test_catalog_rule_page_embeds_rule_for_fetchers(
         encoding="utf-8"
     )
     main_js = (root / "packages" / "web" / "src" / "main.js").read_text(encoding="utf-8")
+    errors_js = (root / "packages" / "web" / "src" / "errors.js").read_text(
+        encoding="utf-8"
+    )
     assert "data-ssr-rule" in catalog_js
     assert "hasSsr" in catalog_js
     assert 'data-ssr-page="catalog"' in catalog_js
-    assert 'data-ssr-page="server-error"' in main_js
-    assert 'data-ssr-page="not-found"' in main_js
+    assert 'ssr(\n      "server-error"' in errors_js or 'ssr("server-error"' in errors_js
+    assert 'ssr(\n      "not-found"' in errors_js or 'ssr("not-found"' in errors_js
+    assert 'painted === "not-found" || painted === "server-error"' in main_js
     assert 'from "./errors.js"' in main_js
 
 
 def test_public_pages_embed_copy_for_fetchers(
-    tmp_env: Path, monkeypatch, live_catalog: Path
+    monkeypatch, live_catalog: Path
 ) -> None:
-    root = Path(__file__).resolve().parents[3]
-    dist = tmp_env / "web-dist"
-    dist.mkdir()
-    (dist / "index.html").write_text(
-        (root / "packages" / "web" / "index.html").read_text(encoding="utf-8"),
-        encoding="utf-8",
-    )
-    monkeypatch.setenv("OPEN_UX_WEB_DIST", str(dist))
+    _use_prerendered_dist(monkeypatch)
     catalog = load_catalog(Settings.load(hosted=True))
     with _client() as client:
         home = client.get("/")
@@ -288,11 +291,12 @@ def test_public_pages_embed_copy_for_fetchers(
         privacy = client.get("/privacy")
         sources = client.get("/sources")
         health = client.get("/health")
+        health_json = client.get("/health.json")
         invite = client.get("/invite")
         requested = client.get("/invite/requested")
         redeem = client.get("/invite/redeem")
     assert "<title>Open UX — Cited UX rules agents audit against</title>" in home.text
-    assert "<h1>Open UX</h1>" in home.text
+    assert "<h1" in home.text and "Open UX</h1>" in home.text
     assert "Say the compose job" in home.text
     assert "<title>Catalog — Open UX</title>" in listing.text
     assert "actions.button_groups" in listing.text
@@ -303,7 +307,8 @@ def test_public_pages_embed_copy_for_fetchers(
     assert "<title>Sources — Open UX</title>" in sources.text
     assert "We do not republish the original page." in sources.text
     assert "<title>Health — Open UX</title>" in health.text
-    assert f"{len(catalog.guidelines)} cited rules" in health.text
+    assert "Whether the hosted service is up" in health.text
+    assert health_json.json()["catalog"]["guideline_count"] == len(catalog.guidelines)
     assert "<title>Request access — Open UX</title>" in invite.text
     assert 'for="email"' in invite.text
     assert "<title>You’re on the list — Open UX</title>" in requested.text

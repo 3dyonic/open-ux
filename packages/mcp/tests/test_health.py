@@ -67,10 +67,16 @@ def test_health_skips_own_routes() -> None:
 
 
 def test_health_json_records_unhandled_500(live_catalog: Path, monkeypatch) -> None:
-    def boom() -> str:
-        raise RuntimeError("boom")
+    from open_ux import server as server_mod
 
-    monkeypatch.setattr("open_ux.server.render_landing_article", boom)
+    real_html_page = server_mod._html_page
+
+    def boom(path: str, **kwargs):
+        if path == "/":
+            raise RuntimeError("boom")
+        return real_html_page(path, **kwargs)
+
+    monkeypatch.setattr(server_mod, "_html_page", boom)
     mcp = create_mcp(hosted=True)
     app = mcp.http_app(
         path="/mcp",
@@ -98,8 +104,9 @@ def test_health_json_records_unhandled_500(live_catalog: Path, monkeypatch) -> N
     assert body["ok"] is False
     assert body["error"]["status"] == 500
     assert body["error"]["path"] == "/"
-    assert "Error: a request failed" in page.text
-    assert "A request returned 500. /" in page.text
+    assert body["title"] == "Error: a request failed"
+    assert page.status_code == 200
+    assert page.headers["content-type"].startswith(("text/html", "application/json"))
 
 
 def test_server_error_page_embeds_copy_for_fetchers(
@@ -112,12 +119,29 @@ def test_server_error_page_embeds_copy_for_fetchers(
         (root / "packages" / "web" / "index.html").read_text(encoding="utf-8"),
         encoding="utf-8",
     )
+    (dist / "500.html").write_text(
+        "<!DOCTYPE html><html><head>"
+        "<title>This page could not be loaded — Open UX</title>"
+        "</head><body><div id=\"app\">"
+        "<div data-ssr-page=\"server-error\">"
+        "<h1>This page could not be loaded</h1>"
+        "<p>Try again in a moment.</p>"
+        "<p><a href=\"{{path}}\">Try again</a></p>"
+        "</div></div></body></html>",
+        encoding="utf-8",
+    )
     monkeypatch.setenv("OPEN_UX_WEB_DIST", str(dist))
 
-    def boom() -> str:
-        raise RuntimeError("boom")
+    from open_ux import server as server_mod
 
-    monkeypatch.setattr("open_ux.server.render_landing_article", boom)
+    real_html_page = server_mod._html_page
+
+    def boom(path: str, **kwargs):
+        if path == "/":
+            raise RuntimeError("boom")
+        return real_html_page(path, **kwargs)
+
+    monkeypatch.setattr(server_mod, "_html_page", boom)
     mcp = create_mcp(hosted=True)
     app = mcp.http_app(
         path="/mcp",

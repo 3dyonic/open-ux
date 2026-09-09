@@ -9,15 +9,13 @@ import "./styles.css";
 
 function route() {
   const root = document.getElementById("app");
-  if (root.querySelector('[data-ssr-page="server-error"]')) {
-    return renderServerError(root, location.pathname || "/");
-  }
-  const prerendered404 = root.querySelector('[data-ssr-page="not-found"]');
-  if (prerendered404) {
-    const kind = prerendered404.getAttribute("data-ssr-kind") || "page";
-    const detail = prerendered404.getAttribute("data-ssr-detail") || location.pathname;
-    return renderNotFound(root, detail, { kind });
-  }
+  const ssrPage = root.querySelector("[data-ssr-page]");
+  const painted = ssrPage?.getAttribute("data-ssr-page") || "";
+  if (painted === "landing") return renderLanding(root);
+  if (painted === "not-found" || painted === "server-error") return;
+  if (painted === "privacy") return renderPrivacy(root);
+  if (painted === "sources") return renderSources(root);
+  if (painted === "requested") return renderRequested(root);
   const path = location.pathname.replace(/\/+$/, "") || "/";
   if (path === "/") return renderLanding(root);
   if (path === "/catalog") return renderCatalog(root);

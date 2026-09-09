@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import os
+import re
 import secrets
+from html import escape
 from pathlib import Path
 from typing import Annotated, Any
 
@@ -34,45 +36,9 @@ from open_ux.jobs import (
     load_job_tree,
 )
 from open_ux.public_html import (
-    CATALOG_DESCRIPTION,
-    CATALOG_TITLE,
     FAVICON_PATH,
-    HEALTH_DESCRIPTION,
-    HEALTH_TITLE,
-    INVITE_DESCRIPTION,
-    INVITE_TITLE,
-    LANDING_DESCRIPTION,
-    LANDING_TITLE,
-    NOT_FOUND_DESCRIPTION,
-    NOT_FOUND_RULE_DESCRIPTION,
-    NOT_FOUND_TITLE,
-    SERVER_ERROR_DESCRIPTION,
-    SERVER_ERROR_TITLE,
-    PRIVACY_DESCRIPTION,
-    PRIVACY_TITLE,
-    REDEEM_DESCRIPTION,
-    REDEEM_TITLE,
-    REQUESTED_DESCRIPTION,
-    REQUESTED_TITLE,
     ROBOTS_TXT,
-    SOURCES_DESCRIPTION,
-    SOURCES_TITLE,
-    apply_spa_shell,
-    guideline_display_name,
-    render_catalog_index_article,
-    render_health_article,
-    render_invite_article,
-    render_landing_article,
-    render_not_found_article,
-    render_server_error_article,
-    render_privacy_article,
-    render_redeem_article,
-    render_requested_article,
-    render_rule_article,
     render_sitemap,
-    render_sources_article,
-    rule_meta_description,
-    rule_meta_title,
 )
 from open_ux.situations import (
     get_situation as run_get_situation,
@@ -100,6 +66,17 @@ ASSET_HEADERS = {
     "X-Content-Type-Options": "nosniff",
 }
 _SHELL_CACHE: dict[str, str] = {}
+_SAFE_ID = re.compile(r"^[A-Za-z0-9._-]+$")
+_PAGE_FILES = {
+    "/": "index.html",
+    "/catalog": "catalog/index.html",
+    "/health": "health/index.html",
+    "/privacy": "privacy/index.html",
+    "/sources": "sources/index.html",
+    "/invite": "invite/index.html",
+    "/invite/requested": "invite/requested/index.html",
+    "/invite/redeem": "invite/redeem/index.html",
+}
 
 
 def web_dist() -> Path | None:
@@ -110,28 +87,38 @@ def web_dist() -> Path | None:
     return None
 
 
-def _shell_html() -> str | None:
+def _dist_file(rel: str) -> Path | None:
     dist = web_dist()
     if dist is None:
         return None
-    key = str((dist / "index.html").resolve())
+    path = (dist / rel).resolve()
+    if dist.resolve() not in path.parents and path != dist.resolve():
+        return None
+    return path if path.is_file() else None
+
+
+def _read_dist(rel: str) -> str | None:
+    path = _dist_file(rel)
+    if path is None:
+        return None
+    key = str(path)
     cached = _SHELL_CACHE.get(key)
     if cached is None:
-        cached = (dist / "index.html").read_text(encoding="utf-8")
+        cached = path.read_text(encoding="utf-8")
         _SHELL_CACHE[key] = cached
     return cached
 
 
-def _html_page(
+def _html_file(
+    rel: str,
     *,
-    title: str,
-    description: str,
-    path: str,
-    article: str,
     status_code: int = 200,
+    replace: dict[str, str] | None = None,
 ) -> Response:
-    shell = _shell_html()
-    if shell is None:
+    html = _read_dist(rel)
+    if html is None:
+        html = _read_dist("index.html")
+    if html is None:
         if status_code < 400:
             status_code = 404
         message = (
@@ -140,19 +127,20 @@ def _html_page(
             else "Not found."
         )
         return JSONResponse({"error": message}, status_code=status_code)
-    html = apply_spa_shell(
-        shell,
-        title=title,
-        description=description,
-        path=path,
-        article=article,
-    )
+    if replace:
+        for token, value in replace.items():
+            html = html.replace(token, value)
     return Response(
         html,
         status_code=status_code,
         media_type="text/html; charset=utf-8",
         headers=SPA_HEADERS,
     )
+
+
+def _html_page(path: str, *, status_code: int = 200) -> Response:
+    rel = _PAGE_FILES.get(path or "/")
+    return _html_file(rel or "index.html", status_code=status_code)
 
 
 def server_error_response(path: str = "/") -> Response:
@@ -162,36 +150,25 @@ def server_error_response(path: str = "/") -> Response:
             {"error": "This page could not be loaded."},
             status_code=500,
         )
-    return _html_page(
-        title=SERVER_ERROR_TITLE,
-        description=SERVER_ERROR_DESCRIPTION,
-        path=clean,
-        article=render_server_error_article(path=clean),
+    return _html_file(
+        "500.html",
         status_code=500,
+        replace={"{{path}}": escape(clean, quote=True)},
     )
 
 
 def not_found_response(*, kind: str = "page", detail: str = "", path: str = "/") -> Response:
-    description = (
-        NOT_FOUND_RULE_DESCRIPTION if kind == "rule" else NOT_FOUND_DESCRIPTION
-    )
-    return _html_page(
-        title=NOT_FOUND_TITLE,
-        description=description,
-        path=path or "/",
-        article=render_not_found_article(kind=kind, detail=detail),
-        status_code=404,
-    )
+    token = escape((detail or path or "").strip() or "/", quote=True)
+    rel = "404-rule.html" if kind == "rule" else "404.html"
+    return _html_file(rel, status_code=404, replace={"{{detail}}": token})
 
 
-def _rule_page(guideline: dict[str, Any]) -> Response:
-    gid = str(guideline.get("id") or "")
-    return _html_page(
-        title=rule_meta_title(guideline_display_name(guideline)),
-        description=rule_meta_description(guideline),
-        path=f"/catalog/{gid}",
-        article=render_rule_article(guideline),
-    )
+def _rule_page(guideline_id: str) -> Response:
+    gid = guideline_id if _SAFE_ID.fullmatch(guideline_id) else ""
+    rel = f"catalog/{gid}/index.html" if gid else ""
+    if gid and _dist_file(rel):
+        return _html_file(rel)
+    return _html_page("/catalog")
 
 
 def _jobs_payload(tree: JobTree) -> dict[str, Any]:
@@ -324,7 +301,6 @@ def create_mcp(*, hosted: bool) -> FastMCP:
     job_tree = load_job_tree(settings)
     dist = web_dist()
     catalog_index = _catalog_index_payload(catalog, job_tree)
-    catalog_list_article = render_catalog_index_article(catalog.guidelines)
     sitemap_xml = render_sitemap(
         [str(row["id"]) for row in catalog.index if row.get("id")]
     )
@@ -566,21 +542,11 @@ def create_mcp(*, hosted: bool) -> FastMCP:
 
     @mcp.custom_route("/", methods=["GET"])
     async def landing(_request: Request) -> Response:
-        return _html_page(
-            title=LANDING_TITLE,
-            description=LANDING_DESCRIPTION,
-            path="/",
-            article=render_landing_article(),
-        )
+        return _html_page("/")
 
     @mcp.custom_route("/catalog", methods=["GET"])
     async def catalog_list(_request: Request) -> Response:
-        return _html_page(
-            title=CATALOG_TITLE,
-            description=CATALOG_DESCRIPTION,
-            path="/catalog",
-            article=catalog_list_article,
-        )
+        return _html_page("/catalog")
 
     @mcp.custom_route("/catalog/{guideline_id}", methods=["GET"])
     async def catalog_rule(request: Request) -> Response:
@@ -592,52 +558,27 @@ def create_mcp(*, hosted: bool) -> FastMCP:
                 detail=guideline_id,
                 path=f"/catalog/{guideline_id}",
             )
-        return _rule_page(found)
+        return _rule_page(guideline_id)
 
     @mcp.custom_route("/health", methods=["GET"])
     async def health_page(_request: Request) -> Response:
-        return _html_page(
-            title=HEALTH_TITLE,
-            description=HEALTH_DESCRIPTION,
-            path="/health",
-            article=render_health_article(current_health()),
-        )
+        return _html_page("/health")
 
     @mcp.custom_route("/privacy", methods=["GET"])
     async def privacy(_request: Request) -> Response:
-        return _html_page(
-            title=PRIVACY_TITLE,
-            description=PRIVACY_DESCRIPTION,
-            path="/privacy",
-            article=render_privacy_article(),
-        )
+        return _html_page("/privacy")
 
     @mcp.custom_route("/sources", methods=["GET"])
     async def sources(_request: Request) -> Response:
-        return _html_page(
-            title=SOURCES_TITLE,
-            description=SOURCES_DESCRIPTION,
-            path="/sources",
-            article=render_sources_article(),
-        )
+        return _html_page("/sources")
 
     @mcp.custom_route("/invite", methods=["GET"])
     async def invite_request_page(_request: Request) -> Response:
-        return _html_page(
-            title=INVITE_TITLE,
-            description=INVITE_DESCRIPTION,
-            path="/invite",
-            article=render_invite_article(),
-        )
+        return _html_page("/invite")
 
     @mcp.custom_route("/invite/requested", methods=["GET"])
     async def invite_requested_page(_request: Request) -> Response:
-        return _html_page(
-            title=REQUESTED_TITLE,
-            description=REQUESTED_DESCRIPTION,
-            path="/invite/requested",
-            article=render_requested_article(),
-        )
+        return _html_page("/invite/requested")
 
     @mcp.custom_route("/robots.txt", methods=["GET"])
     async def robots(_request: Request) -> Response:
@@ -678,12 +619,7 @@ def create_mcp(*, hosted: bool) -> FastMCP:
     @mcp.custom_route("/invite/redeem", methods=["GET", "POST"])
     async def invite_redeem_route(request: Request) -> Response:
         if request.method == "GET":
-            return _html_page(
-                title=REDEEM_TITLE,
-                description=REDEEM_DESCRIPTION,
-                path="/invite/redeem",
-                article=render_redeem_article(),
-            )
+            return _html_page("/invite/redeem")
         if not hosted:
             return JSONResponse(
                 {"error": "Invites are hosted-only. Self-host stdio needs no key."},

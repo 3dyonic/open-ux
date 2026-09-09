@@ -7,6 +7,8 @@ COPY packages/web/ ./
 # git symlinks whose targets sit outside this stage.
 COPY packages/mcp/src/open_ux/static/logo-mark.svg ./public/logo-mark.svg
 COPY packages/mcp/src/open_ux/static/logo-mark.svg ./public/favicon.svg
+COPY catalog /catalog
+ENV OPEN_UX_CATALOG=/catalog
 RUN npm run build
 
 FROM python:3.12-slim AS python-build

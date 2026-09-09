@@ -1,5 +1,5 @@
 import { shell } from "./chrome.js";
-import { escapeHtml, setTitle } from "./util.js";
+import { escapeHtml, setTitle, ssr } from "./util.js";
 
 const SECTIONS = [
   [
@@ -58,15 +58,29 @@ function sectionHtml([heading, paragraph, bullets]) {
   return `<section class="flex flex-col gap-3"><h2 class="m-0 text-base font-semibold text-ink">${escapeHtml(heading)}</h2>${body}${list}</section>`;
 }
 
-export function renderPrivacy(root) {
-  setTitle("Privacy — Open UX");
-  root.innerHTML = shell(
-    `
+export function privacyPage() {
+  return {
+    title: "Privacy — Open UX",
+    description:
+      "How Open UX handles waitlist email, API keys, analytics, and agent usage on the hosted service.",
+    body: ssr(
+      "privacy",
+      shell(
+        `
   <main class="page page-privacy">
     <h1 class="page-title">Privacy</h1>
     <p class="lede">How Open UX handles information on the hosted service at open-ux.dev.</p>
     ${SECTIONS.map(sectionHtml).join("")}
   </main>`,
-    {},
-  );
+        {},
+      ),
+    ),
+  };
+}
+
+export function renderPrivacy(root) {
+  const page = privacyPage();
+  setTitle(page.title);
+  if (root.querySelector('[data-ssr-page="privacy"]')) return;
+  root.innerHTML = page.body;
 }

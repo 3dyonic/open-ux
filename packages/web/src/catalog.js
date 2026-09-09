@@ -1,6 +1,6 @@
 import { shell } from "./chrome.js";
 import { renderNotFound, renderServerError } from "./errors.js";
-import { escapeHtml, setTitle } from "./util.js";
+import { escapeHtml, setTitle, ssr } from "./util.js";
 
 const SOURCE_HOUSES = {
   ant: "Ant",
@@ -504,19 +504,63 @@ function revealActiveRule(tree, guidelineId) {
   }
 }
 
-function paintRulePage(root, found, indexData) {
-  const jobs = indexData.jobs || { containers: [], cards: [] };
-  const index = indexData.guidelines || [];
-  root.innerHTML = shell(
-    `
+export function catalogNamesPage(guidelines) {
+  const rows = Array.isArray(guidelines) ? guidelines : [];
+  const items = rows
+    .map((row) => {
+      const gid = String(row.id || "");
+      if (!gid) return "";
+      return `<a href="${escapeHtml(hrefId(gid))}">${escapeHtml(displayName(row))}</a>`;
+    })
+    .filter(Boolean)
+    .join("");
+  return {
+    title: "Catalog — Open UX",
+    description: "Cited UX rules agents audit against",
+    body: ssr(
+      "catalog",
+      shell(
+        `
+  <main class="page">
+    <h1 class="page-title">Catalog</h1>
+    <p class="lede">Cited UX rules agents audit against</p>
+    <p>${rows.length} shown</p>
+    <div class="list">${items}</div>
+  </main>`,
+        { catalogActive: true, paper: true },
+      ),
+    ),
+  };
+}
+
+export function rulePage(found, indexData) {
+  const jobs = (indexData && indexData.jobs) || { containers: [], cards: [] };
+  const index = (indexData && indexData.guidelines) || [];
+  const gid = String(found.id || "");
+  const name = displayName(found);
+  const rule = String(found.rule || found.description || "").trim();
+  return {
+    title: `${name} — Open UX`,
+    description: rule.split(". ")[0] || name,
+    body: ssr(
+      "rule",
+      shell(
+        `
   <div class="rule-shell">
     ${treeHtml(jobs, index, found)}
     <main class="content">
       ${ruleContentHtml(found, jobs)}
     </main>
   </div>`,
-    { catalogActive: true, paper: true },
-  );
+        { catalogActive: true, paper: true },
+      ),
+      { rule: gid },
+    ),
+  };
+}
+
+function paintRulePage(root, found, indexData) {
+  root.innerHTML = rulePage(found, indexData).body;
   bindTree();
 }
 

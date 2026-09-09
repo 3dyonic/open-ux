@@ -1,5 +1,5 @@
 import { shell } from "./chrome.js";
-import { escapeHtml, setTitle } from "./util.js";
+import { escapeHtml, setTitle, ssr } from "./util.js";
 
 const CONTACT = "contact@open-ux.dev";
 
@@ -77,15 +77,29 @@ function sectionHtml([heading, paragraphs, items]) {
   return `<section class="flex flex-col gap-3"><h2 class="m-0 text-base font-semibold text-ink">${escapeHtml(heading)}</h2>${body}${list}${closing}</section>`;
 }
 
-export function renderSources(root) {
-  setTitle("Sources — Open UX");
-  root.innerHTML = shell(
-    `
+export function sourcesPage() {
+  return {
+    title: "Sources — Open UX",
+    description:
+      "How Open UX writes catalog rules, and how to ask us to change or remove one.",
+    body: ssr(
+      "sources",
+      shell(
+        `
   <main class="page page-sources">
     <h1 class="page-title">Sources</h1>
     <p class="lede">How Open UX writes catalog rules, and how to ask us to change or remove one.</p>
     ${SECTIONS.map(sectionHtml).join("")}
   </main>`,
-    {},
-  );
+        {},
+      ),
+    ),
+  };
+}
+
+export function renderSources(root) {
+  const page = sourcesPage();
+  setTitle(page.title);
+  if (root.querySelector('[data-ssr-page="sources"]')) return;
+  root.innerHTML = page.body;
 }
