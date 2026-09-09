@@ -90,6 +90,11 @@ SPA_HEADERS = {
     "Referrer-Policy": "strict-origin-when-cross-origin",
     "Cache-Control": "no-cache",
 }
+ASSET_HEADERS = {
+    "Cache-Control": "public, max-age=31536000, immutable",
+    "X-Content-Type-Options": "nosniff",
+}
+_SHELL_CACHE: dict[str, str] = {}
 
 
 def web_dist() -> Path | None:
@@ -100,6 +105,18 @@ def web_dist() -> Path | None:
     return None
 
 
+def _shell_html() -> str | None:
+    dist = web_dist()
+    if dist is None:
+        return None
+    key = str((dist / "index.html").resolve())
+    cached = _SHELL_CACHE.get(key)
+    if cached is None:
+        cached = (dist / "index.html").read_text(encoding="utf-8")
+        _SHELL_CACHE[key] = cached
+    return cached
+
+
 def _html_page(
     *,
     title: str,
@@ -107,11 +124,11 @@ def _html_page(
     path: str,
     article: str,
 ) -> Response:
-    dist = web_dist()
-    if dist is None:
+    shell = _shell_html()
+    if shell is None:
         return JSONResponse({"error": "Not found."}, status_code=404)
     html = apply_spa_shell(
-        (dist / "index.html").read_text(encoding="utf-8"),
+        shell,
         title=title,
         description=description,
         path=path,
@@ -258,6 +275,11 @@ def create_mcp(*, hosted: bool) -> FastMCP:
     catalog = load_catalog(settings)
     job_tree = load_job_tree(settings)
     dist = web_dist()
+    catalog_index = _catalog_index_payload(catalog, job_tree)
+    catalog_list_article = render_catalog_index_article(catalog.guidelines)
+    sitemap_xml = render_sitemap(
+        [str(row["id"]) for row in catalog.index if row.get("id")]
+    )
 
     auth = HashedKeyVerifier(settings, store) if hosted else None
     mcp = FastMCP(
@@ -475,8 +497,8 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         return result
 
     @mcp.custom_route("/api/catalog", methods=["GET"])
-    async def catalog_index(_request: Request) -> Response:
-        return JSONResponse(_catalog_index_payload(catalog, job_tree))
+    async def catalog_index_route(_request: Request) -> Response:
+        return JSONResponse(catalog_index)
 
     @mcp.custom_route("/api/catalog/{guideline_id}", methods=["GET"])
     async def catalog_item(request: Request) -> Response:
@@ -505,7 +527,7 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             title=CATALOG_TITLE,
             description=CATALOG_DESCRIPTION,
             path="/catalog",
-            article=render_catalog_index_article(catalog.guidelines),
+            article=catalog_list_article,
         )
 
     @mcp.custom_route("/catalog/{guideline_id}", methods=["GET"])
@@ -572,8 +594,7 @@ def create_mcp(*, hosted: bool) -> FastMCP:
 
     @mcp.custom_route("/sitemap.xml", methods=["GET"])
     async def sitemap(_request: Request) -> Response:
-        ids = [str(row["id"]) for row in catalog.index if row.get("id")]
-        return Response(render_sitemap(ids), media_type="application/xml")
+        return Response(sitemap_xml, media_type="application/xml")
 
     @mcp.custom_route("/logo-mark.svg", methods=["GET"])
     async def logo_mark(_request: Request) -> Response:
@@ -589,7 +610,10 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         @mcp.custom_route("/assets/{path:path}", methods=["GET"])
         async def web_assets(request: Request) -> Response:
             rel = str(request.path_params.get("path") or "")
-            return await static_assets.get_response(rel, request.scope)
+            response = await static_assets.get_response(rel, request.scope)
+            for key, value in ASSET_HEADERS.items():
+                response.headers[key] = value
+            return response
 
     @mcp.custom_route("/invite/request", methods=["POST"])
     async def invite_request_route(request: Request) -> Response:

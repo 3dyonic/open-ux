@@ -135,6 +135,7 @@ def test_dist_serves_shell_on_page_routes_only(
         asset = client.get("/assets/app.js")
         assert asset.status_code == 200
         assert "window.__openUx" in asset.text
+        assert "immutable" in asset.headers.get("cache-control", "")
         health = client.get("/health.json")
         assert health.headers["content-type"].startswith("application/json")
         catalog = client.get("/api/catalog")
@@ -261,6 +262,7 @@ def test_public_pages_embed_copy_for_fetchers(
     assert "<title>Catalog — Open UX</title>" in listing.text
     assert "actions.button_groups" in listing.text
     assert "Button groups" in listing.text
+    assert "Present related actions as a small cluster" not in listing.text
     assert "<title>Privacy — Open UX</title>" in privacy.text
     assert "What this product is" in privacy.text
     assert "<title>Sources — Open UX</title>" in sources.text

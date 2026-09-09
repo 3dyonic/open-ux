@@ -158,7 +158,6 @@ function rowHtml(row, jobs, hidden) {
   const gid = String(row.id || "");
   const name = displayName(row);
   const path = rowPath(row, jobs);
-  const search = searchBlob(row);
   const cid = rowContainer(row, jobs);
   const rule = String(row.rule || "").trim();
   let line = `<span class="row-name">${escapeHtml(name)}</span>`;
@@ -166,7 +165,7 @@ function rowHtml(row, jobs, hidden) {
     line += `<span class="row-path" aria-hidden="true">·</span><span class="row-path">${escapeHtml(path)}</span>`;
   }
   const ruleHtml = rule ? `<span class="row-rule">${escapeHtml(rule)}</span>` : "";
-  return `<a class="catalog-row" href="${escapeHtml(hrefId(gid))}" data-id="${escapeHtml(gid)}" data-container="${escapeHtml(cid)}" data-search="${escapeHtml(search)}"${hidden ? " hidden" : ""}><span class="row-line">${line}</span>${ruleHtml}</a>`;
+  return `<a class="catalog-row" href="${escapeHtml(hrefId(gid))}" data-id="${escapeHtml(gid)}" data-container="${escapeHtml(cid)}"${hidden ? " hidden" : ""}><span class="row-line">${line}</span>${ruleHtml}</a>`;
 }
 
 function bindCatalog(rows, jobs) {
@@ -266,7 +265,7 @@ export async function renderCatalog(root) {
   let page = parseInt(params.get("page") || "1", 10);
   if (!Number.isFinite(page) || page < 1) page = 1;
   const hasSsr = root.querySelector('[data-ssr-page="catalog"]');
-  if (!hasSsr) {
+  if (!hasSsr && !indexCache) {
     root.innerHTML = shell(
       `<main class="page"><p class="lede">Loading catalog…</p></main>`,
       { catalogActive: true, paper: true },

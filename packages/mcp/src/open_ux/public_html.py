@@ -421,12 +421,8 @@ def render_catalog_index_article(guidelines: list[dict[str, Any]]) -> str:
         if not gid:
             continue
         name = guideline_display_name(row)
-        rule = str(row.get("rule") or "").strip()
         href = f"/catalog/{escape(gid, quote=True)}"
-        rule_html = f"<p>{escape(rule)}</p>" if rule else ""
-        items.append(
-            f'<a href="{href}"><span>{escape(name)}</span>{rule_html}</a>'
-        )
+        items.append(f'<a href="{href}">{escape(name)}</a>')
     return _ssr(
         "catalog",
         "<main>"
