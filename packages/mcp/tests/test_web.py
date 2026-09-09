@@ -241,6 +241,45 @@ def test_sources_is_a_vite_tailwind_page() -> None:
     assert "markActiveRule(tree" in catalog_js
 
 
+def test_vite_owns_consent_banner_and_gtm() -> None:
+    root = Path(__file__).resolve().parents[3]
+    main = (root / "packages" / "web" / "src" / "main.js").read_text(encoding="utf-8")
+    consent = (root / "packages" / "web" / "src" / "consent.js").read_text(
+        encoding="utf-8"
+    )
+    chrome = (root / "packages" / "web" / "src" / "chrome.js").read_text(
+        encoding="utf-8"
+    )
+    privacy = (root / "packages" / "web" / "src" / "privacy.js").read_text(
+        encoding="utf-8"
+    )
+    health = (root / "packages" / "web" / "src" / "health.js").read_text(
+        encoding="utf-8"
+    )
+    invite = (root / "packages" / "web" / "src" / "invite.js").read_text(
+        encoding="utf-8"
+    )
+    styles = (root / "packages" / "web" / "src" / "styles.css").read_text(
+        encoding="utf-8"
+    )
+    policy = (root / "docs" / "PRIVACY.md").read_text(encoding="utf-8")
+    assert 'from "./consent.js"' in main
+    assert "mountConsent" in main
+    assert 'CONSENT_COOKIE = "open_ux_gtm_consent"' in consent
+    assert "googletagmanager.com/gtm.js" in consent
+    assert 'id="consent-banner"' in consent
+    assert 'id="cookie-settings"' in chrome
+    assert "consentBannerHtml" in chrome
+    assert "Accept the cookie banner" in privacy
+    assert "Cookie settings in the footer opens the banner again." in privacy
+    assert "There is no cookie banner." not in privacy
+    assert "consent: false" in health
+    assert "consent: false" in invite
+    assert ".consent" in styles
+    assert "open_ux_gtm_consent" in policy
+    assert "Accept the cookie banner" in policy
+
+
 def test_catalog_rule_page_embeds_rule_for_fetchers(
     monkeypatch, live_catalog: Path
 ) -> None:
@@ -316,8 +355,17 @@ def test_public_pages_embed_copy_for_fetchers(
     assert "Present related actions as a small cluster" not in listing.text
     assert "<title>Privacy — Open UX</title>" in privacy.text
     assert "What this product is" in privacy.text
+    assert "Accept the cookie banner" in privacy.text
+    assert 'id="consent-banner"' in privacy.text
+    assert "googletagmanager.com" not in privacy.text
     assert "<title>Sources — Open UX</title>" in sources.text
     assert "We do not republish the original page." in sources.text
+    assert 'id="consent-banner"' in home.text
+    assert "Cookie settings" in home.text
+    assert "googletagmanager.com" not in home.text
+    assert 'id="consent-banner"' not in health.text
+    assert "Cookie settings" not in health.text
+    assert 'id="consent-banner"' not in redeem.text
     assert "<title>Health — Open UX</title>" in health.text
     assert "Whether the hosted service is up" in health.text
     assert health_json.json()["catalog"]["guideline_count"] == len(catalog.guidelines)

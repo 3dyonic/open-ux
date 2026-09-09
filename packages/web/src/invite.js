@@ -121,7 +121,7 @@ export function redeemPage() {
       <p class="foot">Use as bearer on /mcp. Self-host stdio needs no auth.</p>
     </div>
   </main>`,
-        { catalog: false },
+        { catalog: false, consent: false },
       ),
     ),
   };

@@ -13,6 +13,7 @@ const SECTIONS = [
     [
       "These load only after you Accept the cookie banner.",
       "If you Decline, we do not load them for that choice.",
+      "Cookie settings in the footer opens the banner again.",
       "We do not put analytics on the agent API (/mcp) or admin tools.",
     ],
   ],

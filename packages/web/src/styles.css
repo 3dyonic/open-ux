@@ -31,6 +31,10 @@
     @apply m-0 bg-paper font-sans text-base leading-normal text-ink;
   }
 
+  body:has(#consent-banner:not([hidden])) {
+    @apply pb-24;
+  }
+
   #app {
     @apply flex min-h-dvh flex-col;
   }
@@ -117,6 +121,25 @@
   }
   .footer a {
     @apply text-muted underline hover:text-ink focus:text-ink;
+  }
+  .footer-cookies {
+    @apply cursor-pointer border-0 bg-transparent p-0 font-sans text-sm leading-5 text-muted underline hover:text-ink focus:text-ink;
+  }
+
+  .consent {
+    @apply fixed inset-x-0 bottom-0 z-40 flex flex-wrap items-center justify-between gap-4 border-t border-line bg-card px-5 py-4 text-sm leading-5 text-ink md:px-12;
+  }
+  .consent[hidden] {
+    display: none;
+  }
+  .consent-copy {
+    @apply m-0 min-w-[280px] flex-1;
+  }
+  .consent-copy a {
+    @apply text-pip underline;
+  }
+  .consent-actions {
+    @apply flex items-center gap-2;
   }
 
   .page {

@@ -3,6 +3,7 @@ import { renderHealth } from "./health.js";
 import { renderNotFound, renderServerError } from "./errors.js";
 import { renderInvite, renderRedeem, renderRequested } from "./invite.js";
 import { renderLanding } from "./landing.js";
+import { mountConsent } from "./consent.js";
 import { renderPrivacy } from "./privacy.js";
 import { renderSources } from "./sources.js";
 import "./styles.css";
@@ -46,11 +47,19 @@ document.addEventListener("click", (event) => {
   const next = url.pathname + url.search;
   const here = location.pathname + location.search;
   if (next !== here) history.pushState(null, "", next);
-  route();
+  go();
 });
 
 window.addEventListener("popstate", () => {
-  route();
+  go();
 });
 
-route();
+function go() {
+  const next = route();
+  if (next && typeof next.then === "function") {
+    return next.then(() => mountConsent());
+  }
+  mountConsent();
+}
+
+go();

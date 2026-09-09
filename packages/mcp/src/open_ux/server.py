@@ -51,6 +51,7 @@ from open_ux.settings import (
     INVITE_REQUEST_RATE_PER_DAY,
     INVITE_REQUEST_RATE_PER_MINUTE,
     Settings,
+    gtm_container_id,
 )
 from open_ux.rate_limit import client_ip
 from open_ux.store import get_store
@@ -523,6 +524,10 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             guideline_ids=[row.get("id") for row in result.get("guidelines") or [] if row.get("id")],
         )
         return result
+
+    @mcp.custom_route("/api/site", methods=["GET"])
+    async def site_config(_request: Request) -> Response:
+        return JSONResponse({"gtm_id": gtm_container_id()})
 
     @mcp.custom_route("/api/catalog", methods=["GET"])
     async def catalog_index_route(_request: Request) -> Response:

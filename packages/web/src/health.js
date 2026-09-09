@@ -1,6 +1,8 @@
 import { shell } from "./chrome.js";
 import { escapeHtml, setTitle, ssr } from "./util.js";
 
+const CHROME = { paper: true, key: false, consent: false };
+
 function chip(label, tone = "ok") {
   const cls =
     tone === "bad"
@@ -97,7 +99,7 @@ function render(root, payload) {
       <a class="text-sm font-medium text-pip hover:underline focus:underline" href="/catalog">Browse catalog →</a>
     </p>
   </main>`,
-    { paper: true, key: false },
+    CHROME,
   );
 }
 
@@ -114,7 +116,7 @@ export function healthPage() {
     <h1 class="page-title font-semibold">Health</h1>
     <p class="lede">Whether the hosted service is up, and whether the catalog is loaded.</p>
   </main>`,
-        { paper: true, key: false },
+        CHROME,
       ),
     ),
   };
@@ -123,10 +125,10 @@ export function healthPage() {
 export async function renderHealth(root) {
   setTitle("Health — Open UX");
   if (!root.querySelector('[data-ssr-page="health"]')) {
-    root.innerHTML = shell(`<main class="page"><p class="lede">Loading status…</p></main>`, {
-      paper: true,
-      key: false,
-    });
+    root.innerHTML = shell(
+      `<main class="page"><p class="lede">Loading status…</p></main>`,
+      CHROME,
+    );
   }
   try {
     const res = await fetch("/health.json");
