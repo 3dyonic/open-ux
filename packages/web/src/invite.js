@@ -1,5 +1,5 @@
 import { shell } from "./chrome.js";
-import { escapeHtml, setTitle } from "./util.js";
+import { escapeHtml, setTitle, ssr } from "./util.js";
 
 const EMAIL_RE =
   /^[a-z0-9](?:[a-z0-9._+-]{0,62}[a-z0-9])?@(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}$/;
@@ -33,18 +33,23 @@ function clearFieldError(card, input, sub, supporting) {
   sub.textContent = supporting;
 }
 
-export function renderInvite(root) {
-  setTitle("Request access — Open UX");
-  const supporting = "Join the waitlist. We email a one-time redeem when you are approved.";
-  const invalidEmail = "Enter a valid email to request an invite";
-  const requestFailed = "We couldn’t add you to the waitlist. Check the email and try again.";
-  root.innerHTML = shell(
-    `
+const INVITE_TITLE = "Request access — Open UX";
+const INVITE_DESCRIPTION =
+  "Join the waitlist. We email a one-time redeem when you are approved.";
+
+export function invitePage() {
+  return {
+    title: INVITE_TITLE,
+    description: INVITE_DESCRIPTION,
+    body: ssr(
+      "invite",
+      shell(
+        `
   <main class="page page-invite">
     <div class="${CARD}" id="request-card">
       <p class="invite-meta"><span class="pip" aria-hidden="true"></span>Invite · waitlist, one key after approve</p>
       <h1 class="invite-title">Request access</h1>
-      <p class="invite-sub" id="request-sub">${supporting}</p>
+      <p class="invite-sub" id="request-sub">${INVITE_DESCRIPTION}</p>
       <form id="invite-request" class="contents" method="post" action="/invite/request" novalidate>
         <div class="field-invite">
           <label class="label-invite" for="email">Email</label>
@@ -56,8 +61,81 @@ export function renderInvite(root) {
       </form>
     </div>
   </main>`,
-    { catalog: false },
-  );
+        { catalog: false },
+      ),
+    ),
+  };
+}
+
+export function requestedPage() {
+  return {
+    title: "You’re on the list — Open UX",
+    description: "Thanks — we’ll email a one-time invite when your request is approved.",
+    body: ssr(
+      "requested",
+      shell(
+        `
+  <main class="page page-invite">
+    <div class="${CARD}" id="requested-card">
+      <p class="invite-meta"><span class="pip" aria-hidden="true"></span>Invite · waitlist</p>
+      <h1 class="invite-title">You’re on the list</h1>
+      <p class="invite-sub">Thanks — we’ll email a one-time invite when your request is approved.</p>
+      <p class="foot">Already have an invite? Open the link from your email to redeem.</p>
+      <p class="foot foot-meta">No key on this screen — key appears only after a real redeem.</p>
+    </div>
+  </main>`,
+        { catalog: false },
+      ),
+    ),
+  };
+}
+
+export function redeemPage() {
+  return {
+    title: "Redeem invite — Open UX",
+    description: "Paste your invite token, or open the link from your email.",
+    body: ssr(
+      "redeem",
+      shell(
+        `
+  <main class="page page-invite">
+    <div class="${CARD}" id="redeem-card">
+      <p class="invite-meta"><span class="pip" aria-hidden="true"></span>Invite · redeem once</p>
+      <h1 class="invite-title">Redeem invite</h1>
+      <p class="invite-sub" id="redeem-sub">Paste your invite token, or open the link from your email.</p>
+      <form id="invite-redeem" class="contents" method="post" action="/invite/redeem" novalidate>
+        <div class="field-invite">
+          <label class="label-invite" for="token">Invite token</label>
+          <input class="input input-invite" id="token" name="token" type="text" autocomplete="off" spellcheck="false" autocapitalize="none" maxlength="68" placeholder="inv_••••••••••••">
+        </div>
+        <button class="btn btn-primary" type="submit" id="redeem-submit">Redeem</button>
+        <p class="foot" id="redeem-foot">Redeeming burns the invite and mints your uxmcp_ key once.</p>
+      </form>
+    </div>
+    <div class="${CARD}" id="success-card" hidden>
+      <p class="invite-meta"><span class="pip" aria-hidden="true"></span>Redeemed · key once</p>
+      <h1 class="invite-title">Your key</h1>
+      <p class="invite-sub">Invite redeemed. Copy your key — we won’t show it in full again.</p>
+      <div class="key-box" id="key-text"></div>
+      <button class="btn btn-primary" type="button" id="copy-key">Copy</button>
+      <p class="foot">Use as bearer on /mcp. Self-host stdio needs no auth.</p>
+    </div>
+  </main>`,
+        { catalog: false, consent: false },
+      ),
+    ),
+  };
+}
+
+export function renderInvite(root) {
+  const page = invitePage();
+  setTitle(page.title);
+  const supporting = INVITE_DESCRIPTION;
+  if (!root.querySelector('[data-ssr-page="invite"]')) {
+    root.innerHTML = page.body;
+  }
+  const invalidEmail = "Enter a valid email to request an invite";
+  const requestFailed = "We couldn’t add you to the waitlist. Check the email and try again.";
 
   const form = document.getElementById("invite-request");
   const card = document.getElementById("request-card");
@@ -110,53 +188,20 @@ export function renderInvite(root) {
 }
 
 export function renderRequested(root) {
-  setTitle("You’re on the list — Open UX");
-  root.innerHTML = shell(
-    `
-  <main class="page page-invite">
-    <div class="${CARD}" id="requested-card">
-      <p class="invite-meta"><span class="pip" aria-hidden="true"></span>Invite · waitlist</p>
-      <h1 class="invite-title">You’re on the list</h1>
-      <p class="invite-sub">Thanks — we’ll email a one-time invite when your request is approved.</p>
-      <p class="foot">Already have an invite? Open the link from your email to redeem.</p>
-      <p class="foot foot-meta">No key on this screen — key appears only after a real redeem.</p>
-    </div>
-  </main>`,
-    { catalog: false },
-  );
+  const page = requestedPage();
+  setTitle(page.title);
+  if (root.querySelector('[data-ssr-page="requested"]')) return;
+  root.innerHTML = page.body;
 }
 
 export function renderRedeem(root) {
-  setTitle("Redeem invite — Open UX");
-  const supporting = "Paste your invite token, or open the link from your email.";
+  const page = redeemPage();
+  setTitle(page.title);
+  const supporting = page.description;
   const invalidToken = "This invite isn’t valid. It may be used, expired, or mistyped.";
-  root.innerHTML = shell(
-    `
-  <main class="page page-invite">
-    <div class="${CARD}" id="redeem-card">
-      <p class="invite-meta"><span class="pip" aria-hidden="true"></span>Invite · redeem once</p>
-      <h1 class="invite-title">Redeem invite</h1>
-      <p class="invite-sub" id="redeem-sub">${supporting}</p>
-      <form id="invite-redeem" class="contents" method="post" action="/invite/redeem" novalidate>
-        <div class="field-invite">
-          <label class="label-invite" for="token">Invite token</label>
-          <input class="input input-invite" id="token" name="token" type="text" autocomplete="off" spellcheck="false" autocapitalize="none" maxlength="68" placeholder="inv_••••••••••••">
-        </div>
-        <button class="btn btn-primary" type="submit" id="redeem-submit">Redeem</button>
-        <p class="foot" id="redeem-foot">Redeeming burns the invite and mints your uxmcp_ key once.</p>
-      </form>
-    </div>
-    <div class="${CARD}" id="success-card" hidden>
-      <p class="invite-meta"><span class="pip" aria-hidden="true"></span>Redeemed · key once</p>
-      <h1 class="invite-title">Your key</h1>
-      <p class="invite-sub">Invite redeemed. Copy your key — we won’t show it in full again.</p>
-      <div class="key-box" id="key-text"></div>
-      <button class="btn btn-primary" type="button" id="copy-key">Copy</button>
-      <p class="foot">Use as bearer on /mcp. Self-host stdio needs no auth.</p>
-    </div>
-  </main>`,
-    { catalog: false },
-  );
+  if (!root.querySelector('[data-ssr-page="redeem"]')) {
+    root.innerHTML = page.body;
+  }
 
   let issuedKey = "";
   const form = document.getElementById("invite-redeem");
@@ -232,15 +277,3 @@ export function renderRedeem(root) {
   });
 }
 
-export function renderNotFound(root, guidelineId) {
-  setTitle("Not found — Open UX");
-  root.innerHTML = shell(
-    `
-  <main class="page">
-    <a class="back" href="/catalog">← Back to Catalog</a>
-    <h1 class="page-title">Not found</h1>
-    <p class="lede">No guideline with id “${escapeHtml(guidelineId)}”.</p>
-  </main>`,
-    { catalogActive: true, paper: true },
-  );
-}

@@ -1,12 +1,15 @@
 from __future__ import annotations
 
+import os
+import subprocess
 from pathlib import Path
 
+import pytest
 from starlette.testclient import TestClient
 
 from open_ux.catalog import get_by_id, load_catalog
 from open_ux.health import health_payload
-from open_ux.server import create_mcp, web_dist
+from open_ux.server import create_mcp, server_error_response, web_dist
 from open_ux.settings import Settings
 
 ANT_SEED = "ant.checkbox-vs-switch"
@@ -16,6 +19,16 @@ def _client() -> TestClient:
     mcp = create_mcp(hosted=True)
     app = mcp.http_app(path="/mcp", stateless_http=True, transport="http")
     return TestClient(app)
+
+
+def _use_prerendered_dist(monkeypatch) -> Path:
+    root = Path(__file__).resolve().parents[3]
+    raw = os.environ.get("OPEN_UX_WEB_DIST", "").strip()
+    dist = Path(raw) if raw else root / "packages" / "web" / "dist"
+    if not (dist / "404.html").is_file() or not (dist / "catalog" / "index.html").is_file():
+        pytest.skip("web dist is not prerendered; run npm run build in packages/web")
+    monkeypatch.setenv("OPEN_UX_WEB_DIST", str(dist))
+    return dist
 
 
 def _write_dist(tmp_path: Path) -> Path:
@@ -43,7 +56,19 @@ def test_health_json_is_always_json(live_catalog: Path) -> None:
         assert body.status_code == 200
         assert body.headers["content-type"].startswith("application/json")
         assert body.json() == expected
-        assert set(body.json()) == {"ok", "name", "hosted", "version", "catalog"}
+        assert set(body.json()) == {
+            "ok",
+            "name",
+            "hosted",
+            "version",
+            "catalog",
+            "error",
+            "title",
+            "body",
+        }
+        assert body.json()["ok"] is True
+        assert body.json()["error"] is None
+        assert body.json()["title"] == "Success: host and catalog are up"
         assert set(body.json()["catalog"]) == {"status", "guideline_count"}
 
 
@@ -82,11 +107,22 @@ def test_catalog_api_get_returns_guideline_or_404(live_catalog: Path) -> None:
     with _client() as client:
         ok = client.get(f"/api/catalog/{ANT_SEED}")
         missing = client.get("/api/catalog/does.not.exist")
+        unknown_api = client.get("/api/nope")
     assert ok.status_code == 200
     assert ok.json()["id"] == ANT_SEED
     assert ok.json()["rule"] == found["rule"]
     assert missing.status_code == 404
     assert missing.json() == {"found": False, "id": "does.not.exist"}
+    assert unknown_api.status_code == 404
+    assert unknown_api.headers["content-type"].startswith("application/json")
+    assert unknown_api.json() == {"error": "Not found."}
+
+
+def test_server_error_response_stays_json_on_api_paths() -> None:
+    api = server_error_response("/api/catalog/x")
+    assert api.status_code == 500
+    assert api.headers["content-type"].startswith("application/json")
+    assert b"This page could not be loaded." in api.body
 
 
 def test_no_dist_is_json_only_no_shell(tmp_env: Path, monkeypatch) -> None:
@@ -104,6 +140,7 @@ def test_no_dist_is_json_only_no_shell(tmp_env: Path, monkeypatch) -> None:
             "/invite",
             "/invite/requested",
             "/invite/redeem",
+            "/nope",
         ):
             response = client.get(path)
             assert response.status_code == 404, path
@@ -135,6 +172,7 @@ def test_dist_serves_shell_on_page_routes_only(
         asset = client.get("/assets/app.js")
         assert asset.status_code == 200
         assert "window.__openUx" in asset.text
+        assert "immutable" in asset.headers.get("cache-control", "")
         health = client.get("/health.json")
         assert health.headers["content-type"].startswith("application/json")
         catalog = client.get("/api/catalog")
@@ -146,6 +184,21 @@ def test_dist_serves_shell_on_page_routes_only(
         invite_post = client.post("/invite/request", json={"email": "ada@example.com"})
         assert invite_post.status_code == 200
         assert invite_post.json()["ok"] is True
+
+
+def test_html_rereads_dist_after_rebuild(tmp_env: Path, monkeypatch) -> None:
+    dist = _write_dist(tmp_env)
+    monkeypatch.setenv("OPEN_UX_WEB_DIST", str(dist))
+    with _client() as client:
+        first = client.get("/")
+        assert "open-ux-shell" in first.text
+        (dist / "index.html").write_text(
+            "<!DOCTYPE html><html><body>rebuilt-shell</body></html>",
+            encoding="utf-8",
+        )
+        second = client.get("/")
+    assert "rebuilt-shell" in second.text
+    assert "open-ux-shell" not in second.text
 
 
 def test_mcp_and_account_are_not_swallowed(tmp_env: Path, monkeypatch) -> None:
@@ -180,6 +233,204 @@ def test_sources_is_a_vite_tailwind_page() -> None:
     assert "Nielsen" not in sources
     assert "NN/g" not in sources
     assert 'href="/sources"' in chrome
+    catalog_js = (root / "packages" / "web" / "src" / "catalog.js").read_text(
+        encoding="utf-8"
+    )
+    tree_js = (root / "packages" / "web" / "src" / "tree.js").read_text(
+        encoding="utf-8"
+    )
+    model_js = (root / "packages" / "web" / "src" / "catalog-model.js").read_text(
+        encoding="utf-8"
+    )
+    styles = (root / "packages" / "web" / "src" / "styles.css").read_text(
+        encoding="utf-8"
+    )
+    assert "function loadIndex()" in catalog_js
+    assert "matched.slice(start, end)" in catalog_js
+    assert "canReuse" in catalog_js
+    assert "history.pushState" in main
+    assert "popstate" in main
+    assert 'if (path === "/") return renderLanding(root)' in main
+    assert "preventScroll: true" in main
+    assert "overflow-y-auto" in styles
+    assert "#app:has(.rule-shell)" in styles
+    assert "#app > [data-ssr-page]" in styles
+    assert "#app:has(.rule-shell) > [data-ssr-page]" in styles
+    assert "md:max-h-full" in styles
+    assert "md:min-h-0" in styles
+    assert ".sidebar" in styles
+    assert "min-h-11" in styles
+    assert ".content" in styles
+    assert "overflow-y-auto bg-card" in styles
+    assert "max-w-[200px] self-start" in styles
+    assert "content.innerHTML = ruleContentHtml" in catalog_js
+    assert "syncTree(tree" in catalog_js
+    assert "tree.scrollTop = treeScroll" in catalog_js
+    assert 'tree.dataset.bound === "1"' in tree_js
+    assert 'contains("tree-group")' in tree_js
+    assert 'querySelectorAll(".tree-group.is-open")' in tree_js
+    assert "grid-template-columns: 16px minmax(0, 1fr)" in styles
+    assert ".tree-item.is-here .tree-caret" in styles
+    assert ".tree-rule.is-current" in styles
+    assert ".tree-facet.is-here" in styles
+    assert ".tree-caret-leaf" in styles
+    assert "tree-pip" not in tree_js
+    assert ".tree-pip" not in styles
+    assert "function crumbParts(" in model_js
+    assert 'aria-label="Breadcrumb"' in catalog_js
+    assert 'data-field="severity"' not in catalog_js
+    assert "class=\"severity\"" not in catalog_js
+    assert "if (category && segment)" not in catalog_js
+    assert "tree-item-on" not in tree_js
+    assert "tree-item-on" not in styles
+
+
+def test_catalog_tree_edge_cases() -> None:
+    root = Path(__file__).resolve().parents[3]
+    completed = subprocess.run(
+        ["node", str(root / "packages" / "web" / "scripts" / "check-tree.js")],
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    assert completed.returncode == 0, completed.stdout + completed.stderr
+
+
+def test_vite_owns_consent_banner_and_gtm() -> None:
+    root = Path(__file__).resolve().parents[3]
+    main = (root / "packages" / "web" / "src" / "main.js").read_text(encoding="utf-8")
+    consent = (root / "packages" / "web" / "src" / "consent.js").read_text(
+        encoding="utf-8"
+    )
+    chrome = (root / "packages" / "web" / "src" / "chrome.js").read_text(
+        encoding="utf-8"
+    )
+    privacy = (root / "packages" / "web" / "src" / "privacy.js").read_text(
+        encoding="utf-8"
+    )
+    health = (root / "packages" / "web" / "src" / "health.js").read_text(
+        encoding="utf-8"
+    )
+    invite = (root / "packages" / "web" / "src" / "invite.js").read_text(
+        encoding="utf-8"
+    )
+    styles = (root / "packages" / "web" / "src" / "styles.css").read_text(
+        encoding="utf-8"
+    )
+    policy = (root / "docs" / "PRIVACY.md").read_text(encoding="utf-8")
+    assert 'from "./consent.js"' in main
+    assert "mountConsent" in main
+    assert 'CONSENT_COOKIE = "open_ux_gtm_consent"' in consent
+    assert "googletagmanager.com/gtm.js" in consent
+    assert 'id="consent-banner"' in consent
+    assert 'id="cookie-settings"' in chrome
+    assert "consentBannerHtml" in chrome
+    assert "Accept the cookie banner" in privacy
+    assert "Cookie settings in the footer opens the banner again." in privacy
+    assert "There is no cookie banner." not in privacy
+    assert "consent: false" in health
+    assert "consent: false" in invite
+    assert ".consent" in styles
+    assert "open_ux_gtm_consent" in policy
+    assert "Accept the cookie banner" in policy
+
+
+def test_catalog_rule_page_embeds_rule_for_fetchers(
+    monkeypatch, live_catalog: Path
+) -> None:
+    root = Path(__file__).resolve().parents[3]
+    _use_prerendered_dist(monkeypatch)
+    catalog = load_catalog(Settings.load(hosted=True))
+    found = get_by_id(catalog, "actions.button_groups")
+    assert found is not None
+    with _client() as client:
+        response = client.get("/catalog/actions.button_groups")
+        home = client.get("/")
+        missing = client.get("/catalog/does.not.exist")
+        unknown = client.get("/nope")
+    assert response.status_code == 200
+    assert response.headers["content-type"].startswith("text/html")
+    body = response.text
+    assert "<title>Button groups — Open UX</title>" in body
+    assert found["rule"] in body
+    assert 'id="catalog-tree"' in body
+    assert 'class="sidebar"' in body
+    assert "rule-shell" in body
+    assert 'data-ssr-page="rule"' in body
+    assert "tree-card is-here" in body
+    assert 'aria-current="page"' in body
+    assert "Stop inventing UX rules from memory" not in body
+    assert home.status_code == 200
+    assert "<title>Open UX — Cited UX rules agents audit against</title>" in home.text
+    assert found["rule"] not in home.text
+    assert missing.status_code == 404
+    assert found["rule"] not in missing.text
+    assert "<title>Not found — Open UX</title>" in missing.text
+    assert "This id is not in the catalog" in missing.text
+    assert 'data-ssr-page="not-found"' in missing.text
+    assert 'data-ssr-kind="rule"' in missing.text
+    assert unknown.status_code == 404
+    assert "<title>Not found — Open UX</title>" in unknown.text
+    assert "This page is not here" in unknown.text
+    catalog_js = (root / "packages" / "web" / "src" / "catalog.js").read_text(
+        encoding="utf-8"
+    )
+    main_js = (root / "packages" / "web" / "src" / "main.js").read_text(encoding="utf-8")
+    errors_js = (root / "packages" / "web" / "src" / "errors.js").read_text(
+        encoding="utf-8"
+    )
+    assert "data-ssr-rule" in catalog_js
+    assert "hasSsr" in catalog_js
+    assert 'data-ssr-page="catalog"' in catalog_js
+    assert 'ssr(\n      "server-error"' in errors_js or 'ssr("server-error"' in errors_js
+    assert 'ssr(\n      "not-found"' in errors_js or 'ssr("not-found"' in errors_js
+    assert 'painted === "not-found" || painted === "server-error"' in main_js
+    assert 'from "./errors.js"' in main_js
+
+
+def test_public_pages_embed_copy_for_fetchers(
+    monkeypatch, live_catalog: Path
+) -> None:
+    _use_prerendered_dist(monkeypatch)
+    catalog = load_catalog(Settings.load(hosted=True))
+    with _client() as client:
+        home = client.get("/")
+        listing = client.get("/catalog")
+        privacy = client.get("/privacy")
+        sources = client.get("/sources")
+        health = client.get("/health")
+        health_json = client.get("/health.json")
+        invite = client.get("/invite")
+        requested = client.get("/invite/requested")
+        redeem = client.get("/invite/redeem")
+    assert "<title>Open UX — Cited UX rules agents audit against</title>" in home.text
+    assert "<h1" in home.text and "Open UX</h1>" in home.text
+    assert "Say the compose job" in home.text
+    assert "<title>Catalog — Open UX</title>" in listing.text
+    assert "actions.button_groups" in listing.text
+    assert "Button groups" in listing.text
+    assert "Present related actions as a small cluster" not in listing.text
+    assert "<title>Privacy — Open UX</title>" in privacy.text
+    assert "What this product is" in privacy.text
+    assert "Accept the cookie banner" in privacy.text
+    assert 'id="consent-banner"' in privacy.text
+    assert "googletagmanager.com" not in privacy.text
+    assert "<title>Sources — Open UX</title>" in sources.text
+    assert "We do not republish the original page." in sources.text
+    assert 'id="consent-banner"' in home.text
+    assert "Cookie settings" in home.text
+    assert "googletagmanager.com" not in home.text
+    assert 'id="consent-banner"' not in health.text
+    assert "Cookie settings" not in health.text
+    assert 'id="consent-banner"' not in redeem.text
+    assert "<title>Health — Open UX</title>" in health.text
+    assert "Whether the hosted service is up" in health.text
+    assert health_json.json()["catalog"]["guideline_count"] == len(catalog.guidelines)
+    assert "<title>Request access — Open UX</title>" in invite.text
+    assert 'for="email"' in invite.text
+    assert "<title>You’re on the list — Open UX</title>" in requested.text
+    assert "<title>Redeem invite — Open UX</title>" in redeem.text
+    assert 'for="token"' in redeem.text
 
 
 def test_register_still_redirects_to_invite(tmp_env: Path) -> None:

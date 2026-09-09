@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import os
+import re
 import secrets
+from html import escape
 from pathlib import Path
 from typing import Annotated, Any
 
@@ -9,7 +11,7 @@ from fastmcp import FastMCP
 from fastmcp.server.dependencies import get_access_token
 from pydantic import Field
 from starlette.requests import Request
-from starlette.responses import FileResponse, JSONResponse, RedirectResponse, Response
+from starlette.responses import JSONResponse, RedirectResponse, Response
 from starlette.staticfiles import StaticFiles
 
 from open_ux.audit import audit as run_audit
@@ -24,7 +26,7 @@ from open_ux.auth import (
 )
 from open_ux import __version__
 from open_ux.catalog import EMPTY_NOTE, catalog_status, get_by_id, list_index, load_catalog
-from open_ux.health import health_payload
+from open_ux.health import HealthState, health_payload
 from open_ux.jobs import (
     DEFAULT_LIMIT,
     JOB_FIELD_DESCRIPTION,
@@ -33,7 +35,11 @@ from open_ux.jobs import (
     MAX_LIMIT,
     load_job_tree,
 )
-from open_ux.public_html import FAVICON_PATH, ROBOTS_TXT, render_sitemap
+from open_ux.public_html import (
+    FAVICON_PATH,
+    ROBOTS_TXT,
+    render_sitemap,
+)
 from open_ux.situations import (
     get_situation as run_get_situation,
     list_situations as run_list_situations,
@@ -45,6 +51,7 @@ from open_ux.settings import (
     INVITE_REQUEST_RATE_PER_DAY,
     INVITE_REQUEST_RATE_PER_MINUTE,
     Settings,
+    gtm_container_id,
 )
 from open_ux.rate_limit import client_ip
 from open_ux.store import get_store
@@ -54,6 +61,22 @@ SPA_HEADERS = {
     "X-Frame-Options": "DENY",
     "Referrer-Policy": "strict-origin-when-cross-origin",
     "Cache-Control": "no-cache",
+}
+ASSET_HEADERS = {
+    "Cache-Control": "public, max-age=31536000, immutable",
+    "X-Content-Type-Options": "nosniff",
+}
+_SHELL_CACHE: dict[str, tuple[float, str]] = {}
+_SAFE_ID = re.compile(r"^[A-Za-z0-9._-]+$")
+_PAGE_FILES = {
+    "/": "index.html",
+    "/catalog": "catalog/index.html",
+    "/health": "health/index.html",
+    "/privacy": "privacy/index.html",
+    "/sources": "sources/index.html",
+    "/invite": "invite/index.html",
+    "/invite/requested": "invite/requested/index.html",
+    "/invite/redeem": "invite/redeem/index.html",
 }
 
 
@@ -65,15 +88,90 @@ def web_dist() -> Path | None:
     return None
 
 
-def _app_page() -> Response:
+def _dist_file(rel: str) -> Path | None:
     dist = web_dist()
     if dist is None:
-        return JSONResponse({"error": "Not found."}, status_code=404)
-    return FileResponse(
-        dist / "index.html",
+        return None
+    path = (dist / rel).resolve()
+    if dist.resolve() not in path.parents and path != dist.resolve():
+        return None
+    return path if path.is_file() else None
+
+
+def _read_dist(rel: str) -> str | None:
+    path = _dist_file(rel)
+    if path is None:
+        return None
+    key = str(path)
+    mtime = path.stat().st_mtime
+    cached = _SHELL_CACHE.get(key)
+    if cached is None or cached[0] != mtime:
+        text = path.read_text(encoding="utf-8")
+        _SHELL_CACHE[key] = (mtime, text)
+        return text
+    return cached[1]
+
+
+def _html_file(
+    rel: str,
+    *,
+    status_code: int = 200,
+    replace: dict[str, str] | None = None,
+) -> Response:
+    html = _read_dist(rel)
+    if html is None:
+        html = _read_dist("index.html")
+    if html is None:
+        if status_code < 400:
+            status_code = 404
+        message = (
+            "This page could not be loaded."
+            if status_code >= 500
+            else "Not found."
+        )
+        return JSONResponse({"error": message}, status_code=status_code)
+    if replace:
+        for token, value in replace.items():
+            html = html.replace(token, value)
+    return Response(
+        html,
+        status_code=status_code,
         media_type="text/html; charset=utf-8",
         headers=SPA_HEADERS,
     )
+
+
+def _html_page(path: str, *, status_code: int = 200) -> Response:
+    rel = _PAGE_FILES.get(path or "/")
+    return _html_file(rel or "index.html", status_code=status_code)
+
+
+def server_error_response(path: str = "/") -> Response:
+    clean = path or "/"
+    if clean.startswith(("/api", "/mcp", "/admin", "/account")):
+        return JSONResponse(
+            {"error": "This page could not be loaded."},
+            status_code=500,
+        )
+    return _html_file(
+        "500.html",
+        status_code=500,
+        replace={"{{path}}": escape(clean, quote=True)},
+    )
+
+
+def not_found_response(*, kind: str = "page", detail: str = "", path: str = "/") -> Response:
+    token = escape((detail or path or "").strip() or "/", quote=True)
+    rel = "404-rule.html" if kind == "rule" else "404.html"
+    return _html_file(rel, status_code=404, replace={"{{detail}}": token})
+
+
+def _rule_page(guideline_id: str) -> Response:
+    gid = guideline_id if _SAFE_ID.fullmatch(guideline_id) else ""
+    rel = f"catalog/{gid}/index.html" if gid else ""
+    if gid and _dist_file(rel):
+        return _html_file(rel)
+    return _html_page("/catalog")
 
 
 def _jobs_payload(tree: JobTree) -> dict[str, Any]:
@@ -202,8 +300,16 @@ def create_mcp(*, hosted: bool) -> FastMCP:
     settings = Settings.load(hosted=hosted)
     store = get_store(settings)
     catalog = load_catalog(settings)
+    health_state = HealthState()
     job_tree = load_job_tree(settings)
     dist = web_dist()
+    catalog_index = _catalog_index_payload(catalog, job_tree)
+    sitemap_xml = render_sitemap(
+        [str(row["id"]) for row in catalog.index if row.get("id")]
+    )
+
+    def current_health() -> dict[str, Any]:
+        return health_payload(catalog, hosted=hosted, state=health_state)
 
     auth = HashedKeyVerifier(settings, store) if hosted else None
     mcp = FastMCP(
@@ -224,6 +330,7 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         website_url="https://github.com/3dyonic/open-ux",
         auth=auth,
     )
+    mcp.health_state = health_state
 
     @mcp.tool
     def list_guidelines(
@@ -420,9 +527,13 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         )
         return result
 
+    @mcp.custom_route("/api/site", methods=["GET"])
+    async def site_config(_request: Request) -> Response:
+        return JSONResponse({"gtm_id": gtm_container_id()})
+
     @mcp.custom_route("/api/catalog", methods=["GET"])
-    async def catalog_index(_request: Request) -> Response:
-        return JSONResponse(_catalog_index_payload(catalog, job_tree))
+    async def catalog_index_route(_request: Request) -> Response:
+        return JSONResponse(catalog_index)
 
     @mcp.custom_route("/api/catalog/{guideline_id}", methods=["GET"])
     async def catalog_item(request: Request) -> Response:
@@ -434,39 +545,47 @@ def create_mcp(*, hosted: bool) -> FastMCP:
 
     @mcp.custom_route("/health.json", methods=["GET"])
     async def health_json(_request: Request) -> Response:
-        return JSONResponse(health_payload(catalog, hosted=hosted))
+        return JSONResponse(current_health())
 
     @mcp.custom_route("/", methods=["GET"])
     async def landing(_request: Request) -> Response:
-        return _app_page()
+        return _html_page("/")
 
     @mcp.custom_route("/catalog", methods=["GET"])
     async def catalog_list(_request: Request) -> Response:
-        return _app_page()
+        return _html_page("/catalog")
 
     @mcp.custom_route("/catalog/{guideline_id}", methods=["GET"])
-    async def catalog_rule(_request: Request) -> Response:
-        return _app_page()
+    async def catalog_rule(request: Request) -> Response:
+        guideline_id = str(request.path_params.get("guideline_id") or "")
+        found = get_by_id(catalog, guideline_id)
+        if found is None:
+            return not_found_response(
+                kind="rule",
+                detail=guideline_id,
+                path=f"/catalog/{guideline_id}",
+            )
+        return _rule_page(guideline_id)
 
     @mcp.custom_route("/health", methods=["GET"])
     async def health_page(_request: Request) -> Response:
-        return _app_page()
+        return _html_page("/health")
 
     @mcp.custom_route("/privacy", methods=["GET"])
     async def privacy(_request: Request) -> Response:
-        return _app_page()
+        return _html_page("/privacy")
 
     @mcp.custom_route("/sources", methods=["GET"])
     async def sources(_request: Request) -> Response:
-        return _app_page()
+        return _html_page("/sources")
 
     @mcp.custom_route("/invite", methods=["GET"])
     async def invite_request_page(_request: Request) -> Response:
-        return _app_page()
+        return _html_page("/invite")
 
     @mcp.custom_route("/invite/requested", methods=["GET"])
     async def invite_requested_page(_request: Request) -> Response:
-        return _app_page()
+        return _html_page("/invite/requested")
 
     @mcp.custom_route("/robots.txt", methods=["GET"])
     async def robots(_request: Request) -> Response:
@@ -474,8 +593,7 @@ def create_mcp(*, hosted: bool) -> FastMCP:
 
     @mcp.custom_route("/sitemap.xml", methods=["GET"])
     async def sitemap(_request: Request) -> Response:
-        ids = [str(row["id"]) for row in catalog.index if row.get("id")]
-        return Response(render_sitemap(ids), media_type="application/xml")
+        return Response(sitemap_xml, media_type="application/xml")
 
     @mcp.custom_route("/logo-mark.svg", methods=["GET"])
     async def logo_mark(_request: Request) -> Response:
@@ -491,7 +609,10 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         @mcp.custom_route("/assets/{path:path}", methods=["GET"])
         async def web_assets(request: Request) -> Response:
             rel = str(request.path_params.get("path") or "")
-            return await static_assets.get_response(rel, request.scope)
+            response = await static_assets.get_response(rel, request.scope)
+            for key, value in ASSET_HEADERS.items():
+                response.headers[key] = value
+            return response
 
     @mcp.custom_route("/invite/request", methods=["POST"])
     async def invite_request_route(request: Request) -> Response:
@@ -505,7 +626,7 @@ def create_mcp(*, hosted: bool) -> FastMCP:
     @mcp.custom_route("/invite/redeem", methods=["GET", "POST"])
     async def invite_redeem_route(request: Request) -> Response:
         if request.method == "GET":
-            return _app_page()
+            return _html_page("/invite/redeem")
         if not hosted:
             return JSONResponse(
                 {"error": "Invites are hosted-only. Self-host stdio needs no key."},
@@ -606,5 +727,13 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             return JSONResponse({"error": "Email and key do not match."}, status_code=401)
         store.delete_account(normalized)
         return JSONResponse({"deleted": True, "email": normalized})
+
+    @mcp.custom_route("/{path:path}", methods=["GET"])
+    async def public_not_found(request: Request) -> Response:
+        raw = str(request.path_params.get("path") or "")
+        path = f"/{raw}" if raw else "/"
+        if path.startswith(("/api", "/mcp", "/admin", "/account")):
+            return JSONResponse({"error": "Not found."}, status_code=404)
+        return not_found_response(kind="page", detail=path, path=path)
 
     return mcp

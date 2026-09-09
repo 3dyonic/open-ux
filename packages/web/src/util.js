@@ -10,3 +10,12 @@ export function escapeHtml(value) {
 export function setTitle(title) {
   document.title = title;
 }
+
+export function ssr(page, inner, attrs = {}) {
+  let extra = "";
+  for (const [key, value] of Object.entries(attrs)) {
+    if (value == null || value === "") continue;
+    extra += ` data-ssr-${key}="${escapeHtml(String(value))}"`;
+  }
+  return `<div data-ssr-page="${escapeHtml(page)}"${extra}>${inner}</div>`;
+}

@@ -5,7 +5,13 @@ from pathlib import Path
 from starlette.testclient import TestClient
 
 from open_ux.catalog import load_catalog
-from open_ux.public_html import FAVICON_HREF, FAVICON_PATH, ROBOTS_TXT
+from open_ux.public_html import (
+    FAVICON_HREF,
+    FAVICON_PATH,
+    ROBOTS_TXT,
+    guideline_display_id,
+    guideline_display_name,
+)
 from open_ux.server import create_mcp
 from open_ux.settings import Settings
 
@@ -41,6 +47,8 @@ def test_sitemap_lists_landing_catalog_and_remaining_ids(live_catalog: Path) -> 
         assert f"<loc>https://open-ux.dev/catalog/{gid}</loc>" in body
     assert "nng." not in body
     assert "apple." not in body
+    assert "/404" not in body
+    assert "/500" not in body
     assert body.count("<url>") == 4 + len(ids)
 
 
@@ -78,3 +86,12 @@ def test_dockerfile_overlays_web_public_mark() -> None:
     src = "COPY packages/mcp/src/open_ux/static/logo-mark.svg"
     assert f"{src} ./public/logo-mark.svg" in text
     assert f"{src} ./public/favicon.svg" in text
+    assert "COPY catalog /catalog" in text
+    assert "OPEN_UX_CATALOG=/catalog" in text
+
+
+def test_guideline_display_strips_house_and_keeps_category_ids() -> None:
+    assert guideline_display_name({"name": "Button groups — Tidwell"}) == "Button groups"
+    assert guideline_display_name({"title": "button groups"}) == "button groups"
+    assert guideline_display_id("actions.button_groups") == "actions.button_groups"
+    assert guideline_display_id("ant.checkbox-vs-switch") == "checkbox-vs-switch"

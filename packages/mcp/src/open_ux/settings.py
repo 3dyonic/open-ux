@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import re
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -19,6 +20,15 @@ INVITE_REQUEST_RATE_PER_DAY = 30
 INVITE_REDEEM_RATE_PER_MINUTE = 10
 INVITE_REDEEM_RATE_PER_DAY = 50
 RETENTION_DAYS = 30
+DEFAULT_GTM_ID = "GTM-N3BL3G9K"
+_GTM_ID_RE = re.compile(r"^GTM-[A-Z0-9]+$")
+
+
+def gtm_container_id() -> str:
+    raw = os.environ.get("OPEN_UX_GTM_ID", "").strip()
+    if raw and _GTM_ID_RE.fullmatch(raw):
+        return raw
+    return DEFAULT_GTM_ID
 
 
 def _repo_root() -> Path | None:

@@ -1,13 +1,17 @@
 import { shell } from "./chrome.js";
-import { setTitle } from "./util.js";
+import { setTitle, ssr } from "./util.js";
 
-export function renderLanding(root) {
-  setTitle("Open UX — Cited UX rules agents audit against");
-  if (location.hash === "#register") {
-    location.replace("/invite");
-    return;
-  }
-  root.innerHTML = shell(
+const TITLE = "Open UX — Cited UX rules agents audit against";
+const DESCRIPTION =
+  "Stop inventing UX rules from memory. Open UX is a shared, cited catalog agents list, fetch, and audit against.";
+
+export function landingPage() {
+  return {
+    title: TITLE,
+    description: DESCRIPTION,
+    body: ssr(
+      "landing",
+      shell(
     `
   <main>
   <section class="flex w-full flex-wrap items-center justify-between gap-8 px-5 py-10 pb-8 md:px-12">
@@ -89,5 +93,18 @@ export function renderLanding(root) {
     <a class="text-sm font-medium text-pip no-underline" href="https://github.com/3dyonic/open-ux">View repo →</a>
   </section>`,
     {},
-  );
+      ),
+    ),
+  };
+}
+
+export function renderLanding(root) {
+  if (location.hash === "#register") {
+    location.replace("/invite");
+    return;
+  }
+  const page = landingPage();
+  setTitle(page.title);
+  if (root.querySelector('[data-ssr-page="landing"]')) return;
+  root.innerHTML = page.body;
 }

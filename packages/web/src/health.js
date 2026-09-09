@@ -1,5 +1,7 @@
 import { shell } from "./chrome.js";
-import { escapeHtml, setTitle } from "./util.js";
+import { escapeHtml, setTitle, ssr } from "./util.js";
+
+const CHROME = { paper: true, key: false, consent: false };
 
 function chip(label, tone = "ok") {
   const cls =
@@ -19,23 +21,31 @@ function chip(label, tone = "ok") {
 
 function render(root, payload) {
   const catalog = payload.catalog || {};
-  const systemsOk = Boolean(payload.ok) && catalog.status === "ok";
+  const catalogOk = catalog.status === "ok";
+  const error = payload.error && typeof payload.error === "object" ? payload.error : null;
+  const systemsOk = Boolean(payload.ok) && !error && catalogOk;
   const hosted = Boolean(payload.hosted);
-  const statusTitle = systemsOk
+  const statusTitle = payload.title || (systemsOk
     ? "Success: host and catalog are up"
-    : "Error: catalog is not loaded";
-  const statusBody = systemsOk
+    : "Error: catalog is not loaded");
+  const statusBody = payload.body || (systemsOk
     ? "The hosted service is running. The catalog is loaded."
-    : "The host is up. The catalog has no cited rules yet. Browse the catalog when rules land.";
+    : "The host is up. The catalog has no cited rules yet. Browse the catalog when rules land.");
   const pipCls = systemsOk
     ? "size-2.5 shrink-0 rounded-full bg-success"
     : "size-2.5 shrink-0 rounded-full bg-danger";
   const hostedLine = hosted
     ? "Running on the hosted service."
     : "Running locally, not on the hosted service.";
-  const catalogLine = systemsOk
+  const catalogLine = catalogOk
     ? `${catalog.guideline_count} cited rules`
     : "No cited rules loaded yet.";
+  const apiLine = error
+    ? `A request returned ${error.status}.${error.path ? ` ${error.path}` : ""}`
+    : "The service answers requests.";
+  const bannerChip = error
+    ? chip("Error", "bad")
+    : chip(systemsOk ? "Operational" : "Not loaded", systemsOk ? "ok" : "bad");
   root.innerHTML = shell(
     `
   <main class="page">
@@ -47,7 +57,7 @@ function render(root, payload) {
         <p class="m-0 font-mono text-xs text-muted">${escapeHtml(statusBody)}</p>
       </div>
       <span class="flex-1"></span>
-      ${chip(systemsOk ? "Operational" : "Not loaded", systemsOk ? "ok" : "bad")}
+      ${bannerChip}
     </div>
     <div class="flex flex-col gap-3">
       <h1 class="page-title font-semibold">Health</h1>
@@ -60,9 +70,9 @@ function render(root, payload) {
         <div class="flex w-full items-center justify-between gap-4 border-b border-line p-4">
           <div class="flex min-w-0 flex-col gap-1">
             <p class="m-0 text-base font-medium text-ink">API</p>
-            <p class="m-0 font-mono text-[13px] text-muted">The service answers requests.</p>
+            <p class="m-0 font-mono text-[13px] text-muted">${escapeHtml(apiLine)}</p>
           </div>
-          ${chip("Operational")}
+          ${chip(error ? "Error" : "Operational", error ? "bad" : "ok")}
         </div>
         <div class="flex w-full items-center justify-between gap-4 border-b border-line p-4">
           <div class="flex min-w-0 flex-col gap-1">
@@ -76,7 +86,7 @@ function render(root, payload) {
             <p class="m-0 text-base font-medium text-ink">Catalog</p>
             <p class="m-0 font-mono text-[13px] text-muted">${escapeHtml(String(catalogLine))}</p>
           </div>
-          ${chip(systemsOk ? "Operational" : "Not loaded", systemsOk ? "ok" : "bad")}
+          ${chip(catalogOk ? "Operational" : "Not loaded", catalogOk ? "ok" : "bad")}
         </div>
       </div>
     </section>
@@ -89,16 +99,37 @@ function render(root, payload) {
       <a class="text-sm font-medium text-pip hover:underline focus:underline" href="/catalog">Browse catalog →</a>
     </p>
   </main>`,
-    { paper: true, key: false },
+    CHROME,
   );
+}
+
+export function healthPage() {
+  return {
+    title: "Health — Open UX",
+    description: "Whether the hosted service is up, and whether the catalog is loaded.",
+    body: ssr(
+      "health",
+      shell(
+        `
+  <main class="page">
+    <p class="kicker"><span class="pip" aria-hidden="true"></span>Status</p>
+    <h1 class="page-title font-semibold">Health</h1>
+    <p class="lede">Whether the hosted service is up, and whether the catalog is loaded.</p>
+  </main>`,
+        CHROME,
+      ),
+    ),
+  };
 }
 
 export async function renderHealth(root) {
   setTitle("Health — Open UX");
-  root.innerHTML = shell(`<main class="page"><p class="lede">Loading status…</p></main>`, {
-    paper: true,
-    key: false,
-  });
+  if (!root.querySelector('[data-ssr-page="health"]')) {
+    root.innerHTML = shell(
+      `<main class="page"><p class="lede">Loading status…</p></main>`,
+      CHROME,
+    );
+  }
   try {
     const res = await fetch("/health.json");
     const data = await res.json();
@@ -107,6 +138,9 @@ export async function renderHealth(root) {
     render(root, {
       ok: false,
       hosted: false,
+      title: "Error: status could not be loaded",
+      body: "Try this page again.",
+      error: { status: 500, path: "/health.json" },
       catalog: { status: "empty", guideline_count: 0 },
     });
   }

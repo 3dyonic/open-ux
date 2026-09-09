@@ -31,8 +31,24 @@
     @apply m-0 bg-paper font-sans text-base leading-normal text-ink;
   }
 
+  body:has(#consent-banner:not([hidden])):not(:has(.rule-shell)) {
+    @apply pb-24;
+  }
+
   #app {
     @apply flex min-h-dvh flex-col;
+  }
+
+  #app > [data-ssr-page] {
+    @apply flex min-h-0 flex-1 flex-col;
+  }
+
+  #app:has(.rule-shell) {
+    @apply h-dvh overflow-hidden;
+  }
+
+  #app:has(.rule-shell) > [data-ssr-page] {
+    @apply min-h-0 overflow-hidden;
   }
 
   main {
@@ -106,6 +122,25 @@
   .footer a {
     @apply text-muted underline hover:text-ink focus:text-ink;
   }
+  .footer-cookies {
+    @apply cursor-pointer border-0 bg-transparent p-0 font-sans text-sm leading-5 text-muted underline hover:text-ink focus:text-ink;
+  }
+
+  .consent {
+    @apply fixed inset-x-0 bottom-0 z-40 flex flex-wrap items-center justify-between gap-4 border-t border-line bg-card px-5 py-4 text-sm leading-5 text-ink md:px-12;
+  }
+  .consent[hidden] {
+    display: none;
+  }
+  .consent-copy {
+    @apply m-0 min-w-[280px] flex-1;
+  }
+  .consent-copy a {
+    @apply text-pip underline;
+  }
+  .consent-actions {
+    @apply flex items-center gap-2;
+  }
 
   .page {
     @apply flex w-full flex-1 flex-col gap-7 px-5 py-10 pb-12 md:px-12;
@@ -116,6 +151,21 @@
   }
   .page-invite {
     @apply items-center justify-center px-5 py-12 pb-14 md:px-12;
+  }
+  .page-error {
+    @apply items-center justify-center gap-10 px-5 py-16 text-center;
+  }
+  .error-pip {
+    @apply h-[220px] w-[280px];
+  }
+  .error-copy {
+    @apply flex max-w-[520px] flex-col items-center gap-4 px-6 py-6;
+  }
+  .error-title {
+    @apply text-[36px] leading-10;
+  }
+  .error-id {
+    @apply m-0 rounded-sm border border-line bg-card px-2.5 py-1.5 font-mono text-xs text-pip;
   }
   .page-title {
     @apply m-0 text-[28px] font-bold leading-normal text-ink;
@@ -238,10 +288,11 @@
   }
 
   .rule-shell {
-    @apply flex w-full flex-1 items-start;
+    @apply flex w-full min-h-0 flex-1 flex-col items-stretch md:flex-row md:overflow-hidden;
   }
   .sidebar {
-    @apply flex w-[260px] shrink-0 flex-col gap-0.5 border-r border-line py-10 pr-3 pl-5;
+    @apply flex max-h-[36vh] w-full shrink-0 flex-col gap-0.5 overflow-y-auto border-b border-line px-5 py-4 md:h-auto md:max-h-full md:min-h-0 md:w-[260px] md:border-b-0 md:border-r md:py-10 md:pr-3 md:pl-5;
+    overflow-anchor: none;
   }
   .tree-group {
     @apply flex w-full flex-col gap-0.5;
@@ -253,31 +304,52 @@
     @apply hidden;
   }
   .tree-item {
-    @apply flex min-h-7 w-full cursor-pointer items-center gap-1.5 rounded-sm border-0 bg-transparent px-2 py-1.5 text-left font-sans text-sm text-ink;
+    @apply grid min-h-11 w-full cursor-pointer items-center gap-x-2 rounded-sm border-0 bg-transparent px-2 py-2 text-left font-sans text-sm text-ink;
+    grid-template-columns: 16px minmax(0, 1fr);
   }
-  .tree-item-container {
+  .tree-item:focus-visible {
+    @apply outline-2 outline-offset-2 outline-pip;
+  }
+  .tree-container {
     @apply font-semibold;
   }
-  .tree-item-card {
-    @apply pl-5;
+  .tree-card {
+    padding-left: 1.25rem;
   }
-  .tree-item-facet {
-    @apply pl-8 font-medium text-muted;
+  .tree-facet {
+    @apply text-[13px] font-semibold text-muted;
+    padding-left: 1.75rem;
   }
-  .tree-item-rule {
-    @apply pl-11;
+  .tree-facet.is-here {
+    @apply text-ink;
   }
-  .tree-item-on {
+  .tree-rule {
+    @apply font-normal text-ink;
+    padding-left: 2.25rem;
+  }
+  .tree-rule.is-current {
     @apply bg-pip-soft font-medium;
   }
-  .tree-caret {
-    @apply w-2.5 shrink-0 text-[10px] text-muted;
+  .tree-label {
+    @apply min-w-0 text-left;
   }
-  .tree-pip {
-    @apply size-[5px] shrink-0 rounded-full bg-pip;
+  .tree-caret {
+    @apply flex size-4 items-center justify-center text-muted;
+  }
+  .tree-item.is-here .tree-caret {
+    @apply text-pip;
+  }
+  .tree-caret-icon {
+    @apply block size-4;
+  }
+  .tree-group.is-open > .tree-item .tree-caret-icon {
+    transform: rotate(90deg);
+  }
+  .tree-caret-leaf {
+    @apply invisible;
   }
   .content {
-    @apply flex min-w-0 flex-1 flex-col gap-7 px-5 py-10 pb-12 md:px-12 md:pl-10;
+    @apply flex min-h-0 min-w-0 flex-1 flex-col gap-7 overflow-y-auto bg-card px-5 py-10 pb-12 md:px-12 md:pl-10;
   }
   .block {
     @apply flex flex-col gap-2;
@@ -301,10 +373,10 @@
     @apply flex flex-col gap-2 rounded-sm border border-line bg-danger-bg p-4;
   }
   .badge-pass {
-    @apply inline-flex rounded-full bg-success px-2.5 py-1 text-sm font-medium text-white;
+    @apply inline-flex max-w-[200px] self-start rounded-full bg-success px-2.5 py-1 text-sm font-medium text-white;
   }
   .badge-fail {
-    @apply inline-flex rounded-full bg-danger px-2.5 py-1 text-sm font-medium text-white;
+    @apply inline-flex max-w-[200px] self-start rounded-full bg-danger px-2.5 py-1 text-sm font-medium text-white;
   }
   .cite-list {
     @apply flex flex-col gap-3;
@@ -324,14 +396,18 @@
   .examples {
     @apply flex flex-col gap-3;
   }
-  .eyebrow {
-    @apply flex flex-wrap items-center justify-between gap-3;
+  .crumbs {
+    @apply min-w-0 max-md:hidden;
   }
-  .eyebrow-path {
-    @apply m-0 text-sm text-muted;
+  .crumb-list {
+    @apply m-0 flex list-none flex-wrap items-center p-0 text-sm text-muted;
   }
-  .severity {
-    @apply rounded-full border border-line bg-card px-2.5 py-1 font-mono text-xs font-medium text-ink;
+  .crumb-list li {
+    @apply flex items-center;
+  }
+  .crumb-list li:not(:last-child)::after {
+    content: "/";
+    @apply mx-1.5 text-muted;
   }
   .rule-name {
     @apply m-0 text-[28px] font-semibold leading-8 text-ink;
