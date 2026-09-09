@@ -95,10 +95,12 @@ function render(root, payload) {
 
 export async function renderHealth(root) {
   setTitle("Health — Open UX");
-  root.innerHTML = shell(`<main class="page"><p class="lede">Loading status…</p></main>`, {
-    paper: true,
-    key: false,
-  });
+  if (!root.querySelector('[data-ssr-page="health"]')) {
+    root.innerHTML = shell(`<main class="page"><p class="lede">Loading status…</p></main>`, {
+      paper: true,
+      key: false,
+    });
+  }
   try {
     const res = await fetch("/health.json");
     const data = await res.json();

@@ -9,7 +9,7 @@ from fastmcp import FastMCP
 from fastmcp.server.dependencies import get_access_token
 from pydantic import Field
 from starlette.requests import Request
-from starlette.responses import FileResponse, JSONResponse, RedirectResponse, Response
+from starlette.responses import JSONResponse, RedirectResponse, Response
 from starlette.staticfiles import StaticFiles
 
 from open_ux.audit import audit as run_audit
@@ -34,12 +34,38 @@ from open_ux.jobs import (
     load_job_tree,
 )
 from open_ux.public_html import (
+    CATALOG_DESCRIPTION,
+    CATALOG_TITLE,
     FAVICON_PATH,
+    HEALTH_DESCRIPTION,
+    HEALTH_TITLE,
+    INVITE_DESCRIPTION,
+    INVITE_TITLE,
+    LANDING_DESCRIPTION,
+    LANDING_TITLE,
+    NOT_FOUND_TITLE,
+    PRIVACY_DESCRIPTION,
+    PRIVACY_TITLE,
+    REDEEM_DESCRIPTION,
+    REDEEM_TITLE,
+    REQUESTED_DESCRIPTION,
+    REQUESTED_TITLE,
     ROBOTS_TXT,
-    apply_rule_shell,
+    SOURCES_DESCRIPTION,
+    SOURCES_TITLE,
+    apply_spa_shell,
     guideline_display_name,
+    render_catalog_index_article,
+    render_health_article,
+    render_invite_article,
+    render_landing_article,
+    render_not_found_article,
+    render_privacy_article,
+    render_redeem_article,
+    render_requested_article,
     render_rule_article,
     render_sitemap,
+    render_sources_article,
     rule_meta_description,
     rule_meta_title,
 )
@@ -74,32 +100,34 @@ def web_dist() -> Path | None:
     return None
 
 
-def _app_page() -> Response:
+def _html_page(
+    *,
+    title: str,
+    description: str,
+    path: str,
+    article: str,
+) -> Response:
     dist = web_dist()
     if dist is None:
         return JSONResponse({"error": "Not found."}, status_code=404)
-    return FileResponse(
-        dist / "index.html",
-        media_type="text/html; charset=utf-8",
-        headers=SPA_HEADERS,
-    )
-
-
-def _rule_page(guideline: dict[str, Any]) -> Response:
-    dist = web_dist()
-    if dist is None:
-        return JSONResponse({"error": "Not found."}, status_code=404)
-    gid = str(guideline.get("id") or "")
-    title = rule_meta_title(guideline_display_name(guideline))
-    description = rule_meta_description(guideline)
-    html = apply_rule_shell(
+    html = apply_spa_shell(
         (dist / "index.html").read_text(encoding="utf-8"),
         title=title,
         description=description,
+        path=path,
+        article=article,
+    )
+    return Response(html, media_type="text/html; charset=utf-8", headers=SPA_HEADERS)
+
+
+def _rule_page(guideline: dict[str, Any]) -> Response:
+    gid = str(guideline.get("id") or "")
+    return _html_page(
+        title=rule_meta_title(guideline_display_name(guideline)),
+        description=rule_meta_description(guideline),
         path=f"/catalog/{gid}",
         article=render_rule_article(guideline),
     )
-    return Response(html, media_type="text/html; charset=utf-8", headers=SPA_HEADERS)
 
 
 def _jobs_payload(tree: JobTree) -> dict[str, Any]:
@@ -464,39 +492,79 @@ def create_mcp(*, hosted: bool) -> FastMCP:
 
     @mcp.custom_route("/", methods=["GET"])
     async def landing(_request: Request) -> Response:
-        return _app_page()
+        return _html_page(
+            title=LANDING_TITLE,
+            description=LANDING_DESCRIPTION,
+            path="/",
+            article=render_landing_article(),
+        )
 
     @mcp.custom_route("/catalog", methods=["GET"])
     async def catalog_list(_request: Request) -> Response:
-        return _app_page()
+        return _html_page(
+            title=CATALOG_TITLE,
+            description=CATALOG_DESCRIPTION,
+            path="/catalog",
+            article=render_catalog_index_article(catalog.guidelines),
+        )
 
     @mcp.custom_route("/catalog/{guideline_id}", methods=["GET"])
     async def catalog_rule(request: Request) -> Response:
         guideline_id = str(request.path_params.get("guideline_id") or "")
         found = get_by_id(catalog, guideline_id)
         if found is None:
-            return _app_page()
+            return _html_page(
+                title=NOT_FOUND_TITLE,
+                description="No guideline with that id.",
+                path=f"/catalog/{guideline_id}",
+                article=render_not_found_article(guideline_id),
+            )
         return _rule_page(found)
 
     @mcp.custom_route("/health", methods=["GET"])
     async def health_page(_request: Request) -> Response:
-        return _app_page()
+        return _html_page(
+            title=HEALTH_TITLE,
+            description=HEALTH_DESCRIPTION,
+            path="/health",
+            article=render_health_article(health_payload(catalog, hosted=hosted)),
+        )
 
     @mcp.custom_route("/privacy", methods=["GET"])
     async def privacy(_request: Request) -> Response:
-        return _app_page()
+        return _html_page(
+            title=PRIVACY_TITLE,
+            description=PRIVACY_DESCRIPTION,
+            path="/privacy",
+            article=render_privacy_article(),
+        )
 
     @mcp.custom_route("/sources", methods=["GET"])
     async def sources(_request: Request) -> Response:
-        return _app_page()
+        return _html_page(
+            title=SOURCES_TITLE,
+            description=SOURCES_DESCRIPTION,
+            path="/sources",
+            article=render_sources_article(),
+        )
 
     @mcp.custom_route("/invite", methods=["GET"])
     async def invite_request_page(_request: Request) -> Response:
-        return _app_page()
+        return _html_page(
+            title=INVITE_TITLE,
+            description=INVITE_DESCRIPTION,
+            path="/invite",
+            article=render_invite_article(),
+        )
 
     @mcp.custom_route("/invite/requested", methods=["GET"])
     async def invite_requested_page(_request: Request) -> Response:
-        return _app_page()
+        return _html_page(
+            title=REQUESTED_TITLE,
+            description=REQUESTED_DESCRIPTION,
+            path="/invite/requested",
+            article=render_requested_article(),
+        )
 
     @mcp.custom_route("/robots.txt", methods=["GET"])
     async def robots(_request: Request) -> Response:
@@ -535,7 +603,12 @@ def create_mcp(*, hosted: bool) -> FastMCP:
     @mcp.custom_route("/invite/redeem", methods=["GET", "POST"])
     async def invite_redeem_route(request: Request) -> Response:
         if request.method == "GET":
-            return _app_page()
+            return _html_page(
+                title=REDEEM_TITLE,
+                description=REDEEM_DESCRIPTION,
+                path="/invite/redeem",
+                article=render_redeem_article(),
+            )
         if not hosted:
             return JSONResponse(
                 {"error": "Invites are hosted-only. Self-host stdio needs no key."},

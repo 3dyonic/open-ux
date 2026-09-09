@@ -17,6 +17,30 @@ LANDING_DESCRIPTION = (
     "agents list, fetch, and audit against."
 )
 CATALOG_TITLE = "Catalog — Open UX"
+CATALOG_DESCRIPTION = "Cited UX rules agents audit against"
+SOURCES_TITLE = "Sources — Open UX"
+SOURCES_DESCRIPTION = (
+    "How Open UX writes catalog rules, and how to ask us to change or remove one."
+)
+SOURCES_H1 = "Sources"
+SOURCES_LEDE = (
+    "How Open UX writes catalog rules, and how to ask us to change or remove one."
+)
+HEALTH_TITLE = "Health — Open UX"
+HEALTH_DESCRIPTION = (
+    "Whether the hosted service is up, and whether the catalog is loaded."
+)
+INVITE_TITLE = "Request access — Open UX"
+INVITE_DESCRIPTION = (
+    "Join the waitlist. We email a one-time redeem when you are approved."
+)
+REQUESTED_TITLE = "You’re on the list — Open UX"
+REQUESTED_DESCRIPTION = (
+    "Thanks — we’ll email a one-time invite when your request is approved."
+)
+REDEEM_TITLE = "Redeem invite — Open UX"
+REDEEM_DESCRIPTION = "Paste your invite token, or open the link from your email."
+NOT_FOUND_TITLE = "Not found — Open UX"
 _STATIC_DIR = Path(__file__).resolve().parent / "static"
 _MARK_PATH = _STATIC_DIR / "logo-mark.svg"
 _FAVICON_FALLBACK = _STATIC_DIR / "favicon.svg"
@@ -86,6 +110,49 @@ PRIVACY_SECTIONS: tuple[tuple[str, str | None, tuple[str, ...]], ...] = (
     ),
 )
 PRIVACY_CONTACT_EMAIL = "contact@open-ux.dev"
+SOURCES_SECTIONS: tuple[tuple[str, tuple[str, ...], tuple[str, ...]], ...] = (
+    (
+        "What a rule is",
+        (
+            "Each file is one claim. It has a pass/fail, and a citation that names the original page and links to it. Extra URLs on that citation are more sources for the same claim, not extra claims.",
+        ),
+        (),
+    ),
+    (
+        "How we write it",
+        (
+            "We read published design-system and UX guidance that is already public. We write our own short pass/fail so an agent can apply the claim. We do not republish the original page.",
+            "If a claim has no honest home on a Situation Card, we leave it out. Empty leaves stay empty; we do not invent criteria for them.",
+        ),
+        (),
+    ),
+    (
+        "Licenses",
+        (
+            "Open UX (the catalog files, tools, and this site) is MIT. That license is ours. It does not cover the original design systems.",
+            "The organizations we cite keep their own copyrights and licenses. Linking to them is not an endorsement, and we are not those organizations.",
+        ),
+        (),
+    ),
+    (
+        "Ask us to change or remove a rule",
+        (
+            "If you are the source, or you believe a rule should not be in the catalog, email contact@open-ux.dev.",
+            "Include:",
+        ),
+        (
+            "the rule id (for example govuk.hide-password-by-default-show-toggle)",
+            "the catalog or citation URL",
+            "what you want (remove the file, drop a citation, or correct the paraphrase)",
+            "who you are in relation to the source",
+        ),
+    ),
+    ("Contact", (), ()),
+)
+SOURCES_ASK_CLOSING = (
+    "We will look at it and reply. We may remove the file, rewrite the paraphrase, "
+    "or keep it if the citation still supports the claim."
+)
 _GTM_ID_RE = re.compile(r"^GTM-[A-Z0-9]+$")
 CONSENT_CSS = """
     .consent {
@@ -316,6 +383,208 @@ def render_rule_article(guideline: dict[str, Any]) -> str:
     return "".join(parts)
 
 
+def _ssr(page: str, inner: str) -> str:
+    return f'<div data-ssr-page="{escape(page, quote=True)}">{inner}</div>'
+
+
+def _mailto(email: str) -> str:
+    return f'<a href="mailto:{escape(email, quote=True)}">{escape(email)}</a>'
+
+
+def render_landing_article() -> str:
+    return _ssr(
+        "landing",
+        "<main>"
+        '<p class="kicker">Cited catalog · agents audit · no vibes</p>'
+        "<h1>Open UX</h1>"
+        "<p>Cited UX rules agents audit against</p>"
+        f"<p>{escape(LANDING_DESCRIPTION)}</p>"
+        '<p><a href="/catalog">Browse catalog</a> · <a href="/invite">Request access</a></p>'
+        "<h2>How it works</h2>"
+        "<h3>Connect</h3>"
+        "<p>Install the Claude client (or any MCP client) and paste your key.</p>"
+        "<h3>List · get</h3>"
+        "<p>Browse the shared catalog; every rule carries a citation.</p>"
+        "<h3>Audit</h3>"
+        "<p>Say the compose job; get cited criteria. The host does not take a file or return pass or fail.</p>"
+        "<h2>Join the community</h2>"
+        "<p>Open UX is a shared idea — cited rules anyone can fork, cite, and improve together.</p>"
+        '<p><a href="https://github.com/3dyonic/open-ux">View repo</a></p>'
+        "</main>",
+    )
+
+
+def render_catalog_index_article(guidelines: list[dict[str, Any]]) -> str:
+    items: list[str] = []
+    for row in guidelines:
+        gid = str(row.get("id") or "")
+        if not gid:
+            continue
+        name = guideline_display_name(row)
+        rule = str(row.get("rule") or "").strip()
+        href = f"/catalog/{escape(gid, quote=True)}"
+        rule_html = f"<p>{escape(rule)}</p>" if rule else ""
+        items.append(
+            f'<a href="{href}"><span>{escape(name)}</span>{rule_html}</a>'
+        )
+    return _ssr(
+        "catalog",
+        "<main>"
+        "<h1>Catalog</h1>"
+        f"<p>{escape(CATALOG_DESCRIPTION)}</p>"
+        f"<p>{len(items)} shown</p>"
+        f'<div class="list">{"".join(items)}</div>'
+        "</main>",
+    )
+
+
+def render_privacy_article() -> str:
+    sections: list[str] = []
+    for heading, paragraph, bullets in PRIVACY_SECTIONS:
+        if heading == "Contact":
+            body = (
+                f"<p>Privacy questions: {_mailto(PRIVACY_CONTACT_EMAIL)}. "
+                'To ask us to drop a catalog rule, see <a href="/sources">Sources</a>.</p>'
+            )
+        elif paragraph:
+            body = f"<p>{escape(paragraph)}</p>"
+        else:
+            body = ""
+        items = "".join(f"<li>{escape(item)}</li>" for item in bullets)
+        list_html = f"<ul>{items}</ul>" if items else ""
+        sections.append(f"<section><h2>{escape(heading)}</h2>{body}{list_html}</section>")
+    return _ssr(
+        "privacy",
+        f"<main><h1>{escape(PRIVACY_H1)}</h1><p>{escape(PRIVACY_LEDE)}</p>"
+        f"{''.join(sections)}</main>",
+    )
+
+
+def render_sources_article() -> str:
+    sections: list[str] = []
+    contact = PRIVACY_CONTACT_EMAIL
+    for heading, paragraphs, bullets in SOURCES_SECTIONS:
+        if heading == "Contact":
+            body = (
+                f"<p>Sources and catalog questions: {_mailto(contact)}. "
+                'For waitlist email, keys, and analytics, see <a href="/privacy">Privacy</a>.</p>'
+            )
+        else:
+            chunks: list[str] = []
+            for item in paragraphs:
+                text = escape(item).replace(escape(contact), _mailto(contact))
+                chunks.append(f"<p>{text}</p>")
+            body = "".join(chunks)
+        items = "".join(f"<li>{escape(item)}</li>" for item in bullets)
+        list_html = f"<ul>{items}</ul>" if items else ""
+        closing = (
+            f"<p>{escape(SOURCES_ASK_CLOSING)}</p>"
+            if heading == "Ask us to change or remove a rule"
+            else ""
+        )
+        sections.append(
+            f"<section><h2>{escape(heading)}</h2>{body}{list_html}{closing}</section>"
+        )
+    return _ssr(
+        "sources",
+        f"<main><h1>{escape(SOURCES_H1)}</h1><p>{escape(SOURCES_LEDE)}</p>"
+        f"{''.join(sections)}</main>",
+    )
+
+
+def render_health_article(payload: dict[str, Any]) -> str:
+    catalog = payload.get("catalog") if isinstance(payload, dict) else None
+    if not isinstance(catalog, dict):
+        catalog = {}
+    ok = bool(payload.get("ok")) and catalog.get("status") == "ok"
+    hosted = bool(payload.get("hosted"))
+    status_title = (
+        "Success: host and catalog are up"
+        if ok
+        else "Error: catalog is not loaded"
+    )
+    status_body = (
+        "The hosted service is running. The catalog is loaded."
+        if ok
+        else "The host is up. The catalog has no cited rules yet. Browse the catalog when rules land."
+    )
+    hosted_line = (
+        "Running on the hosted service."
+        if hosted
+        else "Running locally, not on the hosted service."
+    )
+    count = catalog.get("guideline_count")
+    catalog_line = f"{count} cited rules" if ok else "No cited rules loaded yet."
+    return _ssr(
+        "health",
+        "<main>"
+        f"<p>{escape(status_title)}</p>"
+        f"<p>{escape(status_body)}</p>"
+        "<h1>Health</h1>"
+        f"<p>{escape(HEALTH_DESCRIPTION)}</p>"
+        '<p><a href="/catalog">Browse catalog</a></p>'
+        "<h2>Components</h2>"
+        "<p>API — The service answers requests.</p>"
+        f"<p>Hosted service — {escape(hosted_line)}</p>"
+        f"<p>Catalog — {escape(str(catalog_line))}</p>"
+        "</main>",
+    )
+
+
+def render_invite_article() -> str:
+    return _ssr(
+        "invite",
+        "<main>"
+        "<h1>Request access</h1>"
+        f"<p>{escape(INVITE_DESCRIPTION)}</p>"
+        '<form method="post" action="/invite/request">'
+        '<label for="email">Email</label>'
+        '<input id="email" name="email" type="email" autocomplete="email">'
+        '<button type="submit">Request access</button>'
+        "</form>"
+        '<p><a href="/invite/redeem">Already have a token? Redeem it.</a></p>'
+        "</main>",
+    )
+
+
+def render_requested_article() -> str:
+    return _ssr(
+        "requested",
+        "<main>"
+        "<h1>You’re on the list</h1>"
+        f"<p>{escape(REQUESTED_DESCRIPTION)}</p>"
+        "<p>Already have an invite? Open the link from your email to redeem.</p>"
+        "</main>",
+    )
+
+
+def render_redeem_article() -> str:
+    return _ssr(
+        "redeem",
+        "<main>"
+        "<h1>Redeem invite</h1>"
+        f"<p>{escape(REDEEM_DESCRIPTION)}</p>"
+        '<form method="post" action="/invite/redeem">'
+        '<label for="token">Invite token</label>'
+        '<input id="token" name="token" type="text" autocomplete="off">'
+        '<button type="submit">Redeem</button>'
+        "</form>"
+        "</main>",
+    )
+
+
+def render_not_found_article(guideline_id: str) -> str:
+    gid = (guideline_id or "").strip() or "unknown"
+    return _ssr(
+        "not-found",
+        "<main>"
+        '<p><a href="/catalog">← Back to Catalog</a></p>'
+        "<h1>Not found</h1>"
+        f"<p>No guideline with id “{escape(gid)}”.</p>"
+        "</main>",
+    )
+
+
 def _rule_head_extras(*, title: str, description: str, path: str) -> str:
     lines: list[str] = []
     for line in head_meta(title=title, description=description, path=path).splitlines():
@@ -331,7 +600,7 @@ def _rule_head_extras(*, title: str, description: str, path: str) -> str:
     return "\n".join(lines)
 
 
-def apply_rule_shell(
+def apply_spa_shell(
     html: str,
     *,
     title: str,
@@ -339,7 +608,7 @@ def apply_rule_shell(
     path: str,
     article: str,
 ) -> str:
-    """Write rule title, description, and body into the Vite shell."""
+    """Write page title, description, and body into the Vite shell."""
     title_e = escape(title, quote=True)
     desc_e = escape(description, quote=True)
     if _TITLE_RE.search(html):
@@ -367,6 +636,9 @@ def apply_rule_shell(
     if re.search(r"</body>", html, flags=re.I):
         return re.sub(r"</body>", f"{app}</body>", html, count=1, flags=re.I)
     return html + app
+
+
+apply_rule_shell = apply_spa_shell
 
 
 def head_meta(*, title: str, description: str, path: str) -> str:

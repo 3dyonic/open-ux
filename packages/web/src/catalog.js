@@ -265,10 +265,13 @@ export async function renderCatalog(root) {
   const query = (params.get("q") || "").trim();
   let page = parseInt(params.get("page") || "1", 10);
   if (!Number.isFinite(page) || page < 1) page = 1;
-  root.innerHTML = shell(
-    `<main class="page"><p class="lede">Loading catalog…</p></main>`,
-    { catalogActive: true, paper: true },
-  );
+  const hasSsr = root.querySelector('[data-ssr-page="catalog"]');
+  if (!hasSsr) {
+    root.innerHTML = shell(
+      `<main class="page"><p class="lede">Loading catalog…</p></main>`,
+      { catalogActive: true, paper: true },
+    );
+  }
   let data;
   try {
     data = await loadIndex();

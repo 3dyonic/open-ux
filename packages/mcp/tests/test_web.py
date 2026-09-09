@@ -221,16 +221,57 @@ def test_catalog_rule_page_embeds_rule_for_fetchers(
     assert found["rule"] in body
     assert "Stop inventing UX rules from memory" not in body
     assert home.status_code == 200
-    assert "<title>Open UX</title>" in home.text
+    assert "<title>Open UX — Cited UX rules agents audit against</title>" in home.text
     assert found["rule"] not in home.text
     assert missing.status_code == 200
     assert found["rule"] not in missing.text
-    assert "<title>Open UX</title>" in missing.text
+    assert "<title>Not found — Open UX</title>" in missing.text
     catalog_js = (root / "packages" / "web" / "src" / "catalog.js").read_text(
         encoding="utf-8"
     )
     assert "data-ssr-rule" in catalog_js
     assert "hasSsr" in catalog_js
+    assert 'data-ssr-page="catalog"' in catalog_js
+
+
+def test_public_pages_embed_copy_for_fetchers(
+    tmp_env: Path, monkeypatch, live_catalog: Path
+) -> None:
+    root = Path(__file__).resolve().parents[3]
+    dist = tmp_env / "web-dist"
+    dist.mkdir()
+    (dist / "index.html").write_text(
+        (root / "packages" / "web" / "index.html").read_text(encoding="utf-8"),
+        encoding="utf-8",
+    )
+    monkeypatch.setenv("OPEN_UX_WEB_DIST", str(dist))
+    catalog = load_catalog(Settings.load(hosted=True))
+    with _client() as client:
+        home = client.get("/")
+        listing = client.get("/catalog")
+        privacy = client.get("/privacy")
+        sources = client.get("/sources")
+        health = client.get("/health")
+        invite = client.get("/invite")
+        requested = client.get("/invite/requested")
+        redeem = client.get("/invite/redeem")
+    assert "<title>Open UX — Cited UX rules agents audit against</title>" in home.text
+    assert "<h1>Open UX</h1>" in home.text
+    assert "Say the compose job" in home.text
+    assert "<title>Catalog — Open UX</title>" in listing.text
+    assert "actions.button_groups" in listing.text
+    assert "Button groups" in listing.text
+    assert "<title>Privacy — Open UX</title>" in privacy.text
+    assert "What this product is" in privacy.text
+    assert "<title>Sources — Open UX</title>" in sources.text
+    assert "We do not republish the original page." in sources.text
+    assert "<title>Health — Open UX</title>" in health.text
+    assert f"{len(catalog.guidelines)} cited rules" in health.text
+    assert "<title>Request access — Open UX</title>" in invite.text
+    assert 'for="email"' in invite.text
+    assert "<title>You’re on the list — Open UX</title>" in requested.text
+    assert "<title>Redeem invite — Open UX</title>" in redeem.text
+    assert 'for="token"' in redeem.text
 
 
 def test_register_still_redirects_to_invite(tmp_env: Path) -> None:
