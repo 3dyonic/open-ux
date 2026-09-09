@@ -8,6 +8,8 @@ from html import escape
 from pathlib import Path
 from typing import Any
 
+from open_ux.catalog import SOURCE_HOUSES
+
 CANONICAL_ORIGIN = "https://open-ux.dev"
 LANDING_TITLE = "Open UX — Cited UX rules agents audit against"
 LANDING_DESCRIPTION = (
@@ -196,6 +198,175 @@ def rule_meta_description(guideline: dict[str, Any]) -> str:
 def rule_meta_title(display_name: str) -> str:
     name = (display_name or "").strip() or "Catalog"
     return f"{name} — Open UX"
+
+
+_HOUSE_SUFFIXES = tuple(
+    sorted((f" — {label}" for label in SOURCE_HOUSES.values()), key=len, reverse=True)
+)
+_TITLE_RE = re.compile(r"<title>[^<]*</title>", re.I)
+_DESC_RE = re.compile(
+    r"""<meta\s+name=["']description["']\s+content="[^"]*"\s*/?>""",
+    re.I,
+)
+_APP_RE = re.compile(r"""<div\s+id=["']app["']>\s*</div>""", re.I)
+
+
+def guideline_display_name(guideline: dict[str, Any]) -> str:
+    raw = str(
+        guideline.get("name") or guideline.get("title") or guideline.get("id") or ""
+    ).strip()
+    for suffix in _HOUSE_SUFFIXES:
+        if raw.endswith(suffix):
+            return raw[: -len(suffix)].rstrip()
+    return raw
+
+
+def guideline_display_id(guideline_id: str) -> str:
+    text = (guideline_id or "").strip()
+    if "." not in text:
+        return text
+    lane, rest = text.split(".", 1)
+    if rest and lane in SOURCE_HOUSES:
+        return rest
+    return text
+
+
+def _text_lines(value: Any) -> list[str]:
+    if value is None:
+        return []
+    if isinstance(value, list):
+        return [str(item) for item in value if item]
+    text = str(value).strip()
+    return [text] if text else []
+
+
+def _field_block(field: str, label: str, value: Any) -> str:
+    items = _text_lines(value)
+    if not items:
+        return ""
+    bodies = "".join(f'<p class="block-body">{escape(line)}</p>' for line in items)
+    return (
+        f'<section class="block" data-field="{escape(field, quote=True)}">'
+        f"<h2>{escape(label)}</h2>{bodies}</section>"
+    )
+
+
+def _citations_html(guideline: dict[str, Any]) -> str:
+    rows = guideline.get("citation")
+    if not isinstance(rows, list):
+        return ""
+    items: list[str] = []
+    for row in rows:
+        if not isinstance(row, dict):
+            continue
+        source = str(row.get("source") or "").strip()
+        url = str(row.get("url") or "").strip()
+        if not source and not url:
+            continue
+        source_html = f'<p class="cite-source">{escape(source)}</p>' if source else ""
+        if url.startswith("https://"):
+            url_html = f'<a class="cite-url" href="{escape(url, quote=True)}">{escape(url)}</a>'
+        elif url:
+            url_html = f'<p class="cite-url">{escape(url)}</p>'
+        else:
+            url_html = ""
+        items.append(f'<div class="cite-row">{source_html}{url_html}</div>')
+    if not items:
+        return ""
+    return (
+        '<section class="block" data-field="citation"><h2>Citations</h2>'
+        f'<div class="cite-list">{"".join(items)}</div></section>'
+    )
+
+
+def render_rule_article(guideline: dict[str, Any]) -> str:
+    """Visible rule body for fetchers that do not run the catalog SPA."""
+    gid = str(guideline.get("id") or "")
+    name = guideline_display_name(guideline)
+    category = str(guideline.get("category") or "").strip()
+    segment = str(guideline.get("segment") or "").strip()
+    if category and segment:
+        path = f"{category} / {segment}"
+    else:
+        path = category
+    parts = [
+        f'<article class="content" data-ssr-rule="{escape(gid, quote=True)}">',
+        '<a class="back" href="/catalog">← Back to Catalog</a>',
+    ]
+    if path:
+        parts.append(f'<p class="eyebrow-path">{escape(path)}</p>')
+    parts.append(f'<h1 class="rule-name" data-field="name">{escape(name)}</h1>')
+    if gid:
+        parts.append(
+            f'<p class="rule-id" data-field="id">{escape(guideline_display_id(gid))}</p>'
+        )
+    rule = str(guideline.get("rule") or "").strip()
+    if rule:
+        parts.append(f'<p class="rule-text" data-field="rule">{escape(rule)}</p>')
+    parts.append(_field_block("description", "Description", guideline.get("description")))
+    when = _field_block("apply_when", "When to use", guideline.get("apply_when"))
+    not_when = _field_block("not_when", "Not when", guideline.get("not_when"))
+    if when or not_when:
+        parts.append(f'<div class="when-stack">{when}{not_when}</div>')
+    parts.append(_field_block("agent_hint", "Agent hint", guideline.get("agent_hint")))
+    parts.append(_field_block("pass_when", "Pass", guideline.get("pass_when")))
+    parts.append(_field_block("fail_when", "Fail", guideline.get("fail_when")))
+    parts.append(_citations_html(guideline))
+    parts.append("</article>")
+    return "".join(parts)
+
+
+def _rule_head_extras(*, title: str, description: str, path: str) -> str:
+    lines: list[str] = []
+    for line in head_meta(title=title, description=description, path=path).splitlines():
+        stripped = line.strip()
+        if (
+            stripped.startswith("<title>")
+            or 'name="description"' in stripped
+            or 'rel="icon"' in stripped
+        ):
+            continue
+        if stripped:
+            lines.append(line)
+    return "\n".join(lines)
+
+
+def apply_rule_shell(
+    html: str,
+    *,
+    title: str,
+    description: str,
+    path: str,
+    article: str,
+) -> str:
+    """Write rule title, description, and body into the Vite shell."""
+    title_e = escape(title, quote=True)
+    desc_e = escape(description, quote=True)
+    if _TITLE_RE.search(html):
+        html = _TITLE_RE.sub(f"<title>{title_e}</title>", html, count=1)
+    if _DESC_RE.search(html):
+        html = _DESC_RE.sub(
+            f'<meta name="description" content="{desc_e}">',
+            html,
+            count=1,
+        )
+    if 'rel="canonical"' not in html:
+        extras = _rule_head_extras(title=title, description=description, path=path)
+        if extras:
+            if _DESC_RE.search(html):
+                html = _DESC_RE.sub(
+                    lambda match: f"{match.group(0)}\n{extras}",
+                    html,
+                    count=1,
+                )
+            elif "</head>" in html:
+                html = html.replace("</head>", f"{extras}\n</head>", 1)
+    app = f'<div id="app">{article}</div>'
+    if _APP_RE.search(html):
+        return _APP_RE.sub(app, html, count=1)
+    if re.search(r"</body>", html, flags=re.I):
+        return re.sub(r"</body>", f"{app}</body>", html, count=1, flags=re.I)
+    return html + app
 
 
 def head_meta(*, title: str, description: str, path: str) -> str:

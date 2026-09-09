@@ -182,6 +182,43 @@ def test_sources_is_a_vite_tailwind_page() -> None:
     assert 'href="/sources"' in chrome
 
 
+def test_catalog_rule_page_embeds_rule_for_fetchers(
+    tmp_env: Path, monkeypatch, live_catalog: Path
+) -> None:
+    root = Path(__file__).resolve().parents[3]
+    dist = tmp_env / "web-dist"
+    dist.mkdir()
+    (dist / "index.html").write_text(
+        (root / "packages" / "web" / "index.html").read_text(encoding="utf-8"),
+        encoding="utf-8",
+    )
+    monkeypatch.setenv("OPEN_UX_WEB_DIST", str(dist))
+    catalog = load_catalog(Settings.load(hosted=True))
+    found = get_by_id(catalog, "actions.button_groups")
+    assert found is not None
+    with _client() as client:
+        response = client.get("/catalog/actions.button_groups")
+        home = client.get("/")
+        missing = client.get("/catalog/does.not.exist")
+    assert response.status_code == 200
+    assert response.headers["content-type"].startswith("text/html")
+    body = response.text
+    assert "<title>Button groups — Open UX</title>" in body
+    assert found["rule"] in body
+    assert "Stop inventing UX rules from memory" not in body
+    assert home.status_code == 200
+    assert "<title>Open UX</title>" in home.text
+    assert found["rule"] not in home.text
+    assert missing.status_code == 200
+    assert found["rule"] not in missing.text
+    assert "<title>Open UX</title>" in missing.text
+    catalog_js = (root / "packages" / "web" / "src" / "catalog.js").read_text(
+        encoding="utf-8"
+    )
+    assert "data-ssr-rule" in catalog_js
+    assert "hasSsr" in catalog_js
+
+
 def test_register_still_redirects_to_invite(tmp_env: Path) -> None:
     with _client() as client:
         response = client.get("/register", follow_redirects=False)

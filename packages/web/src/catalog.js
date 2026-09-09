@@ -421,11 +421,15 @@ function eyebrow(guideline, jobs) {
 }
 
 export async function renderRule(root, guidelineId) {
-  setTitle("Catalog — Open UX");
-  root.innerHTML = shell(
-    `<div class="rule-shell"><main class="content"><p class="lede">Loading rule…</p></main></div>`,
-    { catalogActive: true, paper: true },
-  );
+  const prerendered = root.querySelector("[data-ssr-rule]");
+  const hasSsr = prerendered && prerendered.getAttribute("data-ssr-rule") === guidelineId;
+  if (!hasSsr) {
+    setTitle("Catalog — Open UX");
+    root.innerHTML = shell(
+      `<div class="rule-shell"><main class="content"><p class="lede">Loading rule…</p></main></div>`,
+      { catalogActive: true, paper: true },
+    );
+  }
   let indexData;
   let found;
   try {

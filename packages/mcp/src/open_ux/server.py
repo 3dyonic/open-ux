@@ -33,7 +33,16 @@ from open_ux.jobs import (
     MAX_LIMIT,
     load_job_tree,
 )
-from open_ux.public_html import FAVICON_PATH, ROBOTS_TXT, render_sitemap
+from open_ux.public_html import (
+    FAVICON_PATH,
+    ROBOTS_TXT,
+    apply_rule_shell,
+    guideline_display_name,
+    render_rule_article,
+    render_sitemap,
+    rule_meta_description,
+    rule_meta_title,
+)
 from open_ux.situations import (
     get_situation as run_get_situation,
     list_situations as run_list_situations,
@@ -74,6 +83,23 @@ def _app_page() -> Response:
         media_type="text/html; charset=utf-8",
         headers=SPA_HEADERS,
     )
+
+
+def _rule_page(guideline: dict[str, Any]) -> Response:
+    dist = web_dist()
+    if dist is None:
+        return JSONResponse({"error": "Not found."}, status_code=404)
+    gid = str(guideline.get("id") or "")
+    title = rule_meta_title(guideline_display_name(guideline))
+    description = rule_meta_description(guideline)
+    html = apply_rule_shell(
+        (dist / "index.html").read_text(encoding="utf-8"),
+        title=title,
+        description=description,
+        path=f"/catalog/{gid}",
+        article=render_rule_article(guideline),
+    )
+    return Response(html, media_type="text/html; charset=utf-8", headers=SPA_HEADERS)
 
 
 def _jobs_payload(tree: JobTree) -> dict[str, Any]:
@@ -445,8 +471,12 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         return _app_page()
 
     @mcp.custom_route("/catalog/{guideline_id}", methods=["GET"])
-    async def catalog_rule(_request: Request) -> Response:
-        return _app_page()
+    async def catalog_rule(request: Request) -> Response:
+        guideline_id = str(request.path_params.get("guideline_id") or "")
+        found = get_by_id(catalog, guideline_id)
+        if found is None:
+            return _app_page()
+        return _rule_page(found)
 
     @mcp.custom_route("/health", methods=["GET"])
     async def health_page(_request: Request) -> Response:
