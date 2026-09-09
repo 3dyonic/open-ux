@@ -35,8 +35,16 @@
     @apply flex min-h-dvh flex-col;
   }
 
+  #app > [data-ssr-page] {
+    @apply flex min-h-0 flex-1 flex-col;
+  }
+
   #app:has(.rule-shell) {
     @apply h-dvh overflow-hidden;
+  }
+
+  #app:has(.rule-shell) > [data-ssr-page] {
+    @apply min-h-0 overflow-hidden;
   }
 
   main {
@@ -260,7 +268,7 @@
     @apply flex w-full min-h-0 flex-1 flex-col items-stretch md:flex-row md:overflow-hidden;
   }
   .sidebar {
-    @apply flex max-h-[36vh] w-full shrink-0 flex-col gap-0.5 overflow-y-auto border-b border-line px-5 py-4 md:max-h-none md:h-full md:w-[260px] md:border-b-0 md:border-r md:py-10 md:pr-3 md:pl-5;
+    @apply flex max-h-[36vh] w-full shrink-0 flex-col gap-0.5 overflow-y-auto border-b border-line px-5 py-4 md:h-auto md:max-h-full md:min-h-0 md:w-[260px] md:border-b-0 md:border-r md:py-10 md:pr-3 md:pl-5;
   }
   .tree-group {
     @apply flex w-full flex-col gap-0.5;

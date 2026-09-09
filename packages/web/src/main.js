@@ -9,14 +9,8 @@ import "./styles.css";
 
 function route() {
   const root = document.getElementById("app");
-  const ssrPage = root.querySelector("[data-ssr-page]");
-  const painted = ssrPage?.getAttribute("data-ssr-page") || "";
-  if (painted === "landing") return renderLanding(root);
-  if (painted === "not-found" || painted === "server-error") return;
-  if (painted === "privacy") return renderPrivacy(root);
-  if (painted === "sources") return renderSources(root);
-  if (painted === "requested") return renderRequested(root);
   const path = location.pathname.replace(/\/+$/, "") || "/";
+  const painted = root.querySelector("[data-ssr-page]")?.getAttribute("data-ssr-page") || "";
   if (path === "/") return renderLanding(root);
   if (path === "/catalog") return renderCatalog(root);
   const rule = path.match(/^\/catalog\/(.+)$/);
@@ -27,6 +21,7 @@ function route() {
   if (path === "/invite") return renderInvite(root);
   if (path === "/invite/requested") return renderRequested(root);
   if (path === "/invite/redeem") return renderRedeem(root);
+  if (painted === "not-found" || painted === "server-error") return;
   return renderNotFound(root, path);
 }
 
