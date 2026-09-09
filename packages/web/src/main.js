@@ -44,6 +44,9 @@ document.addEventListener("click", (event) => {
   }
   if (url.origin !== location.origin || !catalogPath(url)) return;
   event.preventDefault();
+  if (link.closest("#catalog-tree")) {
+    link.focus({ preventScroll: true });
+  }
   const next = url.pathname + url.search;
   const here = location.pathname + location.search;
   if (next !== here) history.pushState(null, "", next);

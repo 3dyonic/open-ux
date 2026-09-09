@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "test": "node scripts/check-tree.js",
     "dev": "vite",
     "build": "vite build && node scripts/prerender.js",
     "preview": "vite preview"

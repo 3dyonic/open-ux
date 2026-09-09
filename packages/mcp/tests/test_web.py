@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import subprocess
 from pathlib import Path
 
 import pytest
@@ -235,6 +236,12 @@ def test_sources_is_a_vite_tailwind_page() -> None:
     catalog_js = (root / "packages" / "web" / "src" / "catalog.js").read_text(
         encoding="utf-8"
     )
+    tree_js = (root / "packages" / "web" / "src" / "tree.js").read_text(
+        encoding="utf-8"
+    )
+    model_js = (root / "packages" / "web" / "src" / "catalog-model.js").read_text(
+        encoding="utf-8"
+    )
     styles = (root / "packages" / "web" / "src" / "styles.css").read_text(
         encoding="utf-8"
     )
@@ -244,6 +251,7 @@ def test_sources_is_a_vite_tailwind_page() -> None:
     assert "history.pushState" in main
     assert "popstate" in main
     assert 'if (path === "/") return renderLanding(root)' in main
+    assert "preventScroll: true" in main
     assert "overflow-y-auto" in styles
     assert "#app:has(.rule-shell)" in styles
     assert "#app > [data-ssr-page]" in styles
@@ -252,10 +260,40 @@ def test_sources_is_a_vite_tailwind_page() -> None:
     assert "md:min-h-0" in styles
     assert ".sidebar" in styles
     assert "min-h-11" in styles
+    assert ".content" in styles
+    assert "overflow-y-auto bg-card" in styles
+    assert "max-w-[200px] self-start" in styles
     assert "content.innerHTML = ruleContentHtml" in catalog_js
-    assert "markActiveRule(tree" in catalog_js
-    assert "button.tree-item-card" in catalog_js
-    assert ".tree-group:has(> .tree-children > .tree-group.is-open) > .tree-item-card" in styles
+    assert "syncTree(tree" in catalog_js
+    assert "tree.scrollTop = treeScroll" in catalog_js
+    assert 'tree.dataset.bound === "1"' in tree_js
+    assert 'contains("tree-group")' in tree_js
+    assert 'querySelectorAll(".tree-group.is-open")' in tree_js
+    assert "grid-template-columns: 16px minmax(0, 1fr)" in styles
+    assert ".tree-item.is-here .tree-caret" in styles
+    assert ".tree-rule.is-current" in styles
+    assert ".tree-facet.is-here" in styles
+    assert ".tree-caret-leaf" in styles
+    assert "tree-pip" not in tree_js
+    assert ".tree-pip" not in styles
+    assert "function crumbParts(" in model_js
+    assert 'aria-label="Breadcrumb"' in catalog_js
+    assert 'data-field="severity"' not in catalog_js
+    assert "class=\"severity\"" not in catalog_js
+    assert "if (category && segment)" not in catalog_js
+    assert "tree-item-on" not in tree_js
+    assert "tree-item-on" not in styles
+
+
+def test_catalog_tree_edge_cases() -> None:
+    root = Path(__file__).resolve().parents[3]
+    completed = subprocess.run(
+        ["node", str(root / "packages" / "web" / "scripts" / "check-tree.js")],
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    assert completed.returncode == 0, completed.stdout + completed.stderr
 
 
 def test_vite_owns_consent_banner_and_gtm() -> None:
@@ -319,7 +357,7 @@ def test_catalog_rule_page_embeds_rule_for_fetchers(
     assert 'class="sidebar"' in body
     assert "rule-shell" in body
     assert 'data-ssr-page="rule"' in body
-    assert "tree-item-card tree-item-on" in body
+    assert "tree-card is-here" in body
     assert 'aria-current="page"' in body
     assert "Stop inventing UX rules from memory" not in body
     assert home.status_code == 200

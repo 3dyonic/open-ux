@@ -1,30 +1,17 @@
 import { shell } from "./chrome.js";
 import { renderNotFound, renderServerError } from "./errors.js";
 import { escapeHtml, setTitle, ssr } from "./util.js";
+import {
+  crumbParts,
+  displayId,
+  displayName,
+  hrefId,
+  rowContainer,
+  rowPath,
+} from "./catalog-model.js";
+import { bindTree, syncTree, treeHtml } from "./tree.js";
 
-const SOURCE_HOUSES = {
-  ant: "Ant",
-  nng: "NN/g",
-  govuk: "GOV.UK",
-  fluent: "Fluent",
-  polar: "Polaris",
-  spectrum: "Spectrum",
-  uswds: "USWDS",
-  canada: "Canada.ca",
-  nsw: "NSW",
-  gold: "GOLD",
-  nl: "NL",
-  suomi: "Suomi.fi",
-  mui: "MUI",
-  apple: "Apple",
-  vercel: "Vercel",
-  material: "Material",
-  tidwell: "Tidwell",
-};
-
-const SOURCE_SUFFIXES = Object.values(SOURCE_HOUSES)
-  .sort((a, b) => b.length - a.length)
-  .map((label) => ` — ${label}`);
+export { displayId, displayName } from "./catalog-model.js";
 
 export const CONTAINER_CHIPS = [
   ["forms_and_input", "Forms"],
@@ -62,76 +49,9 @@ function loadIndex() {
   return indexPending;
 }
 
-function stripHouseSuffix(name) {
-  let text = String(name || "").trim();
-  for (const suffix of SOURCE_SUFFIXES) {
-    if (text.endsWith(suffix)) return text.slice(0, -suffix.length).trimEnd();
-  }
-  return text;
-}
-
-function rawName(row) {
-  return String(row.name || row.title || row.id || "");
-}
-
-export function displayName(row) {
-  return stripHouseSuffix(rawName(row));
-}
-
-export function displayId(guidelineId) {
-  const text = String(guidelineId || "").trim();
-  if (!text.includes(".")) return text;
-  const [lane, rest] = text.split(".", 2);
-  if (rest && lane in SOURCE_HOUSES) return rest;
-  return text;
-}
-
 function searchBlob(row) {
   const gid = String(row.id || "");
   return `${displayId(gid)} ${row.title || ""} ${displayName(row)}`.toLowerCase();
-}
-
-function hrefId(guidelineId) {
-  return "/catalog/" + encodeURIComponent(guidelineId).replace(/%2E/g, ".");
-}
-
-function cardById(jobs, cardId) {
-  return (jobs.cards || []).find((card) => card.id === cardId) || null;
-}
-
-function containerTitle(jobs, containerId) {
-  if (!containerId) return "";
-  const found = (jobs.containers || []).find((item) => item.id === containerId);
-  return found ? found.title : containerId;
-}
-
-function cardTitle(jobs, cardId) {
-  if (!cardId) return "";
-  const card = cardById(jobs, cardId);
-  return card ? card.title : cardId;
-}
-
-function rowContainer(row, jobs) {
-  const raw = String(row.container || "").trim();
-  if (raw) return raw;
-  const card = cardById(jobs, String(row.card || ""));
-  if (card && card.container) return String(card.container);
-  const facetId = String(row.facet || "");
-  if (facetId) {
-    for (const item of jobs.cards || []) {
-      if ((item.facets || []).some((facet) => facet.id === facetId)) {
-        return String(item.container);
-      }
-    }
-  }
-  return "";
-}
-
-function rowPath(row, jobs) {
-  const left = containerTitle(jobs, rowContainer(row, jobs) || row.container);
-  const right = cardTitle(jobs, row.card);
-  if (left && right) return `${left} / ${right}`;
-  return left || right;
 }
 
 function pagerMeta(total, page, size = PAGE_SIZE) {
@@ -362,86 +282,15 @@ function citationsHtml(guideline) {
   return `<section class="block" data-field="citation"><p class="block-label">Citations</p><div class="cite-list">${items.join("")}</div></section>`;
 }
 
-function treeToggle(kind, title, open, current = false) {
-  const caret = open ? "▾" : "▸";
-  const on = current ? " tree-item-on" : "";
-  return `<div class="tree-group${open ? " is-open" : ""}"><button type="button" class="tree-item tree-item-${kind}${on}" aria-expanded="${open ? "true" : "false"}"><span class="tree-caret" aria-hidden="true">${caret}</span><span>${escapeHtml(title)}</span></button><div class="tree-children">`;
-}
-
-function treeHtml(jobs, index, current) {
-  if (!(jobs.containers || []).length) return "";
-  const currentId = String(current.id || "");
-  const currentContainer = String(current.container || "");
-  const currentCard = String(current.card || "");
-  const currentFacet = String(current.facet || "");
-  const byFacet = new Map();
-  for (const row of index) {
-    const key = `${row.container || ""}\0${row.card || ""}\0${row.facet || ""}`;
-    if (!byFacet.has(key)) byFacet.set(key, []);
-    byFacet.get(key).push(row);
-  }
-  const parts = [`<nav class="sidebar" id="catalog-tree" aria-label="Catalog tree">`];
-  for (const container of jobs.containers || []) {
-    const openC = container.id === currentContainer;
-    parts.push(treeToggle("container", container.title, openC));
-    for (const card of jobs.cards || []) {
-      if (card.container !== container.id) continue;
-      const openCard = openC && card.id === currentCard;
-      parts.push(treeToggle("card", card.title, openCard, openCard));
-      for (const facet of card.facets || []) {
-        const openF = openCard && facet.id === currentFacet;
-        parts.push(treeToggle("facet", facet.title, openF));
-        for (const row of byFacet.get(`${container.id}\0${card.id}\0${facet.id}`) || []) {
-          const gid = String(row.id || "");
-          if (!gid) continue;
-          const active = gid === currentId;
-          const cls = "tree-item tree-item-rule" + (active ? " tree-item-on" : "");
-          const pip = active ? `<span class="tree-pip" aria-hidden="true"></span>` : "";
-          const current = active ? ' aria-current="page"' : "";
-          parts.push(
-            `<a class="${cls}" href="${escapeHtml(hrefId(gid))}" data-id="${escapeHtml(gid)}"${current}>${pip}<span>${escapeHtml(displayName(row))}</span></a>`,
-          );
-        }
-        parts.push("</div></div>");
-      }
-      parts.push("</div></div>");
-    }
-    parts.push("</div></div>");
-  }
-  parts.push("</nav>");
-  return parts.join("");
-}
-
-function bindTree() {
-  const tree = document.getElementById("catalog-tree");
-  if (!tree) return;
-  tree.addEventListener("click", (event) => {
-    const btn = event.target.closest("button.tree-item[aria-expanded]");
-    if (!btn || !tree.contains(btn)) return;
-    const group = btn.parentElement;
-    if (!group || !group.classList.contains("tree-group")) return;
-    const next = btn.getAttribute("aria-expanded") !== "true";
-    btn.setAttribute("aria-expanded", next ? "true" : "false");
-    group.classList.toggle("is-open", next);
-    const caret = btn.querySelector(".tree-caret");
-    if (caret) caret.textContent = next ? "▾" : "▸";
+function crumbHtml(guideline, jobs) {
+  const parts = crumbParts(guideline, jobs);
+  if (!parts.length) return "";
+  const items = parts.map((label, index) => {
+    const last = index === parts.length - 1;
+    const current = last ? ' aria-current="location"' : "";
+    return `<li${current}><span>${escapeHtml(label)}</span></li>`;
   });
-}
-
-function eyebrow(guideline, jobs) {
-  const category = String(guideline.category || "").trim();
-  const segment = String(guideline.segment || "").trim();
-  let path = "";
-  if (category && segment) path = `${category} / ${segment}`;
-  else if (category) path = category;
-  else path = rowPath(guideline, jobs);
-  const severity = String(guideline.severity || "").trim();
-  const chip = severity
-    ? `<span class="severity" data-field="severity">${escapeHtml(severity[0].toUpperCase() + severity.slice(1))}</span>`
-    : "";
-  const pathHtml = path ? `<p class="eyebrow-path">${escapeHtml(path)}</p>` : "";
-  if (!pathHtml && !chip) return "";
-  return `<div class="eyebrow">${pathHtml}${chip}</div>`;
+  return `<nav class="crumbs" aria-label="Breadcrumb"><ol class="crumb-list">${items.join("")}</ol></nav>`;
 }
 
 function ruleContentHtml(found, jobs) {
@@ -454,7 +303,7 @@ function ruleContentHtml(found, jobs) {
   if (found.rule) {
     fields.push(`<p class="rule-text" data-field="rule">${escapeHtml(found.rule)}</p>`);
   }
-  const header = `<div class="flex flex-col gap-2" data-field="header">${eyebrow(found, jobs)}${fields.join("")}</div>`;
+  const header = `<div class="flex flex-col gap-2" data-field="header">${crumbHtml(found, jobs)}${fields.join("")}</div>`;
   const when = block("apply_when", "When to use", found.apply_when, "block-use");
   const notWhen = block("not_when", "Not when", found.not_when, "block-not");
   const stack = [
@@ -469,52 +318,6 @@ function ruleContentHtml(found, jobs) {
   if (examples) stack.push(`<div class="examples">${examples}</div>`);
   stack.push(citationsHtml(found));
   return `<a class="back" href="/catalog">← Back to Catalog</a>${stack.join("")}`;
-}
-
-function markActiveRule(tree, guidelineId) {
-  const want = String(guidelineId || "");
-  for (const el of tree.querySelectorAll("button.tree-item-card")) {
-    el.classList.remove("tree-item-on");
-  }
-  for (const el of tree.querySelectorAll(".tree-item-rule")) {
-    const on = el.getAttribute("data-id") === want;
-    el.classList.toggle("tree-item-on", on);
-    if (on) el.setAttribute("aria-current", "page");
-    else el.removeAttribute("aria-current");
-    const pip = el.querySelector(".tree-pip");
-    if (on && !pip) {
-      el.insertAdjacentHTML("afterbegin", '<span class="tree-pip" aria-hidden="true"></span>');
-    } else if (!on && pip) {
-      pip.remove();
-    }
-    if (on) {
-      const facetGroup = el.closest(".tree-group");
-      const cardGroup = facetGroup?.parentElement?.closest(".tree-group");
-      const cardBtn = cardGroup?.querySelector(":scope > button.tree-item-card");
-      if (cardBtn) cardBtn.classList.add("tree-item-on");
-    }
-  }
-}
-
-function revealActiveRule(tree, guidelineId) {
-  const want = String(guidelineId || "");
-  const link = [...tree.querySelectorAll(".tree-item-rule")].find(
-    (el) => el.getAttribute("data-id") === want,
-  );
-  if (!link) return;
-  let node = link.parentElement;
-  while (node && node !== tree) {
-    if (node.classList.contains("tree-group")) {
-      node.classList.add("is-open");
-      const btn = node.querySelector(":scope > button.tree-item[aria-expanded]");
-      if (btn) {
-        btn.setAttribute("aria-expanded", "true");
-        const caret = btn.querySelector(".tree-caret");
-        if (caret) caret.textContent = "▾";
-      }
-    }
-    node = node.parentElement;
-  }
 }
 
 export function catalogNamesPage(guidelines) {
@@ -608,11 +411,23 @@ export async function renderRule(root, guidelineId) {
       renderNotFound(root, guidelineId, { kind: "rule" });
       return;
     }
+    if (!indexCache) {
+      try {
+        await loadIndex();
+      } catch {
+        if (gen !== ruleGen) return;
+        renderServerError(root);
+        return;
+      }
+      if (gen !== ruleGen) return;
+    }
     const jobs = (indexCache && indexCache.jobs) || { containers: [], cards: [] };
     setTitle(`${displayName(found)} — Open UX`);
+    const treeScroll = tree.scrollTop;
     content.innerHTML = ruleContentHtml(found, jobs);
-    markActiveRule(tree, String(found.id || guidelineId));
-    revealActiveRule(tree, String(found.id || guidelineId));
+    bindTree();
+    syncTree(tree, String(found.id || guidelineId));
+    tree.scrollTop = treeScroll;
     return;
   }
 
