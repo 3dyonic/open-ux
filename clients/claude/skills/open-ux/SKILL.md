@@ -27,12 +27,15 @@ Compose and review share this one trigger. Compare Cards that fit. Open more tha
 1. **Card table** — pick a Card (or compare `when` / Reject neighbors).
 2. **`Open-UX:get_situation`** — map the Card: facets, merged `guideline_ids`, and **`leaves: [{ id, count }]`** (how stocked each Leaf bay is).
 3. **Scope the pull** — whole Card (`jobs=<card_id>`) or one bay (`jobs=<leaf_id>`) when the ask is narrow (control choice, primary loudness, overlay layer, …).
-4. **`Open-UX:pack`** — read **`reject`** on the envelope **`situation`** (Card reject is never skipped on Card/Leaf pulls). Skim rows: **`overview`**, **`apply_when`**, **`not_when`**, **`rule`**. **`cite_via`** is `get_guideline` — rows are browse slices, not full cites.
-5. **`Open-UX:get_guideline`** — open one id when you need `agent_hint`, `description`, or citations — then back to the pack page, `next_offset`, or another Card.
+4. **`Open-UX:pack`** — read **`reject`** on the envelope **`situation`** (Card reject is never skipped on Card/Leaf pulls). Skim rows: **`overview`**, **`apply_when`**, **`not_when`**, **`rule`**, **`component`**. **`cite_via`** is `get_guideline` — rows are browse slices, not full cites.
+5. **Deep read on a fitting row** — pick one hop; always come back to the pack page, `next_offset`, or another Card:
+   - **Cited rule** (source, citations, `agent_hint`, full `description`) → **`Open-UX:get_guideline`** on row **`id`**.
+   - **Widget shape** (variant names, danger vs primary, hit target, a11y, keyboard) — only when row **`component[]`** is non-empty and the ask is about the control, not the house → **`Open-UX:get_component`** on that id. Row **`component[]`** is ids only; variants live on the component record.
+6. **Loop the page** — if `next_offset` is set, call **`pack`** again with that **`offset`**.
 
-`pack` pages at 10. If `next_offset` is set, call again with that `offset`. The host does not rank. Do not write a pack fetcher or a BM25 ranker — use the Python helpers below.
+`pack` pages at 10. The host does not rank. Do not write a pack fetcher or a BM25 ranker — use the Python helpers below.
 
-Cross-reference similar rules — same `facet`, `Open-UX:search_guidelines`, or other Cards in the table. Two sources on one Card can disagree; say both. `Open-UX:get_component` opens one widget record when `component[]` names an id.
+Cross-reference similar rules — same **`facet`**, **`Open-UX:search_guidelines`**, or other Cards in the table. Two sources on one Card can disagree; say both.
 
 ## Shapes
 
@@ -87,7 +90,7 @@ Cross-reference similar rules — same `facet`, `Open-UX:search_guidelines`, or 
 
 Envelope **`leaf`** only when `jobs=` is a Leaf id. Container pulls (`forms` / `actions` / `feedback`) omit **`situation`**; they still set **`cite_via`**.
 
-Read envelope **`reject`**, then row `apply_when` / `not_when`. If `next_offset` is set, loop the page. Row `id` → `get_guideline` for the full cite — then come back to the pack.
+Read envelope **`reject`**, then row fit (`apply_when` / `not_when`). Step 5: **`get_guideline`** for the cited rule, or **`get_component`** when **`component[]`** names the widget and the ask is shape — then back to the pack.
 
 One Card is many sources. Related Cards are not a fork with a winner. That is the catalog. The host will not pick.
 
@@ -106,7 +109,7 @@ When you need a map of what exists — by **category**, then **source** — read
 - **Review a delete confirm.** Card `protect_destructive_and_leave`. A button ask can also open `design_actions_and_ctas`. You decide.
 - **Vague checkout.** `Open-UX:suggest_situations` with the task text. Read the catalog map, open the Cards that fit (`list_situations` with a container if useful), `get_situation` (leaf counts), then `pack` with `jobs=<card_id>` or a Leaf. More than one Card is fine.
 - **Already have a guideline id.** `Open-UX:get_guideline` for that one cited body.
-- **Delete confirm with a danger button.** Card `protect_destructive_and_leave`. Pack row stamps `component: ["button"]`. Skim cites on the pack; `Open-UX:get_component` with `id=button` for variant names (primary vs danger); back to the pack or open one cite with `get_guideline`.
+- **Delete confirm with a danger button.** Card `protect_destructive_and_leave`. Pack rows may stamp `component: ["button"]`. Loop step 5: **`get_guideline`** for discard/confirm cites; **`get_component`** `button` when variant naming matters — back to the pack between hops.
 
 ## Connect
 

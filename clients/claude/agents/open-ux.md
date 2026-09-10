@@ -43,7 +43,7 @@ Same catalog. No invite. Telemetry off. Point MCP clients at local stdio.
 
 | Job | Tools |
 | --- | --- |
-| compose / review | Card table → `get_situation` (leaf `{ id, count }`) → `pack` (envelope reject, row fit) → `get_guideline`. Prefer Card; use Leaf for one bay. No winner Card. Helpers: `helpers/pack.py`, `helpers/rank_pack.py` ([`helpers/registry.json`](../../../helpers/registry.json); available, not required). |
+| compose / review | Card table → `get_situation` (leaf `{ id, count }`) → `pack` (envelope reject, row fit) → `get_guideline` (rule) or `get_component` (widget shape when row `component[]` fits). Prefer Card; use Leaf for one bay. No winner Card. Helpers: `helpers/pack.py`, `helpers/rank_pack.py` ([`helpers/registry.json`](../../../helpers/registry.json); available, not required). |
 | map | `Open-UX:suggest_situations` when the ask is a surface (catalog map). Pick a Card, then `get_situation` for counts. The catalog stays open after a pack. |
 | cite | `Open-UX:search_guidelines` / `Open-UX:get_guideline` |
 
