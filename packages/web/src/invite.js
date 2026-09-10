@@ -126,7 +126,6 @@ export function redeemPage() {
       <p class="invite-sub">Add this MCP server in your client — paste into <span class="font-mono text-ink">mcp.json</span> or your editor’s MCP settings.</p>
       <pre class="config-box" id="mcp-config"></pre>
       <button class="btn btn-outline" type="button" id="copy-mcp-config">Copy MCP config</button>
-      <p class="foot">Copy MCP config includes auth. Plugins from GitHub add skill and slash commands; MCP config alone enables the tools.</p>
     </div>
   </main>`,
         { catalog: false, consent: false },
