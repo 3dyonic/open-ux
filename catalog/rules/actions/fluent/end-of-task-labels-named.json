@@ -24,7 +24,7 @@
   "facet": "no_clear_primary",
   "leaf": "pick_primary_action",
   "overview": "End-of-task actions use Done, Finish, Close, Got it, or Dismiss by outcome.",
-  "apply_when": "Naming the closing action after a Fluent task or teaching moment.",
+  "apply_when": "Naming the closing action after a task or teaching moment.",
   "not_when": "Primary commit verbs mid-task (Publish, Save) — those are not end-of-task dismissals.",
   "agent_hint": "Pick Done, Finish, Close, Got it, or Dismiss to match the actual outcome.",
   "description": "Fluent end-of-task labels are named from a fixed set: Done, Finish, Close, Got it, or Dismiss. Pick the one that matches the outcome the user just reached, not a generic stand-in. Apply when naming the closing action after a task or teaching moment. Fail generic OK, or a name that does not match the outcome — for example Dismiss when the task finishes a commit.",

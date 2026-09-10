@@ -24,7 +24,7 @@
   "facet": "no_clear_primary",
   "leaf": "pick_primary_action",
   "overview": "Page Complete actions move to the footer when the body cannot carry them.",
-  "apply_when": "Collapsed or complex Ant bodies where Complete would mix with local actions.",
+  "apply_when": "Collapsed or complex page bodies where Complete would mix with local actions.",
   "not_when": "Simple one-screen bodies that can host the page action clearly.",
   "agent_hint": "Put Complete in the footer when body content or subgroup actions would confuse it.",
   "description": "Footer buttons separate page-level Complete from body content when the body cannot carry them—collapsed or multi-screen content, or complex bodies with subgroup actions. Leaving Complete among local subgroup actions confuses page commit with local tools and invites the wrong click. Use the footer for clear separation from the body. A simple single-screen body may keep its action in-flow when no confusion with subgroup actions arises.",

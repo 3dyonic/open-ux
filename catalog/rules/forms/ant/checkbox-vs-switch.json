@@ -28,7 +28,7 @@
   "facet": "wrong_control_for_the_choice",
   "leaf": "choose_control_for_choice",
   "overview": "Switches apply immediately; checkboxes in forms wait for submit.",
-  "apply_when": "Choosing between Switch and checkbox for a boolean on Ant surfaces.",
+  "apply_when": "Choosing between Switch and checkbox for a boolean.",
   "not_when": "Non-boolean inputs or controls outside Switch/checkbox pairing.",
   "agent_hint": "Use Switch for immediate toggles; keep form checkboxes until submit.",
   "description": "On Ant-style data entry, a Switch takes effect immediately and needs no submit button. A checkbox that is part of a submitted form waits for submit; a single checkbox may still be two-state. A Switch that does nothing until submit, or a form checkbox that applies instantly like a Switch, mixes the patterns. Pick based on whether change is immediate or form-bound.",

@@ -24,7 +24,7 @@
   "facet": "no_clear_primary",
   "leaf": "pick_primary_action",
   "overview": "Conversation asks for the action then risks; navigation keeps Back on the left.",
-  "apply_when": "Ordering actions in Ant conversation dialogs or step navigation footers.",
+  "apply_when": "Ordering actions in conversation dialogs or step navigation footers.",
   "not_when": "Platforms that mandate a different Back or commit order than Ant cites.",
   "agent_hint": "Ask desired action before risks; put Back left; park overflow right/bottom.",
   "description": "In Ant’s conversation pattern, ask for the needed or desired action, then present risks. In navigation, Back stays on the left for the previous step; less important actions and collapsed overflow sit right or bottom. Risks-first conversation order, Back off the left, or overflow collapsed leftward fight that guidance. Follow it on Ant button layouts; other platforms may prescribe different order.",

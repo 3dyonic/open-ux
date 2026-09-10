@@ -24,7 +24,7 @@
   "facet": "no_clear_primary",
   "leaf": "pick_primary_action",
   "overview": "Fluent iOS chrome puts Back top-left and Done/Save top-right with Cancel pairing rules.",
-  "apply_when": "Placing Back, Done, Save, or Cancel in Fluent iOS navigation chrome.",
+  "apply_when": "Placing Back, Done, Save, or Cancel in top navigation chrome.",
   "not_when": "Android or web app bars that follow a different platform chrome map.",
   "agent_hint": "Back top-left; Done/Save top-right; Cancel top-left with Done/Save, else top-right.",
   "description": "On Fluent iOS navigation chrome, Back sits top-left and Done or Save sits top-right. Cancel is top-left when it is paired with Done or Save; otherwise Cancel sits top-right. Keep that pairing so platform muscle memory holds. Apply when placing those chrome actions on Fluent iOS screens, not Android or web app bars. Fail swapping those controls against that pairing.",
