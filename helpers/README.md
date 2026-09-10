@@ -7,7 +7,7 @@ pip install open-ux
 open-ux helpers list
 ```
 
-## Agent helpers (LLM-local)
+## Agent helpers (LLM local)
 
 Run **after** MCP tools return data.
 
@@ -31,4 +31,4 @@ Not the agent skill path when MCP is connected.
 
 Repo shims in this directory (`pack.py`, `rank_pack.py`, …) delegate to the same CLI for contributors who clone the repo.
 
-Catalog maintenance: [`scripts/`](../scripts/) — not offered to agents.
+Catalog maintenance: [`scripts/`](../scripts/): not offered to agents.

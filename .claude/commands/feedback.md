@@ -1,1 +1,1 @@
-../../clients/claude/commands/feedback.md
+../../clients/plugin/commands/feedback.md

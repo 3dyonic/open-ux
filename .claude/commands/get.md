@@ -1,1 +1,1 @@
-../../clients/claude/commands/get.md
+../../clients/plugin/commands/get.md

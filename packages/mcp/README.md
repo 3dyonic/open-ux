@@ -14,7 +14,7 @@ python -m open_ux stdio
 OPEN_UX_MODE=hosted python -m open_ux http
 ```
 
-The wheel includes the catalog. `validate-catalog` and stdio work without a git checkout. `--strict-fit` gates task-language `apply_when` on four gate Leaves.
+The wheel includes the catalog. `validate-catalog` and stdio work without a git checkout. `--strict-fit` gates task language `apply_when` on four gate Leaves.
 
 | | Hosted HTTP | Self-host (stdio) |
 | -- | -- | -- |
@@ -24,6 +24,6 @@ The wheel includes the catalog. `validate-catalog` and stdio work without a git 
 
 Browse a local catalog site at `http://127.0.0.1:8080/catalog`. Point MCP clients at local stdio, or at hosted `/mcp` with a `uxmcp_` key.
 
-There is no server-side LLM. `pack` returns cited criteria only — no file upload, no host pass/fail, no WCAG badge.
+There is no server side LLM. `pack` returns cited criteria only; no file upload, no host pass/fail, no WCAG badge.
 
 Tool reference: [`docs/TOOLS.md`](../../docs/TOOLS.md). Doc map: [`docs/README.md`](../../docs/README.md). Product README: [`../../README.md`](../../README.md). Contributing: [`docs/CONTRIBUTING.md`](../../docs/CONTRIBUTING.md).

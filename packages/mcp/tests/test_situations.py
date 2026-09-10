@@ -32,7 +32,7 @@ from open_ux.situations import (
 )
 
 SKILL_DIR = (
-    Path(__file__).resolve().parents[3] / "clients" / "claude" / "skills" / "open-ux"
+    Path(__file__).resolve().parents[3] / "clients" / "plugin" / "skills" / "open-ux"
 )
 SKILL = SKILL_DIR / "SKILL.md"
 ROUTING_REFERENCES = (
@@ -78,7 +78,7 @@ def test_skill_description_is_compose_task_and_short() -> None:
         "Navigation & wayfinding",
         "Layout & data display",
         "Overlays & content structure",
-        "Multi-step flows",
+        "Multi step flows",
     ):
         assert title in routing
 

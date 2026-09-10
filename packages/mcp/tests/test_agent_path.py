@@ -11,7 +11,7 @@ from open_ux.jobs import CARD_IDS
 
 ROOT = Path(__file__).resolve().parents[3]
 SRC = ROOT / "packages" / "mcp" / "src"
-SKILL_DIR = ROOT / "clients" / "claude" / "skills" / "open-ux"
+SKILL_DIR = ROOT / "clients" / "plugin" / "skills" / "open-ux"
 SKILL = SKILL_DIR / "SKILL.md"
 CONNECT = SKILL_DIR / "connect.md"
 TOOLS_REFERENCE = SKILL_DIR / "tools.md"
@@ -25,10 +25,10 @@ ROUTING_REFERENCES = (
     "tools.md",
     "connect.md",
 )
-COMMANDS = ROOT / "clients" / "claude" / "commands"
-PLUGIN = ROOT / "clients" / "claude" / ".claude-plugin" / "plugin.json"
-MCP_JSON = ROOT / "clients" / "claude" / ".mcp.json"
-AGENT = ROOT / "clients" / "claude" / "agents" / "open-ux.md"
+COMMANDS = ROOT / "clients" / "plugin" / "commands"
+PLUGIN = ROOT / "clients" / "plugin" / ".claude-plugin" / "plugin.json"
+MCP_JSON = ROOT / "clients" / "plugin" / ".mcp.json"
+AGENT = ROOT / "clients" / "plugin" / "agents" / "open-ux.md"
 HELPER = ROOT / "helpers" / "mcp_call.py"
 PACK_SCRIPT = ROOT / "helpers" / "pack.py"
 BANNED_BODIES = ("pass_when", "fail_when")
@@ -87,7 +87,7 @@ def _script_env(**extra: str) -> dict[str, str]:
 
 
 def test_one_skill_package_named_open_ux() -> None:
-    skills_root = ROOT / "clients" / "claude" / "skills"
+    skills_root = ROOT / "clients" / "plugin" / "skills"
     packages = [p.name for p in skills_root.iterdir() if p.is_dir()]
     assert packages == ["open-ux"]
     assert (skills_root / "open-ux" / "SKILL.md").is_file()
@@ -148,7 +148,7 @@ def test_skill_routing_table_has_when_and_cross_container_reject() -> None:
         "Navigation & wayfinding",
         "Layout & data display",
         "Overlays & content structure",
-        "Multi-step flows",
+        "Multi step flows",
     ):
         assert title in body
     assert "`forms`" in body and "`actions`" in body and "`feedback`" in body
@@ -230,7 +230,7 @@ def test_commands_are_short_mcp_prompts() -> None:
         assert "no file" in lower or "send a file" in lower or "not ask for a file" in lower
         assert "Open-UX:" in text
         assert "python3 skills/open-ux/scripts" not in lower
-        assert "clients/claude/skills/open-ux/scripts" not in text
+        assert "clients/plugin/skills/open-ux/scripts" not in text
         for banned in ENFORCE_SCRIPT:
             assert banned not in lower
         for token in BANNED_BODIES:
@@ -276,7 +276,7 @@ def test_no_audit_tool_name_in_docs() -> None:
         ROOT / "AGENTS.md",
         ROOT / "CLAUDE.md",
         ROOT / "docs/TOOLS.md",
-        ROOT / "clients/claude/README.md",
+        ROOT / "clients/plugin/README.md",
         AGENT,
         SKILL,
     )
@@ -359,7 +359,7 @@ def test_connect_offers_hosted_or_package() -> None:
         CONNECT,
         ROOT / "AGENTS.md",
         ROOT / "CLAUDE.md",
-        ROOT / "clients" / "claude" / "README.md",
+        ROOT / "clients/plugin/README.md",
         AGENT,
     )
     for path in paths:
