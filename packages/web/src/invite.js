@@ -122,8 +122,11 @@ export function redeemPage() {
       <h1 class="invite-title">Your key</h1>
       <p class="invite-sub">Invite redeemed. Copy your key — we won’t show it in full again.</p>
       <div class="key-box" id="key-text"></div>
-      <button class="btn btn-primary" type="button" id="copy-key">Copy</button>
-      <p class="foot">Use as bearer on /mcp. Self-host stdio needs no auth.</p>
+      <button class="btn btn-primary" type="button" id="copy-key">Copy key</button>
+      <p class="invite-sub">Cursor: Settings → MCP → add this server (global or project <span class="font-mono text-ink">mcp.json</span>).</p>
+      <pre class="config-box" id="mcp-config"></pre>
+      <button class="btn btn-outline" type="button" id="copy-mcp-config">Copy MCP config</button>
+      <p class="foot">Plugin from GitHub adds the skill and slash commands; MCP alone is enough for tools.</p>
     </div>
   </main>`,
         { catalog: false, consent: false },
@@ -217,6 +220,7 @@ export function renderRedeem(root) {
   const redeemCard = document.getElementById("redeem-card");
   const successCard = document.getElementById("success-card");
   const keyText = document.getElementById("key-text");
+  const mcpConfig = document.getElementById("mcp-config");
   const params = new URLSearchParams(location.search);
   const q = params.get("token");
   if (q) tokenInput.value = q;
@@ -224,6 +228,7 @@ export function renderRedeem(root) {
   function hideSuccess() {
     issuedKey = "";
     keyText.textContent = "";
+    mcpConfig.textContent = "";
     successCard.hidden = true;
     setTitle("Redeem invite — Open UX");
   }
@@ -244,6 +249,24 @@ export function renderRedeem(root) {
   function maskKey(key) {
     if (key.startsWith("uxmcp_")) return MASK;
     return "\u2022".repeat(16);
+  }
+
+  function mcpConfigText(key) {
+    const mcpUrl = `${location.origin}/mcp`;
+    return JSON.stringify(
+      {
+        mcpServers: {
+          "open-ux": {
+            url: mcpUrl,
+            headers: {
+              Authorization: `Bearer ${key}`,
+            },
+          },
+        },
+      },
+      null,
+      2,
+    );
   }
 
   form.addEventListener("submit", async (event) => {
@@ -268,6 +291,7 @@ export function renderRedeem(root) {
       }
       issuedKey = data.key;
       keyText.textContent = maskKey(issuedKey);
+      mcpConfig.textContent = mcpConfigText(issuedKey);
       redeemCard.hidden = true;
       successCard.hidden = false;
       setTitle("Your key — Open UX");
@@ -279,6 +303,11 @@ export function renderRedeem(root) {
   document.getElementById("copy-key").addEventListener("click", () => {
     if (!issuedKey || !navigator.clipboard) return;
     navigator.clipboard.writeText(issuedKey);
+  });
+
+  document.getElementById("copy-mcp-config").addEventListener("click", () => {
+    if (!issuedKey || !navigator.clipboard) return;
+    navigator.clipboard.writeText(mcpConfigText(issuedKey));
   });
 }
 

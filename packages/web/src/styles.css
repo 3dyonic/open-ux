@@ -251,6 +251,9 @@
   .key-box {
     @apply w-full rounded-sm border border-pip bg-pip-soft p-3 font-mono text-sm font-medium text-pip;
   }
+  .config-box {
+    @apply w-full overflow-x-auto rounded-sm border border-line bg-paper p-3 font-mono text-xs leading-5 text-ink whitespace-pre-wrap break-all;
+  }
 
   .status-chip {
     @apply inline-flex items-center gap-1.5 whitespace-nowrap rounded-sm border border-success bg-success-soft px-2.5 py-1 font-mono text-xs font-medium text-success;
