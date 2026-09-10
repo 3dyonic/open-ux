@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import sqlite3
 import threading
@@ -11,6 +12,10 @@ from typing import Any, Iterator
 from open_ux.settings import RATE_PER_DAY, RATE_PER_MINUTE, RETENTION_DAYS, Settings
 
 _local = threading.local()
+
+
+def content_hash(content: str) -> str:
+    return hashlib.sha256(content.encode("utf-8")).hexdigest()
 
 
 def _utcnow() -> datetime:

@@ -55,12 +55,10 @@ LEAF_IDS = (
     "pick_primary_action",
     "word_the_action",
     "compose_the_command_surface",
-    "show_action_state",
     "keep_hit_target_usable",
     "disable_or_confirm_destructive",
     "warn_before_leave",
     "announce_system_status",
-    "write_empty_state",
     "tone_of_voice_for_failure",
     "wayfind_after_nav",
     "place_the_search_control",
@@ -74,41 +72,23 @@ LEAF_IDS = (
     "show_step_progress",
 )
 
-JobId = Literal[
-    "design_a_form",
-    "handle_form_errors",
-    "compose_sign_in",
-    "design_actions_and_ctas",
-    "protect_destructive_and_leave",
-    "compose_feedback",
-    "orient_in_the_place",
-    "compose_search",
-    "compose_a_data_display",
-    "compose_the_layout",
-    "write_the_interface",
-    "choose_an_overlay",
-    "build_a_multi_step_flow",
-    "forms_and_input",
-    "actions_and_decisions",
-    "feedback_and_status",
-    "navigation_and_wayfinding",
-    "layout_and_data_display",
-    "overlays_and_content_structure",
-    "multi_step_flows",
-    "forms",
-    "actions",
-    "feedback",
-]
+JobId = Literal.__getitem__(  # type: ignore[misc]
+    CARD_IDS + CONTAINER_IDS + JOB_ALIASES + LEAF_IDS
+)
+
+ALL_PACK_JOBS = CARD_IDS + CONTAINER_IDS + JOB_ALIASES + LEAF_IDS
 
 JOB_FIELD_DESCRIPTION = (
-    "One Situation Card or container: the compose job being solved. "
-    "Prefer a Card over guideline_ids. Leaf ids are not needs. "
+    "One Situation Card, Leaf, or container: the compose job being solved. "
+    "Prefer a Card when the ask spans the whole job; use a Leaf when the ask "
+    "is one bay (e.g. pick_primary_action, choose_control_for_choice). "
+    "Prefer jobs= over guideline_ids. "
     "design_a_form — Signup, settings, or field labeling. "
     "handle_form_errors — Validation and inline form errors. "
     "compose_sign_in — Login, password, forgot-password. "
     "design_actions_and_ctas — Primary/secondary actions and hit targets. "
     "protect_destructive_and_leave — Delete, discard, unsaved leave. "
-    "compose_feedback — Toast, empty, 404, loading, failure tone. "
+    "compose_feedback — Toast, loading, 404, hard error, failure tone. "
     "orient_in_the_place — Nav, breadcrumbs, where you are. "
     "compose_search — Place and compose search. "
     "compose_a_data_display — Table, dashboard, chart vs grid. "
@@ -121,7 +101,7 @@ JOB_FIELD_DESCRIPTION = (
 )
 
 AUDIT_TOOL_DESCRIPTION = (
-    "Say the UX need as one Situation Card or container. "
+    "Say the UX need as one Situation Card, Leaf, or container. "
     "Returns cited rule criteria. "
     "Does not take a file. Does not return pass or fail. "
     "Required: jobs or guideline_ids."
@@ -385,12 +365,23 @@ def _alias_for_container(tree: JobTree, container_id: str) -> str | None:
     return container.aliases[0] if container.aliases else None
 
 
+def leaf_by_id(tree: JobTree, leaf_id: str) -> Leaf | None:
+    for card in tree.cards:
+        for facet in card.facets:
+            for leaf in facet.leaves:
+                if leaf.id == leaf_id:
+                    return leaf
+    return None
+
+
 def expand_need(need: str, tree: JobTree | None = None) -> list[str]:
-    """Tags to match on guideline placement. Leaf ids expand to nothing."""
+    """Tags to match on guideline placement. Leaf ids expand to themselves."""
     job = (need or "").strip()
     if not job:
         return []
     tree = tree or load_job_tree()
+    if job in LEAF_IDS:
+        return [job] if leaf_by_id(tree, job) is not None else []
     container = container_by_id_or_alias(tree, job)
     if container is not None:
         leaves: list[str] = []
@@ -417,11 +408,16 @@ def expand_need(need: str, tree: JobTree | None = None) -> list[str]:
 
 
 def resolve_need(need: str, tree: JobTree | None = None) -> NeedScope:
-    """Card/container → leaf tags plus cluster pointers. Leaf ids are empty."""
+    """Card, Leaf, or container → tags and/or explicit guideline pointers."""
     job = (need or "").strip()
     if not job:
         return NeedScope()
     tree = tree or load_job_tree()
+    if job in LEAF_IDS:
+        leaf = leaf_by_id(tree, job)
+        if leaf is None:
+            return NeedScope()
+        return NeedScope(tags=(job,), guideline_ids=leaf.guideline_ids)
     container = container_by_id_or_alias(tree, job)
     if container is not None:
         tags: list[str] = []

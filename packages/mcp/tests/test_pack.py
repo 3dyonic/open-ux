@@ -2,14 +2,15 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from open_ux.audit import (
+from open_ux.pack import (
     HOST_CITATIONS_ONLY,
     NEED_ERROR,
     PACK_KEYS,
-    _matches_query,
-    _rerank_by_query,
+    PACK_ROW_KEYS,
+    _hints_extra,
+    _pack_row,
     _stratify_by_facet,
-    audit,
+    pack,
 )
 from open_ux.catalog import EMPTY_NOTE, get_by_id, load_catalog, select_by_jobs
 from open_ux.jobs import (
@@ -34,7 +35,8 @@ def _catalog(_live_catalog: Path):
 
 
 def _assert_pack_row(row: dict) -> None:
-    assert set(row) == set(PACK_KEYS)
+    assert set(PACK_ROW_KEYS) <= set(row)
+    assert set(row) <= set(PACK_KEYS)
     assert row["id"]
     assert row["title"]
     assert row["name"]
@@ -48,12 +50,13 @@ def _assert_pack_row(row: dict) -> None:
 
 def _assert_contract(result: dict) -> None:
     assert result["host"] == HOST_CITATIONS_ONLY
+    assert "limit" not in result
     assert "verdict" not in result
     assert "summary" not in result
 
 
 def test_jobs_card_returns_criteria_without_content(live_catalog: Path) -> None:
-    result = audit(_catalog(live_catalog), jobs="design_a_form")
+    result = pack(_catalog(live_catalog), jobs="design_a_form")
     assert "error" not in result
     _assert_contract(result)
     assert result["count"] == len(result["guidelines"])
@@ -64,8 +67,20 @@ def test_jobs_card_returns_criteria_without_content(live_catalog: Path) -> None:
         _assert_pack_row(row)
 
 
+def test_pack_hints_omitted_when_absent() -> None:
+    row = _pack_row({"id": "t.test", "title": "Test"})
+    assert "hints" not in row
+    assert _hints_extra({"hints": []}) == {}
+
+
+def test_pack_hints_included_when_authored(live_catalog: Path) -> None:
+    result = pack(_catalog(live_catalog), guideline_ids=[ERROR])
+    row = next(r for r in result["guidelines"] if r["id"] == ERROR)
+    assert row["hints"] == ["error banner", "jump to field"]
+
+
 def test_jobs_forms_alias_includes_live_seeds(live_catalog: Path) -> None:
-    result = audit(_catalog(live_catalog), jobs="forms", limit=50)
+    result = pack(_catalog(live_catalog), jobs="forms", limit=50)
     ids = {row["id"] for row in result["guidelines"]}
     assert VISIBLE in ids
     assert ERROR in ids
@@ -73,7 +88,7 @@ def test_jobs_forms_alias_includes_live_seeds(live_catalog: Path) -> None:
 
 
 def test_guideline_ids_return_those_rules(live_catalog: Path) -> None:
-    result = audit(
+    result = pack(
         _catalog(live_catalog),
         guideline_ids=[VISIBLE, "actions.button_groups"],
     )
@@ -88,7 +103,7 @@ def test_guideline_ids_return_those_rules(live_catalog: Path) -> None:
 
 
 def test_unknown_id_is_empty_not_invented(live_catalog: Path) -> None:
-    result = audit(_catalog(live_catalog), guideline_ids=["does.not.exist"])
+    result = pack(_catalog(live_catalog), guideline_ids=["does.not.exist"])
     assert result["guidelines"] == []
     assert result["count"] == 0
     assert result["total"] == 0
@@ -97,14 +112,14 @@ def test_unknown_id_is_empty_not_invented(live_catalog: Path) -> None:
 
 
 def test_requires_need(live_catalog: Path) -> None:
-    result = audit(_catalog(live_catalog))
+    result = pack(_catalog(live_catalog))
     assert NEED_ERROR in result["error"]
     assert result["guidelines"] == []
     assert result["count"] == 0
 
 
 def test_leftover_target_is_ignored(live_catalog: Path) -> None:
-    result = audit(
+    result = pack(
         _catalog(live_catalog),
         jobs="forms",
         target={"type": "html", "content": "<input placeholder='Email'>"},
@@ -118,45 +133,25 @@ def test_leftover_target_is_ignored(live_catalog: Path) -> None:
         _assert_pack_row(row)
 
 
-def test_query_reranks_but_never_narrows_within_job(live_catalog: Path) -> None:
-    """query is a soft re-rank, never a filter (OUX-21, finding #4).
-
-    A caller who narrows with `query` must never see fewer guidelines than
-    the same `jobs` call with no query at all -- the content exists either
-    way, only the order changes. Uses a job whose full guideline set fits
-    under `limit` so the capped output is directly comparable; a job whose
-    total exceeds `limit` legitimately has a different capped *window* once
-    reranked (the match moves to the front and displaces the previous
-    boundary item), which is expected and is not what this test checks.
-    """
-    target = "actions.action_panel"
-    wide = audit(_catalog(live_catalog), jobs="design_actions_and_ctas", limit=50)
-    narrow = audit(
+def test_query_is_ignored_same_order(live_catalog: Path) -> None:
+    """Host does not rank. query= leaves catalog / facet order unchanged."""
+    baseline = pack(_catalog(live_catalog), jobs="design_actions_and_ctas", limit=50)
+    with_query = pack(
         _catalog(live_catalog),
         jobs="design_actions_and_ctas",
         query="action panel",
         limit=50,
     )
-    assert wide["total"] < 50  # sanity: nothing capped away in either call
-    assert narrow["total"] == wide["total"]
-    assert {row["id"] for row in narrow["guidelines"]} == {
-        row["id"] for row in wide["guidelines"]
-    }
-    ids = [row["id"] for row in narrow["guidelines"]]
-    assert target in ids
-    assert ids.index(target) == 0
+    assert with_query["total"] == baseline["total"]
+    assert [row["id"] for row in with_query["guidelines"]] == [
+        row["id"] for row in baseline["guidelines"]
+    ]
+    assert "query_fallback" not in with_query
 
 
-def test_query_that_matches_nothing_falls_open(live_catalog: Path) -> None:
-    """A query with zero literal matches still returns the full job set.
-
-    This is the direct fix for finding #4: narrowing a real, non-empty
-    result down to zero via a query string is never acceptable -- a caller
-    who tries to narrow with natural phrasing must never get a worse
-    result than one who omits `query` entirely.
-    """
-    wide = audit(_catalog(live_catalog), jobs="handle_form_errors")
-    narrowed = audit(
+def test_query_no_match_still_same_page(live_catalog: Path) -> None:
+    wide = pack(_catalog(live_catalog), jobs="handle_form_errors")
+    narrowed = pack(
         _catalog(live_catalog),
         jobs="handle_form_errors",
         query="zxqv-not-a-guideline-token",
@@ -167,29 +162,39 @@ def test_query_that_matches_nothing_falls_open(live_catalog: Path) -> None:
     assert [row["id"] for row in narrowed["guidelines"]] == [
         row["id"] for row in wide["guidelines"]
     ]
-    assert narrowed["note"] and "showing all" in narrowed["note"]
-    assert narrowed["query_fallback"] is True
+    assert "query_fallback" not in narrowed
 
 
 def test_limit_caps_pack(live_catalog: Path) -> None:
-    result = audit(_catalog(live_catalog), jobs="forms", limit=3)
+    result = pack(_catalog(live_catalog), jobs="forms", limit=3)
     assert result["count"] == 3
     assert result["total"] > 3
     assert result["omitted"] == result["total"] - 3
     assert result["next_offset"] == 3
 
 
-def test_leaf_id_is_not_a_need(live_catalog: Path) -> None:
-    result = audit(_catalog(live_catalog), jobs="avoid_placeholder_as_label")
-    assert result["guidelines"] == []
-    assert result["count"] == 0
-    assert result["total"] == 0
-    assert result["note"] == MISS_NOTE
+def test_leaf_jobs_scopes_pack(live_catalog: Path) -> None:
+    result = pack(_catalog(live_catalog), jobs="avoid_placeholder_as_label")
+    assert result["count"] >= 1
+    assert result["total"] == result["count"]
+    for row in result["guidelines"]:
+        assert row["leaf"] == "avoid_placeholder_as_label"
+        _assert_pack_row(row)
+
+
+def test_pick_primary_action_leaf_is_narrower_than_card(live_catalog: Path) -> None:
+    leaf = pack(_catalog(live_catalog), jobs="pick_primary_action", limit=50)
+    card = pack(_catalog(live_catalog), jobs="design_actions_and_ctas", limit=50)
+    leaf_ids = {row["id"] for row in leaf["guidelines"]}
+    card_ids = {row["id"] for row in card["guidelines"]}
+    assert "ant.one-cta-per-screen" in leaf_ids
+    assert leaf_ids <= card_ids
+    assert len(leaf_ids) < len(card_ids)
 
 
 def test_live_seeds_resolve_through_their_cards(live_catalog: Path) -> None:
-    form = audit(_catalog(live_catalog), jobs="design_a_form", limit=50)
-    errors = audit(_catalog(live_catalog), jobs="handle_form_errors", limit=50)
+    form = pack(_catalog(live_catalog), jobs="design_a_form", limit=50)
+    errors = pack(_catalog(live_catalog), jobs="handle_form_errors", limit=50)
     form_ids = {row["id"] for row in form["guidelines"]}
     error_ids = {row["id"] for row in errors["guidelines"]}
     assert VISIBLE in form_ids
@@ -199,9 +204,9 @@ def test_live_seeds_resolve_through_their_cards(live_catalog: Path) -> None:
 
 
 def test_cluster_only_cards_return_pointer_criteria(live_catalog: Path) -> None:
-    display = audit(_catalog(live_catalog), jobs="compose_a_data_display", limit=50)
-    overlay = audit(_catalog(live_catalog), jobs="choose_an_overlay", limit=50)
-    steps = audit(_catalog(live_catalog), jobs="build_a_multi_step_flow", limit=50)
+    display = pack(_catalog(live_catalog), jobs="compose_a_data_display", limit=50)
+    overlay = pack(_catalog(live_catalog), jobs="choose_an_overlay", limit=50)
+    steps = pack(_catalog(live_catalog), jobs="build_a_multi_step_flow", limit=50)
     display_ids = {row["id"] for row in display["guidelines"]}
     overlay_ids = {row["id"] for row in overlay["guidelines"]}
     step_ids = {row["id"] for row in steps["guidelines"]}
@@ -215,7 +220,7 @@ def test_cluster_only_cards_return_pointer_criteria(live_catalog: Path) -> None:
 
 
 def test_container_without_leaves_uses_card_pointers(live_catalog: Path) -> None:
-    result = audit(_catalog(live_catalog), jobs="layout_and_data_display", limit=50)
+    result = pack(_catalog(live_catalog), jobs="layout_and_data_display", limit=50)
     ids = {row["id"] for row in result["guidelines"]}
     assert "nsw.charts-start-with-story" in ids
 
@@ -229,7 +234,7 @@ def test_dense_card_includes_cluster_pointers(live_catalog: Path) -> None:
 
 def test_empty_catalog_is_honest(tmp_env: Path) -> None:
     catalog = load_catalog(Settings.load())
-    result = audit(catalog, jobs="forms")
+    result = pack(catalog, jobs="forms")
     assert result["guidelines"] == []
     assert result["note"] == EMPTY_NOTE
     assert "verdict" not in result
@@ -245,7 +250,7 @@ def _nonempty_facets(catalog, job: str) -> set[str]:
 
 def test_design_a_form_default_covers_every_nonempty_facet(live_catalog: Path) -> None:
     catalog = _catalog(live_catalog)
-    result = audit(catalog, jobs="design_a_form")
+    result = pack(catalog, jobs="design_a_form")
     ids = {row["id"] for row in result["guidelines"]}
     assert "fluent.helper-text-below" in ids
     assert "spectrum.asterisk-is-icon-not-label-text" in ids
@@ -257,47 +262,9 @@ def test_design_a_form_default_covers_every_nonempty_facet(live_catalog: Path) -
 
 def test_design_actions_default_covers_every_nonempty_facet(live_catalog: Path) -> None:
     catalog = _catalog(live_catalog)
-    result = audit(catalog, jobs="design_actions_and_ctas")
+    result = pack(catalog, jobs="design_actions_and_ctas")
     window = {row["facet"] for row in result["guidelines"]}
     assert _nonempty_facets(catalog, "design_actions_and_ctas") <= window
-
-
-def test_query_phrase_token_any_does_not_fail_open(live_catalog: Path) -> None:
-    catalog = _catalog(live_catalog)
-    wide = audit(catalog, jobs="design_a_form")
-    narrowed = audit(
-        catalog,
-        jobs="design_a_form",
-        query="label required helper optional",
-    )
-    assert narrowed["total"] == wide["total"]
-    assert not (narrowed.get("note") and "showing all" in narrowed["note"])
-
-
-def test_query_helper_reorders_stratified_not_catalog(live_catalog: Path) -> None:
-    catalog = _catalog(live_catalog)
-    cap = DEFAULT_LIMIT
-    scoped = select_by_jobs(catalog, "design_a_form")
-    stratified = _stratify_by_facet(scoped, load_job_tree(), len(scoped) or 1)
-    ranked, matched = _rerank_by_query(stratified, "helper")
-    assert matched
-    expected = [row["id"] for row in ranked][:cap]
-    result = audit(catalog, jobs="design_a_form", query="helper")
-    assert [row["id"] for row in result["guidelines"]] == expected
-
-
-def test_token_any_required_false_positive_is_accepted(live_catalog: Path) -> None:
-    """query='required' still matches ant.slider-intensity-grade ('precise number is required').
-
-    OUX-24 accepted this as recall not precision. BM25 (OUX-26) does not
-    promise to drop it either.
-    """
-    catalog = _catalog(live_catalog)
-    slider = get_by_id(catalog, "ant.slider-intensity-grade")
-    assert slider is not None
-    assert _matches_query(slider, "required")
-    result = audit(catalog, jobs="design_a_form", query="required")
-    assert not (result.get("note") and "showing all" in result["note"])
 
 
 def test_live_max_nonempty_facets_under_default_limit(live_catalog: Path) -> None:
@@ -385,7 +352,7 @@ def test_stratify_facets_exceed_cap_drops_later_facets() -> None:
 
 
 def test_compose_sign_in_returns_cited_show_password(live_catalog: Path) -> None:
-    result = audit(_catalog(live_catalog), jobs="compose_sign_in")
+    result = pack(_catalog(live_catalog), jobs="compose_sign_in")
     assert result["total"] >= 1
     assert result["count"] >= 1
     ids = {row["id"] for row in result["guidelines"]}
@@ -398,18 +365,17 @@ def test_compose_sign_in_returns_cited_show_password(live_catalog: Path) -> None
 
 def test_data_display_lazy_loads_white_canvas(live_catalog: Path) -> None:
     catalog = _catalog(live_catalog)
-    first = audit(catalog, jobs="compose_a_data_display")
+    first = pack(catalog, jobs="compose_a_data_display")
     _assert_contract(first)
     assert first["count"] == 10
     assert first["total"] == 13
     assert first["omitted"] == 3
     assert first["next_offset"] == 10
-    assert first["limit"] == 10
     assert first["offset"] == 0
     assert "3 more not shown" in first["omitted_hint"]
     assert "offset=10" in first["omitted_hint"]
     page1 = {row["id"] for row in first["guidelines"]}
-    second = audit(catalog, jobs="compose_a_data_display", offset=10)
+    second = pack(catalog, jobs="compose_a_data_display", offset=10)
     _assert_contract(second)
     assert second["count"] == 3
     assert second["total"] == 13
@@ -427,7 +393,7 @@ def test_design_a_form_walks_every_page(live_catalog: Path) -> None:
     total = None
     pages = 0
     while True:
-        result = audit(catalog, jobs="design_a_form", offset=offset)
+        result = pack(catalog, jobs="design_a_form", offset=offset)
         _assert_contract(result)
         if total is None:
             total = result["total"]
@@ -444,15 +410,3 @@ def test_design_a_form_walks_every_page(live_catalog: Path) -> None:
     assert len(seen) == total
     assert pages >= 2
     assert offset >= DEFAULT_LIMIT
-
-
-def test_query_fallback_stays_paged(live_catalog: Path) -> None:
-    result = audit(
-        _catalog(live_catalog),
-        jobs="design_a_form",
-        query="zxqv-not-a-guideline-token",
-    )
-    assert result["query_fallback"] is True
-    assert result["count"] == DEFAULT_LIMIT
-    assert result["omitted"] == result["total"] - DEFAULT_LIMIT
-    assert result["next_offset"] == DEFAULT_LIMIT

@@ -2,10 +2,11 @@
 name: open-ux
 description: >-
   Use when composing or reviewing UI against cited Open UX rules — a form,
-  buttons, delete confirm, empty or error state, navigation, table, modal,
-  or multi-step flow. Pick a Situation Card, then call Open-UX:get_situation
-  and Open-UX:audit with jobs=<card_id>. Do not invent UX from memory.
-  Do not send a file. The host returns cited criteria, not pass or fail.
+  buttons, delete confirm, loading, 404, or error state, navigation, table, modal,
+  or multi-step flow. Open Cards that fit; you decide. Call Open-UX:get_situation
+  and Open-UX:pack with jobs=<card_id>. Host does not pick a Card.
+  Do not invent UX from memory. Do not send a file. The host returns cited
+  criteria, not pass or fail.
 model: inherit
 skills:
   - open-ux
@@ -42,14 +43,14 @@ Same catalog. No invite. Telemetry off. Point MCP clients at local stdio.
 
 | Job | Tools |
 | --- | --- |
-| compose / review | Pick a Card → `Open-UX:get_situation` → `Open-UX:audit` `jobs=<card_id>` |
+| compose / review | Compare Cards that fit → `Open-UX:get_situation` → `Open-UX:pack` `jobs=<card_id>`. No winner Card. Helpers: `helpers/pack.py`, `helpers/rank_pack.py` ([`helpers/registry.json`](../../../helpers/registry.json); available, not required). |
 | map | `Open-UX:suggest_situations` when the ask is a surface (catalog map). Pick a Card, then get_situation. The catalog stays open after a pack. |
 | cite | `Open-UX:search_guidelines` / `Open-UX:get_guideline` |
 
 ## Tools
 
-`Open-UX:list_situations`, `Open-UX:get_situation`, `Open-UX:suggest_situations`, `Open-UX:list_guidelines`, `Open-UX:search_guidelines`, `Open-UX:get_guideline`, `Open-UX:audit`.
+`Open-UX:list_situations`, `Open-UX:get_situation`, `Open-UX:suggest_situations`, `Open-UX:list_guidelines`, `Open-UX:search_guidelines`, `Open-UX:get_guideline`, `Open-UX:pack`.
 
-Scope `audit` (`jobs=` or `guideline_ids`). Surfaces are context, not ids. Leaf ids are not needs.
+Scope `pack` (`jobs=` or `guideline_ids`). Surfaces are context, not ids. Prefer a Card; use a Leaf id when the ask is one bay.
 
-Slash commands `/list` `/get` `/audit` plus aliases `/forms` `/actions` `/feedback` route into this same skill.
+Slash commands `/list` `/get` `/pack` plus aliases `/forms` `/actions` `/feedback` route into this same skill.

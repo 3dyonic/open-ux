@@ -471,16 +471,6 @@
           ]
         },
         {
-          "id": "action_state_is_silent",
-          "title": "Action state is silent",
-          "leaves": [
-            {
-              "id": "show_action_state",
-              "guideline_ids": []
-            }
-          ]
-        },
-        {
           "id": "controls_are_hard_to_hit",
           "title": "Controls are hard to hit",
           "leaves": [
@@ -635,16 +625,6 @@
                 "uswds.dont-hide-then-reveal-alerts",
                 "uswds.site-alert-dont-stack-dont-panic"
               ]
-            }
-          ]
-        },
-        {
-          "id": "empty_or_dead_end_has_no_next_step",
-          "title": "Empty or dead-end has no next step",
-          "leaves": [
-            {
-              "id": "write_empty_state",
-              "guideline_ids": []
             }
           ]
         },

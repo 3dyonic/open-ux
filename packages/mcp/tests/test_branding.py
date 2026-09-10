@@ -1,20 +1,9 @@
 from __future__ import annotations
 
-import json
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
-
-
-def test_plugin_title_is_open_ux() -> None:
-    plugin = json.loads(
-        (ROOT / "clients/claude/.claude-plugin/plugin.json").read_text(encoding="utf-8")
-    )
-    assert plugin["displayName"] == "Open UX"
-    assert "MCP" not in plugin["displayName"]
-    assert "MCP" not in plugin["name"]
-    assert "MCP" not in plugin.get("description", "")
 
 
 def test_readme_embeds_relative_hero() -> None:

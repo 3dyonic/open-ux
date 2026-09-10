@@ -5,10 +5,10 @@ Not the skill path. In Claude, call Open-UX:* tools from the plugin MCP.
 
 Usage (from repo root, after ``pip install open-ux`` or an editable install):
 
-    python3 scripts/mcp_call.py list
-    python3 scripts/mcp_call.py audit '{"jobs":"design_a_form"}'
+    python3 helpers/mcp_call.py list
+    python3 helpers/mcp_call.py pack '{"jobs":"design_a_form"}'
     open-ux tools list
-    open-ux tools call audit '{"jobs":"design_a_form"}'
+    open-ux tools call pack '{"jobs":"design_a_form"}'
 """
 
 from __future__ import annotations
