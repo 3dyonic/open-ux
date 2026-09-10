@@ -115,10 +115,8 @@ def _invite_body_html(*, redeem_url: str, expires_at: str, public_base: str) -> 
             </td>
           </tr>
           <tr>
-            <td style="padding:24px 28px 0;font-family:{_FONT};">
-              <a href="{safe_url}" style="display:inline-block;padding:11px 18px;background:{_COLOR_PIP};color:#ffffff;text-decoration:none;font-size:14px;font-weight:600;line-height:20px;border-radius:6px;">
-                Redeem invite
-              </a>
+            <td style="padding:20px 28px 0;font-family:{_FONT};font-size:15px;line-height:22px;">
+              <a href="{safe_url}" style="color:{_COLOR_PIP};font-weight:600;text-decoration:underline;">Redeem invite</a>
             </td>
           </tr>
           <tr>
@@ -131,14 +129,10 @@ def _invite_body_html(*, redeem_url: str, expires_at: str, public_base: str) -> 
               <img src="{icon_url}" width="20" height="20" alt="" style="vertical-align:middle;margin-right:6px;border-radius:4px;">
               <a href="{site_url}" style="color:{_COLOR_INK};text-decoration:none;font-weight:600;">Open UX</a>
               · cited UX rules for agents ·
-              <a href="{mcp_url}" style="color:{_COLOR_PIP};text-decoration:none;">MCP endpoint</a>
+              <a href="{mcp_url}" style="color:{_COLOR_PIP};text-decoration:underline;">MCP endpoint</a>
             </td>
           </tr>
         </table>
-        <p style="margin:16px 0 0;font-family:{_FONT};font-size:12px;line-height:18px;color:{_COLOR_MUTED};max-width:520px;">
-          If the button does not work, paste this link in your browser:<br>
-          <a href="{safe_url}" style="color:{_COLOR_PIP};word-break:break-all;">{safe_url}</a>
-        </p>
       </td>
     </tr>
   </table>

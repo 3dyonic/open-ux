@@ -76,6 +76,8 @@ def test_send_invite_email_resend_success(
     assert issued.redeem_url in body["html"]
     assert "#FF4B00" in body["html"]
     assert "Redeem invite" in body["html"]
+    assert "If the button does not work" not in body["html"]
+    assert "display:inline-block;padding:11px 18px" not in body["html"]
     assert "/pip.svg" in body["html"]
     assert "Pip, Open UX mascot" in body["html"]
     assert "icon.png" in body["html"]
