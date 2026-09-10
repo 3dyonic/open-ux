@@ -104,7 +104,7 @@ jobs:
           echo "publish_pypi=true" >> "$GITHUB_OUTPUT"
           echo "push_tag=$new" >> "$GITHUB_OUTPUT"
           echo "next $new (from $last)"
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         if: steps.prep.outputs.skip != 'true'
         with:
           python-version: "3.12"
