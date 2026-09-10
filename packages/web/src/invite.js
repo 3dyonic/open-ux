@@ -125,7 +125,7 @@ export function redeemPage() {
       <button class="btn btn-primary" type="button" id="copy-key">Copy key</button>
       <p class="invite-sub">Add this MCP server in your client — paste into <span class="font-mono text-ink">mcp.json</span> or your editor’s MCP settings.</p>
       <pre class="config-box" id="mcp-config"></pre>
-      <button class="btn btn-outline" type="button" id="copy-mcp-config">Copy MCP config</button>
+      <button class="btn btn-outline" type="button" id="copy-mcp-config">Copy to config</button>
     </div>
   </main>`,
         { catalog: false, consent: false },
@@ -250,40 +250,22 @@ export function renderRedeem(root) {
     return "\u2022".repeat(16);
   }
 
-  function mcpConfigText(key) {
+  function mcpServerBlock(authValue) {
     const mcpUrl = `${location.origin}/mcp`;
-    return JSON.stringify(
-      {
-        mcpServers: {
-          "open-ux": {
-            url: mcpUrl,
-            headers: {
-              Authorization: `Bearer ${key}`,
-            },
-          },
-        },
-      },
-      null,
-      2,
-    );
+    return `"open-ux": {
+  "url": ${JSON.stringify(mcpUrl)},
+  "headers": {
+    "Authorization": ${JSON.stringify(authValue)}
+  }
+}`;
+  }
+
+  function mcpConfigText(key) {
+    return mcpServerBlock(`Bearer ${key}`);
   }
 
   function mcpConfigDisplayText() {
-    const mcpUrl = `${location.origin}/mcp`;
-    return JSON.stringify(
-      {
-        mcpServers: {
-          "open-ux": {
-            url: mcpUrl,
-            headers: {
-              Authorization: "YOUR_KEY",
-            },
-          },
-        },
-      },
-      null,
-      2,
-    );
+    return mcpServerBlock("YOUR_KEY");
   }
 
   form.addEventListener("submit", async (event) => {
