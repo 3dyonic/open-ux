@@ -24,7 +24,7 @@ Compose and review share this one trigger. Compare Cards that fit. Open more tha
 ## Loop
 
 0. **Start from the ask:** user words and what is on screen — not a Card id. If phrasing matches [ask-shapes.md](ask-shapes.md), map that Card next at step 2.
-1. **Still vague, no job in mind:** **`Open-UX:suggest_situations`** for the full map, then continue at step 2.
+1. **Still vague or no task yet** (including direct **`/open-ux:open-ux`** with nothing attached): **`Open-UX:list_situations`** for the full index, or **`Open-UX:suggest_situations(task_text)`** when thread context helps. **Show the container-grouped map** — areas (`forms`, `actions`, `feedback`, nav, layout, overlays, multi-step), Cards under each with one-line *when* ([cards.md](cards.md) shape). Then one short question: which area fits, or what's on screen? A generic example list without this drill-down is not enough; interview after the map is fine. Continue at step 2.
 2. **Name the job (Card):** [cards.md](cards.md) or the map from step 0/1 — compare `when` / Reject neighbors; open more than one if the ask spans them.
 3. **`Open-UX:get_situation`:** map the Card: facets, merged `guideline_ids`, and **`leaves: [{ id, count }]`** (how stocked each Leaf bay is).
 4. **Scope the pull:** whole Card (`jobs=<card_id>`) or one bay (`jobs=<leaf_id>`) when the ask is narrow. See [examples.md](examples.md) for container → cite scope sizes.

@@ -13,7 +13,7 @@ def test_marketplace_points_at_pack() -> None:
     market = json.loads((ROOT / ".claude-plugin" / "marketplace.json").read_text())
     plugin = market["plugins"][0]
     assert plugin["source"] == "./clients/plugin"
-    assert plugin["version"] == "1.2.0"
+    assert plugin["version"] == "1.2.1"
     assert plugin.get("homepage") == "https://open-ux.dev"
 
 
@@ -21,8 +21,8 @@ def test_cursor_marketplace_points_at_same_pack() -> None:
     market = json.loads((ROOT / ".cursor-plugin" / "marketplace.json").read_text())
     plugin = market["plugins"][0]
     assert plugin["source"] == "./clients/plugin"
-    assert plugin["version"] == "1.2.0"
-    assert market["metadata"]["version"] == "1.2.0"
+    assert plugin["version"] == "1.2.1"
+    assert market["metadata"]["version"] == "1.2.1"
     assert plugin.get("homepage") == "https://open-ux.dev"
     assert plugin.get("logo") == "assets/icon.svg"
     assert ".." not in plugin["source"]
@@ -99,5 +99,6 @@ def test_cursor_pack_uses_variables_not_user_config() -> None:
     rule = (PACK / "rules" / "open-ux.mdc").read_text(encoding="utf-8")
     assert "alwaysApply: true" in rule
     assert "First Open UX call" in rule
+    assert "container-grouped summary" in rule
     assert "Open-UX:pack" in rule
     assert "pass_when" not in rule

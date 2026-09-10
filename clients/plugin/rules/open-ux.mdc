@@ -3,4 +3,4 @@ description: Open UX: cited UX criteria, not a second catalog
 alwaysApply: true
 ---
 
-One skill: `open-ux`. First Open UX call: `Open-UX:suggest_situations` or `Open-UX:list_situations`, not `Open-UX:pack` blind. Compose and review share `Open-UX:pack` with `jobs=`. Host returns cited criteria, not pass or fail. Host does not pick a Card. Do not send a file. Card table lives in the open-ux skill. Do not copy it here.
+One skill: `open-ux`. First Open UX call: `Open-UX:suggest_situations` or `Open-UX:list_situations`, not `Open-UX:pack` blind. Bare `/open-ux:open-ux`: map call first, then show the container-grouped summary (areas → Cards), then one question. Compose and review share `Open-UX:pack` with `jobs=`. Host returns cited criteria, not pass or fail. Host does not pick a Card. Do not send a file. Card table lives in the open-ux skill. Do not copy it here.
