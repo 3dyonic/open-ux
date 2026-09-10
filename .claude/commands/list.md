@@ -1,1 +1,0 @@
-../../clients/plugin/commands/list.md

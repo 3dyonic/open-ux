@@ -1,1 +1,0 @@
-../../clients/plugin/commands/get.md
