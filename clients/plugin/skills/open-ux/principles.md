@@ -19,7 +19,7 @@ Start from **what the user said and what is on screen** — not from Card ids. C
 What do you have?
 │
 ├─ Direct /open-ux:open-ux, no task attached yet
-│   └─ Open-UX:list_situations or suggest_situations → [bare-invoke.md](bare-invoke.md) verbatim reply
+│   └─ [bare-invoke.md](bare-invoke.md) verbatim reply → task → map below
 │
 ├─ User words + UI in front of you (usual case)
 │   ├─ Ask matches a row in ask-shapes.md?
