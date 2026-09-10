@@ -24,7 +24,7 @@ Plugins are not in the public marketplaces yet. Install from this repo: `claude 
 
 ## Use
 
-One skill: `open-ux`. Commands: `/list` `/get` `/pack`, aliases `/forms` `/actions` `/feedback`; short prompts that call `Open-UX:*` tools.
+One skill: `open-ux`, invoked automatically when the ask matches its description, or directly via `/open-ux:open-ux`. No separate commands: the skill routes straight to `Open-UX:*` tools.
 
 Tool reference: [`docs/TOOLS.md`](docs/TOOLS.md). Criteria pull: **`Open-UX:pack`**.
 

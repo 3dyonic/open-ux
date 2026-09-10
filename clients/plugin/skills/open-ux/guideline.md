@@ -1,12 +1,3 @@
----
-name: open-ux-guideline
-description: >-
- Primary deep read after Open-UX:pack; Open-UX:get_guideline for one cited
- rule. Field guide for the guideline JSON. When component[] is stamped,
- Open-UX:get_component is control context for that Card or job. Not a grade.
- Back to the pack.
----
-
 # Open UX guideline
 
 `Open-UX:get_guideline` opens one full cite. This is the record, not a score. We are a catalog. They choose what to take, including which fields. Then return to `Open-UX:pack`.

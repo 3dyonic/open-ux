@@ -28,10 +28,10 @@ Reference: [`docs/TOOLS.md`](docs/TOOLS.md). Vocabulary: [`docs/glossary.md`](do
 
 Fully qualified: `Open-UX:list_situations`, `Open-UX:get_situation`, `Open-UX:suggest_situations`, `Open-UX:list_guidelines`, `Open-UX:search_guidelines`, `Open-UX:get_guideline`, `Open-UX:pack`, `Open-UX:list_components`, `Open-UX:get_component`.
 
-Scope `pack` with `jobs=<card_id>`, `jobs=<leaf_id>`, container alias, or `guideline_ids`. The host returns cited criteria, not pass or fail. `/list` `/get` `/pack` stay on tools.
+Scope `pack` with `jobs=<card_id>`, `jobs=<leaf_id>`, container alias, or `guideline_ids`. The host returns cited criteria, not pass or fail.
 
 Agents use **`Open-UX:*` MCP tools**; the host fetches catalog data. **`pip install open-ux`** ships helper tools as **`open-ux`** subcommands (`open-ux helpers list`); agent helper: **`open-ux rank-pack`** after pack. See [`helpers/README.md`](helpers/README.md). Do not substitute CLI pack for MCP in agent sessions. Contributor logic stays in `scripts/`; not offered to agents.
 
 ## One skill
 
-`open-ux` is the only always on skill: hub [`SKILL.md`](clients/plugin/skills/open-ux/SKILL.md) plus read on demand references ([`docs/glossary.md`](docs/glossary.md), ask-shapes, examples, cards, …). Compose and review share the pull trigger. Claude agent file: [`clients/plugin/agents/open-ux.md`](clients/plugin/agents/open-ux.md).
+`open-ux` is the only always on skill: hub [`SKILL.md`](clients/plugin/skills/open-ux/SKILL.md) plus read on demand references ([`docs/glossary.md`](docs/glossary.md), ask-shapes, examples, cards, principles, …). No separate commands register alongside it; a person reaches the catalog by describing the task, or by invoking `/open-ux:open-ux` directly. Compose and review share the pull trigger. Claude agent file: [`clients/plugin/agents/open-ux.md`](clients/plugin/agents/open-ux.md).

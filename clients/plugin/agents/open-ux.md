@@ -54,4 +54,4 @@ Same catalog. No invite. Telemetry off. Point MCP clients at local stdio.
 
 Scope `pack` (`jobs=<card_id>`, `jobs=<leaf_id>`, container alias, or `guideline_ids`). Surfaces are context, not ids. Prefer a Card; use a Leaf id when the ask is one bay.
 
-Slash commands `/list` `/get` `/pack` plus aliases `/forms` `/actions` `/feedback` route into this same skill.
+No separate commands. The skill (`clients/plugin/skills/open-ux/SKILL.md`) is the only registered entry: invoked automatically when the ask matches its description, or directly via `/open-ux:open-ux`. A container alias such as `forms` is a `jobs=` value on `pack`, never its own command — see [`principles.md`](../skills/open-ux/principles.md).

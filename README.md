@@ -43,7 +43,7 @@ Open UX gives you two things: a **catalog of cited UX criteria** (one claim per 
 | **Catalog** | 204 rules from GOV.UK, Polaris, Ant Design, Fluent, and others, one claim per file, sources included. Browse at [open-ux.dev/catalog](https://open-ux.dev/catalog). |
 | **Routing** | Rules grouped by compose job (forms, actions, errors, navigation, …) so a pull returns task relevant criteria, not the whole library. |
 | **MCP server** | Hosted or local stdio; loads catalog data into your editor session. |
-| **Plugins** | Claude Code and Cursor skill plus slash commands that walk you through the loop. |
+| **Plugins** | Claude Code and Cursor skill that walks you through the loop — no separate commands to learn. |
 | **Helpers** | Optional local CLI (`open-ux rank-pack`, …) after a pull; same pip install, runs on your machine. |
 
 Compose and review use the same loop: name the task, pull criteria, open cites, decide what applies. Nothing here grades your UI or returns pass or fail; you stay in charge of the decision.
@@ -97,7 +97,7 @@ The plugin skill has the routing table (when to use which job, what to open inst
 3. **Open:** `get_guideline` for the full rule and URL. `get_component` when you need control level detail (variants, keyboard, a11y).
 4. **Apply:** use the claim on the work in hand. Optional: `open-ux rank-pack` to reorder one page locally.
 
-Same catalog on hosted MCP or local stdio. Plugins add the skill and slash commands (`/pack`, `/get`, …).
+Same catalog on hosted MCP or local stdio. Plugins add the skill; it is invoked automatically on a matching ask, or directly via `/open-ux:open-ux`.
 
 ## Catalog
 
@@ -142,9 +142,8 @@ Helpers on the same install: `open-ux helpers list` · [`helpers/README.md`](hel
 
 The **plugin** is not the rule catalog. It adds three things to your editor agent:
 
-1. **Skill:** when to pull UX rules and how to route (forms vs delete vs loading, …)
-2. **Slash commands:** `/pack`, `/get`, … as shortcuts to the tools
-3. **MCP connection:** how the agent reaches Open UX to fetch rules
+1. **Skill:** when to pull UX rules and how to route (forms vs delete vs loading, …) — the single registered entry point, invoked automatically on a matching ask or directly via `/open-ux:open-ux`
+2. **MCP connection:** how the agent reaches Open UX to fetch rules
 
 Rules still come from the **server:** either hosted (`open-ux.dev`) or a local Python process you run yourself. For hosted, [get a key](#get-a-key-hosted-catalog) first.
 

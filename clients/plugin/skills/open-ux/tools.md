@@ -1,6 +1,6 @@
 # Tools
 
-Fully qualified `Open-UX:*` names. `/list` `/get` `/pack` / map / cite stay on **MCP tools**. You compare Cards from [cards.md](cards.md). No winner from the host.
+Fully qualified `Open-UX:*` names. List, get, pack, map, and cite all stay on **MCP tools** — there are no separate slash commands. You compare Cards from [cards.md](cards.md). No winner from the host.
 
 ## MCP (agent path)
 
