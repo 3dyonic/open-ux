@@ -269,6 +269,24 @@ export function renderRedeem(root) {
     );
   }
 
+  function mcpConfigDisplayText() {
+    const mcpUrl = `${location.origin}/mcp`;
+    return JSON.stringify(
+      {
+        mcpServers: {
+          "open-ux": {
+            url: mcpUrl,
+            headers: {
+              Authorization: "Bearer <your key above>",
+            },
+          },
+        },
+      },
+      null,
+      2,
+    );
+  }
+
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
     const token = tokenInput.value.trim();
@@ -291,7 +309,7 @@ export function renderRedeem(root) {
       }
       issuedKey = data.key;
       keyText.textContent = maskKey(issuedKey);
-      mcpConfig.textContent = mcpConfigText(issuedKey);
+      mcpConfig.textContent = mcpConfigDisplayText();
       redeemCard.hidden = true;
       successCard.hidden = false;
       setTitle("Your key — Open UX");
