@@ -20,8 +20,8 @@ Example: `copy/polar/dont-duplicate-content.json` still has `"id": "polar.dont-d
 | --- | --- |
 | `rules/` | 204 guideline files |
 | `jobs.json` | 7 containers, 13 Situation Cards, Facet → Leaf map. Pointers only |
-| `components.json` | Closed widget registry `{id, title, path}` |
-| `components/` | 38 widget records (keywords, vs, variants, accessibility, keyboard) |
+| `components.json` | Closed component registry `{id, title, path}` |
+| `components/` | 38 component records (keywords, vs, variants, accessibility, keyboard) |
 | `index.json` | Generated `{id,title,name,jobs,lane,container,card,facet,leaf?}` |
 | `manifest.json` / `MANIFEST.md` | Generated category → source map for agents. No rule bodies |
 | `schema.json` | One guideline object |
@@ -32,7 +32,7 @@ Placement on every rule: `container`, `card`, `facet`, and `leaf` when that Face
 
 `Open-UX:pack` returns a **browse slice** per cite — not the full record. Rows include `overview`, `apply_when`, `not_when`, `rule`, `leaf`, `card`, `facet`, plus `hints` and `component` (arrays).
 
-**Today:** **52** cites carry authored `hints[]` where host language diverges from skim; **151** omit the key. Pack omits `hints` when the cite omits it. `component[]` is stamped on 131 cites and all 13 Cards where the widget applies; pack echoes cite ids; `get_situation`, scoped `list_situations`, and the suggest map echo Card ids (omit the key when empty).
+**Today:** **52** cites carry authored `hints[]` where host language diverges from skim; **151** omit the key. Pack omits `hints` when the cite omits it. `component[]` is stamped on 131 cites and all 13 Cards where the component applies; pack echoes cite ids; `get_situation`, scoped `list_situations`, and the suggest map echo Card ids (omit the key when empty).
 
 **Do not bridge `agent_hint` → `hints`.** They are different grains:
 
@@ -41,29 +41,31 @@ Placement on every rule: `container`, `card`, `facet`, and `leaf` when that Face
 | `overview`, `apply_when`, `not_when` | cite file; on pack row | Skim layer: what this cite is and when it fits |
 | `agent_hint` | cite file only (`get_guideline`) | Short how-to while composing |
 | `hints` | cite file; on pack row | Host-language extras this row’s skim does not already say. Omit the key when there are none — do not ship `[]`. |
-| `component` | Card in `jobs.json`; cite file; on pack row | Closed widget ids. Join key only (`button`). Not a variant list. |
+| `component` | Card in `jobs.json`; cite file; on pack row | Closed component ids. Join key only (`button`). Not a variant list. |
 | `hints` on a Card | `jobs.json` | Situation-map scan today. Do not copy component `keywords` here. |
 
-Browse works without cite-level tags: use the pack row, then `get_guideline` when you need `agent_hint` or `description`. Optional local reorder: `helpers/rank_pack.py` (BM25 over pack scan fields; host does not rank). See [`helpers/registry.json`](../helpers/registry.json).
+Browse works without cite-level tags: use the pack row, then `get_guideline` when you need `agent_hint` or `description`. Optional local reorder: `open-ux rank-pack` (BM25 over pack scan fields; host does not rank). See [`helpers/registry.json`](../helpers/registry.json).
 
 **Hints pass:** add cite `hints[]` only when the row needs host words skim does not already say; omit the key when it does not. Manifest: `scripts/cite_hints.json`.
 
 ## Component (locked)
 
-A component is a named widget (`button`). It is a matching dimension, not a Card and not a cite. JSON cannot hold an object pointer. Store the id; resolve the record at load time — same join as `card`, `leaf`, and `guideline_ids`.
+Named components (`button`) in `catalog/components/` — a context helper for Cards and jobs, joined by **`component[]`** on Cards and cites. JSON stores the id; the loader resolves the record at load time.
 
 **Stamp `component[]` only on the Card and the cite.**
 
 | Grain | `component[]` | Why |
 | --- | --- | --- |
-| Card | yes | Does this job use the widget? |
-| Cite | yes | Is this claim about the widget? |
+| Card | yes | Does this job use the component? |
+| Cite | yes | Is this claim about the component? |
 | Facet / Leaf | no | Inherit from the Card. Do not restamp. |
-| Container | no | A union of widgets is not a match. |
+| Container | no | A union of components is not a match. |
 
-Pack echoes the cite’s `component[]` (ids only). Do not put `variant`, `size`, `state`, `accessibility`, or `keyboard` on the pack row — a row can list more than one widget, so those axes have no owner. Open the component record for that shape via `Open-UX:get_component` (section switches omit keys when false; `keywords` and `used_on` are opt-in). Index: `Open-UX:list_components`.
+**Wire:** Cards and cites stamp `component[]`; `pack` with `jobs=` returns cite rows that echo those ids; `Open-UX:list_components` / `Open-UX:get_component` and `helpers/get_component.py` return the component record.
 
-**Keywords stay on the component record.** Do not copy them into `jobs.json`. Do not echo them onto every pack row. Inside a Card page, every cite that stamped the same widget would repeat the same four words; that adds no rank.
+Pack echoes the cite’s `component[]` (ids only). Do not put `variant`, `size`, `state`, `accessibility`, or `keyboard` on the pack row — a row can list more than one component, so those axes have no owner. Open the component record for that shape via `Open-UX:get_component` (section switches omit keys when false; `keywords` and `used_on` are opt-in). Index: `Open-UX:list_components`.
+
+**Keywords stay on the component record.** Do not copy them into `jobs.json`. Do not echo them onto every pack row. Inside a Card page, every cite that stamped the same component would repeat the same four words; that adds no rank.
 
 Cite `hints[]` are host words this claim needs that `overview` / `apply_when` / `rule` / `component[]` do not already say. Omit the key when you have none — `govuk.button-types-named` omits. Do not add sibling-source synonyms (`emphasis`, `loudness`). Do not ship `[]`. Do not fill from `agent_hint`. Do not fill from component `keywords`.
 

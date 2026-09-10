@@ -1,32 +1,31 @@
 {
-  "note": "Optional Python helpers for agents. Available, not required — Open-UX:* tools stay first-class. Do not invent a pack fetcher or BM25 ranker.",
-  "helpers": [
-    {
-      "id": "pack",
-      "path": "helpers/pack.py",
-      "cli": "open-ux pack",
-      "summary": "Same pack wire as Open-UX:pack without an MCP session.",
-      "usage": "python3 helpers/pack.py --jobs <card_id>"
-    },
+  "note": "pip install open-ux ships every helper as open-ux CLI subcommands on the user's machine. MCP (Open-UX:*) fetches catalog data on the host. agent_helpers run locally after a tool response — not substitutes for MCP. contributor_wire is terminal/CI only.",
+  "agent_helpers": [
     {
       "id": "rank_pack",
-      "path": "helpers/rank_pack.py",
-      "summary": "BM25 reorder of one pack page (overview, apply_when, hints, component). Fail-open. Host does not rank.",
-      "usage": "python3 helpers/rank_pack.py --query \"…\" < pack.json"
-    },
+      "cli": "open-ux rank-pack",
+      "summary": "LLM-local BM25 reorder of one pack page after Open-UX:pack. Shipped with pip install open-ux. Host does not rank.",
+      "usage": "open-ux rank-pack --query \"…\" < pack.json"
+    }
+  ],
+  "contributor_wire": [
     {
-      "id": "mcp_call",
-      "path": "helpers/mcp_call.py",
-      "cli": "open-ux tools list | open-ux tools call …",
-      "summary": "tools/list and tools/call without a Claude session. Not the skill path.",
-      "usage": "python3 helpers/mcp_call.py list"
+      "id": "pack",
+      "cli": "open-ux pack",
+      "summary": "Same pack wire as Open-UX:pack — terminal/CI only, not the agent skill path.",
+      "usage": "open-ux pack --jobs <card_id>"
     },
     {
       "id": "get_component",
-      "path": "helpers/get_component.py",
       "cli": "open-ux component <id>",
-      "summary": "Same get_component wire as Open-UX:get_component without an MCP session.",
-      "usage": "python3 helpers/get_component.py button --include-used-on"
+      "summary": "Same get_component wire — terminal/CI only, not the agent skill path.",
+      "usage": "open-ux component button --include-used-on"
+    },
+    {
+      "id": "mcp_call",
+      "cli": "open-ux tools list | open-ux tools call …",
+      "summary": "tools/list and tools/call for terminal debug — not the agent skill path.",
+      "usage": "open-ux tools list"
     }
   ]
 }

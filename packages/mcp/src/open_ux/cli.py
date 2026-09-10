@@ -24,6 +24,8 @@ examples:
   open-ux cite forms.field_labels.visible_label
   open-ux components
   open-ux component button --include-used-on
+  open-ux rank-pack --query "inline error" < pack.json
+  open-ux helpers list
   open-ux tools list
   python -m open_ux stdio
   OPEN_UX_MODE=hosted python -m open_ux http
@@ -135,7 +137,7 @@ def _build_parser() -> argparse.ArgumentParser:
     )
     pack_parser.add_argument(
         "--query",
-        help="Ignored on the host. Use helpers/rank_pack.py locally if needed.",
+        help="Ignored on the host. Use open-ux rank-pack locally if needed.",
     )
     pack_parser.add_argument(
         "--limit",
@@ -153,9 +155,9 @@ def _build_parser() -> argparse.ArgumentParser:
     cite = sub.add_parser("cite", help="get_guideline — one cited body")
     cite.add_argument("guideline_id", help="Guideline id.")
 
-    sub.add_parser("components", help="list_components — widget index")
+    sub.add_parser("components", help="list_components — component index")
 
-    component = sub.add_parser("component", help="get_component — one widget record")
+    component = sub.add_parser("component", help="get_component — one component record")
     component.add_argument("component_id", help="Widget id.")
     component.add_argument(
         "--no-vs",
@@ -185,7 +187,7 @@ def _build_parser() -> argparse.ArgumentParser:
     component.add_argument(
         "--include-used-on",
         action="store_true",
-        help="Include Cards and cites that stamp this widget.",
+        help="Include Cards and cites that stamp this component.",
     )
 
     tools = sub.add_parser("tools", help="tools/list and tools/call")
@@ -199,6 +201,28 @@ def _build_parser() -> argparse.ArgumentParser:
         default="{}",
         help='JSON object of arguments, e.g. \'{"jobs":"design_a_form"}\'.',
     )
+
+    rank = sub.add_parser(
+        "rank-pack",
+        help="LLM-local BM25 reorder of one pack page (after Open-UX:pack)",
+    )
+    rank.add_argument(
+        "--query",
+        required=True,
+        help="Words to rank this page. Does not drop cites.",
+    )
+    rank.add_argument(
+        "pack",
+        nargs="?",
+        help="Pack JSON path. Default: stdin.",
+    )
+
+    helpers = sub.add_parser(
+        "helpers",
+        help="Helper catalog shipped with pip install open-ux",
+    )
+    helpers_sub = helpers.add_subparsers(dest="helpers_cmd")
+    helpers_sub.add_parser("list", help="List agent_helpers and contributor_wire CLIs")
 
     sub.add_parser("stdio", help="Run the local MCP server on stdio.")
     sub.add_parser("http", help="Run the HTTP server.")
@@ -362,6 +386,25 @@ def main(argv: list[str] | None = None) -> int:
 
     if command in SERVER_MODES:
         return _run_server(command, args)
+
+    if command == "rank-pack":
+        from open_ux.rank_pack_cmd import run_rank_pack
+
+        rank_argv = ["--query", args.query]
+        if args.compact:
+            rank_argv.append("--compact")
+        if args.pack:
+            rank_argv.append(args.pack)
+        return run_rank_pack(rank_argv)
+
+    if command == "helpers":
+        if args.helpers_cmd != "list":
+            _err("usage: open-ux helpers list", color=color)
+            return 2
+        from open_ux.helpers_registry import load_helpers_registry
+
+        _dump(load_helpers_registry(), compact=args.compact)
+        return 0
 
     called = _tool_payload(command, args, color=color)
     if isinstance(called, int):

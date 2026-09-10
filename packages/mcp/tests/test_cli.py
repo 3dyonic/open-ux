@@ -79,11 +79,25 @@ def test_cli_components_and_component(
     assert with_used_on["component"]["used_on"]["cites_total"] == 32
 
 
+def test_cli_rank_pack_reorders_page(
+    live_catalog: Path, capsys: pytest.CaptureFixture[str], tmp_path: Path
+) -> None:
+    assert main(["pack", "--jobs", "handle_form_errors"]) == 0
+    pack_path = tmp_path / "pack.json"
+    pack_path.write_text(capsys.readouterr().out, encoding="utf-8")
+    assert main(["rank-pack", "--query", "inline error", str(pack_path)]) == 0
+    ranked = json.loads(capsys.readouterr().out)
+    assert ranked["count"] >= 1
+    assert "verdict" not in ranked
+
+
 def test_helpers_have_no_path_hacks() -> None:
     for name in ("pack.py", "mcp_call.py", "get_component.py"):
         source = (ROOT / "helpers" / name).read_text(encoding="utf-8")
         assert "sys.path.insert" not in source
         assert "from open_ux.cli import main" in source
+    rank = (ROOT / "helpers" / "rank_pack.py").read_text(encoding="utf-8")
+    assert "from open_ux.rank_pack_cmd import run_rank_pack" in rank
 
 
 def test_client_has_no_catalog_import() -> None:

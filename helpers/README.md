@@ -1,23 +1,34 @@
-# Helpers (for agents)
+# Helpers
 
-Optional Python helpers agents may run locally. **Available, not required** — `Open-UX:*` MCP tools stay first-class. Do not invent a pack fetcher or BM25 ranker.
-
-Canonical list: [`registry.json`](registry.json).
-
-| Helper | When |
-| --- | --- |
-| `pack.py` | Same wire as `Open-UX:pack` without MCP |
-| `rank_pack.py` | Reorder one pack page after `Open-UX:pack` (host does not rank) |
-| `get_component.py` | Same wire as `Open-UX:get_component` without MCP |
-| `mcp_call.py` | `tools/list` and `tools/call` without a Claude session |
-
-From repo root (after `pip install open-ux` or editable install):
+Canonical list: [`registry.json`](registry.json). **`pip install open-ux`** ships every entry as an **`open-ux`** CLI subcommand on the user's machine.
 
 ```bash
-python3 helpers/pack.py --jobs design_a_form
-python3 helpers/rank_pack.py --query "delete confirm" < pack.json
-python3 helpers/get_component.py button --include-used-on
-python3 helpers/mcp_call.py list
+pip install open-ux
+open-ux helpers list
 ```
 
-Contributor catalog scripts live in [`scripts/`](../scripts/) — not offered to agents.
+## Agent helpers (LLM-local)
+
+Run **after** MCP tools return data.
+
+| CLI | When |
+| --- | --- |
+| `open-ux rank-pack` | Reorder one pack page after `Open-UX:pack` (host does not rank) |
+
+```bash
+open-ux rank-pack --query "delete confirm" < pack.json
+```
+
+## Contributor wire (terminal / CI)
+
+Not the agent skill path when MCP is connected.
+
+| CLI | Wire |
+| --- | --- |
+| `open-ux pack` | `Open-UX:pack` |
+| `open-ux component` | `Open-UX:get_component` |
+| `open-ux tools list` / `open-ux tools call` | MCP debug |
+
+Repo shims in this directory (`pack.py`, `rank_pack.py`, …) delegate to the same CLI for contributors who clone the repo.
+
+Catalog maintenance: [`scripts/`](../scripts/) — not offered to agents.

@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""Optional: tools/list and tools/call without a Claude session.
+"""Contributor / terminal debug: tools/list and tools/call without a Claude session.
+
+Not the agent skill path — agents use Open-UX:* MCP tools directly.
 
 Not the skill path. In Claude, call Open-UX:* tools from the plugin MCP.
 

@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 """Thin pack helper: jobs= or guideline_ids in, cited criteria out.
 
-Same tight wire as Open-UX:pack. No file. No host pass or fail.
-Cited criteria help you decide; the decision is yours.
-
-Available, not required — Open-UX:pack stays first-class. Your choice.
+Same tight wire as Open-UX:pack. Contributor / terminal / CI — not the agent
+skill path. Agents use Open-UX:pack. Available, not required. No file. No host pass or fail.
 
 Usage (from repo root, after ``pip install open-ux`` or an editable install):
 

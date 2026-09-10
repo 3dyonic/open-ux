@@ -1,10 +1,10 @@
 ---
 name: open-ux-guideline
 description: >-
-  Use when opening one Open UX guideline (Open-UX:get_guideline) or
-  reading a full cited record. Field guide for the guideline JSON —
-  what each field gives and how to use it. Not a grade. After you
-  read, go back to the pack.
+  Primary deep read after Open-UX:pack — Open-UX:get_guideline for one cited
+  rule. Field guide for the guideline JSON. When component[] is stamped,
+  Open-UX:get_component is control context for that Card or job. Not a grade.
+  Back to the pack.
 ---
 
 # Open UX guideline
@@ -31,10 +31,14 @@ description: >-
     "citation": [{ "source": "", "url": "" }],
     "facet": "",
     "card": "",
-    "container": ""
+    "container": "",
+    "leaf": "",
+    "component": []
   }
 }
 ```
+
+`leaf` — Situation bay id (compose job slice). **`component[]`** — optional component ids (`button`); omit on most cites. When present, open `get_component` for the record.
 
 ## Fields
 
@@ -53,12 +57,13 @@ description: >-
 | `name` | Claim + source | Who published it; two sources can disagree |
 | `id` | Key | Already used to fetch this record |
 | `title` | Slug | Skip on a scan |
-| `facet` / `card` / `container` | Place in the tree | Sibling cites or another Card |
+| `facet` / `card` / `container` / `leaf` | Place in the Situation tree | Sibling cites or another Card |
+| `component[]` | Component join ids | When stamped — `get_component` for variants, a11y, keyboard |
 
 ## Pack browse row
 
 `Open-UX:pack` returns a slice of each cite — not this full shape. The row has `overview`, `apply_when`, `not_when`, `rule`, placement keys, and `hints` / `component` (arrays).
 
-`component[]` is closed widget ids (`button`) — join only, authored on the Card and the cite. Variants and `keywords` live on the component record; do not expect them on this row. Open `Open-UX:get_component` for variant names and accessibility notes when `component[]` names a widget. `hints[]` are host extras this skim does not already say; omit the key when there are none. Do not expect `agent_hint` there — that stays on this full record. Skim on the pack; open `get_guideline` when you need the how-to.
+`component[]` is closed component ids (`button`) — join only, authored on the Card and the cite. Variants and `keywords` live on the component record; do not expect them on this row. Open `Open-UX:get_component` for variant names and accessibility notes when `component[]` names a component. `hints[]` are host extras this skim does not already say; omit the key when there are none. Do not expect `agent_hint` there — that stays on this full record. Skim on the pack; open `get_guideline` when you need the how-to.
 
 The decision is yours.

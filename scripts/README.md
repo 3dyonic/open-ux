@@ -1,11 +1,11 @@
 # Scripts (contributors)
 
-Catalog and repo maintenance — **not** offered to agents. Agents use [`helpers/`](../helpers/) instead ([`helpers/registry.json`](../helpers/registry.json)).
+Catalog and repo maintenance — **not** offered to agents. Agents use **`Open-UX:*` MCP tools** plus optional LLM-local **`open-ux rank-pack`** (`pip install open-ux`) — [`helpers/README.md`](../helpers/README.md).
 
 | Script | Role |
 | --- | --- |
 | `apply_component_stamps.py` | Stamp Card/cite `component[]` from `component_stamps.json` |
-| `component_stamps.json` | Stamp manifest (Card + cite → widget ids) |
+| `component_stamps.json` | Stamp manifest (Card + cite → component ids) |
 | `apply_cite_hints.py` | Apply cite `hints[]` from `cite_hints.json` |
 | `cite_hints.json` | Cite hints manifest (host scan extras only) |
 | `apply_stamped_catalog.py` | Apply stamped catalog generation |

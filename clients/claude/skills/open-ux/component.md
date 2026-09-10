@@ -1,15 +1,31 @@
 ---
 name: open-ux-component
 description: >-
-  Use when opening one Open UX widget record (Open-UX:get_component) after
-  seeing component[] on a pack row or Card. Field guide for the widget JSON —
-  variants and accessibility, not cited criteria. After you read, go back to
-  the pack.
+  Context helper for Cards and jobs — use when a pack row or Card stamps
+  component[] and the ask is the control (variants, a11y, keyboard). Field
+  guide for Open-UX:get_component and the component JSON. After you read, go
+  back to the pack.
 ---
 
 # Open UX component
 
-`Open-UX:get_component` opens one widget record. This is anatomy and variants, not a cite score. Open only for ids already on a pack row or Card — not all 38 upfront. Then return to `Open-UX:pack`.
+Component records live in `catalog/components/` — a context helper joined to Cards and cites by **`component[]`**. They do not replace **`pack`** or **`get_guideline`**.
+
+`Open-UX:get_component` opens one component record — variants, accessibility, keyboard — not a cite score. Open only for ids already on a pack row or Card — not all 38 upfront. Usually after **`get_guideline`** on the same row. Then return to `Open-UX:pack`.
+
+## Parameters
+
+| Param | Default | Section |
+| --- | --- | --- |
+| `id` | — | Closed id from `component[]` |
+| `include_vs` | true | Near-neighbor contrasts |
+| `include_variants` | true | Named axes (role, size, …) |
+| `include_accessibility` | true | A11y notes |
+| `include_keyboard` | true | Keyboard behavior |
+| `include_keywords` | false | Synonyms (local search only) |
+| `include_used_on` | false | Cards and cites that stamp this id |
+
+False omits the key from the response (like pack `hints`).
 
 ## Shape
 
@@ -34,19 +50,19 @@ Section switches omit keys when false (like pack `hints`). Default fetch include
 
 ## Fields
 
-**`overview`** — Short definition of what this widget is. Same grab as the index row. Start here.
+**`overview`** — Short definition of what this component is. Same grab as the index row. Start here.
 
 | Field | What it gives | How to use it |
 | --- | --- | --- |
 | `overview` | Short definition | Fast confidence. Not a grade. |
-| `apply_when` | When this widget fits | Button vs link vs toggle |
-| `not_when` | Closest wrong widget | Set aside if that is your case |
+| `apply_when` | When this component fits | Button vs link vs toggle |
+| `not_when` | Closest wrong control | Set aside if that is your case |
 | `vs` | Near-neighbor contrasts | Pick the right control |
 | `variants` | Named axes (role, size, …) | Match design-system names |
-| `accessibility` | A11y notes for this widget | Compose accessible markup |
+| `accessibility` | A11y notes for this component | Compose accessible markup |
 | `keyboard` | Keyboard behavior | Focus and activation |
 | `keywords` | Synonyms (opt-in) | Local search only; not on pack rows |
-| `used_on` | Cards and cites that stamp this id (opt-in) | See where the widget appears |
+| `used_on` | Cards and cites that stamp this id (opt-in) | See where the component appears |
 
 ## Pack browse row
 
