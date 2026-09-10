@@ -8,6 +8,7 @@ from fastmcp import Client
 
 from open_ux.catalog import EMPTY_NOTE, citations
 from open_ux.jobs import CARD_IDS, CONTAINER_IDS, JOB_ALIASES, LEAF_IDS
+from open_ux.pack import PACK_KEYS, PACK_ROW_KEYS
 from open_ux.server import create_mcp
 
 REMAINING_SEED = (
@@ -44,15 +45,15 @@ async def test_empty_catalog_tools_are_honest(tmp_env: Path) -> None:
         assert data["guidelines"] == []
         assert data["count"] == 0
         assert data["catalog"]["status"] == "empty"
-        assert "UNS-44" in data["note"]
+        assert data["note"] == EMPTY_NOTE
 
         got = await client.call_tool("get_guideline", {"id": "forms.field_labels.visible_label"})
         body = got.data
         assert body["found"] is False
         assert "forms.field_labels.visible_label" in body["error"]
 
-        audited = await client.call_tool("audit", {})
-        result = audited.data
+        packed = await client.call_tool("pack", {})
+        result = packed.data
         assert result["guidelines"] == []
         assert "requires jobs or guideline_ids" in result["error"]
         assert EMPTY_NOTE in result["note"]
@@ -65,11 +66,11 @@ async def test_empty_catalog_tools_are_honest(tmp_env: Path) -> None:
 async def test_unknown_id_is_empty_not_invented(tmp_env: Path) -> None:
     mcp = create_mcp(hosted=False)
     async with Client(mcp) as client:
-        audited = await client.call_tool(
-            "audit",
+        packed = await client.call_tool(
+            "pack",
             {"guideline_ids": ["not.a.real.rule"]},
         )
-        result = audited.data
+        result = packed.data
         assert result["guidelines"] == []
         assert result["count"] == 0
         assert "verdict" not in result
@@ -172,7 +173,7 @@ async def test_search_lane_forms_only(live_catalog: Path) -> None:
 
 
 @pytest.mark.asyncio
-async def test_search_query_orders_without_filtering(live_catalog: Path) -> None:
+async def test_search_query_does_not_reorder(live_catalog: Path) -> None:
     mcp = create_mcp(hosted=False)
     async with Client(mcp) as client:
         wide = await client.call_tool("search_guidelines", {"limit": 50, "offset": 0})
@@ -181,8 +182,9 @@ async def test_search_query_orders_without_filtering(live_catalog: Path) -> None
             {"query": "helper text", "limit": 50, "offset": 0},
         )
         assert ranked.data["total"] == wide.data["total"]
-        ranked_ids = [row["id"] for row in ranked.data["guidelines"]]
-        assert "fluent.helper-text-below" in ranked_ids[:10]
+        assert [row["id"] for row in ranked.data["guidelines"]] == [
+            row["id"] for row in wide.data["guidelines"]
+        ]
 
 
 @pytest.mark.asyncio
@@ -279,21 +281,43 @@ async def test_get_harvest5_guideline_returns_full_body(live_catalog: Path) -> N
 
 
 @pytest.mark.asyncio
-async def test_audit_without_scope_fails(live_catalog: Path) -> None:
+async def test_pack_query_does_not_reorder(live_catalog: Path) -> None:
     mcp = create_mcp(hosted=False)
     async with Client(mcp) as client:
-        audited = await client.call_tool("audit", {})
-        result = audited.data
+        baseline = await client.call_tool(
+            "pack", {"jobs": "design_actions_and_ctas", "limit": 50}
+        )
+        with_query = await client.call_tool(
+            "pack",
+            {
+                "jobs": "design_actions_and_ctas",
+                "query": "action panel",
+                "limit": 50,
+            },
+        )
+        assert with_query.data["total"] == baseline.data["total"]
+        assert [row["id"] for row in with_query.data["guidelines"]] == [
+            row["id"] for row in baseline.data["guidelines"]
+        ]
+        assert "query_fallback" not in with_query.data
+
+
+@pytest.mark.asyncio
+async def test_pack_without_scope_fails(live_catalog: Path) -> None:
+    mcp = create_mcp(hosted=False)
+    async with Client(mcp) as client:
+        packed = await client.call_tool("pack", {})
+        result = packed.data
         assert "requires jobs or guideline_ids" in result["error"]
         assert result["guidelines"] == []
 
 
 @pytest.mark.asyncio
-async def test_audit_guideline_ids_only_those_rules(live_catalog: Path) -> None:
+async def test_pack_guideline_ids_only_those_rules(live_catalog: Path) -> None:
     mcp = create_mcp(hosted=False)
     async with Client(mcp) as client:
-        audited = await client.call_tool(
-            "audit",
+        packed = await client.call_tool(
+            "pack",
             {
                 "guideline_ids": [
                     FORM_SEED,
@@ -301,7 +325,7 @@ async def test_audit_guideline_ids_only_those_rules(live_catalog: Path) -> None:
                 ],
             },
         )
-        result = audited.data
+        result = packed.data
         ids = [row["id"] for row in result["guidelines"]]
         assert ids == [
             FORM_SEED,
@@ -310,24 +334,18 @@ async def test_audit_guideline_ids_only_those_rules(live_catalog: Path) -> None:
         assert "error" not in result
         assert "verdict" not in result
         for row in result["guidelines"]:
-            assert set(row) == {
-                "id",
-                "title",
-                "name",
-                "overview",
-                "rule",
-                "facet",
-            }
+            assert set(PACK_ROW_KEYS) <= set(row)
+            assert set(row) <= set(PACK_KEYS)
 
 
 @pytest.mark.asyncio
-async def test_audit_schema_shows_jobs_enum_not_target(live_catalog: Path) -> None:
+async def test_pack_schema_shows_jobs_enum_not_target(live_catalog: Path) -> None:
     mcp = create_mcp(hosted=False)
     async with Client(mcp) as client:
         tools = await client.list_tools()
-    audit_tool = next(t for t in tools if t.name == "audit")
-    schema = getattr(audit_tool, "input_schema", None) or getattr(
-        audit_tool, "inputSchema"
+    pack_tool = next(t for t in tools if t.name == "pack")
+    schema = getattr(pack_tool, "input_schema", None) or getattr(
+        pack_tool, "inputSchema"
     )
     props = schema["properties"]
     assert "target" not in props
@@ -337,36 +355,79 @@ async def test_audit_schema_shows_jobs_enum_not_target(live_catalog: Path) -> No
         for branch in props["jobs"]["anyOf"]
         if "enum" in branch
     )
-    assert set(jobs_enum) == set(CARD_IDS) | set(CONTAINER_IDS) | set(JOB_ALIASES)
-    assert len(jobs_enum) == 13 + 7 + 3
-    for leaf in LEAF_IDS:
-        assert leaf not in jobs_enum
+    assert set(jobs_enum) == set(CARD_IDS) | set(CONTAINER_IDS) | set(JOB_ALIASES) | set(
+        LEAF_IDS
+    )
+    assert len(jobs_enum) == 13 + 7 + 3 + len(LEAF_IDS)
+    assert "pick_primary_action" in jobs_enum
     assert "checkout" not in jobs_enum
-    description = audit_tool.description or ""
-    assert "Situation Card or container" in description
+    description = pack_tool.description or ""
+    assert "Situation Card" in description
+    assert "Leaf" in description
     assert "Does not take a file" in description
     assert "Does not return pass or fail" in description
-    assert "Leaf ids are not needs" in description
 
 
 @pytest.mark.asyncio
-async def test_audit_jobs_returns_criteria(live_catalog: Path) -> None:
+async def test_pack_leaf_jobs_scopes_criteria(live_catalog: Path) -> None:
     mcp = create_mcp(hosted=False)
     async with Client(mcp) as client:
-        audited = await client.call_tool(
-            "audit", {"jobs": "design_a_form"}
+        packed = await client.call_tool("pack", {"jobs": "pick_primary_action"})
+        result = packed.data
+        assert result["count"] >= 1
+        ids = {row["id"] for row in result["guidelines"]}
+        assert "ant.one-cta-per-screen" in ids
+        assert all(row["leaf"] == "pick_primary_action" for row in result["guidelines"])
+
+
+@pytest.mark.asyncio
+async def test_pack_jobs_returns_criteria(live_catalog: Path) -> None:
+    mcp = create_mcp(hosted=False)
+    async with Client(mcp) as client:
+        packed = await client.call_tool(
+            "pack", {"jobs": "design_a_form"}
         )
-        result = audited.data
+        result = packed.data
         assert result["count"] >= 1
         assert "verdict" not in result
         assert "summary" not in result
         assert result["host"] == "citations_only"
         row = result["guidelines"][0]
-        assert set(row) == {
-            "id",
-            "title",
-            "name",
-            "overview",
-            "rule",
-            "facet",
-        }
+        assert set(PACK_ROW_KEYS) <= set(row)
+        assert set(row) <= set(PACK_KEYS)
+
+
+@pytest.mark.asyncio
+async def test_list_components_returns_index(live_catalog: Path) -> None:
+    mcp = create_mcp(hosted=False)
+    async with Client(mcp) as client:
+        listed = await client.call_tool("list_components", {})
+        payload = listed.data
+        assert payload["count"] == 38
+        assert payload["total"] == 38
+        assert set(payload["components"][0]) == {"id", "title", "overview"}
+
+
+@pytest.mark.asyncio
+async def test_get_component_default_and_used_on(live_catalog: Path) -> None:
+    mcp = create_mcp(hosted=False)
+    async with Client(mcp) as client:
+        got = await client.call_tool("get_component", {"id": "button"})
+        payload = got.data
+        assert payload["found"] is True
+        component = payload["component"]
+        assert component["id"] == "button"
+        assert "variants" in component
+        assert "keywords" not in component
+        assert "used_on" not in component
+
+        with_used_on = await client.call_tool(
+            "get_component",
+            {"id": "button", "include_used_on": True},
+        )
+        used_on = with_used_on.data["component"]["used_on"]
+        assert used_on["cards_total"] == 8
+        assert used_on["cites_total"] == 31
+
+        missing = await client.call_tool("get_component", {"id": "not_a_widget"})
+        assert missing.data["found"] is False

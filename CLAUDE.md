@@ -23,6 +23,6 @@ Install from this repo: `claude plugin marketplace add 3dyonic/open-ux` then `cl
 
 ## Use
 
-One skill: `open-ux`. Commands: `/list` `/get` `/audit`, aliases `/forms` `/actions` `/feedback` — short prompts that call `Open-UX:*` tools.
+One skill: `open-ux`. Commands: `/list` `/get` `/pack`, aliases `/forms` `/actions` `/feedback` — short prompts that call `Open-UX:*` tools.
 
-Scope `Open-UX:audit` (`jobs=` or `guideline_ids`). Surfaces (`home` / `cart` / `checkout`) are context, not ids.
+Scope `Open-UX:pack` (`jobs=` or `guideline_ids`). Surfaces (`home` / `cart` / `checkout`) are context, not ids. You decide which Cards to open. Widget records: `Open-UX:list_components`, `Open-UX:get_component`. Helpers: [`helpers/registry.json`](helpers/registry.json) — `helpers/pack.py`, `helpers/rank_pack.py`, `helpers/get_component.py` (available, not required). Contributor scripts: `scripts/` only.

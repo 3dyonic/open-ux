@@ -66,6 +66,16 @@ def tokens(text: str) -> list[str]:
     ]
 
 
+def _join_terms(value: Any) -> str:
+    if value is None:
+        return ""
+    if isinstance(value, str):
+        return value
+    if isinstance(value, (list, tuple)):
+        return " ".join(str(item) for item in value if item)
+    return str(value)
+
+
 def guideline_blob(guideline: dict[str, Any]) -> str:
     return " ".join(
         [
@@ -78,6 +88,41 @@ def guideline_blob(guideline: dict[str, Any]) -> str:
             str(guideline.get("facet") or ""),
         ]
     )
+
+
+def pack_blob(row: dict[str, Any]) -> str:
+    """Text the local ranker uses. Pack scan fields only — not description or pass/fail."""
+    return " ".join(
+        [
+            str(row.get("id") or ""),
+            str(row.get("name") or ""),
+            str(row.get("overview") or ""),
+            str(row.get("apply_when") or ""),
+            str(row.get("not_when") or ""),
+            str(row.get("rule") or ""),
+            _join_terms(row.get("hints")),
+            _join_terms(row.get("component")),
+            str(row.get("leaf") or ""),
+            str(row.get("card") or ""),
+            str(row.get("facet") or ""),
+        ]
+    )
+
+
+def rank_pack(payload: dict[str, Any], query: str | None) -> dict[str, Any]:
+    """Reorder a pack page. No scores in the result. Fail-open if nothing matches."""
+    rows = list(payload.get("guidelines") or [])
+    out = dict(payload)
+    q = (query or "").strip()
+    if not q or not rows:
+        return out
+    order, matched = rank_blobs(q, [pack_blob(row) for row in rows])
+    out["guidelines"] = [rows[i] for i in order]
+    if not matched:
+        out["query_fallback"] = True
+    elif "query_fallback" in out:
+        del out["query_fallback"]
+    return out
 
 
 def _idf(df: int, n_docs: int) -> float:

@@ -3,14 +3,12 @@ name: open-ux
 description: >-
   Use when building or checking UI — composing or reviewing a form, field
   labels, input choice, validation, buttons or CTAs, delete/unsaved confirm,
-  empty or error states, navigation, a table or dashboard, a modal, or a
-  multi-step flow. Open UX is a cited UX catalog for agents. Pick one
-  Situation Card, then call Open-UX:get_situation and Open-UX:audit with
-  jobs=<card_id>. A browse catalog. Expect pages; loop next_offset;
-  go in and out of a cite. Start from overview — short definition,
-  the fast grab. Don't invent UX rules from memory; use the cited
-  records on work already in hand.
-  We are a catalog; they choose what to take. Cited criteria help
+  loading, 404, or error states, navigation, a table or dashboard, a modal, or a
+  multi-step flow. Open UX is a cited UX catalog for agents. Open Situation
+  Cards that fit; you decide which packs to take. Call Open-UX:get_situation
+  and Open-UX:pack with jobs=<card_id>. Host does not pick a Card. Expect pages; loop next_offset; go in and out of a cite. Start from
+  overview — short definition, the fast grab. Don't invent UX rules from memory;
+  use the cited records on work already in hand. Cited criteria help
   you decide; the decision is yours. Returns citations, not pass or fail.
   home/cart/checkout are context, not ids. Use Open-UX:suggest_situations
   only if the task is a vague surface or pasted UI. Cite via
@@ -20,33 +18,46 @@ description: >-
 
 # Open UX
 
-Need in → cited criteria out. We are a catalog. They choose what to take. You already have the UI. We hand you a page of matching cited rules so you don't invent UX from memory. Cited criteria help you decide. The decision is yours.
+Need in → cited criteria out. We are a catalog. They choose what to take. You already have the UI. We hand you a page of matching cited rules so you don't invent UX from memory. Cited criteria help you decide. The decision is yours. The host does not pick a Card.
 
-Compose and review share this one trigger. Pick a Situation Card, call `Open-UX:get_situation`, then `Open-UX:audit` with `jobs=<card_id>`.
+Compose and review share this one trigger. Compare Cards that fit. Open more than one if the ask spans them. Call `Open-UX:get_situation`, then `Open-UX:pack` with `jobs=<card_id>`. You decide what to take.
 
-`audit` is the shelf. Expect pagination: pages of 10. Use this page. If `next_offset` is set, more of the catalog is there — call again with that `offset` if you want more. You choose what to take. `query` orders the shelf. If `query_fallback` is set, you are on the unfiltered shelf.
+`pack` is the pack page. Expect pagination: pages of 10. Use this page. If `next_offset` is set, more of the catalog is there — call again with that `offset` if you want more. The host does not rank. Do not write a pack fetcher or a BM25 ranker — use the Python helpers below.
 
-Go in and out. `Open-UX:get_guideline` opens one full record; then come back to the shelf, another page, or another Card. Cross-reference similar rules — same `facet`, `Open-UX:search_guidelines`, or the Reject column for the Card that ask actually is. Two houses on one Card can disagree; say both.
+Go in and out. `Open-UX:get_guideline` opens one full cite; `Open-UX:get_component` opens one widget record when `component[]` names an id — then come back to the pack, another page, or another Card. Cross-reference similar rules — same `facet`, `Open-UX:search_guidelines`, or other Cards in the table. Two sources on one Card can disagree; say both.
 
 ## Shapes
 
 **`overview`** is the short definition — what this cite *is*. Start there. Fast confidence. Not a grade.
 
-`audit` is a page, not the Card:
+`pack` is a page, not the Card:
 
 ```json
 {
-  "guidelines": [{ "id": "", "name": "", "overview": "", "rule": "", "facet": "" }],
+  "guidelines": [{
+    "id": "",
+    "name": "",
+    "overview": "",
+    "apply_when": "",
+    "not_when": "",
+    "rule": "",
+    "hints": [],
+    "component": [],
+    "leaf": "",
+    "card": "",
+    "facet": ""
+  }],
   "count": 10,
   "total": 13,
+  "offset": 0,
   "host": "citations_only",
   "next_offset": 10
 }
 ```
 
-Read `overview`. If `next_offset` is set, loop. `id` opens `get_guideline` for the rest of that cite — then come back to the shelf.
+Read `overview` and `apply_when`. If `next_offset` is set, loop. `id` opens `get_guideline` for the rest of that cite — then come back to the pack.
 
-One Card is many houses. That is the catalog. The host will not pick.
+One Card is many sources. Related Cards are not a fork with a winner. That is the catalog. The host will not pick.
 
 This is a catalog, not a judge. `host` is `citations_only`. Do not write a score as if we graded. The decision is yours.
 
@@ -57,9 +68,10 @@ When you need a map of what exists — by **category**, then **source** — read
 ## Examples
 
 - **Signup / settings fields.** Card `design_a_form`. Browse via `jobs=design_a_form`. Loop `next_offset`. Open one id with `get_guideline`, then back to the page. Same if you are reviewing that form.
-- **Review a delete confirm.** Card `protect_destructive_and_leave`.
-- **Vague checkout.** `Open-UX:suggest_situations` with the task text. Read the catalog map, pick a Card (or `list_situations` with a container), `Open-UX:get_situation`, then `Open-UX:audit` with `jobs=<card_id>`.
+- **Review a delete confirm.** Card `protect_destructive_and_leave`. A button ask can also open `design_actions_and_ctas`. You decide.
+- **Vague checkout.** `Open-UX:suggest_situations` with the task text. Read the catalog map, open the Cards that fit (`list_situations` with a container if useful), `Open-UX:get_situation`, then `Open-UX:pack` with `jobs=<card_id>`. More than one Card is fine.
 - **Already have a guideline id.** `Open-UX:get_guideline` for that one cited body.
+- **Delete confirm with a danger button.** Card `protect_destructive_and_leave`. Pack row stamps `component: ["button"]`. Skim cites on the pack; `Open-UX:get_component` with `id=button` for variant names (primary vs danger); back to the pack or open one cite with `get_guideline`.
 
 ## Connect
 
@@ -78,16 +90,16 @@ Same catalog. No invite. Telemetry off. Point MCP clients at local stdio.
 
 ## Situation Cards
 
-Reject **crosses containers** — pick the Card the ask actually is.
+The table is the map. Compare `when`. Other Cards in Reject are neighbors to open if they fit — not a host winner. You decide.
 
 | Container | Card | When | Reject (use this instead) |
 | --- | --- | --- | --- |
 | Forms & input (`forms`) | `design_a_form` | Signup, settings, or checkout *fields*; labels; placeholders; choosing a control; grouping; required marks; helper text | Validation / inline errors → `handle_form_errors`. Login / password → `compose_sign_in`. Wizard / steps → `build_a_multi_step_flow`. CTA wording → `design_actions_and_ctas`. Table / dashboard → `compose_a_data_display` |
-| Forms & input (`forms`) | `handle_form_errors` | Composing validation; inline or summary errors; submit-failure messaging *on a form* | Page-level empty / 404 / hard error / toast → `compose_feedback`. Unmarked required before submit → `design_a_form` |
+| Forms & input (`forms`) | `handle_form_errors` | Composing validation; inline or summary errors; submit-failure messaging *on a form* | Page-level 404 / hard error / toast → `compose_feedback`. Unmarked required before submit → `design_a_form` |
 | Forms & input (`forms`) | `compose_sign_in` | Login, show password, forgot-password, credential fields | Ordinary non-credential fields → `design_a_form`. Inline validation after submit → `handle_form_errors` |
-| Actions & decisions (`actions`) | `design_actions_and_ctas` | Primary vs secondary; submit / continue label; toolbar; buttons too small; command panel | Delete / discard / unsaved leave → `protect_destructive_and_leave`. Field labels stay `design_a_form`. Page voice or link text → `write_the_interface` |
+| Actions & decisions (`actions`) | `design_actions_and_ctas` | Primary vs secondary; submit / continue label; toolbar; buttons too small; command panel | Delete / discard / unsaved leave → `protect_destructive_and_leave`. Field labels stay `design_a_form`. Page voice or link text → `write_the_interface`. Spinner / loading on the control → `compose_feedback` |
 | Actions & decisions (`actions`) | `protect_destructive_and_leave` | Delete confirmation; discard; leave unsaved work; confirm / undo | Unclear Continue / Submit label → `design_actions_and_ctas`. Failure tone after it already fired → `compose_feedback` |
-| Feedback & status (`feedback`) | `compose_feedback` | Toast after save; loading; empty state; 404; hard error (not a field); failure tone | Inline field errors → `handle_form_errors`. Progress inside a wizard → `build_a_multi_step_flow`. Loading on the control itself → `design_actions_and_ctas` |
+| Feedback & status (`feedback`) | `compose_feedback` | Toast after save; loading (including on the control); 404; hard error (not a field); failure tone | Inline field errors → `handle_form_errors`. Progress inside a wizard → `build_a_multi_step_flow` |
 | Navigation & wayfinding | `orient_in_the_place` | Sidebar; breadcrumbs; tabs or menu; which *section* they are in; top nav | Step indicators inside a wizard → `build_a_multi_step_flow`. Search control placement → `compose_search` |
 | Navigation & wayfinding | `compose_search` | Header or homepage search; search box vs link; place the search control | Site chrome / which section → `orient_in_the_place`. Link destination wording → `write_the_interface` |
 | Layout & data display | `compose_a_data_display` | Table or card grid; dashboard; scannable table; chart vs table | Controls inside a form → `design_a_form`. Page scan path → `compose_the_layout`. Overlay choice → `choose_an_overlay` |
@@ -100,15 +112,21 @@ Reject **crosses containers** — pick the Card the ask actually is.
 
 ## Tools
 
-Fully qualified `Open-UX:*` names. `/list` `/get` / map / cite stay on tools. Card pick is the table above (judgment).
+Fully qualified `Open-UX:*` names. `/list` `/get` `/pack` / map / cite stay on tools. You compare Cards from the table. No winner from the host.
 
-- `Open-UX:get_situation` — Card when / reject / pointers (not rule bodies)
-- `Open-UX:audit` — `jobs=<card_id>` or `guideline_ids`. Browse. Start from `overview`. Loop `next_offset`. Go in and out. The decision is yours.
-- Same wire (available, not required): `open-ux audit --jobs <card_id>` or `python3 scripts/audit.py --jobs <card_id>` / `--guideline-ids`. Your choice — the tool or this helper.
+- `Open-UX:get_situation` — Card when / reject / pointers / `component[]` (not rule bodies)
+- `Open-UX:pack` — `jobs=<card_id>` or `guideline_ids`. Browse. Start from `overview`. Loop `next_offset`. Go in and out. The decision is yours.
+- Python helpers (available, not required). Your choice whether to use them. List: [`helpers/registry.json`](../../../../helpers/registry.json). Do not invent these:
+  - `python3 helpers/pack.py --jobs <card_id>` — same pack as `Open-UX:pack`
+  - `python3 helpers/rank_pack.py --query "…" < pack.json` — BM25 over this page (`overview` / `apply_when` / `hints` / `component`). Fail-open. No winner.
+  - `open-ux pack --jobs <card_id>` — same wire
+  - `python3 helpers/get_component.py button --include-used-on` — same wire as `Open-UX:get_component`
+  - `open-ux component button --include-used-on` — same wire
 - `Open-UX:list_situations` — Card index; with `container=` that kind's specs (`when` / `reject`)
 - `Open-UX:suggest_situations` — catalog map (lock-order overviews). Vague surface or pasted UI. Does not pick a Card.
 - `Open-UX:get_guideline` / `Open-UX:search_guidelines` / `Open-UX:list_guidelines` — cite. Full-record fields: [guideline.md](guideline.md).
+- `Open-UX:list_components` / `Open-UX:get_component` — widget index and record. Open `get_component` only for ids on a pack row or Card. Full-record fields: [component.md](component.md).
 
 Empty shelf → say so. We are a catalog. They choose what to take. Cited criteria help you decide; the decision is yours. We don't return pass or fail.
 
-Without a Claude session, [`scripts/mcp_call.py`](../../../../scripts/mcp_call.py) speaks `tools/list` and `tools/call`. In Claude, call the tools. Do not treat `mcp_call.py` as the skill path.
+Without a Claude session, [`helpers/mcp_call.py`](../../../../helpers/mcp_call.py) speaks `tools/list` and `tools/call`. In Claude, call the tools. Do not treat `mcp_call.py` as the skill path. Contributor scripts live in `scripts/` — not for agents.

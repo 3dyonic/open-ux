@@ -35,10 +35,10 @@ NO_SUGGEST_MATCH = (
 )
 SUGGEST_MENU_NOTE = (
     "Catalog map. Pick a container with list_situations, or a Card with "
-    "get_situation. Then audit with jobs=<card_id>."
+    "get_situation. Then pack with jobs=<card_id>."
 )
 
-MAP_ROW_KEYS = ("id", "title", "overview", "hints")
+MAP_ROW_KEYS = ("id", "title", "overview", "hints", "component")
 SPEC_ROW_KEYS = (
     "id",
     "title",
@@ -48,7 +48,14 @@ SPEC_ROW_KEYS = (
     "reject",
     "facet_count",
     "provisional",
+    "component",
 )
+
+
+def _component_extra(card) -> dict[str, list[str]]:
+    if card.component:
+        return {"component": list(card.component)}
+    return {}
 
 
 def _index_row(card) -> dict[str, Any]:
@@ -75,6 +82,7 @@ def _spec_row(card) -> dict[str, Any]:
         "reject": _reject_payload(card),
         "facet_count": len(card.facets),
         "provisional": card.provisional,
+        **_component_extra(card),
     }
 
 
@@ -84,6 +92,7 @@ def _map_row(card) -> dict[str, Any]:
         "title": card.title,
         "overview": card.overview,
         "hints": list(card.hints),
+        **_component_extra(card),
     }
 
 
@@ -118,6 +127,7 @@ def _card_payload(card) -> dict[str, Any]:
         "reject": _reject_payload(card),
         "facets": [_facet_payload(facet) for facet in card.facets],
         "provisional": card.provisional,
+        **_component_extra(card),
     }
 
 

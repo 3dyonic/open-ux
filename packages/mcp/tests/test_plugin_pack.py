@@ -54,7 +54,7 @@ def test_host_mounts_are_symlinks_into_pack() -> None:
         ROOT / ".claude" / "agents" / "open-ux.md",
         ROOT / ".claude" / "commands" / "list.md",
         ROOT / ".claude" / "commands" / "get.md",
-        ROOT / ".claude" / "commands" / "audit.md",
+        ROOT / ".claude" / "commands" / "pack.md",
         ROOT / ".claude" / "commands" / "forms.md",
         ROOT / ".claude" / "commands" / "actions.md",
         ROOT / ".claude" / "commands" / "feedback.md",
@@ -92,5 +92,5 @@ def test_cursor_pack_uses_variables_not_user_config() -> None:
     assert ".." not in plugin["logo"]
     rule = (PACK / "rules" / "open-ux.mdc").read_text(encoding="utf-8")
     assert "alwaysApply: true" in rule
-    assert "Open-UX:audit" in rule
+    assert "Open-UX:pack" in rule
     assert "pass_when" not in rule
