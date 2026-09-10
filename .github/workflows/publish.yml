@@ -3,7 +3,7 @@ on:
   push:
     tags:
       - "v*"
-    branches: [master, main]
+    branches: [master]
     paths:
       - "catalog/**"
       - "packages/mcp/src/**"
