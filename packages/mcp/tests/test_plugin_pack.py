@@ -5,14 +5,14 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
-PACK = ROOT / "clients" / "claude"
+PACK = ROOT / "clients" / "plugin"
 PLACEHOLDER = re.compile(r"\$\{([A-Z][A-Z0-9_]*)\}")
 
 
 def test_marketplace_points_at_pack() -> None:
     market = json.loads((ROOT / ".claude-plugin" / "marketplace.json").read_text())
     plugin = market["plugins"][0]
-    assert plugin["source"] == "./clients/claude"
+    assert plugin["source"] == "./clients/plugin"
     assert plugin["version"] == "1.1.0"
     assert plugin.get("homepage") == "https://open-ux.dev"
 
@@ -20,7 +20,7 @@ def test_marketplace_points_at_pack() -> None:
 def test_cursor_marketplace_points_at_same_pack() -> None:
     market = json.loads((ROOT / ".cursor-plugin" / "marketplace.json").read_text())
     plugin = market["plugins"][0]
-    assert plugin["source"] == "./clients/claude"
+    assert plugin["source"] == "./clients/plugin"
     assert plugin["version"] == "1.1.0"
     assert plugin.get("homepage") == "https://open-ux.dev"
     assert plugin.get("logo") == "assets/icon.svg"
@@ -44,8 +44,7 @@ def test_listing_assets_and_setup_exist() -> None:
     assert "assets/offerings.svg" in readme
     assert "cursor.com/marketplace/publish" in readme
     assert "OPEN_UX_API_KEY" in readme
-    assert "Not listed yet." in readme
-    assert "not published" in readme.lower()
+    assert "public marketplaces yet" in readme
 
 
 def test_host_mounts_are_symlinks_into_pack() -> None:

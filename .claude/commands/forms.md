@@ -1,1 +1,1 @@
-../../clients/claude/commands/forms.md
+../../clients/plugin/commands/forms.md

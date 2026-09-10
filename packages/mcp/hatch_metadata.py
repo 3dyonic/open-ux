@@ -11,7 +11,7 @@ _PYPI_LINKS = (
     ("](docs/readme-hero.svg)", f"]({_RAW}/docs/readme-hero.svg)"),
     ("](LICENSE)", f"]({_REPO}/blob/master/LICENSE)"),
     ("](catalog/README.md)", f"]({_REPO}/blob/master/catalog/README.md)"),
-    ("](clients/claude)", f"]({_REPO}/tree/master/clients/claude)"),
+    ("](clients/plugin)", f"]({_REPO}/tree/master/clients/plugin)"),
     ("](docs/PRIVACY.md)", f"]({_REPO}/blob/master/docs/PRIVACY.md)"),
 )
 

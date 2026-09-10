@@ -1,1 +1,1 @@
-../../clients/claude/commands/actions.md
+../../clients/plugin/commands/actions.md

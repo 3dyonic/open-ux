@@ -1,21 +1,21 @@
 ---
 name: open-ux
 description: >-
-  Use when composing or reviewing UI against cited Open UX rules — a form,
-  buttons, delete confirm, loading, 404, or error state, navigation, table, modal,
-  or multi-step flow. Open Cards that fit; you decide. Call Open-UX:get_situation
-  and Open-UX:pack with jobs=<card_id>. Host does not pick a Card.
-  Do not invent UX from memory. Do not send a file. The host returns cited
-  criteria, not pass or fail. get_component is control context for Cards and
-  jobs when component[] is stamped.
+ Use when composing or reviewing UI against cited Open UX rules; a form,
+ buttons, delete confirm, loading, 404, or error state, navigation, table, modal,
+ or multi-step flow. Open Cards that fit; you decide. Call Open-UX:get_situation
+ and Open-UX:pack with jobs=<card_id>. Host does not pick a Card.
+ Do not invent UX from memory. Do not send a file. The host returns cited
+ criteria, not pass or fail. get_component is control context for Cards and
+ jobs when component[] is stamped.
 model: inherit
 skills:
-  - open-ux
+ - open-ux
 ---
 
 # Open UX agent
 
-Pointers only. One skill: `open-ux` (`clients/claude/skills/open-ux/SKILL.md`). Card table lives there. No `/critique`. No catalog bodies.
+Pointers only. One skill: `open-ux` (`clients/plugin/skills/open-ux/SKILL.md`). Card table lives there. No `/critique`. No catalog bodies.
 
 ## When to invoke
 
@@ -27,7 +27,7 @@ Accessibility conformance, visual scoring, or inventing rules from memory. Do no
 
 ## Connect
 
-`pip install` the package, or hosted — same tools, same Cards. Package name: `open-ux`. Console script: `open-ux`.
+`pip install` the package, or hosted; same tools, same Cards. Package name: `open-ux`. Console script: `open-ux`.
 
 ```bash
 pip install open-ux
@@ -44,7 +44,7 @@ Same catalog. No invite. Telemetry off. Point MCP clients at local stdio.
 
 | Job | Tools |
 | --- | --- |
-| compose / review | Card table → `get_situation` (leaf `{ id, count }`) → `pack` (envelope reject, row fit) → `get_guideline`; `get_component` for control context when row `component[]` fits. Prefer Card; use Leaf for one bay. No winner Card. Optional LLM-local: `open-ux rank-pack` after pack (`pip install open-ux`) — [`helpers/README.md`](../../../helpers/README.md). |
+| compose / review | Card table → `get_situation` (leaf `{ id, count }`) → `pack` (envelope reject, row fit) → `get_guideline`; `get_component` for control context when row `component[]` fits. Prefer Card; use Leaf for one bay. No winner Card. Optional LLM local: `open-ux rank-pack` after pack (`pip install open-ux`); see [`helpers/README.md`](../../../helpers/README.md). |
 | map | `Open-UX:suggest_situations` when the ask is a surface (catalog map). Pick a Card, then `get_situation` for counts. The catalog stays open after a pack. |
 | cite | `Open-UX:search_guidelines` / `Open-UX:get_guideline` |
 
@@ -52,6 +52,6 @@ Same catalog. No invite. Telemetry off. Point MCP clients at local stdio.
 
 `Open-UX:list_situations`, `Open-UX:get_situation`, `Open-UX:suggest_situations`, `Open-UX:list_guidelines`, `Open-UX:search_guidelines`, `Open-UX:get_guideline`, `Open-UX:pack`, `Open-UX:list_components`, `Open-UX:get_component`.
 
-Scope `pack` (`jobs=` or `guideline_ids`). Surfaces are context, not ids. Prefer a Card; use a Leaf id when the ask is one bay.
+Scope `pack` (`jobs=<card_id>`, `jobs=<leaf_id>`, container alias, or `guideline_ids`). Surfaces are context, not ids. Prefer a Card; use a Leaf id when the ask is one bay.
 
 Slash commands `/list` `/get` `/pack` plus aliases `/forms` `/actions` `/feedback` route into this same skill.

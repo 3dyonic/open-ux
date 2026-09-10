@@ -1,11 +1,11 @@
 # Situation Cards
 
-The table is the map. Compare `when`. Other Cards in Reject are neighbors to open if they fit — not a host winner. You decide.
+The table is the map. Compare `when`. Other Cards in Reject are neighbors to open if they fit; not a host winner. You decide.
 
 | Container | Card | When | Reject (use this instead) |
 | --- | --- | --- | --- |
 | Forms & input (`forms`) | `design_a_form` | Signup, settings, or checkout *fields*; labels; placeholders; choosing a control; grouping; required marks; helper text | Validation / inline errors → `handle_form_errors`. Login / password → `compose_sign_in`. Wizard / steps → `build_a_multi_step_flow`. CTA wording → `design_actions_and_ctas`. Table / dashboard → `compose_a_data_display` |
-| Forms & input (`forms`) | `handle_form_errors` | Composing validation; inline or summary errors; submit-failure messaging *on a form* | Page-level 404 / hard error / toast → `compose_feedback`. Unmarked required before submit → `design_a_form` |
+| Forms & input (`forms`) | `handle_form_errors` | Composing validation; inline or summary errors; submit failure messaging *on a form* | Page-level 404 / hard error / toast → `compose_feedback`. Unmarked required before submit → `design_a_form` |
 | Forms & input (`forms`) | `compose_sign_in` | Login, show password, forgot-password, credential fields | Ordinary non-credential fields → `design_a_form`. Inline validation after submit → `handle_form_errors` |
 | Actions & decisions (`actions`) | `design_actions_and_ctas` | Primary vs secondary; submit / continue label; toolbar; buttons too small; command panel | Delete / discard / unsaved leave → `protect_destructive_and_leave`. Field labels stay `design_a_form`. Page voice or link text → `write_the_interface`. Spinner / loading on the control → `compose_feedback` |
 | Actions & decisions (`actions`) | `protect_destructive_and_leave` | Delete confirmation; discard; leave unsaved work; confirm / undo | Unclear Continue / Submit label → `design_actions_and_ctas`. Failure tone after it already fired → `compose_feedback` |
@@ -16,6 +16,6 @@ The table is the map. Compare `when`. Other Cards in Reject are neighbors to ope
 | Layout & data display | `compose_the_layout` | Page structure and headings; inverted pyramid; keep the page scannable | Table / chart / map → `compose_a_data_display`. Voice or link wording → `write_the_interface` |
 | Layout & data display | `write_the_interface` | Link destination text; you/your voice; page copy that is not a button or field label | Button / command verbs → `design_actions_and_ctas`. Field labels stay `design_a_form`. Section chrome → `orient_in_the_place` |
 | Overlays & content structure | `choose_an_overlay` | Modal vs accordion; tooltip vs inline help; hide advanced options; side panel | Destructive decision inside a dialog → `protect_destructive_and_leave`. Fields inside a modal → `design_a_form`. Page layout → `compose_the_layout` |
-| Multi-step flows | `build_a_multi_step_flow` | Checkout *flow*; split a long form into steps; progress indicator; go back to an earlier step; change a previous answer; leave mid-flow; onboarding *sequence* | Single form on one screen → `design_a_form`. Site-level nav chrome → `orient_in_the_place`. Leave-warn as the only ask → `protect_destructive_and_leave` |
+| Multi-step flows | `build_a_multi_step_flow` | Checkout *flow*; split a long form into steps; progress indicator; go back to an earlier step; change a previous answer; leave mid-flow; onboarding *sequence* | Single form on one screen → `design_a_form`. Site-level nav chrome → `orient_in_the_place`. Leave warn as the only ask → `protect_destructive_and_leave` |
 
 `checkout` / `home` / `cart` are not Cards.

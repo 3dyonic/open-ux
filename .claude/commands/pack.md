@@ -1,1 +1,1 @@
-../../clients/claude/commands/pack.md
+../../clients/plugin/commands/pack.md

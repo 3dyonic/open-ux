@@ -1,1 +1,1 @@
-../../clients/claude/agents/open-ux.md
+../../clients/plugin/agents/open-ux.md

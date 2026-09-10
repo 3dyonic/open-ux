@@ -2,165 +2,219 @@
 
 ![Open UX](docs/readme-hero.svg)
 
-**Cited UX rules agents can list, fetch, and audit against.**
+**Cited UX rules for the UI work you already have.**
 
-Stop inventing UX guidance from memory. Open UX is a shared, open-source catalog of UX rules with citations, plus tools so an agent can find the right criteria and apply them to work it already has.
+You're building a form, reviewing a delete dialog, or fixing a loading state. Open UX gives you cited criteria from real design systems, with links you can share, so you and your agent can compose and review from evidence instead of guesswork.
 
-**Hosted:** [open-ux.dev](https://open-ux.dev) · **License:** [MIT](LICENSE)
+> **Vision:** A community maintained catalog of UX criteria, every rule cited to a published source, validated for fit, and open to contribution, so teams work from evidence, not guesswork.
 
-## What it is
+Open UX is a shared catalog plus tools that fetch the right slice for your task. You keep the UI; we return cited claims with links. You decide what applies.
 
-A curated, machine-readable store of UX guidelines and a small tool surface so an agent can:
+**Site:** [open-ux.dev](https://open-ux.dev) · **License:** [MIT](LICENSE)
 
-1. **Map a Card** — `get_situation` for when / reject, facets, and leaf `{ id, count }` bays
-2. **Fetch criteria** — `pack` with `jobs=` (Card or Leaf); read envelope `situation.reject` and row fit (`overview`, `apply_when`, `not_when`)
-3. **Deep read** — `get_guideline` for the cited rule; `get_component` for control context when `component[]` is stamped on the Card or row; loop `next_offset`
-4. **Apply locally** — the client judges the artifact; the host never takes the file and never returns pass/fail
+## Overview
 
-There is no server-side LLM. One shared catalog for every caller — an account unlocks the hosted API; it does not give you a private rulebook.
+You compose and review UI constantly. When advice has no source, it is hard to trust and hard to explain to teammates or stakeholders.
 
-## What it is not
+Open UX gives you two things: a **catalog of cited UX criteria** (one claim per rule, every entry links to a published source) and **tools** that fetch what fits the task at hand. You pull criteria into the thread, open the source when you need depth, and apply what makes sense for the people using the product.
 
-* A generative design copilot or “does this look good?” scorer
-* A WCAG / accessibility compliance checker (we do not claim conformance, contrast audits, or screen-reader naming)
-* A closed corpus — the catalog and server are open source; you can self-host the same tools
+**Task:** The work in scope for this session: build a signup form, review a delete dialog, fix a loading state. The task determines which catalog job to pull and how narrow the pull should be.
 
-## Features
+**Cited rule:** One sentence a source actually states, stored as a single catalog entry (`rule` field). Example: *“Hide passwords by default until the user chooses to show them.”* Each entry includes a source URL, text for when it applies, and fit criteria; not a full design system dump; not model generated advice.
 
-* **Cited catalog** — 204 rules, 13 Situation Cards, 28 Leaves; one JSON file per rule, with sources you can follow
-* **Public catalog site** — browse rules in the browser at [`/catalog`](https://open-ux.dev/catalog)
-* **Agent tools** — map Cards (`get_situation` with leaf counts); pack by need; list / search / get guidelines; component records (`get_component`)
-* **Claude Code and Cursor plugins** — same pack in [`clients/claude`](clients/claude). Submitted to both marketplaces; **not listed yet**
-* **Hosted or self-host** — waitlist + API key on the hosted service, or stdio locally with no auth
-* **Privacy-minded hosted mode** — we do not store UI payloads or prompts; see [Privacy](https://open-ux.dev/privacy). How we cite rules: [Sources](https://open-ux.dev/sources)
+```
+ UI under review (in chat or repo)
+ │
+ ▼
+ Identify the task ──► routing table / MCP tools
+ │
+ ▼
+ Pull matching criteria (pack) ──► rows: fit + cited claim
+ │
+ ▼
+ Open the source (get_guideline) ──► full rule + URL
+ │
+ ▼
+ Compose, review, or audit ──► does the UI serve the people using it, and match what the source says?
+```
 
-## Quick start
+| Component | Purpose |
+| --- | --- |
+| **Catalog** | 204 rules from GOV.UK, Polaris, Ant Design, Fluent, and others, one claim per file, sources included. Browse at [open-ux.dev/catalog](https://open-ux.dev/catalog). |
+| **Routing** | Rules grouped by compose job (forms, actions, errors, navigation, …) so a pull returns task relevant criteria, not the whole library. |
+| **MCP server** | Hosted or local stdio; loads catalog data into your editor session. |
+| **Plugins** | Claude Code and Cursor skill plus slash commands that walk you through the loop. |
+| **Helpers** | Optional local CLI (`open-ux rank-pack`, …) after a pull; same pip install, runs on your machine. |
+
+Compose and review use the same loop: name the task, pull criteria, open cites, decide what applies. Nothing here grades your UI or returns pass or fail; you stay in charge of the decision.
+
+## Who this is for
+
+| You are… | Start here |
+| --- | --- |
+| Building or fixing UI in an agent session | [The loop](#the-loop) and the task table below |
+| Reviewing a screen, flow, or PR | Same loop; read `apply_when` on each row before opening the source |
+| Adding or correcting a rule | [`catalog/README.md`](catalog/README.md) and [`docs/CONTRIBUTING.md`](docs/CONTRIBUTING.md) |
+| Wiring MCP or the plugin | [Get started](#get-started) |
+
+## What you can do
+
+**Compose:** start from what you're building, narrow to the task, pull cited rules.
+
+| If you're working on… | Start here |
+| --- | --- |
+| Form fields, labels, grouping | Fields and labels (not validation yet) |
+| Validation, inline errors | Errors on a form |
+| Login, password | Sign in |
+| Buttons, primary action, toolbar | Actions and CTAs |
+| Delete, discard, unsaved changes | Destructive confirm |
+| Toast, loading, 404 | Feedback and status |
+| Nav, breadcrumbs, search placement | Wayfinding |
+| Tables, dashboards, charts | Data display |
+| Modals, tooltips, progressive disclosure | Overlays |
+| Checkout steps, wizard | Multi step flow |
+
+Not sure? `suggest_situations` returns the full map. Know the area but not the exact task? `list_situations` lists the jobs in that area. Know the task? `get_situation` then `pack`.
+
+**How wide to pull:**
+
+- **Whole task:** signup form, checkout CTA row, delete dialog → `pack` scoped to that job
+- **One slice:** only primary vs secondary, only control choice, only password toggle → narrower `pack`
+- **Known rule:** skip browse; `get_guideline` by id
+
+The plugin skill has the routing table (when to use which job, what to open instead). Agents: [`clients/plugin/skills/open-ux/cards.md`](clients/plugin/skills/open-ux/cards.md).
+
+**Review:** same flow: name the task on the screen, pull rules, read whether each cite fits (`apply_when`), open sources, audit against the claim.
+
+**Browse:** all 204 rules at [open-ux.dev/catalog](https://open-ux.dev/catalog).
+
+**Cite:** every pulled row links to a source you can paste in the thread.
+
+## The loop
+
+1. **Name the task:** what part of the UI is this? Use the table above or the skill routing table. Related tasks stay open; pick more than one pull if the ask spans them.
+2. **Pull:** `Open-UX:pack` for that job (whole task or one slice). Ten rows per page; follow `next_offset`. Each row says when it fits and what the cited claim is.
+3. **Open:** `get_guideline` for the full rule and URL. `get_component` when you need control level detail (variants, keyboard, a11y).
+4. **Apply:** use the claim on the work in hand. Optional: `open-ux rank-pack` to reorder one page locally.
+
+Same catalog on hosted MCP or local stdio. Plugins add the skill and slash commands (`/pack`, `/get`, …).
+
+## Catalog
+
+204 cited rules, grouped into compose jobs and finer slices. One JSON file per rule in `catalog/rules/`. Tree in `catalog/jobs.json`. Authoring: [`catalog/README.md`](catalog/README.md).
+
+## Get started
+
+### Get a key (hosted catalog)
+
+Hosted MCP uses a bearer token that starts with `uxmcp_`.
+
+1. Go to [open-ux.dev/invite](https://open-ux.dev/invite) and request access (email).
+2. When you receive an invite, open the link and **redeem** it and you get one API key.
+3. Copy the key. **Claude Code:** paste when the plugin asks for `api_key`. **Cursor:** **Plugins → Configure** → `OPEN_UX_API_KEY`. **Other MCP clients:** `Authorization: Bearer uxmcp_…` on `https://open-ux.dev/mcp`.
+
+No key? Skip hosted and use [self-host](#self-host) with local stdio (same tools, no auth).
 
 ### Hosted
 
-1. Request access at [open-ux.dev/invite](https://open-ux.dev/invite)
-2. After approval, redeem your invite for a bearer API key (`uxmcp_…`)
-3. Point your MCP client at the hosted `/mcp` endpoint with that key
-4. Call `list_guidelines` or `pack` with a job (no file upload)
-
-Tools return **401** without a key.
+1. Complete [Get a key](#get-a-key-hosted-catalog) above
+2. Point your MCP client at `https://open-ux.dev/mcp` with that bearer token
+3. Name the task (e.g. a signup form), `get_situation`, then `Open-UX:pack`. See the skill table for `jobs=` ids
 
 ### Self-host
 
 ```bash
 pip install open-ux
 python -m open_ux validate-catalog
-python -m open_ux validate-catalog --strict-fit
 python -m open_ux stdio
+```
+
+Local site + MCP:
+
+```bash
 OPEN_UX_MODE=hosted python -m open_ux http
+# http://127.0.0.1:8080/catalog
 ```
 
-The wheel includes the catalog. A change to `catalog/` or the package source on `master` publishes a new PyPI patch so pip and hosted carry the same rules.
+Helpers on the same install: `open-ux helpers list` · [`helpers/README.md`](helpers/README.md)
 
-Browse the local site at `http://127.0.0.1:8080/catalog`. Point MCP clients at local stdio, or at hosted `/mcp` with a `uxmcp_` key.
+### Claude Code and Cursor
 
-### Contribute from this repo
+The **plugin** is not the rule catalog. It adds three things to your editor agent:
+
+1. **Skill:** when to pull UX rules and how to route (forms vs delete vs loading, …)
+2. **Slash commands:** `/pack`, `/get`, … as shortcuts to the tools
+3. **MCP connection:** how the agent reaches Open UX to fetch rules
+
+Rules still come from the **server:** either hosted (`open-ux.dev`) or a local Python process you run yourself. For hosted, [get a key](#get-a-key-hosted-catalog) first.
+
+**Claude Code** (terminal, from any folder):
 
 ```bash
-python -m venv .venv && source .venv/bin/activate
+claude plugin marketplace add 3dyonic/open-ux # register this GitHub repo as a plugin source
+claude plugin install open-ux@open-ux # install the Open UX plugin from that source
+```
+
+Then enable the plugin in Claude Code and paste your `uxmcp_` key when it asks.
+
+**Cursor** (this repository open as the workspace):
+
+1. Enable the Open UX plugin (Cursor reads it from [`clients/plugin`](clients/plugin)).
+2. **Plugins → Configure** → set **`OPEN_UX_API_KEY`** to your `uxmcp_…` token.
+
+That key is sent as `Authorization: Bearer …` to `https://open-ux.dev/mcp` (see [`mcp.json`](clients/plugin/mcp.json)).
+
+**No key? Local catalog instead:** `pip install open-ux`, run `python -m open_ux stdio`, and point MCP at [`mcp.stdio.json`](clients/plugin/mcp.stdio.json). Same tools; catalog loads from this repo’s `catalog/` folder. Step by step: [`clients/plugin/SETUP.md`](clients/plugin/SETUP.md).
+
+Plugins are not in the public marketplaces yet. Install from this repo until listing ships.
+
+### Contribute
+
+```bash
 pip install -e "packages/mcp[dev]"
-python -m open_ux validate-catalog
 python -m open_ux validate-catalog --strict-fit
 python -m open_ux stdio
-```
-
-### Tests
-
-```bash
 cd packages/mcp && python -m pytest
 ```
 
-### Plugins (Claude Code and Cursor)
+## Tools
 
-Same pack in [`clients/claude`](clients/claude). It connects to the catalog; it does not ship a second copy of the rules. `.cursor` and `.claude` in this repo are mounts (symlinks) into that pack.
+`Open-UX:*` on the wire. Details: [`docs/TOOLS.md`](docs/TOOLS.md).
 
-**Not listed yet.** Both plugins are in marketplace submission (Claude Code directory and Cursor marketplace). They are not published. Searching either marketplace will not find Open UX.
+| Tool | Role |
+| --- | --- |
+| `suggest_situations` | Full map when the ask is vague |
+| `list_situations` | List compose jobs; optional filter by area (forms, actions, feedback, …) |
+| `get_situation` | One job: when to use it, what to open instead, how many rules per slice |
+| **`pack`** | Cited criteria for a job, slice, or rule ids; page with `next_offset` |
+| `get_guideline` | Full rule body and sources |
+| `list_guidelines` / `search_guidelines` | Paged index |
+| `list_components` / `get_component` | Control detail when a row points at a component |
 
-Until they are listed, install from this repo:
-
-**Claude Code**
-
-```bash
-claude plugin marketplace add 3dyonic/open-ux
-claude plugin install open-ux@open-ux
-```
-
-Enable, then paste a key from [open-ux.dev/invite](https://open-ux.dev/invite).
-
-**Cursor**
-
-Open this repository — the `.cursor` mount is already the pack (`.cursor-plugin/` + `mcp.json`). Enable the plugin, then **Plugins → Configure** and set `OPEN_UX_API_KEY` to the `uxmcp_` key from the invite.
-
-Setup: [`clients/claude/SETUP.md`](clients/claude/SETUP.md).
-
-## Agent tools
-
-There is **no** `audit` tool — use **`pack`**. Full reference: [`docs/TOOLS.md`](docs/TOOLS.md).
-
-- **`suggest_situations`** — `task_text` → full catalog map of all 13 Cards by container. Does not pick or rank.
-- **`list_situations`** — Card index; optional `container` filter. Metadata only, no rule bodies.
-- **`get_situation`** — One Card: when / reject, facets, `leaves: [{ id, count }]`. Leaf id fails. No rule text.
-- **`pack`** — Cited rule criteria for `jobs` (Card, Leaf, or container) or `guideline_ids`. Page with `limit` / `offset` / `next_offset`. Host ignores `query` (use **`open-ux rank-pack`** locally; `pip install open-ux`). No file, no pass/fail.
-- **`get_guideline`** — One full rule body by id.
-- **`list_guidelines`** / **`search_guidelines`** — Paged index; scope by jobs / lane. No bodies; host ignores `query` on search.
-- **`list_components`** / **`get_component`** — Component index and record. `get_component`: section switches `include_vs`, `include_variants`, `include_accessibility`, `include_keyboard` (default on); opt-in `include_keywords`, `include_used_on`.
-
-Card/Leaf **`pack`** pulls add envelope **`situation`** (`when`, `reject`; `leaf` when scoped) and **`cite_via: get_guideline`**. Rows are browse slices — open `get_guideline` or `get_component` for full records.
-
-## Catalog layout
+## Repository
 
 ```
-catalog/
-  rules/{category}/{source}/   one JSON file per rule
-  index.json                   generated index
-  jobs.json                    Situation tree
-  schema.json                  rule schema
-  MANIFEST.md                  human map (no rule bodies)
+catalog/           rules, jobs tree, schema
+packages/mcp/      MCP server (PyPI: open-ux)
+packages/web/      public site
+helpers/           local CLI (rank-pack, wire debug)
+clients/plugin/    Claude Code + Cursor plugin
+docs/              doc map, tools, contributing, privacy
 ```
-
-Rules are never forked per tenant. Soft size budget ~50–100 KB; hard ceiling ~384 KB. Details: [`catalog/README.md`](catalog/README.md).
-
-## Repository layout
-
-```
-packages/mcp      Python server (FastMCP)
-packages/web      public site (Vite)
-catalog/          shared rules + schema (204 files)
-helpers/          LLM-local rank_pack + contributor wire (registry.json)
-scripts/          contributor catalog maintenance
-clients/claude    Claude Code and Cursor plugin pack
-docs/             privacy, assets
-```
-
-Python package: `open-ux` · npm / plugin scope: `@3dyonic/open-ux`
 
 ## Hosted vs self-host
 
-|  | Hosted HTTP | Self-host (stdio) |
-| -- | -- | -- |
-| Auth | Waitlist → invite → bearer `uxmcp_` | None |
-| Rate limits | Per-key and per-IP on `/mcp` | None |
-| Telemetry | Aggregated usage (key hash, tools, rule ids) | Off |
+| | Hosted | Self-host |
+| --- | --- | --- |
+| Catalog | Shared live | Same wheel |
+| Auth | `uxmcp_` key | None |
+| Privacy | [open-ux.dev/privacy](https://open-ux.dev/privacy) | Telemetry off |
 
-Privacy on the hosted product: [open-ux.dev/privacy](https://open-ux.dev/privacy) (Eng constraints also in [`docs/PRIVACY.md`](docs/PRIVACY.md)). How we write and cite catalog rules, and how to ask us to change or remove one: [open-ux.dev/sources](https://open-ux.dev/sources).
+Sources: [open-ux.dev/sources](https://open-ux.dev/sources)
 
 ## Contributing
 
-Issues and pull requests are welcome. Keep the catalog cited — every rule should point at a real source. Prefer small, reviewable PRs: one concern per change (catalog rows, server behavior, or docs).
-
-Before opening a PR:
-
-```bash
-python -m open_ux validate-catalog --strict-fit
-claude plugin validate . --strict
-node scripts/validate-cursor-plugin.mjs --strict
-cd packages/mcp && python -m pytest
-```
+PRs welcome: cited catalog rules, server changes, docs, plugin pack. **Docs map:** [`docs/README.md`](docs/README.md). **Before a PR:** [`docs/CONTRIBUTING.md`](docs/CONTRIBUTING.md) (checklist + cite shape).
 
 ## License
 

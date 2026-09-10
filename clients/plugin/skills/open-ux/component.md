@@ -1,23 +1,23 @@
 ---
 name: open-ux-component
 description: >-
-  Context helper for Cards and jobs — use when a pack row or Card stamps
-  component[] and the ask is the control (variants, a11y, keyboard). Field
-  guide for Open-UX:get_component and the component JSON. After you read, go
-  back to the pack.
+ Context helper for Cards and jobs; use when a pack row or Card stamps
+ component[] and the ask is the control (variants, a11y, keyboard). Field
+ guide for Open-UX:get_component and the component JSON. After you read, go
+ back to the pack.
 ---
 
 # Open UX component
 
-Component records live in `catalog/components/` — a context helper joined to Cards and cites by **`component[]`**. They do not replace **`pack`** or **`get_guideline`**.
+Component records live in `catalog/components/`: a context helper joined to Cards and cites by **`component[]`**. They do not replace **`pack`** or **`get_guideline`**.
 
-`Open-UX:get_component` opens one component record — variants, accessibility, keyboard — not a cite score. Open only for ids already on a pack row or Card — not all 38 upfront. Usually after **`get_guideline`** on the same row. Then return to `Open-UX:pack`.
+`Open-UX:get_component` opens one component record; variants, accessibility, keyboard; not a cite score. Open only for ids already on a pack row or Card: not all 38 upfront. Usually after **`get_guideline`** on the same row. Then return to `Open-UX:pack`.
 
 ## Parameters
 
 | Param | Default | Section |
 | --- | --- | --- |
-| `id` | — | Closed id from `component[]` |
+| `id` |: | Closed id from `component[]` |
 | `include_vs` | true | Near-neighbor contrasts |
 | `include_variants` | true | Named axes (role, size, …) |
 | `include_accessibility` | true | A11y notes |
@@ -31,18 +31,18 @@ False omits the key from the response (like pack `hints`).
 
 ```json
 {
-  "found": true,
-  "component": {
-    "id": "",
-    "title": "",
-    "overview": "",
-    "apply_when": "",
-    "not_when": "",
-    "vs": [],
-    "variants": {},
-    "accessibility": [],
-    "keyboard": []
-  }
+ "found": true,
+ "component": {
+ "id": "",
+ "title": "",
+ "overview": "",
+ "apply_when": "",
+ "not_when": "",
+ "vs": [],
+ "variants": {},
+ "accessibility": [],
+ "keyboard": []
+ }
 }
 ```
 
@@ -50,7 +50,7 @@ Section switches omit keys when false (like pack `hints`). Default fetch include
 
 ## Fields
 
-**`overview`** — Short definition of what this component is. Same grab as the index row. Start here.
+**`overview`:** Short definition of what this component is. Same grab as the index row. Start here.
 
 | Field | What it gives | How to use it |
 | --- | --- | --- |
@@ -58,7 +58,7 @@ Section switches omit keys when false (like pack `hints`). Default fetch include
 | `apply_when` | When this component fits | Button vs link vs toggle |
 | `not_when` | Closest wrong control | Set aside if that is your case |
 | `vs` | Near-neighbor contrasts | Pick the right control |
-| `variants` | Named axes (role, size, …) | Match design-system names |
+| `variants` | Named axes (role, size, …) | Match design system names |
 | `accessibility` | A11y notes for this component | Compose accessible markup |
 | `keyboard` | Keyboard behavior | Focus and activation |
 | `keywords` | Synonyms (opt-in) | Local search only; not on pack rows |
@@ -66,6 +66,6 @@ Section switches omit keys when false (like pack `hints`). Default fetch include
 
 ## Pack browse row
 
-`Open-UX:pack` echoes `component[]` as closed ids only (`button`). Variants and `keywords` live here — do not expect them on the pack row. Skim cites on the pack; open `get_component` when you need variant names or accessibility notes. Open `get_guideline` for the cited claim.
+`Open-UX:pack` echoes `component[]` as closed ids only (`button`). Variants and `keywords` live here: do not expect them on the pack row. Skim cites on the pack; open `get_component` when you need variant names or accessibility notes. Open `get_guideline` for the cited claim.
 
 The decision is yours.

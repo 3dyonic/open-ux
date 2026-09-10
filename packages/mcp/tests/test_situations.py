@@ -32,7 +32,7 @@ from open_ux.situations import (
 )
 
 SKILL_DIR = (
-    Path(__file__).resolve().parents[3] / "clients" / "claude" / "skills" / "open-ux"
+    Path(__file__).resolve().parents[3] / "clients" / "plugin" / "skills" / "open-ux"
 )
 SKILL = SKILL_DIR / "SKILL.md"
 ROUTING_REFERENCES = (

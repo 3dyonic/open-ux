@@ -1,10 +1,10 @@
-# Open UX — Claude pointers
+# Open UX: Claude pointers
 
-Same connect as [`AGENTS.md`](AGENTS.md). Skill and commands live in `clients/claude`. Do not duplicate the Card table.
+Same connect as [`AGENTS.md`](AGENTS.md). Skill and commands live in `clients/plugin`. Do not duplicate the Card table.
 
 ## Connect
 
-`pip install` the package, or hosted — same tools, same Cards. Package name: `open-ux`. Console script: `open-ux`.
+`pip install` the package, or hosted; same tools, same Cards. Package name: `open-ux`. Console script: `open-ux`.
 
 ```bash
 pip install open-ux
@@ -18,14 +18,14 @@ Same catalog. No invite. Telemetry off. Point MCP clients at local stdio.
 
 - **Hosted** (shared live catalog): `https://open-ux.dev/mcp` + `Authorization: Bearer uxmcp_…` (`OPEN_UX_API_KEY`). Invite at `/invite`.
 
-Contributors: clone the repo and `pip install -e "packages/mcp[dev]"`.
+Contributors: clone the repo and `pip install -e "packages/mcp[dev]"`. Before PR: [`docs/CONTRIBUTING.md`](docs/CONTRIBUTING.md).
 
-Plugins are submitted, not yet published. Until listed, install from this repo: `claude plugin marketplace add 3dyonic/open-ux` then `claude plugin install open-ux@open-ux`. Validate: `claude plugin validate . --strict` and `claude plugin validate ./clients/claude --strict`. Cursor: `node scripts/validate-cursor-plugin.mjs --strict`. CI runs both.
+Plugins are not in the public marketplaces yet. Install from this repo: `claude plugin marketplace add 3dyonic/open-ux` then `claude plugin install open-ux@open-ux`. Validate: `claude plugin validate . --strict`. Cursor: `node scripts/validate-cursor-plugin.mjs --strict`.
 
 ## Use
 
-One skill: `open-ux`. Commands: `/list` `/get` `/pack`, aliases `/forms` `/actions` `/feedback` — short prompts that call `Open-UX:*` tools.
+One skill: `open-ux`. Commands: `/list` `/get` `/pack`, aliases `/forms` `/actions` `/feedback`; short prompts that call `Open-UX:*` tools.
 
-No `Open-UX:audit` — use **`Open-UX:pack`**. Tool reference: [`docs/TOOLS.md`](docs/TOOLS.md).
+Tool reference: [`docs/TOOLS.md`](docs/TOOLS.md). Criteria pull: **`Open-UX:pack`**.
 
-Scope `Open-UX:pack` (`jobs=` or `guideline_ids`). Surfaces (`home` / `cart` / `checkout`) are context, not ids. You decide which Cards to open. Component records: `Open-UX:list_components`, `Open-UX:get_component`. MCP tools fetch catalog data; optional LLM-local `open-ux rank-pack` after pack (`pip install open-ux`) — [`helpers/README.md`](helpers/README.md). Contributor scripts: `scripts/` only.
+Scope `Open-UX:pack` (`jobs=<card_id>`, `jobs=<leaf_id>`, container alias, or `guideline_ids`). Surfaces (`home` / `cart` / `checkout`) are context, not ids. Prefer a Card; use a Leaf when the ask is one bay. Component records: `Open-UX:list_components`, `Open-UX:get_component`. MCP tools fetch catalog data; optional LLM local `open-ux rank-pack` after pack (`pip install open-ux`); see [`helpers/README.md`](helpers/README.md). Maintainer scripts: [`scripts/`](scripts/) only.
