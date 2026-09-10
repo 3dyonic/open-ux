@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="280" height="220" viewBox="0 0 280 220" role="img" aria-label="Pip, Open UX mascot">
+  <ellipse cx="123" cy="199" rx="75" ry="11" fill="#D6BEA6" fill-opacity="0.55"/>
+  <ellipse cx="62" cy="127" rx="20" ry="9" transform="rotate(22 62 127)" fill="#ECDCCA"/>
+  <circle cx="123" cy="107" r="59" fill="#FF4B00"/>
+  <ellipse cx="109" cy="81" rx="23" ry="11" fill="#FFC79E" fill-opacity="0.7"/>
+  <ellipse cx="104" cy="103" rx="4" ry="5" fill="#1F1B16"/>
+  <ellipse cx="134" cy="103" rx="4" ry="5" fill="#1F1B16"/>
+  <ellipse cx="121" cy="123" rx="8" ry="2.5" fill="#B8330D"/>
+  <ellipse cx="189" cy="117" rx="21" ry="9" transform="rotate(-22 189 117)" fill="#ECDCCA"/>
+  <rect x="168" y="58" width="54" height="68" rx="6" fill="#FFFFFF" stroke="#DED4C8"/>
+  <rect x="180" y="72" width="30" height="6" rx="3" fill="#ECDCCA"/>
+  <rect x="180" y="84" width="22" height="6" rx="3" fill="#D6BEA6"/>
+</svg>

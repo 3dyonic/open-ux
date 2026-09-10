@@ -33,6 +33,7 @@ from open_ux.components import (
     load_components,
 )
 from open_ux.health import HealthState, health_payload
+from open_ux.mail import send_invite_email
 from open_ux.jobs import (
     DEFAULT_LIMIT,
     JOB_FIELD_DESCRIPTION,
@@ -43,6 +44,8 @@ from open_ux.jobs import (
 )
 from open_ux.public_html import (
     FAVICON_PATH,
+    ICON_PNG_PATH,
+    PIP_SVG_PATH,
     ICON_PNG_PATH,
     ROBOTS_TXT,
     render_sitemap,
@@ -690,6 +693,10 @@ def create_mcp(*, hosted: bool) -> FastMCP:
     async def icon_png(_request: Request) -> Response:
         return Response(ICON_PNG_PATH.read_bytes(), media_type="image/png")
 
+    @mcp.custom_route("/pip.svg", methods=["GET"])
+    async def pip_svg(_request: Request) -> Response:
+        return Response(PIP_SVG_PATH.read_bytes(), media_type="image/svg+xml")
+
     if dist is not None and (dist / "assets").is_dir():
         static_assets = StaticFiles(directory=dist / "assets")
 
@@ -771,6 +778,7 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             issued = approve_invite(email, settings=settings, store=store)
         except AuthError as exc:
             return JSONResponse({"error": str(exc)}, status_code=400)
+        send_invite_email(issued, settings=settings)
         return JSONResponse(
             {
                 "email": issued.email,

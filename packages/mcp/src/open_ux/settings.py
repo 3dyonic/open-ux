@@ -68,6 +68,9 @@ class Settings:
     admin_token: str
     telemetry: bool
     public_url: str
+    mail_provider: str
+    mail_api_key: str
+    mail_from: str
 
     @classmethod
     def load(cls, *, hosted: bool | None = None) -> Settings:
@@ -99,4 +102,7 @@ class Settings:
             admin_token=os.environ.get("OPEN_UX_ADMIN_TOKEN", ""),
             telemetry=telemetry and hosted,
             public_url=os.environ.get("OPEN_UX_PUBLIC_URL", "").rstrip("/"),
+            mail_provider=os.environ.get("OPEN_UX_MAIL_PROVIDER", "").strip().lower(),
+            mail_api_key=os.environ.get("OPEN_UX_MAIL_API_KEY", "").strip(),
+            mail_from=os.environ.get("OPEN_UX_MAIL_FROM", "").strip(),
         )

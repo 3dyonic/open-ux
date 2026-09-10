@@ -16,6 +16,52 @@ function setBusy(button, busy, idleLabel, busyLabel) {
   button.textContent = busy ? busyLabel : idleLabel;
 }
 
+function setCopied(button, label) {
+  button.disabled = true;
+  button.classList.add("btn-copied");
+  button.textContent = label;
+}
+
+function resetCopyButton(button, label) {
+  if (!button) return;
+  button.disabled = false;
+  button.classList.remove("btn-copied");
+  button.textContent = label;
+}
+
+function fallbackCopy(text) {
+  try {
+    const el = document.createElement("textarea");
+    el.value = text;
+    el.setAttribute("readonly", "");
+    el.style.cssText = "position:fixed;left:-9999px;top:0;opacity:0";
+    document.body.appendChild(el);
+    el.focus();
+    el.select();
+    el.setSelectionRange(0, text.length);
+    const ok = document.execCommand("copy");
+    document.body.removeChild(el);
+    return ok;
+  } catch {
+    return false;
+  }
+}
+
+function copyText(button, text, copiedLabel) {
+  if (!button || !text) return;
+
+  const done = () => setCopied(button, copiedLabel);
+
+  if (navigator.clipboard?.writeText) {
+    navigator.clipboard.writeText(text).then(done).catch(() => {
+      if (fallbackCopy(text)) done();
+    });
+    return;
+  }
+
+  if (fallbackCopy(text)) done();
+}
+
 function setFieldError(card, input, sub, error) {
   card.className = CARD_ERROR;
   input.setAttribute("aria-invalid", "true");
@@ -122,8 +168,10 @@ export function redeemPage() {
       <h1 class="invite-title">Your key</h1>
       <p class="invite-sub">Invite redeemed. Copy your key — we won’t show it in full again.</p>
       <div class="key-box" id="key-text"></div>
-      <button class="btn btn-primary" type="button" id="copy-key">Copy</button>
-      <p class="foot">Use as bearer on /mcp. Self-host stdio needs no auth.</p>
+      <button class="btn btn-primary" type="button" id="copy-key">Copy key</button>
+      <p class="invite-sub">Add this MCP server in your client — paste into <span class="font-mono text-ink">mcp.json</span> or your editor’s MCP settings.</p>
+      <pre class="config-box" id="mcp-config"></pre>
+      <button class="btn btn-outline" type="button" id="copy-mcp-config">Copy to config</button>
     </div>
   </main>`,
         { catalog: false, consent: false },
@@ -217,6 +265,9 @@ export function renderRedeem(root) {
   const redeemCard = document.getElementById("redeem-card");
   const successCard = document.getElementById("success-card");
   const keyText = document.getElementById("key-text");
+  const mcpConfig = document.getElementById("mcp-config");
+  const copyKeyBtn = document.getElementById("copy-key");
+  const copyMcpBtn = document.getElementById("copy-mcp-config");
   const params = new URLSearchParams(location.search);
   const q = params.get("token");
   if (q) tokenInput.value = q;
@@ -224,6 +275,9 @@ export function renderRedeem(root) {
   function hideSuccess() {
     issuedKey = "";
     keyText.textContent = "";
+    mcpConfig.textContent = "";
+    resetCopyButton(copyKeyBtn, "Copy key");
+    resetCopyButton(copyMcpBtn, "Copy to config");
     successCard.hidden = true;
     setTitle("Redeem invite — Open UX");
   }
@@ -246,6 +300,24 @@ export function renderRedeem(root) {
     return "\u2022".repeat(16);
   }
 
+  function mcpServerBlock(authValue) {
+    const mcpUrl = `${location.origin}/mcp`;
+    return `"open-ux": {
+  "url": ${JSON.stringify(mcpUrl)},
+  "headers": {
+    "Authorization": ${JSON.stringify(authValue)}
+  }
+}`;
+  }
+
+  function mcpConfigText(key) {
+    return mcpServerBlock(`Bearer ${key}`);
+  }
+
+  function mcpConfigDisplayText() {
+    return mcpServerBlock("YOUR_KEY");
+  }
+
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
     const token = tokenInput.value.trim();
@@ -266,8 +338,12 @@ export function renderRedeem(root) {
         showError();
         return;
       }
+      setBusy(submit, false, "Redeem", "Redeeming…");
       issuedKey = data.key;
       keyText.textContent = maskKey(issuedKey);
+      mcpConfig.textContent = mcpConfigDisplayText();
+      resetCopyButton(copyKeyBtn, "Copy key");
+      resetCopyButton(copyMcpBtn, "Copy to config");
       redeemCard.hidden = true;
       successCard.hidden = false;
       setTitle("Your key — Open UX");
@@ -276,9 +352,12 @@ export function renderRedeem(root) {
     }
   });
 
-  document.getElementById("copy-key").addEventListener("click", () => {
-    if (!issuedKey || !navigator.clipboard) return;
-    navigator.clipboard.writeText(issuedKey);
+  copyKeyBtn?.addEventListener("click", () => {
+    copyText(copyKeyBtn, issuedKey, "Copied");
+  });
+
+  copyMcpBtn?.addEventListener("click", () => {
+    copyText(copyMcpBtn, mcpConfigText(issuedKey), "Copied");
   });
 }
 

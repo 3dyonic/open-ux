@@ -15,7 +15,7 @@ jobs:
       OPEN_UX_SCHEMA: ${{ github.workspace }}/catalog/schema.json
       OPEN_UX_WEB_DIST: ${{ github.workspace }}/packages/web/dist
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: actions/setup-node@v4
         with:
           node-version: "22"

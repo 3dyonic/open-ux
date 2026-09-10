@@ -25,10 +25,9 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# Env / secrets
+# Env / secrets (hosted names live in private open-ux-ops/.env.example)
 .env
 .env.*
-!.env.example
 *.pem
 id_rsa
 id_ed25519

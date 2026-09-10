@@ -51,6 +51,7 @@ packages = ["src/open_ux"]
 "src/open_ux/static/favicon.svg" = "open_ux/static/favicon.svg"
 "src/open_ux/static/logo-mark.svg" = "open_ux/static/logo-mark.svg"
 "src/open_ux/static/icon.png" = "open_ux/static/icon.png"
+"src/open_ux/static/pip.svg" = "open_ux/static/pip.svg"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
