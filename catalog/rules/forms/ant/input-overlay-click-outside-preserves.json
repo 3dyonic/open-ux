@@ -24,7 +24,7 @@
   "facet": "wrong_layer_for_the_content",
   "leaf": "disclose_instead_of_dump",
   "overview": "Clicking outside an input overlay closes it and preserves entered input.",
-  "apply_when": "Ant input overlays that collect values without leaving the page.",
+  "apply_when": "Input overlays that collect values without leaving the page.",
   "not_when": "Explicit Cancel actions that intentionally abandon overlay input.",
   "agent_hint": "On outside click, close the input overlay and keep the entered value.",
   "description": "For input overlays, a click outside should close the overlay and preserve what was entered. Discarding input on outside click punishes a common dismiss gesture; failing to close leaves the overlay stuck. Preserve-and-close matches the stay-on-page pattern for lightweight input layers. Explicit Cancel may still abandon on purpose; the outside-click path is keep the value and dismiss.",

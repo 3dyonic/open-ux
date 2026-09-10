@@ -24,7 +24,7 @@
   "facet": "no_clear_primary",
   "leaf": "pick_primary_action",
   "overview": "A single button may carry zero or one icon, never two.",
-  "apply_when": "Adding icons to Ant buttons or action controls.",
+  "apply_when": "Adding an icon to a button or action control.",
   "not_when": "Separate adjacent icon buttons — each control may have its own icon.",
   "agent_hint": "Put at most one icon in a button; never two icons together.",
   "description": "Ant forbids two icons inside one button. A control may have no icon or a single icon that supports its label; stacking two icons in the same button muddies what the action is. Keep icon content to zero or one per button when composing actions and CTAs. Apply when deciding button content — not when two neighboring buttons each carry one icon of their own. Fail any single button that shows two icons together.",
