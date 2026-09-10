@@ -146,6 +146,7 @@
                 "polar.default-option-selected-when-possible",
                 "polar.select-4plus-choice-list-under-4",
                 "suomi.radio-extras-hidden-then-indented",
+                "uswds.button-vs-link-for-action",
                 "uswds.date-picker-when-weekday-always-type"
               ]
             },

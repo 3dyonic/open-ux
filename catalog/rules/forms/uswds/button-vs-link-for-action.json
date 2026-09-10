@@ -1,0 +1,36 @@
+{
+  "id": "uswds.button-vs-link-for-action",
+  "category": "Forms",
+  "segment": "Buttons",
+  "title": "button vs link for action",
+  "name": "Button vs link for action — USWDS",
+  "rule": "In-page action (submit, cancel, dismiss, reset state on this view) → real `<button>` with explicit `type`. Navigation to another URL or route → `<a>`. Do not use a styled link as the only control for an in-page action; do not use `<div>` as a button.",
+  "citation": [
+    {
+      "source": "USWDS — Button",
+      "url": "https://designsystem.digital.gov/components/button/"
+    }
+  ],
+  "check": "llm_judgment",
+  "pass_when": [
+    "In-page actions use a real `<button>` with explicit `type`; navigation uses `<a>`."
+  ],
+  "fail_when": [
+    "A styled link is the only control for an in-page action, or `<div>` stands in for a button."
+  ],
+  "severity": "major",
+  "container": "forms_and_input",
+  "card": "design_a_form",
+  "facet": "wrong_control_for_the_choice",
+  "leaf": "choose_control_for_choice",
+  "overview": "In-page actions use a button; navigation uses a link.",
+  "apply_when": "Choosing button versus link for an action on the current page (e.g. Cancel, Save, Dismiss).",
+  "not_when": "Navigation to another destination that should stay a link; button variant loudness (see pick_primary_action).",
+  "agent_hint": "Use <button type=…> for in-page actions; use <a href=…> for navigation.",
+  "description": "USWDS treats in-page actions—submit, cancel, dismiss, or reset on the current view—as real buttons with an explicit type. Navigation to another URL or route stays a link. A styled link as the only control for an in-page action, or a div posing as a button, fails. Variant loudness and primary styling belong on the actions shelf (pick_primary_action), not here.",
+  "do_not_claim": "Filled versus outline styling; one-primary hierarchy.",
+  "component": [
+    "button",
+    "link"
+  ]
+}

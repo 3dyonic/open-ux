@@ -18,7 +18,7 @@ Example: `copy/polar/dont-duplicate-content.json` still has `"id": "polar.dont-d
 
 | File | Role |
 | --- | --- |
-| `rules/` | 203 guideline files |
+| `rules/` | 204 guideline files |
 | `jobs.json` | 7 containers, 13 Situation Cards, Facet → Leaf map. Pointers only |
 | `components.json` | Closed widget registry `{id, title, path}` |
 | `components/` | 38 widget records (keywords, vs, variants, accessibility, keyboard) |
