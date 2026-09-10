@@ -33,6 +33,7 @@ from open_ux.components import (
     load_components,
 )
 from open_ux.health import HealthState, health_payload
+from open_ux.mail import send_invite_email
 from open_ux.jobs import (
     DEFAULT_LIMIT,
     JOB_FIELD_DESCRIPTION,
@@ -771,6 +772,7 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             issued = approve_invite(email, settings=settings, store=store)
         except AuthError as exc:
             return JSONResponse({"error": str(exc)}, status_code=400)
+        send_invite_email(issued, settings=settings)
         return JSONResponse(
             {
                 "email": issued.email,
