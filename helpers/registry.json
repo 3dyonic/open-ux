@@ -1,0 +1,32 @@
+{
+  "note": "Optional Python helpers for agents. Available, not required — Open-UX:* tools stay first-class. Do not invent a pack fetcher or BM25 ranker.",
+  "helpers": [
+    {
+      "id": "pack",
+      "path": "helpers/pack.py",
+      "cli": "open-ux pack",
+      "summary": "Same pack wire as Open-UX:pack without an MCP session.",
+      "usage": "python3 helpers/pack.py --jobs <card_id>"
+    },
+    {
+      "id": "rank_pack",
+      "path": "helpers/rank_pack.py",
+      "summary": "BM25 reorder of one pack page (overview, apply_when, hints, component). Fail-open. Host does not rank.",
+      "usage": "python3 helpers/rank_pack.py --query \"…\" < pack.json"
+    },
+    {
+      "id": "mcp_call",
+      "path": "helpers/mcp_call.py",
+      "cli": "open-ux tools list | open-ux tools call …",
+      "summary": "tools/list and tools/call without a Claude session. Not the skill path.",
+      "usage": "python3 helpers/mcp_call.py list"
+    },
+    {
+      "id": "get_component",
+      "path": "helpers/get_component.py",
+      "cli": "open-ux component <id>",
+      "summary": "Same get_component wire as Open-UX:get_component without an MCP session.",
+      "usage": "python3 helpers/get_component.py button --include-used-on"
+    }
+  ]
+}

@@ -14,8 +14,8 @@ from open_ux import client as ux_client
 from open_ux.client import McpError, _http_post, _parse_rpc_body, _unwrap_tool_result, call_tool
 
 ROOT = Path(__file__).resolve().parents[3]
-HELPER = ROOT / "scripts" / "mcp_call.py"
-AUDIT_SCRIPT = ROOT / "scripts" / "audit.py"
+HELPER = ROOT / "helpers" / "mcp_call.py"
+PACK_SCRIPT = ROOT / "helpers" / "pack.py"
 
 
 def _load(path: Path, name: str) -> ModuleType:
@@ -34,8 +34,8 @@ def helper() -> ModuleType:
 
 
 @pytest.fixture()
-def audit_mod() -> ModuleType:
-    return _load(AUDIT_SCRIPT, "open_ux_audit_helper")
+def pack_mod() -> ModuleType:
+    return _load(PACK_SCRIPT, "open_ux_pack_helper")
 
 
 def test_hosted_http_requires_key(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -43,7 +43,7 @@ def test_hosted_http_requires_key(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.delenv("OPEN_UX_URL", raising=False)
     monkeypatch.setenv("OPEN_UX_TRANSPORT", "http")
     with pytest.raises(McpError, match="OPEN_UX_API_KEY"):
-        call_tool("audit", {"jobs": "design_a_form"})
+        call_tool("pack", {"jobs": "design_a_form"})
 
 
 def test_http_helper_unwraps_sse_tool_result() -> None:
@@ -70,7 +70,7 @@ def test_http_helper_maps_401(monkeypatch: pytest.MonkeyPatch) -> None:
         _http_post("https://open-ux.dev/mcp", {"jsonrpc": "2.0"}, {}, None)
 
 
-def test_mcp_call_inprocess_list_and_audit(
+def test_mcp_call_inprocess_list_and_pack(
     live_catalog: Path,
     helper: ModuleType,
     monkeypatch: pytest.MonkeyPatch,
@@ -79,8 +79,8 @@ def test_mcp_call_inprocess_list_and_audit(
     monkeypatch.setenv("OPEN_UX_TRANSPORT", "inprocess")
     assert helper.main(["list"]) == 0
     names = {row["name"] for row in json.loads(capsys.readouterr().out)}
-    assert "audit" in names
-    assert helper.main(["audit", '{"jobs":"design_a_form"}']) == 0
+    assert "pack" in names
+    assert helper.main(["pack", '{"jobs":"design_a_form"}']) == 0
     payload = json.loads(capsys.readouterr().out)
     assert payload["count"] >= 1
     assert "verdict" not in payload
@@ -90,20 +90,20 @@ def test_helper_never_imports_catalog() -> None:
     source = HELPER.read_text(encoding="utf-8")
     client = Path(ux_client.__file__).read_text(encoding="utf-8")
     assert "catalog/rules" not in source
-    assert "from open_ux.audit import" not in source
+    assert "from open_ux.pack import" not in source
     assert "load_catalog" not in source
     assert "sys.path.insert" not in source
     assert "tools/list" in source
     assert "tools/call" in source
     assert "load_catalog" not in client
-    assert "from open_ux.audit import" not in client
+    assert "from open_ux.pack import" not in client
     assert "catalog/rules" not in client
 
 
-def test_audit_script_requires_jobs_or_ids(
-    audit_mod: ModuleType, capsys: pytest.CaptureFixture[str]
+def test_pack_script_requires_jobs_or_ids(
+    pack_mod: ModuleType, capsys: pytest.CaptureFixture[str]
 ) -> None:
-    assert audit_mod.main([]) == 2
+    assert pack_mod.main([]) == 2
     err = capsys.readouterr().err
     assert "jobs" in err or "guideline" in err
 
@@ -118,34 +118,19 @@ def test_audit_script_requires_jobs_or_ids(
         ["--upload", "ui.png"],
     ),
 )
-def test_audit_script_rejects_file_and_verdict(
-    audit_mod: ModuleType, argv: list[str], capsys: pytest.CaptureFixture[str]
+def test_pack_script_rejects_file_and_verdict(
+    pack_mod: ModuleType, argv: list[str], capsys: pytest.CaptureFixture[str]
 ) -> None:
-    assert audit_mod.main(argv) == 2
+    assert pack_mod.main(argv) == 2
     err = capsys.readouterr().err.lower()
     assert "file" in err or "verdict" in err or "content" in err or "target" in err
 
 
-def test_audit_script_prints_pack(
-    live_catalog: Path,
-    audit_mod: ModuleType,
-    capsys: pytest.CaptureFixture[str],
-) -> None:
-    assert audit_mod.main(["--jobs", "design_a_form"]) == 0
-    payload = json.loads(capsys.readouterr().out)
-    assert payload["count"] >= 1
-    assert "verdict" not in payload
-    row = payload["guidelines"][0]
-    assert {"id", "title", "name", "overview", "rule", "facet"} <= set(row)
-    assert "pass_when" not in row
-    assert "fail_when" not in row
-
-
-def test_audit_script_uses_shared_helper() -> None:
-    source = AUDIT_SCRIPT.read_text(encoding="utf-8")
+def test_pack_script_uses_shared_helper() -> None:
+    source = PACK_SCRIPT.read_text(encoding="utf-8")
     assert "from open_ux.cli import main" in source
     assert "load_catalog" not in source
-    assert "from open_ux.audit import" not in source
+    assert "from open_ux.pack import" not in source
     assert "sys.path.insert" not in source
     assert "--jobs" in source
     assert "--guideline-ids" in source

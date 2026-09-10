@@ -3,7 +3,6 @@ from __future__ import annotations
 from collections import defaultdict
 from typing import Any
 
-from open_ux.bm25 import guideline_blob, rank_blobs
 from open_ux.catalog import EMPTY_NOTE, Catalog, get_by_id, select_by_jobs
 from open_ux.jobs import (
     CARD_IDS,
@@ -15,8 +14,22 @@ from open_ux.jobs import (
     load_job_tree,
 )
 
-PACK_KEYS = ("id", "title", "name", "overview", "rule", "facet")
-NEED_ERROR = "audit requires jobs or guideline_ids; the full catalog is never run."
+PACK_ROW_KEYS = (
+    "id",
+    "title",
+    "name",
+    "overview",
+    "apply_when",
+    "not_when",
+    "rule",
+    "component",
+    "leaf",
+    "card",
+    "facet",
+)
+OPTIONAL_PACK_ROW_KEYS = ("hints",)
+PACK_KEYS = PACK_ROW_KEYS + OPTIONAL_PACK_ROW_KEYS
+NEED_ERROR = "pack requires jobs or guideline_ids; the full catalog is never run."
 HOST_CITATIONS_ONLY = "citations_only"
 
 
@@ -34,41 +47,36 @@ def _clamp_offset(offset: int) -> int:
     return offset
 
 
-def _pack(guideline: dict[str, Any]) -> dict[str, Any]:
+def _terms(value: Any) -> list[str]:
+    if isinstance(value, str):
+        return [value] if value else []
+    if isinstance(value, (list, tuple)):
+        return [str(item) for item in value if item]
+    return []
+
+
+def _hints_extra(guideline: dict[str, Any]) -> dict[str, list[str]]:
+    hints = _terms(guideline.get("hints"))
+    if hints:
+        return {"hints": hints}
+    return {}
+
+
+def _pack_row(guideline: dict[str, Any]) -> dict[str, Any]:
     return {
         "id": guideline["id"],
         "title": guideline.get("title") or "",
         "name": guideline.get("name") or guideline.get("title") or "",
         "overview": guideline.get("overview") or "",
+        "apply_when": guideline.get("apply_when") or "",
+        "not_when": guideline.get("not_when") or "",
         "rule": guideline.get("rule") or "",
+        "component": _terms(guideline.get("component")),
+        "leaf": guideline.get("leaf") or "",
+        "card": guideline.get("card") or "",
         "facet": guideline.get("facet") or "",
+        **_hints_extra(guideline),
     }
-
-
-def _matches_query(guideline: dict[str, Any], query: str | None) -> bool:
-    q = (query or "").strip()
-    if not q:
-        return True
-    _order, matched = rank_blobs(q, [guideline_blob(guideline)])
-    return matched
-
-
-def _rerank_by_query(
-    rows: list[dict[str, Any]], query: str | None
-) -> tuple[list[dict[str, Any]], bool]:
-    """Query orders the pack, never drops access: rank matches first.
-
-    In-process BM25 over pack JSON. Phrase hits still lead via a
-    substring bonus (OUX-24). Zero hits fail open (OUX-21).
-    """
-    q = (query or "").strip()
-    if not q:
-        return rows, True
-    blobs = [guideline_blob(row) for row in rows]
-    order, matched = rank_blobs(q, blobs)
-    if not matched:
-        return rows, False
-    return [rows[i] for i in order], True
 
 
 def _facet_keys(tree: JobTree) -> list[tuple[str, str]]:
@@ -135,19 +143,16 @@ def _payload(
     rows: list[dict[str, Any]],
     *,
     total: int,
-    limit: int,
     offset: int,
     note: str | None = None,
     error: str | None = None,
-    query_fallback: bool = False,
 ) -> dict[str, Any]:
-    packed = [_pack(g) for g in rows]
+    packed = [_pack_row(g) for g in rows]
     count = len(packed)
     out: dict[str, Any] = {
         "guidelines": packed,
         "count": count,
         "total": total,
-        "limit": limit,
         "offset": offset,
         "host": HOST_CITATIONS_ONLY,
     }
@@ -159,8 +164,6 @@ def _payload(
         out["omitted_hint"] = (
             f"{omitted} more not shown; pass offset={next_offset}"
         )
-    if query_fallback:
-        out["query_fallback"] = True
     if note:
         out["note"] = note
     if error:
@@ -168,7 +171,7 @@ def _payload(
     return out
 
 
-def audit(
+def pack(
     catalog: Catalog,
     *,
     jobs: str | None = None,
@@ -180,8 +183,12 @@ def audit(
     content: Any = None,
     target_type: str | None = None,
 ) -> dict[str, Any]:
-    """Need in, matching rule criteria out. Leftover target/content are ignored."""
-    del target, content, target_type
+    """Need in, matching rule criteria out. Leftover target/content are ignored.
+
+    ``query`` is accepted for wire compatibility and is not ranked. Catalog /
+    facet order only. Optional local BM25: helpers/rank_pack.py.
+    """
+    del target, content, target_type, query
     cap = _clamp_limit(limit)
     skip = _clamp_offset(offset)
     requested = [gid for gid in (guideline_ids or []) if gid]
@@ -190,11 +197,11 @@ def audit(
     if not requested and not job:
         note = EMPTY_NOTE if catalog.empty else None
         return _payload(
-            [], total=0, limit=cap, offset=skip, note=note, error=NEED_ERROR
+            [], total=0, offset=skip, note=note, error=NEED_ERROR
         )
 
     if catalog.empty:
-        return _payload([], total=0, limit=cap, offset=skip, note=EMPTY_NOTE)
+        return _payload([], total=0, offset=skip, note=EMPTY_NOTE)
 
     if requested:
         found: list[dict[str, Any]] = []
@@ -208,22 +215,12 @@ def audit(
         scoped = _select_by_need(catalog, job)
         rows = _stratify_by_facet(scoped, load_job_tree(), len(scoped) or 1)
 
-    selected, query_matched = _rerank_by_query(rows, query)
-
-    total = len(selected)
-    page = selected[skip : skip + cap]
-    note = None
-    query_fallback = False
-    if total == 0:
-        note = MISS_NOTE
-    elif not query_matched:
-        note = f"query too narrow — showing all {total} guidelines in scope"
-        query_fallback = True
+    total = len(rows)
+    page = rows[skip : skip + cap]
+    note = MISS_NOTE if total == 0 else None
     return _payload(
         page,
         total=total,
-        limit=cap,
         offset=skip,
         note=note,
-        query_fallback=query_fallback,
     )

@@ -17,22 +17,27 @@ COMMANDS = ROOT / "clients" / "claude" / "commands"
 PLUGIN = ROOT / "clients" / "claude" / ".claude-plugin" / "plugin.json"
 MCP_JSON = ROOT / "clients" / "claude" / ".mcp.json"
 AGENT = ROOT / "clients" / "claude" / "agents" / "open-ux.md"
-HELPER = ROOT / "scripts" / "mcp_call.py"
-AUDIT_SCRIPT = ROOT / "scripts" / "audit.py"
+HELPER = ROOT / "helpers" / "mcp_call.py"
+PACK_SCRIPT = ROOT / "helpers" / "pack.py"
 BANNED_BODIES = ("pass_when", "fail_when")
 ENFORCE_SCRIPT = (
     "must run this script",
     "must run the script",
     "must run the audit script",
+    "must run helpers/pack",
+    "must run scripts/pack",
     "must run scripts/audit",
     "must run",
     "audit is required",
     "required open ux audit wire",
-    "do not improvise the open-ux:audit wire",
-    "do not call `open-ux:audit` instead",
+    "do not improvise the open-ux:pack wire",
+    "do not call `open-ux:pack` instead",
     "required script",
     "required audit path",
+    "prefer `helpers/pack.py`",
+    "prefer `scripts/pack.py`",
     "prefer `scripts/audit.py`",
+    "prefer the pack helper",
     "prefer the audit helper",
     "prefer the script",
 )
@@ -63,6 +68,7 @@ def test_one_skill_package_named_open_ux() -> None:
     assert packages == ["open-ux"]
     assert (skills_root / "open-ux" / "SKILL.md").is_file()
     assert (skills_root / "open-ux" / "guideline.md").is_file()
+    assert (skills_root / "open-ux" / "component.md").is_file()
     for banned in ("open-ux-forms", "open-ux-actions", "open-ux-feedback"):
         assert not (skills_root / banned).exists()
     assert not (SKILL_DIR / "scripts").exists()
@@ -84,7 +90,7 @@ def test_skill_description_informs_and_promotes() -> None:
     assert "invent" in lower or "memory" in lower
     assert "open ux" in lower
     assert "Open-UX:get_situation" in desc
-    assert "Open-UX:audit" in desc
+    assert "Open-UX:pack" in desc
     assert "jobs=<card_id>" in desc
     assert "target" not in desc
     assert "verdict" not in desc
@@ -119,8 +125,10 @@ def test_skill_routing_table_has_when_and_cross_container_reject() -> None:
     assert "Field labels stay `design_a_form`" in body
     assert "jobs=" in body
     assert "verdict" not in body
-    assert "Open-UX:audit" in body
+    assert "Open-UX:pack" in body
     assert "must run" not in body.lower()
+    assert "prefer `helpers/pack.py`" not in body
+    assert "prefer `scripts/pack.py`" not in body
     assert "prefer `scripts/audit.py`" not in body
 
 
@@ -136,13 +144,14 @@ def test_skill_examples_and_tools_not_sermons() -> None:
     assert "`protect_destructive_and_leave`" in body
     assert "Open-UX:suggest_situations" in body
     assert "Open-UX:get_guideline" in body
-    assert "Open-UX:audit" in body
+    assert "Open-UX:pack" in body
     assert "need in" in lower
-    assert "scripts/audit.py" in body
+    assert "helpers/pack.py" in body
+    assert "helpers/registry.json" in body
     assert "available" in lower
     assert "not required" in lower
     assert "choice" in lower
-    assert body.index("Open-UX:audit") < body.index("scripts/audit.py")
+    assert body.index("Open-UX:pack") < body.index("helpers/pack.py")
 
 
 def test_skill_files_point_at_tools_not_catalog_bodies() -> None:
@@ -150,7 +159,7 @@ def test_skill_files_point_at_tools_not_catalog_bodies() -> None:
         text = path.read_text(encoding="utf-8")
         leaked = GUIDELINE_ID.findall(text)
         assert leaked == [], f"{path.name} must not embed guideline ids {leaked}"
-        if path.name == "guideline.md":
+        if path.name in ("guideline.md", "component.md"):
             assert "overview" in text
             continue
         for token in BANNED_BODIES:
@@ -173,7 +182,7 @@ def test_plugin_points_at_hosted_mcp() -> None:
 
 
 def test_commands_are_short_mcp_prompts() -> None:
-    names = {"list.md", "get.md", "audit.md", "forms.md", "actions.md", "feedback.md"}
+    names = {"list.md", "get.md", "pack.md", "forms.md", "actions.md", "feedback.md"}
     found = {p.name for p in COMMANDS.glob("*.md")}
     assert names <= found
     assert not (COMMANDS / "critique.md").exists()
@@ -192,15 +201,16 @@ def test_commands_are_short_mcp_prompts() -> None:
         for token in BANNED_BODIES:
             assert token not in text
         assert len(text.splitlines()) <= 12
-        if path.name != "audit.md":
+        if path.name != "pack.md":
             assert "audit.py" not in text
-    audit = (COMMANDS / "audit.md").read_text(encoding="utf-8")
-    assert "Open-UX:audit" in audit
-    assert "jobs=" in audit
-    assert "guideline_ids" in audit
-    assert "scripts/audit.py" in audit
-    assert "available" in audit.lower()
-    assert audit.index("Open-UX:audit") < audit.index("scripts/audit.py")
+            assert "pack.py" not in text
+    pack_cmd = (COMMANDS / "pack.md").read_text(encoding="utf-8")
+    assert "Open-UX:pack" in pack_cmd
+    assert "jobs=" in pack_cmd
+    assert "guideline_ids" in pack_cmd
+    assert "helpers/pack.py" in pack_cmd
+    assert "available" in pack_cmd.lower()
+    assert pack_cmd.index("Open-UX:pack") < pack_cmd.index("helpers/pack.py")
     list_cmd = (COMMANDS / "list.md").read_text(encoding="utf-8")
     get_cmd = (COMMANDS / "get.md").read_text(encoding="utf-8")
     assert "Open-UX:list_situations" in list_cmd
@@ -218,17 +228,17 @@ def test_pointer_docs_exist_and_stay_thin() -> None:
         assert "pass_when" not in text
         assert "forms.field_labels" not in text
         assert "must run" not in text.lower()
-        assert "Open-UX:audit" in text
+        assert "Open-UX:pack" in text
         for card_id in CARD_IDS:
             if path.name in {"AGENTS.md", "CLAUDE.md"}:
                 assert card_id not in text
     assert not (COMMANDS / "critique.md").exists()
 
 
-def test_audit_helper_available_not_required() -> None:
-    assert AUDIT_SCRIPT.is_file()
+def test_pack_helper_available_not_required() -> None:
+    assert PACK_SCRIPT.is_file()
     help_text = subprocess.check_output(
-        [sys.executable, str(AUDIT_SCRIPT), "--help"],
+        [sys.executable, str(PACK_SCRIPT), "--help"],
         text=True,
         cwd=ROOT,
         env=_script_env(),
@@ -238,7 +248,7 @@ def test_audit_helper_available_not_required() -> None:
     assert "--file" not in help_text
     assert "verdict" not in help_text.lower()
     scoped = subprocess.check_output(
-        [sys.executable, str(AUDIT_SCRIPT), "--jobs", "design_a_form"],
+        [sys.executable, str(PACK_SCRIPT), "--jobs", "design_a_form"],
         text=True,
         cwd=ROOT,
         env=_script_env(),
@@ -248,7 +258,7 @@ def test_audit_helper_available_not_required() -> None:
     assert "verdict" not in payload
     assert payload["count"] >= 1
     empty = subprocess.run(
-        [sys.executable, str(AUDIT_SCRIPT)],
+        [sys.executable, str(PACK_SCRIPT)],
         cwd=ROOT,
         capture_output=True,
         text=True,
@@ -257,9 +267,9 @@ def test_audit_helper_available_not_required() -> None:
     assert empty.returncode != 0
     skill = SKILL.read_text(encoding="utf-8")
     lower = skill.lower()
-    assert "scripts/audit.py" in skill
+    assert "helpers/pack.py" in skill
     assert "not required" in lower
-    assert "Open-UX:audit" in skill
+    assert "Open-UX:pack" in skill
     for banned in ENFORCE_SCRIPT:
         assert banned not in lower
 
@@ -274,9 +284,9 @@ def test_optional_helper_is_protocol_not_path() -> None:
         env=env,
     )
     names = {row["name"] for row in json.loads(listed)}
-    assert {"audit", "list_situations", "get_situation"}.issubset(names)
+    assert {"pack", "list_situations", "get_situation"}.issubset(names)
     scoped = subprocess.check_output(
-        [sys.executable, str(HELPER), "audit", '{"jobs":"design_a_form"}'],
+        [sys.executable, str(HELPER), "pack", '{"jobs":"design_a_form"}'],
         text=True,
         cwd=ROOT,
         env=env,
