@@ -1,16 +1,16 @@
 {
   "eor.e1.empty_catalog": {
-    "claim": "Schema-valid empty catalog; list/get/audit return honest empty/incomplete; no invented guideline bodies.",
+    "claim": "Schema-valid empty catalog; list/get/pack return honest empty/incomplete; no invented guideline bodies.",
     "evidence": "packages/mcp/tests/test_catalog.py + test_tools.py (pytest, no LLM)",
     "status": "coded"
   },
   "eor.e2.unauthorized": {
-    "claim": "Hosted HTTP list/get/audit path (MCP endpoint) is 401 without a bearer key; invite redeem issues uxmcp_.",
+    "claim": "Hosted HTTP list/get/pack path (MCP endpoint) is 401 without a bearer key; invite redeem issues uxmcp_.",
     "evidence": "packages/mcp/tests/test_auth.py",
     "status": "coded"
   },
   "eor.e3.content_not_stored": {
-    "claim": "Raw audit.content is not persisted; telemetry keeps length + hash; bearer secret not in sqlite dump.",
+    "claim": "Raw pack payloads are not persisted; telemetry keeps length + hash; bearer secret not in sqlite dump.",
     "evidence": "packages/mcp/tests/test_privacy.py",
     "status": "coded"
   },

@@ -44,10 +44,10 @@ No key; same catalog. Point MCP clients at local stdio, or hosted `https://open-
 
 Compose, review, map, and cite are jobs in `skills/open-ux` — not extra packages.
 
-- **Compose / review** — compare Cards that fit; `Open-UX:get_situation`, then `Open-UX:pack` with `jobs=`. You decide. No winner Card.
+- **Compose / review** — compare Cards that fit; `Open-UX:get_situation` (leaf `{ id, count }`), then `Open-UX:pack` with `jobs=`; read envelope reject and row fit; `get_guideline` or `get_component`; loop `next_offset`. You decide. No winner Card.
 - **Map** — `Open-UX:suggest_situations` when the ask is a vague surface (catalog map). The catalog stays open after a pack.
 - **Cite** — `Open-UX:search_guidelines` / `Open-UX:get_guideline`
 
 Commands: `/list` `/get` `/pack`, plus aliases `/forms` `/actions` `/feedback`. Agent pointers: `agents/open-ux.md`.
 
-Same wire without a session: `open-ux pack --jobs …`. Agent helpers: [`helpers/registry.json`](../../helpers/registry.json) — `helpers/pack.py`, `helpers/rank_pack.py`, `helpers/mcp_call.py` (available, not required). Do not invent a ranker. Contributor scripts live in `scripts/` — not the skill path.
+Same wire without a session: `open-ux pack --jobs …`, `open-ux component button --include-used-on`. Agent helpers: [`helpers/registry.json`](../../helpers/registry.json) — `helpers/pack.py`, `helpers/rank_pack.py`, `helpers/get_component.py`, `helpers/mcp_call.py` (available, not required). Do not invent a ranker. Contributor scripts live in `scripts/` — not the skill path.

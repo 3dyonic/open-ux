@@ -12,9 +12,10 @@ Stop inventing UX guidance from memory. Open UX is a shared, open-source catalog
 
 A curated, machine-readable store of UX guidelines and a small tool surface so an agent can:
 
-1. **Browse situations** — pick a compose job (Situation Card) that matches the work
-2. **Fetch criteria** — get cited rules for that job (`overview`, `name`, `rule`)
-3. **Apply locally** — the client judges the artifact; the host never takes the file and never returns pass/fail
+1. **Map a Card** — `get_situation` for when / reject, facets, and leaf `{ id, count }` bays
+2. **Fetch criteria** — `pack` with `jobs=` (Card or Leaf); read envelope `situation.reject` and row fit (`overview`, `apply_when`, `not_when`)
+3. **Deep read** — `get_guideline` for the cited rule, or `get_component` when the ask is widget shape; loop `next_offset`
+4. **Apply locally** — the client judges the artifact; the host never takes the file and never returns pass/fail
 
 There is no server-side LLM. One shared catalog for every caller — an account unlocks the hosted API; it does not give you a private rulebook.
 
@@ -28,7 +29,7 @@ There is no server-side LLM. One shared catalog for every caller — an account 
 
 * **Cited catalog** — one JSON file per rule, with sources you can follow
 * **Public catalog site** — browse rules in the browser at [`/catalog`](https://open-ux.dev/catalog)
-* **Agent tools** — list / search / get guidelines; suggest situations; pack by need (job or ids)
+* **Agent tools** — map Cards (`get_situation` with leaf counts); pack by need; list / search / get guidelines; widget records (`get_component`)
 * **Hosted or self-host** — waitlist + API key on the hosted service, or stdio locally with no auth
 * **Privacy-minded hosted mode** — we do not store UI payloads or prompts; see [Privacy](https://open-ux.dev/privacy). How we cite rules: [Sources](https://open-ux.dev/sources)
 
@@ -48,6 +49,7 @@ Tools return **401** without a key.
 ```bash
 pip install open-ux
 python -m open_ux validate-catalog
+python -m open_ux validate-catalog --strict-fit
 python -m open_ux stdio
 OPEN_UX_MODE=hosted python -m open_ux http
 ```
@@ -62,6 +64,7 @@ Browse the local site at `http://127.0.0.1:8080/catalog`. Point MCP clients at l
 python -m venv .venv && source .venv/bin/activate
 pip install -e "packages/mcp[dev]"
 python -m open_ux validate-catalog
+python -m open_ux validate-catalog --strict-fit
 python -m open_ux stdio
 ```
 
@@ -89,12 +92,15 @@ Cursor uses the same pack (`.cursor-plugin/` + `mcp.json`). Set `OPEN_UX_API_KEY
 | Tool | Purpose |
 | -- | -- |
 | `list_situations` | Page Situation Cards (optional `container` returns that kind's specs) |
-| `get_situation` | One Card plus facets / rule pointers |
+| `get_situation` | One Card: when / reject, facets, **`leaves: [{ id, count }]`**, merged rule pointers |
 | `suggest_situations` | Catalog map: `{containers: [{situations: [...]}]}` in lock order (does not pick a Card; no `why`, not ranked) |
 | `list_guidelines` | Paged catalog index |
 | `search_guidelines` | Scope by jobs / lane; BM25-order by query; no rule bodies |
 | `get_guideline` | Full rule body by id |
-| `pack` | Say the need (`jobs` Card/container or `guideline_ids`); get matching criteria |
+| `pack` | Say the need (`jobs` Card/Leaf/container or `guideline_ids`); get matching criteria |
+| `list_components` / `get_component` | Widget index and record; optional `used_on` reverse index |
+
+Card/Leaf pulls add envelope **`situation`** (`when`, `reject`; `leaf` when scoped) and **`cite_via: get_guideline`**. Rows are browse slices — open `get_guideline` or `get_component` for full records.
 
 `pack` accepts optional `query` (ignored on the host — use `helpers/rank_pack.py` locally; see [`helpers/registry.json`](helpers/registry.json)), `limit` (page size, default 10), and `offset`. Follow `next_offset` until it is absent. It does **not** take a file target and does **not** return a host verdict (`host: "citations_only"`). Cited criteria help you decide; the decision is yours.
 
@@ -141,7 +147,7 @@ Issues and pull requests are welcome. Keep the catalog cited — every rule shou
 Before opening a PR:
 
 ```bash
-python -m open_ux validate-catalog
+python -m open_ux validate-catalog --strict-fit
 cd packages/mcp && python -m pytest
 ```
 
