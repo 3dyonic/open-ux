@@ -6,7 +6,15 @@
 - OUX-37: `/health` and `/health.json`: `ok` is computed (catalog loaded, no recorded 5xx). Payload adds `error`, `title`, and `body`. HTTP stays 200.
 - OUX-37: Public 404 and 500 pages are prerendered into the SPA shell. Missing catalog ids and unknown paths return 404. Unhandled errors return the 500 page.
 - OUX-37: Vite writes public HTML at build. Python serves the files and status codes; it does not write page markup.
-- `audit` browse row includes `overview` and omits `pass_when` / `fail_when` (those stay on `get_guideline`).
+- **BREAKING:** `Open-UX:audit` → `Open-UX:pack`. Module `open_ux.audit` → `open_ux.pack`. CLI `open-ux pack`. Slash command `/pack`. Host does not BM25-rank on request; optional `helpers/rank_pack.py`.
+- **BREAKING:** Leaf ids are valid `jobs=` values (`pick_primary_action`, etc.). MCP `pack` jobs enum includes all 28 Leaves.
+- Pack row adds `apply_when`, `not_when`, `leaf`, `card`, `hints`, `component`. Component matching dimension: `catalog/components.json` + 38 records; `load_components()`; Card and cite `component[]` stamps (131 cites, 13 Cards). Cite `hints[]` on 52 cites where host scan benefits; pack omits `hints` when the cite omits it; do not bridge `agent_hint` → `hints` (see `catalog/README.md`).
+- `Open-UX:list_components` / `Open-UX:get_component` — widget index and record with section switches; optional `used_on` reverse index. CLI `open-ux components` / `open-ux component`. Helper `helpers/get_component.py`.
+- **Lock:** `component[]` is a join id on the Card and the cite only. Facet, Leaf, and container do not stamp it. Component `keywords` stay on the component record — do not copy into `jobs.json` or echo onto every pack row. Pack `component[]` is ids only (no variant axes). Cite `hints[]` are host extras not already on the row; omit the key when empty — do not ship `[]` or copy `agent_hint` / component `keywords`.
+- Pack envelope: `count`, `total`, `offset`, optional `next_offset`, `host` — no echoed `limit` (page size is input only).
+- Agent helpers moved to `helpers/` with `helpers/registry.json`. Contributor scripts stay in `scripts/`.
+- Skill: no winner Card; compare Cards; Python helpers `helpers/pack.py` and `helpers/rank_pack.py` (available, not required — do not invent a ranker).
+- Dropped empty Leaves `show_action_state` and `write_empty_state`. Spinner / loading on the control routes to `compose_feedback`. Empty-collection is not a named bay until a cite exists.
 - Skill pack: browse orientation on `SKILL.md`; full-record field guide in `guideline.md`.
 
 ## 0.2.2
