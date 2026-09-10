@@ -15,3 +15,11 @@ Catalog and repo maintenance — **not** offered to agents. Agents use [`helpers
 | `drop_apple_nng_primary.py` | Source cleanup |
 
 Run from repo root after `pip install -e "packages/mcp[dev]"`.
+
+## Plugin manifests (agents)
+
+| Script | Role |
+| --- | --- |
+| `validate-cursor-plugin.mjs` | Cursor marketplace + `.cursor-plugin/plugin.json` (adapted from [cursor/plugin-template](https://github.com/cursor/plugin-template)); `--strict` fails on warnings |
+
+Claude: `claude plugin validate . --strict` and `claude plugin validate ./clients/claude --strict`. Both run in CI (`.github/workflows/test.yml`).

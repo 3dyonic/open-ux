@@ -1,4 +1,5 @@
 ---
+name: feedback
 description: Feedback container — toast, loading, 404, hard error.
 ---
 

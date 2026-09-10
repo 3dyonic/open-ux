@@ -1,4 +1,5 @@
 ---
+name: get
 description: Fetch one Situation Card or one cited guideline.
 ---
 

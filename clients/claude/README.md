@@ -21,7 +21,7 @@ claude plugin marketplace add 3dyonic/open-ux
 claude plugin install open-ux@open-ux
 ```
 
-Paste the key when prompted (`api_key`). Submit: [platform.claude.com/plugins/submit](https://platform.claude.com/plugins/submit). Validate: `claude plugin validate . --strict` (repo marketplace) or `claude plugin validate ./clients/claude --strict`.
+Paste the key when prompted (`api_key`). Submit: [platform.claude.com/plugins/submit](https://platform.claude.com/plugins/submit). Validate: `claude plugin validate . --strict` (repo marketplace) or `claude plugin validate ./clients/claude --strict`. Cursor: `node scripts/validate-cursor-plugin.mjs --strict` from repo root. CI runs both.
 
 ### Cursor
 

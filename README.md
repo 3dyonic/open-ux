@@ -148,6 +148,8 @@ Before opening a PR:
 
 ```bash
 python -m open_ux validate-catalog --strict-fit
+claude plugin validate . --strict
+node scripts/validate-cursor-plugin.mjs --strict
 cd packages/mcp && python -m pytest
 ```
 

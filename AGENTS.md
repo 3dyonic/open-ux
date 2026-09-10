@@ -18,7 +18,7 @@ Same catalog. No invite. Telemetry off. Point MCP clients at local stdio.
 
 - **Hosted** (shared live catalog): `https://open-ux.dev/mcp` with bearer `uxmcp_` (`OPEN_UX_API_KEY`). Invite at [open-ux.dev/invite](https://open-ux.dev/invite).
 
-Contributors: clone the repo and `pip install -e "packages/mcp[dev]"`.
+Contributors: clone the repo and `pip install -e "packages/mcp[dev]"`. Before PR: `validate-catalog --strict-fit`, `claude plugin validate . --strict`, `node scripts/validate-cursor-plugin.mjs --strict`.
 
 The authored plugin pack is [`clients/claude/`](clients/claude/). `.cursor` and `.claude` are mounts (symlinks), not a second copy. Claude marketplace: `claude plugin marketplace add 3dyonic/open-ux` then `claude plugin install open-ux@open-ux`. Cursor: same pack (`.cursor-plugin/` + `mcp.json`), submit at [cursor.com/marketplace/publish](https://cursor.com/marketplace/publish). Site: [open-ux.dev](https://open-ux.dev).
 
