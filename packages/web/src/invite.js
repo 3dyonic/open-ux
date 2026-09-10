@@ -123,10 +123,10 @@ export function redeemPage() {
       <p class="invite-sub">Invite redeemed. Copy your key — we won’t show it in full again.</p>
       <div class="key-box" id="key-text"></div>
       <button class="btn btn-primary" type="button" id="copy-key">Copy key</button>
-      <p class="invite-sub">Cursor: LLM settings → MCP → add this server (global or project <span class="font-mono text-ink">mcp.json</span>).</p>
+      <p class="invite-sub">Add this MCP server in your client — paste into <span class="font-mono text-ink">mcp.json</span> or your editor’s MCP settings.</p>
       <pre class="config-box" id="mcp-config"></pre>
       <button class="btn btn-outline" type="button" id="copy-mcp-config">Copy MCP config</button>
-      <p class="foot">Plugin from GitHub adds the skill and slash commands; MCP alone is enough for tools.</p>
+      <p class="foot">Bearer key only. Plugins from GitHub add skill and slash commands; MCP config alone enables the tools.</p>
     </div>
   </main>`,
         { catalog: false, consent: false },
