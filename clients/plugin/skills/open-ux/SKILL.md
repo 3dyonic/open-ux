@@ -5,7 +5,7 @@ description: >-
  confirmation, a loading state, a 404 or error state, navigation, a table or
  dashboard, a modal or overlay, page copy, or a multi-step or checkout flow.
  Start from the ask, not a Card id. Open UX hands back cited criteria from
- real design systems; you decide what applies. Tooling: Open-UX:suggest_situations,
+ real published sources; you decide what applies. Tooling: Open-UX:suggest_situations,
  Open-UX:list_situations, Open-UX:get_situation (map a Card),
  Open-UX:pack with jobs=<card_id>, jobs=<leaf_id>, container alias
  (forms, actions, feedback), or guideline_ids, Open-UX:get_guideline (full rule),

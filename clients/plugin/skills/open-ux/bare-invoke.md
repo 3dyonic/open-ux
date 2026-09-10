@@ -7,7 +7,7 @@ Direct **`/open-ux:open-ux`** with no task attached.
 
 ## Verbatim reply
 
-**Open UX** · cited criteria from real design systems · you decide what applies.
+**Open UX** · cited UX criteria from published sources · you decide what applies.
 
 No specific screen yet. UI work groups into **seven areas** — each has Cards (compose jobs):
 

@@ -102,6 +102,7 @@ def test_cursor_pack_uses_variables_not_user_config() -> None:
     assert "bare-invoke.md" in rule
     bare = (PACK / "skills" / "open-ux" / "bare-invoke.md").read_text(encoding="utf-8")
     assert "Verbatim reply" in bare
-    assert "`design_a_form`" in bare
+    assert "published sources" in bare
+    assert "design systems" not in bare.lower()
     assert "Open-UX:pack" in rule
     assert "pass_when" not in rule
