@@ -5,7 +5,7 @@ description: >-
  confirmation, a loading state, a 404 or error state, navigation, a table or
  dashboard, a modal or overlay, page copy, or a multi-step or checkout flow.
  Start from the ask, not a Card id. Open UX hands back cited criteria from
- real design systems; you decide what applies. Tooling: Open-UX:suggest_situations,
+ real published sources; you decide what applies. Tooling: Open-UX:suggest_situations,
  Open-UX:list_situations, Open-UX:get_situation (map a Card),
  Open-UX:pack with jobs=<card_id>, jobs=<leaf_id>, container alias
  (forms, actions, feedback), or guideline_ids, Open-UX:get_guideline (full rule),
@@ -24,7 +24,7 @@ Compose and review share this one trigger. Compare Cards that fit. Open more tha
 ## Loop
 
 0. **Start from the ask:** user words and what is on screen — not a Card id. If phrasing matches [ask-shapes.md](ask-shapes.md), map that Card next at step 2.
-1. **Still vague, no job in mind:** **`Open-UX:suggest_situations`** for the full map, then continue at step 2.
+1. **Still vague or no task yet** (including **`/open-ux:open-ux`** with nothing attached): reply with [bare-invoke.md](bare-invoke.md) **Verbatim reply** every time — no map call yet. When a task arrives in the next message, continue from step 0. Continue at step 2 once the ask is clear.
 2. **Name the job (Card):** [cards.md](cards.md) or the map from step 0/1 — compare `when` / Reject neighbors; open more than one if the ask spans them.
 3. **`Open-UX:get_situation`:** map the Card: facets, merged `guideline_ids`, and **`leaves: [{ id, count }]`** (how stocked each Leaf bay is).
 4. **Scope the pull:** whole Card (`jobs=<card_id>`) or one bay (`jobs=<leaf_id>`) when the ask is narrow. See [examples.md](examples.md) for container → cite scope sizes.
@@ -62,6 +62,7 @@ One skill package. Read the reference that matches the task; do not load all upf
 
 | Reference | Read when |
 | --- | --- |
+| [bare-invoke.md](bare-invoke.md) | Direct **`/open-ux:open-ux`** with no task — verbatim onboarding reply |
 | [glossary.md](../../../../docs/glossary.md) | Map, container, Card, Leaf, cite, pack, component: vocabulary (any MCP agent) |
 | [ask-shapes.md](ask-shapes.md) | User language → Card / Leaf / `get_component` |
 | [examples.md](examples.md) | **`jobs=`** scope sizes (container → Card → Leaf → cite) |
