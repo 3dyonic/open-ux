@@ -1,6 +1,16 @@
 # Tools
 
-Fully qualified `Open-UX:*` names. `/list` `/get` `/pack` / map / cite stay on **MCP tools**. You compare Cards from [cards.md](cards.md). No winner from the host.
+Fully qualified `Open-UX:*` names. List, get, pack, map, and cite all stay on **MCP tools** — there are no separate slash commands. You compare Cards from [cards.md](cards.md). No winner from the host.
+
+## By verb (9 tools)
+
+| Verb | Tools | Shape |
+| --- | --- | --- |
+| List | `list_situations`, `list_guidelines`, `list_components` | Browse index, no rule bodies |
+| Get | `get_situation`, `get_guideline`, `get_component` | One thing, full body, by id |
+| Pull | `pack`, `suggest_situations`, `search_guidelines` | Multi-row, cited, paged |
+
+Every tool name signals its verb. A new tool should fit one of the three or it does not belong on the wire.
 
 ## MCP (agent path)
 
@@ -30,3 +40,14 @@ Never use `rank_pack` to fetch a pack, pick a Card, or replace the skill loop.
 Also on pip (terminal / CI only: not agent path when MCP is connected): `open-ux pack`, `open-ux component`, `open-ux tools list`. See **`contributor_wire`** in **`open-ux helpers list`**.
 
 Contributor scripts live in `scripts/`: not for agents.
+
+## API ergonomics
+
+These disciplines keep the catalog scalable while the tool count stays at nine:
+
+- **One scoping parameter, three sizes.** `jobs=` takes a container, Card, or Leaf id; the envelope grows with it. A graduated parameter beats parallel entry points for the same concept.
+- **Map before you pull.** `get_situation` (ids + counts) precedes `pack` (bodies), so you know roughly how much sits behind a scope before choosing how narrow to go.
+- **`reject` travels with `situation`.** Steering away from adjacent Cards rides in the same payload as steering toward one — not a second call.
+- **Ranking stays off the server.** `query` on `pack` / `search_guidelines` is non-authoritative; reorder one fetched page with optional local `open-ux rank-pack` only.
+- **`component[]` is stamped, not enumerated.** Open `get_component` only when a row or Card names the id. See [component.md](component.md).
+- **One registered skill.** New capability → new `jobs=` value or a new row in a reference file the skill already points to — not a new registered entry. Decision tree → [principles.md](principles.md).

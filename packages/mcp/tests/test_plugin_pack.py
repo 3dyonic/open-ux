@@ -13,7 +13,7 @@ def test_marketplace_points_at_pack() -> None:
     market = json.loads((ROOT / ".claude-plugin" / "marketplace.json").read_text())
     plugin = market["plugins"][0]
     assert plugin["source"] == "./clients/plugin"
-    assert plugin["version"] == "1.1.0"
+    assert plugin["version"] == "1.2.0"
     assert plugin.get("homepage") == "https://open-ux.dev"
 
 
@@ -21,7 +21,8 @@ def test_cursor_marketplace_points_at_same_pack() -> None:
     market = json.loads((ROOT / ".cursor-plugin" / "marketplace.json").read_text())
     plugin = market["plugins"][0]
     assert plugin["source"] == "./clients/plugin"
-    assert plugin["version"] == "1.1.0"
+    assert plugin["version"] == "1.2.0"
+    assert market["metadata"]["version"] == "1.2.0"
     assert plugin.get("homepage") == "https://open-ux.dev"
     assert plugin.get("logo") == "assets/icon.svg"
     assert ".." not in plugin["source"]
@@ -53,13 +54,17 @@ def test_host_mounts_are_symlinks_into_pack() -> None:
         ROOT / ".cursor" / "rules" / "open-ux.mdc",
         ROOT / ".claude" / "skills" / "open-ux",
         ROOT / ".claude" / "agents" / "open-ux.md",
-        ROOT / ".claude" / "commands" / "list.md",
-        ROOT / ".claude" / "commands" / "get.md",
-        ROOT / ".claude" / "commands" / "pack.md",
-        ROOT / ".claude" / "commands" / "forms.md",
-        ROOT / ".claude" / "commands" / "actions.md",
-        ROOT / ".claude" / "commands" / "feedback.md",
     )
+    command_mounts = (
+        "list.md",
+        "get.md",
+        "pack.md",
+        "forms.md",
+        "actions.md",
+        "feedback.md",
+    )
+    for name in command_mounts:
+        assert not (ROOT / ".claude" / "commands" / name).exists(), name
     pack = PACK.resolve()
     for path in mounts:
         assert path.is_symlink(), path
@@ -93,5 +98,6 @@ def test_cursor_pack_uses_variables_not_user_config() -> None:
     assert ".." not in plugin["logo"]
     rule = (PACK / "rules" / "open-ux.mdc").read_text(encoding="utf-8")
     assert "alwaysApply: true" in rule
+    assert "First Open UX call" in rule
     assert "Open-UX:pack" in rule
     assert "pass_when" not in rule

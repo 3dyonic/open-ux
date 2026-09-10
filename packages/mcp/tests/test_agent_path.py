@@ -22,6 +22,7 @@ ROUTING_REFERENCES = (
     "examples.md",
     "shapes.md",
     "cards.md",
+    "principles.md",
     "tools.md",
     "connect.md",
 )
@@ -54,6 +55,11 @@ ENFORCE_SCRIPT = (
     "prefer the script",
 )
 GUIDELINE_ID = re.compile(r"`[a-z]+(?:\.[a-z0-9_-]+){1,}`")
+
+
+def _catalog_guideline_leaks(text: str) -> list[str]:
+    """Catalog leaf ids like `forms.field_labels`, not reference links like `cards.md`."""
+    return [m for m in GUIDELINE_ID.findall(text) if not m.endswith(".md`")]
 
 
 def _frontmatter_description(text: str) -> str:
@@ -98,6 +104,7 @@ def test_one_skill_package_named_open_ux() -> None:
         "examples.md",
         "shapes.md",
         "cards.md",
+        "principles.md",
         "tools.md",
         "connect.md",
     ):
@@ -116,8 +123,8 @@ def test_skill_description_informs_and_promotes() -> None:
     desc = _frontmatter_description(text)
     assert len(desc) <= 1024
     lower = desc.lower()
-    assert "building or checking UI" in desc
-    assert "composing or reviewing" in lower
+    assert "building or reviewing" in lower
+    assert "ui or ux work" in lower
     assert "form" in lower
     assert "cited" in lower
     assert "pass" in lower and "fail" in lower
@@ -190,7 +197,7 @@ def test_skill_examples_and_tools_not_sermons() -> None:
 def test_skill_files_point_at_tools_not_catalog_bodies() -> None:
     for path in _skill_files():
         text = path.read_text(encoding="utf-8")
-        leaked = GUIDELINE_ID.findall(text)
+        leaked = _catalog_guideline_leaks(text)
         assert leaked == [], f"{path.name} must not embed guideline ids {leaked}"
         if path.name in ("guideline.md", "component.md"):
             assert "overview" in text
@@ -216,40 +223,26 @@ def test_plugin_points_at_hosted_mcp() -> None:
     assert plugin.get("homepage") == "https://open-ux.dev"
 
 
-def test_commands_are_short_mcp_prompts() -> None:
-    names = {"list.md", "get.md", "pack.md", "forms.md", "actions.md", "feedback.md"}
-    found = {p.name for p in COMMANDS.glob("*.md")}
-    assert names <= found
-    assert not (COMMANDS / "critique.md").exists()
-    for path in COMMANDS.glob("*.md"):
-        text = path.read_text(encoding="utf-8")
-        lower = text.lower()
-        assert "verdict" not in lower
-        assert "pass/fail" not in lower
-        assert "upload" not in lower
-        assert "no file" in lower or "send a file" in lower or "not ask for a file" in lower
-        assert "Open-UX:" in text
-        assert "python3 skills/open-ux/scripts" not in lower
-        assert "clients/plugin/skills/open-ux/scripts" not in text
-        for banned in ENFORCE_SCRIPT:
-            assert banned not in lower
-        for token in BANNED_BODIES:
-            assert token not in text
-        assert len(text.splitlines()) <= 12
-        if path.name != "pack.md":
-            assert "audit.py" not in text
-            assert "pack.py" not in text
-    pack_cmd = (COMMANDS / "pack.md").read_text(encoding="utf-8")
-    assert "Open-UX:pack" in pack_cmd
-    assert "jobs=" in pack_cmd
-    assert "guideline_ids" in pack_cmd
-    assert "rank-pack" in pack_cmd
-    assert "helpers/pack.py" not in pack_cmd
-    assert pack_cmd.index("Open-UX:pack") < pack_cmd.index("rank-pack")
-    list_cmd = (COMMANDS / "list.md").read_text(encoding="utf-8")
-    get_cmd = (COMMANDS / "get.md").read_text(encoding="utf-8")
-    assert "Open-UX:list_situations" in list_cmd
-    assert "Open-UX:get_situation" in get_cmd
+def test_plugin_has_no_separate_commands() -> None:
+    """One skill only — container aliases belong in jobs=, not slash commands (OUX-128/129)."""
+    assert not COMMANDS.exists()
+    stale = (
+        "list.md",
+        "get.md",
+        "pack.md",
+        "forms.md",
+        "actions.md",
+        "feedback.md",
+        "critique.md",
+    )
+    for name in stale:
+        mount = ROOT / ".claude" / "commands" / name
+        assert not mount.exists(), f"remove stale command mount {mount}"
+    tools = TOOLS_REFERENCE.read_text(encoding="utf-8").lower()
+    assert "no separate slash commands" in tools
+    skill = SKILL.read_text(encoding="utf-8")
+    assert "principles.md" in skill
+    assert "Open-UX:pack" in skill
 
 
 def test_pointer_docs_exist_and_stay_thin() -> None:
@@ -267,7 +260,7 @@ def test_pointer_docs_exist_and_stay_thin() -> None:
         for card_id in CARD_IDS:
             if path.name in {"AGENTS.md", "CLAUDE.md"}:
                 assert card_id not in text
-    assert not (COMMANDS / "critique.md").exists()
+    assert not COMMANDS.exists()
 
 
 def test_no_audit_tool_name_in_docs() -> None:

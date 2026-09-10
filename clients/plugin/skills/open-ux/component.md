@@ -1,12 +1,3 @@
----
-name: open-ux-component
-description: >-
- Context helper for Cards and jobs; use when a pack row or Card stamps
- component[] and the ask is the control (variants, a11y, keyboard). Field
- guide for Open-UX:get_component and the component JSON. After you read, go
- back to the pack.
----
-
 # Open UX component
 
 Component records live in `catalog/components/`: a context helper joined to Cards and cites by **`component[]`**. They do not replace **`pack`** or **`get_guideline`**.

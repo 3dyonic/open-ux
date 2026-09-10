@@ -10,7 +10,7 @@
       "name": "open-ux",
       "source": "./clients/plugin",
       "description": "Cited UX rules agents audit against. Pick a Situation Card, then get a criteria pack.",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "author": {
         "name": "3dyonic",
         "url": "https://github.com/3dyonic"

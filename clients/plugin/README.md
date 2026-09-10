@@ -69,6 +69,6 @@ Compose, review, map, and cite are jobs in `skills/open-ux`: not extra packages.
 - **Map:** `Open-UX:suggest_situations` when the ask is a vague surface (catalog map). The catalog stays open after a pack.
 - **Cite:** `Open-UX:search_guidelines` / `Open-UX:get_guideline`
 
-Commands: `/list` `/get` `/pack`, plus aliases `/forms` `/actions` `/feedback`. Agent pointers: `agents/open-ux.md`.
+No separate commands: the skill (`skills/open-ux/SKILL.md`) is invoked automatically on a matching ask, or directly via `/open-ux:open-ux`. Agent pointers: `agents/open-ux.md`.
 
 Agents use **`Open-UX:*` MCP tools**; host fetches catalog data. Optional LLM local: **`open-ux rank-pack`** after pack (`pip install open-ux`); see [`helpers/README.md`](../../helpers/README.md). Contributor CLI/wire: `contributor_wire` in `open-ux helpers list`. Contributor scripts live in `scripts/`: not the skill path.
