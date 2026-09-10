@@ -20,13 +20,36 @@ description: >-
 
 Need in → cited criteria out. We are a catalog. They choose what to take. You already have the UI. We hand you a page of matching cited rules so you don't invent UX from memory. Cited criteria help you decide. The decision is yours. The host does not pick a Card.
 
-Compose and review share this one trigger. Compare Cards that fit. Open more than one if the ask spans them. Call `Open-UX:get_situation`, then `Open-UX:pack` with `jobs=<card_id>`. You decide what to take.
+Compose and review share this one trigger. Compare Cards that fit. Open more than one if the ask spans them. You decide what to take.
 
-`pack` is the pack page. Expect pagination: pages of 10. Use this page. If `next_offset` is set, more of the catalog is there — call again with that `offset` if you want more. The host does not rank. Do not write a pack fetcher or a BM25 ranker — use the Python helpers below.
+## Loop
 
-Go in and out. `Open-UX:get_guideline` opens one full cite; `Open-UX:get_component` opens one widget record when `component[]` names an id — then come back to the pack, another page, or another Card. Cross-reference similar rules — same `facet`, `Open-UX:search_guidelines`, or other Cards in the table. Two sources on one Card can disagree; say both.
+1. **Card table** — pick a Card (or compare `when` / Reject neighbors).
+2. **`Open-UX:get_situation`** — map the Card: facets, merged `guideline_ids`, and **`leaves: [{ id, count }]`** (how stocked each Leaf bay is).
+3. **Scope the pull** — whole Card (`jobs=<card_id>`) or one bay (`jobs=<leaf_id>`) when the ask is narrow (control choice, primary loudness, overlay layer, …).
+4. **`Open-UX:pack`** — read **`reject`** on the envelope **`situation`** (Card reject is never skipped on Card/Leaf pulls). Skim rows: **`overview`**, **`apply_when`**, **`not_when`**, **`rule`**. **`cite_via`** is `get_guideline` — rows are browse slices, not full cites.
+5. **`Open-UX:get_guideline`** — open one id when you need `agent_hint`, `description`, or citations — then back to the pack page, `next_offset`, or another Card.
+
+`pack` pages at 10. If `next_offset` is set, call again with that `offset`. The host does not rank. Do not write a pack fetcher or a BM25 ranker — use the Python helpers below.
+
+Cross-reference similar rules — same `facet`, `Open-UX:search_guidelines`, or other Cards in the table. Two sources on one Card can disagree; say both. `Open-UX:get_component` opens one widget record when `component[]` names an id.
 
 ## Shapes
+
+**Map** (`get_situation` facet):
+
+```json
+{
+  "id": "wrong_control_for_the_choice",
+  "title": "Wrong control for the choice",
+  "leaves": [
+    { "id": "choose_control_for_choice", "count": 20 }
+  ],
+  "guideline_ids": ["…"]
+}
+```
+
+**Pack** (Card or Leaf pull — envelope + page):
 
 **`overview`** is the short definition — what this cite *is*. Start there. Fast confidence. Not a grade.
 
@@ -34,6 +57,13 @@ Go in and out. `Open-UX:get_guideline` opens one full cite; `Open-UX:get_compone
 
 ```json
 {
+  "situation": {
+    "card": "design_a_form",
+    "when": ["…"],
+    "reject": [{ "id": "handle_form_errors", "why": "…" }],
+    "leaf": "choose_control_for_choice"
+  },
+  "cite_via": "get_guideline",
   "guidelines": [{
     "id": "",
     "name": "",
@@ -55,7 +85,9 @@ Go in and out. `Open-UX:get_guideline` opens one full cite; `Open-UX:get_compone
 }
 ```
 
-Read `overview` and `apply_when`. If `next_offset` is set, loop. `id` opens `get_guideline` for the rest of that cite — then come back to the pack.
+Envelope **`leaf`** only when `jobs=` is a Leaf id. Container pulls (`forms` / `actions` / `feedback`) omit **`situation`**; they still set **`cite_via`**.
+
+Read envelope **`reject`**, then row `apply_when` / `not_when`. If `next_offset` is set, loop the page. Row `id` → `get_guideline` for the full cite — then come back to the pack.
 
 One Card is many sources. Related Cards are not a fork with a winner. That is the catalog. The host will not pick.
 
@@ -67,9 +99,12 @@ When you need a map of what exists — by **category**, then **source** — read
 
 ## Examples
 
-- **Signup / settings fields.** Card `design_a_form`. Browse via `jobs=design_a_form`. Loop `next_offset`. Open one id with `get_guideline`, then back to the page. Same if you are reviewing that form.
+- **Signup / settings fields.** Card `design_a_form`. Map with `get_situation`, pack `jobs=design_a_form`, read envelope **`reject`**, loop `next_offset`, `get_guideline` for one id, back to the page. Same if you are reviewing that form.
+- **Cancel as link vs button.** Leaf `choose_control_for_choice` on `design_a_form` (map counts first). Pack `jobs=choose_control_for_choice` — not `pick_primary_action` (that bay is variant loudness / implementation).
+- **Primary vs secondary styling.** Leaf `pick_primary_action` on `design_actions_and_ctas`. Pack `jobs=pick_primary_action`.
+- **Spinner / loading on the control.** Card `compose_feedback` — not a separate loading Leaf.
 - **Review a delete confirm.** Card `protect_destructive_and_leave`. A button ask can also open `design_actions_and_ctas`. You decide.
-- **Vague checkout.** `Open-UX:suggest_situations` with the task text. Read the catalog map, open the Cards that fit (`list_situations` with a container if useful), `Open-UX:get_situation`, then `Open-UX:pack` with `jobs=<card_id>`. More than one Card is fine.
+- **Vague checkout.** `Open-UX:suggest_situations` with the task text. Read the catalog map, open the Cards that fit (`list_situations` with a container if useful), `get_situation` (leaf counts), then `pack` with `jobs=<card_id>` or a Leaf. More than one Card is fine.
 - **Already have a guideline id.** `Open-UX:get_guideline` for that one cited body.
 - **Delete confirm with a danger button.** Card `protect_destructive_and_leave`. Pack row stamps `component: ["button"]`. Skim cites on the pack; `Open-UX:get_component` with `id=button` for variant names (primary vs danger); back to the pack or open one cite with `get_guideline`.
 
@@ -114,8 +149,8 @@ The table is the map. Compare `when`. Other Cards in Reject are neighbors to ope
 
 Fully qualified `Open-UX:*` names. `/list` `/get` `/pack` / map / cite stay on tools. You compare Cards from the table. No winner from the host.
 
-- `Open-UX:get_situation` — Card when / reject / pointers / `component[]` (not rule bodies)
-- `Open-UX:pack` — `jobs=<card_id>` or `guideline_ids`. Browse. Start from `overview`. Loop `next_offset`. Go in and out. The decision is yours.
+- `Open-UX:get_situation` — Card when / reject / facets / **`leaves: { id, count }`** / merged pointers / `component[]` (not rule bodies)
+- `Open-UX:pack` — `jobs=<card_id>` or `jobs=<leaf_id>` or `guideline_ids`. Card/Leaf pulls: **`situation`** + **`cite_via`**. Read reject and row fit (`apply_when` / `not_when`). Loop `next_offset`. Row `id` → `get_guideline`. The decision is yours.
 - Python helpers (available, not required). Your choice whether to use them. List: [`helpers/registry.json`](../../../../helpers/registry.json). Do not invent these:
   - `python3 helpers/pack.py --jobs <card_id>` — same pack as `Open-UX:pack`
   - `python3 helpers/rank_pack.py --query "…" < pack.json` — BM25 over this page (`overview` / `apply_when` / `hints` / `component`). Fail-open. No winner.
