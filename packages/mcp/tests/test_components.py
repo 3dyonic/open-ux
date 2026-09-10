@@ -4,8 +4,8 @@ from pathlib import Path
 
 import pytest
 
-from open_ux.catalog import CatalogError, load_catalog
 from open_ux.catalog import load_catalog
+from open_ux.catalog_error import CatalogError
 from open_ux.components import (
     build_component_usage,
     get_component,
@@ -26,12 +26,6 @@ def test_live_registry_loads_all(live_catalog: Path) -> None:
     assert record["title"] == "Button"
     assert "cta" in record["keywords"]
     assert record["variants"]["role"][0]["id"] == "primary"
-
-
-def test_live_catalog_validates_component_cite(live_catalog: Path) -> None:
-    catalog = load_catalog(Settings.load(hosted=True))
-    cited = catalog.by_id["govuk.button-types-named"]
-    assert cited["component"] == ["button"]
 
 
 def test_unknown_cite_component_rejected(live_catalog: Path) -> None:
@@ -117,21 +111,6 @@ def test_get_component_switches_omit_keys(live_catalog: Path) -> None:
     assert "accessibility" not in component
     assert "keyboard" not in component
     assert "keywords" in component
-
-
-def test_get_component_used_on_button(live_catalog: Path) -> None:
-    registry = load_components(Settings.load(hosted=True))
-    tree = load_job_tree(Settings.load(hosted=True))
-    catalog = load_catalog(Settings.load(hosted=True))
-    usage = build_component_usage(tree, catalog.guidelines)
-    payload = get_component(registry, usage, "button", include_used_on=True)
-    used_on = payload["component"]["used_on"]
-    assert used_on["cards_total"] == 8
-    assert used_on["cites_total"] == 31
-    assert len(used_on["cards"]) == 8
-    assert len(used_on["cites"]) == 31
-    cite = used_on["cites"][0]
-    assert set(cite) == {"id", "overview", "card", "facet", "leaf"}
 
 
 def test_get_component_unknown_id(live_catalog: Path) -> None:

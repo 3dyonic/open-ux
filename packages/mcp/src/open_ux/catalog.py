@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -7,6 +8,7 @@ from typing import Any
 
 from jsonschema.validators import validator_for
 
+from open_ux.bm25 import guideline_blob, rank_blobs
 from open_ux.catalog_error import CatalogError
 from open_ux.components import load_components, validate_component_refs
 from open_ux.jobs import (
@@ -21,7 +23,10 @@ from open_ux.manifest import manifest_ids
 from open_ux.rule_paths import iter_rule_files, rule_file_stem, rule_relpath
 from open_ux.settings import HARD_CATALOG_BYTES, Settings
 
-EMPTY_NOTE = "Catalog is empty. No guideline content is invented."
+EMPTY_NOTE = (
+    "Catalog is empty. Cited seed rules have not landed yet "
+    "(Designer UNS-44 — Forms → field labels ×3). No guideline content is invented."
+)
 
 INDEX_KEYS = ("id", "title", "name", "jobs", "lane", "container", "card", "facet", "leaf")
 BODY_KEYS = frozenset({"pass_when", "fail_when", "rule", "citation", "check", "severity"})
@@ -242,6 +247,7 @@ def load_catalog(settings: Settings | None = None) -> Catalog:
 def list_index(
     catalog: Catalog,
     *,
+    query: str | None = None,
     jobs: str | list[str] | None = None,
     lane: str | None = None,
     limit: int = 50,
@@ -250,6 +256,7 @@ def list_index(
     scope = resolve_need_scope(jobs)
     if jobs is not None and scope is not None and scope.empty:
         return [], 0
+    q = (query or "").strip()
     out: list[dict[str, Any]] = []
     for row in catalog.index:
         entry = {k: row.get(k) for k in INDEX_KEYS if k in row}
@@ -263,6 +270,12 @@ def list_index(
         if lane and entry.get("lane") != lane:
             continue
         out.append(entry)
+    if q:
+        bodies = {g.get("id"): g for g in catalog.guidelines}
+        blobs = [guideline_blob(bodies.get(entry.get("id")) or entry) for entry in out]
+        order, matched = rank_blobs(q, blobs)
+        if matched:
+            out = [out[i] for i in order]
     if limit < 1:
         raise CatalogError("limit must be >= 1")
     if offset < 0:
@@ -271,11 +284,15 @@ def list_index(
 
 
 def citations(guideline: dict[str, Any]) -> list[dict[str, Any]]:
-    """Return citation as a list of {source, url}."""
-    raw = guideline.get("citation") or []
-    if not isinstance(raw, list):
+    """Return citation as a list of {source, url}. Catalog stores an array."""
+    raw = guideline.get("citation")
+    if raw is None:
         return []
-    return [item for item in raw if isinstance(item, dict)]
+    if isinstance(raw, list):
+        return [item for item in raw if isinstance(item, dict)]
+    if isinstance(raw, dict):
+        return [raw]
+    return []
 
 
 def get_by_id(catalog: Catalog, guideline_id: str) -> dict[str, Any] | None:
@@ -308,3 +325,7 @@ def select_by_jobs(catalog: Catalog, jobs: str | list[str]) -> list[dict[str, An
         for g in catalog.guidelines
         if _in_scope(g.get("id"), g.get("jobs") or [], scope, leaf=g.get("leaf"))
     ]
+
+
+def content_hash(content: str) -> str:
+    return hashlib.sha256(content.encode("utf-8")).hexdigest()
