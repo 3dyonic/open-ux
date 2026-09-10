@@ -14,11 +14,11 @@ MARKER = "UNIQUE_RAW_PAYLOAD_SHOULD_NEVER_BE_STORED_xyzzy"
 
 
 @pytest.mark.asyncio
-async def test_audit_tool_does_not_write_raw_content(tmp_env: Path) -> None:
+async def test_pack_tool_does_not_write_raw_content(tmp_env: Path) -> None:
     mcp = create_mcp(hosted=True)
     async with Client(mcp) as client:
         await client.call_tool(
-            "audit",
+            "pack",
             {
                 "guideline_ids": ["forms.field_labels.visible_label"],
                 "query": MARKER,
@@ -33,12 +33,12 @@ def test_telemetry_stores_length_and_hash_only(tmp_env: Path) -> None:
     settings = Settings.load(hosted=True)
     issued = register("ada@example.com", settings=settings)
     store = get_store(settings)
-    from open_ux.catalog import content_hash
+    from open_ux.store import content_hash
 
     payload = f"<form>{MARKER}</form>"
     store.record_telemetry(
         key_hash=issued.key_hash,
-        tool="audit",
+        tool="pack",
         target_type="html",
         content_length=len(payload.encode("utf-8")),
         content_hash=content_hash(payload),
@@ -72,7 +72,7 @@ async def test_stdio_has_no_hosted_telemetry(tmp_env: Path, monkeypatch: pytest.
     mcp = create_mcp(hosted=False)
     async with Client(mcp) as client:
         await client.call_tool(
-            "audit",
+            "pack",
             {
                 "guideline_ids": ["forms.field_labels.visible_label"],
                 "query": MARKER,

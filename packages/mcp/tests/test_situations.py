@@ -8,11 +8,15 @@ from fastmcp import Client
 from open_ux.jobs import CARD_IDS, CONTAINER_IDS, LEAF_IDS, expand_need, load_job_tree, resolve_need
 from open_ux.server import create_mcp
 from open_ux.settings import Settings
+from open_ux.jobs import Card
 from open_ux.situations import (
     MAP_ROW_KEYS,
     NO_SUGGEST_MATCH,
     SPEC_ROW_KEYS,
     SUGGEST_MENU_NOTE,
+    _card_payload,
+    _map_row,
+    _spec_row,
     get_situation,
     list_situations,
     suggest_card_ids,
@@ -42,7 +46,7 @@ def test_skill_description_is_compose_task_and_short() -> None:
     assert len(desc) <= 1024
     assert "form" in desc.lower()
     assert "Open-UX:get_situation" in desc
-    assert "Open-UX:audit" in desc
+    assert "Open-UX:pack" in desc
     assert "target" not in desc
     assert "verdict" not in desc
     assert "pass_when" not in rest
@@ -62,11 +66,11 @@ def test_skill_description_is_compose_task_and_short() -> None:
         assert title in rest
 
 
-def test_expand_need_cards_not_leaves(live_catalog: Path) -> None:
+def test_expand_need_cards_and_leaves(live_catalog: Path) -> None:
     tree = _tree(live_catalog)
     assert "avoid_placeholder_as_label" in expand_need("design_a_form", tree)
     assert "explain_failure_next_to_cause" in expand_need("handle_form_errors", tree)
-    assert expand_need("avoid_placeholder_as_label", tree) == []
+    assert expand_need("avoid_placeholder_as_label", tree) == ["avoid_placeholder_as_label"]
     assert expand_need("forms", tree) == expand_need("forms_and_input", tree)
     assert "avoid_placeholder_as_label" in expand_need("forms", tree)
     assert "avoid_placeholder_as_label" in expand_need("forms_and_input", tree)
@@ -78,7 +82,12 @@ def test_expand_need_cards_not_leaves(live_catalog: Path) -> None:
     assert "mui.non-modal-dialogs-allowed" in overlay.guideline_ids
     steps = resolve_need("build_a_multi_step_flow", tree)
     assert "nl.step-n-of-m-in-title-and-above-form" in steps.guideline_ids
-    assert resolve_need("avoid_placeholder_as_label", tree).empty
+    placeholder = resolve_need("avoid_placeholder_as_label", tree)
+    assert placeholder.tags == ("avoid_placeholder_as_label",)
+    assert placeholder.guideline_ids
+    primary = resolve_need("pick_primary_action", tree)
+    assert primary.tags == ("pick_primary_action",)
+    assert "ant.one-cta-per-screen" in primary.guideline_ids
 
 
 def test_list_situations_returns_allowlist_only(live_catalog: Path) -> None:
@@ -110,6 +119,43 @@ def test_unscoped_list_stays_index(live_catalog: Path) -> None:
         assert "when" not in row
         assert "reject" not in row
         assert "overview" not in row
+
+
+def test_get_situation_includes_component(live_catalog: Path) -> None:
+    result = get_situation("design_actions_and_ctas", _tree(live_catalog))
+    assert result["found"] is True
+    assert result["situation"]["component"] == ["button", "link"]
+
+
+def test_component_omitted_when_empty() -> None:
+    bare = Card(
+        id="x",
+        title="t",
+        container="forms_and_input",
+        overview="o",
+        when=(),
+        reject=(),
+        hints=(),
+        facets=(),
+    )
+    assert "component" not in _map_row(bare)
+    assert "component" not in _spec_row(bare)
+    assert "component" not in _card_payload(bare)
+
+    stamped = Card(
+        id="x",
+        title="t",
+        container="forms_and_input",
+        overview="o",
+        when=(),
+        reject=(),
+        hints=(),
+        facets=(),
+        component=("button", "link"),
+    )
+    assert _map_row(stamped)["component"] == ["button", "link"]
+    assert _spec_row(stamped)["component"] == ["button", "link"]
+    assert _card_payload(stamped)["component"] == ["button", "link"]
 
 
 def test_get_situation_returns_pointers_not_bodies(live_catalog: Path) -> None:

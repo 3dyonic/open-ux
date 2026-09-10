@@ -9,14 +9,12 @@ from jsonschema import ValidationError, validate
 from open_ux.catalog import (
     AGENT_KEYS,
     CatalogError,
-    build_manifest,
     citations,
     load_catalog,
-    rule_file_stem,
-    rule_relpath,
-    source_house,
     validate_placement,
 )
+from open_ux.manifest import build_manifest
+from open_ux.rule_paths import rule_file_stem, rule_relpath, rule_source
 from open_ux.jobs import (
     CARD_IDS,
     CONTAINER_IDS,
@@ -123,8 +121,6 @@ def test_empty_catalog_validates(tmp_env: Path) -> None:
     catalog = load_catalog(Settings.load(hosted=True))
     assert catalog.empty
     assert catalog.guidelines == []
-    assert catalog.jobs == []
-    assert catalog.patterns == []
 
 
 def test_invalid_catalog_rejected(tmp_env: Path, catalog_dir: Path) -> None:
@@ -444,10 +440,7 @@ def test_leaf_required_iff_facet_has_working_leaves() -> None:
         )
 
 
-def test_citation_is_object_or_array_of_sources() -> None:
-    assert citations({"citation": {"source": "A", "url": "https://a.example"}}) == [
-        {"source": "A", "url": "https://a.example"}
-    ]
+def test_citation_is_array_of_sources() -> None:
     assert citations(
         {"citation": [{"source": "A", "url": "https://a.example"}]}
     ) == [{"source": "A", "url": "https://a.example"}]
@@ -525,7 +518,7 @@ def test_names_are_claim_then_source_and_folders_follow_category(
     assert (live_catalog / "rules" / "actions" / "ant" / "one-cta-per-screen.json").is_file()
 
     for guideline in catalog.guidelines:
-        _slug, label = source_house(guideline)
+        _slug, label = rule_source(guideline)
         assert guideline["name"].endswith(f" — {label}")
         assert not guideline["name"].endswith(" — Actions")
         assert not guideline["name"].endswith(" — Forms")
@@ -538,22 +531,22 @@ VERCEL_FORMS = (
     "https://github.com/vercel-labs/web-interface-guidelines/blob/main/README.md#forms"
 )
 MATERIAL_TEXT_FIELDS = "https://m3.material.io/components/text-fields/guidelines"
-HOUSE_CITE_URLS = {
+SOURCE_CITE_URLS = {
     "tidwell": TIDWELL_BOOK,
     "vercel": VERCEL_FORMS,
     "material": MATERIAL_TEXT_FIELDS,
 }
 
 
-def test_tidwell_vercel_material_cite_the_house_page(live_catalog: Path) -> None:
+def test_tidwell_vercel_material_cite_the_source_page(live_catalog: Path) -> None:
     catalog = load_catalog(Settings.load(hosted=True))
-    seen = {slug: [] for slug in HOUSE_CITE_URLS}
+    seen = {slug: [] for slug in SOURCE_CITE_URLS}
     for guideline in catalog.guidelines:
-        slug, _label = source_house(guideline)
-        if slug not in HOUSE_CITE_URLS:
+        slug, _label = rule_source(guideline)
+        if slug not in SOURCE_CITE_URLS:
             continue
         urls = [cite["url"] for cite in citations(guideline)]
-        assert urls == [HOUSE_CITE_URLS[slug]], guideline["id"]
+        assert urls == [SOURCE_CITE_URLS[slug]], guideline["id"]
         seen[slug].append(guideline["id"])
     assert len(seen["tidwell"]) == 17
     assert len(seen["vercel"]) == 6
@@ -603,12 +596,12 @@ def test_no_primary_apple_or_nng_rules_remain(live_catalog: Path) -> None:
     assert leftover == []
     assert not list((live_catalog / "rules").rglob("nng/*.json"))
     assert not list((live_catalog / "rules").rglob("apple/*.json"))
-    house_dirs = [
+    source_dirs = [
         path
         for path in (live_catalog / "rules").rglob("*")
         if path.is_dir() and path.name in {"apple", "nng"}
     ]
-    assert house_dirs == []
+    assert source_dirs == []
     assert not any(g["id"].startswith(("nng.", "apple.")) for g in catalog.guidelines)
     nng_urls = []
     nng_cite_names = []
@@ -626,21 +619,13 @@ def test_no_primary_apple_or_nng_rules_remain(live_catalog: Path) -> None:
     assert nng_cite_names == []
 
 
-EMPTY_LEAVES = {
-    "show_action_state": "design_actions_and_ctas",
-    "write_empty_state": "compose_feedback",
-}
-
-
-def test_unpublished_empty_leaves_stay_empty() -> None:
+def test_every_leaf_has_cites() -> None:
     tree = load_job_tree()
-    found: dict[str, tuple[str, tuple[str, ...]]] = {}
-    for card in tree.cards:
-        for facet in card.facets:
-            for leaf in facet.leaves:
-                if leaf.id in EMPTY_LEAVES:
-                    found[leaf.id] = (card.id, leaf.guideline_ids)
-    assert set(found) == set(EMPTY_LEAVES)
-    for leaf_id, (card_id, ids) in found.items():
-        assert card_id == EMPTY_LEAVES[leaf_id]
-        assert ids == ()
+    empty = [
+        (card.id, leaf.id)
+        for card in tree.cards
+        for facet in card.facets
+        for leaf in facet.leaves
+        if not leaf.guideline_ids
+    ]
+    assert empty == []

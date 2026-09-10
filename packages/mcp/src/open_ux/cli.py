@@ -1,4 +1,4 @@
-"""Product CLI: cards, get, audit, cite, tools — plus existing server modes."""
+"""Product CLI: cards, get, pack, cite, tools — plus existing server modes."""
 
 from __future__ import annotations
 
@@ -10,18 +10,20 @@ from typing import TextIO
 
 from open_ux import __version__
 from open_ux.client import McpError, call_tool, list_tools
-from open_ux.jobs import CARD_IDS, CONTAINER_IDS, DEFAULT_LIMIT, JOB_ALIASES
+from open_ux.jobs import ALL_PACK_JOBS, CARD_IDS, CONTAINER_IDS, DEFAULT_LIMIT, JOB_ALIASES, LEAF_IDS
 
-BANNED_AUDIT_FLAGS = ("--file", "--content", "--target", "--verdict", "--upload")
-KNOWN_NEEDS = CARD_IDS + CONTAINER_IDS + JOB_ALIASES
+BANNED_PACK_FLAGS = ("--file", "--content", "--target", "--verdict", "--upload")
+KNOWN_NEEDS = ALL_PACK_JOBS
 SERVER_MODES = ("stdio", "http", "validate-catalog", "approve-invite")
 
 EPILOG = """\
 examples:
   open-ux cards
   open-ux get design_a_form
-  open-ux audit --jobs design_a_form
+  open-ux pack --jobs design_a_form
   open-ux cite forms.field_labels.visible_label
+  open-ux components
+  open-ux component button --include-used-on
   open-ux tools list
   python -m open_ux stdio
   OPEN_UX_MODE=hosted python -m open_ux http
@@ -51,14 +53,19 @@ def _dump(payload: object, *, compact: bool) -> None:
 def _known_needs_hint() -> str:
     cards = ", ".join(CARD_IDS)
     aliases = ", ".join(JOB_ALIASES)
-    return f"known Cards: {cards}\naliases: {aliases}"
+    leaves = ", ".join(LEAF_IDS[:5]) + ", …"
+    return (
+        f"known Cards: {cards}\n"
+        f"aliases: {aliases}\n"
+        f"Leaf ids (examples): {leaves}"
+    )
 
 
 def _validate_need(need: str) -> str | None:
     job = need.strip()
     if job in KNOWN_NEEDS:
         return None
-    return f"unknown Card or container {job!r}.\n{_known_needs_hint()}"
+    return f"unknown Card, Leaf, or container {job!r}.\n{_known_needs_hint()}"
 
 
 def _build_parser() -> argparse.ArgumentParser:
@@ -110,30 +117,33 @@ def _build_parser() -> argparse.ArgumentParser:
     getter = sub.add_parser("get", help="get_situation — one Card")
     getter.add_argument("card_id", help="Situation Card id.")
 
-    audit = sub.add_parser(
-        "audit",
-        help="Open-UX:audit — cited criteria (decision is yours)",
+    pack_parser = sub.add_parser(
+        "pack",
+        help="Open-UX:pack — cited criteria (decision is yours)",
         epilog=_known_needs_hint(),
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
-    audit.add_argument(
+    pack_parser.add_argument(
         "--jobs",
         help="Situation Card id or container alias (forms / actions / feedback).",
     )
-    audit.add_argument(
+    pack_parser.add_argument(
         "--guideline-ids",
         nargs="+",
         metavar="ID",
         help="Known guideline ids. Prefer a Card on --jobs when composing.",
     )
-    audit.add_argument("--query", help="Optional text filter inside the pack.")
-    audit.add_argument(
+    pack_parser.add_argument(
+        "--query",
+        help="Ignored on the host. Use helpers/rank_pack.py locally if needed.",
+    )
+    pack_parser.add_argument(
         "--limit",
         type=int,
         default=DEFAULT_LIMIT,
         help=f"Page size (default {DEFAULT_LIMIT}).",
     )
-    audit.add_argument(
+    pack_parser.add_argument(
         "--offset",
         type=int,
         default=0,
@@ -142,6 +152,41 @@ def _build_parser() -> argparse.ArgumentParser:
 
     cite = sub.add_parser("cite", help="get_guideline — one cited body")
     cite.add_argument("guideline_id", help="Guideline id.")
+
+    sub.add_parser("components", help="list_components — widget index")
+
+    component = sub.add_parser("component", help="get_component — one widget record")
+    component.add_argument("component_id", help="Widget id.")
+    component.add_argument(
+        "--no-vs",
+        action="store_true",
+        help="Omit vs section.",
+    )
+    component.add_argument(
+        "--no-variants",
+        action="store_true",
+        help="Omit variants section.",
+    )
+    component.add_argument(
+        "--no-accessibility",
+        action="store_true",
+        help="Omit accessibility section.",
+    )
+    component.add_argument(
+        "--no-keyboard",
+        action="store_true",
+        help="Omit keyboard section.",
+    )
+    component.add_argument(
+        "--include-keywords",
+        action="store_true",
+        help="Include keywords (default off).",
+    )
+    component.add_argument(
+        "--include-used-on",
+        action="store_true",
+        help="Include Cards and cites that stamp this widget.",
+    )
 
     tools = sub.add_parser("tools", help="tools/list and tools/call")
     tools_sub = tools.add_subparsers(dest="tools_cmd")
@@ -228,7 +273,7 @@ def _tool_payload(
             _err(hint, color=color)
             return 2
         return "get_situation", {"id": args.card_id}
-    if command == "audit":
+    if command == "pack":
         if not args.jobs and not args.guideline_ids:
             _err("requires --jobs or --guideline-ids", color=color)
             return 2
@@ -247,9 +292,22 @@ def _tool_payload(
         body["limit"] = args.limit
         if args.offset:
             body["offset"] = args.offset
-        return "audit", body
+        return "pack", body
     if command == "cite":
         return "get_guideline", {"id": args.guideline_id}
+    if command == "components":
+        return "list_components", {}
+    if command == "component":
+        body = {
+            "id": args.component_id,
+            "include_vs": not args.no_vs,
+            "include_variants": not args.no_variants,
+            "include_accessibility": not args.no_accessibility,
+            "include_keyboard": not args.no_keyboard,
+            "include_keywords": args.include_keywords,
+            "include_used_on": args.include_used_on,
+        }
+        return "get_component", body
     if command == "tools":
         if args.tools_cmd == "list":
             return "list", {}
@@ -271,11 +329,11 @@ def _tool_payload(
 
 def main(argv: list[str] | None = None) -> int:
     raw = list(sys.argv[1:] if argv is None else argv)
-    if any(flag in raw for flag in BANNED_AUDIT_FLAGS) and (
-        not raw or raw[0] == "audit" or "--jobs" in raw or "--guideline-ids" in raw
+    if any(flag in raw for flag in BANNED_PACK_FLAGS) and (
+        not raw or raw[0] == "pack" or "--jobs" in raw or "--guideline-ids" in raw
     ):
         print(
-            "audit accepts --jobs or --guideline-ids only "
+            "pack accepts --jobs or --guideline-ids only "
             "(no file, no content, no target, no verdict)",
             file=sys.stderr,
         )

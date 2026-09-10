@@ -14,7 +14,7 @@ from starlette.requests import Request
 from starlette.responses import JSONResponse, RedirectResponse, Response
 from starlette.staticfiles import StaticFiles
 
-from open_ux.audit import audit as run_audit
+from open_ux.pack import pack as run_pack
 from open_ux.auth import (
     AuthError,
     HashedKeyVerifier,
@@ -26,6 +26,12 @@ from open_ux.auth import (
 )
 from open_ux import __version__
 from open_ux.catalog import EMPTY_NOTE, catalog_status, get_by_id, list_index, load_catalog
+from open_ux.components import (
+    build_component_usage,
+    get_component as run_get_component,
+    list_components as run_list_components,
+    load_components,
+)
 from open_ux.health import HealthState, health_payload
 from open_ux.jobs import (
     DEFAULT_LIMIT,
@@ -302,6 +308,8 @@ def create_mcp(*, hosted: bool) -> FastMCP:
     catalog = load_catalog(settings)
     health_state = HealthState()
     job_tree = load_job_tree(settings)
+    component_registry = load_components(settings)
+    component_usage = build_component_usage(job_tree, catalog.guidelines)
     dist = web_dist()
     catalog_index = _catalog_index_payload(catalog, job_tree)
     sitemap_xml = render_sitemap(
@@ -317,13 +325,13 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         instructions=(
             "Open UX: cited UX rules agents audit against. "
             "Find a Situation Card with list_situations, get_situation, or "
-            "suggest_situations (catalog map), then audit. "
+            "suggest_situations (catalog map), then pack. "
             "No server LLM. "
-            "audit: say one Card or container as jobs; returns cited rule "
+            "pack: say one Card or container as jobs; returns cited rule "
             "criteria so you can make a better decision — the decision is yours. "
             "Does not take a file. Does not return pass or fail. "
             "Page with limit/offset; follow next_offset. "
-            "Leaf ids and Surfaces are not needs. "
+            "Surfaces are not needs. Leaf ids scope one bay. "
             "If the catalog is empty, return empty; do not invent rules."
         ),
         version=__version__,
@@ -360,10 +368,9 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         limit: int = 50,
         offset: int = 0,
     ) -> dict[str, Any]:
-        """Scope the paged index by jobs / lane. Query BM25-orders; does not filter. No rule bodies."""
+        """Scope the paged index by jobs / lane. Catalog order. Query is ignored. No rule bodies."""
         items, total = list_index(
             catalog,
-            query=query,
             jobs=jobs,
             lane=lane,
             limit=limit,
@@ -432,7 +439,7 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             Field(description="A Situation Card id. A Leaf id fails."),
         ],
     ) -> dict[str, Any]:
-        """Fetch one Situation Card: when, reject, facets, leaf pointers.
+        """Fetch one Situation Card: when, reject, facets, leaf pointers, component.
 
         Fails on a Leaf id. Does not invent a Card. No rule bodies.
         """
@@ -466,7 +473,7 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         Always returns the complete 13-card allowlist grouped by container —
         never a filtered subset and never a ranked winner. Order is the catalog
         lock, not a hint. task_text requests the map; it does not reorder. Pick
-        a container or a Card, then get_situation, then audit with
+        a container or a Card, then get_situation, then pack with
         jobs=<card_id>. Surface is not an id. No server LLM.
         """
         result = run_suggest_situations(task_text, surface, job_tree)
@@ -474,15 +481,14 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         return result
 
     @mcp.tool
-    def audit(
+    def pack(
         jobs: Annotated[JobId | None, Field(description=JOB_FIELD_DESCRIPTION)] = None,
         query: Annotated[
             str | None,
             Field(
                 description=(
-                    "Optional words to order the pack within that job. Not a substitute "
-                    "for jobs. Never drops rules to zero -- reorders best matches first "
-                    "and falls back to the full set already in scope if nothing matches."
+                    "Ignored. The host does not rank. Use helpers/rank_pack.py locally "
+                    "on the pack page if you want BM25."
                 )
             ),
         ] = None,
@@ -506,13 +512,13 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             ),
         ] = 0,
     ) -> dict[str, Any]:
-        """Say the UX need as one Situation Card or container.
+        """Say the UX need as one Situation Card, Leaf, or container.
 
         Returns cited rule criteria so you can make a better decision; the
         decision is yours. Does not take a file. Does not return pass or fail.
-        Required: jobs or guideline_ids. Leaf ids are not needs.
+        Required: jobs or guideline_ids. Prefer a Card; use a Leaf for one bay.
         """
-        result = run_audit(
+        result = run_pack(
             catalog,
             jobs=jobs,
             query=query,
@@ -522,9 +528,70 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         )
         _maybe_telemetry(
             settings,
-            tool="audit",
+            tool="pack",
             guideline_ids=[row.get("id") for row in result.get("guidelines") or [] if row.get("id")],
         )
+        return result
+
+    @mcp.tool
+    def list_components() -> dict[str, Any]:
+        """Index only: id, title, overview for every widget record. One page. No variants."""
+        result = run_list_components(component_registry)
+        _maybe_telemetry(settings, tool="list_components")
+        return result
+
+    @mcp.tool
+    def get_component(
+        id: Annotated[
+            str,
+            Field(description="Closed widget id from pack component[] or Card component[]."),
+        ],
+        include_vs: Annotated[
+            bool,
+            Field(description="Include vs (near-neighbor) section. Default true."),
+        ] = True,
+        include_variants: Annotated[
+            bool,
+            Field(description="Include variants section. Default true."),
+        ] = True,
+        include_accessibility: Annotated[
+            bool,
+            Field(description="Include accessibility section. Default true."),
+        ] = True,
+        include_keyboard: Annotated[
+            bool,
+            Field(description="Include keyboard section. Default true."),
+        ] = True,
+        include_keywords: Annotated[
+            bool,
+            Field(description="Include keywords. Default false."),
+        ] = False,
+        include_used_on: Annotated[
+            bool,
+            Field(
+                description=(
+                    "Include Cards and cites that stamp this widget. Default false."
+                )
+            ),
+        ] = False,
+    ) -> dict[str, Any]:
+        """Fetch one widget record. Section switches omit keys when false.
+
+        Open only for ids already on a pack row or Card — not all 38 upfront.
+        Does not invent a record. Not cited criteria; return to pack after skim.
+        """
+        result = run_get_component(
+            component_registry,
+            component_usage,
+            id,
+            include_vs=include_vs,
+            include_variants=include_variants,
+            include_accessibility=include_accessibility,
+            include_keyboard=include_keyboard,
+            include_keywords=include_keywords,
+            include_used_on=include_used_on,
+        )
+        _maybe_telemetry(settings, tool="get_component")
         return result
 
     @mcp.custom_route("/api/site", methods=["GET"])
