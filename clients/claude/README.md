@@ -12,22 +12,30 @@ Logo (Cursor `logo` field): [assets/icon.svg](assets/icon.svg). Listing art: [as
 
 ## Install
 
-**Not listed yet.** Claude Code and Cursor listings are in marketplace submission. They are not published. Until they are listed, install from this GitHub repo.
+Plugins are not in the public marketplaces yet — install from this GitHub repo. See [SETUP.md](SETUP.md) for keys and MCP.
 
-Invite: [open-ux.dev/invite](https://open-ux.dev/invite) → `uxmcp_`. Then enable. See [SETUP.md](SETUP.md).
+### Get a key
 
-### Claude
+[open-ux.dev/invite](https://open-ux.dev/invite) → redeem → `uxmcp_…`
+
+### Claude Code
 
 ```bash
 claude plugin marketplace add 3dyonic/open-ux
 claude plugin install open-ux@open-ux
 ```
 
-Paste the key when prompted (`api_key`). Submit (not yet published): [platform.claude.com/plugins/submit](https://platform.claude.com/plugins/submit). Validate: `claude plugin validate . --strict` (repo marketplace) or `claude plugin validate ./clients/claude --strict`. Cursor: `node scripts/validate-cursor-plugin.mjs --strict` from repo root. CI runs both.
+Enable the plugin; paste your key when prompted.
 
 ### Cursor
 
-Same pack (`.cursor-plugin/` + `mcp.json`). Open this repository, enable the plugin, then set `OPEN_UX_API_KEY` under **Plugins → Configure**. Submit (not yet published): [cursor.com/marketplace/publish](https://cursor.com/marketplace/publish).
+Open this repository, enable the Open UX plugin, set **`OPEN_UX_API_KEY`** under **Plugins → Configure**.
+
+Validate: `claude plugin validate . --strict` · `node scripts/validate-cursor-plugin.mjs --strict` (repo root).
+
+Listing submit (maintainers): [Claude](https://platform.claude.com/plugins/submit) · [Cursor](https://cursor.com/marketplace/publish).
+
+Contributors: [`docs/CONTRIBUTING.md`](../../docs/CONTRIBUTING.md).
 
 ## Connect
 
@@ -44,12 +52,12 @@ No key; same catalog. Point MCP clients at local stdio, or hosted `https://open-
 
 ## Tools
 
-No **`Open-UX:audit`** — use **`Open-UX:pack`**. See [`docs/TOOLS.md`](../../docs/TOOLS.md).
+See [`docs/TOOLS.md`](../../docs/TOOLS.md). Criteria pull: **`Open-UX:pack`**.
 
 - **`suggest_situations`** — `task_text` → full 13-Card map by container. Does not pick or rank.
 - **`list_situations`** — Card index; optional `container`. Metadata only.
 - **`get_situation`** — One Card (when / reject / leaf counts). Leaf id fails.
-- **`pack`** — Cited criteria for `jobs` or `guideline_ids`; page with `next_offset`. No file, no pass/fail.
+- **`pack`** — Cited criteria for `jobs=<card_id>`, `jobs=<leaf_id>`, container alias, or `guideline_ids`; page with `next_offset`. No file, no pass/fail.
 - **`get_guideline`** — One full rule body by id.
 - **`list_components`** / **`get_component`** — Component index and record. Context helper when `component[]` is on the Card or pack row.
 

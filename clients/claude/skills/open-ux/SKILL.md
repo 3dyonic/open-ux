@@ -28,7 +28,7 @@ Compose and review share this one trigger. Compare Cards that fit. Open more tha
 4. **`Open-UX:pack`** — read **`reject`** on the envelope **`situation`** (Card reject is never skipped on Card/Leaf pulls). Skim rows: **`overview`**, **`apply_when`**, **`not_when`**, **`rule`**, **`component`**. **`cite_via`** is `get_guideline` — rows are browse slices, not full cites.
 5. **Deep read on a fitting row** — always come back to the pack page, `next_offset`, or another Card:
    - **`Open-UX:get_guideline`** on row **`id`** — cited rule (source, citations, `agent_hint`, full `description`). Primary.
-   - **`Open-UX:get_component`** on row **`component[]`** — context helper when the id is stamped and the ask is the control (variant names, danger vs primary, hit target, a11y, keyboard), not the house. Usually after **`get_guideline`** on the same row.
+   - **`Open-UX:get_component`** on row **`component[]`** — control context when the id is stamped (variants, danger vs primary, hit target, a11y, keyboard). Usually after **`get_guideline`** on the same row.
 6. **Loop the page** — if `next_offset` is set, call **`pack`** again with that **`offset`**.
 
 `pack` pages at 10. The host does not rank. Optional: **`open-ux rank-pack`** locally on one page after **`Open-UX:pack`** (`pip install open-ux`) — see [tools.md](tools.md). Do not write a pack fetcher or a BM25 ranker.

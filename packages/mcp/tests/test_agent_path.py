@@ -380,8 +380,8 @@ def test_connect_offers_hosted_or_package() -> None:
     assert "python -m open_ux validate-catalog" in readme
     assert "python -m open_ux stdio" in readme
     assert "OPEN_UX_MODE=hosted python -m open_ux http" in readme
-    assert "### Contribute from this repo" in readme
-    assert readme.index("### Self-host") < readme.index("### Contribute from this repo")
+    assert "### Contribute" in readme
+    assert readme.index("### Self-host") < readme.index("### Contribute")
     assert readme.index("pip install open-ux") < readme.index(
         'pip install -e "packages/mcp[dev]"'
     )

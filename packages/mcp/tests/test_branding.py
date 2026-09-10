@@ -25,13 +25,11 @@ def test_readme_embeds_relative_hero() -> None:
     assert "[MIT](LICENSE)" in readme
     assert "UNS-" not in readme
     assert "Apple HIG" not in readme
-    assert "### Plugins (Claude Code and Cursor)" in readme
+    assert "### Claude Code and Cursor" in readme
     assert "**Cursor**" in readme
     assert "Plugins → Configure" in readme
     assert "OPEN_UX_API_KEY" in readme
-    assert "Not listed yet." in readme
-    assert "not published" in readme.lower()
-    assert "Claude Code and Cursor plugin pack" in readme
+    assert "public marketplaces yet" in readme
     assert "packages/web" in readme
 
 

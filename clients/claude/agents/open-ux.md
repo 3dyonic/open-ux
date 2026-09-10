@@ -52,6 +52,6 @@ Same catalog. No invite. Telemetry off. Point MCP clients at local stdio.
 
 `Open-UX:list_situations`, `Open-UX:get_situation`, `Open-UX:suggest_situations`, `Open-UX:list_guidelines`, `Open-UX:search_guidelines`, `Open-UX:get_guideline`, `Open-UX:pack`, `Open-UX:list_components`, `Open-UX:get_component`.
 
-Scope `pack` (`jobs=` or `guideline_ids`). Surfaces are context, not ids. Prefer a Card; use a Leaf id when the ask is one bay.
+Scope `pack` (`jobs=<card_id>`, `jobs=<leaf_id>`, container alias, or `guideline_ids`). Surfaces are context, not ids. Prefer a Card; use a Leaf id when the ask is one bay.
 
 Slash commands `/list` `/get` `/pack` plus aliases `/forms` `/actions` `/feedback` route into this same skill.

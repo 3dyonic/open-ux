@@ -44,8 +44,7 @@ def test_listing_assets_and_setup_exist() -> None:
     assert "assets/offerings.svg" in readme
     assert "cursor.com/marketplace/publish" in readme
     assert "OPEN_UX_API_KEY" in readme
-    assert "Not listed yet." in readme
-    assert "not published" in readme.lower()
+    assert "public marketplaces yet" in readme
 
 
 def test_host_mounts_are_symlinks_into_pack() -> None:

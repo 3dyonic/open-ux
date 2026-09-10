@@ -1,6 +1,6 @@
 # Agent tools
 
-Fully qualified on the wire: `Open-UX:<name>`. There is **no** `audit` tool — use **`pack`**.
+Fully qualified on the wire: `Open-UX:<name>`. Criteria pull: **`pack`**. Full list below.
 
 ## Situation map
 
