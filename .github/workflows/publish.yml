@@ -4,12 +4,19 @@ on:
     tags:
       - "v*"
     branches: [master]
+    # PyPI = catalog + MCP tools (pip install open-ux). Not hosted site/mail/static.
+    # packages/web/** never listed here — web-only merges skip this workflow.
     paths:
       - "catalog/**"
-      - "packages/mcp/src/**"
       - "packages/mcp/pyproject.toml"
       - "packages/mcp/hatch_build.py"
       - "packages/mcp/hatch_metadata.py"
+      - "packages/mcp/src/**"
+      - "!packages/mcp/tests/**"
+      - "!packages/mcp/src/open_ux/static/**"
+      - "!packages/mcp/src/open_ux/mail.py"
+      - "!packages/mcp/src/open_ux/public_html.py"
+      - "!packages/mcp/src/open_ux/settings.py"
   workflow_dispatch:
     inputs:
       target:
@@ -61,11 +68,20 @@ jobs:
             changed="$(git diff --name-only "$before" "$GITHUB_SHA")"
           fi
           echo "$changed"
-          if ! echo "$changed" | grep -Eq '^(catalog/|packages/mcp/src/|packages/mcp/pyproject.toml|packages/mcp/hatch_build.py|packages/mcp/hatch_metadata.py)'; then
+          pypi="$(echo "$changed" | grep -Ev \
+            '^packages/mcp/tests/' \
+            '^packages/mcp/src/open_ux/static/' \
+            '^packages/mcp/src/open_ux/mail\.py$' \
+            '^packages/mcp/src/open_ux/public_html\.py$' \
+            '^packages/mcp/src/open_ux/settings\.py$' \
+            || true)"
+          echo "pypi-relevant:"
+          echo "$pypi"
+          if ! echo "$pypi" | grep -Eq '^(catalog/|packages/mcp/pyproject\.toml|packages/mcp/hatch_build\.py|packages/mcp/hatch_metadata\.py|packages/mcp/src/)'; then
             echo "skip=true" >> "$GITHUB_OUTPUT"
             echo "publish_pypi=false" >> "$GITHUB_OUTPUT"
             echo "push_tag=" >> "$GITHUB_OUTPUT"
-            echo "no catalog/package source change; skip"
+            echo "no PyPI-relevant change; skip"
             exit 0
           fi
 
