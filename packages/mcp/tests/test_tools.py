@@ -25,7 +25,7 @@ CATALOG_COUNT = 204
 FORM_COUNT = 14
 EXTRA_COUNT = 46
 HARVEST3_COUNT = 56
-HARVEST4_COUNT = 43
+HARVEST4_COUNT = 44
 HARVEST5_COUNT = 34
 HARVEST3_SAMPLE = "spectrum.quiet-vs-standard-background"
 HARVEST4_SAMPLE = "uswds.filled-next-outline-this-page"
@@ -427,7 +427,7 @@ async def test_get_component_default_and_used_on(live_catalog: Path) -> None:
         )
         used_on = with_used_on.data["component"]["used_on"]
         assert used_on["cards_total"] == 8
-        assert used_on["cites_total"] == 31
+        assert used_on["cites_total"] == 32
 
         missing = await client.call_tool("get_component", {"id": "not_a_widget"})
         assert missing.data["found"] is False

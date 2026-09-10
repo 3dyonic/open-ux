@@ -76,7 +76,7 @@ def test_cli_components_and_component(
     assert payload["component"]["id"] == "button"
     assert main(["component", "button", "--include-used-on"]) == 0
     with_used_on = json.loads(capsys.readouterr().out)
-    assert with_used_on["component"]["used_on"]["cites_total"] == 31
+    assert with_used_on["component"]["used_on"]["cites_total"] == 32
 
 
 def test_helpers_have_no_path_hacks() -> None:
