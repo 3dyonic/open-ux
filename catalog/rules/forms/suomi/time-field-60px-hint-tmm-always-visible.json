@@ -28,5 +28,11 @@
   "not_when": "Format living only in a placeholder, or oversized time fields with no lasting hint.",
   "agent_hint": "Keep the time field ~60px with a lasting t.mm hint; do not rely on placeholder-only format.",
   "description": "Suomi.fi time fields are fixed around 60px wide, keep a `t.mm` hint always visible, and normalize values to Finnish time. Format must not live only in a placeholder (placeholder/label lock). Dual-cite USWDS time picker increments for related timing patterns. A placeholder-only format or a much wider field without the lasting hint fails the pattern and hides the expected shape while typing.",
-  "do_not_claim": "Date `PP.KK.VVVV` hint as this time row; USWDS increments as a merge."
+  "do_not_claim": "Date `PP.KK.VVVV` hint as this time row; USWDS increments as a merge.",
+  "component": [
+    "time_input"
+  ],
+  "hints": [
+    "hour and minute"
+  ]
 }

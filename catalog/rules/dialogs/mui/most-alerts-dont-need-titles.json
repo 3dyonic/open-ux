@@ -28,5 +28,11 @@
   "not_when": "Not for non-alert modal editors that need a lasting working title.",
   "agent_hint": "Omit title bars on ordinary alerts; reserve titles for high-risk; use alertdialog.",
   "description": "Most alerts do not need titles—summarize in a sentence or two tied to the buttons, and use `role=\"alertdialog\"`. Reserve a title bar for high-risk cases such as potential loss of connectivity. People should understand choices from title (if any) and button text alone. Fail for a title bar on a non-high-risk alert, a missing alertdialog role, or choices that cannot be understood from title and buttons.",
-  "do_not_claim": "Banned-title list (next row) as this \"most don't need titles\" row."
+  "do_not_claim": "Banned-title list (next row) as this \"most don't need titles\" row.",
+  "component": [
+    "alert"
+  ],
+  "hints": [
+    "callout"
+  ]
 }

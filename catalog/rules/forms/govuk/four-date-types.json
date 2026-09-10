@@ -28,5 +28,8 @@
   "not_when": "Not for non-date values, or times without a date component.",
   "agent_hint": "Pick the control for the date type; do not use one widget for every date kind.",
   "description": "Distinguish four date types—memorable, from documents or cards, approximate, and relative—and match the control to that type rather than forcing one date widget for all. Memorable and document dates may suit day/month/year; approximate and relative dates need different patterns. One date-input or calendar for every kind of date fails the pattern. Fail when a single widget is used regardless of whether the date is memorable, documented, approximate, or relative. Choose the control from the date type first.",
-  "do_not_claim": "A house fifth type."
+  "do_not_claim": "A house fifth type.",
+  "component": [
+    "date_input"
+  ]
 }

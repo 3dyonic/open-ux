@@ -28,5 +28,8 @@
   "not_when": "The named topic-page hyperlink style that deliberately pairs underline and bold.",
   "agent_hint": "Underline links only; skip italics for emphasis; bold sparingly.",
   "description": "On Canada.ca, underline means links only. Do not use italics for emphasis — italics are hard for dyslexia — and use bold sparingly instead. Do not combine underline and bold except the named topic-page hyperlink style. Apply when styling body text, links, and inline emphasis. Fail underlined non-links, italics used for emphasis, or underline-plus-bold on ordinary text outside that topic-page style.",
-  "do_not_claim": "WCAG contrast; hit targets."
+  "do_not_claim": "WCAG contrast; hit targets.",
+  "component": [
+    "link"
+  ]
 }

@@ -28,5 +28,8 @@
   "not_when": "Not for single-field dates, or intentional user-driven focus moves.",
   "agent_hint": "Leave focus in the current date segment until the user moves it.",
   "description": "Focus must stay in the current day, month, or year field until the user moves it. Never auto-tab into the next segment when one is completed; automatic jumps surprise keyboard and assistive-tech users and cause mistyped dates. Let people move between segments themselves. Fail if finishing a segment automatically jumps focus to the next. Apply whenever you implement segmented day/month/year date inputs.",
-  "do_not_claim": "Autocomplete tokens (see `govuk.dob-autocomplete-tokens`)."
+  "do_not_claim": "Autocomplete tokens (see `govuk.dob-autocomplete-tokens`).",
+  "component": [
+    "date_input"
+  ]
 }

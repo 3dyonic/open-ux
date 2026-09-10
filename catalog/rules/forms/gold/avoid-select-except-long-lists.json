@@ -28,5 +28,11 @@
   "not_when": "Inventing a house numeric cutoff claimed as GOLD.",
   "agent_hint": "Use radios/checkboxes/text for short lists; select only for long lists.",
   "description": "Avoid select except for long lists — selects hide content, vary across devices, and hurt low digital literacy. Short lists (for example Australian state/territory) should use radios, checkboxes, or text; long lists (for example country) may trade usability for compactness. Dual-cite GOV.UK / USWDS / NSW cutoffs without collapsing them into a house N. Pass when short lists avoid select and select is reserved for long lists; fail when a short list is a select or a numeric cutoff is invented as GOLD.",
-  "do_not_claim": "A house “use select above N options”; NL `<select multiple>` ban as this single-select usage row."
+  "do_not_claim": "A house “use select above N options”; NL `<select multiple>` ban as this single-select usage row.",
+  "component": [
+    "select"
+  ],
+  "hints": [
+    "dropdown"
+  ]
 }

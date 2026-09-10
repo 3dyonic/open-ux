@@ -1,0 +1,500 @@
+{
+  "cards": {
+    "build_a_multi_step_flow": [
+      "button",
+      "progress",
+      "task_list"
+    ],
+    "choose_an_overlay": [
+      "accordion",
+      "button",
+      "drawer",
+      "modal",
+      "popconfirm",
+      "tooltip"
+    ],
+    "compose_a_data_display": [
+      "chart",
+      "map",
+      "skeleton",
+      "table"
+    ],
+    "compose_feedback": [
+      "alert",
+      "button",
+      "empty_state",
+      "loading_indicator",
+      "site_alert",
+      "skeleton",
+      "task_list",
+      "toast"
+    ],
+    "compose_search": [
+      "search"
+    ],
+    "compose_sign_in": [
+      "button",
+      "password",
+      "text_field"
+    ],
+    "compose_the_layout": [
+      "button",
+      "content_card"
+    ],
+    "design_a_form": [
+      "autocomplete",
+      "character_count",
+      "checkbox",
+      "date_input",
+      "file_upload",
+      "list_builder",
+      "modal",
+      "radio",
+      "select",
+      "slider",
+      "switch",
+      "text_field",
+      "textarea",
+      "time_input"
+    ],
+    "design_actions_and_ctas": [
+      "button",
+      "link"
+    ],
+    "handle_form_errors": [
+      "button",
+      "error_summary",
+      "text_field"
+    ],
+    "orient_in_the_place": [
+      "breadcrumb",
+      "link",
+      "pagination",
+      "tabs"
+    ],
+    "protect_destructive_and_leave": [
+      "button",
+      "modal",
+      "popconfirm"
+    ],
+    "write_the_interface": [
+      "link"
+    ]
+  },
+  "cites": {
+    "actions.button_groups": [
+      "button"
+    ],
+    "actions.hover_or_popup_tools": [
+      "tooltip"
+    ],
+    "actions.prominent_done_or_assumed_next": [
+      "button"
+    ],
+    "ant.checkbox-vs-switch": [
+      "checkbox",
+      "switch"
+    ],
+    "ant.danger-cancel-primary-when-not-recommended": [
+      "button"
+    ],
+    "ant.dialog-feedback-only-important-actionable": [
+      "modal"
+    ],
+    "ant.dropdown-when-over-5-no-truncate": [
+      "select"
+    ],
+    "ant.footer-buttons-when-body-cannot-carry": [
+      "button"
+    ],
+    "ant.form-in-modal-lifecycle": [
+      "button",
+      "modal"
+    ],
+    "ant.group-spacing-overflow-dropdown": [
+      "button"
+    ],
+    "ant.hover-detail-overlay-timing": [
+      "tooltip"
+    ],
+    "ant.message-not-for-important-failures": [
+      "modal",
+      "toast"
+    ],
+    "ant.named-button-type-map": [
+      "button"
+    ],
+    "ant.never-two-icons-in-one-button": [
+      "button"
+    ],
+    "ant.ok-cancel-default-vs-explicit-verb": [
+      "button"
+    ],
+    "ant.one-cta-per-screen": [
+      "button"
+    ],
+    "ant.prefer-undo-or-popconfirm-over-modal": [
+      "button",
+      "modal",
+      "popconfirm"
+    ],
+    "ant.radio-count-2-to-5": [
+      "radio"
+    ],
+    "ant.slider-intensity-grade": [
+      "slider"
+    ],
+    "canada.equivalent-content-both-official-languages": [
+      "link"
+    ],
+    "canada.no-click-here-same-text-same-destination": [
+      "link"
+    ],
+    "canada.supertask-once-never-promo": [
+      "button"
+    ],
+    "canada.underline-links-only-no-italics-emphasis": [
+      "link"
+    ],
+    "fluent.apply-versus-save-prefer-autosave": [
+      "button"
+    ],
+    "fluent.create-labels-new-thing": [
+      "button"
+    ],
+    "fluent.end-of-task-labels-named": [
+      "button"
+    ],
+    "fluent.ios-chrome-back-done-cancel": [
+      "button"
+    ],
+    "fluent.multistep-next-not-continue": [
+      "button"
+    ],
+    "fluent.split-button-dont-repeat-primary": [
+      "button"
+    ],
+    "forms.inputs.autocompletion": [
+      "autocomplete"
+    ],
+    "forms.inputs.dropdown_chooser": [
+      "select"
+    ],
+    "forms.inputs.html_autocomplete_and_name": [
+      "autocomplete",
+      "date_input",
+      "text_field"
+    ],
+    "forms.inputs.list_builder": [
+      "list_builder"
+    ],
+    "forms.inputs.password_strength_meter": [
+      "password"
+    ],
+    "forms.submit.enabled_until_request": [
+      "button",
+      "loading_indicator"
+    ],
+    "gold.accordion-find-in-page-misses-collapsed": [
+      "accordion"
+    ],
+    "gold.avoid-select-except-long-lists": [
+      "select"
+    ],
+    "gold.card-one-inner-link-hit-area": [
+      "content_card"
+    ],
+    "gold.next-primary-save-progress-secondary": [
+      "button"
+    ],
+    "gold.progress-indicator-out-of-order-returnable": [
+      "progress"
+    ],
+    "gold.search-input-attributes": [
+      "search"
+    ],
+    "gold.search-placement-home-vs-results": [
+      "search"
+    ],
+    "gold.visual-loudness-primary-secondary-tertiary": [
+      "button"
+    ],
+    "govuk.allow-copy-paste-in-password-fields": [
+      "password"
+    ],
+    "govuk.avoid-confirm-password-field": [
+      "password"
+    ],
+    "govuk.button-types-named": [
+      "button"
+    ],
+    "govuk.calendar-control-when": [
+      "date_input"
+    ],
+    "govuk.character-count-fieldset-legend": [
+      "character_count",
+      "radio",
+      "textarea"
+    ],
+    "govuk.conditionally-reveal-related-question": [
+      "radio"
+    ],
+    "govuk.date-input-only-memorable": [
+      "date_input"
+    ],
+    "govuk.dob-autocomplete-tokens": [
+      "autocomplete",
+      "date_input",
+      "text_field"
+    ],
+    "govuk.dont-use-disabled-buttons": [
+      "button"
+    ],
+    "govuk.error-summary-plus-per-field": [
+      "error_summary"
+    ],
+    "govuk.example-dates-unambiguous-order": [
+      "date_input"
+    ],
+    "govuk.file-upload-reuse-already-uploaded": [
+      "file_upload"
+    ],
+    "govuk.four-date-types": [
+      "date_input"
+    ],
+    "govuk.hide-password-by-default-show-toggle": [
+      "password"
+    ],
+    "govuk.item-hints-one-sentence": [
+      "text_field"
+    ],
+    "govuk.labels-sentence-case-no-colons-above": [
+      "text_field"
+    ],
+    "govuk.never-auto-tab-date-fields": [
+      "date_input"
+    ],
+    "govuk.question-pages-continue-back-no-sliders": [
+      "button",
+      "link",
+      "slider"
+    ],
+    "govuk.radio-divider-or": [
+      "radio"
+    ],
+    "govuk.radios-left-of-labels": [
+      "radio"
+    ],
+    "govuk.select-last-resort": [
+      "select"
+    ],
+    "govuk.select-preselect-settings-not-questions": [
+      "select"
+    ],
+    "govuk.stop-accidental-double-submit": [
+      "button"
+    ],
+    "govuk.task-list-statuses": [
+      "task_list"
+    ],
+    "mui.button-variant-roles": [
+      "button"
+    ],
+    "mui.dont-type-number": [
+      "text_field"
+    ],
+    "mui.explicit-id-for-label-helper": [
+      "text_field"
+    ],
+    "mui.helper-text-changes-field-height": [
+      "text_field"
+    ],
+    "mui.most-alerts-dont-need-titles": [
+      "alert"
+    ],
+    "mui.non-modal-dialogs-allowed": [
+      "modal"
+    ],
+    "nl.header-search-placeholder-visible-search-control": [
+      "search"
+    ],
+    "nl.long-legal-jargon-before-form-not-tooltip": [
+      "tooltip"
+    ],
+    "nl.no-select-multiple": [
+      "select"
+    ],
+    "nl.privacy-terms-link-outside-label": [
+      "checkbox",
+      "link"
+    ],
+    "nl.step-n-of-m-in-title-and-above-form": [
+      "progress"
+    ],
+    "nsw.100pct-stacked-show-absolute-totals": [
+      "chart"
+    ],
+    "nsw.chart-anatomy-title-insight-table": [
+      "chart",
+      "table"
+    ],
+    "nsw.chart-text-horizontal": [
+      "chart"
+    ],
+    "nsw.charts-start-with-story": [
+      "chart"
+    ],
+    "nsw.direct-labels-over-legends": [
+      "chart"
+    ],
+    "nsw.established-colour-conventions": [
+      "chart"
+    ],
+    "nsw.honest-baseline-bars-zero-or-truncation": [
+      "chart"
+    ],
+    "nsw.lines-dash-fills-patterns": [
+      "chart"
+    ],
+    "nsw.maps-never-only-channel": [
+      "map"
+    ],
+    "nsw.no-tooltip-only-values": [
+      "chart",
+      "tooltip"
+    ],
+    "nsw.white-canvas-single-colour-when-labelled": [
+      "chart"
+    ],
+    "polar.default-option-selected-when-possible": [
+      "select"
+    ],
+    "polar.dont-use-modals-for-complex-forms": [
+      "modal"
+    ],
+    "polar.encourage-action-cta-verb": [
+      "button"
+    ],
+    "polar.long-form-errors-banner-plus-inline": [
+      "error_summary"
+    ],
+    "polar.select-4plus-choice-list-under-4": [
+      "select"
+    ],
+    "spectrum.bundle-instead-of-spam-toasts": [
+      "toast"
+    ],
+    "spectrum.dont-place-mobile-toasts-over-navigation": [
+      "toast"
+    ],
+    "spectrum.min-width-1-5x-field-height": [
+      "text_field"
+    ],
+    "spectrum.one-toast-at-a-time": [
+      "toast"
+    ],
+    "spectrum.picker-concise-items-full-value": [
+      "select"
+    ],
+    "spectrum.picker-ghost-text-placeholder": [
+      "select"
+    ],
+    "spectrum.picker-min-width-2x-height": [
+      "select"
+    ],
+    "spectrum.picker-mobile-tray-when-overwhelming": [
+      "select"
+    ],
+    "spectrum.picker-no-max-menu-height": [
+      "select"
+    ],
+    "spectrum.picker-readonly-only-if-selection": [
+      "select"
+    ],
+    "spectrum.toast-at-most-one-action": [
+      "button",
+      "toast"
+    ],
+    "spectrum.toast-auto-dismiss-min-5s": [
+      "toast"
+    ],
+    "spectrum.toast-no-redundant-dismiss": [
+      "toast"
+    ],
+    "spectrum.toast-placement-geometry": [
+      "toast"
+    ],
+    "spectrum.toast-sentence-case-generic-tone": [
+      "toast"
+    ],
+    "spectrum.toast-vs-dialog": [
+      "modal",
+      "toast"
+    ],
+    "spectrum.toast-writing-formulas": [
+      "toast"
+    ],
+    "suomi.button-max-three-words-mobile-full-width": [
+      "button"
+    ],
+    "suomi.date-hint-ppkkvvvv-calendar-optional-focus-trap": [
+      "date_input"
+    ],
+    "suomi.errorsummary-link-text-equals-field-error": [
+      "error_summary"
+    ],
+    "suomi.file-hint-and-datetime-fieldset": [
+      "file_upload",
+      "time_input"
+    ],
+    "suomi.hide-breadcrumbs-on-mobile": [
+      "breadcrumb"
+    ],
+    "suomi.notification-first-load-not-post-action": [
+      "alert"
+    ],
+    "suomi.pagination-skip-link-to-listing": [
+      "link",
+      "pagination"
+    ],
+    "suomi.radio-extras-hidden-then-indented": [
+      "radio"
+    ],
+    "suomi.search-hide-label-only-if-name-states-context": [
+      "search"
+    ],
+    "suomi.time-field-60px-hint-tmm-always-visible": [
+      "time_input"
+    ],
+    "suomi.toast-10s-hover-stick-then-float": [
+      "toast"
+    ],
+    "uswds.alert-first-word-is-type": [
+      "alert"
+    ],
+    "uswds.alerts-dont-blame-name-next-step": [
+      "alert"
+    ],
+    "uswds.date-picker-when-weekday-always-type": [
+      "date_input"
+    ],
+    "uswds.dont-hide-then-reveal-alerts": [
+      "alert"
+    ],
+    "uswds.dont-split-phone-ssn-card": [
+      "text_field"
+    ],
+    "uswds.filled-next-outline-this-page": [
+      "button"
+    ],
+    "uswds.homepage-search-box-not-link": [
+      "search"
+    ],
+    "uswds.real-button-with-type-space-vs-enter": [
+      "button"
+    ],
+    "uswds.site-alert-dont-stack-dont-panic": [
+      "site_alert"
+    ]
+  }
+}

@@ -28,5 +28,8 @@
   "not_when": "Choosing the language-toggle control pattern — that is a separate job.",
   "agent_hint": "Ship equivalent EN/FR translations, including media or transcripts — not summaries.",
   "description": "Canada.ca requires equivalent content in both official languages: professionally translated with Canadian EN/FR conventions, including bilingual images, multimedia, and transcripts (or equivalent information). A summary in the other language is not enough. Dual-cite USWDS full-equivalent translations versus Canada’s keep-place toggle — this row is content equivalence, not the toggle control. Fail one-language-only media with no equivalent, or other-language summary standing in for a full translation.",
-  "do_not_claim": "Keep-place language toggle as this row; USWDS 2-vs-3+ selector as this row."
+  "do_not_claim": "Keep-place language toggle as this row; USWDS 2-vs-3+ selector as this row.",
+  "component": [
+    "link"
+  ]
 }

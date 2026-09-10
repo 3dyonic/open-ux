@@ -28,5 +28,8 @@
   "not_when": "Not for idempotent local UI toggles that do not submit a form.",
   "agent_hint": "Prevent duplicate submits after the request starts; ignore repeated presses.",
   "description": "Once a submit request has started, a second press must not send a duplicate. Protect people from accidental double submit on the primary action, especially on slower networks where they may press again. Blocking duplicate submits after the request starts prevents repeated side effects. Fail if repeated presses queue duplicate submits. Apply when wiring primary submit buttons that start a network request.",
-  "do_not_claim": "Loading-on-button as the only allowed mechanism (`actions.buttons.loading_on_button`); disabling-before-request as a global (see disabled-submit lock)."
+  "do_not_claim": "Loading-on-button as the only allowed mechanism (`actions.buttons.loading_on_button`); disabling-before-request as a global (see disabled-submit lock).",
+  "component": [
+    "button"
+  ]
 }

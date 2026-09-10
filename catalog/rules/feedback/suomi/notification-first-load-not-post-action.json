@@ -28,5 +28,11 @@
   "not_when": "Post-interaction popups or toasts that announce a change the user just made.",
   "agent_hint": "Use Notification on initial load; switch post-action dynamic feedback to InlineAlert.",
   "description": "Suomi.fi Notification is first-load page content with `role=\"region\"`, not a post-action pop-in after the user acts. Dynamic feedback after interaction belongs in InlineAlert instead (dual-cite NSW in-page vs global alert). Using Notification as a post-interaction popup misuses the component. Keep standing page notices in Notification; route action-triggered status to InlineAlert so the roles stay distinct.",
-  "do_not_claim": "Toast row; NSW in-page vs global as a merge; ErrorSummary."
+  "do_not_claim": "Toast row; NSW in-page vs global as a merge; ErrorSummary.",
+  "component": [
+    "alert"
+  ],
+  "hints": [
+    "callout"
+  ]
 }

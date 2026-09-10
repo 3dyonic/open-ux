@@ -28,5 +28,12 @@
   "not_when": "Not for live inline hints before submit, or non-form status toasts.",
   "agent_hint": "Focus an error summary, link each item to its field, and keep per-field errors.",
   "description": "After submit errors, provide both an error summary and per-field errors. Focus the summary, and link each summary item to its answer. Summary-only or field-only patterns miss the requirement; GOV.UK needs the summary as well as field messages. Fail if the summary is missing, fields lack errors, the summary is not focused, or items do not link to answers.",
-  "do_not_claim": "A winner vs Vercel focus-first-field (`forms.errors.focus_first_error`); Polar banner (dual-cite, see `polar.long-form-errors-banner-plus-inline`). Overlap with Forms 54: `forms.errors.next_to_field_not_summary_only` + `forms.errors.focus_first_error`. Compatible with “not summary-only”; do not drop the summary."
+  "do_not_claim": "A winner vs Vercel focus-first-field (`forms.errors.focus_first_error`); Polar banner (dual-cite, see `polar.long-form-errors-banner-plus-inline`). Overlap with Forms 54: `forms.errors.next_to_field_not_summary_only` + `forms.errors.focus_first_error`. Compatible with “not summary-only”; do not drop the summary.",
+  "component": [
+    "error_summary"
+  ],
+  "hints": [
+    "error banner",
+    "jump to field"
+  ]
 }

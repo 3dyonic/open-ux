@@ -28,5 +28,8 @@
   "not_when": "GOV.UK question pages that correctly use Continue and Back.",
   "agent_hint": "Use Next/Previous on Fluent multistep; keep Continue/Back on GOV.UK questions.",
   "description": "Fluent multistep settings and wizards use Next, not Continue, and Previous, not Back. GOV.UK question pages still use Continue and Back — choose by surface, not a global winner. Apply when labeling steps in a Fluent wizard; leave GOV.UK question wording alone. Fail Fluent multistep using Continue/Back as this usage, or a house Next/Continue rule applied to the other surface.",
-  "do_not_claim": "NN/g prefer specific verb over generic Next as a winner that bans Next here. Overlap with Actions 40: `actions.copy.verbs_for_actions` (prefer specific verb over generic Next) and GOV.UK question-page Continue."
+  "do_not_claim": "NN/g prefer specific verb over generic Next as a winner that bans Next here. Overlap with Actions 40: `actions.copy.verbs_for_actions` (prefer specific verb over generic Next) and GOV.UK question-page Continue.",
+  "component": [
+    "button"
+  ]
 }

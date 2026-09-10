@@ -28,5 +28,11 @@
   "not_when": "Not as permission to modal nonessential off-flow content that should stay in-page.",
   "agent_hint": "Allow non-modal patterns that leave the page usable; do not force a blocking modal.",
   "description": "Non-modal dialogs are allowed: they do not interrupt interaction behind them. A persistent cookie banner is the named pattern for staying visible without blocking the page. Implementing that pattern as a blocking modal breaks the permission. Fail if a cookie-banner or non-modal pattern is implemented as a blocking modal, or if “non-modal allowed” is treated as permission to modal nonessential off-flow content. Use non-modal when the page behind must stay usable.",
-  "do_not_claim": "A winner that deletes `nng.modal-and-nonmodal-dialogs`. Overlap with extra 73: `nng.modal-and-nonmodal-dialogs`."
+  "do_not_claim": "A winner that deletes `nng.modal-and-nonmodal-dialogs`. Overlap with extra 73: `nng.modal-and-nonmodal-dialogs`.",
+  "component": [
+    "modal"
+  ],
+  "hints": [
+    "modeless"
+  ]
 }

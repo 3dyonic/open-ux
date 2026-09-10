@@ -28,5 +28,11 @@
   "not_when": "Blameful error copy, goal-unrelated notices, or alerts standing in for destructive confirms.",
   "agent_hint": "Write polite recovery steps on-goal; use a confirmation modal for destructive work.",
   "description": "USWDS alerts do not blame the user; they name the next step, stay polite, and include how to recover. Educational material is allowed because people will read an error that unblocks them. Do not notify off the current goal, and send destructive work to a confirmation modal rather than an alert. Blameful copy, missing next steps, off-goal notices, or alerts replacing destructive confirms fail.",
-  "do_not_claim": "Site alert stacking; Spectrum toast-vs-dialog."
+  "do_not_claim": "Site alert stacking; Spectrum toast-vs-dialog.",
+  "component": [
+    "alert"
+  ],
+  "hints": [
+    "callout"
+  ]
 }

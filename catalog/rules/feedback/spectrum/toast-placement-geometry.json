@@ -28,5 +28,11 @@
   "not_when": "Dialogs, modals, or sitewide banners that use their own placement rules.",
   "agent_hint": "Default toasts to bottom center with cited offsets; move only if unnoticed or disruptive.",
   "description": "Spectrum places toasts at bottom center by default: 16 px from the desktop viewport bottom, or 16 px above the mobile bottom toolbar, never wider than the viewport with 8 px left and right margins. Alternate corners (bottom end, top end, top center) are allowed only when the default is unnoticed or disruptive. Wrong defaults without that reason, or toasts that spill past the viewport margins, fail the geometry.",
-  "do_not_claim": "Ant Message top-center as a house winner."
+  "do_not_claim": "Ant Message top-center as a house winner.",
+  "component": [
+    "toast"
+  ],
+  "hints": [
+    "snackbar"
+  ]
 }

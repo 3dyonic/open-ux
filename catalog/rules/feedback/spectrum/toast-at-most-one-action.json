@@ -28,5 +28,12 @@
   "not_when": "Multi-step recovery flows or unrelated actions that belong in the page.",
   "agent_hint": "Limit toast actions to zero or one related concise secondary outline button.",
   "description": "Spectrum toasts allow at most one action: a static white secondary outline button, concise, and only when it relates directly to the toast text. Two or more actions, or an unrelated control on the toast, overloads a low-priority surface. Prefer zero or one related action; move broader recovery or navigation into the page or a dialog.",
-  "do_not_claim": "Polar modal max two bottom actions as this toast row."
+  "do_not_claim": "Polar modal max two bottom actions as this toast row.",
+  "component": [
+    "button",
+    "toast"
+  ],
+  "hints": [
+    "snackbar"
+  ]
 }

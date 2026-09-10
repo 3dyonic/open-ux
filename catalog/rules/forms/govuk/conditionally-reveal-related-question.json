@@ -28,5 +28,8 @@
   "not_when": "Not for always-needed fields that belong on the page for every choice.",
   "agent_hint": "Conditionally reveal the related follow-up when that radio or checkbox is chosen.",
   "description": "A follow-up that only applies to one radio or checkbox should appear when that option is chosen, and stay hidden otherwise. That keeps related inputs with the choice that needs them instead of scattering always-visible extras across the page. Conditionally revealing the related question reduces noise for people who picked a different option. Fail if the related follow-up is always visible for every option, or if it never becomes available after the qualifying choice is made. Use this when grouping related inputs around radios or checkboxes.",
-  "do_not_claim": "Generic progressive disclosure (`forms.structure.progressive_disclosure`) as a second copy of this row. Overlap with Forms 54: `forms.structure.progressive_disclosure`."
+  "do_not_claim": "Generic progressive disclosure (`forms.structure.progressive_disclosure`) as a second copy of this row. Overlap with Forms 54: `forms.structure.progressive_disclosure`.",
+  "component": [
+    "radio"
+  ]
 }

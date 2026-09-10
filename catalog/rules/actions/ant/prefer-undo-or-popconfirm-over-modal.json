@@ -28,5 +28,13 @@
   "not_when": "Irreversible high-stakes commits where undo is truly invalid by design.",
   "agent_hint": "After delete, offer success plus Undo, or Popconfirm beside the control.",
   "description": "Ant prefers undo (or Popconfirm) over a blocking Modal double-confirm. Delete should surface success with Undo (message and undo gone after one minute or on Undo); when undo is invalid, place Popconfirm next to the control. Abusing Modal drops context and blocks undo. Dual-cite Primer/NN/g undo guidance; Ant names Popconfirm versus Modal. Fail Modal double-confirm where undo is valid, or delete with neither undo nor Popconfirm.",
-  "do_not_claim": "Deleting `actions.confirm.serious_or_undo`; a house one-minute as law outside this cite. Overlap with Actions 40: `actions.confirm.serious_or_undo`. Overlap with extra 73: `nng.support-undo-discoverable`."
+  "do_not_claim": "Deleting `actions.confirm.serious_or_undo`; a house one-minute as law outside this cite. Overlap with Actions 40: `actions.confirm.serious_or_undo`. Overlap with extra 73: `nng.support-undo-discoverable`.",
+  "component": [
+    "button",
+    "modal",
+    "popconfirm"
+  ],
+  "hints": [
+    "are you sure"
+  ]
 }

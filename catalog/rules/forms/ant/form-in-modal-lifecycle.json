@@ -28,5 +28,12 @@
   "not_when": "Inline page forms that are not mounted in a create Modal lifecycle.",
   "agent_hint": "Call resetFields on reopen; connect useForm; submit via form.submit from footer.",
   "description": "List-page create may open a form in a Modal. destroyOnHidden does not clear Form fields—call resetFields. useForm created before open stays disconnected unless forceRender (or equivalent) connects it. Prefer native submit; if the submit control sits in the Modal footer outside the Form, call form.submit. Stale fields, disconnected instances, or footer buttons that never submit break the lifecycle.",
-  "do_not_claim": "API-table props beyond these named lifecycle facts; Polar \"don't use modals for complex forms\" as a winner."
+  "do_not_claim": "API-table props beyond these named lifecycle facts; Polar \"don't use modals for complex forms\" as a winner.",
+  "component": [
+    "button",
+    "modal"
+  ],
+  "hints": [
+    "focus trap"
+  ]
 }

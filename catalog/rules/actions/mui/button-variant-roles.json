@@ -28,5 +28,8 @@
   "not_when": "Not for links styled as text without button semantics, or icon-only affordances.",
   "agent_hint": "Map text/outlined/contained to emphasis; keep contained for the app primary.",
   "description": "Text buttons are less pronounced—typical in dialogs and cards so card content stays primary. Contained is high emphasis with elevation and fill for the app primary. Outlined is medium: important but not primary, sitting between contained and text. Match variant to that role map so emphasis stays honest. Fail if contained is used for a low-emphasis card action, or text is used as the app’s primary. Apply when choosing MUI button variants for dialogs, cards, and primary actions.",
-  "do_not_claim": "One-primary page cap as this variant-map row; M3 max-two-actions (not on this MUI page)."
+  "do_not_claim": "One-primary page cap as this variant-map row; M3 max-two-actions (not on this MUI page).",
+  "component": [
+    "button"
+  ]
 }

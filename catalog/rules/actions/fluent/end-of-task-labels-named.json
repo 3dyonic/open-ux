@@ -28,5 +28,8 @@
   "not_when": "Primary commit verbs mid-task (Publish, Save) — those are not end-of-task dismissals.",
   "agent_hint": "Pick Done, Finish, Close, Got it, or Dismiss to match the actual outcome.",
   "description": "Fluent end-of-task labels are named from a fixed set: Done, Finish, Close, Got it, or Dismiss. Pick the one that matches the outcome the user just reached, not a generic stand-in. Apply when naming the closing action after a task or teaching moment. Fail generic OK, or a name that does not match the outcome — for example Dismiss when the task finishes a commit.",
-  "do_not_claim": "`actions.copy.explicit_verb_not_ok` as a merge; Close vs Cancel keep-vs-abandon."
+  "do_not_claim": "`actions.copy.explicit_verb_not_ok` as a merge; Close vs Cancel keep-vs-abandon.",
+  "component": [
+    "button"
+  ]
 }
