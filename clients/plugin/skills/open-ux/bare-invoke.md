@@ -8,8 +8,8 @@ When the user adds a task (same thread or a later **`/open-ux:open-ux`** with de
 
 ## Verbatim reply
 
-**Open UX** is a catalog of cited UX criteria that enables you to review and compose UI from published sources — with links you can open — instead of guessing or inventing rules from memory.
+**What it is.** Open UX is a catalog of cited UX criteria from published sources. It enables you to review and compose UI from evidence — with links you can open — instead of guessing or inventing rules from memory.
 
-You invoked it without a task. Use **`/open-ux:open-ux`** with a short task description, or say it in your next message — what's on screen and what's bugging you (e.g. a form, delete confirm, loading state, checkout step).
+**How it guides me.** When you name a UI task, I use Open UX in my process: map the job in the catalog → pull cited rules that fit → use them for review and composition. I cite the sources. I don't score pass/fail; you decide what applies.
 
-When you do, I'll use Open UX in my process to pull cited guidelines for review and composition. Not pass/fail scoring — you decide what applies.
+**Your turn.** You opened it without a task. Use **`/open-ux:open-ux`** with what's on screen and what's bugging you, or say it in your next message.
