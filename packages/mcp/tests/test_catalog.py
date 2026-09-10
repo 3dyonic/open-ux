@@ -10,6 +10,7 @@ from open_ux.catalog import (
     AGENT_KEYS,
     citations,
     load_catalog,
+    validate_apply_when_fit,
     validate_placement,
 )
 from open_ux.catalog_error import CatalogError
@@ -629,3 +630,97 @@ def test_every_leaf_has_cites() -> None:
         if not leaf.guideline_ids
     ]
     assert empty == []
+
+
+def test_validate_apply_when_fit_skips_non_gate_leaves() -> None:
+    rows = validate_apply_when_fit(
+        [
+            {
+                "id": "ant.test",
+                "leaf": "avoid_placeholder_as_label",
+                "apply_when": "Ant surfaces only.",
+                "overview": "Different.",
+            }
+        ]
+    )
+    assert rows == []
+
+
+def test_validate_apply_when_fit_flags_vendor_without_task_frame() -> None:
+    rows = validate_apply_when_fit(
+        [
+            {
+                "id": "ant.test",
+                "leaf": "choose_control_for_choice",
+                "apply_when": "Ant data-entry choices with more than five options.",
+                "overview": "Use a dropdown when there are many options.",
+                "title": "dropdown when over 5",
+                "name": "Dropdown when over 5 — Ant",
+            }
+        ]
+    )
+    assert any(row["reason"] == "apply_when names a house or surface" for row in rows)
+
+
+def test_validate_apply_when_fit_allows_task_framed_vendor_token() -> None:
+    rows = validate_apply_when_fit(
+        [
+            {
+                "id": "ant.test",
+                "leaf": "pick_primary_action",
+                "apply_when": "Choosing Ant button types for actions in a group.",
+                "overview": "Map button types to roles.",
+                "title": "named button type map",
+                "name": "Named button type map — Ant",
+            }
+        ]
+    )
+    assert rows == []
+
+
+def test_validate_apply_when_fit_flags_overview_restatement() -> None:
+    overview = "Switches apply immediately; checkboxes wait for submit."
+    rows = validate_apply_when_fit(
+        [
+            {
+                "id": "ant.test",
+                "leaf": "choose_control_for_choice",
+                "apply_when": overview,
+                "overview": overview,
+                "title": "checkbox vs switch",
+                "name": "Checkbox vs switch — Ant",
+            }
+        ]
+    )
+    assert any(row["reason"] == "apply_when equals overview" for row in rows)
+
+
+def test_validate_catalog_strict_fit_green(live_catalog: Path) -> None:
+    import subprocess
+    import sys
+
+    root = Path(__file__).resolve().parents[3]
+    proc = subprocess.run(
+        [sys.executable, "-m", "open_ux", "validate-catalog", "--strict-fit"],
+        cwd=root,
+        capture_output=True,
+        text=True,
+    )
+    assert proc.returncode == 0
+    assert "catalog ok" in proc.stdout
+    assert "apply_when fit:" not in proc.stderr
+
+
+def test_validate_catalog_default_exits_zero_without_strict(live_catalog: Path) -> None:
+    import subprocess
+    import sys
+
+    root = Path(__file__).resolve().parents[3]
+    proc = subprocess.run(
+        [sys.executable, "-m", "open_ux", "validate-catalog"],
+        cwd=root,
+        capture_output=True,
+        text=True,
+    )
+    assert proc.returncode == 0
+    assert "catalog ok" in proc.stdout

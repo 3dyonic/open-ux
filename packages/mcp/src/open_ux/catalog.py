@@ -2,9 +2,10 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any
+from typing import Any, TypedDict
 
 from jsonschema.validators import validator_for
 
@@ -31,6 +32,92 @@ EMPTY_NOTE = (
 INDEX_KEYS = ("id", "title", "name", "jobs", "lane", "container", "card", "facet", "leaf")
 BODY_KEYS = frozenset({"pass_when", "fail_when", "rule", "citation", "check", "severity"})
 AGENT_KEYS = ("overview", "apply_when", "not_when", "agent_hint", "description")
+
+GATE_LEAVES = frozenset(
+    {
+        "choose_control_for_choice",
+        "pick_primary_action",
+        "pick_modal_only_when_blocking",
+        "disclose_instead_of_dump",
+    }
+)
+
+_VENDOR_PATTERN = re.compile(
+    r"\b(?:"
+    r"Ant(?:\s+Design)?|MUI|Material(?:\s+UI)?|GOV\.?UK|Fluent|Polaris|Suomi(?:\.fi)?|"
+    r"USWDS|NSW|Canada|Vercel|Spectrum|Gold(?:\s+Design)?|Tidwell|Lightning|NN/g|Polar"
+    r")\b",
+    re.IGNORECASE,
+)
+_ON_SURFACES_PATTERN = re.compile(r"\bon\s+\w+\s+surfaces\b", re.IGNORECASE)
+_TASK_FRAME_PATTERN = re.compile(
+    r"^(Choosing|Collecting|Ordering|Placing|Composing|Labeling|Adding|Naming|Arranging|"
+    r"List-page|Scheduling|Hover|Input)\b",
+    re.IGNORECASE,
+)
+
+
+class ApplyWhenFitViolation(TypedDict):
+    id: str
+    leaf: str
+    apply_when: str
+    reason: str
+
+
+def _squish_fit(text: str) -> str:
+    return " ".join((text or "").split()).casefold()
+
+
+def _title_phrase(guideline: dict[str, Any]) -> str:
+    name = str(guideline.get("name") or "")
+    if "—" in name:
+        name = name.split("—", 1)[0]
+    elif " - " in name:
+        name = name.split(" - ", 1)[0]
+    title = str(guideline.get("title") or "")
+    return name.strip() or title.replace("-", " ").strip()
+
+
+def _apply_when_fit_reasons(guideline: dict[str, Any]) -> list[str]:
+    apply_when = str(guideline.get("apply_when") or "").strip()
+    if not apply_when:
+        return ["apply_when is empty"]
+    overview = str(guideline.get("overview") or "").strip()
+    reasons: list[str] = []
+    task_framed = bool(_TASK_FRAME_PATTERN.match(apply_when))
+    if not task_framed and (
+        _VENDOR_PATTERN.search(apply_when) or _ON_SURFACES_PATTERN.search(apply_when)
+    ):
+        reasons.append("apply_when names a house or surface")
+    if _squish_fit(apply_when) == _squish_fit(overview):
+        reasons.append("apply_when equals overview")
+    title_phrase = _title_phrase(guideline)
+    if title_phrase and _squish_fit(apply_when) == _squish_fit(title_phrase):
+        reasons.append("apply_when only restates the cite title")
+    return reasons
+
+
+def validate_apply_when_fit(
+    guidelines: list[dict[str, Any]],
+) -> list[ApplyWhenFitViolation]:
+    """Gate-Leaf apply_when sniff test. Report-only unless the caller exits non-zero."""
+    out: list[ApplyWhenFitViolation] = []
+    for guideline in guidelines:
+        leaf = str(guideline.get("leaf") or "")
+        if leaf not in GATE_LEAVES:
+            continue
+        apply_when = str(guideline.get("apply_when") or "").strip()
+        for reason in _apply_when_fit_reasons(guideline):
+            out.append(
+                {
+                    "id": str(guideline.get("id") or ""),
+                    "leaf": leaf,
+                    "apply_when": apply_when,
+                    "reason": reason,
+                }
+            )
+    out.sort(key=lambda row: (row["id"], row["reason"]))
+    return out
 
 
 def _rules_root(path: Path) -> Path | None:

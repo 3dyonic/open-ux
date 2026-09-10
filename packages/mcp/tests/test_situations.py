@@ -5,7 +5,15 @@ from pathlib import Path
 import pytest
 from fastmcp import Client
 
-from open_ux.jobs import CARD_IDS, CONTAINER_IDS, LEAF_IDS, expand_need, load_job_tree, resolve_need
+from open_ux.jobs import (
+    CARD_IDS,
+    CONTAINER_IDS,
+    LEAF_IDS,
+    expand_need,
+    leaf_by_id,
+    load_job_tree,
+    resolve_need,
+)
 from open_ux.server import create_mcp
 from open_ux.settings import Settings
 from open_ux.jobs import Card
@@ -165,11 +173,27 @@ def test_get_situation_returns_pointers_not_bodies(live_catalog: Path) -> None:
     assert card["id"] == "design_a_form"
     assert card["when"]
     assert any(item["id"] == "handle_form_errors" for item in card["reject"])
-    leaf_ids = [leaf for facet in card["facets"] for leaf in facet["leaves"]]
+    leaf_rows = [leaf for facet in card["facets"] for leaf in facet["leaves"]]
+    leaf_ids = [leaf["id"] for leaf in leaf_rows]
     assert "avoid_placeholder_as_label" in leaf_ids
+    for leaf in leaf_rows:
+        assert set(leaf) == {"id", "count"}
+        assert leaf["count"] >= 0
     dumped = str(card)
     assert "pass_when" not in dumped
     assert "Place a clear label" not in dumped
+
+
+def test_get_situation_leaf_counts_match_tree(live_catalog: Path) -> None:
+    tree = _tree(live_catalog)
+    result = get_situation("design_a_form", tree)
+    facet = next(
+        f for f in result["situation"]["facets"] if f["id"] == "wrong_control_for_the_choice"
+    )
+    leaf = next(row for row in facet["leaves"] if row["id"] == "choose_control_for_choice")
+    source = leaf_by_id(tree, "choose_control_for_choice")
+    assert source is not None
+    assert leaf["count"] == len(source.guideline_ids)
 
 
 def test_get_situation_multi_step_has_go_back_and_leave_warn(live_catalog: Path) -> None:

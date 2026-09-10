@@ -439,9 +439,10 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             Field(description="A Situation Card id. A Leaf id fails."),
         ],
     ) -> dict[str, Any]:
-        """Fetch one Situation Card: when, reject, facets, leaf pointers, component.
+        """Fetch one Situation Card: when, reject, facets, leaf counts, component.
 
-        Fails on a Leaf id. Does not invent a Card. No rule bodies.
+        Each facet lists leaves as {id, count}. Fails on a Leaf id.
+        Does not invent a Card. No rule bodies.
         """
         result = run_get_situation(id, job_tree)
         _maybe_telemetry(settings, tool="get_situation")
@@ -515,7 +516,9 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         """Say the UX need as one Situation Card, Leaf, or container.
 
         Returns cited rule criteria so you can make a better decision; the
-        decision is yours. Does not take a file. Does not return pass or fail.
+        decision is yours. Card/Leaf pulls include situation (when, reject;
+        leaf when scoped) and cite_via get_guideline. Rows are browse slices,
+        not full cites. Does not take a file. Does not return pass or fail.
         Required: jobs or guideline_ids. Prefer a Card; use a Leaf for one bay.
         """
         result = run_pack(
