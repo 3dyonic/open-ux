@@ -153,9 +153,9 @@ def _build_parser() -> argparse.ArgumentParser:
     cite = sub.add_parser("cite", help="get_guideline — one cited body")
     cite.add_argument("guideline_id", help="Guideline id.")
 
-    sub.add_parser("components", help="list_components — widget index")
+    sub.add_parser("components", help="list_components — component index")
 
-    component = sub.add_parser("component", help="get_component — one widget record")
+    component = sub.add_parser("component", help="get_component — one component record")
     component.add_argument("component_id", help="Widget id.")
     component.add_argument(
         "--no-vs",
@@ -185,7 +185,7 @@ def _build_parser() -> argparse.ArgumentParser:
     component.add_argument(
         "--include-used-on",
         action="store_true",
-        help="Include Cards and cites that stamp this widget.",
+        help="Include Cards and cites that stamp this component.",
     )
 
     tools = sub.add_parser("tools", help="tools/list and tools/call")

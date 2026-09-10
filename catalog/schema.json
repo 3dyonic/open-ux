@@ -170,7 +170,7 @@
       "type": "array",
       "minItems": 1,
       "items": { "type": "string", "minLength": 1, "pattern": "^[a-z0-9_]+$" },
-      "description": "Closed widget ids. Join key only. Authored on the cite (and the Card). Omit when unset."
+      "description": "Closed component ids. Join key only. Authored on the cite (and the Card). Omit when unset."
     },
     "agent_hint": {
       "type": "string",

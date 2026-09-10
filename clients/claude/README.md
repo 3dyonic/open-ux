@@ -49,12 +49,13 @@ No **`Open-UX:audit`** — use **`Open-UX:pack`**. See [`docs/TOOLS.md`](../../d
 - **`get_situation`** — One Card (when / reject / leaf counts). Leaf id fails.
 - **`pack`** — Cited criteria for `jobs` or `guideline_ids`; page with `next_offset`. No file, no pass/fail.
 - **`get_guideline`** — One full rule body by id.
+- **`list_components`** / **`get_component`** — Component index and record. Context helper when `component[]` is on the Card or pack row.
 
 ## Offerings (one skill)
 
 Compose, review, map, and cite are jobs in `skills/open-ux` — not extra packages.
 
-- **Compose / review** — compare Cards that fit; `Open-UX:get_situation` (leaf `{ id, count }`), then `Open-UX:pack` with `jobs=`; read envelope reject and row fit; `get_guideline` or `get_component`; loop `next_offset`. You decide. No winner Card.
+- **Compose / review** — compare Cards that fit; `Open-UX:get_situation` (leaf `{ id, count }`), then `Open-UX:pack` with `jobs=`; read envelope reject and row fit; `get_guideline`; `get_component` for control context when `component[]` fits; loop `next_offset`. You decide. No winner Card.
 - **Map** — `Open-UX:suggest_situations` when the ask is a vague surface (catalog map). The catalog stays open after a pack.
 - **Cite** — `Open-UX:search_guidelines` / `Open-UX:get_guideline`
 

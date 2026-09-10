@@ -14,7 +14,9 @@ Fully qualified on the wire: `Open-UX:<name>`. There is **no** `audit` tool — 
 
 **`pack`** — Returns cited rule criteria for a job. Takes `jobs` (Card, Leaf, or container id) or `guideline_ids`, plus `limit` / `offset` to page (`next_offset`). Host **ignores** `query` — use `helpers/rank_pack.py` locally ([`helpers/registry.json`](../helpers/registry.json)) to reorder one page. Does not take a file, does not return pass/fail — hands back relevant rules to check your own work against.
 
-**`get_guideline`** — Fetches one full guideline body by id when you already know which rule you want.
+**`get_guideline`** — Fetches one full guideline body by id when you already know which rule you want. Primary deep read after **`pack`**.
+
+When the row or Card stamps **`component[]`**, **`get_component`** is a context helper for that job — control shape (variants, a11y, keyboard) while you stay on the cite pull.
 
 ## Index and search
 
@@ -22,6 +24,14 @@ Fully qualified on the wire: `Open-UX:<name>`. There is **no** `audit` tool — 
 
 **`search_guidelines`** — Scope the index by `jobs` / `lane`. Host ignores `query`. No rule bodies.
 
-## Widgets
+## Components
 
-**`list_components`** / **`get_component`** — Widget index and record; optional `used_on` reverse index. Open `get_component` only for ids on a pack row or Card.
+Context helper for Cards and **`jobs=`** pulls — not a second catalog map. Records in `catalog/components/` — variants, accessibility, and keyboard. **`button.json`** is the exemplar. Cards and cites stamp **`component[]`**; **`pack`** rows echo those ids.
+
+**`list_components`** — Component index (id, title, overview). No variant bodies.
+
+**`get_component`** — One component record by `id`. Section switches (default on unless noted): `include_vs`, `include_variants`, `include_accessibility`, `include_keyboard`; opt-in: `include_keywords`, `include_used_on` (Cards and cites that stamp this id). False omits the key. Open when **`component[]`** on the Card or pack row names the id. Full fields: [`component.md`](../clients/claude/skills/open-ux/component.md).
+
+## CLI (no session)
+
+Same wire as MCP: `open-ux pack`, `open-ux cite` (`get_guideline`), `open-ux component` (`get_component`), `open-ux components` (`list_components`). Contributors: point MCP at [`clients/claude/mcp.stdio.json`](../clients/claude/mcp.stdio.json) for local stdio — current `pack` + component tools; hosted catches up on deploy.

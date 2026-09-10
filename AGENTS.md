@@ -14,7 +14,7 @@ python -m open_ux stdio
 OPEN_UX_MODE=hosted python -m open_ux http
 ```
 
-Same catalog. No invite. Telemetry off. Point MCP clients at local stdio.
+Same catalog. No invite. Telemetry off. Point MCP clients at local stdio ([`clients/claude/mcp.stdio.json`](clients/claude/mcp.stdio.json) in this repo).
 
 - **Hosted** (shared live catalog): `https://open-ux.dev/mcp` with bearer `uxmcp_` (`OPEN_UX_API_KEY`). Invite at [open-ux.dev/invite](https://open-ux.dev/invite).
 
@@ -34,4 +34,4 @@ Same wire without a session: `open-ux pack --jobs …` or helpers in [`helpers/r
 
 ## One skill
 
-`open-ux` is the only always-on skill. Compose and review share the pull trigger; map and cite are sections inside it. Claude agent file: [`clients/claude/agents/open-ux.md`](clients/claude/agents/open-ux.md).
+`open-ux` is the only always-on skill — hub [`SKILL.md`](clients/claude/skills/open-ux/SKILL.md) plus read-on-demand references (glossary, ask-shapes, examples, cards, …). Compose and review share the pull trigger. Claude agent file: [`clients/claude/agents/open-ux.md`](clients/claude/agents/open-ux.md).

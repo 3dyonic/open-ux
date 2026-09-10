@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Thin get_component helper: widget id in, record out.
+"""Thin get_component helper: component id in, record out.
 
 Same wire as Open-UX:get_component. Section switches mirror the MCP tool.
 

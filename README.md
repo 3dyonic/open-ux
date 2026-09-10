@@ -14,7 +14,7 @@ A curated, machine-readable store of UX guidelines and a small tool surface so a
 
 1. **Map a Card** — `get_situation` for when / reject, facets, and leaf `{ id, count }` bays
 2. **Fetch criteria** — `pack` with `jobs=` (Card or Leaf); read envelope `situation.reject` and row fit (`overview`, `apply_when`, `not_when`)
-3. **Deep read** — `get_guideline` for the cited rule, or `get_component` when the ask is widget shape; loop `next_offset`
+3. **Deep read** — `get_guideline` for the cited rule; `get_component` for control context when `component[]` is stamped on the Card or row; loop `next_offset`
 4. **Apply locally** — the client judges the artifact; the host never takes the file and never returns pass/fail
 
 There is no server-side LLM. One shared catalog for every caller — an account unlocks the hosted API; it does not give you a private rulebook.
@@ -29,7 +29,7 @@ There is no server-side LLM. One shared catalog for every caller — an account 
 
 * **Cited catalog** — one JSON file per rule, with sources you can follow
 * **Public catalog site** — browse rules in the browser at [`/catalog`](https://open-ux.dev/catalog)
-* **Agent tools** — map Cards (`get_situation` with leaf counts); pack by need; list / search / get guidelines; widget records (`get_component`)
+* **Agent tools** — map Cards (`get_situation` with leaf counts); pack by need; list / search / get guidelines; component records (`get_component`)
 * **Hosted or self-host** — waitlist + API key on the hosted service, or stdio locally with no auth
 * **Privacy-minded hosted mode** — we do not store UI payloads or prompts; see [Privacy](https://open-ux.dev/privacy). How we cite rules: [Sources](https://open-ux.dev/sources)
 
@@ -97,7 +97,7 @@ There is **no** `audit` tool — use **`pack`**. Full reference: [`docs/TOOLS.md
 - **`pack`** — Cited rule criteria for `jobs` (Card, Leaf, or container) or `guideline_ids`. Page with `limit` / `offset` / `next_offset`. Host ignores `query` (use [`helpers/rank_pack.py`](helpers/registry.json) locally). No file, no pass/fail.
 - **`get_guideline`** — One full rule body by id.
 - **`list_guidelines`** / **`search_guidelines`** — Paged index; scope by jobs / lane. No bodies; host ignores `query` on search.
-- **`list_components`** / **`get_component`** — Widget records; optional `used_on`.
+- **`list_components`** / **`get_component`** — Component index and record. `get_component`: section switches `include_vs`, `include_variants`, `include_accessibility`, `include_keyboard` (default on); opt-in `include_keywords`, `include_used_on`.
 
 Card/Leaf **`pack`** pulls add envelope **`situation`** (`when`, `reject`; `leaf` when scoped) and **`cite_via: get_guideline`**. Rows are browse slices — open `get_guideline` or `get_component` for full records.
 

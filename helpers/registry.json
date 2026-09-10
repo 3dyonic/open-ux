@@ -25,7 +25,7 @@
       "id": "get_component",
       "path": "helpers/get_component.py",
       "cli": "open-ux component <id>",
-      "summary": "Same get_component wire as Open-UX:get_component without an MCP session.",
+      "summary": "Control context for Cards and jobs — same get_component wire without an MCP session.",
       "usage": "python3 helpers/get_component.py button --include-used-on"
     }
   ]

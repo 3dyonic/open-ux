@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Docs: components as context helper for Cards and jobs; ask-shapes table and Leaf-scoping examples in skill; `component.md` link and CLI aliases in [`docs/TOOLS.md`](docs/TOOLS.md); `widget` → `component` in tool docstrings; [`clients/claude/mcp.stdio.json`](clients/claude/mcp.stdio.json) for local MCP wire (`pack`, `get_component`).
+- Skill: hub + references `open-ux` package — hub [`SKILL.md`](clients/claude/skills/open-ux/SKILL.md) + glossary, ask-shapes, examples, shapes, cards, tools, connect, guideline, component references (progressive disclosure).
 - Docs: [`docs/TOOLS.md`](docs/TOOLS.md) — canonical tool blurbs; no `audit` tool (use `pack`); sweep `packs/imp.json`, README, AGENTS, plugin README; ops `DEPLOY.md`.
 - Docs: root README tool table and pack loop; `catalog/README.md` file count (204); plugin SETUP/README; `docs/PRIVACY.md` `pack`; agent Tools list includes components; `packs/eor.json` claims use `pack` not `audit`.
 - CI and contributor checks: `claude plugin validate` (marketplace + plugin, `--strict`) and `node scripts/validate-cursor-plugin.mjs --strict`. Slash command frontmatter adds `name`.
@@ -17,7 +19,7 @@
 - **BREAKING:** `Open-UX:audit` → `Open-UX:pack`. Module `open_ux.audit` → `open_ux.pack`. CLI `open-ux pack`. Slash command `/pack`. Host does not BM25-rank on request; optional `helpers/rank_pack.py`.
 - **BREAKING:** Leaf ids are valid `jobs=` values (`pick_primary_action`, etc.). MCP `pack` jobs enum includes all 28 Leaves.
 - Pack row adds `apply_when`, `not_when`, `leaf`, `card`, `hints`, `component`. Component matching dimension: `catalog/components.json` + 38 records; `load_components()`; Card and cite `component[]` stamps (131 cites, 13 Cards). Cite `hints[]` on 52 cites where host scan benefits; pack omits `hints` when the cite omits it; do not bridge `agent_hint` → `hints` (see `catalog/README.md`).
-- `Open-UX:list_components` / `Open-UX:get_component` — widget index and record with section switches; optional `used_on` reverse index. CLI `open-ux components` / `open-ux component`. Helper `helpers/get_component.py`.
+- `Open-UX:list_components` / `Open-UX:get_component` — component index and record with section switches; optional `used_on` reverse index. CLI `open-ux components` / `open-ux component`. Helper `helpers/get_component.py`.
 - **Lock:** `component[]` is a join id on the Card and the cite only. Facet, Leaf, and container do not stamp it. Component `keywords` stay on the component record — do not copy into `jobs.json` or echo onto every pack row. Pack `component[]` is ids only (no variant axes). Cite `hints[]` are host extras not already on the row; omit the key when empty — do not ship `[]` or copy `agent_hint` / component `keywords`.
 - Pack envelope: `count`, `total`, `offset`, optional `next_offset`, `host` — no echoed `limit` (page size is input only).
 - Agent helpers moved to `helpers/` with `helpers/registry.json`. Contributor scripts stay in `scripts/`.

@@ -13,6 +13,18 @@ ROOT = Path(__file__).resolve().parents[3]
 SRC = ROOT / "packages" / "mcp" / "src"
 SKILL_DIR = ROOT / "clients" / "claude" / "skills" / "open-ux"
 SKILL = SKILL_DIR / "SKILL.md"
+CONNECT = SKILL_DIR / "connect.md"
+TOOLS_REFERENCE = SKILL_DIR / "tools.md"
+ROUTING_REFERENCES = (
+    "SKILL.md",
+    "glossary.md",
+    "ask-shapes.md",
+    "examples.md",
+    "shapes.md",
+    "cards.md",
+    "tools.md",
+    "connect.md",
+)
 COMMANDS = ROOT / "clients" / "claude" / "commands"
 PLUGIN = ROOT / "clients" / "claude" / ".claude-plugin" / "plugin.json"
 MCP_JSON = ROOT / "clients" / "claude" / ".mcp.json"
@@ -54,6 +66,18 @@ def _skill_files() -> list[Path]:
     return sorted(SKILL_DIR.glob("*.md"))
 
 
+def _skill_corpus() -> str:
+    """Hub + references — one skill package, progressive disclosure."""
+    return "\n".join(path.read_text(encoding="utf-8") for path in _skill_files())
+
+
+def _skill_routing_corpus() -> str:
+    """Routing references only — excludes field guides with pass_when in shape examples."""
+    return "\n".join(
+        (SKILL_DIR / name).read_text(encoding="utf-8") for name in ROUTING_REFERENCES
+    )
+
+
 def _script_env(**extra: str) -> dict[str, str]:
     env = {**os.environ, **extra}
     existing = env.get("PYTHONPATH", "")
@@ -68,6 +92,16 @@ def test_one_skill_package_named_open_ux() -> None:
     assert packages == ["open-ux"]
     assert (skills_root / "open-ux" / "SKILL.md").is_file()
     assert (skills_root / "open-ux" / "guideline.md").is_file()
+    for reference in (
+        "glossary.md",
+        "ask-shapes.md",
+        "examples.md",
+        "shapes.md",
+        "cards.md",
+        "tools.md",
+        "connect.md",
+    ):
+        assert (skills_root / "open-ux" / reference).is_file()
     assert (skills_root / "open-ux" / "component.md").is_file()
     for banned in ("open-ux-forms", "open-ux-actions", "open-ux-feedback"):
         assert not (skills_root / banned).exists()
@@ -101,8 +135,7 @@ def test_skill_description_informs_and_promotes() -> None:
 
 
 def test_skill_routing_table_has_when_and_cross_container_reject() -> None:
-    text = SKILL.read_text(encoding="utf-8")
-    _empty, _meta, body = text.split("---", 2)
+    body = _skill_routing_corpus()
     assert "MANIFEST.md" in body
     assert "pass_when" not in body
     assert "forms.field_labels" not in body
@@ -133,8 +166,8 @@ def test_skill_routing_table_has_when_and_cross_container_reject() -> None:
 
 
 def test_skill_examples_and_tools_not_sermons() -> None:
-    text = SKILL.read_text(encoding="utf-8")
-    _empty, _meta, body = text.split("---", 2)
+    text = _skill_corpus()
+    body = text
     lower = body.lower()
     assert "MUST" not in text
     for banned in ENFORCE_SCRIPT:
@@ -161,6 +194,8 @@ def test_skill_files_point_at_tools_not_catalog_bodies() -> None:
         assert leaked == [], f"{path.name} must not embed guideline ids {leaked}"
         if path.name in ("guideline.md", "component.md"):
             assert "overview" in text
+            continue
+        if path.name in ("examples.md",):
             continue
         for token in BANNED_BODIES:
             assert token not in text, f"{path.name} must not contain {token}"
@@ -282,11 +317,11 @@ def test_pack_helper_available_not_required() -> None:
         env=_script_env(),
     )
     assert empty.returncode != 0
-    skill = SKILL.read_text(encoding="utf-8")
-    lower = skill.lower()
-    assert "helpers/pack.py" in skill
+    tools = TOOLS_REFERENCE.read_text(encoding="utf-8")
+    lower = tools.lower()
+    assert "helpers/pack.py" in tools
     assert "not required" in lower
-    assert "Open-UX:pack" in skill
+    assert "Open-UX:pack" in tools
     for banned in ENFORCE_SCRIPT:
         assert banned not in lower
 
@@ -312,15 +347,15 @@ def test_optional_helper_is_protocol_not_path() -> None:
     assert "guidelines" in payload
     assert "verdict" not in payload
     assert payload["count"] >= 1
-    skill = SKILL.read_text(encoding="utf-8")
-    assert "mcp_call.py" in skill
-    assert "do not treat `mcp_call.py`" in skill.lower()
-    assert "must run" not in skill.lower()
+    tools = TOOLS_REFERENCE.read_text(encoding="utf-8")
+    assert "mcp_call.py" in tools
+    assert "do not treat `mcp_call.py`" in tools.lower()
+    assert "must run" not in tools.lower()
 
 
 def test_connect_offers_hosted_or_package() -> None:
     paths = (
-        SKILL,
+        CONNECT,
         ROOT / "AGENTS.md",
         ROOT / "CLAUDE.md",
         ROOT / "clients" / "claude" / "README.md",
@@ -335,9 +370,9 @@ def test_connect_offers_hosted_or_package() -> None:
         assert "OPEN_UX_MODE=hosted python -m open_ux http" in text
         assert "uxmcp_" in text or "OPEN_UX_API_KEY" in text
         assert "package" in text.lower() or "pip install" in text.lower()
-    skill = SKILL.read_text(encoding="utf-8")
-    assert 'pip install -e "packages/mcp[dev]"' not in skill
-    assert "clone" not in skill.lower()
+    connect = CONNECT.read_text(encoding="utf-8")
+    assert 'pip install -e "packages/mcp[dev]"' not in connect
+    assert "clone" not in connect.lower()
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
     assert "### Self-host" in readme
     assert "pip install open-ux" in readme

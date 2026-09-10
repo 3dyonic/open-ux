@@ -5,7 +5,7 @@ Catalog and repo maintenance — **not** offered to agents. Agents use [`helpers
 | Script | Role |
 | --- | --- |
 | `apply_component_stamps.py` | Stamp Card/cite `component[]` from `component_stamps.json` |
-| `component_stamps.json` | Stamp manifest (Card + cite → widget ids) |
+| `component_stamps.json` | Stamp manifest (Card + cite → component ids) |
 | `apply_cite_hints.py` | Apply cite `hints[]` from `cite_hints.json` |
 | `cite_hints.json` | Cite hints manifest (host scan extras only) |
 | `apply_stamped_catalog.py` | Apply stamped catalog generation |

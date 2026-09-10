@@ -431,3 +431,16 @@ async def test_get_component_default_and_used_on(live_catalog: Path) -> None:
 
         missing = await client.call_tool("get_component", {"id": "not_a_widget"})
         assert missing.data["found"] is False
+
+
+@pytest.mark.asyncio
+async def test_mcp_tool_names_include_pack_and_components_not_audit(
+    live_catalog: Path,
+) -> None:
+    mcp = create_mcp(hosted=False)
+    async with Client(mcp) as client:
+        names = {tool.name for tool in await client.list_tools()}
+    assert "pack" in names
+    assert "list_components" in names
+    assert "get_component" in names
+    assert "audit" not in names

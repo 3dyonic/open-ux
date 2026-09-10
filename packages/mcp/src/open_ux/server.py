@@ -329,6 +329,9 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             "No server LLM. "
             "pack: say one Card or container as jobs; returns cited rule "
             "criteria so you can make a better decision — the decision is yours. "
+            "get_guideline for the full cite. When component[] is on the Card or "
+            "pack row, get_component is control context for that job (variants, "
+            "a11y, keyboard) — not a second catalog map. "
             "Does not take a file. Does not return pass or fail. "
             "Page with limit/offset; follow next_offset. "
             "Surfaces are not needs. Leaf ids scope one bay. "
@@ -538,7 +541,7 @@ def create_mcp(*, hosted: bool) -> FastMCP:
 
     @mcp.tool
     def list_components() -> dict[str, Any]:
-        """Index only: id, title, overview for every widget record. One page. No variants."""
+        """Component index — context helper for Cards and jobs. Id, title, overview only. One page. No variants."""
         result = run_list_components(component_registry)
         _maybe_telemetry(settings, tool="list_components")
         return result
@@ -547,7 +550,7 @@ def create_mcp(*, hosted: bool) -> FastMCP:
     def get_component(
         id: Annotated[
             str,
-            Field(description="Closed widget id from pack component[] or Card component[]."),
+            Field(description="Closed component id from pack component[] or Card component[]."),
         ],
         include_vs: Annotated[
             bool,
@@ -573,15 +576,15 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             bool,
             Field(
                 description=(
-                    "Include Cards and cites that stamp this widget. Default false."
+                    "Include Cards and cites that stamp this component. Default false."
                 )
             ),
         ] = False,
     ) -> dict[str, Any]:
-        """Fetch one widget record. Section switches omit keys when false.
+        """Fetch one component record. Context helper for Cards and jobs.
 
-        Open only for ids already on a pack row or Card — not all 38 upfront.
-        Does not invent a record. Not cited criteria; return to pack after skim.
+        Section switches omit keys when false. Open only for ids on a pack row
+        or Card component[] — not all 38 upfront. Return to pack after skim.
         """
         result = run_get_component(
             component_registry,
