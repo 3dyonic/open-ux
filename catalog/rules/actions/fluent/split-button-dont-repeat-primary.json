@@ -24,7 +24,7 @@
   "facet": "no_clear_primary",
   "leaf": "pick_primary_action",
   "overview": "Split-button primary shows the full phrase; the menu does not repeat it.",
-  "apply_when": "Composing a Fluent split button with a primary and secondary list.",
+  "apply_when": "Composing a split button with a primary and secondary list.",
   "not_when": "Ordinary button groups without a split primary-plus-menu pattern.",
   "agent_hint": "Put the full primary phrase on rest-state; do not duplicate it in the list.",
   "description": "A Fluent split button puts the full phrase on the rest-state primary so the default action is clear before the menu opens. The secondary list must not repeat that same primary entry. Apply when composing a split button with a primary action and overflow list. Fail an incomplete primary phrase, or the same primary duplicated inside the secondary list.",

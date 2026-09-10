@@ -6,7 +6,7 @@ Layout: `catalog/rules/{category}/{source}/{file}.json`. The harvest prefix is i
 
 Read this map when you need to see what exists. Then call `Open-UX:get_guideline` or open that one file. Do not copy guideline ids into SKILL.md.
 
-203 rules.
+204 rules.
 
 ## Actions
 
@@ -301,6 +301,7 @@ Read this map when you need to see what exists. Then call `Open-UX:get_guideline
 
 ### USWDS
 
+- [Button vs link for action — USWDS](rules/forms/uswds/button-vs-link-for-action.json) — `uswds.button-vs-link-for-action` · `design_a_form`
 - [Character count brevity or legal — USWDS](rules/forms/uswds/character-count-brevity-or-legal.json) — `uswds.character-count-brevity-or-legal` · `design_a_form`
 - [Date picker when weekday always type — USWDS](rules/forms/uswds/date-picker-when-weekday-always-type.json) — `uswds.date-picker-when-weekday-always-type` · `design_a_form`
 - [Don't split phone, SSN, or card — USWDS](rules/forms/uswds/dont-split-phone-ssn-card.json) — `uswds.dont-split-phone-ssn-card` · `design_a_form`

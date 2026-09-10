@@ -24,7 +24,7 @@
   "facet": "wrong_layer_for_the_content",
   "leaf": "pick_modal_only_when_blocking",
   "overview": "Create-modals reset fields, keep the form connected, and submit from the footer.",
-  "apply_when": "Ant list-page create flows that open a form inside a Modal.",
+  "apply_when": "List-page create flows that open a form inside a modal.",
   "not_when": "Inline page forms that are not mounted in a create Modal lifecycle.",
   "agent_hint": "Call resetFields on reopen; connect useForm; submit via form.submit from footer.",
   "description": "List-page create may open a form in a Modal. destroyOnHidden does not clear Form fields—call resetFields. useForm created before open stays disconnected unless forceRender (or equivalent) connects it. Prefer native submit; if the submit control sits in the Modal footer outside the Form, call form.submit. Stale fields, disconnected instances, or footer buttons that never submit break the lifecycle.",

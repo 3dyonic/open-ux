@@ -24,7 +24,7 @@
   "facet": "wrong_control_for_the_choice",
   "leaf": "choose_control_for_choice",
   "overview": "Use Select for 4+ options; Choice list when there are fewer than four.",
-  "apply_when": "Choosing Polaris Select versus Choice list for option count.",
+  "apply_when": "Choosing Select versus Choice list for option count.",
   "not_when": "Select for under four options or Choice list for a long 4+ set.",
   "agent_hint": "Use Choice list under four options; use Select for four or more on Polar surfaces.",
   "description": "On Polar surfaces, use Select for 4+ options and Choice list for fewer than 4—the named Polar cutoffs. Pass when fewer than 4 map to choice list and 4+ map to select. Fail when a Polar surface uses select for under 4, or choice list for a long 4+ set, as if the Polar cutoff were ignored.",

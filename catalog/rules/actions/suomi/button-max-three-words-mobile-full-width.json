@@ -24,7 +24,7 @@
   "facet": "no_clear_primary",
   "leaf": "pick_primary_action",
   "overview": "Action labels stay ≤3 words, verb-first; full-width on mobile, shrink-to-content on desktop.",
-  "apply_when": "Labeling primary and secondary buttons in Suomi.fi forms and flows.",
+  "apply_when": "Labeling primary and secondary buttons in forms and flows.",
   "not_when": "Long help links, multi-sentence instructions, or icon-only controls with accessible names.",
   "agent_hint": "Cap button labels at three verb-first words; full-width mobile, content-width desktop.",
   "description": "Suomi.fi buttons use at most three words, start with a verb, capitalize the first letter, span the viewport on mobile, and shrink to content on desktop. Inverted variants stay off images unless contrast holds. Longer labels, fixed wide desktop blocks, mobile buttons that do not span, or inverted-on-image without contrast fail the pattern. Dual-cite explicit-verb action guidance; the unique bits here are the three-word cap and mobile full-width.",

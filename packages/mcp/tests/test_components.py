@@ -127,9 +127,9 @@ def test_get_component_used_on_button(live_catalog: Path) -> None:
     payload = get_component(registry, usage, "button", include_used_on=True)
     used_on = payload["component"]["used_on"]
     assert used_on["cards_total"] == 8
-    assert used_on["cites_total"] == 31
+    assert used_on["cites_total"] == 32
     assert len(used_on["cards"]) == 8
-    assert len(used_on["cites"]) == 31
+    assert len(used_on["cites"]) == 32
     cite = used_on["cites"][0]
     assert set(cite) == {"id", "overview", "card", "facet", "leaf"}
 
