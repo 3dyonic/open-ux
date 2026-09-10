@@ -1,7 +1,7 @@
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "vite";
 
-const backend = "http://127.0.0.1:8081";
+const backend = "http://127.0.0.1:8080";
 
 export default defineConfig({
   plugins: [tailwindcss()],
