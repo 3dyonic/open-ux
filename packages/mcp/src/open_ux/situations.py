@@ -34,8 +34,9 @@ NO_SUGGEST_MATCH = (
     "(form, actions, feedback, nav, overlay, steps)."
 )
 SUGGEST_MENU_NOTE = (
-    "Catalog map. Pick a container with list_situations, or a Card with "
-    "get_situation. Then pack with jobs=<card_id>."
+    "Catalog map. Compare jobs with list_situations(container=…) or "
+    "get_situation(card_id). Then pack with jobs=<card_id>, jobs=<leaf_id>, "
+    "or jobs=<container> for a broad pass (no situation envelope)."
 )
 
 MAP_ROW_KEYS = ("id", "title", "overview", "hints", "component")

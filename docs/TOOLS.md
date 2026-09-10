@@ -4,7 +4,7 @@ Fully qualified on the wire: `Open-UX:<name>`. Criteria pull: **`pack`**. Full l
 
 ## Situation map
 
-**`suggest_situations`:** Takes `task_text` (what you are composing) and returns the full catalog map of all 13 Situation Cards, grouped by container. Does not pick one for you, does not rank: just the map.
+**`suggest_situations`:** Takes `task_text` (what you are composing) and returns the full catalog map of all 13 Situation Cards, grouped by container. Does not pick one for you, does not rank: just the map. Next: compare jobs with **`list_situations(container=…)`** or **`get_situation`**, then **`pack`** with `jobs=<card_id>`, `jobs=<leaf_id>`, or `jobs=<container>` for a broad pass (no **`situation`** envelope).
 
 **`list_situations`:** Lists Situation Cards, optionally filtered by `container`. Unscoped, it is the full index. No rule bodies: card metadata only (id, title, container; with `container=`, when / reject specs).
 
@@ -12,7 +12,7 @@ Fully qualified on the wire: `Open-UX:<name>`. Criteria pull: **`pack`**. Full l
 
 ## Criteria
 
-**`pack`:** Returns cited rule criteria for a job. Takes `jobs` (Card, Leaf, or container id) or `guideline_ids`, plus `limit` / `offset` to page (`next_offset`). Host **ignores** `query`: use **`open-ux rank-pack`** locally ([`helpers/registry.json`](../helpers/registry.json)) to reorder one page. Does not take a file, does not return pass/fail: hands back relevant rules to check your own work against.
+**`pack`:** Returns cited rule criteria for a job. Takes `jobs` (Card, Leaf, or container id) or `guideline_ids`, plus `limit` / `offset` to page (`next_offset`). Card/Leaf pulls include **`situation`** (when, reject). Container pulls are a broad pass: **`cite_via` only**, no **`situation`** — narrow to a Card when the ask sharpens. Host **ignores** `query`: use **`open-ux rank-pack`** locally ([`helpers/registry.json`](../helpers/registry.json)) to reorder one page. Does not take a file, does not return pass/fail: hands back relevant rules to check your own work against.
 
 **`get_guideline`:** Fetches one full guideline body by id when you already know which rule you want. Primary deep read after **`pack`**.
 

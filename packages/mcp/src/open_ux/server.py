@@ -335,10 +335,11 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         name="Open UX",
         instructions=(
             "Open UX: cited UX rules agents audit against. "
-            "Find a Situation Card with list_situations, get_situation, or "
-            "suggest_situations (catalog map), then pack. "
+            "Start from the ask; map with suggest_situations, list_situations, "
+            "or get_situation, then pack. "
             "No server LLM. "
-            "pack: say one Card or container as jobs; returns cited rule "
+            "pack: jobs=<card_id>, jobs=<leaf_id>, or jobs=<container> "
+            "(container = broad pass, no situation envelope); returns cited rule "
             "criteria so you can make a better decision — the decision is yours. "
             "get_guideline for the full cite. When component[] is on the Card or "
             "pack row, get_component is control context for that job (variants, "
@@ -441,7 +442,7 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         limit: int = 20,
         offset: int = 0,
     ) -> dict[str, Any]:
-        """List Situation Cards. With container=, return that kind's specs (when / reject). Unscoped is the index. No rule bodies."""
+        """List Situation Cards. With container=, return that kind's specs (when / reject). Unscoped is the index. No rule bodies. Next: get_situation on a Card, or pack(jobs=<container>) for a broad pass."""
         result = run_list_situations(
             job_tree, container=container, limit=limit, offset=offset
         )
@@ -489,9 +490,10 @@ def create_mcp(*, hosted: bool) -> FastMCP:
 
         Always returns the complete 13-card allowlist grouped by container —
         never a filtered subset and never a ranked winner. Order is the catalog
-        lock, not a hint. task_text requests the map; it does not reorder. Pick
-        a container or a Card, then get_situation, then pack with
-        jobs=<card_id>. Surface is not an id. No server LLM.
+        lock, not a hint. task_text requests the map; it does not reorder.
+        Compare jobs with list_situations(container=…) or get_situation(card_id),
+        then pack with jobs=<card_id>, jobs=<leaf_id>, or jobs=<container> for a
+        broad pass (no situation envelope). Surface is not an id. No server LLM.
         """
         result = run_suggest_situations(task_text, surface, job_tree)
         _maybe_telemetry(settings, tool="suggest_situations")
@@ -533,8 +535,10 @@ def create_mcp(*, hosted: bool) -> FastMCP:
 
         Returns cited rule criteria so you can make a better decision; the
         decision is yours. Card/Leaf pulls include situation (when, reject;
-        leaf when scoped) and cite_via get_guideline. Rows are browse slices,
-        not full cites. Does not take a file. Does not return pass or fail.
+        leaf when scoped) and cite_via get_guideline. Container pulls
+        (jobs=forms, actions, feedback, …) are a broad pass: cite_via only, no
+        situation envelope — narrow to a Card when the ask sharpens. Rows are
+        browse slices, not full cites. Does not take a file. Does not return pass or fail.
         Required: jobs or guideline_ids. Prefer a Card; use a Leaf for one bay.
         """
         result = run_pack(

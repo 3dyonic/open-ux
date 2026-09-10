@@ -1,13 +1,19 @@
 ---
 name: open-ux
 description: >-
- Use when composing or reviewing UI against cited Open UX rules; a form,
- buttons, delete confirm, loading, 404, or error state, navigation, table, modal,
- or multi-step flow. Open Cards that fit; you decide. Call Open-UX:get_situation
- and Open-UX:pack with jobs=<card_id>. Host does not pick a Card.
- Do not invent UX from memory. Do not send a file. The host returns cited
- criteria, not pass or fail. get_component is control context for Cards and
- jobs when component[] is stamped.
+ Use for any UI or UX work: building or reviewing a form, buttons, a delete
+ confirmation, a loading state, a 404 or error state, navigation, a table or
+ dashboard, a modal or overlay, page copy, or a multi-step or checkout flow.
+ Start from the ask, not a Card id. Open UX hands back cited criteria from
+ real design systems; you decide what applies. Tooling: Open-UX:suggest_situations,
+ Open-UX:list_situations, Open-UX:get_situation (map a Card),
+ Open-UX:pack with jobs=<card_id>, jobs=<leaf_id>, container alias
+ (forms, actions, feedback), or guideline_ids, Open-UX:get_guideline (full rule),
+ Open-UX:get_component when stamped. Host fetches catalog data via MCP; use tools,
+ not helper substitutes. Optional LLM local: open-ux rank-pack after pack
+ (pip install open-ux). Sourced criteria; not pass or fail; do not invent from
+ memory. Hub + references via the skill. Host does not pick a Card. Do not send
+ a file.
 model: inherit
 skills:
  - open-ux
@@ -15,11 +21,11 @@ skills:
 
 # Open UX agent
 
-Pointers only. One skill: `open-ux` (`clients/plugin/skills/open-ux/SKILL.md`). Card table lives there. No `/critique`. No catalog bodies.
+Pointers only. One skill: `open-ux` (`clients/plugin/skills/open-ux/SKILL.md`). Card table and decision tree live there. No `/critique`. No catalog bodies.
 
 ## When to invoke
 
-Building or checking UI that matches the skill trigger. Compose and review share one path.
+Any UI or UX task in user words — building or reviewing. Start from the ask and what is on screen, not a Card id. Compose and review share one path.
 
 ## When not to invoke
 
@@ -44,14 +50,14 @@ Same catalog. No invite. Telemetry off. Point MCP clients at local stdio.
 
 | Job | Tools |
 | --- | --- |
-| compose / review | Card table → `get_situation` (leaf `{ id, count }`) → `pack` (envelope reject, row fit) → `get_guideline`; `get_component` for control context when row `component[]` fits. Prefer Card; use Leaf for one bay. No winner Card. Optional LLM local: `open-ux rank-pack` after pack (`pip install open-ux`); see [`helpers/README.md`](../../../helpers/README.md). |
-| map | `Open-UX:suggest_situations` when the ask is a surface (catalog map). Pick a Card, then `get_situation` for counts. The catalog stays open after a pack. |
+| compose / review | Ask → [ask-shapes.md](../skills/open-ux/ask-shapes.md) or map → `get_situation` (leaf `{ id, count }`) → `pack` (envelope reject, row fit) → `get_guideline`; `get_component` when row `component[]` fits. Prefer Card; Leaf for one bay; `jobs=<container>` for a broad pass until the ask sharpens. No winner Card. Optional LLM local: `open-ux rank-pack` after pack (`pip install open-ux`); see [`helpers/README.md`](../../../helpers/README.md). |
+| map | `Open-UX:suggest_situations` (vague ask) or `Open-UX:list_situations(container=…)` (area known). Compare when/reject; name the job, then `get_situation`. Full tree → [principles.md](../skills/open-ux/principles.md). |
 | cite | `Open-UX:search_guidelines` / `Open-UX:get_guideline` |
 
 ## Tools
 
 `Open-UX:list_situations`, `Open-UX:get_situation`, `Open-UX:suggest_situations`, `Open-UX:list_guidelines`, `Open-UX:search_guidelines`, `Open-UX:get_guideline`, `Open-UX:pack`, `Open-UX:list_components`, `Open-UX:get_component`.
 
-Scope `pack` (`jobs=<card_id>`, `jobs=<leaf_id>`, container alias, or `guideline_ids`). Surfaces are context, not ids. Prefer a Card; use a Leaf id when the ask is one bay.
+Scope `pack` (`jobs=<card_id>`, `jobs=<leaf_id>`, container alias, or `guideline_ids`). Container pulls: broad pass, no `situation` envelope — narrow to a Card when steering matters. Surfaces are context, not ids. Prefer a Card; use a Leaf when the ask is one bay.
 
-No separate commands. The skill (`clients/plugin/skills/open-ux/SKILL.md`) is the only registered entry: invoked automatically when the ask matches its description, or directly via `/open-ux:open-ux`. A container alias such as `forms` is a `jobs=` value on `pack`, never its own command — see [`principles.md`](../skills/open-ux/principles.md).
+No separate commands. The skill is the only registered entry: invoked automatically when the ask matches its description, or directly via `/open-ux:open-ux`. A container alias such as `forms` is a `jobs=` value on `pack`, never its own command — see [principles.md](../skills/open-ux/principles.md).
