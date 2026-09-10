@@ -31,13 +31,19 @@ from open_ux.situations import (
     suggest_situations,
 )
 
-SKILL = (
-    Path(__file__).resolve().parents[3]
-    / "clients"
-    / "claude"
-    / "skills"
-    / "open-ux"
-    / "SKILL.md"
+SKILL_DIR = (
+    Path(__file__).resolve().parents[3] / "clients" / "claude" / "skills" / "open-ux"
+)
+SKILL = SKILL_DIR / "SKILL.md"
+ROUTING_REFERENCES = (
+    "SKILL.md",
+    "glossary.md",
+    "ask-shapes.md",
+    "examples.md",
+    "shapes.md",
+    "cards.md",
+    "tools.md",
+    "connect.md",
 )
 BODY_KEYS = {"pass_when", "fail_when", "rule", "citation", "check"}
 
@@ -59,9 +65,12 @@ def test_skill_description_is_compose_task_and_short() -> None:
     assert "verdict" not in desc
     assert "pass_when" not in rest
     assert "forms.field_labels" not in rest
-    assert "MANIFEST.md" in rest
+    routing = "\n".join(
+        (SKILL_DIR / name).read_text(encoding="utf-8") for name in ROUTING_REFERENCES
+    )
+    assert "MANIFEST.md" in routing
     for card_id in CARD_IDS:
-        assert card_id in rest
+        assert card_id in routing
     for title in (
         "Forms & input",
         "Actions & decisions",
@@ -71,7 +80,7 @@ def test_skill_description_is_compose_task_and_short() -> None:
         "Overlays & content structure",
         "Multi-step flows",
     ):
-        assert title in rest
+        assert title in routing
 
 
 def test_expand_need_cards_and_leaves(live_catalog: Path) -> None:

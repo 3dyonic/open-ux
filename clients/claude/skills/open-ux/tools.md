@@ -17,7 +17,7 @@ Empty shelf → say so. We are a catalog. They choose what to take. Cited criter
 
 ## LLM helper (optional, local)
 
-**`pip install open-ux`** ships all helpers as **`open-ux`** subcommands — **`open-ux helpers list`**. Do not invent these.
+**`pip install open-ux`** ships all helpers as **`open-ux`** subcommands — **`open-ux helpers list`**. Details: [`helpers/README.md`](../../../../helpers/README.md). Do not invent these.
 
 Agent helper (LLM-local, after **`Open-UX:pack`**):
 

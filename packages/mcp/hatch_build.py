@@ -28,7 +28,8 @@ class CustomBuildHook(BuildHookInterface):
         build_data.setdefault("force_include", {})
         build_data["force_include"][str(catalog)] = dest
         repo_root = Path(self.root).resolve().parent.parent
-        helpers_registry = repo_root / "helpers" / "registry.json"
+        helpers_dir = repo_root / "helpers"
+        helpers_registry = helpers_dir / "registry.json"
         if helpers_registry.is_file():
             reg_dest = (
                 "src/open_ux/data/helpers/registry.json"

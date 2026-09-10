@@ -2,7 +2,7 @@
 """Thin pack helper: jobs= or guideline_ids in, cited criteria out.
 
 Same tight wire as Open-UX:pack. Contributor / terminal / CI — not the agent
-skill path. Agents use Open-UX:pack. No file. No host pass or fail.
+skill path. Agents use Open-UX:pack. Available, not required. No file. No host pass or fail.
 
 Usage (from repo root, after ``pip install open-ux`` or an editable install):
 

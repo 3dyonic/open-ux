@@ -28,4 +28,4 @@ One skill: `open-ux`. Commands: `/list` `/get` `/pack`, aliases `/forms` `/actio
 
 No `Open-UX:audit` — use **`Open-UX:pack`**. Tool reference: [`docs/TOOLS.md`](docs/TOOLS.md).
 
-Scope `Open-UX:pack` (`jobs=` or `guideline_ids`). Surfaces (`home` / `cart` / `checkout`) are context, not ids. You decide which Cards to open. Component records: `Open-UX:list_components`, `Open-UX:get_component`. MCP tools fetch catalog data; optional LLM-local `open-ux rank-pack` after pack (`pip install open-ux`) ([`helpers/registry.json`](helpers/registry.json)). Contributor scripts: `scripts/` only.
+Scope `Open-UX:pack` (`jobs=` or `guideline_ids`). Surfaces (`home` / `cart` / `checkout`) are context, not ids. You decide which Cards to open. Component records: `Open-UX:list_components`, `Open-UX:get_component`. MCP tools fetch catalog data; optional LLM-local `open-ux rank-pack` after pack (`pip install open-ux`) — [`helpers/README.md`](helpers/README.md). Contributor scripts: `scripts/` only.

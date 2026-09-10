@@ -20,8 +20,10 @@ def test_registry_splits_agent_helpers_and_contributor_wire() -> None:
     assert {row["id"] for row in contrib} == {"pack", "mcp_call", "get_component"}
     for row in agent + contrib:
         assert row["cli"].startswith("open-ux")
+        assert "resource" not in row
         assert "summary" in row
         assert "usage" in row
+    assert "mcp_resources" not in data
     assert "pip install open-ux" in data["note"].lower()
     disk = json.loads(REGISTRY.read_text(encoding="utf-8"))
     assert data == disk

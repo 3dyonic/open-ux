@@ -1,6 +1,6 @@
 # Scripts (contributors)
 
-Catalog and repo maintenance — **not** offered to agents. Agents use **`Open-UX:*` MCP tools** plus optional LLM-local **`open-ux rank-pack`** (`pip install open-ux`) ([`helpers/registry.json`](../helpers/registry.json) → `agent_helpers`).
+Catalog and repo maintenance — **not** offered to agents. Agents use **`Open-UX:*` MCP tools** plus optional LLM-local **`open-ux rank-pack`** (`pip install open-ux`) — [`helpers/README.md`](../helpers/README.md).
 
 | Script | Role |
 | --- | --- |

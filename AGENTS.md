@@ -30,7 +30,7 @@ Fully qualified: `Open-UX:list_situations`, `Open-UX:get_situation`, `Open-UX:su
 
 Scope `pack` with `jobs=` (Card, Leaf, or `forms` / `actions` / `feedback`) or `guideline_ids`. The host returns cited criteria, not pass or fail. `/list` `/get` `/pack` stay on tools.
 
-Agents use **`Open-UX:*` MCP tools** — the host fetches catalog data. **`pip install open-ux`** ships helper tools as **`open-ux`** subcommands (`open-ux helpers list`); agent helper: **`open-ux rank-pack`** after pack. Do not substitute CLI pack for MCP in agent sessions. Contributor logic stays in `scripts/` — not offered to agents.
+Agents use **`Open-UX:*` MCP tools** — the host fetches catalog data. **`pip install open-ux`** ships helper tools as **`open-ux`** subcommands (`open-ux helpers list`); agent helper: **`open-ux rank-pack`** after pack. See [`helpers/README.md`](helpers/README.md). Do not substitute CLI pack for MCP in agent sessions. Contributor logic stays in `scripts/` — not offered to agents.
 
 ## One skill
 

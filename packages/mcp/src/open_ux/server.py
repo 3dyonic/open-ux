@@ -335,7 +335,9 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             "Does not take a file. Does not return pass or fail. "
             "Page with limit/offset; follow next_offset. "
             "Surfaces are not needs. Leaf ids scope one bay. "
-            "If the catalog is empty, return empty; do not invent rules."
+            "If the catalog is empty, return empty; do not invent rules. "
+            "Helpers (LLM-local): pip install open-ux on the client; "
+            "open-ux rank-pack after pack. Host does not execute helpers."
         ),
         version=__version__,
         website_url="https://github.com/3dyonic/open-ux",
