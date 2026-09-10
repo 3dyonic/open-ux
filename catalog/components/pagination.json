@@ -1,0 +1,133 @@
+{
+  "id": "pagination",
+  "title": "Pagination",
+  "overview": "Move through pages of a listing.",
+  "apply_when": "A result or table set is split across pages.",
+  "not_when": "Wizard steps (progress / task_list) or infinite scroll (no record yet).",
+  "keywords": [
+    "pagination",
+    "pager",
+    "page numbers",
+    "next page",
+    "pages",
+    "previous page",
+    "aria-current page"
+  ],
+  "vs": [
+    {
+      "id": "progress",
+      "why": "task steps, not list pages"
+    },
+    {
+      "id": "table",
+      "why": "the rows; pagination is how you page them"
+    }
+  ],
+  "variants": {
+    "role": [
+      {
+        "id": "default",
+        "overview": "Move through a long list by page. Current page is named.",
+        "apply_when": "A collection that does not fit one view.",
+        "not_when": "Infinite scroll with no pager, or tabs."
+      }
+    ],
+    "size": [
+      {
+        "id": "large",
+        "overview": "Highest in the size hierarchy — the easiest to hit.",
+        "apply_when": "The view's main instance, or full-width on a small viewport.",
+        "not_when": "A dense toolbar or a third option next to the main control.",
+        "aliases": [
+          "lg",
+          "xl",
+          "full-width",
+          "block"
+        ]
+      },
+      {
+        "id": "medium",
+        "overview": "The default size — body use.",
+        "apply_when": "Ordinary use in forms, pages, and chrome.",
+        "not_when": "The only control on a mobile screen that should span the width.",
+        "aliases": [
+          "default",
+          "md"
+        ]
+      },
+      {
+        "id": "small",
+        "overview": "Lowest in the size hierarchy — densest.",
+        "apply_when": "Inline or chrome that sits beside content.",
+        "not_when": "The page's primary instance, or a control under 44×44.",
+        "aliases": [
+          "sm",
+          "xs",
+          "compact"
+        ]
+      }
+    ],
+    "composition": [
+      {
+        "id": "prev_next",
+        "overview": "Previous and next, with or without page numbers.",
+        "apply_when": "Most pagers.",
+        "not_when": "A load-more button that is not a pager (that is a button)."
+      }
+    ],
+    "state": [
+      {
+        "id": "default",
+        "overview": "A page other than this one is available.",
+        "apply_when": "There is more than one page.",
+        "not_when": "A pager on a single page of results."
+      },
+      {
+        "id": "current",
+        "overview": "This page is the one they are on.",
+        "apply_when": "The active page.",
+        "not_when": "A visual fill with no aria-current."
+      },
+      {
+        "id": "disabled",
+        "overview": "Previous or next is not available. Must stay perceivable.",
+        "apply_when": "First or last page.",
+        "not_when": "A missing control with no explanation."
+      }
+    ]
+  },
+  "accessibility": [
+    {
+      "id": "nav_named",
+      "overview": "The pager is a named navigation (Pagination).",
+      "apply_when": "Any pager.",
+      "not_when": "A row of numbers with no nav name."
+    },
+    {
+      "id": "aria_current",
+      "overview": "The current page is exposed.",
+      "apply_when": "Numbered pages.",
+      "not_when": "Bold alone."
+    },
+    {
+      "id": "accessible_name",
+      "overview": "Previous/next name the destination, not only icons.",
+      "apply_when": "Prev/next controls.",
+      "not_when": "Chevrons with no name."
+    }
+  ],
+  "keyboard": [
+    {
+      "id": "tab",
+      "overview": "Tab lands on each available page control.",
+      "apply_when": "Moving through the pager.",
+      "not_when": "The current page is a dead stop that traps."
+    },
+    {
+      "id": "enter",
+      "overview": "Enter goes to that page.",
+      "apply_when": "A page control is focused.",
+      "not_when": "Enter does nothing."
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "id": "site_alert",
+  "title": "Site alert",
+  "overview": "One full-width sitewide notice near the top. Do not stack.",
+  "apply_when": "An incident or sitewide message that is not form validation.",
+  "not_when": "In-page alert, toast, error summary, or official .gov HTTPS banner.",
+  "keywords": [
+    "site alert",
+    "sitewide alert",
+    "notification banner",
+    "emergency banner"
+  ],
+  "vs": [
+    {
+      "id": "alert",
+      "why": "in-page, with the content"
+    },
+    {
+      "id": "toast",
+      "why": "floating, transient"
+    }
+  ],
+  "variants": {
+    "role": [
+      {
+        "id": "info",
+        "overview": "One full-width sitewide notice near the top.",
+        "apply_when": "An incident or sitewide message that is not form validation.",
+        "not_when": "In-page alert, toast, or .gov HTTPS banner."
+      },
+      {
+        "id": "emergency",
+        "overview": "The strongest sitewide notice. Still one — do not stack.",
+        "apply_when": "An emergency.",
+        "not_when": "A second site alert under the first."
+      }
+    ],
+    "size": [
+      {
+        "id": "full",
+        "overview": "Full width, near the top.",
+        "apply_when": "Sitewide.",
+        "not_when": "An in-page alert mid-article.",
+        "aliases": [
+          "full-width"
+        ]
+      }
+    ],
+    "composition": [
+      {
+        "id": "single",
+        "overview": "One site alert. Do not stack.",
+        "apply_when": "Any sitewide notice.",
+        "not_when": "Two banners of the same kind."
+      }
+    ],
+    "state": [
+      {
+        "id": "shown",
+        "overview": "Visible at the top.",
+        "apply_when": "The incident applies.",
+        "not_when": "Hidden from AT."
+      },
+      {
+        "id": "dismissed",
+        "overview": "Gone for this session if dismiss is allowed.",
+        "apply_when": "They dismissed a dismissible notice.",
+        "not_when": "An emergency they cannot bring back when they still need it."
+      }
+    ]
+  },
+  "accessibility": [
+    {
+      "id": "named_status",
+      "overview": "The banner has a name and a message.",
+      "apply_when": "Any site alert.",
+      "not_when": "A colored strip with no text."
+    },
+    {
+      "id": "live",
+      "overview": "If it appears after load, it is announced.",
+      "apply_when": "A new incident.",
+      "not_when": "Visual-only."
+    }
+  ],
+  "keyboard": [
+    {
+      "id": "tab",
+      "overview": "Actions inside are reachable. The banner is not a trap.",
+      "apply_when": "A link or dismiss.",
+      "not_when": "Skip-to-content cannot pass it."
+    }
+  ]
+}

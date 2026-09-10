@@ -1,0 +1,211 @@
+{
+  "id": "link",
+  "title": "Link",
+  "overview": "Navigation to another page, section, or document — not a commit on this screen.",
+  "apply_when": "The press takes them somewhere: a URL, an in-page target, a download, Back.",
+  "not_when": "The press does something here (save, submit, delete, open a dialog). That is button.",
+  "keywords": [
+    "link",
+    "anchor",
+    "href",
+    "<a>",
+    "hyperlink",
+    "skip link",
+    "back link",
+    "in-page link",
+    "underline",
+    "a href",
+    "router link",
+    "nav link",
+    "external link",
+    "download link",
+    "visited",
+    "skip to content",
+    "back",
+    "breadcrumb link",
+    "focus",
+    "hover",
+    "aria-current"
+  ],
+  "vs": [
+    {
+      "id": "button",
+      "why": "commits an action on this screen"
+    }
+  ],
+  "variants": {
+    "role": [
+      {
+        "id": "inline",
+        "overview": "A destination in running copy.",
+        "apply_when": "A sentence or paragraph that names where they go.",
+        "not_when": "A whole card wrapped in one link so AT reads everything as the name.",
+        "aliases": [
+          "text link",
+          "in-copy"
+        ]
+      },
+      {
+        "id": "navigation",
+        "overview": "A destination in chrome: nav, back, skip.",
+        "apply_when": "Getting to another view or past repeated chrome.",
+        "not_when": "A commit on this screen (button).",
+        "aliases": [
+          "nav link",
+          "back link",
+          "skip link"
+        ]
+      },
+      {
+        "id": "download",
+        "overview": "A destination that fetches a file.",
+        "apply_when": "A document, export, or attachment.",
+        "not_when": "A button that starts an upload."
+      }
+    ],
+    "size": [
+      {
+        "id": "large",
+        "overview": "Highest in the size hierarchy — the easiest to hit.",
+        "apply_when": "The view's main instance, or full-width on a small viewport.",
+        "not_when": "A dense toolbar or a third option next to the main control.",
+        "aliases": [
+          "lg",
+          "xl",
+          "full-width",
+          "block"
+        ]
+      },
+      {
+        "id": "medium",
+        "overview": "The default size — body use.",
+        "apply_when": "Ordinary use in forms, pages, and chrome.",
+        "not_when": "The only control on a mobile screen that should span the width.",
+        "aliases": [
+          "default",
+          "md"
+        ]
+      },
+      {
+        "id": "small",
+        "overview": "Lowest in the size hierarchy — densest.",
+        "apply_when": "Inline or chrome that sits beside content.",
+        "not_when": "The page's primary instance, or a control under 44×44.",
+        "aliases": [
+          "sm",
+          "xs",
+          "compact"
+        ]
+      }
+    ],
+    "composition": [
+      {
+        "id": "text",
+        "overview": "The destination is the words.",
+        "apply_when": "The verb or page name is enough.",
+        "not_when": "The control has no visible text and no accessible name."
+      },
+      {
+        "id": "icon_text",
+        "overview": "Icon plus destination name.",
+        "apply_when": "A known destination that still needs words.",
+        "not_when": "Icon only with no name.",
+        "aliases": [
+          "icon+text"
+        ]
+      },
+      {
+        "id": "standalone",
+        "overview": "The link is its own hit area, not wrapping a whole card.",
+        "apply_when": "Back, skip, inline, or a named nav item.",
+        "not_when": "Wrapping a content_card so the card is one giant link."
+      }
+    ],
+    "state": [
+      {
+        "id": "default",
+        "overview": "Not visited this session as a required cue — still a link.",
+        "apply_when": "The destination is available.",
+        "not_when": "Styled as body text with no affordance."
+      },
+      {
+        "id": "hover",
+        "overview": "Pointer is over the link — extra cue, not the only cue.",
+        "apply_when": "A mouse or trackpad can reach it.",
+        "not_when": "Underline only on hover (fails on touch).",
+        "aliases": [
+          "underline on hover"
+        ]
+      },
+      {
+        "id": "focus",
+        "overview": "Keyboard or AT is on this link. Must stay visible.",
+        "apply_when": "Tab or skip-to-content.",
+        "not_when": "Focus outline removed.",
+        "aliases": [
+          "keyboard-focus"
+        ]
+      },
+      {
+        "id": "visited",
+        "overview": "They have been to this destination. Optional extra cue.",
+        "apply_when": "History can be exposed.",
+        "not_when": "Visited color is the only way to know it is a link."
+      }
+    ]
+  },
+  "accessibility": [
+    {
+      "id": "accessible_name",
+      "overview": "The link names the destination, not 'click here'.",
+      "apply_when": "Any link, especially icon-only or a repeated 'Read more'.",
+      "not_when": "The only name is the URL or 'click here'.",
+      "aliases": [
+        "aria-label",
+        "link text"
+      ]
+    },
+    {
+      "id": "focus_visible",
+      "overview": "The focused link stays visible.",
+      "apply_when": "Keyboard or AT focus.",
+      "not_when": "Outline removed with no replacement.",
+      "aliases": [
+        "focus-ring"
+      ]
+    },
+    {
+      "id": "hit_target",
+      "overview": "The hit area stays usable.",
+      "apply_when": "Touch or inline links that must not collide.",
+      "not_when": "A 12px text link with no padding.",
+      "aliases": [
+        "44x44",
+        "touch-target"
+      ]
+    },
+    {
+      "id": "new_window_named",
+      "overview": "If it opens a new window, the name says so.",
+      "apply_when": "target=_blank or a download that leaves the page.",
+      "not_when": "A surprise new window with no name change."
+    }
+  ],
+  "keyboard": [
+    {
+      "id": "tab",
+      "overview": "Tab lands on the link in a logical order.",
+      "apply_when": "Moving through the page.",
+      "not_when": "Skip links are not first, or the link is not focusable.",
+      "aliases": [
+        "tab-order"
+      ]
+    },
+    {
+      "id": "enter",
+      "overview": "Enter follows the link.",
+      "apply_when": "The link is focused.",
+      "not_when": "Enter does nothing because it was faked as a click-only span."
+    }
+  ]
+}

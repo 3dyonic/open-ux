@@ -1,0 +1,187 @@
+{
+  "id": "switch",
+  "title": "Switch",
+  "overview": "Binary on/off that applies immediately, without a separate submit.",
+  "apply_when": "A setting that should persist as soon as they flip it.",
+  "not_when": "A form checkbox that waits for submit, or a sticky pressed button (`aria-pressed`) that should stay a button.",
+  "keywords": [
+    "switch",
+    "toggle",
+    "toggle switch",
+    "immediate",
+    "on/off",
+    "on off",
+    "aria-checked",
+    "settings switch"
+  ],
+  "vs": [
+    {
+      "id": "checkbox",
+      "why": "form-bound; waits for submit"
+    },
+    {
+      "id": "button",
+      "why": "a press that commits, including toggle-button / aria-pressed"
+    }
+  ],
+  "variants": {
+    "role": [
+      {
+        "id": "default",
+        "overview": "Binary on/off that applies now.",
+        "apply_when": "A setting that should persist as state without a form submit.",
+        "not_when": "A form flag that waits for submit (checkbox)."
+      }
+    ],
+    "size": [
+      {
+        "id": "large",
+        "overview": "Highest in the size hierarchy — the easiest to hit.",
+        "apply_when": "The view's main instance, or full-width on a small viewport.",
+        "not_when": "A dense toolbar or a third option next to the main control.",
+        "aliases": [
+          "lg",
+          "xl",
+          "full-width",
+          "block"
+        ]
+      },
+      {
+        "id": "medium",
+        "overview": "The default size — body use.",
+        "apply_when": "Ordinary use in forms, pages, and chrome.",
+        "not_when": "The only control on a mobile screen that should span the width.",
+        "aliases": [
+          "default",
+          "md"
+        ]
+      },
+      {
+        "id": "small",
+        "overview": "Lowest in the size hierarchy — densest.",
+        "apply_when": "Inline or chrome that sits beside content.",
+        "not_when": "The page's primary instance, or a control under 44×44.",
+        "aliases": [
+          "sm",
+          "xs",
+          "compact"
+        ]
+      }
+    ],
+    "composition": [
+      {
+        "id": "label_beside",
+        "overview": "The setting name sits with the switch.",
+        "apply_when": "Almost every switch.",
+        "not_when": "A switch with no visible name."
+      }
+    ],
+    "state": [
+      {
+        "id": "default",
+        "overview": "Off or on as stored, available.",
+        "apply_when": "The setting can change now.",
+        "not_when": "The switch is disabled."
+      },
+      {
+        "id": "hover",
+        "overview": "Pointer is over the switch.",
+        "apply_when": "A mouse or trackpad can reach it.",
+        "not_when": "Hover is the only on/off cue."
+      },
+      {
+        "id": "focus",
+        "overview": "Keyboard or AT is on the switch. Must stay visible.",
+        "apply_when": "Tab onto the setting.",
+        "not_when": "Focus outline removed.",
+        "aliases": [
+          "keyboard-focus"
+        ]
+      },
+      {
+        "id": "disabled",
+        "overview": "The setting cannot change. Must stay perceivable.",
+        "apply_when": "A locked preference.",
+        "not_when": "A required setting dropped from the tab order.",
+        "aliases": [
+          "aria-disabled"
+        ]
+      },
+      {
+        "id": "on",
+        "overview": "The setting is on and already applying.",
+        "apply_when": "Immediate effect.",
+        "not_when": "A visual slide with no accessible state.",
+        "aliases": [
+          "checked",
+          "aria-checked=true"
+        ]
+      },
+      {
+        "id": "off",
+        "overview": "The setting is off.",
+        "apply_when": "Immediate effect.",
+        "not_when": "Off that looks identical to disabled.",
+        "aliases": [
+          "unchecked"
+        ]
+      }
+    ]
+  },
+  "accessibility": [
+    {
+      "id": "accessible_name",
+      "overview": "The switch names the setting, not On/Off alone.",
+      "apply_when": "Any switch.",
+      "not_when": "The only name is a color."
+    },
+    {
+      "id": "focus_visible",
+      "overview": "The focused switch stays visible.",
+      "apply_when": "Keyboard or AT focus.",
+      "not_when": "Outline removed."
+    },
+    {
+      "id": "aria_checked",
+      "overview": "On/off is exposed as checked state (or switch role).",
+      "apply_when": "Any switch.",
+      "not_when": "A checkbox faked as a switch with no role.",
+      "aliases": [
+        "aria-checked",
+        "role=switch"
+      ]
+    },
+    {
+      "id": "hit_target",
+      "overview": "The hit area includes the label.",
+      "apply_when": "Touch.",
+      "not_when": "A 20px track with no padding.",
+      "aliases": [
+        "44x44"
+      ]
+    }
+  ],
+  "keyboard": [
+    {
+      "id": "tab",
+      "overview": "Tab lands on the switch.",
+      "apply_when": "Moving through settings.",
+      "not_when": "Skipped because of HTML disabled."
+    },
+    {
+      "id": "space",
+      "overview": "Space toggles.",
+      "apply_when": "The switch is focused.",
+      "not_when": "Space scrolls the page.",
+      "aliases": [
+        "spacebar"
+      ]
+    },
+    {
+      "id": "enter",
+      "overview": "Enter toggles when that is the house.",
+      "apply_when": "The switch is focused.",
+      "not_when": "Enter submits a parent form."
+    }
+  ]
+}

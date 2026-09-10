@@ -1,0 +1,174 @@
+{
+  "id": "slider",
+  "title": "Slider",
+  "overview": "A range control for intensity or grade when a precise typed number is not required.",
+  "apply_when": "Volume, brightness, saturation; pair with a number field when precision is required.",
+  "not_when": "A public question page that needs an exact answer (GOV.UK: no range sliders).",
+  "keywords": [
+    "slider",
+    "range",
+    "input type=range",
+    "track",
+    "thumb",
+    "intensity",
+    "aria-valuenow",
+    "aria-valuemin"
+  ],
+  "vs": [
+    {
+      "id": "text_field",
+      "why": "precise typed number"
+    },
+    {
+      "id": "radio",
+      "why": "named discrete choices"
+    }
+  ],
+  "variants": {
+    "role": [
+      {
+        "id": "default",
+        "overview": "A value on a continuous or stepped scale.",
+        "apply_when": "Intensity, volume, a grade they feel.",
+        "not_when": "A question that should be typed or a GOV.UK question page (no range sliders)."
+      }
+    ],
+    "size": [
+      {
+        "id": "large",
+        "overview": "Highest in the size hierarchy — the easiest to hit.",
+        "apply_when": "The view's main instance, or full-width on a small viewport.",
+        "not_when": "A dense toolbar or a third option next to the main control.",
+        "aliases": [
+          "lg",
+          "xl",
+          "full-width",
+          "block"
+        ]
+      },
+      {
+        "id": "medium",
+        "overview": "The default size — body use.",
+        "apply_when": "Ordinary use in forms, pages, and chrome.",
+        "not_when": "The only control on a mobile screen that should span the width.",
+        "aliases": [
+          "default",
+          "md"
+        ]
+      },
+      {
+        "id": "small",
+        "overview": "Lowest in the size hierarchy — densest.",
+        "apply_when": "Inline or chrome that sits beside content.",
+        "not_when": "The page's primary instance, or a control under 44×44.",
+        "aliases": [
+          "sm",
+          "xs",
+          "compact"
+        ]
+      }
+    ],
+    "composition": [
+      {
+        "id": "single",
+        "overview": "One thumb.",
+        "apply_when": "One value.",
+        "not_when": "Two values faked as one thumb."
+      },
+      {
+        "id": "range",
+        "overview": "Two thumbs for a min and max.",
+        "apply_when": "A numeric range.",
+        "not_when": "A date range (not this widget)."
+      }
+    ],
+    "state": [
+      {
+        "id": "default",
+        "overview": "At rest, available.",
+        "apply_when": "The value can change.",
+        "not_when": "The slider is disabled."
+      },
+      {
+        "id": "hover",
+        "overview": "Pointer is over the thumb or track.",
+        "apply_when": "A mouse or trackpad.",
+        "not_when": "Hover is the only value cue."
+      },
+      {
+        "id": "focus",
+        "overview": "Keyboard or AT is on the thumb. Must stay visible.",
+        "apply_when": "Tab onto the slider.",
+        "not_when": "Focus outline removed."
+      },
+      {
+        "id": "disabled",
+        "overview": "The value cannot change. Must stay perceivable.",
+        "apply_when": "A locked setting.",
+        "not_when": "Dropped from the tab order."
+      },
+      {
+        "id": "dragging",
+        "overview": "The thumb is moving.",
+        "apply_when": "Pointer or keys are changing the value.",
+        "not_when": "A sticky drag with no value text."
+      }
+    ]
+  },
+  "accessibility": [
+    {
+      "id": "accessible_name",
+      "overview": "The slider names what is being set.",
+      "apply_when": "Any slider.",
+      "not_when": "A track with no label."
+    },
+    {
+      "id": "value_text",
+      "overview": "The current value is available as text, not color on a track.",
+      "apply_when": "Any slider.",
+      "not_when": "A thumb with no aria-valuenow / visible number.",
+      "aliases": [
+        "aria-valuenow",
+        "valuetext"
+      ]
+    },
+    {
+      "id": "focus_visible",
+      "overview": "The focused thumb stays visible.",
+      "apply_when": "Keyboard focus.",
+      "not_when": "Outline removed."
+    },
+    {
+      "id": "hit_target",
+      "overview": "The thumb is hittable.",
+      "apply_when": "Touch.",
+      "not_when": "A 8px thumb.",
+      "aliases": [
+        "44x44"
+      ]
+    }
+  ],
+  "keyboard": [
+    {
+      "id": "tab",
+      "overview": "Tab lands on the thumb.",
+      "apply_when": "Moving through the form.",
+      "not_when": "The track is not focusable."
+    },
+    {
+      "id": "arrows",
+      "overview": "Arrows change the value by a small step.",
+      "apply_when": "The slider is focused.",
+      "not_when": "Arrows move a parent carousel.",
+      "aliases": [
+        "arrow keys"
+      ]
+    },
+    {
+      "id": "page",
+      "overview": "Page Up/Down or Home/End jump a larger step when that is the house.",
+      "apply_when": "The slider is focused.",
+      "not_when": "Those keys leave the page."
+    }
+  ]
+}

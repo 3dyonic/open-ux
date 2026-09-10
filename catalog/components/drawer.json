@@ -1,0 +1,138 @@
+{
+  "id": "drawer",
+  "title": "Drawer",
+  "overview": "A panel that slides from an edge. Keeps more of the page visible than a centered modal.",
+  "apply_when": "Filters, details, or a secondary form while the page stays in view.",
+  "not_when": "A blocking decision that needs the page dimmed (modal), or a tiny confirm (popconfirm).",
+  "keywords": [
+    "drawer",
+    "sheet",
+    "side panel",
+    "slide-over",
+    "offcanvas"
+  ],
+  "vs": [
+    {
+      "id": "modal",
+      "why": "centered blocking overlay"
+    },
+    {
+      "id": "popconfirm",
+      "why": "tiny confirm on the control"
+    }
+  ],
+  "variants": {
+    "role": [
+      {
+        "id": "default",
+        "overview": "A panel from an edge. More of the page stays visible than a centered modal.",
+        "apply_when": "Filters, details, a secondary form.",
+        "not_when": "A blocking decision that needs the page dimmed (modal)."
+      }
+    ],
+    "size": [
+      {
+        "id": "large",
+        "overview": "Highest in the size hierarchy — the easiest to hit.",
+        "apply_when": "The view's main instance, or full-width on a small viewport.",
+        "not_when": "A dense toolbar or a third option next to the main control.",
+        "aliases": [
+          "lg",
+          "xl",
+          "full-width",
+          "block"
+        ]
+      },
+      {
+        "id": "medium",
+        "overview": "The default size — body use.",
+        "apply_when": "Ordinary use in forms, pages, and chrome.",
+        "not_when": "The only control on a mobile screen that should span the width.",
+        "aliases": [
+          "default",
+          "md"
+        ]
+      },
+      {
+        "id": "small",
+        "overview": "Lowest in the size hierarchy — densest.",
+        "apply_when": "Inline or chrome that sits beside content.",
+        "not_when": "The page's primary instance, or a control under 44×44.",
+        "aliases": [
+          "sm",
+          "xs",
+          "compact"
+        ]
+      }
+    ],
+    "composition": [
+      {
+        "id": "edge",
+        "overview": "Slides from start, end, top, or bottom.",
+        "apply_when": "A side or bottom sheet.",
+        "not_when": "A centered modal labeled drawer."
+      }
+    ],
+    "state": [
+      {
+        "id": "closed",
+        "overview": "The overlay is not shown. The trigger stays available.",
+        "apply_when": "The page is the place they work.",
+        "not_when": "The overlay is still in the tab order while hidden."
+      },
+      {
+        "id": "open",
+        "overview": "The overlay is shown and owns the conversation.",
+        "apply_when": "They must see or finish this layer.",
+        "not_when": "Content behind stays fully interactive when this overlay must trap.",
+        "aliases": [
+          "visible",
+          "expanded"
+        ]
+      },
+      {
+        "id": "focus",
+        "overview": "Focus is inside the overlay. Must stay visible.",
+        "apply_when": "Tab, open, or restoring after a nested popover.",
+        "not_when": "Focus dumped on the document behind.",
+        "aliases": [
+          "keyboard-focus"
+        ]
+      }
+    ]
+  },
+  "accessibility": [
+    {
+      "id": "accessible_name",
+      "overview": "The drawer has a name AT can speak.",
+      "apply_when": "Any drawer.",
+      "not_when": "A blank panel."
+    },
+    {
+      "id": "focus_visible",
+      "overview": "The focused control inside stays visible.",
+      "apply_when": "Keyboard focus in the drawer.",
+      "not_when": "Outline removed."
+    },
+    {
+      "id": "focus_restore",
+      "overview": "After close, focus returns to the trigger.",
+      "apply_when": "Opened from a control.",
+      "not_when": "Focus dumped on the body."
+    }
+  ],
+  "keyboard": [
+    {
+      "id": "escape",
+      "overview": "Escape dismisses when dismiss is allowed.",
+      "apply_when": "The drawer is open.",
+      "not_when": "Escape loses unsaved work with no confirm."
+    },
+    {
+      "id": "tab",
+      "overview": "Tab moves through the drawer. Say whether the page behind stays in the order.",
+      "apply_when": "The drawer is open.",
+      "not_when": "Focus is lost behind the panel."
+    }
+  ]
+}

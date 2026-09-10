@@ -1,0 +1,117 @@
+{
+  "id": "chart",
+  "title": "Chart",
+  "overview": "A visual for comparison, trend, proportion, distribution, or correlation.",
+  "apply_when": "The story is a relationship in a set, not a single callout number.",
+  "not_when": "A table is clearer, the set is too small, or decoration.",
+  "keywords": [
+    "chart",
+    "graph",
+    "bar",
+    "line",
+    "pie",
+    "plot",
+    "visualization",
+    "legend",
+    "data viz"
+  ],
+  "vs": [
+    {
+      "id": "table",
+      "why": "the data as rows; often required beside the chart"
+    },
+    {
+      "id": "map",
+      "why": "geography as the channel"
+    }
+  ],
+  "variants": {
+    "role": [
+      {
+        "id": "default",
+        "overview": "The shape of a relationship in data — never the only channel.",
+        "apply_when": "A trend or comparison they should see as a picture, with a table or text alternative.",
+        "not_when": "A map of geography (map), or cell lookup (table) as the only view they need."
+      }
+    ],
+    "size": [
+      {
+        "id": "large",
+        "overview": "Highest in the size hierarchy — the easiest to hit.",
+        "apply_when": "The view's main instance, or full-width on a small viewport.",
+        "not_when": "A dense toolbar or a third option next to the main control.",
+        "aliases": [
+          "lg",
+          "xl",
+          "full-width",
+          "block"
+        ]
+      },
+      {
+        "id": "medium",
+        "overview": "The default size — body use.",
+        "apply_when": "Ordinary use in forms, pages, and chrome.",
+        "not_when": "The only control on a mobile screen that should span the width.",
+        "aliases": [
+          "default",
+          "md"
+        ]
+      },
+      {
+        "id": "small",
+        "overview": "Lowest in the size hierarchy — densest.",
+        "apply_when": "Inline or chrome that sits beside content.",
+        "not_when": "The page's primary instance, or a control under 44×44.",
+        "aliases": [
+          "sm",
+          "xs",
+          "compact"
+        ]
+      }
+    ],
+    "composition": [
+      {
+        "id": "with_alternative",
+        "overview": "A text or table alternative exists.",
+        "apply_when": "Any chart.",
+        "not_when": "Color-only lines with no table."
+      }
+    ],
+    "state": [
+      {
+        "id": "default",
+        "overview": "The chart is shown with its alternative.",
+        "apply_when": "Data is ready.",
+        "not_when": "A skeleton or empty_state."
+      },
+      {
+        "id": "loading",
+        "overview": "Geometry is not ready — skeleton or loading_indicator, not a lying axis.",
+        "apply_when": "Fetching.",
+        "not_when": "Empty axes labeled as zero data."
+      }
+    ]
+  },
+  "accessibility": [
+    {
+      "id": "text_alternative",
+      "overview": "A table or summary exists; the chart is not the only channel.",
+      "apply_when": "Any chart.",
+      "not_when": "SVG with no description."
+    },
+    {
+      "id": "not_color_only",
+      "overview": "Series are not color alone.",
+      "apply_when": "Multi-series.",
+      "not_when": "Red vs green lines with no pattern or label."
+    }
+  ],
+  "keyboard": [
+    {
+      "id": "tab",
+      "overview": "Interactive legends or filters are in the tab order. A static chart is not a fake widget.",
+      "apply_when": "A chart with controls.",
+      "not_when": "Every datapoint is a stop."
+    }
+  ]
+}

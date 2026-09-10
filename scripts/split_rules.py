@@ -14,7 +14,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG = ROOT / "catalog"
 RULES = CATALOG / "rules"
-LANE_SKIP = frozenset({"schema.json", "index.json", "guidelines.json", "jobs.json"})
+LANE_SKIP = frozenset({"schema.json", "index.json", "jobs.json"})
 LIVE_SEED = (
     "forms.field_labels.visible_label",
     "forms.field_labels.label_stays_visible",

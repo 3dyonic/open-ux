@@ -1,0 +1,493 @@
+{
+  "id": "button",
+  "title": "Button",
+  "overview": "A control that commits an action on this screen.",
+  "apply_when": "The press does something here: save, submit, delete, open a dialog, go to the next step, or show in-flight state on the control.",
+  "not_when": "The press only takes them to another page (link), or flips a setting that should persist as a toggle. Field labels stay design_a_form.",
+  "keywords": [
+    "button",
+    "btn",
+    "cta",
+    "call to action",
+    "call-to-action",
+    "CTA",
+    "action button",
+    "command button",
+    "push button",
+    "press button",
+    "native button",
+    "semantic button",
+    "html button",
+    "<button>",
+    "type=button",
+    "type=submit",
+    "type=reset",
+    "submit button",
+    "reset button",
+    "input type=submit",
+    "input type=button",
+    "input type=image",
+    "role=button",
+    "primary",
+    "secondary",
+    "tertiary",
+    "default",
+    "start",
+    "start button",
+    "Start",
+    "start now",
+    "warning",
+    "warning button",
+    "destructive",
+    "danger",
+    "danger button",
+    "ghost",
+    "ghost button",
+    "outline",
+    "outlined",
+    "contained",
+    "filled",
+    "filled button",
+    "text button",
+    "text",
+    "dashed",
+    "dashed button",
+    "link button",
+    "unstyled",
+    "unstyled button",
+    "inverse",
+    "inverse button",
+    "tonal",
+    "elevated",
+    "subtle",
+    "transparent",
+    "solid",
+    "accent-cool",
+    "accent-warm",
+    "base",
+    "big",
+    "usa-button--big",
+    "high-emphasis",
+    "medium-emphasis",
+    "low-emphasis",
+    "loudness",
+    "visual loudness",
+    "one primary",
+    "one CTA",
+    "supertask",
+    "supertask button",
+    "small",
+    "medium",
+    "large",
+    "extra small",
+    "extra large",
+    "xs",
+    "sm",
+    "md",
+    "lg",
+    "xl",
+    "compact",
+    "comfortable",
+    "full-width",
+    "block",
+    "full width button",
+    "icon button",
+    "icon-only",
+    "icon only",
+    "icon-only button",
+    "leading icon",
+    "trailing icon",
+    "split button",
+    "split-button",
+    "menu button",
+    "compound button",
+    "toggle button",
+    "button group",
+    "button groups",
+    "segmented",
+    "segmented button",
+    "segmented button group",
+    "FAB",
+    "fab",
+    "floating action button",
+    "extended FAB",
+    "close button",
+    "icon+text",
+    "double icon",
+    "toolbar button",
+    "footer button",
+    "chrome button",
+    "overflow",
+    "social login button",
+    "upload button",
+    "hover",
+    "focus",
+    "active",
+    "pressed",
+    "disabled",
+    "aria-disabled",
+    "loading",
+    "busy",
+    "aria-busy",
+    "pending",
+    "spinner on a button",
+    "in-flight",
+    "double submit",
+    "aria-label",
+    "accessible name",
+    "focus visible",
+    "focus ring",
+    ":focus-visible",
+    "aria-pressed",
+    "aria-expanded",
+    "hit target",
+    "44x44",
+    "44px",
+    "touch target",
+    "Enter",
+    "Return",
+    "Space",
+    "spacebar",
+    "tab",
+    "tab order",
+    "focus restore",
+    "keyboard",
+    "submit",
+    "save",
+    "continue",
+    "next",
+    "previous",
+    "back",
+    "cancel",
+    "delete",
+    "remove",
+    "done",
+    "finish",
+    "close",
+    "dismiss",
+    "got it",
+    "apply",
+    "send",
+    "reset",
+    "show more",
+    "play",
+    "pause",
+    "share",
+    "follow",
+    "like",
+    "export",
+    "download",
+    "upload",
+    "Start now"
+  ],
+  "vs": [
+    {
+      "id": "link",
+      "why": "navigation to another page or section"
+    },
+    {
+      "id": "toggle",
+      "why": "binary on/off that should persist as state"
+    }
+  ],
+  "variants": {
+    "role": [
+      {
+        "id": "primary",
+        "overview": "The one action this view is for.",
+        "apply_when": "One commit: Submit, Save, Continue, Start, Next.",
+        "not_when": "A second equally loud action on the same view.",
+        "aliases": [
+          "default",
+          "start",
+          "contained",
+          "filled",
+          "high-emphasis",
+          "supertask"
+        ]
+      },
+      {
+        "id": "secondary",
+        "overview": "A real action, quieter than the commit.",
+        "apply_when": "Cancel, Back, Reset next to a primary.",
+        "not_when": "This is the only action — then it is primary.",
+        "aliases": [
+          "outlined",
+          "outline",
+          "medium-emphasis",
+          "tonal"
+        ]
+      },
+      {
+        "id": "tertiary",
+        "overview": "Lowest emphasis; do not compete with the commit.",
+        "apply_when": "A third option, a card action, a toast action, or ghost/text.",
+        "not_when": "The page's main task — that is primary.",
+        "aliases": [
+          "text",
+          "ghost",
+          "low-emphasis",
+          "unstyled",
+          "subtle",
+          "transparent"
+        ]
+      },
+      {
+        "id": "destructive",
+        "overview": "The action removes or cannot be undone.",
+        "apply_when": "Delete, Remove, Clear all, GOV.UK warning, Ant danger.",
+        "not_when": "An ordinary commit dressed as danger for emphasis.",
+        "aliases": [
+          "warning",
+          "danger"
+        ]
+      }
+    ],
+    "size": [
+      {
+        "id": "large",
+        "overview": "Highest in the size hierarchy — the easiest to hit.",
+        "apply_when": "The view's main commit, full-width on a small viewport, USWDS big.",
+        "not_when": "A dense toolbar or a third option next to the commit.",
+        "aliases": [
+          "lg",
+          "xl",
+          "extra large",
+          "comfortable",
+          "big",
+          "usa-button--big",
+          "full-width",
+          "block"
+        ]
+      },
+      {
+        "id": "medium",
+        "overview": "The default size — body actions.",
+        "apply_when": "Ordinary actions in forms, dialogs, and page chrome.",
+        "not_when": "The only action on a mobile screen that should span the width.",
+        "aliases": [
+          "default",
+          "md"
+        ]
+      },
+      {
+        "id": "small",
+        "overview": "Lowest in the size hierarchy — densest.",
+        "apply_when": "Inline or toolbar actions that sit beside content.",
+        "not_when": "The page's primary commit, or a control under 44×44.",
+        "aliases": [
+          "sm",
+          "xs",
+          "extra small",
+          "compact"
+        ]
+      }
+    ],
+    "composition": [
+      {
+        "id": "text",
+        "overview": "Label only — the action is the words.",
+        "apply_when": "The verb is enough: Save, Cancel, Delete, Continue, Next.",
+        "not_when": "The control has no visible text and no accessible name."
+      },
+      {
+        "id": "icon_text",
+        "overview": "Icon plus label — icon clarifies, label names.",
+        "apply_when": "A known action that still needs a verb.",
+        "not_when": "Two icons in one button.",
+        "aliases": [
+          "icon+text",
+          "leading-icon",
+          "trailing-icon"
+        ]
+      },
+      {
+        "id": "icon",
+        "overview": "Icon only — the name is not on screen.",
+        "apply_when": "A repeated, known control in chrome (close, settings).",
+        "not_when": "A one-off or destructive action with no accessible name.",
+        "aliases": [
+          "icon-only",
+          "icon-button",
+          "icon only"
+        ]
+      },
+      {
+        "id": "split",
+        "overview": "Primary press plus a second control for more options.",
+        "apply_when": "One default action and a short related list.",
+        "not_when": "The menu repeats the primary phrase.",
+        "aliases": [
+          "split-button",
+          "menu button",
+          "compound button"
+        ]
+      }
+    ],
+    "state": [
+      {
+        "id": "default",
+        "overview": "At rest, available, not being used.",
+        "apply_when": "The action can run now.",
+        "not_when": "Work is in flight, or the control is not available."
+      },
+      {
+        "id": "hover",
+        "overview": "Pointer is over the control — extra cue, not the only cue.",
+        "apply_when": "A mouse or trackpad can reach the control.",
+        "not_when": "Hover is the only way to know it is a button (fails on touch)."
+      },
+      {
+        "id": "focus",
+        "overview": "Keyboard or assistive tech is on this control. Must stay visible.",
+        "apply_when": "Tab, Enter, Space, or restoring focus after a dialog.",
+        "not_when": "Focus outline removed with no replacement; or autofocus on destructive.",
+        "aliases": [
+          "keyboard-focus",
+          ":focus-visible"
+        ]
+      },
+      {
+        "id": "active",
+        "overview": "The press is happening.",
+        "apply_when": "Pointer down or Space/Enter held.",
+        "not_when": "A sticky pressed look after the action has finished.",
+        "aliases": [
+          "pressed"
+        ]
+      },
+      {
+        "id": "disabled",
+        "overview": "The action is not available. Must stay perceivable and explain why.",
+        "apply_when": "Settings Save with a visible reason; or a control that must not run.",
+        "not_when": "Public question submit — keep it enabled and explain on press. Dual-cite govuk.dont-use-disabled-buttons and fluent disabled-field perceivable.",
+        "aliases": [
+          "unavailable",
+          "aria-disabled"
+        ]
+      },
+      {
+        "id": "loading",
+        "overview": "The action started; a second press must not send again.",
+        "apply_when": "A request is in flight (save, submit, upload). Card compose_feedback when the spinner is on the control; cite forms.submit.enabled_until_request / govuk.stop-accidental-double-submit.",
+        "not_when": "A spinner with no name, or the icon-only control replaced by a spinner.",
+        "aliases": [
+          "busy",
+          "aria-busy",
+          "pending",
+          "in-flight",
+          "spinner on a button"
+        ]
+      }
+    ]
+  },
+  "accessibility": [
+    {
+      "id": "accessible_name",
+      "overview": "The control has a name assistive tech can speak.",
+      "apply_when": "Any button, especially icon-only or a label that is an icon.",
+      "not_when": "The only name is a tooltip that never reaches the button.",
+      "aliases": [
+        "aria-label",
+        "accessible-name"
+      ]
+    },
+    {
+      "id": "focus_visible",
+      "overview": "The focused control stays visible. Color alone is not the cue.",
+      "apply_when": "Keyboard or AT focus is on the button.",
+      "not_when": "Outline removed with no replacement.",
+      "aliases": [
+        "focus-indicator",
+        "focus-ring"
+      ]
+    },
+    {
+      "id": "aria_disabled",
+      "overview": "Unavailable stays in the tab order and explains why.",
+      "apply_when": "The action must not run, but focus must not jump away.",
+      "not_when": "The HTML disabled attribute, which drops the control from the keyboard flow.",
+      "aliases": [
+        "aria-disabled"
+      ]
+    },
+    {
+      "id": "aria_busy",
+      "overview": "In-flight work is announced; the name and icon stay.",
+      "apply_when": "Save, submit, or upload has started.",
+      "not_when": "A spinner that replaces the icon-only control with no live name.",
+      "aliases": [
+        "aria-busy"
+      ]
+    },
+    {
+      "id": "aria_pressed",
+      "overview": "A button that stays down exposes pressed state.",
+      "apply_when": "Pin, follow, or another sticky on/off on a button.",
+      "not_when": "A setting that should be a toggle, not a button.",
+      "aliases": [
+        "aria-pressed",
+        "toggle-button"
+      ]
+    },
+    {
+      "id": "aria_expanded",
+      "overview": "A button that opens something exposes open/closed.",
+      "apply_when": "The press reveals a menu, panel, or more content.",
+      "not_when": "A plain commit that does not reveal UI.",
+      "aliases": [
+        "aria-expanded"
+      ]
+    },
+    {
+      "id": "hit_target",
+      "overview": "The hit area stays usable, including at small size.",
+      "apply_when": "Touch, pointer, or a compact toolbar button.",
+      "not_when": "A 24px icon whose tap area is the glyph only.",
+      "aliases": [
+        "44x44",
+        "touch-target",
+        "44px"
+      ]
+    }
+  ],
+  "keyboard": [
+    {
+      "id": "tab",
+      "overview": "Tab lands on the button in a logical order.",
+      "apply_when": "Moving through the page or a dialog.",
+      "not_when": "The control is skipped because it used HTML disabled.",
+      "aliases": [
+        "tab-order",
+        "focus-order"
+      ]
+    },
+    {
+      "id": "enter",
+      "overview": "Enter runs the same action as a click.",
+      "apply_when": "The button is focused and the person confirms.",
+      "not_when": "Enter only works on submit, not on type=button.",
+      "aliases": [
+        "return"
+      ]
+    },
+    {
+      "id": "space",
+      "overview": "Space runs the same action as a click.",
+      "apply_when": "The button is focused.",
+      "not_when": "Space scrolls the page instead of activating.",
+      "aliases": [
+        "spacebar"
+      ]
+    },
+    {
+      "id": "focus_restore",
+      "overview": "After the action closes a surface, focus returns to the trigger.",
+      "apply_when": "The button opened a modal, menu, or popover that just closed.",
+      "not_when": "Focus dumped on the document body.",
+      "aliases": [
+        "return-focus"
+      ]
+    }
+  ]
+}

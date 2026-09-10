@@ -1,0 +1,107 @@
+{
+  "id": "skeleton",
+  "title": "Skeleton",
+  "overview": "Placeholder geometry that matches the final layout so the page does not jump when content arrives.",
+  "apply_when": "Feeds, card grids, dashboards, tables whose shape is known.",
+  "not_when": "A spinner with no layout (loading_indicator), empty finished state (empty_state), or step chrome (progress).",
+  "keywords": [
+    "skeleton",
+    "shimmer",
+    "placeholder content",
+    "content placeholder",
+    "pulse"
+  ],
+  "vs": [
+    {
+      "id": "loading_indicator",
+      "why": "indeterminate wait graphic, not layout stand-in"
+    },
+    {
+      "id": "empty_state",
+      "why": "there is no data, not still loading"
+    }
+  ],
+  "variants": {
+    "role": [
+      {
+        "id": "default",
+        "overview": "Placeholder geometry that matches the final layout so the page does not jump when content arrives.",
+        "apply_when": "Feeds, card grids, dashboards, tables whose shape is known.",
+        "not_when": "A spinner with no layout (loading_indicator), empty finished state (empty_state), or step chrome (progress)."
+      }
+    ],
+    "size": [
+      {
+        "id": "large",
+        "overview": "Highest in the size hierarchy — the easiest to hit.",
+        "apply_when": "The view's main instance, or full-width on a small viewport.",
+        "not_when": "A dense toolbar or a third option next to the main control.",
+        "aliases": [
+          "lg",
+          "xl",
+          "full-width",
+          "block"
+        ]
+      },
+      {
+        "id": "medium",
+        "overview": "The default size — body use.",
+        "apply_when": "Ordinary use in forms, pages, and chrome.",
+        "not_when": "The only control on a mobile screen that should span the width.",
+        "aliases": [
+          "default",
+          "md"
+        ]
+      },
+      {
+        "id": "small",
+        "overview": "Lowest in the size hierarchy — densest.",
+        "apply_when": "Inline or chrome that sits beside content.",
+        "not_when": "The page's primary instance, or a control under 44×44.",
+        "aliases": [
+          "sm",
+          "xs",
+          "compact"
+        ]
+      }
+    ],
+    "composition": [
+      {
+        "id": "shape_match",
+        "overview": "Blocks match the heading, image, and text that will arrive.",
+        "apply_when": "Known layout.",
+        "not_when": "A generic grey box that does not match the result."
+      }
+    ],
+    "state": [
+      {
+        "id": "waiting",
+        "overview": "Content has not arrived. This is not empty.",
+        "apply_when": "First paint of a known layout.",
+        "not_when": "Finished no-data (empty_state)."
+      }
+    ]
+  },
+  "accessibility": [
+    {
+      "id": "busy_region",
+      "overview": "The region is exposed as busy / loading, not as the final content.",
+      "apply_when": "Any skeleton.",
+      "not_when": "Fake titles that AT reads as real data."
+    },
+    {
+      "id": "not_empty",
+      "overview": "This is not announced as no results.",
+      "apply_when": "Waiting.",
+      "not_when": "An empty_state copy on a skeleton."
+    }
+  ],
+  "keyboard": [
+    {
+      "id": "tab",
+      "overview": "The skeleton is not a set of fake tab stops.",
+      "apply_when": "Waiting.",
+      "not_when": "Placeholder buttons in the tab order."
+    }
+  ]
+}

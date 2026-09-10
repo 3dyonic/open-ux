@@ -16,7 +16,7 @@ SRC = ROOT / "packages" / "mcp" / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from open_ux.catalog import find_rule_file, iter_rule_files  # noqa: E402
+from open_ux.rule_paths import find_rule_file, iter_rule_files  # noqa: E402
 
 CATALOG = ROOT / "catalog"
 RULES = CATALOG / "rules"

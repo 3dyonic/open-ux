@@ -10,12 +10,8 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT / "packages" / "mcp" / "src") not in sys.path:
     sys.path.insert(0, str(ROOT / "packages" / "mcp" / "src"))
 
-from open_ux.catalog import (  # noqa: E402
-    build_manifest,
-    iter_rule_files,
-    render_manifest_markdown,
-    rule_file_stem,
-)
+from open_ux.manifest import build_manifest, render_manifest_markdown  # noqa: E402
+from open_ux.rule_paths import iter_rule_files, rule_file_stem  # noqa: E402
 
 CATALOG = ROOT / "catalog"
 RULES = CATALOG / "rules"
@@ -113,13 +109,13 @@ def main() -> int:
         paths[gid].unlink()
     _prune_empty(RULES)
 
-    leftover_houses = [
+    leftover_source_dirs = [
         p
         for p in RULES.rglob("*")
         if p.is_dir() and p.name in {"apple", "nng"}
     ]
-    for folder in leftover_houses:
-        print(f"leftover house dir still present: {folder}")
+    for folder in leftover_source_dirs:
+        print(f"leftover source dir still present: {folder}")
 
     kept_ids = [gid for gid in by_id if gid not in drop]
     index_data = json.loads(INDEX.read_text(encoding="utf-8"))

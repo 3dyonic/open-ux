@@ -1,0 +1,165 @@
+{
+  "id": "toast",
+  "title": "Toast",
+  "overview": "Short, non-blocking confirmation or low-priority status.",
+  "apply_when": "Saved, uploaded, bundled events, something they should notice without stopping the task.",
+  "not_when": "Important failure that needs a reason (modal), standing page notice (alert / site_alert), or in-flight wait (loading_indicator / button loading).",
+  "keywords": [
+    "toast",
+    "snackbar",
+    "message",
+    "non-blocking",
+    "auto-dismiss",
+    "transient",
+    "notification toast",
+    "aria-live",
+    "message toast"
+  ],
+  "vs": [
+    {
+      "id": "alert",
+      "why": "in-page, persistent, on-goal recovery"
+    },
+    {
+      "id": "modal",
+      "why": "needs attention or a response"
+    },
+    {
+      "id": "site_alert",
+      "why": "full-width sitewide, not a floating toast"
+    }
+  ],
+  "variants": {
+    "role": [
+      {
+        "id": "info",
+        "overview": "A short status that does not fully interrupt.",
+        "apply_when": "Something finished or a low-priority note.",
+        "not_when": "A blocking failure (modal) or in-page alert."
+      },
+      {
+        "id": "success",
+        "overview": "A short success.",
+        "apply_when": "Saved, sent, copied.",
+        "not_when": "A full-page confirmation they must read."
+      },
+      {
+        "id": "warning",
+        "overview": "A short warning they can miss only if that is safe.",
+        "apply_when": "A recoverable issue.",
+        "not_when": "A destructive confirm."
+      },
+      {
+        "id": "error",
+        "overview": "A short failure. If they must act, consider alert or modal.",
+        "apply_when": "A request failed and they can retry from here.",
+        "not_when": "Form field errors (those stay on the fields / error_summary)."
+      }
+    ],
+    "size": [
+      {
+        "id": "large",
+        "overview": "Highest in the size hierarchy — the easiest to hit.",
+        "apply_when": "The view's main instance, or full-width on a small viewport.",
+        "not_when": "A dense toolbar or a third option next to the main control.",
+        "aliases": [
+          "lg",
+          "xl",
+          "full-width",
+          "block"
+        ]
+      },
+      {
+        "id": "medium",
+        "overview": "The default size — body use.",
+        "apply_when": "Ordinary use in forms, pages, and chrome.",
+        "not_when": "The only control on a mobile screen that should span the width.",
+        "aliases": [
+          "default",
+          "md"
+        ]
+      },
+      {
+        "id": "small",
+        "overview": "Lowest in the size hierarchy — densest.",
+        "apply_when": "Inline or chrome that sits beside content.",
+        "not_when": "The page's primary instance, or a control under 44×44.",
+        "aliases": [
+          "sm",
+          "xs",
+          "compact"
+        ]
+      }
+    ],
+    "composition": [
+      {
+        "id": "message",
+        "overview": "Text only, or text plus one action.",
+        "apply_when": "Most toasts.",
+        "not_when": "A form inside a toast."
+      },
+      {
+        "id": "with_action",
+        "overview": "One secondary action (undo, view).",
+        "apply_when": "Undo or a single next step.",
+        "not_when": "Two competing actions (those belong on a dialog).",
+        "aliases": [
+          "toast action"
+        ]
+      }
+    ],
+    "state": [
+      {
+        "id": "shown",
+        "overview": "Visible. Must not steal focus unless the house says so.",
+        "apply_when": "A status just happened.",
+        "not_when": "A toast that traps the page."
+      },
+      {
+        "id": "dismissed",
+        "overview": "Gone. If undo was offered, the window may be over.",
+        "apply_when": "Timer or dismiss.",
+        "not_when": "Dismissed with no way to recover a destructive action."
+      }
+    ]
+  },
+  "accessibility": [
+    {
+      "id": "live",
+      "overview": "The message is announced. Prefer polite unless they must stop.",
+      "apply_when": "Any toast.",
+      "not_when": "Visual-only.",
+      "aliases": [
+        "aria-live",
+        "status",
+        "alert"
+      ]
+    },
+    {
+      "id": "action_named",
+      "overview": "If there is an action, it has a name and is reachable.",
+      "apply_when": "Undo / view.",
+      "not_when": "A clickable toast body with no button name."
+    },
+    {
+      "id": "focus_not_stolen",
+      "overview": "Focus stays where they were unless the house requires otherwise.",
+      "apply_when": "Most toasts.",
+      "not_when": "Focus jumped into the toast and they lost the field."
+    }
+  ],
+  "keyboard": [
+    {
+      "id": "tab",
+      "overview": "If an action exists, it is in the tab order without trapping the page.",
+      "apply_when": "A toast with an action.",
+      "not_when": "The toast is a focus trap."
+    },
+    {
+      "id": "escape",
+      "overview": "Escape dismisses when dismiss is allowed.",
+      "apply_when": "The toast is shown.",
+      "not_when": "Escape also undoes."
+    }
+  ]
+}

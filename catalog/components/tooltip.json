@@ -1,0 +1,128 @@
+{
+  "id": "tooltip",
+  "title": "Tooltip",
+  "overview": "A short peek on hover or focus. Not the only place values or legal copy live.",
+  "apply_when": "A brief name or hint for a control that already has an accessible name.",
+  "not_when": "The only values (charts), long legal copy, or a confirm (popconfirm / modal).",
+  "keywords": [
+    "tooltip",
+    "popover",
+    "hover card",
+    "title attribute",
+    "tip",
+    "hover",
+    "title",
+    "hover tip",
+    "hint",
+    "aria-describedby tooltip"
+  ],
+  "vs": [
+    {
+      "id": "popconfirm",
+      "why": "must confirm an action"
+    },
+    {
+      "id": "modal",
+      "why": "needs a blocking decision"
+    },
+    {
+      "id": "alert",
+      "why": "standing in-page message"
+    }
+  ],
+  "variants": {
+    "role": [
+      {
+        "id": "default",
+        "overview": "A short hint on hover or focus. No decision required.",
+        "apply_when": "A name or extra hint for a control that already has a name.",
+        "not_when": "A confirm (popconfirm), a modal, or the only accessible name."
+      }
+    ],
+    "size": [
+      {
+        "id": "large",
+        "overview": "Highest in the size hierarchy — the easiest to hit.",
+        "apply_when": "The view's main instance, or full-width on a small viewport.",
+        "not_when": "A dense toolbar or a third option next to the main control.",
+        "aliases": [
+          "lg",
+          "xl",
+          "full-width",
+          "block"
+        ]
+      },
+      {
+        "id": "medium",
+        "overview": "The default size — body use.",
+        "apply_when": "Ordinary use in forms, pages, and chrome.",
+        "not_when": "The only control on a mobile screen that should span the width.",
+        "aliases": [
+          "default",
+          "md"
+        ]
+      },
+      {
+        "id": "small",
+        "overview": "Lowest in the size hierarchy — densest.",
+        "apply_when": "Inline or chrome that sits beside content.",
+        "not_when": "The page's primary instance, or a control under 44×44.",
+        "aliases": [
+          "sm",
+          "xs",
+          "compact"
+        ]
+      }
+    ],
+    "composition": [
+      {
+        "id": "describedby",
+        "overview": "The tip describes a control that already has a name.",
+        "apply_when": "Icon buttons that already have aria-label; extra hint.",
+        "not_when": "The tooltip is the only name."
+      }
+    ],
+    "state": [
+      {
+        "id": "hidden",
+        "overview": "The tip is not shown.",
+        "apply_when": "Pointer and focus are elsewhere.",
+        "not_when": "The tip stays in the tab order."
+      },
+      {
+        "id": "shown",
+        "overview": "The tip is visible.",
+        "apply_when": "Hover or focus on the trigger.",
+        "not_when": "Shown only on hover so keyboard never sees it."
+      }
+    ]
+  },
+  "accessibility": [
+    {
+      "id": "not_the_name",
+      "overview": "The control still has a name without the tooltip.",
+      "apply_when": "Any tooltip.",
+      "not_when": "Icon-only with title= as the only name."
+    },
+    {
+      "id": "keyboard_reaches",
+      "overview": "Focus can show the same tip hover shows.",
+      "apply_when": "A hint they might need without a pointer.",
+      "not_when": "Hover-only."
+    }
+  ],
+  "keyboard": [
+    {
+      "id": "focus",
+      "overview": "Focusing the trigger shows the tip.",
+      "apply_when": "Keyboard users.",
+      "not_when": "Focus never shows it."
+    },
+    {
+      "id": "escape",
+      "overview": "Escape hides the tip.",
+      "apply_when": "The tip is shown.",
+      "not_when": "Escape does nothing and the tip blocks the next control."
+    }
+  ]
+}

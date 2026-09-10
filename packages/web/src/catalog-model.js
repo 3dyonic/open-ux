@@ -1,4 +1,4 @@
-const SOURCE_HOUSES = {
+const SOURCES = {
   ant: "Ant",
   nng: "NN/g",
   govuk: "GOV.UK",
@@ -18,7 +18,7 @@ const SOURCE_HOUSES = {
   tidwell: "Tidwell",
 };
 
-const SOURCE_SUFFIXES = Object.values(SOURCE_HOUSES)
+const SOURCE_SUFFIXES = Object.values(SOURCES)
   .sort((a, b) => b.length - a.length)
   .map((label) => ` — ${label}`);
 
@@ -42,7 +42,7 @@ export function displayId(guidelineId) {
   const text = String(guidelineId || "").trim();
   if (!text.includes(".")) return text;
   const [lane, rest] = text.split(".", 2);
-  if (rest && lane in SOURCE_HOUSES) return rest;
+  if (rest && lane in SOURCES) return rest;
   return text;
 }
 

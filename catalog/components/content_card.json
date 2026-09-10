@@ -1,0 +1,135 @@
+{
+  "id": "content_card",
+  "title": "Content card",
+  "overview": "A grouped teaser or action surface: one inner link; hit-area wraps the card.",
+  "apply_when": "A repeating unit of title, media, and one destination or action.",
+  "not_when": "A Situation Card (job), or wrapping the whole card in `<a>` so AT reads everything as one link.",
+  "keywords": [
+    "card",
+    "content card",
+    "tile",
+    "teaser",
+    "card grid",
+    "media card"
+  ],
+  "vs": [
+    {
+      "id": "button",
+      "why": "the inner action may be a button; the unit is the card"
+    },
+    {
+      "id": "link",
+      "why": "one inner link, not the whole wrapper"
+    }
+  ],
+  "variants": {
+    "role": [
+      {
+        "id": "default",
+        "overview": "A grouped teaser or action surface: one inner link; hit-area wraps the card.",
+        "apply_when": "A repeating unit of title, media, and one destination or action.",
+        "not_when": "A Situation Card (job), or wrapping the whole card in <a> so AT reads everything as one link."
+      }
+    ],
+    "size": [
+      {
+        "id": "large",
+        "overview": "Highest in the size hierarchy — the easiest to hit.",
+        "apply_when": "The view's main instance, or full-width on a small viewport.",
+        "not_when": "A dense toolbar or a third option next to the main control.",
+        "aliases": [
+          "lg",
+          "xl",
+          "full-width",
+          "block"
+        ]
+      },
+      {
+        "id": "medium",
+        "overview": "The default size — body use.",
+        "apply_when": "Ordinary use in forms, pages, and chrome.",
+        "not_when": "The only control on a mobile screen that should span the width.",
+        "aliases": [
+          "default",
+          "md"
+        ]
+      },
+      {
+        "id": "small",
+        "overview": "Lowest in the size hierarchy — densest.",
+        "apply_when": "Inline or chrome that sits beside content.",
+        "not_when": "The page's primary instance, or a control under 44×44.",
+        "aliases": [
+          "sm",
+          "xs",
+          "compact"
+        ]
+      }
+    ],
+    "composition": [
+      {
+        "id": "one_inner_link",
+        "overview": "One destination or action inside; the card hit-area follows that control.",
+        "apply_when": "Almost every content card.",
+        "not_when": "Nested competing links in one card."
+      }
+    ],
+    "state": [
+      {
+        "id": "default",
+        "overview": "At rest, available.",
+        "apply_when": "The destination is available.",
+        "not_when": "A dead tile with no control."
+      },
+      {
+        "id": "hover",
+        "overview": "Pointer is over the card — extra cue.",
+        "apply_when": "A mouse or trackpad.",
+        "not_when": "Hover is the only affordance."
+      },
+      {
+        "id": "focus",
+        "overview": "Keyboard is on the inner link or button. Must stay visible.",
+        "apply_when": "Tab onto the card's control.",
+        "not_when": "Focus outline removed."
+      }
+    ]
+  },
+  "accessibility": [
+    {
+      "id": "one_name",
+      "overview": "AT gets one coherent name from the inner control, not the whole card as one link wrapping heading+image+meta.",
+      "apply_when": "Any content card.",
+      "not_when": "Wrapping the card in <a>."
+    },
+    {
+      "id": "hit_target",
+      "overview": "The hit area is the card, wired to the one inner control.",
+      "apply_when": "Touch.",
+      "not_when": "A tiny text link in the corner only.",
+      "aliases": [
+        "44x44"
+      ]
+    },
+    {
+      "id": "focus_visible",
+      "overview": "The focused inner control stays visible.",
+      "apply_when": "Keyboard.",
+      "not_when": "Outline removed."
+    }
+  ],
+  "keyboard": [
+    {
+      "id": "tab",
+      "overview": "One stop per card (the inner link or button).",
+      "apply_when": "Moving through a grid.",
+      "not_when": "Every nested bit of meta is a stop."
+    },
+    {
+      "id": "enter",
+      "overview": "Enter follows the inner control.",
+      "apply_when": "The card's control is focused.",
+      "not_when": "Enter does nothing."
+    }
+  ]
+}

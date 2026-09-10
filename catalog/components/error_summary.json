@@ -1,0 +1,120 @@
+{
+  "id": "error_summary",
+  "title": "Error summary",
+  "overview": "After submit: a focused list of errors that link to each field, plus per-field messages.",
+  "apply_when": "The form failed validation and they need both a map and the field fix.",
+  "not_when": "A standing page alert, a toast, or native required bubbles as the only UI.",
+  "keywords": [
+    "error summary",
+    "error list",
+    "form errors banner",
+    "page errors",
+    "error banner",
+    "jump to field"
+  ],
+  "vs": [
+    {
+      "id": "alert",
+      "why": "in-page status, not a field-linked summary"
+    },
+    {
+      "id": "toast",
+      "why": "transient, not a submit map"
+    }
+  ],
+  "variants": {
+    "role": [
+      {
+        "id": "default",
+        "overview": "A page-level list of errors that jump to the fields. Fields still show their own errors.",
+        "apply_when": "After submit when one or more fields failed.",
+        "not_when": "A toast, or field errors with no summary when the house requires both."
+      }
+    ],
+    "size": [
+      {
+        "id": "large",
+        "overview": "Highest in the size hierarchy — the easiest to hit.",
+        "apply_when": "The view's main instance, or full-width on a small viewport.",
+        "not_when": "A dense toolbar or a third option next to the main control.",
+        "aliases": [
+          "lg",
+          "xl",
+          "full-width",
+          "block"
+        ]
+      },
+      {
+        "id": "medium",
+        "overview": "The default size — body use.",
+        "apply_when": "Ordinary use in forms, pages, and chrome.",
+        "not_when": "The only control on a mobile screen that should span the width.",
+        "aliases": [
+          "default",
+          "md"
+        ]
+      },
+      {
+        "id": "small",
+        "overview": "Lowest in the size hierarchy — densest.",
+        "apply_when": "Inline or chrome that sits beside content.",
+        "not_when": "The page's primary instance, or a control under 44×44.",
+        "aliases": [
+          "sm",
+          "xs",
+          "compact"
+        ]
+      }
+    ],
+    "composition": [
+      {
+        "id": "list_of_links",
+        "overview": "Each error is a link to the field.",
+        "apply_when": "Almost every error summary.",
+        "not_when": "A paragraph of errors with no jumps."
+      }
+    ],
+    "state": [
+      {
+        "id": "shown",
+        "overview": "Visible at the top of the form after validate.",
+        "apply_when": "Submit failed.",
+        "not_when": "Shown on first paint before they tried."
+      }
+    ]
+  },
+  "accessibility": [
+    {
+      "id": "named",
+      "overview": "The summary has a heading AT can speak.",
+      "apply_when": "Any error summary.",
+      "not_when": "A red box with no heading."
+    },
+    {
+      "id": "focus_on_show",
+      "overview": "Focus moves to the summary when it appears after submit.",
+      "apply_when": "Post-submit errors.",
+      "not_when": "They are left at the submit button with no announcement."
+    },
+    {
+      "id": "links_to_fields",
+      "overview": "Each item moves focus to the field.",
+      "apply_when": "More than one error, or one error that is off-screen.",
+      "not_when": "Links that go nowhere."
+    }
+  ],
+  "keyboard": [
+    {
+      "id": "tab",
+      "overview": "Tab from the summary into the list of jumps, then to the form.",
+      "apply_when": "The summary is shown.",
+      "not_when": "The summary is not focusable and never announced."
+    },
+    {
+      "id": "enter",
+      "overview": "Enter on an error link jumps to the field.",
+      "apply_when": "A link in the list.",
+      "not_when": "Enter does nothing."
+    }
+  ]
+}

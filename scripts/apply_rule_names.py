@@ -17,13 +17,8 @@ SRC = ROOT / "packages" / "mcp" / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from open_ux.catalog import (  # noqa: E402
-    build_manifest,
-    iter_rule_files,
-    render_manifest_markdown,
-    rule_dest,
-    source_house,
-)
+from open_ux.manifest import build_manifest, render_manifest_markdown  # noqa: E402
+from open_ux.rule_paths import iter_rule_files, rule_dest, rule_source  # noqa: E402
 
 RULES = ROOT / "catalog" / "rules"
 INDEX = ROOT / "catalog" / "index.json"
@@ -193,11 +188,11 @@ def name_from_title(title: str) -> str:
 
 def display_name(guideline: dict) -> str:
     gid = guideline["id"]
-    _slug, house = source_house(guideline)
+    _slug, source = rule_source(guideline)
     base = OVERRIDES[gid] if gid in OVERRIDES else name_from_title(
         guideline.get("title") or gid.split(".")[-1]
     )
-    suffix = f" — {house}"
+    suffix = f" — {source}"
     if base.endswith(suffix):
         return base
     return f"{base}{suffix}"

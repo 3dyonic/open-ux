@@ -1,0 +1,238 @@
+{
+  "id": "search",
+  "title": "Search",
+  "overview": "A control to query a catalog, site, or result set.",
+  "apply_when": "Header search, homepage box, results-page query, find-in-service.",
+  "not_when": "A form field that happens to be labeled Search; typeahead inside a form field is autocomplete.",
+  "keywords": [
+    "search",
+    "search box",
+    "search field",
+    "magnifying",
+    "query",
+    "type=search",
+    "find",
+    "magnifying glass",
+    "site search",
+    "search results",
+    "clear search"
+  ],
+  "vs": [
+    {
+      "id": "text_field",
+      "why": "ordinary form value, not site search"
+    },
+    {
+      "id": "autocomplete",
+      "why": "suggest completions for a known set while typing a field"
+    }
+  ],
+  "variants": {
+    "role": [
+      {
+        "id": "site",
+        "overview": "Find across the product or site.",
+        "apply_when": "Header or dedicated search.",
+        "not_when": "A form field whose label happens to be Search (text_field)."
+      },
+      {
+        "id": "filter",
+        "overview": "Find within the current list or table.",
+        "apply_when": "A collection already on screen.",
+        "not_when": "Site-wide search."
+      }
+    ],
+    "size": [
+      {
+        "id": "large",
+        "overview": "Highest in the size hierarchy — the easiest to hit.",
+        "apply_when": "The view's main instance, or full-width on a small viewport.",
+        "not_when": "A dense toolbar or a third option next to the main control.",
+        "aliases": [
+          "lg",
+          "xl",
+          "full-width",
+          "block"
+        ]
+      },
+      {
+        "id": "medium",
+        "overview": "The default size — body use.",
+        "apply_when": "Ordinary use in forms, pages, and chrome.",
+        "not_when": "The only control on a mobile screen that should span the width.",
+        "aliases": [
+          "default",
+          "md"
+        ]
+      },
+      {
+        "id": "small",
+        "overview": "Lowest in the size hierarchy — densest.",
+        "apply_when": "Inline or chrome that sits beside content.",
+        "not_when": "The page's primary instance, or a control under 44×44.",
+        "aliases": [
+          "sm",
+          "xs",
+          "compact"
+        ]
+      }
+    ],
+    "composition": [
+      {
+        "id": "field_and_submit",
+        "overview": "A field plus an explicit search action.",
+        "apply_when": "Site search.",
+        "not_when": "A field that searches on every keystroke with no name."
+      },
+      {
+        "id": "with_suggestions",
+        "overview": "Suggestions appear as they type — still search, not a form select.",
+        "apply_when": "A large known set.",
+        "not_when": "A closed select pretending to be search (select / autocomplete)."
+      }
+    ],
+    "state": [
+      {
+        "id": "default",
+        "overview": "At rest, available, not being used.",
+        "apply_when": "The field can take a value now.",
+        "not_when": "The field is invalid, disabled, or work is in flight."
+      },
+      {
+        "id": "hover",
+        "overview": "Pointer is over the field — extra cue, not the only cue.",
+        "apply_when": "A mouse or trackpad can reach the field.",
+        "not_when": "Hover is the only way to know it is editable."
+      },
+      {
+        "id": "focus",
+        "overview": "Keyboard or assistive tech is on this field. Must stay visible.",
+        "apply_when": "Tab, click, or restoring focus after an error jump.",
+        "not_when": "Focus outline removed with no replacement.",
+        "aliases": [
+          "keyboard-focus",
+          ":focus-visible"
+        ]
+      },
+      {
+        "id": "disabled",
+        "overview": "The field is not available. Must stay perceivable and explain why.",
+        "apply_when": "A value that must not change on this view.",
+        "not_when": "A required answer on a public form — keep it enabled and explain on submit.",
+        "aliases": [
+          "unavailable",
+          "aria-disabled"
+        ]
+      },
+      {
+        "id": "error",
+        "overview": "The value failed a check. The field stays named and described.",
+        "apply_when": "After validate; helper or error text is tied to this field.",
+        "not_when": "A page banner with no field association (error_summary without the field).",
+        "aliases": [
+          "invalid",
+          "aria-invalid"
+        ]
+      },
+      {
+        "id": "loading",
+        "overview": "Results or suggestions are in flight.",
+        "apply_when": "A query was sent.",
+        "not_when": "A spinner with no live region.",
+        "aliases": [
+          "busy"
+        ]
+      }
+    ]
+  },
+  "accessibility": [
+    {
+      "id": "accessible_name",
+      "overview": "The field has a name assistive tech can speak — usually a visible label.",
+      "apply_when": "Any input, especially placeholder-only or icon-prefixed fields.",
+      "not_when": "The only name is placeholder or a tooltip that never reaches the input.",
+      "aliases": [
+        "aria-label",
+        "accessible-name",
+        "label"
+      ]
+    },
+    {
+      "id": "focus_visible",
+      "overview": "The focused field stays visible. Color alone is not the cue.",
+      "apply_when": "Keyboard or AT focus is on the field.",
+      "not_when": "Outline removed with no replacement.",
+      "aliases": [
+        "focus-indicator",
+        "focus-ring"
+      ]
+    },
+    {
+      "id": "aria_disabled",
+      "overview": "Unavailable stays in the tab order and explains why.",
+      "apply_when": "The field must not run, but focus must not jump away.",
+      "not_when": "The HTML disabled attribute, which drops the control from the keyboard flow.",
+      "aliases": [
+        "aria-disabled"
+      ]
+    },
+    {
+      "id": "described_by",
+      "overview": "Helper, hint, or error is tied to the field so AT speaks it with the name.",
+      "apply_when": "Hint text, character count, or a field error.",
+      "not_when": "A page-level message with no aria-describedby / for= on this field.",
+      "aliases": [
+        "aria-describedby",
+        "hint",
+        "helper text"
+      ]
+    },
+    {
+      "id": "hit_target",
+      "overview": "The hit area stays usable, including the label.",
+      "apply_when": "Touch, pointer, or a compact form.",
+      "not_when": "A 16px box whose tap area is the glyph only.",
+      "aliases": [
+        "44x44",
+        "touch-target",
+        "44px"
+      ]
+    },
+    {
+      "id": "results_announced",
+      "overview": "Result count or suggestions are announced without stealing typing focus.",
+      "apply_when": "A query that returned.",
+      "not_when": "A visual list with no live update."
+    }
+  ],
+  "keyboard": [
+    {
+      "id": "tab",
+      "overview": "Tab lands on the field in a logical order.",
+      "apply_when": "Moving through the form.",
+      "not_when": "The control is skipped because it used HTML disabled.",
+      "aliases": [
+        "tab-order",
+        "focus-order"
+      ]
+    },
+    {
+      "id": "enter",
+      "overview": "Enter submits the form when this is a single-line field, or confirms in a dialog.",
+      "apply_when": "A text-like field in a form or overlay.",
+      "not_when": "Enter inserts a newline (textarea) or only works on a button."
+    },
+    {
+      "id": "escape",
+      "overview": "Escape clears suggestions or the field per the house — say which.",
+      "apply_when": "Suggestions are open.",
+      "not_when": "Escape leaves the page."
+    },
+    {
+      "id": "arrows",
+      "overview": "Arrows move through suggestions when a list is open.",
+      "apply_when": "A suggestion list.",
+      "not_when": "Arrows leave the field with no listbox."
+    }
+  ]
+}
