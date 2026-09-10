@@ -5,7 +5,8 @@
 - **BREAKING:** `Open-UX:get_situation` facet `leaves` is `{id, count}` (stocked cite count per Leaf), not a string list.
 - Pack Card/Leaf pulls add envelope `situation` (`when`, `reject`; `leaf` when scoped) and `cite_via: get_guideline`.
 - Skill: documented loop — map leaf counts → pack (envelope reject, row fit) → `get_guideline` or `get_component` by question type; Leaf routing examples (control choice vs primary loudness; spinner → `compose_feedback`).
-- `validate_apply_when_fit` on gate Leaves; `validate-catalog` reports violations (exit 0), `--strict-fit` exits 1.
+- `validate_apply_when_fit` on gate Leaves; `validate-catalog` reports violations (exit 0), `--strict-fit` exits 1. CI uses `--strict-fit`.
+- Slash commands `/get` and `/pack` aligned with the loop; `packages/mcp/README.md` documents `pack` and `--strict-fit`.
 - Vite owns the cookie banner, `open_ux_gtm_consent`, and Google Tag Manager after Accept. Python only returns the container id at `/api/site`.
 - OUX-37: `/health` and `/health.json`: `ok` is computed (catalog loaded, no recorded 5xx). Payload adds `error`, `title`, and `body`. HTTP stays 200.
 - OUX-37: Public 404 and 500 pages are prerendered into the SPA shell. Missing catalog ids and unknown paths return 404. Unhandled errors return the 500 page.

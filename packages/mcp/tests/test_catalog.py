@@ -695,7 +695,7 @@ def test_validate_apply_when_fit_flags_overview_restatement() -> None:
     assert any(row["reason"] == "apply_when equals overview" for row in rows)
 
 
-def test_validate_catalog_strict_fit_exits_nonzero(live_catalog: Path) -> None:
+def test_validate_catalog_strict_fit_green(live_catalog: Path) -> None:
     import subprocess
     import sys
 
@@ -706,11 +706,12 @@ def test_validate_catalog_strict_fit_exits_nonzero(live_catalog: Path) -> None:
         capture_output=True,
         text=True,
     )
-    assert proc.returncode == 1
-    assert "apply_when fit:" in proc.stderr
+    assert proc.returncode == 0
+    assert "catalog ok" in proc.stdout
+    assert "apply_when fit:" not in proc.stderr
 
 
-def test_validate_catalog_default_reports_fit_but_exits_zero(live_catalog: Path) -> None:
+def test_validate_catalog_default_exits_zero_without_strict(live_catalog: Path) -> None:
     import subprocess
     import sys
 
@@ -723,5 +724,3 @@ def test_validate_catalog_default_reports_fit_but_exits_zero(live_catalog: Path)
     )
     assert proc.returncode == 0
     assert "catalog ok" in proc.stdout
-    if "apply_when fit:" in proc.stderr:
-        assert '"reason"' in proc.stderr
