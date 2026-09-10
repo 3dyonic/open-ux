@@ -45,6 +45,8 @@ from open_ux.jobs import (
 from open_ux.public_html import (
     FAVICON_PATH,
     ICON_PNG_PATH,
+    PIP_SVG_PATH,
+    ICON_PNG_PATH,
     ROBOTS_TXT,
     render_sitemap,
     sitemap_lastmods,
@@ -690,6 +692,10 @@ def create_mcp(*, hosted: bool) -> FastMCP:
     @mcp.custom_route("/icon.png", methods=["GET"])
     async def icon_png(_request: Request) -> Response:
         return Response(ICON_PNG_PATH.read_bytes(), media_type="image/png")
+
+    @mcp.custom_route("/pip.svg", methods=["GET"])
+    async def pip_svg(_request: Request) -> Response:
+        return Response(PIP_SVG_PATH.read_bytes(), media_type="image/svg+xml")
 
     if dist is not None and (dist / "assets").is_dir():
         static_assets = StaticFiles(directory=dist / "assets")

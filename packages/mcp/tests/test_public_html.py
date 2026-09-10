@@ -10,6 +10,8 @@ from open_ux.public_html import (
     FAVICON_PATH,
     ICON_PNG_HREF,
     ICON_PNG_PATH,
+    PIP_SVG_HREF,
+    PIP_SVG_PATH,
     ROBOTS_TXT,
     guideline_display_id,
     guideline_display_name,
@@ -118,6 +120,19 @@ def test_icon_png_is_served(tmp_env: Path) -> None:
     assert response.status_code == 200
     assert response.headers["content-type"].startswith("image/png")
     assert response.content == png
+
+
+def test_pip_svg_is_served(tmp_env: Path) -> None:
+    assert PIP_SVG_PATH.is_file()
+    assert PIP_SVG_HREF == "/pip.svg"
+    svg = PIP_SVG_PATH.read_bytes()
+    assert svg.startswith(b"<svg")
+    assert b"Pip, Open UX mascot" in svg
+    with _client() as client:
+        response = client.get("/pip.svg")
+    assert response.status_code == 200
+    assert response.headers["content-type"].startswith("image/svg+xml")
+    assert response.content == svg
 
 
 def test_web_public_mark_symlinks_to_package_static() -> None:

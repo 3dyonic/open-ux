@@ -72,8 +72,13 @@ def test_send_invite_email_resend_success(
     assert body["from"] == "Open UX <hello@open-ux.dev>"
     assert body["to"] == ["ada@example.com"]
     assert body["subject"] == INVITE_SUBJECT
-    assert issued.redeem_url in body["text"]
-    assert issued.expires_at in body["text"]
+    assert "html" in body
+    assert issued.redeem_url in body["html"]
+    assert "#FF4B00" in body["html"]
+    assert "Redeem invite" in body["html"]
+    assert "/pip.svg" in body["html"]
+    assert "Pip, Open UX mascot" in body["html"]
+    assert "icon.png" in body["html"]
 
 
 def test_send_invite_email_resend_failure_is_best_effort(

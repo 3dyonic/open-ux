@@ -18,6 +18,8 @@ FAVICON_PATH = _MARK_PATH if _MARK_PATH.is_file() else _FAVICON_FALLBACK
 FAVICON_HREF = "/logo-mark.svg" if FAVICON_PATH == _MARK_PATH else "/favicon.svg"
 ICON_PNG_PATH = _STATIC_DIR / "icon.png"
 ICON_PNG_HREF = "/icon.png"
+PIP_SVG_PATH = _STATIC_DIR / "pip.svg"
+PIP_SVG_HREF = "/pip.svg"
 ROBOTS_TXT = """User-agent: *
 Allow: /
 Allow: /catalog
