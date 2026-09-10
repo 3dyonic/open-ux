@@ -27,9 +27,10 @@ There is no server-side LLM. One shared catalog for every caller — an account 
 
 ## Features
 
-* **Cited catalog** — one JSON file per rule, with sources you can follow
+* **Cited catalog** — 204 rules, 13 Situation Cards, 28 Leaves; one JSON file per rule, with sources you can follow
 * **Public catalog site** — browse rules in the browser at [`/catalog`](https://open-ux.dev/catalog)
 * **Agent tools** — map Cards (`get_situation` with leaf counts); pack by need; list / search / get guidelines; component records (`get_component`)
+* **Claude Code and Cursor plugins** — same pack in [`clients/claude`](clients/claude). Submitted to both marketplaces; **not listed yet**
 * **Hosted or self-host** — waitlist + API key on the hosted service, or stdio locally with no auth
 * **Privacy-minded hosted mode** — we do not store UI payloads or prompts; see [Privacy](https://open-ux.dev/privacy). How we cite rules: [Sources](https://open-ux.dev/sources)
 
@@ -74,9 +75,15 @@ python -m open_ux stdio
 cd packages/mcp && python -m pytest
 ```
 
-### Claude plugin
+### Plugins (Claude Code and Cursor)
 
-Pack in [`clients/claude`](clients/claude). It connects to the catalog; it does not ship a second copy of the rules. `.cursor` and `.claude` in this repo are mounts (symlinks) into that pack.
+Same pack in [`clients/claude`](clients/claude). It connects to the catalog; it does not ship a second copy of the rules. `.cursor` and `.claude` in this repo are mounts (symlinks) into that pack.
+
+**Not listed yet.** Both plugins are in marketplace submission (Claude Code directory and Cursor marketplace). They are not published. Searching either marketplace will not find Open UX.
+
+Until they are listed, install from this repo:
+
+**Claude Code**
 
 ```bash
 claude plugin marketplace add 3dyonic/open-ux
@@ -85,7 +92,11 @@ claude plugin install open-ux@open-ux
 
 Enable, then paste a key from [open-ux.dev/invite](https://open-ux.dev/invite).
 
-Cursor uses the same pack (`.cursor-plugin/` + `mcp.json`). Set `OPEN_UX_API_KEY` under Plugins → Configure. Submit: [cursor.com/marketplace/publish](https://cursor.com/marketplace/publish).
+**Cursor**
+
+Open this repository — the `.cursor` mount is already the pack (`.cursor-plugin/` + `mcp.json`). Enable the plugin, then **Plugins → Configure** and set `OPEN_UX_API_KEY` to the `uxmcp_` key from the invite.
+
+Setup: [`clients/claude/SETUP.md`](clients/claude/SETUP.md).
 
 ## Agent tools
 
@@ -118,10 +129,11 @@ Rules are never forked per tenant. Soft size budget ~50–100 KB; hard ceiling ~
 
 ```
 packages/mcp      Python server (FastMCP)
-catalog/          shared rules + schema
+packages/web      public site (Vite)
+catalog/          shared rules + schema (204 files)
 helpers/          LLM-local rank_pack + contributor wire (registry.json)
 scripts/          contributor catalog maintenance
-clients/claude    thin Claude plugin
+clients/claude    Claude Code and Cursor plugin pack
 docs/             privacy, assets
 ```
 
