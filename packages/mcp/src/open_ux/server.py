@@ -43,8 +43,10 @@ from open_ux.jobs import (
 )
 from open_ux.public_html import (
     FAVICON_PATH,
+    ICON_PNG_PATH,
     ROBOTS_TXT,
     render_sitemap,
+    sitemap_lastmods,
 )
 from open_ux.situations import (
     get_situation as run_get_situation,
@@ -312,8 +314,14 @@ def create_mcp(*, hosted: bool) -> FastMCP:
     component_usage = build_component_usage(job_tree, catalog.guidelines)
     dist = web_dist()
     catalog_index = _catalog_index_payload(catalog, job_tree)
+    guideline_ids = [str(row["id"]) for row in catalog.index if row.get("id")]
     sitemap_xml = render_sitemap(
-        [str(row["id"]) for row in catalog.index if row.get("id")]
+        guideline_ids,
+        lastmods=sitemap_lastmods(
+            catalog_path=catalog.path,
+            guidelines=catalog.guidelines,
+            dist=dist,
+        ),
     )
 
     def current_health() -> dict[str, Any]:
@@ -677,6 +685,10 @@ def create_mcp(*, hosted: bool) -> FastMCP:
     @mcp.custom_route("/favicon.svg", methods=["GET"])
     async def favicon(_request: Request) -> Response:
         return Response(FAVICON_PATH.read_bytes(), media_type="image/svg+xml")
+
+    @mcp.custom_route("/icon.png", methods=["GET"])
+    async def icon_png(_request: Request) -> Response:
+        return Response(ICON_PNG_PATH.read_bytes(), media_type="image/png")
 
     if dist is not None and (dist / "assets").is_dir():
         static_assets = StaticFiles(directory=dist / "assets")

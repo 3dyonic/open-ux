@@ -41,6 +41,7 @@ export function invitePage() {
   return {
     title: INVITE_TITLE,
     description: INVITE_DESCRIPTION,
+    path: "/invite",
     body: ssr(
       "invite",
       shell(
@@ -71,6 +72,8 @@ export function requestedPage() {
   return {
     title: "You’re on the list — Open UX",
     description: "Thanks — we’ll email a one-time invite when your request is approved.",
+    path: "/invite/requested",
+    index: false,
     body: ssr(
       "requested",
       shell(
@@ -94,6 +97,8 @@ export function redeemPage() {
   return {
     title: "Redeem invite — Open UX",
     description: "Paste your invite token, or open the link from your email.",
+    path: "/invite/redeem",
+    index: false,
     body: ssr(
       "redeem",
       shell(

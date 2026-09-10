@@ -333,6 +333,11 @@ export function catalogNamesPage(guidelines) {
   return {
     title: "Catalog — Open UX",
     description: "Cited UX rules agents audit against",
+    path: "/catalog",
+    breadcrumbs: [
+      { name: "Open UX", path: "/" },
+      { name: "Catalog", path: "/catalog" },
+    ],
     body: ssr(
       "catalog",
       shell(
@@ -358,6 +363,12 @@ export function rulePage(found, indexData) {
   return {
     title: `${name} — Open UX`,
     description: rule.split(". ")[0] || name,
+    path: gid ? `/catalog/${gid}` : "/catalog",
+    breadcrumbs: [
+      { name: "Open UX", path: "/" },
+      { name: "Catalog", path: "/catalog" },
+      { name, path: gid ? `/catalog/${gid}` : "/catalog" },
+    ],
     body: ssr(
       "rule",
       shell(

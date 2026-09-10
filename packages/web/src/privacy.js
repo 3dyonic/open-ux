@@ -64,6 +64,7 @@ export function privacyPage() {
     title: "Privacy — Open UX",
     description:
       "How Open UX handles waitlist email, API keys, analytics, and agent usage on the hosted service.",
+    path: "/privacy",
     body: ssr(
       "privacy",
       shell(

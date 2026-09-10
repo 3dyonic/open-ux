@@ -16,6 +16,8 @@ export function notFoundPage(detail = "", { kind = "page" } = {}) {
   return {
     title: "Not found — Open UX",
     description: lede,
+    path: "/404",
+    index: false,
     body: ssr(
       "not-found",
       shell(
@@ -42,6 +44,8 @@ export function serverErrorPage(path = "/") {
   return {
     title: "This page could not be loaded — Open UX",
     description: "Try again in a moment.",
+    path: "/500",
+    index: false,
     body: ssr(
       "server-error",
       shell(
