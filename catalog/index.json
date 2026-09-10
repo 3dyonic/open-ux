@@ -2471,6 +2471,19 @@
       "leaf": "group_related_inputs"
     },
     {
+      "id": "uswds.button-vs-link-for-action",
+      "title": "button vs link for action",
+      "name": "Button vs link for action — USWDS",
+      "jobs": [
+        "choose_control_for_choice"
+      ],
+      "lane": "uswds",
+      "container": "forms_and_input",
+      "card": "design_a_form",
+      "facet": "wrong_control_for_the_choice",
+      "leaf": "choose_control_for_choice"
+    },
+    {
       "id": "uswds.date-picker-when-weekday-always-type",
       "title": "date picker when weekday always type",
       "name": "Date picker when weekday always type — USWDS",

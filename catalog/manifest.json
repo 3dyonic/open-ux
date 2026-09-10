@@ -1,5 +1,5 @@
 {
-  "count": 203,
+  "count": 204,
   "note": "Auto-generated. Category folder, then source folder. No rule bodies. Agents read this map, then fetch one id.",
   "categories": [
     {
@@ -746,7 +746,7 @@
     {
       "id": "forms",
       "title": "Forms",
-      "count": 96,
+      "count": 97,
       "sources": [
         {
           "id": "ant",
@@ -1351,8 +1351,14 @@
         {
           "id": "uswds",
           "title": "USWDS",
-          "count": 4,
+          "count": 5,
           "rules": [
+            {
+              "id": "uswds.button-vs-link-for-action",
+              "name": "Button vs link for action — USWDS",
+              "card": "design_a_form",
+              "path": "rules/forms/uswds/button-vs-link-for-action.json"
+            },
             {
               "id": "uswds.character-count-brevity-or-legal",
               "name": "Character count brevity or legal — USWDS",
