@@ -18,6 +18,8 @@ from open_ux.server import create_mcp
 from open_ux.settings import Settings
 from open_ux.jobs import Card
 from open_ux.situations import (
+    LIST_CONTAINER_NOTE,
+    LIST_INDEX_NOTE,
     MAP_ROW_KEYS,
     NO_SUGGEST_MATCH,
     SPEC_ROW_KEYS,
@@ -112,6 +114,7 @@ def test_list_situations_returns_allowlist_only(live_catalog: Path) -> None:
     ids = [row["id"] for row in result["situations"]]
     assert ids == list(CARD_IDS)
     assert result["total"] == 13
+    assert result["note"] == LIST_INDEX_NOTE
     for row in result["situations"]:
         assert set(row) == {"id", "title", "container", "facet_count", "provisional"}
         assert BODY_KEYS.isdisjoint(row)
@@ -121,6 +124,7 @@ def test_list_situations_filters_container_alias(live_catalog: Path) -> None:
     result = list_situations(_tree(live_catalog), container="forms")
     ids = [row["id"] for row in result["situations"]]
     assert ids == ["design_a_form", "handle_form_errors", "compose_sign_in"]
+    assert result["note"] == LIST_CONTAINER_NOTE
     for row in result["situations"]:
         assert set(row) == set(SPEC_ROW_KEYS)
         assert row["overview"]
@@ -332,6 +336,15 @@ async def test_situation_tools_live(live_catalog: Path) -> None:
         assert "protect_destructive_and_leave" in ids
         assert ids == list(CARD_IDS)
         assert not set(ids) & set(LEAF_IDS)
+
+
+@pytest.mark.asyncio
+async def test_map_tool_descriptions_start_with_when(live_catalog: Path) -> None:
+    mcp = create_mcp(hosted=False)
+    async with Client(mcp) as client:
+        tools = {t.name: (t.description or "") for t in await client.list_tools()}
+    for name in ("suggest_situations", "list_situations", "get_situation", "pack"):
+        assert tools[name].startswith("When:"), name
 
 
 @pytest.mark.asyncio

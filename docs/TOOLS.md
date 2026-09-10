@@ -6,7 +6,7 @@ Fully qualified on the wire: `Open-UX:<name>`. Criteria pull: **`pack`**. Full l
 
 **`suggest_situations`:** Takes `task_text` (what you are composing) and returns the full catalog map of all 13 Situation Cards, grouped by container. Does not pick one for you, does not rank: just the map. Next: compare jobs with **`list_situations(container=…)`** or **`get_situation`**, then **`pack`** with `jobs=<card_id>`, `jobs=<leaf_id>`, or `jobs=<container>` for a broad pass (no **`situation`** envelope).
 
-**`list_situations`:** Lists Situation Cards, optionally filtered by `container`. Unscoped, it is the full index. No rule bodies: card metadata only (id, title, container; with `container=`, when / reject specs).
+**`list_situations`:** Lists Situation Cards, optionally filtered by `container`. Unscoped, it is the full index (no when/reject). With `container=`, returns when/reject specs. No rule bodies. Response **`note`** points to the next step (`suggest_situations` for a vague ask; `get_situation` then **`pack`** when a job is named).
 
 **`get_situation`:** Fetches one Situation Card by id: when / reject criteria and facets (`leaves: [{ id, count }]`). Fails if you pass a Leaf id instead of a Card id. No rule text.
 

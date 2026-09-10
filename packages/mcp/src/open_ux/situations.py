@@ -38,6 +38,14 @@ SUGGEST_MENU_NOTE = (
     "get_situation(card_id). Then pack with jobs=<card_id>, jobs=<leaf_id>, "
     "or jobs=<container> for a broad pass (no situation envelope)."
 )
+LIST_INDEX_NOTE = (
+    "Card index only (no when/reject). For area specs pass container=. "
+    "For a vague ask use suggest_situations(task_text)."
+)
+LIST_CONTAINER_NOTE = (
+    "Compare when/reject; pick a Card; get_situation(card_id); then pack with "
+    "jobs=<card_id>, jobs=<leaf_id>, or jobs=<container> for a broad pass."
+)
 
 MAP_ROW_KEYS = ("id", "title", "overview", "hints", "component")
 SPEC_ROW_KEYS = (
@@ -172,6 +180,10 @@ def list_situations(
     }
     if tree.empty:
         payload["note"] = EMPTY_SITUATIONS_NOTE
+    elif scoped:
+        payload["note"] = LIST_CONTAINER_NOTE
+    else:
+        payload["note"] = LIST_INDEX_NOTE
     return payload
 
 

@@ -31,7 +31,11 @@ PACK_ROW_KEYS = (
 )
 OPTIONAL_PACK_ROW_KEYS = ("hints",)
 PACK_KEYS = PACK_ROW_KEYS + OPTIONAL_PACK_ROW_KEYS
-NEED_ERROR = "pack requires jobs or guideline_ids; the full catalog is never run."
+NEED_ERROR = (
+    "pack requires jobs or guideline_ids; the full catalog is never run. "
+    "Start with suggest_situations(task_text) or list_situations(container=…) "
+    "to name jobs=, then get_situation(card_id) before a Card or Leaf pull."
+)
 HOST_CITATIONS_ONLY = "citations_only"
 CITE_VIA = "get_guideline"
 

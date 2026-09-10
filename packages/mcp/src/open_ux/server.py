@@ -335,8 +335,9 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         name="Open UX",
         instructions=(
             "Open UX: cited UX rules agents audit against. "
-            "Start from the ask; map with suggest_situations, list_situations, "
-            "or get_situation, then pack. "
+            "First path: (1) ask → suggest_situations(task_text) or "
+            "list_situations(container=…); (2) map → get_situation(card_id); "
+            "(3) pull → pack(jobs=card|leaf|container) → get_guideline. "
             "No server LLM. "
             "pack: jobs=<card_id>, jobs=<leaf_id>, or jobs=<container> "
             "(container = broad pass, no situation envelope); returns cited rule "
@@ -442,7 +443,11 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         limit: int = 20,
         offset: int = 0,
     ) -> dict[str, Any]:
-        """List Situation Cards. With container=, return that kind's specs (when / reject). Unscoped is the index. No rule bodies. Next: get_situation on a Card, or pack(jobs=<container>) for a broad pass."""
+        """When: area known or browsing the Card index. List Situation Cards.
+
+        With container=, return that kind's specs (when / reject). Unscoped is
+        the index only. No rule bodies. Response note points to the next step.
+        """
         result = run_list_situations(
             job_tree, container=container, limit=limit, offset=offset
         )
@@ -456,9 +461,10 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             Field(description="A Situation Card id. A Leaf id fails."),
         ],
     ) -> dict[str, Any]:
-        """Fetch one Situation Card: when, reject, facets, leaf counts, component.
+        """When: a Card is named and you need leaf counts before pack.
 
-        Each facet lists leaves as {id, count}. Fails on a Leaf id.
+        Fetch one Situation Card: when, reject, facets, leaf counts, component.
+        Each facet lists leaves as {id, count}. Fails on a Leaf or container id.
         Does not invent a Card. No rule bodies.
         """
         result = run_get_situation(id, job_tree)
@@ -486,14 +492,15 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             ),
         ] = None,
     ) -> dict[str, Any]:
-        """Catalog map: every Situation Card in lock order. No ranking.
+        """When: the UI ask is vague — returns the full catalog map, not a pick.
 
-        Always returns the complete 13-card allowlist grouped by container —
-        never a filtered subset and never a ranked winner. Order is the catalog
-        lock, not a hint. task_text requests the map; it does not reorder.
-        Compare jobs with list_situations(container=…) or get_situation(card_id),
-        then pack with jobs=<card_id>, jobs=<leaf_id>, or jobs=<container> for a
-        broad pass (no situation envelope). Surface is not an id. No server LLM.
+        Catalog map in lock order. No ranking. Every Situation Card grouped by
+        container — never a filtered subset and never a ranked winner. Order is
+        the catalog lock, not a hint. task_text requests the map; it does not
+        reorder. Compare jobs with list_situations(container=…) or
+        get_situation(card_id), then pack with jobs=<card_id>, jobs=<leaf_id>,
+        or jobs=<container> for a broad pass (no situation envelope). Response
+        note repeats the next step. Surface is not an id. No server LLM.
         """
         result = run_suggest_situations(task_text, surface, job_tree)
         _maybe_telemetry(settings, tool="suggest_situations")
@@ -531,15 +538,14 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             ),
         ] = 0,
     ) -> dict[str, Any]:
-        """Say the UX need as one Situation Card, Leaf, or container.
+        """When: a job is named on jobs= — pull cited criteria.
 
-        Returns cited rule criteria so you can make a better decision; the
-        decision is yours. Card/Leaf pulls include situation (when, reject;
-        leaf when scoped) and cite_via get_guideline. Container pulls
-        (jobs=forms, actions, feedback, …) are a broad pass: cite_via only, no
-        situation envelope — narrow to a Card when the ask sharpens. Rows are
-        browse slices, not full cites. Does not take a file. Does not return pass or fail.
-        Required: jobs or guideline_ids. Prefer a Card; use a Leaf for one bay.
+        Say the UX need as one Situation Card, Leaf, or container. Returns cited
+        rule criteria so you can make a better decision; the decision is yours.
+        Card/Leaf pulls include situation (when, reject; leaf when scoped) and
+        cite_via get_guideline. Container pulls (jobs=forms, actions, feedback, …)
+        are a broad pass: cite_via only, no situation envelope — narrow to a Card
+        when the ask sharpens. Rows are browse slices, not full cites. Does not take a file. Does not return pass or fail. Required: jobs or guideline_ids. Missing jobs= error points to map tools first. Prefer a Card; use a Leaf for one bay.
         """
         result = run_pack(
             catalog,

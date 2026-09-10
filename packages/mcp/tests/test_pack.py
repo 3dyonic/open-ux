@@ -121,6 +121,8 @@ def test_unknown_id_is_empty_not_invented(live_catalog: Path) -> None:
 def test_requires_need(live_catalog: Path) -> None:
     result = pack(_catalog(live_catalog))
     assert NEED_ERROR in result["error"]
+    assert "suggest_situations" in result["error"]
+    assert "list_situations" in result["error"]
     assert result["guidelines"] == []
     assert result["count"] == 0
 
