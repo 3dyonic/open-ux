@@ -99,6 +99,9 @@ def test_cursor_pack_uses_variables_not_user_config() -> None:
     rule = (PACK / "rules" / "open-ux.mdc").read_text(encoding="utf-8")
     assert "alwaysApply: true" in rule
     assert "First Open UX call" in rule
-    assert "container-grouped summary" in rule
+    assert "bare-invoke.md" in rule
+    bare = (PACK / "skills" / "open-ux" / "bare-invoke.md").read_text(encoding="utf-8")
+    assert "Verbatim reply" in bare
+    assert "`design_a_form`" in bare
     assert "Open-UX:pack" in rule
     assert "pass_when" not in rule

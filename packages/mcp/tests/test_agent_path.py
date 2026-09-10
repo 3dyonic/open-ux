@@ -17,6 +17,7 @@ CONNECT = SKILL_DIR / "connect.md"
 TOOLS_REFERENCE = SKILL_DIR / "tools.md"
 ROUTING_REFERENCES = (
     "SKILL.md",
+    "bare-invoke.md",
     "glossary.md",
     "ask-shapes.md",
     "examples.md",
