@@ -1,0 +1,124 @@
+{
+  "id": "character_count",
+  "title": "Character count",
+  "overview": "A live count (or word count) when a length limit is justified.",
+  "apply_when": "A justified max length on a field.",
+  "not_when": "An unjustified limit, or a closed choice dumped into a textarea (use radio).",
+  "keywords": [
+    "character count",
+    "word count",
+    "maxlength",
+    "remaining characters",
+    "char count",
+    "limit",
+    "remaining",
+    "character counter",
+    "over limit",
+    "fieldset legend"
+  ],
+  "vs": [
+    {
+      "id": "textarea",
+      "why": "the field; this is the count accessory"
+    }
+  ],
+  "variants": {
+    "role": [
+      {
+        "id": "default",
+        "overview": "A live count for a field that has a limit.",
+        "apply_when": "A textarea or text field with a maximum.",
+        "not_when": "A limit with no visible count, or a count with no field."
+      }
+    ],
+    "size": [
+      {
+        "id": "large",
+        "overview": "Highest in the size hierarchy — the easiest to hit.",
+        "apply_when": "The view's main instance, or full-width on a small viewport.",
+        "not_when": "A dense toolbar or a third option next to the main control.",
+        "aliases": [
+          "lg",
+          "xl",
+          "full-width",
+          "block"
+        ]
+      },
+      {
+        "id": "medium",
+        "overview": "The default size — body use.",
+        "apply_when": "Ordinary use in forms, pages, and chrome.",
+        "not_when": "The only control on a mobile screen that should span the width.",
+        "aliases": [
+          "default",
+          "md"
+        ]
+      },
+      {
+        "id": "small",
+        "overview": "Lowest in the size hierarchy — densest.",
+        "apply_when": "Inline or chrome that sits beside content.",
+        "not_when": "The page's primary instance, or a control under 44×44.",
+        "aliases": [
+          "sm",
+          "xs",
+          "compact"
+        ]
+      }
+    ],
+    "composition": [
+      {
+        "id": "with_field",
+        "overview": "The count sits with the field it describes.",
+        "apply_when": "Almost always.",
+        "not_when": "A count in a toast."
+      }
+    ],
+    "state": [
+      {
+        "id": "default",
+        "overview": "Under the limit. The count is available to AT.",
+        "apply_when": "They are typing.",
+        "not_when": "The count is visual-only."
+      },
+      {
+        "id": "over",
+        "overview": "Over the limit. The field is in error and the count says so.",
+        "apply_when": "They exceeded the maximum.",
+        "not_when": "A red count with no field error.",
+        "aliases": [
+          "error",
+          "too many"
+        ]
+      }
+    ]
+  },
+  "accessibility": [
+    {
+      "id": "described_by",
+      "overview": "The count is tied to the field.",
+      "apply_when": "Any character count.",
+      "not_when": "A floating number with no aria-describedby.",
+      "aliases": [
+        "aria-describedby"
+      ]
+    },
+    {
+      "id": "live",
+      "overview": "Crossing the limit is announced without stealing focus.",
+      "apply_when": "They go over or back under.",
+      "not_when": "A visual flash only.",
+      "aliases": [
+        "aria-live"
+      ]
+    }
+  ],
+  "keyboard": [
+    {
+      "id": "tab",
+      "overview": "Tab lands on the field, not a separate count control.",
+      "apply_when": "Moving through the form.",
+      "not_when": "The count is a fake tab stop."
+    }
+  ]
+}

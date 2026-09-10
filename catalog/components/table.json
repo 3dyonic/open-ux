@@ -1,0 +1,133 @@
+{
+  "id": "table",
+  "title": "Table",
+  "overview": "Rows and columns of comparable records. Caption, headers, one primary sort story.",
+  "apply_when": "Comparable records they scan, sort, or compare cell by cell.",
+  "not_when": "A layout grid of cards (content_card), a chart of relationships (chart), or a map.",
+  "keywords": [
+    "table",
+    "data table",
+    "spreadsheet",
+    "grid",
+    "th scope",
+    "caption",
+    "sortable"
+  ],
+  "vs": [
+    {
+      "id": "chart",
+      "why": "shape of a relationship, not cell lookup"
+    },
+    {
+      "id": "content_card",
+      "why": "teaser tiles, not a grid of cells"
+    }
+  ],
+  "variants": {
+    "role": [
+      {
+        "id": "default",
+        "overview": "Rows and columns of comparable records. Caption, headers, one primary sort story.",
+        "apply_when": "Comparable records they scan, sort, or compare cell by cell.",
+        "not_when": "A layout grid of cards (content_card), a chart, or a map."
+      }
+    ],
+    "size": [
+      {
+        "id": "large",
+        "overview": "Highest in the size hierarchy — the easiest to hit.",
+        "apply_when": "The view's main instance, or full-width on a small viewport.",
+        "not_when": "A dense toolbar or a third option next to the main control.",
+        "aliases": [
+          "lg",
+          "xl",
+          "full-width",
+          "block"
+        ]
+      },
+      {
+        "id": "medium",
+        "overview": "The default size — body use.",
+        "apply_when": "Ordinary use in forms, pages, and chrome.",
+        "not_when": "The only control on a mobile screen that should span the width.",
+        "aliases": [
+          "default",
+          "md"
+        ]
+      },
+      {
+        "id": "small",
+        "overview": "Lowest in the size hierarchy — densest.",
+        "apply_when": "Inline or chrome that sits beside content.",
+        "not_when": "The page's primary instance, or a control under 44×44.",
+        "aliases": [
+          "sm",
+          "xs",
+          "compact"
+        ]
+      }
+    ],
+    "composition": [
+      {
+        "id": "caption_headers",
+        "overview": "A caption names the table; headers name columns (and rows when needed).",
+        "apply_when": "Almost every data table.",
+        "not_when": "A grid of divs with bold first row."
+      }
+    ],
+    "state": [
+      {
+        "id": "default",
+        "overview": "Data is shown.",
+        "apply_when": "The query returned rows.",
+        "not_when": "An empty_state or skeleton instead."
+      },
+      {
+        "id": "sorted",
+        "overview": "One primary sort is active and named.",
+        "apply_when": "They chose a column sort.",
+        "not_when": "Arrows on every column with no current sort."
+      },
+      {
+        "id": "loading",
+        "overview": "Rows are in flight — prefer skeleton geometry over an empty table.",
+        "apply_when": "Fetching.",
+        "not_when": "A spinner with no table shape (loading_indicator vs skeleton)."
+      }
+    ]
+  },
+  "accessibility": [
+    {
+      "id": "caption",
+      "overview": "The table has a caption or equivalent name.",
+      "apply_when": "Any data table.",
+      "not_when": "A naked grid."
+    },
+    {
+      "id": "headers",
+      "overview": "Header cells are headers (scope / markup), not just bold.",
+      "apply_when": "Any data table.",
+      "not_when": "First row is styled bold in divs."
+    },
+    {
+      "id": "sort_named",
+      "overview": "The sorted column and direction are exposed.",
+      "apply_when": "A sortable table.",
+      "not_when": "A triangle with no text."
+    }
+  ],
+  "keyboard": [
+    {
+      "id": "tab",
+      "overview": "Tab lands on interactive cells (links, buttons, inputs), not every TD.",
+      "apply_when": "A table with actions.",
+      "not_when": "Every cell is a stop."
+    },
+    {
+      "id": "arrows",
+      "overview": "If this is a grid widget, arrows move the cell. A static table does not invent a grid.",
+      "apply_when": "An application grid.",
+      "not_when": "Arrows trap them in a static table."
+    }
+  ]
+}

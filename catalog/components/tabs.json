@@ -1,0 +1,150 @@
+{
+  "id": "tabs",
+  "title": "Tabs",
+  "overview": "Same-page panels under one view. One tablist; arrow keys; the selected tab owns the panel.",
+  "apply_when": "Related views of the same object that must stay on one URL.",
+  "not_when": "A nav of destinations (links), or a stepper (progress / task_list).",
+  "keywords": [
+    "tabs",
+    "tablist",
+    "tab panel",
+    "aria-selected",
+    "same-page panels"
+  ],
+  "vs": [
+    {
+      "id": "accordion",
+      "why": "stacked disclosure, not a tablist"
+    },
+    {
+      "id": "progress",
+      "why": "ordered steps, not peer panels"
+    }
+  ],
+  "variants": {
+    "role": [
+      {
+        "id": "default",
+        "overview": "Same-page panels under one view. One tablist; the selected tab owns the panel.",
+        "apply_when": "Related views of the same object that must stay on one URL.",
+        "not_when": "A nav of destinations (links), or a stepper (progress / task_list)."
+      }
+    ],
+    "size": [
+      {
+        "id": "large",
+        "overview": "Highest in the size hierarchy — the easiest to hit.",
+        "apply_when": "The view's main instance, or full-width on a small viewport.",
+        "not_when": "A dense toolbar or a third option next to the main control.",
+        "aliases": [
+          "lg",
+          "xl",
+          "full-width",
+          "block"
+        ]
+      },
+      {
+        "id": "medium",
+        "overview": "The default size — body use.",
+        "apply_when": "Ordinary use in forms, pages, and chrome.",
+        "not_when": "The only control on a mobile screen that should span the width.",
+        "aliases": [
+          "default",
+          "md"
+        ]
+      },
+      {
+        "id": "small",
+        "overview": "Lowest in the size hierarchy — densest.",
+        "apply_when": "Inline or chrome that sits beside content.",
+        "not_when": "The page's primary instance, or a control under 44×44.",
+        "aliases": [
+          "sm",
+          "xs",
+          "compact"
+        ]
+      }
+    ],
+    "composition": [
+      {
+        "id": "tablist",
+        "overview": "Tabs in a tablist; panels are labeled by the selected tab.",
+        "apply_when": "Almost every tabs.",
+        "not_when": "A row of links that change the URL (that is navigation)."
+      }
+    ],
+    "state": [
+      {
+        "id": "selected",
+        "overview": "This tab's panel is shown.",
+        "apply_when": "The active view.",
+        "not_when": "A visual underline with no aria-selected.",
+        "aliases": [
+          "aria-selected",
+          "active tab"
+        ]
+      },
+      {
+        "id": "unselected",
+        "overview": "This tab's panel is hidden.",
+        "apply_when": "The other views.",
+        "not_when": "Hidden panels still in the tab order."
+      },
+      {
+        "id": "focus",
+        "overview": "Keyboard is on a tab. Must stay visible.",
+        "apply_when": "Arrows or Tab onto the tablist.",
+        "not_when": "Focus outline removed."
+      }
+    ]
+  },
+  "accessibility": [
+    {
+      "id": "tablist",
+      "overview": "The set is a tablist; each tab names its panel.",
+      "apply_when": "Any tabs.",
+      "not_when": "A row of divs."
+    },
+    {
+      "id": "aria_selected",
+      "overview": "The selected tab is exposed.",
+      "apply_when": "Any tabs.",
+      "not_when": "Color alone."
+    },
+    {
+      "id": "focus_visible",
+      "overview": "The focused tab stays visible.",
+      "apply_when": "Keyboard.",
+      "not_when": "Outline removed."
+    }
+  ],
+  "keyboard": [
+    {
+      "id": "tab",
+      "overview": "Tab lands on the tablist, then into the selected panel — not every tab as a stop, unless the house uses automatic activation.",
+      "apply_when": "Moving through the page.",
+      "not_when": "Every tab is a stop and the panel is unreachable."
+    },
+    {
+      "id": "arrows",
+      "overview": "Arrows move between tabs.",
+      "apply_when": "The tablist is focused.",
+      "not_when": "Arrows leave the widget.",
+      "aliases": [
+        "arrow keys"
+      ]
+    },
+    {
+      "id": "enter",
+      "overview": "Enter (or automatic selection) shows the focused tab's panel.",
+      "apply_when": "A tab is focused.",
+      "not_when": "Enter follows a URL instead of switching panels."
+    },
+    {
+      "id": "home_end",
+      "overview": "Home/End jump to first/last tab when that is the house.",
+      "apply_when": "The tablist is focused.",
+      "not_when": "Those keys scroll the page."
+    }
+  ]
+}

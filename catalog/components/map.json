@@ -1,0 +1,119 @@
+{
+  "id": "map",
+  "title": "Map",
+  "overview": "Geography as a channel — never the only channel.",
+  "apply_when": "Location, catchment, routes; a text alternative must exist.",
+  "not_when": "A chart of non-geographic data, or a table of addresses with no map.",
+  "keywords": [
+    "map",
+    "gis",
+    "geography",
+    "markers",
+    "viewport"
+  ],
+  "vs": [
+    {
+      "id": "chart",
+      "why": "non-geographic relationship"
+    },
+    {
+      "id": "table",
+      "why": "the text alternative is often a table"
+    }
+  ],
+  "variants": {
+    "role": [
+      {
+        "id": "default",
+        "overview": "Geography as a channel — never the only channel.",
+        "apply_when": "Location, catchment, routes; a text alternative must exist.",
+        "not_when": "A chart of non-geographic data, or a table of addresses with no map."
+      }
+    ],
+    "size": [
+      {
+        "id": "large",
+        "overview": "Highest in the size hierarchy — the easiest to hit.",
+        "apply_when": "The view's main instance, or full-width on a small viewport.",
+        "not_when": "A dense toolbar or a third option next to the main control.",
+        "aliases": [
+          "lg",
+          "xl",
+          "full-width",
+          "block"
+        ]
+      },
+      {
+        "id": "medium",
+        "overview": "The default size — body use.",
+        "apply_when": "Ordinary use in forms, pages, and chrome.",
+        "not_when": "The only control on a mobile screen that should span the width.",
+        "aliases": [
+          "default",
+          "md"
+        ]
+      },
+      {
+        "id": "small",
+        "overview": "Lowest in the size hierarchy — densest.",
+        "apply_when": "Inline or chrome that sits beside content.",
+        "not_when": "The page's primary instance, or a control under 44×44.",
+        "aliases": [
+          "sm",
+          "xs",
+          "compact"
+        ]
+      }
+    ],
+    "composition": [
+      {
+        "id": "with_alternative",
+        "overview": "A list or table of the same places exists.",
+        "apply_when": "Any map used to choose or understand places.",
+        "not_when": "A map-only store finder."
+      }
+    ],
+    "state": [
+      {
+        "id": "default",
+        "overview": "The map and its alternative are available.",
+        "apply_when": "Places are ready.",
+        "not_when": "A grey box with no list."
+      },
+      {
+        "id": "loading",
+        "overview": "Tiles or markers in flight.",
+        "apply_when": "Fetching.",
+        "not_when": "An empty map labeled as no results (empty_state)."
+      }
+    ]
+  },
+  "accessibility": [
+    {
+      "id": "text_alternative",
+      "overview": "The same places exist as text.",
+      "apply_when": "Any map.",
+      "not_when": "Map-only."
+    },
+    {
+      "id": "controls_named",
+      "overview": "Zoom and pan controls have names.",
+      "apply_when": "Interactive maps.",
+      "not_when": "Gesture-only with no buttons."
+    }
+  ],
+  "keyboard": [
+    {
+      "id": "tab",
+      "overview": "Map controls and the alternative list are reachable.",
+      "apply_when": "An interactive map.",
+      "not_when": "The map eats Tab."
+    },
+    {
+      "id": "arrows",
+      "overview": "If the map is a widget, arrows pan when that is the house — the list remains the alternative.",
+      "apply_when": "The map widget is focused.",
+      "not_when": "Arrows only, no list."
+    }
+  ]
+}

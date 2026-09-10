@@ -1,0 +1,117 @@
+{
+  "id": "loading_indicator",
+  "title": "Loading indicator",
+  "overview": "Show that work is in progress when duration is unknown — region, list, or overlay wait. Not a layout placeholder.",
+  "apply_when": "Fetching a panel, syncing, a wait that is not the submit control itself.",
+  "not_when": "Spinner on Submit (button loading), placeholder geometry (skeleton), or step chrome (progress).",
+  "keywords": [
+    "loading",
+    "loader",
+    "spinner",
+    "busy",
+    "in progress wait",
+    "aria-busy",
+    "indeterminate"
+  ],
+  "vs": [
+    {
+      "id": "button",
+      "why": "loading state on the commit control"
+    },
+    {
+      "id": "skeleton",
+      "why": "preserve final layout, not an indeterminate spinner"
+    },
+    {
+      "id": "progress",
+      "why": "known steps, not unknown wait"
+    }
+  ],
+  "variants": {
+    "role": [
+      {
+        "id": "default",
+        "overview": "Unknown-duration wait on a region, list, or overlay. Not a layout placeholder.",
+        "apply_when": "Fetching a panel, syncing, a wait that is not the submit control itself.",
+        "not_when": "Spinner on Submit (button loading), placeholder geometry (skeleton), or step chrome (progress)."
+      }
+    ],
+    "size": [
+      {
+        "id": "large",
+        "overview": "Highest in the size hierarchy — the easiest to hit.",
+        "apply_when": "The view's main instance, or full-width on a small viewport.",
+        "not_when": "A dense toolbar or a third option next to the main control.",
+        "aliases": [
+          "lg",
+          "xl",
+          "full-width",
+          "block"
+        ]
+      },
+      {
+        "id": "medium",
+        "overview": "The default size — body use.",
+        "apply_when": "Ordinary use in forms, pages, and chrome.",
+        "not_when": "The only control on a mobile screen that should span the width.",
+        "aliases": [
+          "default",
+          "md"
+        ]
+      },
+      {
+        "id": "small",
+        "overview": "Lowest in the size hierarchy — densest.",
+        "apply_when": "Inline or chrome that sits beside content.",
+        "not_when": "The page's primary instance, or a control under 44×44.",
+        "aliases": [
+          "sm",
+          "xs",
+          "compact"
+        ]
+      }
+    ],
+    "composition": [
+      {
+        "id": "region",
+        "overview": "The busy graphic sits on the region that is waiting.",
+        "apply_when": "A panel or list.",
+        "not_when": "A page-modal spinner that hides everything with no name."
+      }
+    ],
+    "state": [
+      {
+        "id": "busy",
+        "overview": "Work is in progress. Duration unknown.",
+        "apply_when": "A request with no percent.",
+        "not_when": "A determinate bar (progress) or a skeleton.",
+        "aliases": [
+          "aria-busy",
+          "pending"
+        ]
+      }
+    ]
+  },
+  "accessibility": [
+    {
+      "id": "named_busy",
+      "overview": "The wait has a name (Loading, or the region is aria-busy and labeled).",
+      "apply_when": "Any loading indicator.",
+      "not_when": "A spinner with no text or accessible name."
+    },
+    {
+      "id": "live",
+      "overview": "Start (and end) of the wait can be announced without stealing typing focus.",
+      "apply_when": "A region refresh.",
+      "not_when": "Visual-only."
+    }
+  ],
+  "keyboard": [
+    {
+      "id": "tab",
+      "overview": "The spinner is not a tab stop. Controls that still work stay reachable.",
+      "apply_when": "A partial wait.",
+      "not_when": "The spinner traps focus."
+    }
+  ]
+}

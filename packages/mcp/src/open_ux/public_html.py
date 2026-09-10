@@ -6,7 +6,7 @@ from html import escape
 from pathlib import Path
 from typing import Any
 
-from open_ux.catalog import SOURCE_HOUSES
+from open_ux.rule_paths import SOURCES
 
 CANONICAL_ORIGIN = "https://open-ux.dev"
 _STATIC_DIR = Path(__file__).resolve().parent / "static"
@@ -27,7 +27,7 @@ Sitemap: https://open-ux.dev/sitemap.xml
 """
 
 _HOUSE_SUFFIXES = tuple(
-    sorted((f" — {label}" for label in SOURCE_HOUSES.values()), key=len, reverse=True)
+    sorted((f" — {label}" for label in SOURCES.values()), key=len, reverse=True)
 )
 
 
@@ -53,7 +53,7 @@ def guideline_display_id(guideline_id: str) -> str:
     if "." not in text:
         return text
     lane, rest = text.split(".", 1)
-    if rest and lane in SOURCE_HOUSES:
+    if rest and lane in SOURCES:
         return rest
     return text
 

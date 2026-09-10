@@ -163,6 +163,7 @@ class Card:
     hints: tuple[str, ...]
     facets: tuple[Facet, ...]
     provisional: bool = False
+    component: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -225,8 +226,11 @@ def _card(raw: Any) -> Card:
         raise JobTreeError("Each card needs an id.")
     when = raw.get("when") or []
     hints = raw.get("hints") or []
+    component = raw.get("component") or []
     if not isinstance(when, list) or not isinstance(hints, list):
         raise JobTreeError(f"Card {raw.get('id')!r} when/hints must be lists.")
+    if not isinstance(component, list):
+        raise JobTreeError(f"Card {raw.get('id')!r} component must be a list.")
     return Card(
         id=str(raw["id"]),
         title=str(raw.get("title") or raw["id"]),
@@ -235,6 +239,7 @@ def _card(raw: Any) -> Card:
         when=tuple(str(item) for item in when),
         reject=tuple(_reject(item) for item in (raw.get("reject") or [])),
         hints=tuple(str(item) for item in hints),
+        component=tuple(str(item) for item in component),
         facets=tuple(_facet(item) for item in (raw.get("facets") or [])),
         provisional=bool(raw.get("provisional")),
     )

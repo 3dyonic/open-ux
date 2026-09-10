@@ -1,0 +1,140 @@
+{
+  "id": "list_builder",
+  "title": "List builder",
+  "overview": "Assemble a list: available vs selected, not a free-text dump.",
+  "apply_when": "They must pick many items from a known set into an ordered or grouped selection.",
+  "not_when": "A handful of checkboxes, or a single select.",
+  "keywords": [
+    "list builder",
+    "available selected",
+    "shuttle",
+    "dual list",
+    "transfer list"
+  ],
+  "vs": [
+    {
+      "id": "checkbox",
+      "why": "few independent flags"
+    },
+    {
+      "id": "select",
+      "why": "one compact dropdown"
+    }
+  ],
+  "variants": {
+    "role": [
+      {
+        "id": "default",
+        "overview": "Assemble a list: available vs selected, not a free-text dump.",
+        "apply_when": "They must pick many items from a known set into an ordered or grouped selection.",
+        "not_when": "A handful of checkboxes, or a single select."
+      }
+    ],
+    "size": [
+      {
+        "id": "large",
+        "overview": "Highest in the size hierarchy — the easiest to hit.",
+        "apply_when": "The view's main instance, or full-width on a small viewport.",
+        "not_when": "A dense toolbar or a third option next to the main control.",
+        "aliases": [
+          "lg",
+          "xl",
+          "full-width",
+          "block"
+        ]
+      },
+      {
+        "id": "medium",
+        "overview": "The default size — body use.",
+        "apply_when": "Ordinary use in forms, pages, and chrome.",
+        "not_when": "The only control on a mobile screen that should span the width.",
+        "aliases": [
+          "default",
+          "md"
+        ]
+      },
+      {
+        "id": "small",
+        "overview": "Lowest in the size hierarchy — densest.",
+        "apply_when": "Inline or chrome that sits beside content.",
+        "not_when": "The page's primary instance, or a control under 44×44.",
+        "aliases": [
+          "sm",
+          "xs",
+          "compact"
+        ]
+      }
+    ],
+    "composition": [
+      {
+        "id": "two_lists",
+        "overview": "Available on one side, selected on the other, with move actions.",
+        "apply_when": "Classic shuttle.",
+        "not_when": "A multi select with no selected-summary."
+      }
+    ],
+    "state": [
+      {
+        "id": "default",
+        "overview": "Items can move.",
+        "apply_when": "The builder is available.",
+        "not_when": "Both lists empty with no empty_state."
+      },
+      {
+        "id": "focus",
+        "overview": "Keyboard is in a list or on a move action.",
+        "apply_when": "Tab/arrows in the builder.",
+        "not_when": "Focus outline removed."
+      },
+      {
+        "id": "disabled",
+        "overview": "Move is not available (nothing selected, or locked).",
+        "apply_when": "A disabled move action.",
+        "not_when": "Dropped from the tab order with no reason."
+      }
+    ]
+  },
+  "accessibility": [
+    {
+      "id": "list_named",
+      "overview": "Each list has a name (Available / Selected).",
+      "apply_when": "Any list builder.",
+      "not_when": "Two unlabeled boxes."
+    },
+    {
+      "id": "actions_named",
+      "overview": "Add/remove/up/down have names.",
+      "apply_when": "Move actions.",
+      "not_when": "Icon-only chevrons with no name."
+    },
+    {
+      "id": "hit_target",
+      "overview": "Actions are hittable.",
+      "apply_when": "Touch.",
+      "not_when": "12px arrows.",
+      "aliases": [
+        "44x44"
+      ]
+    }
+  ],
+  "keyboard": [
+    {
+      "id": "tab",
+      "overview": "Tab moves between lists and actions.",
+      "apply_when": "The builder is focused.",
+      "not_when": "The widget is pointer-only."
+    },
+    {
+      "id": "arrows",
+      "overview": "Arrows move within a list.",
+      "apply_when": "A list is focused.",
+      "not_when": "Arrows do nothing."
+    },
+    {
+      "id": "space",
+      "overview": "Space selects an item to move, or activates a move action.",
+      "apply_when": "A list or action is focused.",
+      "not_when": "Space scrolls the page."
+    }
+  ]
+}

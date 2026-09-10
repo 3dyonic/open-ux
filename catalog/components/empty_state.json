@@ -1,0 +1,118 @@
+{
+  "id": "empty_state",
+  "title": "Empty state",
+  "overview": "The region loaded; there is nothing to show. Say why and what they can do next.",
+  "apply_when": "Empty list, empty search, 404-in-a-region, first-run with no items.",
+  "not_when": "Still loading (skeleton / loading_indicator), or an error that blocked the load (alert).",
+  "keywords": [
+    "empty state",
+    "no results",
+    "nothing here",
+    "blank slate",
+    "zero state",
+    "first run"
+  ],
+  "vs": [
+    {
+      "id": "skeleton",
+      "why": "still loading; layout stand-in"
+    },
+    {
+      "id": "loading_indicator",
+      "why": "unknown-duration wait"
+    },
+    {
+      "id": "alert",
+      "why": "something went wrong, not empty-on-purpose"
+    }
+  ],
+  "variants": {
+    "role": [
+      {
+        "id": "default",
+        "overview": "The region loaded; there is nothing to show. Say why and what they can do next.",
+        "apply_when": "Empty list, empty search, 404-in-a-region, first-run with no items.",
+        "not_when": "Still loading (skeleton / loading_indicator), or an error that blocked the load (alert)."
+      }
+    ],
+    "size": [
+      {
+        "id": "large",
+        "overview": "Highest in the size hierarchy — the easiest to hit.",
+        "apply_when": "The view's main instance, or full-width on a small viewport.",
+        "not_when": "A dense toolbar or a third option next to the main control.",
+        "aliases": [
+          "lg",
+          "xl",
+          "full-width",
+          "block"
+        ]
+      },
+      {
+        "id": "medium",
+        "overview": "The default size — body use.",
+        "apply_when": "Ordinary use in forms, pages, and chrome.",
+        "not_when": "The only control on a mobile screen that should span the width.",
+        "aliases": [
+          "default",
+          "md"
+        ]
+      },
+      {
+        "id": "small",
+        "overview": "Lowest in the size hierarchy — densest.",
+        "apply_when": "Inline or chrome that sits beside content.",
+        "not_when": "The page's primary instance, or a control under 44×44.",
+        "aliases": [
+          "sm",
+          "xs",
+          "compact"
+        ]
+      }
+    ],
+    "composition": [
+      {
+        "id": "why_and_next",
+        "overview": "A reason plus a next step when a next step exists.",
+        "apply_when": "Almost every empty state.",
+        "not_when": "A blank white region."
+      }
+    ],
+    "state": [
+      {
+        "id": "shown",
+        "overview": "Loaded and empty.",
+        "apply_when": "The query returned zero.",
+        "not_when": "A skeleton still waiting."
+      }
+    ]
+  },
+  "accessibility": [
+    {
+      "id": "named",
+      "overview": "The empty region has a message AT can speak.",
+      "apply_when": "Any empty state.",
+      "not_when": "A blank card grid."
+    },
+    {
+      "id": "next_named",
+      "overview": "If there is a next step, it is a named control (button or link).",
+      "apply_when": "First-run or no-results with a clear action.",
+      "not_when": "A decorative illustration only."
+    }
+  ],
+  "keyboard": [
+    {
+      "id": "tab",
+      "overview": "The next-step control is in the tab order.",
+      "apply_when": "An empty state with an action.",
+      "not_when": "The message is not reachable and there is no control."
+    },
+    {
+      "id": "enter",
+      "overview": "Enter runs the next step when that control is focused.",
+      "apply_when": "A button or link in the empty state.",
+      "not_when": "Enter does nothing."
+    }
+  ]
+}

@@ -1,0 +1,218 @@
+{
+  "id": "radio",
+  "title": "Radio",
+  "overview": "One exclusive choice from a short visible set.",
+  "apply_when": "Two to about five options; the answer is one of them.",
+  "not_when": "Many options (select), many-of (checkbox), or immediate on/off (switch).",
+  "keywords": [
+    "radio",
+    "radios",
+    "radio group",
+    "radio button",
+    "type=radio",
+    "exclusive",
+    "fieldset",
+    "legend",
+    "divider or",
+    "conditionally reveal"
+  ],
+  "vs": [
+    {
+      "id": "checkbox",
+      "why": "more than one may be true"
+    },
+    {
+      "id": "select",
+      "why": "the list is long"
+    },
+    {
+      "id": "switch",
+      "why": "binary that applies now"
+    }
+  ],
+  "variants": {
+    "role": [
+      {
+        "id": "default",
+        "overview": "One exclusive choice from a short visible set.",
+        "apply_when": "Two to about five options.",
+        "not_when": "Many options (select) or many-of (checkbox)."
+      }
+    ],
+    "size": [
+      {
+        "id": "large",
+        "overview": "Highest in the size hierarchy — the easiest to hit.",
+        "apply_when": "The view's main instance, or full-width on a small viewport.",
+        "not_when": "A dense toolbar or a third option next to the main control.",
+        "aliases": [
+          "lg",
+          "xl",
+          "full-width",
+          "block"
+        ]
+      },
+      {
+        "id": "medium",
+        "overview": "The default size — body use.",
+        "apply_when": "Ordinary use in forms, pages, and chrome.",
+        "not_when": "The only control on a mobile screen that should span the width.",
+        "aliases": [
+          "default",
+          "md"
+        ]
+      },
+      {
+        "id": "small",
+        "overview": "Lowest in the size hierarchy — densest.",
+        "apply_when": "Inline or chrome that sits beside content.",
+        "not_when": "The page's primary instance, or a control under 44×44.",
+        "aliases": [
+          "sm",
+          "xs",
+          "compact"
+        ]
+      }
+    ],
+    "composition": [
+      {
+        "id": "label_beside",
+        "overview": "Label sits with the radio; radios stay left of labels where that is the house.",
+        "apply_when": "A visible set of options.",
+        "not_when": "A radio with no visible label."
+      },
+      {
+        "id": "with_reveal",
+        "overview": "Choosing an option reveals a related field.",
+        "apply_when": "A follow-up that only applies to that answer.",
+        "not_when": "Revealing content with no name change on the radio."
+      },
+      {
+        "id": "with_divider",
+        "overview": "An Or (or similar) splits the set.",
+        "apply_when": "None of the above / other as a last exclusive option.",
+        "not_when": "A divider that is itself a radio."
+      }
+    ],
+    "state": [
+      {
+        "id": "default",
+        "overview": "At rest, available, not selected or selected as stored.",
+        "apply_when": "The choice can change now.",
+        "not_when": "The group is disabled or submitting."
+      },
+      {
+        "id": "hover",
+        "overview": "Pointer is over the control — extra cue, not the only cue.",
+        "apply_when": "A mouse or trackpad can reach the control.",
+        "not_when": "Hover is the only selected cue."
+      },
+      {
+        "id": "focus",
+        "overview": "Keyboard or AT is on this option. Must stay visible.",
+        "apply_when": "Tab, arrow keys, or restoring focus after an error.",
+        "not_when": "Focus outline removed with no replacement.",
+        "aliases": [
+          "keyboard-focus",
+          ":focus-visible"
+        ]
+      },
+      {
+        "id": "disabled",
+        "overview": "This option is not available. Must stay perceivable.",
+        "apply_when": "An option that must not be chosen on this view.",
+        "not_when": "Hiding the only valid answer.",
+        "aliases": [
+          "unavailable",
+          "aria-disabled"
+        ]
+      },
+      {
+        "id": "checked",
+        "overview": "This option is on.",
+        "apply_when": "The stored or in-progress value includes this option.",
+        "not_when": "A visual tick with no accessible state.",
+        "aliases": [
+          "selected",
+          "aria-checked"
+        ]
+      }
+    ]
+  },
+  "accessibility": [
+    {
+      "id": "accessible_name",
+      "overview": "The option (and the group) have names AT can speak.",
+      "apply_when": "Any choice control, especially a group with no legend.",
+      "not_when": "The only name is placeholder copy next to an unlabeled box.",
+      "aliases": [
+        "aria-label",
+        "legend",
+        "fieldset"
+      ]
+    },
+    {
+      "id": "focus_visible",
+      "overview": "The focused option stays visible.",
+      "apply_when": "Keyboard or AT focus is on an option.",
+      "not_when": "Outline removed with no replacement.",
+      "aliases": [
+        "focus-ring"
+      ]
+    },
+    {
+      "id": "aria_disabled",
+      "overview": "Unavailable stays in the tab order and explains why.",
+      "apply_when": "An option that must not run.",
+      "not_when": "HTML disabled that drops the option from the keyboard flow.",
+      "aliases": [
+        "aria-disabled"
+      ]
+    },
+    {
+      "id": "hit_target",
+      "overview": "The hit area includes the label, not only the box.",
+      "apply_when": "Touch or a compact form.",
+      "not_when": "A 16px box with a disconnected label.",
+      "aliases": [
+        "44x44",
+        "touch-target"
+      ]
+    }
+  ],
+  "keyboard": [
+    {
+      "id": "tab",
+      "overview": "Tab lands on the group or the checked option in a logical order.",
+      "apply_when": "Moving through the form.",
+      "not_when": "Each option is a separate tab stop when arrows should move inside the group.",
+      "aliases": [
+        "tab-order"
+      ]
+    },
+    {
+      "id": "arrows",
+      "overview": "Arrow keys move between options in the group.",
+      "apply_when": "Radios, a listbox, or a segmented set.",
+      "not_when": "Arrows scroll the page because the group never took focus.",
+      "aliases": [
+        "arrow keys"
+      ]
+    },
+    {
+      "id": "space",
+      "overview": "Space toggles or selects the focused option.",
+      "apply_when": "The option is focused.",
+      "not_when": "Space scrolls the page instead of activating.",
+      "aliases": [
+        "spacebar"
+      ]
+    },
+    {
+      "id": "enter",
+      "overview": "Enter selects the focused option when that is the house pattern.",
+      "apply_when": "A listbox or menu of choices.",
+      "not_when": "Enter submits the whole form instead of picking."
+    }
+  ]
+}

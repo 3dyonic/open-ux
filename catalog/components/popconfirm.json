@@ -1,0 +1,143 @@
+{
+  "id": "popconfirm",
+  "title": "Popconfirm",
+  "overview": "A small confirm attached to the control. Prefer undo; if undo is invalid, confirm here — not a page modal.",
+  "apply_when": "Delete or similar when a full modal would drop context.",
+  "not_when": "A complex form (not in a modal either), or a hover hint (tooltip).",
+  "keywords": [
+    "popconfirm",
+    "pop confirm",
+    "inline confirm",
+    "confirm popover"
+  ],
+  "vs": [
+    {
+      "id": "modal",
+      "why": "blocking page overlay"
+    },
+    {
+      "id": "tooltip",
+      "why": "no decision required"
+    }
+  ],
+  "variants": {
+    "role": [
+      {
+        "id": "default",
+        "overview": "A small confirm attached to the control. Prefer undo; if undo is invalid, confirm here.",
+        "apply_when": "Delete or similar when a full modal would drop context.",
+        "not_when": "A complex form or a hover hint (tooltip)."
+      }
+    ],
+    "size": [
+      {
+        "id": "large",
+        "overview": "Highest in the size hierarchy — the easiest to hit.",
+        "apply_when": "The view's main instance, or full-width on a small viewport.",
+        "not_when": "A dense toolbar or a third option next to the main control.",
+        "aliases": [
+          "lg",
+          "xl",
+          "full-width",
+          "block"
+        ]
+      },
+      {
+        "id": "medium",
+        "overview": "The default size — body use.",
+        "apply_when": "Ordinary use in forms, pages, and chrome.",
+        "not_when": "The only control on a mobile screen that should span the width.",
+        "aliases": [
+          "default",
+          "md"
+        ]
+      },
+      {
+        "id": "small",
+        "overview": "Lowest in the size hierarchy — densest.",
+        "apply_when": "Inline or chrome that sits beside content.",
+        "not_when": "The page's primary instance, or a control under 44×44.",
+        "aliases": [
+          "sm",
+          "xs",
+          "compact"
+        ]
+      }
+    ],
+    "composition": [
+      {
+        "id": "anchored",
+        "overview": "Attached to the trigger, with confirm and cancel.",
+        "apply_when": "Almost every popconfirm.",
+        "not_when": "A page-center modal."
+      }
+    ],
+    "state": [
+      {
+        "id": "closed",
+        "overview": "The overlay is not shown. The trigger stays available.",
+        "apply_when": "The page is the place they work.",
+        "not_when": "The overlay is still in the tab order while hidden."
+      },
+      {
+        "id": "open",
+        "overview": "The overlay is shown and owns the conversation.",
+        "apply_when": "They must see or finish this layer.",
+        "not_when": "Content behind stays fully interactive when this overlay must trap.",
+        "aliases": [
+          "visible",
+          "expanded"
+        ]
+      },
+      {
+        "id": "focus",
+        "overview": "Focus is inside the overlay. Must stay visible.",
+        "apply_when": "Tab, open, or restoring after a nested popover.",
+        "not_when": "Focus dumped on the document behind.",
+        "aliases": [
+          "keyboard-focus"
+        ]
+      }
+    ]
+  },
+  "accessibility": [
+    {
+      "id": "accessible_name",
+      "overview": "The confirm has a name: what will happen.",
+      "apply_when": "Any popconfirm.",
+      "not_when": "A popover that only says OK."
+    },
+    {
+      "id": "focus_visible",
+      "overview": "The focused action stays visible.",
+      "apply_when": "Keyboard in the confirm.",
+      "not_when": "Outline removed."
+    },
+    {
+      "id": "focus_restore",
+      "overview": "After dismiss, focus returns to the trigger.",
+      "apply_when": "The trigger still exists.",
+      "not_when": "Focus dumped on the body."
+    }
+  ],
+  "keyboard": [
+    {
+      "id": "escape",
+      "overview": "Escape cancels.",
+      "apply_when": "The confirm is open.",
+      "not_when": "Escape confirms."
+    },
+    {
+      "id": "tab",
+      "overview": "Tab moves between confirm and cancel.",
+      "apply_when": "The confirm is open.",
+      "not_when": "Tab leaks to the whole page with no name."
+    },
+    {
+      "id": "enter",
+      "overview": "Enter runs the default action when a default exists — usually cancel for destructive.",
+      "apply_when": "The confirm is open.",
+      "not_when": "Enter silently deletes."
+    }
+  ]
+}

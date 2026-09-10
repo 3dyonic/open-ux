@@ -1,0 +1,191 @@
+{
+  "id": "modal",
+  "title": "Modal",
+  "overview": "A blocking layer that takes attention until they respond or dismiss.",
+  "apply_when": "They must decide or finish before returning to the page: confirm, short form, important failure.",
+  "not_when": "Low-priority status (toast), in-page expand (accordion), side sheet that should not trap the whole page (drawer), or a tiny confirm next to the control (popconfirm).",
+  "keywords": [
+    "modal",
+    "dialog",
+    "overlay",
+    "lightbox",
+    "blocking",
+    "modal dialog",
+    "alertdialog",
+    "focus trap",
+    "aria-modal"
+  ],
+  "vs": [
+    {
+      "id": "drawer",
+      "why": "side panel; page behind may stay usable"
+    },
+    {
+      "id": "toast",
+      "why": "does not fully interrupt"
+    },
+    {
+      "id": "popconfirm",
+      "why": "confirm next to the control, not a page modal"
+    },
+    {
+      "id": "alert",
+      "why": "in-page status, not a layer"
+    }
+  ],
+  "variants": {
+    "role": [
+      {
+        "id": "dialog",
+        "overview": "A blocking layer they must finish or dismiss.",
+        "apply_when": "Confirm, short form, important failure.",
+        "not_when": "A toast, drawer, or popconfirm."
+      },
+      {
+        "id": "alertdialog",
+        "overview": "A blocking layer that must be acknowledged before anything else.",
+        "apply_when": "Destructive confirm they cannot miss.",
+        "not_when": "A low-priority message."
+      }
+    ],
+    "size": [
+      {
+        "id": "large",
+        "overview": "Highest in the size hierarchy — the easiest to hit.",
+        "apply_when": "The view's main instance, or full-width on a small viewport.",
+        "not_when": "A dense toolbar or a third option next to the main control.",
+        "aliases": [
+          "lg",
+          "xl",
+          "full-width",
+          "block"
+        ]
+      },
+      {
+        "id": "medium",
+        "overview": "The default size — body use.",
+        "apply_when": "Ordinary use in forms, pages, and chrome.",
+        "not_when": "The only control on a mobile screen that should span the width.",
+        "aliases": [
+          "default",
+          "md"
+        ]
+      },
+      {
+        "id": "small",
+        "overview": "Lowest in the size hierarchy — densest.",
+        "apply_when": "Inline or chrome that sits beside content.",
+        "not_when": "The page's primary instance, or a control under 44×44.",
+        "aliases": [
+          "sm",
+          "xs",
+          "compact"
+        ]
+      }
+    ],
+    "composition": [
+      {
+        "id": "title_body_actions",
+        "overview": "A name, a body, and footer actions.",
+        "apply_when": "Almost every modal.",
+        "not_when": "A blank overlay with only an X."
+      },
+      {
+        "id": "form",
+        "overview": "A short form lives in the modal. Submit must actually submit.",
+        "apply_when": "A small set of fields.",
+        "not_when": "A complex multi-section form (not in a modal)."
+      }
+    ],
+    "state": [
+      {
+        "id": "closed",
+        "overview": "The overlay is not shown. The trigger stays available.",
+        "apply_when": "The page is the place they work.",
+        "not_when": "The overlay is still in the tab order while hidden."
+      },
+      {
+        "id": "open",
+        "overview": "The overlay is shown and owns the conversation.",
+        "apply_when": "They must see or finish this layer.",
+        "not_when": "Content behind stays fully interactive when this overlay must trap.",
+        "aliases": [
+          "visible",
+          "expanded"
+        ]
+      },
+      {
+        "id": "focus",
+        "overview": "Focus is inside the overlay. Must stay visible.",
+        "apply_when": "Tab, open, or restoring after a nested popover.",
+        "not_when": "Focus dumped on the document behind.",
+        "aliases": [
+          "keyboard-focus"
+        ]
+      }
+    ]
+  },
+  "accessibility": [
+    {
+      "id": "accessible_name",
+      "overview": "The overlay has a name AT can speak (title or aria-label).",
+      "apply_when": "Any dialog, drawer, or popconfirm.",
+      "not_when": "The only name is a decorative icon.",
+      "aliases": [
+        "aria-label",
+        "aria-labelledby"
+      ]
+    },
+    {
+      "id": "focus_visible",
+      "overview": "The focused control inside stays visible.",
+      "apply_when": "Keyboard or AT focus is in the overlay.",
+      "not_when": "Outline removed with no replacement."
+    },
+    {
+      "id": "aria_modal",
+      "overview": "A blocking overlay exposes modal so AT does not read the page behind.",
+      "apply_when": "A modal that traps until dismiss.",
+      "not_when": "A non-blocking drawer or popconfirm marked as modal.",
+      "aliases": [
+        "aria-modal"
+      ]
+    },
+    {
+      "id": "focus_restore",
+      "overview": "After close, focus returns to the trigger.",
+      "apply_when": "The overlay opened from a control that still exists.",
+      "not_when": "Focus dumped on the document body.",
+      "aliases": [
+        "return-focus"
+      ]
+    }
+  ],
+  "keyboard": [
+    {
+      "id": "escape",
+      "overview": "Escape dismisses when dismiss is allowed.",
+      "apply_when": "The overlay is open and cancel is valid.",
+      "not_when": "Escape submits or destroys work with no confirm.",
+      "aliases": [
+        "esc"
+      ]
+    },
+    {
+      "id": "tab",
+      "overview": "Tab cycles the overlay's controls. A modal does not leak to the page.",
+      "apply_when": "Moving inside the open overlay.",
+      "not_when": "Tab reaches the page behind a blocking modal.",
+      "aliases": [
+        "focus-trap",
+        "tab-order"
+      ]
+    },
+    {
+      "id": "enter",
+      "overview": "Enter runs the default action when a default exists.",
+      "apply_when": "A confirm or a focused control.",
+      "not_when": "Enter submits a complex form the person has not finished."
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "id": "breadcrumb",
+  "title": "Breadcrumb",
+  "overview": "A trail of ancestors so they know where this page sits.",
+  "apply_when": "Deep IA; they may jump up a level.",
+  "not_when": "Step progress in a wizard (progress / task_list) or primary nav (no record yet).",
+  "keywords": [
+    "breadcrumb",
+    "breadcrumbs",
+    "trail",
+    "path",
+    "aria-current",
+    "you are here"
+  ],
+  "vs": [
+    {
+      "id": "progress",
+      "why": "wizard steps, not site ancestry"
+    },
+    {
+      "id": "pagination",
+      "why": "pages of a list, not ancestors"
+    }
+  ],
+  "variants": {
+    "role": [
+      {
+        "id": "default",
+        "overview": "The path of where they are. Last item is the current page, not a loop.",
+        "apply_when": "Hierarchy deeper than one level.",
+        "not_when": "A primary nav, or tabs."
+      }
+    ],
+    "size": [
+      {
+        "id": "large",
+        "overview": "Highest in the size hierarchy — the easiest to hit.",
+        "apply_when": "The view's main instance, or full-width on a small viewport.",
+        "not_when": "A dense toolbar or a third option next to the main control.",
+        "aliases": [
+          "lg",
+          "xl",
+          "full-width",
+          "block"
+        ]
+      },
+      {
+        "id": "medium",
+        "overview": "The default size — body use.",
+        "apply_when": "Ordinary use in forms, pages, and chrome.",
+        "not_when": "The only control on a mobile screen that should span the width.",
+        "aliases": [
+          "default",
+          "md"
+        ]
+      },
+      {
+        "id": "small",
+        "overview": "Lowest in the size hierarchy — densest.",
+        "apply_when": "Inline or chrome that sits beside content.",
+        "not_when": "The page's primary instance, or a control under 44×44.",
+        "aliases": [
+          "sm",
+          "xs",
+          "compact"
+        ]
+      }
+    ],
+    "composition": [
+      {
+        "id": "list_of_links",
+        "overview": "Ancestors are links; the current page is text (or aria-current).",
+        "apply_when": "Almost every breadcrumb.",
+        "not_when": "Every item is the current page."
+      }
+    ],
+    "state": [
+      {
+        "id": "default",
+        "overview": "The path is visible.",
+        "apply_when": "They need to go up.",
+        "not_when": "The only orientation is a logo."
+      }
+    ]
+  },
+  "accessibility": [
+    {
+      "id": "nav_named",
+      "overview": "The trail is a named navigation (Breadcrumb).",
+      "apply_when": "Any breadcrumb.",
+      "not_when": "A raw list with no nav name."
+    },
+    {
+      "id": "aria_current",
+      "overview": "The last item is the current page.",
+      "apply_when": "Any breadcrumb.",
+      "not_when": "The last item is a link to this same URL with no current."
+    }
+  ],
+  "keyboard": [
+    {
+      "id": "tab",
+      "overview": "Tab lands on each ancestor link.",
+      "apply_when": "Moving through the trail.",
+      "not_when": "The trail is pictures only."
+    },
+    {
+      "id": "enter",
+      "overview": "Enter follows the ancestor.",
+      "apply_when": "A link is focused.",
+      "not_when": "Enter does nothing."
+    }
+  ]
+}

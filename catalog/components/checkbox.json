@@ -1,0 +1,206 @@
+{
+  "id": "checkbox",
+  "title": "Checkbox",
+  "overview": "One or many independent on/off choices, usually submitted with the form.",
+  "apply_when": "Agree, select many, optional extras. State waits for submit when it is part of a form.",
+  "not_when": "Exactly one of a short set (radio), immediate on/off (switch), or a long list (select).",
+  "keywords": [
+    "checkbox",
+    "checkboxes",
+    "tick",
+    "multi-select checkboxes",
+    "consent",
+    "type=checkbox",
+    "indeterminate",
+    "select all",
+    "terms",
+    "agree",
+    "aria-checked",
+    "fieldset"
+  ],
+  "vs": [
+    {
+      "id": "radio",
+      "why": "one exclusive choice"
+    },
+    {
+      "id": "switch",
+      "why": "takes effect immediately"
+    },
+    {
+      "id": "select",
+      "why": "many options in a compact list"
+    }
+  ],
+  "variants": {
+    "role": [
+      {
+        "id": "single",
+        "overview": "One independent flag.",
+        "apply_when": "Agree, remember me, optional extra.",
+        "not_when": "A group of exclusive options (radio)."
+      },
+      {
+        "id": "group",
+        "overview": "Many independent flags in one set.",
+        "apply_when": "Select all that apply.",
+        "not_when": "Exactly one of a short set (radio)."
+      }
+    ],
+    "size": [
+      {
+        "id": "large",
+        "overview": "Highest in the size hierarchy — the easiest to hit.",
+        "apply_when": "The view's main instance, or full-width on a small viewport.",
+        "not_when": "A dense toolbar or a third option next to the main control.",
+        "aliases": [
+          "lg",
+          "xl",
+          "full-width",
+          "block"
+        ]
+      },
+      {
+        "id": "medium",
+        "overview": "The default size — body use.",
+        "apply_when": "Ordinary use in forms, pages, and chrome.",
+        "not_when": "The only control on a mobile screen that should span the width.",
+        "aliases": [
+          "default",
+          "md"
+        ]
+      },
+      {
+        "id": "small",
+        "overview": "Lowest in the size hierarchy — densest.",
+        "apply_when": "Inline or chrome that sits beside content.",
+        "not_when": "The page's primary instance, or a control under 44×44.",
+        "aliases": [
+          "sm",
+          "xs",
+          "compact"
+        ]
+      }
+    ],
+    "composition": [
+      {
+        "id": "label_beside",
+        "overview": "The label is next to the box and both are one hit area.",
+        "apply_when": "Almost every checkbox.",
+        "not_when": "A tiny box with a disconnected label."
+      },
+      {
+        "id": "indeterminate",
+        "overview": "A parent shows mixed child state.",
+        "apply_when": "Select-all when some children are on.",
+        "not_when": "A third value they must submit as a mystery.",
+        "aliases": [
+          "mixed",
+          "aria-checked=mixed"
+        ]
+      }
+    ],
+    "state": [
+      {
+        "id": "default",
+        "overview": "At rest, available, not selected or selected as stored.",
+        "apply_when": "The choice can change now.",
+        "not_when": "The group is disabled or submitting."
+      },
+      {
+        "id": "hover",
+        "overview": "Pointer is over the control — extra cue, not the only cue.",
+        "apply_when": "A mouse or trackpad can reach the control.",
+        "not_when": "Hover is the only selected cue."
+      },
+      {
+        "id": "focus",
+        "overview": "Keyboard or AT is on this option. Must stay visible.",
+        "apply_when": "Tab, arrow keys, or restoring focus after an error.",
+        "not_when": "Focus outline removed with no replacement.",
+        "aliases": [
+          "keyboard-focus",
+          ":focus-visible"
+        ]
+      },
+      {
+        "id": "disabled",
+        "overview": "This option is not available. Must stay perceivable.",
+        "apply_when": "An option that must not be chosen on this view.",
+        "not_when": "Hiding the only valid answer.",
+        "aliases": [
+          "unavailable",
+          "aria-disabled"
+        ]
+      },
+      {
+        "id": "checked",
+        "overview": "This option is on.",
+        "apply_when": "The stored or in-progress value includes this option.",
+        "not_when": "A visual tick with no accessible state.",
+        "aliases": [
+          "selected",
+          "aria-checked"
+        ]
+      }
+    ]
+  },
+  "accessibility": [
+    {
+      "id": "accessible_name",
+      "overview": "The option (and the group) have names AT can speak.",
+      "apply_when": "Any choice control, especially a group with no legend.",
+      "not_when": "The only name is placeholder copy next to an unlabeled box.",
+      "aliases": [
+        "aria-label",
+        "legend",
+        "fieldset"
+      ]
+    },
+    {
+      "id": "focus_visible",
+      "overview": "The focused option stays visible.",
+      "apply_when": "Keyboard or AT focus is on an option.",
+      "not_when": "Outline removed with no replacement.",
+      "aliases": [
+        "focus-ring"
+      ]
+    },
+    {
+      "id": "aria_disabled",
+      "overview": "Unavailable stays in the tab order and explains why.",
+      "apply_when": "An option that must not run.",
+      "not_when": "HTML disabled that drops the option from the keyboard flow.",
+      "aliases": [
+        "aria-disabled"
+      ]
+    },
+    {
+      "id": "hit_target",
+      "overview": "The hit area includes the label, not only the box.",
+      "apply_when": "Touch or a compact form.",
+      "not_when": "A 16px box with a disconnected label.",
+      "aliases": [
+        "44x44",
+        "touch-target"
+      ]
+    }
+  ],
+  "keyboard": [
+    {
+      "id": "tab",
+      "overview": "Tab lands on each checkbox, or on the group then arrows — match the house.",
+      "apply_when": "Moving through the form.",
+      "not_when": "The box is skipped because of HTML disabled."
+    },
+    {
+      "id": "space",
+      "overview": "Space toggles the focused checkbox.",
+      "apply_when": "The checkbox is focused.",
+      "not_when": "Space scrolls the page.",
+      "aliases": [
+        "spacebar"
+      ]
+    }
+  ]
+}

@@ -22,7 +22,7 @@ SRC = ROOT / "packages" / "mcp" / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from open_ux.catalog import find_rule_file, iter_rule_files, rule_dest  # noqa: E402
+from open_ux.rule_paths import find_rule_file, iter_rule_files, rule_dest  # noqa: E402
 
 CATALOG = ROOT / "catalog"
 RULES = CATALOG / "rules"
@@ -342,6 +342,10 @@ def main(argv: list[str] | None = None) -> int:
                     },
                     {"id": "design_a_form", "why": "field labels"},
                     {"id": "write_the_interface", "why": "page voice or link destination text"},
+                    {
+                        "id": "compose_feedback",
+                        "why": "spinner / loading on the control itself",
+                    },
                 ],
                 "hints": [
                     "button",
@@ -374,11 +378,6 @@ def main(argv: list[str] | None = None) -> int:
                                 ids("compose_the_command_surface"),
                             )
                         ],
-                    },
-                    {
-                        "id": "action_state_is_silent",
-                        "title": "Action state is silent",
-                        "leaves": [_leaf("show_action_state", ids("show_action_state"))],
                     },
                     {
                         "id": "controls_are_hard_to_hit",
@@ -437,11 +436,11 @@ def main(argv: list[str] | None = None) -> int:
                 "id": "compose_feedback",
                 "title": "Compose feedback",
                 "container": "feedback_and_status",
-                "overview": "Say what happened, what is happening, or that there is nothing here.",
+                "overview": "Say what happened or what is happening.",
                 "when": [
                     "toast after save",
                     "loading state",
-                    "write the empty state",
+                    "spinner on a button",
                     "design a 404",
                     "error message for a failed payment or hard error",
                     "tone on failure",
@@ -449,11 +448,9 @@ def main(argv: list[str] | None = None) -> int:
                 "reject": [
                     {"id": "handle_form_errors", "why": "inline field errors"},
                     {"id": "build_a_multi_step_flow", "why": "progress inside a wizard"},
-                    {"id": "show_action_state", "why": ""},
                 ],
                 "hints": [
                     "toast",
-                    "empty",
                     "404",
                     "loading",
                     "spinner",
@@ -466,11 +463,6 @@ def main(argv: list[str] | None = None) -> int:
                         "id": "system_stayed_quiet_after_change",
                         "title": "System stayed quiet after change",
                         "leaves": [_leaf("announce_system_status", ids("announce_system_status"))],
-                    },
-                    {
-                        "id": "empty_or_dead_end_has_no_next_step",
-                        "title": "Empty or dead-end has no next step",
-                        "leaves": [_leaf("write_empty_state", ids("write_empty_state"))],
                     },
                     {
                         "id": "tone_fights_the_moment",
@@ -706,19 +698,6 @@ def main(argv: list[str] | None = None) -> int:
             },
         ],
     }
-
-    # reject ids must be Cards, not Leaves — fix the accidental leaf reject
-    for card in jobs["cards"]:
-        card["reject"] = [
-            item for item in card["reject"] if item.get("id") != "show_action_state"
-        ]
-        if card["id"] == "compose_feedback":
-            card["reject"].append(
-                {
-                    "id": "design_actions_and_ctas",
-                    "why": "button press / loading state on the control itself",
-                }
-            )
 
     (CATALOG / "jobs.json").write_text(
         json.dumps(jobs, indent=2, ensure_ascii=False) + "\n",

@@ -1,0 +1,149 @@
+{
+  "id": "accordion",
+  "title": "Accordion",
+  "overview": "In-page sections that expand and collapse without leaving the page.",
+  "apply_when": "Optional detail, FAQs, grouped content they may skip.",
+  "not_when": "A blocking decision (modal), a side sheet (drawer), or a hover peek (tooltip).",
+  "keywords": [
+    "accordion",
+    "disclosure",
+    "expand collapse",
+    "details summary",
+    "collapse",
+    "expand",
+    "aria-expanded"
+  ],
+  "vs": [
+    {
+      "id": "modal",
+      "why": "blocking overlay"
+    },
+    {
+      "id": "tabs",
+      "why": "peer panels, not stacked disclosures"
+    }
+  ],
+  "variants": {
+    "role": [
+      {
+        "id": "default",
+        "overview": "Stacked sections they open one or more of. Not a tablist.",
+        "apply_when": "Optional extra, FAQ, long content they do not need all at once.",
+        "not_when": "Peer panels that should stay on one URL as tabs, or a modal."
+      }
+    ],
+    "size": [
+      {
+        "id": "large",
+        "overview": "Highest in the size hierarchy — the easiest to hit.",
+        "apply_when": "The view's main instance, or full-width on a small viewport.",
+        "not_when": "A dense toolbar or a third option next to the main control.",
+        "aliases": [
+          "lg",
+          "xl",
+          "full-width",
+          "block"
+        ]
+      },
+      {
+        "id": "medium",
+        "overview": "The default size — body use.",
+        "apply_when": "Ordinary use in forms, pages, and chrome.",
+        "not_when": "The only control on a mobile screen that should span the width.",
+        "aliases": [
+          "default",
+          "md"
+        ]
+      },
+      {
+        "id": "small",
+        "overview": "Lowest in the size hierarchy — densest.",
+        "apply_when": "Inline or chrome that sits beside content.",
+        "not_when": "The page's primary instance, or a control under 44×44.",
+        "aliases": [
+          "sm",
+          "xs",
+          "compact"
+        ]
+      }
+    ],
+    "composition": [
+      {
+        "id": "heading_button",
+        "overview": "The header is a button (or equivalent) that names the section.",
+        "apply_when": "Almost every accordion.",
+        "not_when": "A clickable div with no name."
+      }
+    ],
+    "state": [
+      {
+        "id": "collapsed",
+        "overview": "The section body is hidden.",
+        "apply_when": "They have not opened it, or they closed it.",
+        "not_when": "Body hidden but still in the tab order."
+      },
+      {
+        "id": "expanded",
+        "overview": "The section body is shown.",
+        "apply_when": "They opened it.",
+        "not_when": "Expanded with no aria-expanded.",
+        "aliases": [
+          "open",
+          "aria-expanded=true"
+        ]
+      },
+      {
+        "id": "focus",
+        "overview": "Keyboard is on the header. Must stay visible.",
+        "apply_when": "Tab to a section.",
+        "not_when": "Focus outline removed."
+      }
+    ]
+  },
+  "accessibility": [
+    {
+      "id": "accessible_name",
+      "overview": "Each header names the section.",
+      "apply_when": "Any accordion.",
+      "not_when": "Section 1, Section 2."
+    },
+    {
+      "id": "aria_expanded",
+      "overview": "Open/closed is exposed on the header.",
+      "apply_when": "Any accordion.",
+      "not_when": "A chevron that is the only cue.",
+      "aliases": [
+        "aria-expanded"
+      ]
+    },
+    {
+      "id": "focus_visible",
+      "overview": "The focused header stays visible.",
+      "apply_when": "Keyboard.",
+      "not_when": "Outline removed."
+    }
+  ],
+  "keyboard": [
+    {
+      "id": "tab",
+      "overview": "Tab lands on each header.",
+      "apply_when": "Moving through the page.",
+      "not_when": "Headers are not focusable."
+    },
+    {
+      "id": "enter",
+      "overview": "Enter toggles the focused section.",
+      "apply_when": "A header is focused.",
+      "not_when": "Enter only works with a mouse."
+    },
+    {
+      "id": "space",
+      "overview": "Space toggles the focused section.",
+      "apply_when": "A header is focused.",
+      "not_when": "Space scrolls the page.",
+      "aliases": [
+        "spacebar"
+      ]
+    }
+  ]
+}

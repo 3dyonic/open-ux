@@ -1,0 +1,139 @@
+{
+  "id": "progress",
+  "title": "Progress indicator",
+  "overview": "Where they are in a multi-step or multi-task journey.",
+  "apply_when": "Wizard, onboarding, returnable tasks with named states.",
+  "not_when": "Unknown-duration wait (loading_indicator), placeholder geometry (skeleton), or spinner on Submit (button loading).",
+  "keywords": [
+    "progress",
+    "stepper",
+    "wizard",
+    "step indicator",
+    "todo doing done",
+    "steps",
+    "todo",
+    "doing",
+    "done",
+    "wizard steps",
+    "progress bar"
+  ],
+  "vs": [
+    {
+      "id": "loading_indicator",
+      "why": "wait with unknown duration, not step chrome"
+    },
+    {
+      "id": "task_list",
+      "why": "a list of tasks with statuses, not a linear step bar"
+    },
+    {
+      "id": "skeleton",
+      "why": "content not arrived yet"
+    }
+  ],
+  "variants": {
+    "role": [
+      {
+        "id": "steps",
+        "overview": "GOLD task/step chrome: todo / doing / done. Not a loading spinner.",
+        "apply_when": "A linear multi-step journey.",
+        "not_when": "A task list they complete in any order (task_list), or an unknown wait (loading_indicator)."
+      },
+      {
+        "id": "bar",
+        "overview": "A determinate bar when the amount of work is known.",
+        "apply_when": "Upload percent, known total.",
+        "not_when": "Unknown duration wait (loading_indicator)."
+      }
+    ],
+    "size": [
+      {
+        "id": "large",
+        "overview": "Highest in the size hierarchy — the easiest to hit.",
+        "apply_when": "The view's main instance, or full-width on a small viewport.",
+        "not_when": "A dense toolbar or a third option next to the main control.",
+        "aliases": [
+          "lg",
+          "xl",
+          "full-width",
+          "block"
+        ]
+      },
+      {
+        "id": "medium",
+        "overview": "The default size — body use.",
+        "apply_when": "Ordinary use in forms, pages, and chrome.",
+        "not_when": "The only control on a mobile screen that should span the width.",
+        "aliases": [
+          "default",
+          "md"
+        ]
+      },
+      {
+        "id": "small",
+        "overview": "Lowest in the size hierarchy — densest.",
+        "apply_when": "Inline or chrome that sits beside content.",
+        "not_when": "The page's primary instance, or a control under 44×44.",
+        "aliases": [
+          "sm",
+          "xs",
+          "compact"
+        ]
+      }
+    ],
+    "composition": [
+      {
+        "id": "named_steps",
+        "overview": "Each step has a name, not only a number.",
+        "apply_when": "A wizard.",
+        "not_when": "Step 1, Step 2 with no names."
+      }
+    ],
+    "state": [
+      {
+        "id": "todo",
+        "overview": "This step is not started.",
+        "apply_when": "Later in the journey.",
+        "not_when": "A skipped required step with no name."
+      },
+      {
+        "id": "doing",
+        "overview": "This step is the current one.",
+        "apply_when": "They are here.",
+        "not_when": "A highlight with no accessible current.",
+        "aliases": [
+          "current",
+          "in progress"
+        ]
+      },
+      {
+        "id": "done",
+        "overview": "This step is complete.",
+        "apply_when": "They already finished it.",
+        "not_when": "A tick that is the only cue and not named."
+      }
+    ]
+  },
+  "accessibility": [
+    {
+      "id": "named_current",
+      "overview": "The current step is named and exposed.",
+      "apply_when": "Any stepper.",
+      "not_when": "A colored pip only."
+    },
+    {
+      "id": "not_a_spinner",
+      "overview": "This is not an indeterminate wait graphic.",
+      "apply_when": "Step chrome.",
+      "not_when": "A looping spinner labeled progress (loading_indicator)."
+    }
+  ],
+  "keyboard": [
+    {
+      "id": "tab",
+      "overview": "If steps are links to completed steps, they are in the tab order. Decorative pips are not fake stops.",
+      "apply_when": "A stepper they can go back through.",
+      "not_when": "Every pip is a tab stop with no name."
+    }
+  ]
+}

@@ -1,0 +1,143 @@
+{
+  "id": "alert",
+  "title": "Alert",
+  "overview": "In-page status that stays with the content: success, warning, error, info.",
+  "apply_when": "They need to read recovery or a standing notice on this page, tied to the current goal.",
+  "not_when": "Sitewide strip (site_alert), floating auto-dismiss (toast), or post-submit field list (error_summary).",
+  "keywords": [
+    "alert",
+    "inline alert",
+    "notification",
+    "banner message",
+    "status",
+    "callout",
+    "status message",
+    "role=alert",
+    "info warning error success"
+  ],
+  "vs": [
+    {
+      "id": "toast",
+      "why": "transient, non-blocking"
+    },
+    {
+      "id": "site_alert",
+      "why": "one full-width site notice at the top"
+    },
+    {
+      "id": "error_summary",
+      "why": "form submit errors linked to fields"
+    }
+  ],
+  "variants": {
+    "role": [
+      {
+        "id": "info",
+        "overview": "In-page information with the content.",
+        "apply_when": "A note they should see with this section.",
+        "not_when": "A sitewide banner (site_alert) or a toast."
+      },
+      {
+        "id": "success",
+        "overview": "In-page success with the content.",
+        "apply_when": "This section's action worked.",
+        "not_when": "A transient toast for a global save."
+      },
+      {
+        "id": "warning",
+        "overview": "In-page warning with the content.",
+        "apply_when": "A risk on this page.",
+        "not_when": "A site emergency banner."
+      },
+      {
+        "id": "error",
+        "overview": "In-page error with the content. Field errors still live on fields.",
+        "apply_when": "A section failed to load, or a page-level problem next to the work.",
+        "not_when": "Only a toast, or field errors with no field association."
+      }
+    ],
+    "size": [
+      {
+        "id": "large",
+        "overview": "Highest in the size hierarchy — the easiest to hit.",
+        "apply_when": "The view's main instance, or full-width on a small viewport.",
+        "not_when": "A dense toolbar or a third option next to the main control.",
+        "aliases": [
+          "lg",
+          "xl",
+          "full-width",
+          "block"
+        ]
+      },
+      {
+        "id": "medium",
+        "overview": "The default size — body use.",
+        "apply_when": "Ordinary use in forms, pages, and chrome.",
+        "not_when": "The only control on a mobile screen that should span the width.",
+        "aliases": [
+          "default",
+          "md"
+        ]
+      },
+      {
+        "id": "small",
+        "overview": "Lowest in the size hierarchy — densest.",
+        "apply_when": "Inline or chrome that sits beside content.",
+        "not_when": "The page's primary instance, or a control under 44×44.",
+        "aliases": [
+          "sm",
+          "xs",
+          "compact"
+        ]
+      }
+    ],
+    "composition": [
+      {
+        "id": "with_content",
+        "overview": "Sits with the region it is about.",
+        "apply_when": "Almost every in-page alert.",
+        "not_when": "A floating toast."
+      }
+    ],
+    "state": [
+      {
+        "id": "shown",
+        "overview": "Visible with the content.",
+        "apply_when": "The status applies now.",
+        "not_when": "Hidden from AT."
+      }
+    ]
+  },
+  "accessibility": [
+    {
+      "id": "named_status",
+      "overview": "The alert has a name (status word + message).",
+      "apply_when": "Any alert.",
+      "not_when": "A colored box with no text."
+    },
+    {
+      "id": "live",
+      "overview": "If it appears after load, it is announced.",
+      "apply_when": "A status that was not in the first paint.",
+      "not_when": "Visual-only.",
+      "aliases": [
+        "role=alert",
+        "aria-live"
+      ]
+    },
+    {
+      "id": "not_sitewide",
+      "overview": "This is not the only full-width site banner.",
+      "apply_when": "In-page use.",
+      "not_when": "Stacked site alerts (site_alert)."
+    }
+  ],
+  "keyboard": [
+    {
+      "id": "tab",
+      "overview": "Links or actions inside are in the tab order. The alert itself is not a trap.",
+      "apply_when": "An alert with a next step.",
+      "not_when": "The whole page is skipped."
+    }
+  ]
+}

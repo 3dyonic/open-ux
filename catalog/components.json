@@ -1,0 +1,194 @@
+{
+  "components": [
+    {
+      "id": "accordion",
+      "title": "Accordion",
+      "path": "components/accordion.json"
+    },
+    {
+      "id": "alert",
+      "title": "Alert",
+      "path": "components/alert.json"
+    },
+    {
+      "id": "autocomplete",
+      "title": "Autocomplete",
+      "path": "components/autocomplete.json"
+    },
+    {
+      "id": "breadcrumb",
+      "title": "Breadcrumb",
+      "path": "components/breadcrumb.json"
+    },
+    {
+      "id": "button",
+      "title": "Button",
+      "path": "components/button.json"
+    },
+    {
+      "id": "character_count",
+      "title": "Character count",
+      "path": "components/character_count.json"
+    },
+    {
+      "id": "chart",
+      "title": "Chart",
+      "path": "components/chart.json"
+    },
+    {
+      "id": "checkbox",
+      "title": "Checkbox",
+      "path": "components/checkbox.json"
+    },
+    {
+      "id": "content_card",
+      "title": "Content card",
+      "path": "components/content_card.json"
+    },
+    {
+      "id": "date_input",
+      "title": "Date input",
+      "path": "components/date_input.json"
+    },
+    {
+      "id": "drawer",
+      "title": "Drawer",
+      "path": "components/drawer.json"
+    },
+    {
+      "id": "empty_state",
+      "title": "Empty state",
+      "path": "components/empty_state.json"
+    },
+    {
+      "id": "error_summary",
+      "title": "Error summary",
+      "path": "components/error_summary.json"
+    },
+    {
+      "id": "file_upload",
+      "title": "File upload",
+      "path": "components/file_upload.json"
+    },
+    {
+      "id": "link",
+      "title": "Link",
+      "path": "components/link.json"
+    },
+    {
+      "id": "list_builder",
+      "title": "List builder",
+      "path": "components/list_builder.json"
+    },
+    {
+      "id": "loading_indicator",
+      "title": "Loading indicator",
+      "path": "components/loading_indicator.json"
+    },
+    {
+      "id": "map",
+      "title": "Map",
+      "path": "components/map.json"
+    },
+    {
+      "id": "modal",
+      "title": "Modal",
+      "path": "components/modal.json"
+    },
+    {
+      "id": "pagination",
+      "title": "Pagination",
+      "path": "components/pagination.json"
+    },
+    {
+      "id": "password",
+      "title": "Password",
+      "path": "components/password.json"
+    },
+    {
+      "id": "popconfirm",
+      "title": "Popconfirm",
+      "path": "components/popconfirm.json"
+    },
+    {
+      "id": "progress",
+      "title": "Progress indicator",
+      "path": "components/progress.json"
+    },
+    {
+      "id": "radio",
+      "title": "Radio",
+      "path": "components/radio.json"
+    },
+    {
+      "id": "search",
+      "title": "Search",
+      "path": "components/search.json"
+    },
+    {
+      "id": "select",
+      "title": "Select",
+      "path": "components/select.json"
+    },
+    {
+      "id": "site_alert",
+      "title": "Site alert",
+      "path": "components/site_alert.json"
+    },
+    {
+      "id": "skeleton",
+      "title": "Skeleton",
+      "path": "components/skeleton.json"
+    },
+    {
+      "id": "slider",
+      "title": "Slider",
+      "path": "components/slider.json"
+    },
+    {
+      "id": "switch",
+      "title": "Switch",
+      "path": "components/switch.json"
+    },
+    {
+      "id": "table",
+      "title": "Table",
+      "path": "components/table.json"
+    },
+    {
+      "id": "tabs",
+      "title": "Tabs",
+      "path": "components/tabs.json"
+    },
+    {
+      "id": "task_list",
+      "title": "Task list",
+      "path": "components/task_list.json"
+    },
+    {
+      "id": "text_field",
+      "title": "Text field",
+      "path": "components/text_field.json"
+    },
+    {
+      "id": "textarea",
+      "title": "Textarea",
+      "path": "components/textarea.json"
+    },
+    {
+      "id": "time_input",
+      "title": "Time input",
+      "path": "components/time_input.json"
+    },
+    {
+      "id": "toast",
+      "title": "Toast",
+      "path": "components/toast.json"
+    },
+    {
+      "id": "tooltip",
+      "title": "Tooltip",
+      "path": "components/tooltip.json"
+    }
+  ]
+}

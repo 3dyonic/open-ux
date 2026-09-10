@@ -8,15 +8,13 @@ from jsonschema import ValidationError, validate
 
 from open_ux.catalog import (
     AGENT_KEYS,
-    CatalogError,
-    build_manifest,
     citations,
     load_catalog,
-    rule_file_stem,
-    rule_relpath,
-    source_house,
     validate_placement,
 )
+from open_ux.catalog_error import CatalogError
+from open_ux.manifest import build_manifest
+from open_ux.rule_paths import rule_file_stem, rule_relpath, rule_source
 from open_ux.jobs import (
     CARD_IDS,
     CONTAINER_IDS,
@@ -123,8 +121,6 @@ def test_empty_catalog_validates(tmp_env: Path) -> None:
     catalog = load_catalog(Settings.load(hosted=True))
     assert catalog.empty
     assert catalog.guidelines == []
-    assert catalog.jobs == []
-    assert catalog.patterns == []
 
 
 def test_invalid_catalog_rejected(tmp_env: Path, catalog_dir: Path) -> None:
@@ -525,7 +521,7 @@ def test_names_are_claim_then_source_and_folders_follow_category(
     assert (live_catalog / "rules" / "actions" / "ant" / "one-cta-per-screen.json").is_file()
 
     for guideline in catalog.guidelines:
-        _slug, label = source_house(guideline)
+        _slug, label = rule_source(guideline)
         assert guideline["name"].endswith(f" — {label}")
         assert not guideline["name"].endswith(" — Actions")
         assert not guideline["name"].endswith(" — Forms")
@@ -549,7 +545,7 @@ def test_tidwell_vercel_material_cite_the_house_page(live_catalog: Path) -> None
     catalog = load_catalog(Settings.load(hosted=True))
     seen = {slug: [] for slug in HOUSE_CITE_URLS}
     for guideline in catalog.guidelines:
-        slug, _label = source_house(guideline)
+        slug, _label = rule_source(guideline)
         if slug not in HOUSE_CITE_URLS:
             continue
         urls = [cite["url"] for cite in citations(guideline)]

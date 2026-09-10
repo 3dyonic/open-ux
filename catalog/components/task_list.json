@@ -1,0 +1,130 @@
+{
+  "id": "task_list",
+  "title": "Task list",
+  "overview": "A list of tasks with named statuses (Not started / Cannot start yet / In progress / Completed).",
+  "apply_when": "A multi-task journey they complete in any sensible order.",
+  "not_when": "A linear step bar (progress) or a data table of records (table).",
+  "keywords": [
+    "task list",
+    "task statuses",
+    "cannot start yet",
+    "not started",
+    "completed"
+  ],
+  "vs": [
+    {
+      "id": "progress",
+      "why": "step chrome / todo-doing-done indicator, not a task list"
+    }
+  ],
+  "variants": {
+    "role": [
+      {
+        "id": "default",
+        "overview": "A list of tasks with named statuses. Not the GOLD step indicator.",
+        "apply_when": "A multi-task journey they complete in any sensible order.",
+        "not_when": "A linear step bar (progress) or a data table of records (table)."
+      }
+    ],
+    "size": [
+      {
+        "id": "large",
+        "overview": "Highest in the size hierarchy — the easiest to hit.",
+        "apply_when": "The view's main instance, or full-width on a small viewport.",
+        "not_when": "A dense toolbar or a third option next to the main control.",
+        "aliases": [
+          "lg",
+          "xl",
+          "full-width",
+          "block"
+        ]
+      },
+      {
+        "id": "medium",
+        "overview": "The default size — body use.",
+        "apply_when": "Ordinary use in forms, pages, and chrome.",
+        "not_when": "The only control on a mobile screen that should span the width.",
+        "aliases": [
+          "default",
+          "md"
+        ]
+      },
+      {
+        "id": "small",
+        "overview": "Lowest in the size hierarchy — densest.",
+        "apply_when": "Inline or chrome that sits beside content.",
+        "not_when": "The page's primary instance, or a control under 44×44.",
+        "aliases": [
+          "sm",
+          "xs",
+          "compact"
+        ]
+      }
+    ],
+    "composition": [
+      {
+        "id": "named_tasks",
+        "overview": "Each task has a name and a status.",
+        "apply_when": "Almost every task list.",
+        "not_when": "A stepper labeled as a task list."
+      }
+    ],
+    "state": [
+      {
+        "id": "not_started",
+        "overview": "They can start this task.",
+        "apply_when": "Available work.",
+        "not_when": "A grey label with no name."
+      },
+      {
+        "id": "cannot_start",
+        "overview": "Something else must happen first.",
+        "apply_when": "A blocked task.",
+        "not_when": "A disabled row with no reason.",
+        "aliases": [
+          "cannot start yet"
+        ]
+      },
+      {
+        "id": "in_progress",
+        "overview": "They started this task.",
+        "apply_when": "Partially complete.",
+        "not_when": "A spinner (loading_indicator)."
+      },
+      {
+        "id": "completed",
+        "overview": "This task is done.",
+        "apply_when": "Finished work.",
+        "not_when": "A tick with no text status."
+      }
+    ]
+  },
+  "accessibility": [
+    {
+      "id": "status_named",
+      "overview": "Status is text (or equivalent), not color alone.",
+      "apply_when": "Any task list.",
+      "not_when": "Green/red rows only."
+    },
+    {
+      "id": "task_is_link",
+      "overview": "A startable task is a link (or button) to the work.",
+      "apply_when": "Not-started and in-progress.",
+      "not_when": "The whole row is text with no control."
+    }
+  ],
+  "keyboard": [
+    {
+      "id": "tab",
+      "overview": "Tab lands on each startable task.",
+      "apply_when": "Moving through the list.",
+      "not_when": "Completed and blocked tasks are confusing stops with no name."
+    },
+    {
+      "id": "enter",
+      "overview": "Enter opens the focused task.",
+      "apply_when": "A task control is focused.",
+      "not_when": "Enter does nothing."
+    }
+  ]
+}
