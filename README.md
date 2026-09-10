@@ -28,7 +28,7 @@ There is no server-side LLM. One shared catalog for every caller — an account 
 
 * **Cited catalog** — one JSON file per rule, with sources you can follow
 * **Public catalog site** — browse rules in the browser at [`/catalog`](https://open-ux.dev/catalog)
-* **Agent tools** — list / search / get guidelines; suggest situations; audit by need (job or ids)
+* **Agent tools** — list / search / get guidelines; suggest situations; pack by need (job or ids)
 * **Hosted or self-host** — waitlist + API key on the hosted service, or stdio locally with no auth
 * **Privacy-minded hosted mode** — we do not store UI payloads or prompts; see [Privacy](https://open-ux.dev/privacy). How we cite rules: [Sources](https://open-ux.dev/sources)
 
@@ -39,7 +39,7 @@ There is no server-side LLM. One shared catalog for every caller — an account 
 1. Request access at [open-ux.dev/invite](https://open-ux.dev/invite)
 2. After approval, redeem your invite for a bearer API key (`uxmcp_…`)
 3. Point your MCP client at the hosted `/mcp` endpoint with that key
-4. Call `list_guidelines` or `audit` with a job (no file upload)
+4. Call `list_guidelines` or `pack` with a job (no file upload)
 
 Tools return **401** without a key.
 
@@ -94,9 +94,9 @@ Cursor uses the same pack (`.cursor-plugin/` + `mcp.json`). Set `OPEN_UX_API_KEY
 | `list_guidelines` | Paged catalog index |
 | `search_guidelines` | Scope by jobs / lane; BM25-order by query; no rule bodies |
 | `get_guideline` | Full rule body by id |
-| `audit` | Say the need (`jobs` Card/container or `guideline_ids`); get matching criteria |
+| `pack` | Say the need (`jobs` Card/container or `guideline_ids`); get matching criteria |
 
-`audit` accepts optional `query` (orders the shelf), `limit` (page size, default 10), and `offset`. Follow `next_offset` until it is absent. It does **not** take a file target and does **not** return a host verdict (`host: "citations_only"`). Cited criteria help you decide; the decision is yours. If a query matches nothing, `query_fallback` is true and you still see the unfiltered shelf, paged.
+`pack` accepts optional `query` (ignored on the host — use `helpers/rank_pack.py` locally; see [`helpers/registry.json`](helpers/registry.json)), `limit` (page size, default 10), and `offset`. Follow `next_offset` until it is absent. It does **not** take a file target and does **not** return a host verdict (`host: "citations_only"`). Cited criteria help you decide; the decision is yours.
 
 ## Catalog layout
 
@@ -116,6 +116,8 @@ Rules are never forked per tenant. Soft size budget ~50–100 KB; hard ceiling ~
 ```
 packages/mcp      Python server (FastMCP)
 catalog/          shared rules + schema
+helpers/          optional agent helpers (registry.json)
+scripts/          contributor catalog maintenance
 clients/claude    thin Claude plugin
 docs/             privacy, assets
 ```

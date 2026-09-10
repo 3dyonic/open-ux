@@ -1,5 +1,5 @@
 ---
-description: Feedback container — toast, empty, 404, hard error.
+description: Feedback container — toast, loading, 404, hard error.
 ---
 
-Same `open-ux` skill. Example: empty state → `compose_feedback` then `Open-UX:audit` with `jobs=compose_feedback`. We return the pack. Do not send a file.
+Same `open-ux` skill. Example: toast after save → `compose_feedback` then `Open-UX:pack` with `jobs=compose_feedback`. We return the pack. Do not send a file.
