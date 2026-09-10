@@ -1,6 +1,6 @@
 # Scripts (contributors)
 
-Catalog and repo maintenance — **not** offered to agents. Agents use [`helpers/`](../helpers/) instead ([`helpers/registry.json`](../helpers/registry.json)).
+Catalog and repo maintenance — **not** offered to agents. Agents use **`Open-UX:*` MCP tools** plus optional LLM-local [`helpers/rank_pack.py`](../helpers/rank_pack.py) ([`helpers/registry.json`](../helpers/registry.json) → `agent_helpers`).
 
 | Script | Role |
 | --- | --- |

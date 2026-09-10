@@ -179,12 +179,12 @@ def test_skill_examples_and_tools_not_sermons() -> None:
     assert "Open-UX:get_guideline" in body
     assert "Open-UX:pack" in body
     assert "need in" in lower
-    assert "helpers/pack.py" in body
+    assert "helpers/rank_pack.py" in body
     assert "helpers/registry.json" in body
-    assert "available" in lower
-    assert "not required" in lower
+    assert "mcp" in lower
     assert "choice" in lower
-    assert body.index("Open-UX:pack") < body.index("helpers/pack.py")
+    assert "helpers/pack.py" not in body
+    assert "not skill path" in lower or "contributor_wire" in lower
 
 
 def test_skill_files_point_at_tools_not_catalog_bodies() -> None:
@@ -243,9 +243,9 @@ def test_commands_are_short_mcp_prompts() -> None:
     assert "Open-UX:pack" in pack_cmd
     assert "jobs=" in pack_cmd
     assert "guideline_ids" in pack_cmd
-    assert "helpers/pack.py" in pack_cmd
-    assert "available" in pack_cmd.lower()
-    assert pack_cmd.index("Open-UX:pack") < pack_cmd.index("helpers/pack.py")
+    assert "helpers/rank_pack.py" in pack_cmd
+    assert "helpers/pack.py" not in pack_cmd
+    assert pack_cmd.index("Open-UX:pack") < pack_cmd.index("helpers/rank_pack.py")
     list_cmd = (COMMANDS / "list.md").read_text(encoding="utf-8")
     get_cmd = (COMMANDS / "get.md").read_text(encoding="utf-8")
     assert "Open-UX:list_situations" in list_cmd
@@ -287,7 +287,7 @@ def test_no_audit_tool_name_in_docs() -> None:
                 assert "no " in line.lower(), f"{path.name} must not offer Open-UX:audit: {line!r}"
 
 
-def test_pack_helper_available_not_required() -> None:
+def test_contributor_pack_wire_and_skill_uses_mcp() -> None:
     assert PACK_SCRIPT.is_file()
     help_text = subprocess.check_output(
         [sys.executable, str(PACK_SCRIPT), "--help"],
@@ -319,9 +319,11 @@ def test_pack_helper_available_not_required() -> None:
     assert empty.returncode != 0
     tools = TOOLS_REFERENCE.read_text(encoding="utf-8")
     lower = tools.lower()
-    assert "helpers/pack.py" in tools
-    assert "not required" in lower
+    assert "helpers/rank_pack.py" in tools
+    assert "agent_helpers" in lower
+    assert "contributor_wire" in lower
     assert "Open-UX:pack" in tools
+    assert "not skill path" in lower
     for banned in ENFORCE_SCRIPT:
         assert banned not in lower
 
@@ -349,7 +351,7 @@ def test_optional_helper_is_protocol_not_path() -> None:
     assert payload["count"] >= 1
     tools = TOOLS_REFERENCE.read_text(encoding="utf-8")
     assert "mcp_call.py" in tools
-    assert "do not treat `mcp_call.py`" in tools.lower()
+    assert "contributor_wire" in tools.lower()
     assert "must run" not in tools.lower()
 
 

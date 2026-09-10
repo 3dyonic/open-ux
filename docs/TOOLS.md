@@ -32,6 +32,10 @@ Context helper for Cards and **`jobs=`** pulls — not a second catalog map. Rec
 
 **`get_component`** — One component record by `id`. Section switches (default on unless noted): `include_vs`, `include_variants`, `include_accessibility`, `include_keyboard`; opt-in: `include_keywords`, `include_used_on` (Cards and cites that stamp this id). False omits the key. Open when **`component[]`** on the Card or pack row names the id. Full fields: [`component.md`](../clients/claude/skills/open-ux/component.md).
 
-## CLI (no session)
+## LLM helper (agent, local)
 
-Same wire as MCP: `open-ux pack`, `open-ux cite` (`get_guideline`), `open-ux component` (`get_component`), `open-ux components` (`list_components`). Contributors: point MCP at [`clients/claude/mcp.stdio.json`](../clients/claude/mcp.stdio.json) for local stdio — current `pack` + component tools; hosted catches up on deploy.
+After **`pack`** returns a page, the model may run [`helpers/rank_pack.py`](../helpers/rank_pack.py) locally to reorder rows — host does not rank. See [`helpers/registry.json`](../helpers/registry.json) → `agent_helpers`. Not a substitute for MCP tools.
+
+## Contributor CLI (not agent path)
+
+Same wire as MCP for terminal/CI: `open-ux pack`, `open-ux cite`, `open-ux component`, `open-ux components`. Listed under `contributor_wire` in [`helpers/registry.json`](../helpers/registry.json). Agents use **`Open-UX:*` tools**. Local stdio: [`clients/claude/mcp.stdio.json`](../clients/claude/mcp.stdio.json).

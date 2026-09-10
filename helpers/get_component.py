@@ -3,7 +3,7 @@
 
 Same wire as Open-UX:get_component. Section switches mirror the MCP tool.
 
-Available, not required — Open-UX:get_component stays first-class.
+Contributor / terminal / CI — not the agent skill path. Agents use Open-UX:get_component.
 
 Usage (from repo root, after ``pip install open-ux`` or an editable install):
 

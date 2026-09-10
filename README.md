@@ -119,7 +119,7 @@ Rules are never forked per tenant. Soft size budget ~50–100 KB; hard ceiling ~
 ```
 packages/mcp      Python server (FastMCP)
 catalog/          shared rules + schema
-helpers/          optional agent helpers (registry.json)
+helpers/          LLM-local rank_pack + contributor wire (registry.json)
 scripts/          contributor catalog maintenance
 clients/claude    thin Claude plugin
 docs/             privacy, assets

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Reorder a pack page with BM25 over pack scan fields.
 
-Host still serves the pack (catalog order / facet page). This script is
-optional: the model can run it locally after Open-UX:pack. No winner,
-no scores. Fail-open if the query hits nothing.
+LLM-local helper: run after Open-UX:pack returns a page. The host serves
+catalog order / facet paging and does not rank. No winner, no scores.
+Fail-open if the query hits nothing. Not a substitute for Open-UX:pack.
 
 Blob: id, name, overview, apply_when, not_when, rule, hints, component,
 leaf, card, facet. Not description or pass/fail.

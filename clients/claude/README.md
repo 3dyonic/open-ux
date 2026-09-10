@@ -61,4 +61,4 @@ Compose, review, map, and cite are jobs in `skills/open-ux` — not extra packag
 
 Commands: `/list` `/get` `/pack`, plus aliases `/forms` `/actions` `/feedback`. Agent pointers: `agents/open-ux.md`.
 
-Same wire without a session: `open-ux pack --jobs …`, `open-ux component button --include-used-on`. Agent helpers: [`helpers/registry.json`](../../helpers/registry.json) — `helpers/pack.py`, `helpers/rank_pack.py`, `helpers/get_component.py`, `helpers/mcp_call.py` (available, not required). Do not invent a ranker. Contributor scripts live in `scripts/` — not the skill path.
+Agents use **`Open-UX:*` MCP tools** — host fetches catalog data. Optional LLM-local: [`helpers/rank_pack.py`](../../helpers/rank_pack.py) after pack ([`helpers/registry.json`](../../helpers/registry.json)). Contributor CLI/wire: `contributor_wire` in registry. Contributor scripts live in `scripts/` — not the skill path.

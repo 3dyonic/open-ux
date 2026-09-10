@@ -30,7 +30,7 @@ Fully qualified: `Open-UX:list_situations`, `Open-UX:get_situation`, `Open-UX:su
 
 Scope `pack` with `jobs=` (Card, Leaf, or `forms` / `actions` / `feedback`) or `guideline_ids`. The host returns cited criteria, not pass or fail. `/list` `/get` `/pack` stay on tools.
 
-Same wire without a session: `open-ux pack --jobs …` or helpers in [`helpers/registry.json`](helpers/registry.json) (`helpers/pack.py`, `helpers/rank_pack.py`, `helpers/get_component.py`). Available, not required. The product is the hosted tools. Do not invent a pack fetcher or BM25 ranker. Contributor logic stays in `scripts/` — not offered to agents.
+Agents use **`Open-UX:*` MCP tools** — the host fetches catalog data. One LLM-local helper after pack: [`helpers/rank_pack.py`](helpers/rank_pack.py) ([`helpers/registry.json`](helpers/registry.json) → `agent_helpers`). Do not substitute `helpers/pack.py` or CLI for MCP in agent sessions. Contributor wire and `open-ux` CLI: `contributor_wire` in registry. Contributor logic stays in `scripts/` — not offered to agents.
 
 ## One skill
 

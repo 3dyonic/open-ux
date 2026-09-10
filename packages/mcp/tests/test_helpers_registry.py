@@ -8,18 +8,20 @@ REGISTRY = ROOT / "helpers" / "registry.json"
 HELPERS = ROOT / "helpers"
 
 
-def test_registry_lists_agent_helpers_only() -> None:
+def test_registry_splits_agent_helpers_and_contributor_wire() -> None:
     data = json.loads(REGISTRY.read_text(encoding="utf-8"))
-    rows = data["helpers"]
-    assert len(rows) == 4
-    ids = {row["id"] for row in rows}
-    assert ids == {"pack", "rank_pack", "mcp_call", "get_component"}
-    for row in rows:
+    agent = data["agent_helpers"]
+    contrib = data["contributor_wire"]
+    assert len(agent) == 1
+    assert agent[0]["id"] == "rank_pack"
+    assert {row["id"] for row in contrib} == {"pack", "mcp_call", "get_component"}
+    for row in agent + contrib:
         path = ROOT / row["path"]
         assert path.is_file(), row["path"]
         assert row["path"].startswith("helpers/")
         assert "summary" in row
         assert "usage" in row
+    assert "not the agent skill path" in contrib[0]["summary"].lower()
 
 
 def test_scripts_dir_has_no_agent_helpers() -> None:
