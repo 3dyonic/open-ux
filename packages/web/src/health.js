@@ -107,6 +107,8 @@ export function healthPage() {
   return {
     title: "Health — Open UX",
     description: "Whether the hosted service is up, and whether the catalog is loaded.",
+    path: "/health",
+    index: false,
     body: ssr(
       "health",
       shell(

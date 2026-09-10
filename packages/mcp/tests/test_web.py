@@ -335,6 +335,27 @@ def test_vite_owns_consent_banner_and_gtm() -> None:
     assert "Accept the cookie banner" in policy
 
 
+def test_index_html_ships_search_head() -> None:
+    html = (
+        Path(__file__).resolve().parents[3] / "packages" / "web" / "index.html"
+    ).read_text(encoding="utf-8")
+    for needle in (
+        'rel="canonical"',
+        'name="robots"',
+        'property="og:title"',
+        'property="og:description"',
+        'property="og:image"',
+        'property="og:image:width"',
+        'property="og:locale"',
+        'name="twitter:card"',
+        'name="twitter:image"',
+        '"@type":"WebSite"',
+        "open-ux:head:start",
+        "open-ux:head:end",
+    ):
+        assert needle in html, needle
+
+
 def test_catalog_rule_page_embeds_rule_for_fetchers(
     monkeypatch, live_catalog: Path
 ) -> None:
@@ -352,6 +373,8 @@ def test_catalog_rule_page_embeds_rule_for_fetchers(
     assert response.headers["content-type"].startswith("text/html")
     body = response.text
     assert "<title>Button groups — Open UX</title>" in body
+    assert '<link rel="canonical" href="https://open-ux.dev/catalog/actions.button_groups">' in body
+    assert '"@type":"BreadcrumbList"' in body
     assert found["rule"] in body
     assert 'id="catalog-tree"' in body
     assert 'class="sidebar"' in body
@@ -404,6 +427,16 @@ def test_public_pages_embed_copy_for_fetchers(
         requested = client.get("/invite/requested")
         redeem = client.get("/invite/redeem")
     assert "<title>Open UX — Cited UX rules agents audit against</title>" in home.text
+    assert '<link rel="canonical" href="https://open-ux.dev/">' in home.text
+    assert '<meta property="og:site_name" content="Open UX">' in home.text
+    assert '<meta property="og:locale" content="en_US">' in home.text
+    assert '<meta property="og:image" content="https://open-ux.dev/icon.png">' in home.text
+    assert '<meta name="twitter:image" content="https://open-ux.dev/icon.png">' in home.text
+    assert "max-snippet:-1" in home.text
+    assert '"@type":"WebSite"' in home.text
+    assert '"@type":"Organization"' in home.text
+    assert "https://open-ux.dev/icon.png" in home.text
+    assert '<link rel="icon" href="/icon.png"' in home.text
     assert "<h1" in home.text and "Open UX</h1>" in home.text
     assert "Say the compose job" in home.text
     assert "<title>Catalog — Open UX</title>" in listing.text
@@ -424,6 +457,8 @@ def test_public_pages_embed_copy_for_fetchers(
     assert "Cookie settings" not in health.text
     assert 'id="consent-banner"' not in redeem.text
     assert "<title>Health — Open UX</title>" in health.text
+    assert 'name="robots" content="noindex, nofollow"' in health.text
+    assert 'rel="canonical"' not in health.text
     assert "Whether the hosted service is up" in health.text
     assert health_json.json()["catalog"]["guideline_count"] == len(catalog.guidelines)
     assert "<title>Request access — Open UX</title>" in invite.text

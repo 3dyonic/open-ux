@@ -17,11 +17,112 @@ const catalogRoot = process.env.OPEN_UX_CATALOG
   ? path.resolve(process.env.OPEN_UX_CATALOG)
   : path.resolve(webRoot, "../../catalog");
 
+const ORIGIN = "https://open-ux.dev";
+const SITE_NAME = "Open UX";
+const SITE_DESCRIPTION =
+  "Stop inventing UX rules from memory. Open UX is a shared, cited catalog agents list, fetch, and audit against.";
+const ICON = `${ORIGIN}/icon.png`;
+const HEAD_START = "<!-- open-ux:head:start -->";
+const HEAD_END = "<!-- open-ux:head:end -->";
+
 function escapeAttr(value) {
   return String(value)
     .replace(/&/g, "&amp;")
     .replace(/"/g, "&quot;")
     .replace(/</g, "&lt;");
+}
+
+function canonicalFor(pagePath) {
+  const text = pagePath && pagePath.startsWith("/") ? pagePath : `/${pagePath || ""}`;
+  if (text === "/" || text === "") return `${ORIGIN}/`;
+  return `${ORIGIN}${text.endsWith("/") ? text.slice(0, -1) : text}`;
+}
+
+function jsonLd(data) {
+  return JSON.stringify(data).replace(/</g, "\\u003c");
+}
+
+function siteGraph() {
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": `${ORIGIN}/#org`,
+        name: SITE_NAME,
+        url: `${ORIGIN}/`,
+        logo: ICON,
+        sameAs: ["https://github.com/3dyonic/open-ux"],
+        description: SITE_DESCRIPTION,
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${ORIGIN}/#website`,
+        name: SITE_NAME,
+        url: `${ORIGIN}/`,
+        publisher: { "@id": `${ORIGIN}/#org` },
+        description: SITE_DESCRIPTION,
+      },
+    ],
+  };
+}
+
+function breadcrumbList(crumbs) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: crumbs.map((crumb, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: crumb.name,
+      item: canonicalFor(crumb.path),
+    })),
+  };
+}
+
+function headTags(page) {
+  const indexable = page.index !== false;
+  const url = canonicalFor(page.path || "/");
+  const title = escapeAttr(page.title);
+  const description = escapeAttr(page.description);
+  const tags = [];
+  if (indexable) {
+    tags.push(
+      `<link rel="canonical" href="${escapeAttr(url)}">`,
+      '<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">',
+    );
+  } else {
+    tags.push('<meta name="robots" content="noindex, nofollow">');
+  }
+  tags.push(
+    `<meta property="og:site_name" content="${SITE_NAME}">`,
+    '<meta property="og:locale" content="en_US">',
+    '<meta property="og:type" content="website">',
+    `<meta property="og:title" content="${title}">`,
+    `<meta property="og:description" content="${description}">`,
+    `<meta property="og:url" content="${escapeAttr(url)}">`,
+    `<meta property="og:image" content="${ICON}">`,
+    '<meta property="og:image:type" content="image/png">',
+    '<meta property="og:image:width" content="512">',
+    '<meta property="og:image:height" content="512">',
+    `<meta property="og:image:alt" content="${SITE_NAME}">`,
+    '<meta name="twitter:card" content="summary">',
+    `<meta name="twitter:title" content="${title}">`,
+    `<meta name="twitter:description" content="${description}">`,
+    `<meta name="twitter:image" content="${ICON}">`,
+    `<meta name="twitter:image:alt" content="${SITE_NAME}">`,
+  );
+  if (indexable) {
+    if ((page.path || "/") === "/") {
+      tags.push(`<script type="application/ld+json">${jsonLd(siteGraph())}</script>`);
+    }
+    if (page.breadcrumbs && page.breadcrumbs.length) {
+      tags.push(
+        `<script type="application/ld+json">${jsonLd(breadcrumbList(page.breadcrumbs))}</script>`,
+      );
+    }
+  }
+  return tags.join("\n  ");
 }
 
 function fill(template, page) {
@@ -34,6 +135,14 @@ function fill(template, page) {
     /<meta name="description" content="[^"]*">/,
     `<meta name="description" content="${escapeAttr(page.description)}">`,
   );
+  const start = html.indexOf(HEAD_START);
+  const end = html.indexOf(HEAD_END);
+  if (start !== -1 && end !== -1) {
+    html =
+      html.slice(0, start) +
+      `${HEAD_START}\n  ${headTags(page)}\n  ${HEAD_END}` +
+      html.slice(end + HEAD_END.length);
+  }
   return html;
 }
 

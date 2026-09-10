@@ -9,6 +9,7 @@ export function landingPage() {
   return {
     title: TITLE,
     description: DESCRIPTION,
+    path: "/",
     body: ssr(
       "landing",
       shell(

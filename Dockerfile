@@ -7,6 +7,7 @@ COPY packages/web/ ./
 # git symlinks whose targets sit outside this stage.
 COPY packages/mcp/src/open_ux/static/logo-mark.svg ./public/logo-mark.svg
 COPY packages/mcp/src/open_ux/static/logo-mark.svg ./public/favicon.svg
+COPY packages/mcp/src/open_ux/static/icon.png ./public/icon.png
 COPY catalog /catalog
 ENV OPEN_UX_CATALOG=/catalog
 RUN npm run build

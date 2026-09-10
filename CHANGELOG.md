@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Search appearance: PNG favicon (`/icon.png`), canonical / Open Graph tags, WebSite + Organization JSON-LD, breadcrumbs on catalog pages. Sitemap adds `/invite`, `lastmod` from real file dates, and the homepage image entry. `noindex` on health and invite utility pages.
+
 - Helpers: **`pip install open-ux`** ships all helper tools as **`open-ux`** subcommands (`open-ux helpers list`; agent helper **`open-ux rank-pack`**). Registry bundled in wheel. MCP fetches catalog data; helpers run on the user's machine ([`helpers/README.md`](helpers/README.md)). No MCP helper resources — pip is the execution path.
 - Docs: components as context helper for Cards and jobs; ask-shapes table and Leaf-scoping examples in skill; `component.md` link and CLI aliases in [`docs/TOOLS.md`](docs/TOOLS.md); `widget` → `component` in tool docstrings; [`clients/claude/mcp.stdio.json`](clients/claude/mcp.stdio.json) for local MCP wire (`pack`, `get_component`).
 - Skill: hub + references `open-ux` package — hub [`SKILL.md`](clients/claude/skills/open-ux/SKILL.md) + glossary, ask-shapes, examples, shapes, cards, tools, connect, guideline, component references (progressive disclosure).

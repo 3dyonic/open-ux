@@ -82,6 +82,7 @@ export function sourcesPage() {
     title: "Sources — Open UX",
     description:
       "How Open UX writes catalog rules, and how to ask us to change or remove one.",
+    path: "/sources",
     body: ssr(
       "sources",
       shell(

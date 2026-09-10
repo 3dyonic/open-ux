@@ -8,9 +8,12 @@ from open_ux.catalog import load_catalog
 from open_ux.public_html import (
     FAVICON_HREF,
     FAVICON_PATH,
+    ICON_PNG_HREF,
+    ICON_PNG_PATH,
     ROBOTS_TXT,
     guideline_display_id,
     guideline_display_name,
+    render_sitemap,
 )
 from open_ux.server import create_mcp
 from open_ux.settings import Settings
@@ -28,6 +31,8 @@ def test_robots_txt_is_exact(tmp_env: Path) -> None:
     assert response.status_code == 200
     assert response.text == ROBOTS_TXT
     assert "Disallow: /mcp" in response.text
+    assert "Disallow: /health" in response.text
+    assert "Disallow: /invite/requested" in response.text
     assert "Sitemap: https://open-ux.dev/sitemap.xml" in response.text
 
 
@@ -39,17 +44,49 @@ def test_sitemap_lists_landing_catalog_and_remaining_ids(live_catalog: Path) -> 
     assert response.status_code == 200
     body = response.text
     assert 'xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"' in body
+    assert 'xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"' in body
     assert "<loc>https://open-ux.dev/</loc>" in body
     assert "<loc>https://open-ux.dev/catalog</loc>" in body
+    assert "<loc>https://open-ux.dev/invite</loc>" in body
     assert "<loc>https://open-ux.dev/privacy</loc>" in body
     assert "<loc>https://open-ux.dev/sources</loc>" in body
+    assert "<image:loc>https://open-ux.dev/icon.png</image:loc>" in body
+    assert "<lastmod>" in body
+    assert "<changefreq>" not in body
+    assert "<priority>" not in body
     for gid in ids:
         assert f"<loc>https://open-ux.dev/catalog/{gid}</loc>" in body
     assert "nng." not in body
     assert "apple." not in body
     assert "/404" not in body
     assert "/500" not in body
-    assert body.count("<url>") == 4 + len(ids)
+    assert "https://open-ux.dev/health" not in body
+    assert body.count("<url>") == 5 + len(ids)
+
+
+def test_sitemap_house_block_uses_protocol_fields() -> None:
+    xml = render_sitemap(
+        ["actions.button_groups"],
+        lastmods={
+            "/": "2026-09-10",
+            "/catalog": "2026-09-09",
+            "/catalog/actions.button_groups": "2026-09-08",
+        },
+    )
+    assert xml.startswith('<?xml version="1.0" encoding="UTF-8"?>')
+    home = """  <url>
+    <loc>https://open-ux.dev/</loc>
+    <lastmod>2026-09-10</lastmod>
+    <image:image>
+      <image:loc>https://open-ux.dev/icon.png</image:loc>
+      <image:title>Open UX</image:title>
+    </image:image>
+  </url>"""
+    assert home in xml
+    assert """  <url>
+    <loc>https://open-ux.dev/catalog/actions.button_groups</loc>
+    <lastmod>2026-09-08</lastmod>
+  </url>""" in xml
 
 
 def test_favicon_svg_is_served(tmp_env: Path) -> None:
@@ -70,6 +107,19 @@ def test_favicon_svg_is_served(tmp_env: Path) -> None:
     assert b"#FF4B00" in preferred.content
 
 
+def test_icon_png_is_served(tmp_env: Path) -> None:
+    assert ICON_PNG_PATH.is_file()
+    assert ICON_PNG_HREF == "/icon.png"
+    png = ICON_PNG_PATH.read_bytes()
+    assert png.startswith(b"\x89PNG\r\n\x1a\n")
+    assert png[16:24] == b"\x00\x00\x02\x00\x00\x00\x02\x00"  # 512x512
+    with _client() as client:
+        response = client.get("/icon.png")
+    assert response.status_code == 200
+    assert response.headers["content-type"].startswith("image/png")
+    assert response.content == png
+
+
 def test_web_public_mark_symlinks_to_package_static() -> None:
     root = Path(__file__).resolve().parents[3]
     mark = (root / "packages" / "mcp" / "src" / "open_ux" / "static" / "logo-mark.svg").resolve()
@@ -79,6 +129,10 @@ def test_web_public_mark_symlinks_to_package_static() -> None:
         assert path.is_symlink(), name
         assert path.resolve() == mark
         assert path.read_bytes() == mark.read_bytes()
+    icon = public / "icon.png"
+    assert icon.is_symlink()
+    assert icon.resolve() == ICON_PNG_PATH.resolve()
+    assert icon.read_bytes() == ICON_PNG_PATH.read_bytes()
 
 
 def test_dockerfile_overlays_web_public_mark() -> None:
@@ -86,6 +140,7 @@ def test_dockerfile_overlays_web_public_mark() -> None:
     src = "COPY packages/mcp/src/open_ux/static/logo-mark.svg"
     assert f"{src} ./public/logo-mark.svg" in text
     assert f"{src} ./public/favicon.svg" in text
+    assert "COPY packages/mcp/src/open_ux/static/icon.png ./public/icon.png" in text
     assert "COPY catalog /catalog" in text
     assert "OPEN_UX_CATALOG=/catalog" in text
 
