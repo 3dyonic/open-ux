@@ -81,6 +81,7 @@ def test_send_invite_email_resend_success(
     assert "/pip.svg" in body["html"]
     assert "Pip, Open UX mascot" in body["html"]
     assert "icon.png" in body["html"]
+    assert "MCP endpoint" not in body["html"]
 
 
 def test_send_invite_email_resend_failure_is_best_effort(

@@ -65,7 +65,6 @@ def _invite_body_html(*, redeem_url: str, expires_at: str, public_base: str) -> 
     expires_label = escape(_format_expires(expires_at))
     pip_url = escape(f"{public_base}/pip.svg", quote=True)
     icon_url = escape(f"{public_base}/icon.png", quote=True)
-    mcp_url = escape(f"{public_base}/mcp", quote=True)
     site_url = escape(public_base, quote=True)
 
     return f"""<!DOCTYPE html>
@@ -128,8 +127,6 @@ def _invite_body_html(*, redeem_url: str, expires_at: str, public_base: str) -> 
             <td style="padding:20px 28px 28px;font-family:{_FONT};font-size:12px;line-height:18px;color:{_COLOR_MUTED};border-top:1px solid {_COLOR_LINE};">
               <img src="{icon_url}" width="20" height="20" alt="" style="vertical-align:middle;margin-right:6px;border-radius:4px;">
               <a href="{site_url}" style="color:{_COLOR_INK};text-decoration:none;font-weight:600;">Open UX</a>
-              · cited UX rules for agents ·
-              <a href="{mcp_url}" style="color:{_COLOR_PIP};text-decoration:underline;">MCP endpoint</a>
             </td>
           </tr>
         </table>
