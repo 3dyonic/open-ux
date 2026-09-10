@@ -28,5 +28,11 @@
   "not_when": "Not for inventing rules about conditional step counts when evidence is insufficient.",
   "agent_hint": "Put step n of m in the title and heading; update the title on SPA step changes.",
   "description": "`document.title` and the heading above the form both include step n of m as text—for example `Stap 2 van 6`—not only a progress bar. Prefer text over a bar because it scales under zoom. If a SPA swaps steps on one URL, still update the title. Fail if step n of m is missing from the title or heading, the SPA keeps a stale title, or a house rule for conditional step counts is invented.",
-  "do_not_claim": "GOLD out-of-order progress indicator; GOV.UK test-without as a merge that drops title+heading; a house conditional-count rule."
+  "do_not_claim": "GOLD out-of-order progress indicator; GOV.UK test-without as a merge that drops title+heading; a house conditional-count rule.",
+  "component": [
+    "progress"
+  ],
+  "hints": [
+    "stepper"
+  ]
 }

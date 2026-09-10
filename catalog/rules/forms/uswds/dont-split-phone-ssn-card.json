@@ -28,5 +28,8 @@
   "not_when": "GOV.UK-style three-field memorable dates, which are a different pattern.",
   "agent_hint": "Keep phone, SSN, and card numbers in one field each; do not segment them.",
   "description": "USWDS keeps phone, SSN, and credit-card numbers in one input each so assistive technology gets a meaningful label and users paste or autofill without hopping boxes. Segmented fields force meaningless part labels and break common entry habits. This is distinct from GOV.UK three-field memorable dates. Splitting those numbers across multiple boxes fails; use a single field per number type.",
-  "do_not_claim": "Memorable date three fields as this row; input-mask (skipped as NN/g)."
+  "do_not_claim": "Memorable date three fields as this row; input-mask (skipped as NN/g).",
+  "component": [
+    "text_field"
+  ]
 }

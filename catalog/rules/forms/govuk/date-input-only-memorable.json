@@ -28,5 +28,8 @@
   "not_when": "Not for approximate, relative, or unknown exact dates users cannot recall.",
   "agent_hint": "Use day/month/year only for memorable or look-up dates, not unknowns.",
   "description": "Use the day/month/year date input when people know the date or can look it up—for example date of birth or a document date. The pattern is for memorable or look-up dates, not for dates the person will not know exactly. Asking for precise day, month, and year when they cannot supply them creates avoidable errors. Fail if date input is offered for a date they cannot provide precisely. Prefer another date pattern when the value is approximate, relative, or otherwise unknown.",
-  "do_not_claim": "Calendar vs approximate/relative (see `govuk.four-date-types` / `govuk.calendar-control-when`)."
+  "do_not_claim": "Calendar vs approximate/relative (see `govuk.four-date-types` / `govuk.calendar-control-when`).",
+  "component": [
+    "date_input"
+  ]
 }

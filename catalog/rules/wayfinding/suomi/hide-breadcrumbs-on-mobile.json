@@ -28,5 +28,11 @@
   "not_when": "Desktop deep hierarchies that still benefit from a breadcrumb trail.",
   "agent_hint": "Hide breadcrumbs on mobile; omit them on 2–3 level sites entirely.",
   "description": "Suomi.fi hides breadcrumbs on mobile so content starts higher and users avoid a hard motor target; dual-cite USWDS omit-on-home, noting this is viewport hide rather than home omit. Do not use breadcrumbs on two-to-three level sites at all. Showing a mobile trail, or breadcrumbs on a shallow site, fights the guidance and wastes scarce viewport space.",
-  "do_not_claim": "USWDS omit-on-home as this viewport-hide row."
+  "do_not_claim": "USWDS omit-on-home as this viewport-hide row.",
+  "component": [
+    "breadcrumb"
+  ],
+  "hints": [
+    "you are here"
+  ]
 }

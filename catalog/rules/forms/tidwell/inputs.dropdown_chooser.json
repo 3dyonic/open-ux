@@ -27,5 +27,8 @@
   "apply_when": "Bounded choice sets where recalling the exact string is unnecessary.",
   "not_when": "Open values with no fixed list to choose from.",
   "agent_hint": "Use a drop-down chooser for bounded sets; do not force memory typing.",
-  "description": "For a bounded choice set, let the user pick from a drop-down chooser rather than typing the value from memory. Pass when the bounded set is chosen from a drop-down or equivalent; fail when a bounded list is presented as a blank the user must recall. Prefer choosers that surface the options over memory-taxing free text."
+  "description": "For a bounded choice set, let the user pick from a drop-down chooser rather than typing the value from memory. Pass when the bounded set is chosen from a drop-down or equivalent; fail when a bounded list is presented as a blank the user must recall. Prefer choosers that surface the options over memory-taxing free text.",
+  "component": [
+    "select"
+  ]
 }

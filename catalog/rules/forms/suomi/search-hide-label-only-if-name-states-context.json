@@ -28,5 +28,11 @@
   "not_when": "Ordinary non-search fields, or generic accessible names that omit search context.",
   "agent_hint": "Hide the search label only if the accessible name states context; keep placeholder as extra.",
   "description": "Suomi.fi allows visually hiding a search label only when the accessible name states the search context (for example “Hae sivustolta” / “Hae toimipisteitä”). Placeholder remains visual extra; a clear control appears once there is a query; tiny single-page tools may omit search. This is not a general placeholder-as-label pass. A hidden label with a generic name, or ordinary fields citing this rule, fails.",
-  "do_not_claim": "NL header-search placeholder exception as this context-name row; GOLD search placement."
+  "do_not_claim": "NL header-search placeholder exception as this context-name row; GOLD search placement.",
+  "component": [
+    "search"
+  ],
+  "hints": [
+    "site search"
+  ]
 }

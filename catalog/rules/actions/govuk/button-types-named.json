@@ -26,6 +26,9 @@
   "overview": "Button type must match role: default, Start, secondary, or warning.",
   "apply_when": "Choosing button styling for primary, start, secondary, or destructive actions.",
   "not_when": "Not for link styling, or icon-only toolbar controls without a button role.",
+  "component": [
+    "button"
+  ],
   "agent_hint": "Match button type to role; use warning only for destructive actions.",
   "description": "Named button types keep action weight readable: default for ordinary actions, Start for the service start, secondary for lower emphasis, and warning for destructive work. The type must match the role so people can trust the styling. Fail if a destructive action uses default styling, or if Start, secondary, or warning is used for the wrong job. Apply when designing action and CTA buttons that need clear priority.",
   "do_not_claim": "One-primary (`actions.buttons.one_primary`); default-not-destructive as a second winner. Overlap with Actions 40: `actions.buttons.default_not_destructive`."

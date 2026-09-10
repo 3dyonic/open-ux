@@ -28,5 +28,11 @@
   "not_when": "Inventing a house timer outside 10s+hover, Spectrum ≥5s, or Ant 3s.",
   "agent_hint": "Apply one named duration school; for Suomi use 10s/hover, stick-then-float, no required response.",
   "description": "Suomi.fi toasts show for 10 seconds or while hovered, slide out the top, stick then float top-right on scroll, and cover success that needs no action. Dual-cite Spectrum ≥5s and Ant Message 3s without inventing a house seconds value. Collapse those schools into one unmarked timer, or require a response on a success toast, and the pattern fails. Pick one named school and apply it consistently.",
-  "do_not_claim": "A house toast duration; Notification first-load split as this row."
+  "do_not_claim": "A house toast duration; Notification first-load split as this row.",
+  "component": [
+    "toast"
+  ],
+  "hints": [
+    "snackbar"
+  ]
 }

@@ -28,5 +28,9 @@
   "not_when": "Not for plain-text agreement labels with no policy link.",
   "agent_hint": "Put policy links above the control or in a fieldset description via aria-describedby.",
   "description": "A privacy or terms link must sit outside the label—not “I agree to the [privacy policy]” as a nested `<a>`. Put the link above, or in a fieldset description via `aria-describedby`, so the label stays text-only and operable. Nested anchors inside the agreement label break voice control and screen readers. Fail when a privacy/terms `<a>` is nested inside the agreement `<label>`. Apply beside consent checkboxes that link to policy text.",
-  "do_not_claim": "Labels-contain-only-text as this privacy-pattern row; contact pages."
+  "do_not_claim": "Labels-contain-only-text as this privacy-pattern row; contact pages.",
+  "component": [
+    "checkbox",
+    "link"
+  ]
 }

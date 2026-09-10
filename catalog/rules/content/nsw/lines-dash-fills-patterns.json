@@ -28,5 +28,11 @@
   "not_when": "Colour-only line series, patterns on lines, or more than five fill patterns.",
   "agent_hint": "Use dash styles on lines and patterns on fills; cap patterns at four to five.",
   "description": "Lines use dash styles; fills use patterns (max 4–5). Solid, dashed, dotted, dash-dot for series. Hatch, dot, grid for bars, area, pie—not for lines. Two colours per pattern (fill plus stroke). Pass when line series use dash styles, area/bar/pie fills use ≤4–5 patterns with two colours each, and patterns are not used on lines. Fail when lines are colour-only with no dash, patterns sit on lines, or more than five fill patterns appear.",
-  "do_not_claim": "Established colour conventions as a merge that drops dash/pattern."
+  "do_not_claim": "Established colour conventions as a merge that drops dash/pattern.",
+  "component": [
+    "chart"
+  ],
+  "hints": [
+    "graph"
+  ]
 }

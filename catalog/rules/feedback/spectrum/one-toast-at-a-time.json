@@ -28,5 +28,11 @@
   "not_when": "Dialogs that need a response, or sitewide static banners and alerts.",
   "agent_hint": "Show one toast at a time; queue the rest by priority instead of stacking.",
   "description": "Toast feedback must stay readable: Spectrum allows only one toast on screen while consecutive or simultaneous messages wait in a priority queue. Stacking several visible toasts crowds the viewport and makes status hard to parse. Keep confirmations and simple notifications in that single-toast lane; escalate situations that need attention or a response to a dialog instead of piling more toasts.",
-  "do_not_claim": "Bundle copy (see `spectrum.bundle-instead-of-spam-toasts`)."
+  "do_not_claim": "Bundle copy (see `spectrum.bundle-instead-of-spam-toasts`).",
+  "component": [
+    "toast"
+  ],
+  "hints": [
+    "snackbar"
+  ]
 }

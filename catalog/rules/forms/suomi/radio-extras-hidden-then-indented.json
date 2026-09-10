@@ -28,5 +28,8 @@
   "not_when": "Independent checkbox groups, or always-visible related fields that are not radio extras.",
   "agent_hint": "Hide radio extras until selection; show them indented under the chosen radio.",
   "description": "Suomi.fi radio extras stay hidden until that radio is selected, then appear indented under it—not as a second radios-versus-checkboxes row. Showing extras for unselected radios, or placing them unindented and disconnected from the choice, breaks the progressive disclosure. Reveal only the selected branch and keep it visually nested under that radio so the relationship stays obvious.",
-  "do_not_claim": "Radios vs checkboxes vs toggle (already filed)."
+  "do_not_claim": "Radios vs checkboxes vs toggle (already filed).",
+  "component": [
+    "radio"
+  ]
 }

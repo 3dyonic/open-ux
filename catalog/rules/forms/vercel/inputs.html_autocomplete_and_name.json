@@ -27,5 +27,10 @@
   "apply_when": "HTML form controls that browsers or password managers may autofill.",
   "not_when": "Non-HTML or custom controls without name/autocomplete attributes.",
   "agent_hint": "Set autocomplete and a meaningful name on every relevant input.",
-  "description": "Inputs need both `autocomplete` and a meaningful `name`. Pass when those attributes are present and the name is meaningful; fail when `autocomplete` is missing or `name` is missing or meaningless. This supports browser autofill and assistive tooling without inventing extra attributes beyond the cited forms guidance. Apply to HTML controls browsers or password managers may fill."
+  "description": "Inputs need both `autocomplete` and a meaningful `name`. Pass when those attributes are present and the name is meaningful; fail when `autocomplete` is missing or `name` is missing or meaningless. This supports browser autofill and assistive tooling without inventing extra attributes beyond the cited forms guidance. Apply to HTML controls browsers or password managers may fill.",
+  "component": [
+    "autocomplete",
+    "date_input",
+    "text_field"
+  ]
 }

@@ -28,5 +28,8 @@
   "not_when": "Non-search text fields that need ordinary autocomplete.",
   "agent_hint": "Skip sensitive autocomplete on search; do not message empty search with required alone.",
   "description": "Search `autocomplete` can leak sensitive queries on shared machines; `autocorrect` / `spellcheck` conflict with server-side search correction; do not rely on `required` as the only empty-search message. Pass when search does not store sensitive queries via autocomplete, autocorrect/spellcheck are not fighting server-side correction, and empty search is not messaged by `required` alone; fail when search autocomplete stores queries on a shared machine or `required` is the only empty-search message.",
-  "do_not_claim": "Header-search placeholder exception; Suomi visually-hidden search label as this attributes row."
+  "do_not_claim": "Header-search placeholder exception; Suomi visually-hidden search label as this attributes row.",
+  "component": [
+    "search"
+  ]
 }

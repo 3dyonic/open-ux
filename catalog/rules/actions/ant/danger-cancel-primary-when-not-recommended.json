@@ -28,5 +28,8 @@
   "not_when": "Recommended safe primary actions that are not destructive deletes.",
   "agent_hint": "Style delete as danger; when discouraged, make Cancel primary—not delete.",
   "description": "If the user’s intention is delete, use danger styling to warn. When the system does not recommend deletion, Cancel should be the primary and destructive must not be the recommended path. Making delete primary while discouraging it collapses that safeguard. Pair with the general rule that primary is not destructive; Ant adds the Cancel-as-primary case when deletion is discouraged.",
-  "do_not_claim": "A second invented rule beyond this cite + `actions.buttons.default_not_destructive`. Overlap with Actions 40: `actions.buttons.default_not_destructive`."
+  "do_not_claim": "A second invented rule beyond this cite + `actions.buttons.default_not_destructive`. Overlap with Actions 40: `actions.buttons.default_not_destructive`.",
+  "component": [
+    "button"
+  ]
 }

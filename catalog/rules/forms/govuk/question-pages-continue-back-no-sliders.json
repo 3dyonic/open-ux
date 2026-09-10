@@ -28,5 +28,10 @@
   "not_when": "Not for settings screens that truly submit, or non-question content pages.",
   "agent_hint": "Label the primary Continue, include Back, and avoid range sliders for answers.",
   "description": "On question pages the primary action is Continue, not Submit jargon; include a Back link; and do not use a range slider as the answer control. Continue names the next step without sounding like a final commit, and Back keeps recovery obvious. Range sliders are a poor fit for precise answers on question pages. Fail for Submit wording on a question page, a missing Back link, or a range slider collecting the answer. Use this on GOV.UK-style question pages.",
-  "do_not_claim": "Fluent multistep “Next not Continue” as a winner — dual-cite by surface (question page vs multistep settings). Overlap with Actions 40: `actions.copy.verbs_for_actions`."
+  "do_not_claim": "Fluent multistep “Next not Continue” as a winner — dual-cite by surface (question page vs multistep settings). Overlap with Actions 40: `actions.copy.verbs_for_actions`.",
+  "component": [
+    "button",
+    "link",
+    "slider"
+  ]
 }

@@ -28,5 +28,8 @@
   "not_when": "Single-page forms without a Next/Save progress pair.",
   "agent_hint": "Style Next page primary and Save progress secondary on multi-page forms.",
   "description": "Multi-page pairing: Next page is primary; Save progress is secondary. Pass when on a multi-page form Next page is the primary control and Save progress is secondary; fail when Save progress is styled as primary or Next page is demoted below Save progress. Visual priority should match the forward path, not the optional save action.",
-  "do_not_claim": "The three-loudness scale as this pairing; NL last-step-is-send as this GOLD Next/Save pair."
+  "do_not_claim": "The three-loudness scale as this pairing; NL last-step-is-send as this GOLD Next/Save pair.",
+  "component": [
+    "button"
+  ]
 }

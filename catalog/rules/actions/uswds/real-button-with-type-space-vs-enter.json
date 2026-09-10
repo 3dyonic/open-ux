@@ -28,5 +28,8 @@
   "not_when": "Anchor navigation that should remain a real link, not a faux button.",
   "agent_hint": "Use <button> with explicit type; do not make <a> or <div> the only button control.",
   "description": "USWDS requires a real `<button>` with `type` set to `submit`, `button`, or `reset` (default is submit). Do not use `<a>` or `<div>` as the only control. Space triggers a button; Enter triggers a link—do not style links as buttons without that difference. Omitting `type` on a non-submit button so it submits, or relying on an anchor/div as the sole control, fails.",
-  "do_not_claim": "Hit-target size; one-primary."
+  "do_not_claim": "Hit-target size; one-primary.",
+  "component": [
+    "button"
+  ]
 }

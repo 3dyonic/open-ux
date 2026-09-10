@@ -28,5 +28,12 @@
   "not_when": "Missing tables for small sets, vague summaries, or titles without unit or timeframe.",
   "agent_hint": "Require timeframe-plus-unit title, meaningful insight, and a visible table for small sets.",
   "description": "Required anatomy: title with timeframe and unit, insight summary stating what the data means, and a data table. Use subtitle or callout, not both. Small datasets show a full semantic table visible, not behind a toggle. Pass when those hold. Fail when there is no table for a small set (or only behind a toggle), the summary is “the line goes up,” or the title omits unit or timeframe.",
-  "do_not_claim": "Tooltip-only values as this anatomy row."
+  "do_not_claim": "Tooltip-only values as this anatomy row.",
+  "component": [
+    "chart",
+    "table"
+  ],
+  "hints": [
+    "graph"
+  ]
 }

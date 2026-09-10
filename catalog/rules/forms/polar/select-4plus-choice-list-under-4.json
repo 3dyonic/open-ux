@@ -28,5 +28,11 @@
   "not_when": "Select for under four options or Choice list for a long 4+ set.",
   "agent_hint": "Use Choice list under four options; use Select for four or more on Polar surfaces.",
   "description": "On Polar surfaces, use Select for 4+ options and Choice list for fewer than 4—the named Polar cutoffs. Pass when fewer than 4 map to choice list and 4+ map to select. Fail when a Polar surface uses select for under 4, or choice list for a long 4+ set, as if the Polar cutoff were ignored.",
-  "do_not_claim": "A house number that beats NN/g handful / GOV.UK last-resort / USWDS <7 / M3 6 / Carbon 3. Overlap with Forms 54: `forms.inputs.match_control_and_size`, `dropdown_chooser`, `combo_box`, `offer_choices_not_only_text`."
+  "do_not_claim": "A house number that beats NN/g handful / GOV.UK last-resort / USWDS <7 / M3 6 / Carbon 3. Overlap with Forms 54: `forms.inputs.match_control_and_size`, `dropdown_chooser`, `combo_box`, `offer_choices_not_only_text`.",
+  "component": [
+    "select"
+  ],
+  "hints": [
+    "dropdown"
+  ]
 }

@@ -28,5 +28,8 @@
   "not_when": "Not for distant, memorable, or lookup dates better served by day/month/year.",
   "agent_hint": "Add a calendar only with text entry; never make date picking JS-only.",
   "description": "A calendar control is for dates close to today when weekday or week-of-month matters to the choice. It must never be the only path: always offer a text entry as well so the flow is not JS-only. Skip the calendar when those conditions do not hold. Fail if a calendar is used for unsuitable dates, or if there is no text-entry alternative beside it.",
-  "do_not_claim": "Date-input-for-memorable as the calendar rule."
+  "do_not_claim": "Date-input-for-memorable as the calendar rule.",
+  "component": [
+    "date_input"
+  ]
 }

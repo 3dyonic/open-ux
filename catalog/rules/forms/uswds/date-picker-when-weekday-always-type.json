@@ -28,5 +28,8 @@
   "not_when": "Birthdays or other well-known dates that should use memorable typed fields only.",
   "agent_hint": "Keep dates typeable; reserve pickers for scheduling; never auto-submit or use type=number days.",
   "description": "USWDS date pickers appear only when weekday or scheduling context helps, and typing always remains available. Birthdays and other well-known dates use memorable date fields. Hint `mm/dd/yyyy`. Do not auto-submit on picking a day. Dual-cite GOV.UK three-field memorable dates and USWDS month=select versus three text fields—both pass if labeled, with no auto-advance and day/year not `type=number`. Birthday-only calendars, auto-submit, auto-advance, or numeric day/year fail.",
-  "do_not_claim": "A winner between month-select and three text fields."
+  "do_not_claim": "A winner between month-select and three text fields.",
+  "component": [
+    "date_input"
+  ]
 }

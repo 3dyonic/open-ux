@@ -28,5 +28,11 @@
   "not_when": "Not for first-time uploads with no prior file in the session.",
   "agent_hint": "Offer reuse of an already-uploaded file; do not force a fresh disk pick each step.",
   "description": "When a journey already has an uploaded file, let the person reuse it on later steps instead of forcing another pick from disk. Reuse saves time and avoids accidental different-file uploads mid-flow. The control should make an already-uploaded file available where the journey still needs it. Fail if every step that needs the file requires a fresh upload with no reuse path. Use this in multi-step forms that ask for the same file more than once.",
-  "do_not_claim": "Multi-file builders (`forms.inputs.list_builder`)."
+  "do_not_claim": "Multi-file builders (`forms.inputs.list_builder`).",
+  "component": [
+    "file_upload"
+  ],
+  "hints": [
+    "drag and drop"
+  ]
 }

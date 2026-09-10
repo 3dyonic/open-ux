@@ -28,5 +28,11 @@
   "not_when": "Decorative charts or charting a single number a callout would carry.",
   "agent_hint": "Pick comparison, trend, proportion, distribution, or correlation first; skip decorative charts.",
   "description": "Start with the story, not the chart. Pick the relationship—comparison, trend, proportion, distribution, correlation—first. No chart if a single callout number or a table is clearer, the set is too small, or the chart needs heavy explanation. Not for decoration. Pass when chart type matches the relationship and no chart appears when a callout or table is clearer. Fail for decorative charts or charting a single number a callout would carry.",
-  "do_not_claim": "Anatomy (title/insight/table) as this story row."
+  "do_not_claim": "Anatomy (title/insight/table) as this story row.",
+  "component": [
+    "chart"
+  ],
+  "hints": [
+    "graph"
+  ]
 }

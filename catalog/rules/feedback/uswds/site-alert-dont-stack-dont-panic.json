@@ -28,5 +28,8 @@
   "not_when": "Form or task validation, or stacked separate site alerts.",
   "agent_hint": "Ship one site alert; nest extra messages as links; avoid panic-red as the only weight.",
   "description": "USWDS allows one full-width site alert near the top. Do not stack alerts; multiple messages become a list of links inside a single site alert. Positioning already gives weight—do not rely on heavy red or orange panic colour. Dual-cite GOV.UK notification banner and system-status guidance: sitewide static, never form validation, never stacked. Stacked alerts, validation misuse, or panic colour as the only signal fail.",
-  "do_not_claim": "Page alert type-word (`uswds.alert-first-word-is-type`); live system-status toasts."
+  "do_not_claim": "Page alert type-word (`uswds.alert-first-word-is-type`); live system-status toasts.",
+  "component": [
+    "site_alert"
+  ]
 }

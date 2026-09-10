@@ -28,5 +28,8 @@
   "not_when": "Desktop pickers, or small option sets that fit a compact popover.",
   "agent_hint": "On mobile, switch from popover to tray when the option count would overwhelm.",
   "description": "On mobile, Spectrum picker menus live in a popover or a tray. Prefer a tray when the option count would overwhelm a popover, rather than forcing a large set into a cramped overlay. Small sets can stay in a popover; large catalogs need the tray pattern so choices remain scannable. Apply on mobile picker containers; do not force tray on desktop or on tiny lists that already fit.",
-  "do_not_claim": "A house option-count cutoff."
+  "do_not_claim": "A house option-count cutoff.",
+  "component": [
+    "select"
+  ]
 }

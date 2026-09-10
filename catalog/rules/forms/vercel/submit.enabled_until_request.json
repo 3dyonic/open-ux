@@ -27,5 +27,9 @@
   "apply_when": "Submit actions that fire a network or async request.",
   "not_when": "Client-only saves with no request that needs in-flight feedback.",
   "agent_hint": "Leave Submit enabled until request start; show a spinner while in flight.",
-  "description": "Keep Submit enabled until the request starts; then show a spinner on the request. Pass when Submit stays enabled until the request starts and an in-flight spinner shows; fail when Submit is disabled before the request starts, or in-flight has no spinner. Premature disable blocks last-second correction; a missing spinner hides that work is in flight."
+  "description": "Keep Submit enabled until the request starts; then show a spinner on the request. Pass when Submit stays enabled until the request starts and an in-flight spinner shows; fail when Submit is disabled before the request starts, or in-flight has no spinner. Premature disable blocks last-second correction; a missing spinner hides that work is in flight.",
+  "component": [
+    "button",
+    "loading_indicator"
+  ]
 }

@@ -28,5 +28,8 @@
   "not_when": "Feature/promo patterns — those are not the supertask control.",
   "agent_hint": "One supertask for the main task; link-style for rare actions; danger only if real.",
   "description": "A Canada.ca supertask button appears once and launches the page’s main task (apply, calculator, wizard). Never use it for promotion — use feature patterns instead. Keep primary at most one per page (dual-cite Actions). Link-style buttons cover infrequent actions (restart calculator) with a larger hit area than a text link. Danger only when consequences are real. Fail two supertasks, promo-as-supertask, two primaries, or danger without real consequences.",
-  "do_not_claim": "A second primary class that beats Actions one-primary."
+  "do_not_claim": "A second primary class that beats Actions one-primary.",
+  "component": [
+    "button"
+  ]
 }

@@ -28,5 +28,11 @@
   "not_when": "Non-white canvas, rainbow labelled single-series bars, or unapproved palettes.",
   "agent_hint": "Use white canvas and one colour for labelled single-series; NSW palettes only.",
   "description": "White canvas (#FFFFFF); single colour when bars are already labelled. Multi-colour only for multiple series or a highlight. Approved NSW / Aboriginal chart-mark palettes only (pre-validated on white). Start with theme 01 then 02. Pass when the chart sits on white, labelled single-series bars use one colour, extra colours only for series or highlight, and only NSW/Aboriginal palettes are used. Fail for non-white canvas, rainbow single-series labelled bars, or an unapproved palette.",
-  "do_not_claim": "Established conventions (next row) as a free-for-all palette."
+  "do_not_claim": "Established conventions (next row) as a free-for-all palette.",
+  "component": [
+    "chart"
+  ],
+  "hints": [
+    "graph"
+  ]
 }

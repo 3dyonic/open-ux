@@ -28,5 +28,8 @@
   "not_when": "Tiny single-page sites that omit search, or advanced search forced as the default.",
   "agent_hint": "Put a simple search field on the home page; do not default to advanced search.",
   "description": "USWDS home pages provide a search box, not a search link that sends people elsewhere before they can type. Advanced search is not the default because most people use one or two terms and advanced-as-default increases mistakes. Tiny or single-page sites may omit search. A home that only links away to search, or that opens on advanced search, fails the pattern.",
-  "do_not_claim": "27-character width as this row."
+  "do_not_claim": "27-character width as this row.",
+  "component": [
+    "search"
+  ]
 }

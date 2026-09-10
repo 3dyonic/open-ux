@@ -27,5 +27,8 @@
   "apply_when": "Presenting a few related actions side by side or stacked.",
   "not_when": "A large command set needs an action panel or overflow menu.",
   "agent_hint": "Cluster related buttons; split past three or four into further groups.",
-  "description": "Related actions read as one unit when they sit in a small horizontal or vertical cluster rather than scattering across the chrome. Keep each cluster to about three or four buttons; past that, split into further groups so the strip stays scannable. Apply this to peer actions that share a role; do not force a huge tool set into one undifferentiated strip when an action panel or menu is the better home."
+  "description": "Related actions read as one unit when they sit in a small horizontal or vertical cluster rather than scattering across the chrome. Keep each cluster to about three or four buttons; past that, split into further groups so the strip stays scannable. Apply this to peer actions that share a role; do not force a huge tool set into one undifferentiated strip when an action panel or menu is the better home.",
+  "component": [
+    "button"
+  ]
 }

@@ -28,5 +28,8 @@
   "not_when": "Long help links, multi-sentence instructions, or icon-only controls with accessible names.",
   "agent_hint": "Cap button labels at three verb-first words; full-width mobile, content-width desktop.",
   "description": "Suomi.fi buttons use at most three words, start with a verb, capitalize the first letter, span the viewport on mobile, and shrink to content on desktop. Inverted variants stay off images unless contrast holds. Longer labels, fixed wide desktop blocks, mobile buttons that do not span, or inverted-on-image without contrast fail the pattern. Dual-cite explicit-verb action guidance; the unique bits here are the three-word cap and mobile full-width.",
-  "do_not_claim": "One primary per view; Actions explicit-verb without the three-word cap."
+  "do_not_claim": "One primary per view; Actions explicit-verb without the three-word cap.",
+  "component": [
+    "button"
+  ]
 }
