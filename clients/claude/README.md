@@ -2,7 +2,7 @@
 
 ![Open UX](assets/hero.svg)
 
-Cited UX rules agents audit against. Pick a Situation Card, then get a criteria pack.
+Cited UX rules agents audit against. Open Cards that fit, then get a criteria pack. You decide.
 
 Homepage: [open-ux.dev](https://open-ux.dev)
 
@@ -44,10 +44,10 @@ No key; same catalog. Point MCP clients at local stdio, or hosted `https://open-
 
 Compose, review, map, and cite are jobs in `skills/open-ux` — not extra packages.
 
-- **Compose / review** — pick a Card, `Open-UX:get_situation`, then `Open-UX:audit` with `jobs=`
-- **Map** — `Open-UX:suggest_situations` when the ask is a vague surface (catalog map, then pick a Card). The catalog stays open after a pack.
+- **Compose / review** — compare Cards that fit; `Open-UX:get_situation`, then `Open-UX:pack` with `jobs=`. You decide. No winner Card.
+- **Map** — `Open-UX:suggest_situations` when the ask is a vague surface (catalog map). The catalog stays open after a pack.
 - **Cite** — `Open-UX:search_guidelines` / `Open-UX:get_guideline`
 
-Commands: `/list` `/get` `/audit`, plus aliases `/forms` `/actions` `/feedback`. Agent pointers: `agents/open-ux.md`.
+Commands: `/list` `/get` `/pack`, plus aliases `/forms` `/actions` `/feedback`. Agent pointers: `agents/open-ux.md`.
 
-Same wire without a session: `open-ux audit --jobs …`. Repo helper `scripts/mcp_call.py` (`tools/list` / `tools/call`) is available, not required. Not the skill path.
+Same wire without a session: `open-ux pack --jobs …`. Agent helpers: [`helpers/registry.json`](../../helpers/registry.json) — `helpers/pack.py`, `helpers/rank_pack.py`, `helpers/mcp_call.py` (available, not required). Do not invent a ranker. Contributor scripts live in `scripts/` — not the skill path.
