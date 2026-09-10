@@ -439,9 +439,10 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             Field(description="A Situation Card id. A Leaf id fails."),
         ],
     ) -> dict[str, Any]:
-        """Fetch one Situation Card: when, reject, facets, leaf pointers, component.
+        """Fetch one Situation Card: when, reject, facets, leaf counts, component.
 
-        Fails on a Leaf id. Does not invent a Card. No rule bodies.
+        Each facet lists leaves as {id, count}. Fails on a Leaf id.
+        Does not invent a Card. No rule bodies.
         """
         result = run_get_situation(id, job_tree)
         _maybe_telemetry(settings, tool="get_situation")

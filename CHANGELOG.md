@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- **BREAKING:** `Open-UX:get_situation` facet `leaves` is `{id, count}` (stocked cite count per Leaf), not a string list.
+- Pack Card/Leaf pulls add envelope `situation` (`when`, `reject`; `leaf` when scoped) and `cite_via: get_guideline`.
 - Vite owns the cookie banner, `open_ux_gtm_consent`, and Google Tag Manager after Accept. Python only returns the container id at `/api/site`.
 - OUX-37: `/health` and `/health.json`: `ok` is computed (catalog loaded, no recorded 5xx). Payload adds `error`, `title`, and `body`. HTTP stays 200.
 - OUX-37: Public 404 and 500 pages are prerendered into the SPA shell. Missing catalog ids and unknown paths return 404. Unhandled errors return the 500 page.

@@ -97,7 +97,6 @@ def _map_row(card) -> dict[str, Any]:
 
 
 def _facet_payload(facet) -> dict[str, Any]:
-    leaf_ids = [leaf.id for leaf in facet.leaves]
     pointers: list[str] = []
     seen: set[str] = set()
     for gid in facet.guideline_ids:
@@ -112,7 +111,9 @@ def _facet_payload(facet) -> dict[str, Any]:
     return {
         "id": facet.id,
         "title": facet.title,
-        "leaves": leaf_ids,
+        "leaves": [
+            {"id": leaf.id, "count": len(leaf.guideline_ids)} for leaf in facet.leaves
+        ],
         "guideline_ids": pointers,
     }
 
