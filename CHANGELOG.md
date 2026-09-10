@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-- Helpers: MCP (`Open-UX:*`) is the agent product — host fetches catalog data. `registry.json` splits **`agent_helpers`** (`open-ux rank-pack`, LLM-local after pack; ships with `pip install open-ux`) from **`contributor_wire`** (terminal/CI). Plugin + key alone do not install rank-pack — one local pip install on the machine.
+- Helpers: **`pip install open-ux`** ships all helper tools as **`open-ux`** subcommands (`open-ux helpers list`; agent helper **`open-ux rank-pack`**). Registry bundled in wheel. MCP fetches catalog data; helpers run on the user's machine.
 - Docs: components as context helper for Cards and jobs; ask-shapes table and Leaf-scoping examples in skill; `component.md` link and CLI aliases in [`docs/TOOLS.md`](docs/TOOLS.md); `widget` → `component` in tool docstrings; [`clients/claude/mcp.stdio.json`](clients/claude/mcp.stdio.json) for local MCP wire (`pack`, `get_component`).
 - Skill: hub + references `open-ux` package — hub [`SKILL.md`](clients/claude/skills/open-ux/SKILL.md) + glossary, ask-shapes, examples, shapes, cards, tools, connect, guideline, component references (progressive disclosure).
 - Docs: [`docs/TOOLS.md`](docs/TOOLS.md) — canonical tool blurbs; no `audit` tool (use `pack`); sweep `packs/imp.json`, README, AGENTS, plugin README; ops `DEPLOY.md`.

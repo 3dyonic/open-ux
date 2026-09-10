@@ -1,9 +1,8 @@
 {
-  "note": "MCP (Open-UX:*) is the agent product — the host fetches catalog data. agent_helpers run on the user's machine after a tool response; pip install open-ux ships open-ux rank-pack. Not substitutes for MCP. contributor_wire is terminal/CI only.",
+  "note": "pip install open-ux ships every helper as open-ux CLI subcommands on the user's machine. MCP (Open-UX:*) fetches catalog data on the host. agent_helpers run locally after a tool response — not substitutes for MCP. contributor_wire is terminal/CI only.",
   "agent_helpers": [
     {
       "id": "rank_pack",
-      "path": "helpers/rank_pack.py",
       "cli": "open-ux rank-pack",
       "summary": "LLM-local BM25 reorder of one pack page after Open-UX:pack. Shipped with pip install open-ux. Host does not rank.",
       "usage": "open-ux rank-pack --query \"…\" < pack.json"
@@ -12,24 +11,21 @@
   "contributor_wire": [
     {
       "id": "pack",
-      "path": "helpers/pack.py",
       "cli": "open-ux pack",
       "summary": "Same pack wire as Open-UX:pack — terminal/CI only, not the agent skill path.",
-      "usage": "python3 helpers/pack.py --jobs <card_id>"
+      "usage": "open-ux pack --jobs <card_id>"
     },
     {
       "id": "get_component",
-      "path": "helpers/get_component.py",
       "cli": "open-ux component <id>",
       "summary": "Same get_component wire — terminal/CI only, not the agent skill path.",
-      "usage": "python3 helpers/get_component.py button --include-used-on"
+      "usage": "open-ux component button --include-used-on"
     },
     {
       "id": "mcp_call",
-      "path": "helpers/mcp_call.py",
       "cli": "open-ux tools list | open-ux tools call …",
       "summary": "tools/list and tools/call for terminal debug — not the agent skill path.",
-      "usage": "python3 helpers/mcp_call.py list"
+      "usage": "open-ux tools list"
     }
   ]
 }

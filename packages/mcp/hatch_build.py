@@ -27,6 +27,15 @@ class CustomBuildHook(BuildHookInterface):
         )
         build_data.setdefault("force_include", {})
         build_data["force_include"][str(catalog)] = dest
+        repo_root = Path(self.root).resolve().parent.parent
+        helpers_registry = repo_root / "helpers" / "registry.json"
+        if helpers_registry.is_file():
+            reg_dest = (
+                "src/open_ux/data/helpers/registry.json"
+                if self.target_name == "sdist"
+                else "open_ux/data/helpers/registry.json"
+            )
+            build_data["force_include"][str(helpers_registry)] = reg_dest
         if self.target_name == "sdist":
             repo_readme = Path(self.root).resolve().parent.parent / "README.md"
             if repo_readme.is_file():

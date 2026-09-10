@@ -34,8 +34,8 @@ Context helper for Cards and **`jobs=`** pulls — not a second catalog map. Rec
 
 ## LLM helper (agent, local)
 
-After **`pack`** returns a page, the model may run **`open-ux rank-pack`** locally (`pip install open-ux` on the machine) to reorder rows — host does not rank. See [`helpers/registry.json`](../helpers/registry.json) → `agent_helpers`. Plugin + key alone do not ship the CLI; one local pip install is enough. Not a substitute for MCP tools.
+**`pip install open-ux`** ships all helpers as **`open-ux`** subcommands — list with **`open-ux helpers list`**. After **`pack`**, the model may run **`open-ux rank-pack`** locally to reorder one page (host does not rank). Not a substitute for MCP tools. Plugin + key alone do not install helpers.
 
-## Contributor CLI (not agent path)
+## Contributor CLI (same pip package, not agent path)
 
-Same wire as MCP for terminal/CI: `open-ux pack`, `open-ux cite`, `open-ux component`, `open-ux components`. Listed under `contributor_wire` in [`helpers/registry.json`](../helpers/registry.json). Agents use **`Open-UX:*` tools**. Local stdio: [`clients/claude/mcp.stdio.json`](../clients/claude/mcp.stdio.json).
+Terminal/CI: `open-ux pack`, `open-ux cite`, `open-ux component`, `open-ux components`, `open-ux tools`. Agents with MCP connected use **`Open-UX:*` tools**. Local stdio: [`clients/claude/mcp.stdio.json`](../clients/claude/mcp.stdio.json).

@@ -17,14 +17,16 @@ Empty shelf → say so. We are a catalog. They choose what to take. Cited criter
 
 ## LLM helper (optional, local)
 
-One helper for work the host does not do. List: [`helpers/registry.json`](../../../../helpers/registry.json) → **`agent_helpers`**. Do not invent these:
+**`pip install open-ux`** ships all helpers as **`open-ux`** subcommands — **`open-ux helpers list`**. Do not invent these.
 
-- `open-ux rank-pack --query "…" < pack.json` — BM25 over one page you already got from **`Open-UX:pack`**. Requires **`pip install open-ux`** on the machine (ships with the package). Repo shim: `helpers/rank_pack.py`. Fail-open. No winner.
+Agent helper (LLM-local, after **`Open-UX:pack`**):
+
+- `open-ux rank-pack --query "…" < pack.json` — BM25 over one page. Fail-open. No winner.
 
 Never use `rank_pack` to fetch a pack, pick a Card, or replace the skill loop.
 
 ## Contributor wire (not skill path)
 
-Terminal and CI mirrors — [helpers registry](../../../../helpers/registry.json) → **`contributor_wire`**: `open-ux pack`, `open-ux component`, `helpers/mcp_call.py`. Contributors only; agents use MCP tools above.
+Also on pip (terminal / CI only — not agent path when MCP is connected): `open-ux pack`, `open-ux component`, `open-ux tools list`. See **`contributor_wire`** in **`open-ux helpers list`**.
 
 Contributor scripts live in `scripts/` — not for agents.

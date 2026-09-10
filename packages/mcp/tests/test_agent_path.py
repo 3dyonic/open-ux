@@ -180,11 +180,11 @@ def test_skill_examples_and_tools_not_sermons() -> None:
     assert "Open-UX:pack" in body
     assert "need in" in lower
     assert "open-ux rank-pack" in body or "rank-pack" in body
-    assert "helpers/registry.json" in body
+    assert "helpers list" in lower or "open-ux helpers" in lower
+    assert "pip install open-ux" in lower
     assert "mcp" in lower
     assert "choice" in lower
     assert "helpers/pack.py" not in body
-    assert "not skill path" in lower or "contributor_wire" in lower
 
 
 def test_skill_files_point_at_tools_not_catalog_bodies() -> None:
@@ -320,10 +320,9 @@ def test_contributor_pack_wire_and_skill_uses_mcp() -> None:
     tools = TOOLS_REFERENCE.read_text(encoding="utf-8")
     lower = tools.lower()
     assert "rank-pack" in tools
-    assert "agent_helpers" in lower
-    assert "contributor_wire" in lower
+    assert "helpers list" in lower
+    assert "pip install open-ux" in lower
     assert "Open-UX:pack" in tools
-    assert "not skill path" in lower
     for banned in ENFORCE_SCRIPT:
         assert banned not in lower
 
@@ -350,8 +349,8 @@ def test_optional_helper_is_protocol_not_path() -> None:
     assert "verdict" not in payload
     assert payload["count"] >= 1
     tools = TOOLS_REFERENCE.read_text(encoding="utf-8")
-    assert "mcp_call.py" in tools
-    assert "contributor_wire" in tools.lower()
+    assert "open-ux tools list" in tools
+    assert "helpers list" in tools.lower()
     assert "must run" not in tools.lower()
 
 

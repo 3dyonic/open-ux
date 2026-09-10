@@ -25,6 +25,7 @@ examples:
   open-ux components
   open-ux component button --include-used-on
   open-ux rank-pack --query "inline error" < pack.json
+  open-ux helpers list
   open-ux tools list
   python -m open_ux stdio
   OPEN_UX_MODE=hosted python -m open_ux http
@@ -216,6 +217,13 @@ def _build_parser() -> argparse.ArgumentParser:
         help="Pack JSON path. Default: stdin.",
     )
 
+    helpers = sub.add_parser(
+        "helpers",
+        help="Helper catalog shipped with pip install open-ux",
+    )
+    helpers_sub = helpers.add_subparsers(dest="helpers_cmd")
+    helpers_sub.add_parser("list", help="List agent_helpers and contributor_wire CLIs")
+
     sub.add_parser("stdio", help="Run the local MCP server on stdio.")
     sub.add_parser("http", help="Run the HTTP server.")
     validate = sub.add_parser("validate-catalog", help="Load and check the catalog.")
@@ -388,6 +396,15 @@ def main(argv: list[str] | None = None) -> int:
         if args.pack:
             rank_argv.append(args.pack)
         return run_rank_pack(rank_argv)
+
+    if command == "helpers":
+        if args.helpers_cmd != "list":
+            _err("usage: open-ux helpers list", color=color)
+            return 2
+        from open_ux.helpers_registry import load_helpers_registry
+
+        _dump(load_helpers_registry(), compact=args.compact)
+        return 0
 
     called = _tool_payload(command, args, color=color)
     if isinstance(called, int):
