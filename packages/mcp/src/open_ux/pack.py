@@ -7,10 +7,12 @@ from open_ux.catalog import EMPTY_NOTE, Catalog, get_by_id, select_by_jobs
 from open_ux.jobs import (
     CARD_IDS,
     DEFAULT_LIMIT,
+    LEAF_IDS,
     MAX_LIMIT,
     MISS_NOTE,
     JobTree,
     card_by_id,
+    card_id_for_leaf,
     load_job_tree,
 )
 
@@ -31,6 +33,7 @@ OPTIONAL_PACK_ROW_KEYS = ("hints",)
 PACK_KEYS = PACK_ROW_KEYS + OPTIONAL_PACK_ROW_KEYS
 NEED_ERROR = "pack requires jobs or guideline_ids; the full catalog is never run."
 HOST_CITATIONS_ONLY = "citations_only"
+CITE_VIA = "get_guideline"
 
 
 def _clamp_limit(limit: int) -> int:
@@ -139,6 +142,33 @@ def _select_by_need(catalog: Catalog, jobs: str) -> list[dict[str, Any]]:
     return select_by_jobs(catalog, jobs)
 
 
+def _situation_envelope(job: str, tree: JobTree) -> dict[str, Any] | None:
+    """Card when/reject for Card or Leaf pack. Omit for container aliases."""
+    need = (job or "").strip()
+    if not need:
+        return None
+    leaf_id: str | None = None
+    card_id: str | None = None
+    if need in LEAF_IDS:
+        leaf_id = need
+        card_id = card_id_for_leaf(tree, need)
+    elif card_by_id(tree, need) is not None:
+        card_id = need
+    else:
+        return None
+    card = card_by_id(tree, card_id or "")
+    if card is None:
+        return None
+    out: dict[str, Any] = {
+        "card": card.id,
+        "when": list(card.when),
+        "reject": [{"id": item.id, "why": item.why} for item in card.reject],
+    }
+    if leaf_id:
+        out["leaf"] = leaf_id
+    return out
+
+
 def _payload(
     rows: list[dict[str, Any]],
     *,
@@ -146,6 +176,8 @@ def _payload(
     offset: int,
     note: str | None = None,
     error: str | None = None,
+    situation: dict[str, Any] | None = None,
+    cite_via: str | None = None,
 ) -> dict[str, Any]:
     packed = [_pack_row(g) for g in rows]
     count = len(packed)
@@ -156,6 +188,10 @@ def _payload(
         "offset": offset,
         "host": HOST_CITATIONS_ONLY,
     }
+    if situation is not None:
+        out["situation"] = situation
+    if cite_via is not None:
+        out["cite_via"] = cite_via
     omitted = max(0, total - offset - count)
     if omitted:
         next_offset = offset + count
@@ -203,6 +239,10 @@ def pack(
     if catalog.empty:
         return _payload([], total=0, offset=skip, note=EMPTY_NOTE)
 
+    tree = load_job_tree()
+    situation: dict[str, Any] | None = None
+    cite_via: str | None = None
+
     if requested:
         found: list[dict[str, Any]] = []
         for gid in requested:
@@ -210,10 +250,14 @@ def pack(
             if g is not None:
                 found.append(g)
         rows = found
+        if found:
+            cite_via = CITE_VIA
     else:
         assert job is not None
+        situation = _situation_envelope(job, tree)
+        cite_via = CITE_VIA
         scoped = _select_by_need(catalog, job)
-        rows = _stratify_by_facet(scoped, load_job_tree(), len(scoped) or 1)
+        rows = _stratify_by_facet(scoped, tree, len(scoped) or 1)
 
     total = len(rows)
     page = rows[skip : skip + cap]
@@ -223,4 +267,6 @@ def pack(
         total=total,
         offset=skip,
         note=note,
+        situation=situation,
+        cite_via=cite_via,
     )

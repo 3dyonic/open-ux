@@ -3,6 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from open_ux.pack import (
+    CITE_VIA,
     HOST_CITATIONS_ONLY,
     NEED_ERROR,
     PACK_KEYS,
@@ -59,12 +60,18 @@ def test_jobs_card_returns_criteria_without_content(live_catalog: Path) -> None:
     result = pack(_catalog(live_catalog), jobs="design_a_form")
     assert "error" not in result
     _assert_contract(result)
+    assert result["cite_via"] == CITE_VIA
+    assert result["situation"]["card"] == "design_a_form"
+    assert result["situation"]["when"]
+    assert "leaf" not in result["situation"]
+    assert any(item["id"] == "handle_form_errors" for item in result["situation"]["reject"])
     assert result["count"] == len(result["guidelines"])
     assert result["total"] >= result["count"]
     assert result["count"] >= 1
     assert result["count"] <= DEFAULT_LIMIT
     for row in result["guidelines"]:
         _assert_pack_row(row)
+        assert "citation" not in row
 
 
 def test_pack_hints_omitted_when_absent() -> None:
@@ -175,11 +182,32 @@ def test_limit_caps_pack(live_catalog: Path) -> None:
 
 def test_leaf_jobs_scopes_pack(live_catalog: Path) -> None:
     result = pack(_catalog(live_catalog), jobs="avoid_placeholder_as_label")
+    assert result["cite_via"] == CITE_VIA
+    assert result["situation"]["card"] == "design_a_form"
+    assert result["situation"]["leaf"] == "avoid_placeholder_as_label"
     assert result["count"] >= 1
     assert result["total"] == result["count"]
     for row in result["guidelines"]:
         assert row["leaf"] == "avoid_placeholder_as_label"
         _assert_pack_row(row)
+
+
+def test_container_jobs_has_cite_via_not_situation(live_catalog: Path) -> None:
+    result = pack(_catalog(live_catalog), jobs="forms", limit=5)
+    assert result["cite_via"] == CITE_VIA
+    assert "situation" not in result
+
+
+def test_guideline_ids_has_cite_via_not_situation(live_catalog: Path) -> None:
+    result = pack(_catalog(live_catalog), guideline_ids=[VISIBLE])
+    assert result["cite_via"] == CITE_VIA
+    assert "situation" not in result
+
+
+def test_need_error_has_no_envelope(live_catalog: Path) -> None:
+    result = pack(_catalog(live_catalog))
+    assert "cite_via" not in result
+    assert "situation" not in result
 
 
 def test_pick_primary_action_leaf_is_narrower_than_card(live_catalog: Path) -> None:

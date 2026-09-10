@@ -515,7 +515,9 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         """Say the UX need as one Situation Card, Leaf, or container.
 
         Returns cited rule criteria so you can make a better decision; the
-        decision is yours. Does not take a file. Does not return pass or fail.
+        decision is yours. Card/Leaf pulls include situation (when, reject;
+        leaf when scoped) and cite_via get_guideline. Rows are browse slices,
+        not full cites. Does not take a file. Does not return pass or fail.
         Required: jobs or guideline_ids. Prefer a Card; use a Leaf for one bay.
         """
         result = run_pack(
