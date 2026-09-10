@@ -7,6 +7,7 @@ on:
     # PyPI = catalog + MCP tools (pip install open-ux). Not hosted site/mail/static.
     # packages/web/** never listed here — web-only merges skip this workflow.
     paths:
+      - ".github/workflows/publish.yml"
       - "catalog/**"
       - "packages/mcp/pyproject.toml"
       - "packages/mcp/hatch_build.py"
@@ -68,16 +69,18 @@ jobs:
             changed="$(git diff --name-only "$before" "$GITHUB_SHA")"
           fi
           echo "$changed"
+          # One -E pattern: bare multiple args are treated as filenames, not patterns.
           pypi="$(echo "$changed" | grep -Ev \
-            '^packages/mcp/tests/' \
-            '^packages/mcp/src/open_ux/static/' \
-            '^packages/mcp/src/open_ux/mail\.py$' \
-            '^packages/mcp/src/open_ux/public_html\.py$' \
-            '^packages/mcp/src/open_ux/settings\.py$' \
+            '^packages/mcp/tests/|^packages/mcp/src/open_ux/static/|^packages/mcp/src/open_ux/mail\.py$|^packages/mcp/src/open_ux/public_html\.py$|^packages/mcp/src/open_ux/settings\.py$' \
             || true)"
           echo "pypi-relevant:"
           echo "$pypi"
-          if ! echo "$pypi" | grep -Eq '^(catalog/|packages/mcp/pyproject\.toml|packages/mcp/hatch_build\.py|packages/mcp/hatch_metadata\.py|packages/mcp/src/)'; then
+          workflow_changed=false
+          if echo "$changed" | grep -qxF '.github/workflows/publish.yml'; then
+            workflow_changed=true
+            echo "publish workflow changed; allow republish"
+          fi
+          if [[ "$workflow_changed" != true ]] && ! echo "$pypi" | grep -Eq '^(catalog/|packages/mcp/pyproject\.toml|packages/mcp/hatch_build\.py|packages/mcp/hatch_metadata\.py|packages/mcp/src/)'; then
             echo "skip=true" >> "$GITHUB_OUTPUT"
             echo "publish_pypi=false" >> "$GITHUB_OUTPUT"
             echo "push_tag=" >> "$GITHUB_OUTPUT"
