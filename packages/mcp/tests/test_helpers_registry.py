@@ -42,9 +42,6 @@ def test_scripts_dir_has_no_agent_helpers() -> None:
         assert not (ROOT / "scripts" / name).exists()
 
 
-def test_bundled_registry_in_src_tree() -> None:
-    bundled = (
-        ROOT / "packages" / "mcp" / "src" / "open_ux" / "data" / "helpers" / "registry.json"
-    )
-    assert bundled.is_file()
-    assert json.loads(bundled.read_text()) == json.loads(REGISTRY.read_text())
+def test_repo_registry_loads_without_wheel() -> None:
+    assert REGISTRY.is_file()
+    assert load_helpers_registry() == json.loads(REGISTRY.read_text(encoding="utf-8"))

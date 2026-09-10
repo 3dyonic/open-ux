@@ -9,7 +9,8 @@ from typing import Any
 
 
 def _repo_registry() -> Path:
-    return Path(__file__).resolve().parents[3] / "helpers" / "registry.json"
+    # …/packages/mcp/src/open_ux/helpers_registry.py → repo root
+    return Path(__file__).resolve().parents[4] / "helpers" / "registry.json"
 
 
 def load_helpers_registry() -> dict[str, Any]:
