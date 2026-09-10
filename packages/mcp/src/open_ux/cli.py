@@ -202,7 +202,12 @@ def _build_parser() -> argparse.ArgumentParser:
 
     sub.add_parser("stdio", help="Run the local MCP server on stdio.")
     sub.add_parser("http", help="Run the HTTP server.")
-    sub.add_parser("validate-catalog", help="Load and check the catalog.")
+    validate = sub.add_parser("validate-catalog", help="Load and check the catalog.")
+    validate.add_argument(
+        "--strict-fit",
+        action="store_true",
+        help="Exit 1 when gate-Leaf apply_when fails the task-language sniff test.",
+    )
     invite = sub.add_parser("approve-invite", help="Issue an invite token.")
     invite.add_argument("email", nargs="?", default="")
     return parser
@@ -210,12 +215,23 @@ def _build_parser() -> argparse.ArgumentParser:
 
 def _run_server(command: str, args: argparse.Namespace) -> int:
     if command == "validate-catalog":
-        from open_ux.catalog import load_catalog
+        from open_ux.catalog import load_catalog, validate_apply_when_fit
 
         catalog = load_catalog()
         print(
             f"catalog ok guidelines={len(catalog.guidelines)} bytes={catalog.size_bytes}"
         )
+        violations = validate_apply_when_fit(catalog.guidelines)
+        if violations:
+            print(
+                f"apply_when fit: {len(violations)} violation(s) on gate Leaves",
+                file=sys.stderr,
+            )
+            for row in violations:
+                print(json.dumps(row, ensure_ascii=False), file=sys.stderr)
+        strict = bool(getattr(args, "strict_fit", False))
+        if violations and strict:
+            return 1
         return 0
 
     if command == "approve-invite":
