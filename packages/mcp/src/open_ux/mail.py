@@ -55,7 +55,7 @@ def _invite_body_text(*, redeem_url: str, expires_at: str, public_base: str) -> 
         "Your Open UX invite is ready.\n\n"
         f"Redeem (one time): {redeem_url}\n\n"
         f"This link expires {expires_label}.\n\n"
-        f"After redeem you get a uxmcp_ bearer for {public_base}/mcp. "
+        f"After redeem you get a uxmcp_ key for {public_base}/mcp. "
         "Store it in your MCP client — it is shown once.\n"
     )
 
@@ -110,7 +110,7 @@ def _invite_body_html(*, redeem_url: str, expires_at: str, public_base: str) -> 
             <td style="padding:12px 28px 0;font-family:{_FONT};font-size:15px;line-height:22px;color:{_COLOR_MUTED};">
               Open the link below to redeem your one-time invite and copy your
               <span style="font-family:monospace;color:{_COLOR_INK};">uxmcp_</span>
-              bearer for the hosted catalog.
+              key for the hosted catalog.
             </td>
           </tr>
           <tr>
