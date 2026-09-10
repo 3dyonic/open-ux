@@ -1,4 +1,5 @@
 ---
+name: pack
 description: Fetch a cited criteria pack for a Situation Card. The decision is yours.
 ---
 

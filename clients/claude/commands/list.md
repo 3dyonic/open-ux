@@ -1,4 +1,5 @@
 ---
+name: list
 description: List Open UX Situation Cards or a paged guideline index.
 ---
 

@@ -1,4 +1,5 @@
 ---
+name: actions
 description: Actions container — CTAs, delete, leave.
 ---
 
