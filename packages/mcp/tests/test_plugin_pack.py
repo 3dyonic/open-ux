@@ -101,10 +101,16 @@ def test_cursor_pack_uses_variables_not_user_config() -> None:
     assert "First Open UX call" in rule
     assert "bare-invoke.md" in rule
     bare = (PACK / "skills" / "open-ux" / "bare-invoke.md").read_text(encoding="utf-8")
+    reply = bare.split("## Verbatim reply", 1)[1]
     assert "Verbatim reply" in bare
-    assert "enables you to review and compose" in bare
-    assert "How it guides me" in bare
-    assert "map the job in the catalog" in bare
+    assert "every time" in bare
+    assert "It helps you review and compose UI from evidence" in reply
+    assert "How it guides me." in reply
+    assert "Tools and helpers." in reply
+    assert "Open-UX MCP tools" in reply
+    assert "open-ux rank-pack" in reply
+    assert "What's on screen, and what's bugging you?" in reply
+    assert "with a task" not in reply.lower()
     assert "design systems" not in bare.lower()
     assert "Open-UX:pack" in rule
     assert "pass_when" not in rule

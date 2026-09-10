@@ -18,8 +18,8 @@ Start from **what the user said and what is on screen** — not from Card ids. C
 ```
 What do you have?
 │
-├─ Direct /open-ux:open-ux, no task attached yet
-│   └─ [bare-invoke.md](bare-invoke.md) verbatim reply → task → map below
+├─ Direct /open-ux:open-ux, no UI task in the message
+│   └─ [bare-invoke.md](bare-invoke.md) verbatim reply every time → next message → map below
 │
 ├─ User words + UI in front of you (usual case)
 │   ├─ Ask matches a row in ask-shapes.md?

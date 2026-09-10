@@ -25,7 +25,7 @@ Pointers only. One skill: `open-ux` (`clients/plugin/skills/open-ux/SKILL.md`). 
 
 ## When to invoke
 
-Any UI or UX task in user words — building or reviewing. Start from the ask and what is on screen, not a Card id. Bare `/open-ux:open-ux` with no task: [bare-invoke.md](../skills/open-ux/bare-invoke.md) verbatim reply only. Compose and review share one path.
+Any UI or UX task in user words — building or reviewing. Start from the ask and what is on screen, not a Card id. Bare `/open-ux:open-ux` or invoke with no UI task: [bare-invoke.md](../skills/open-ux/bare-invoke.md) verbatim reply every time. Compose and review share one path.
 
 ## When not to invoke
 

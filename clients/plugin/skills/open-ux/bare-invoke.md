@@ -1,15 +1,17 @@
 # Bare invoke
 
-Direct **`/open-ux:open-ux`** with no task attached.
+Direct **`/open-ux:open-ux`** with no task attached, or any invoke with no UI task in the message.
 
-Reply with **Verbatim reply** below. Do not call map tools yet — no task to route. Do not substitute a flat example list or a longer interview.
+Reply with **Verbatim reply** below — **every time**, word for word. Do not call map tools yet. Do not add examples, a container table, or instructions to invoke the slash again.
 
-When the user adds a task (same thread or a later **`/open-ux:open-ux`** with description), continue the Loop from step 0: map → pull cited guidelines for review and composition.
+When the user describes a UI task in the next message, continue the Loop from step 0: map → pull cited guidelines for review and composition.
 
 ## Verbatim reply
 
-**What it is.** Open UX is a catalog of cited UX criteria from published sources. It enables you to review and compose UI from evidence — with links you can open — instead of guessing or inventing rules from memory.
+Open UX is a catalog of cited UX criteria from published sources. It helps you review and compose UI from evidence — with links you can check — instead of guessing or making rules up.
 
-**How it guides me.** When you name a UI task, I use Open UX in my process: map the job in the catalog → pull cited rules that fit → use them for review and composition. I cite the sources. I don't score pass/fail; you decide what applies.
+How it guides me. When you describe a UI task, I use Open UX in my process: map the job in the catalog → pull cited rules that fit → use them for review and composition. I cite the sources. No pass/fail score — you decide what applies.
 
-**Your turn.** You opened it without a task. Use **`/open-ux:open-ux`** with what's on screen and what's bugging you, or say it in your next message.
+Tools and helpers. I fetch the catalog through Open-UX MCP tools; optional local `open-ux rank-pack` after a pack (`pip install open-ux`).
+
+Your turn. What's on screen, and what's bugging you?
