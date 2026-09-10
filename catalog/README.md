@@ -89,7 +89,7 @@ The picker is a Card — one compose job. Containers are how the skill lists the
 
 ## Harvest rows that are not files
 
-The harvest had 309 rows. 200 files were published after dropping primary Apple HIG and NN/g cites. Three GOV.UK password-input claims were added later for `compose_sign_in` (OUX-25), so 203 files are on disk. The other 14 harvest rows were never files; they are listed here so a missing id is explained, not silent.
+The harvest had 309 rows. 200 files were published after dropping primary Apple HIG and NN/g cites. Three GOV.UK password-input claims were added later for `compose_sign_in` (OUX-25). One USWDS control-choice cite was added on `choose_control_for_choice` (#64). **204** files are on disk. The other 14 harvest rows were never files; they are listed here so a missing id is explained, not silent.
 
 ### No published file
 

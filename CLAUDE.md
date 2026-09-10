@@ -9,6 +9,7 @@ Same connect as [`AGENTS.md`](AGENTS.md). Skill and commands live in `clients/cl
 ```bash
 pip install open-ux
 python -m open_ux validate-catalog
+python -m open_ux validate-catalog --strict-fit
 python -m open_ux stdio
 OPEN_UX_MODE=hosted python -m open_ux http
 ```

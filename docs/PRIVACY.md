@@ -2,7 +2,7 @@
 
 Eng Done fails if any of these are violated.
 
-- **Never persist** file contents, prompts, or raw payloads. `audit` does not take a file.
+- **Never persist** file contents, prompts, or raw payloads. `pack` does not take a file.
 - **Keys hashed at rest.** Logs keyed by `key_hash`, never the bearer secret. Plaintext `uxmcp_` is shown once at redeem, then discarded.
 - **Invite tokens hashed at rest.** One-time `inv_` tokens are stored as hashes with expiry; redeem burns them.
 - **Email** is stored on the waitlist, to issue/redeem invites, and to revoke keys. No marketing mail.

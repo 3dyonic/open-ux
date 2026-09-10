@@ -9,6 +9,7 @@ Connect and tools only. The routing table lives in [`clients/claude/skills/open-
 ```bash
 pip install open-ux
 python -m open_ux validate-catalog
+python -m open_ux validate-catalog --strict-fit
 python -m open_ux stdio
 OPEN_UX_MODE=hosted python -m open_ux http
 ```

@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Docs: root README tool table and pack loop; `catalog/README.md` file count (204); plugin SETUP/README; `docs/PRIVACY.md` `pack`; agent Tools list includes components; `packs/eor.json` claims use `pack` not `audit`.
 - **BREAKING:** `Open-UX:get_situation` facet `leaves` is `{id, count}` (stocked cite count per Leaf), not a string list.
 - Pack Card/Leaf pulls add envelope `situation` (`when`, `reject`; `leaf` when scoped) and `cite_via: get_guideline`.
 - Skill: documented loop — map leaf counts → pack (envelope reject, row fit) → `get_guideline` or `get_component` by question type; Leaf routing examples (control choice vs primary loudness; spinner → `compose_feedback`).
