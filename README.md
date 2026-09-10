@@ -89,20 +89,17 @@ Cursor uses the same pack (`.cursor-plugin/` + `mcp.json`). Set `OPEN_UX_API_KEY
 
 ## Agent tools
 
-| Tool | Purpose |
-| -- | -- |
-| `list_situations` | Page Situation Cards (optional `container` returns that kind's specs) |
-| `get_situation` | One Card: when / reject, facets, **`leaves: [{ id, count }]`**, merged rule pointers |
-| `suggest_situations` | Catalog map: `{containers: [{situations: [...]}]}` in lock order (does not pick a Card; no `why`, not ranked) |
-| `list_guidelines` | Paged catalog index |
-| `search_guidelines` | Scope by jobs / lane; BM25-order by query; no rule bodies |
-| `get_guideline` | Full rule body by id |
-| `pack` | Say the need (`jobs` Card/Leaf/container or `guideline_ids`); get matching criteria |
-| `list_components` / `get_component` | Widget index and record; optional `used_on` reverse index |
+There is **no** `audit` tool — use **`pack`**. Full reference: [`docs/TOOLS.md`](docs/TOOLS.md).
 
-Card/Leaf pulls add envelope **`situation`** (`when`, `reject`; `leaf` when scoped) and **`cite_via: get_guideline`**. Rows are browse slices — open `get_guideline` or `get_component` for full records.
+- **`suggest_situations`** — `task_text` → full catalog map of all 13 Cards by container. Does not pick or rank.
+- **`list_situations`** — Card index; optional `container` filter. Metadata only, no rule bodies.
+- **`get_situation`** — One Card: when / reject, facets, `leaves: [{ id, count }]`. Leaf id fails. No rule text.
+- **`pack`** — Cited rule criteria for `jobs` (Card, Leaf, or container) or `guideline_ids`. Page with `limit` / `offset` / `next_offset`. Host ignores `query` (use [`helpers/rank_pack.py`](helpers/registry.json) locally). No file, no pass/fail.
+- **`get_guideline`** — One full rule body by id.
+- **`list_guidelines`** / **`search_guidelines`** — Paged index; scope by jobs / lane. No bodies; host ignores `query` on search.
+- **`list_components`** / **`get_component`** — Widget records; optional `used_on`.
 
-`pack` accepts optional `query` (ignored on the host — use `helpers/rank_pack.py` locally; see [`helpers/registry.json`](helpers/registry.json)), `limit` (page size, default 10), and `offset`. Follow `next_offset` until it is absent. It does **not** take a file target and does **not** return a host verdict (`host: "citations_only"`). Cited criteria help you decide; the decision is yours.
+Card/Leaf **`pack`** pulls add envelope **`situation`** (`when`, `reject`; `leaf` when scoped) and **`cite_via: get_guideline`**. Rows are browse slices — open `get_guideline` or `get_component` for full records.
 
 ## Catalog layout
 

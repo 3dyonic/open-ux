@@ -235,6 +235,23 @@ def test_pointer_docs_exist_and_stay_thin() -> None:
     assert not (COMMANDS / "critique.md").exists()
 
 
+def test_no_audit_tool_name_in_docs() -> None:
+    paths = (
+        ROOT / "README.md",
+        ROOT / "AGENTS.md",
+        ROOT / "CLAUDE.md",
+        ROOT / "docs/TOOLS.md",
+        ROOT / "clients/claude/README.md",
+        AGENT,
+        SKILL,
+    )
+    for path in paths:
+        text = path.read_text(encoding="utf-8")
+        for line in text.splitlines():
+            if "Open-UX:audit" in line:
+                assert "no " in line.lower(), f"{path.name} must not offer Open-UX:audit: {line!r}"
+
+
 def test_pack_helper_available_not_required() -> None:
     assert PACK_SCRIPT.is_file()
     help_text = subprocess.check_output(

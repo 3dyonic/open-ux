@@ -40,6 +40,16 @@ OPEN_UX_MODE=hosted python -m open_ux http
 
 No key; same catalog. Point MCP clients at local stdio, or hosted `https://open-ux.dev/mcp` + `uxmcp_` bearer (`OPEN_UX_API_KEY`) for the shared live catalog. Contributors: clone the repo and `pip install -e "packages/mcp[dev]"`.
 
+## Tools
+
+No **`Open-UX:audit`** — use **`Open-UX:pack`**. See [`docs/TOOLS.md`](../../docs/TOOLS.md).
+
+- **`suggest_situations`** — `task_text` → full 13-Card map by container. Does not pick or rank.
+- **`list_situations`** — Card index; optional `container`. Metadata only.
+- **`get_situation`** — One Card (when / reject / leaf counts). Leaf id fails.
+- **`pack`** — Cited criteria for `jobs` or `guideline_ids`; page with `next_offset`. No file, no pass/fail.
+- **`get_guideline`** — One full rule body by id.
+
 ## Offerings (one skill)
 
 Compose, review, map, and cite are jobs in `skills/open-ux` — not extra packages.

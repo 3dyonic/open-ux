@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Docs: [`docs/TOOLS.md`](docs/TOOLS.md) — canonical tool blurbs; no `audit` tool (use `pack`); sweep `packs/imp.json`, README, AGENTS, plugin README; ops `DEPLOY.md`.
 - Docs: root README tool table and pack loop; `catalog/README.md` file count (204); plugin SETUP/README; `docs/PRIVACY.md` `pack`; agent Tools list includes components; `packs/eor.json` claims use `pack` not `audit`.
 - CI and contributor checks: `claude plugin validate` (marketplace + plugin, `--strict`) and `node scripts/validate-cursor-plugin.mjs --strict`. Slash command frontmatter adds `name`.
 - **BREAKING:** `Open-UX:get_situation` facet `leaves` is `{id, count}` (stocked cite count per Leaf), not a string list.
