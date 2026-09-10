@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Docs: root README lists Claude Code and Cursor plugins as equal paths; both are in marketplace submission and not yet published. Catalog size (204 / 13 / 28) and `packages/web` in the repo layout.
 - Search appearance: PNG favicon (`/icon.png`), canonical / Open Graph tags, WebSite + Organization JSON-LD, breadcrumbs on catalog pages. Sitemap adds `/invite`, `lastmod` from real file dates, and the homepage image entry. `noindex` on health and invite utility pages.
 
 - Helpers: **`pip install open-ux`** ships all helper tools as **`open-ux`** subcommands (`open-ux helpers list`; agent helper **`open-ux rank-pack`**). Registry bundled in wheel. MCP fetches catalog data; helpers run on the user's machine ([`helpers/README.md`](helpers/README.md)). No MCP helper resources — pip is the execution path.

@@ -12,6 +12,8 @@ Logo (Cursor `logo` field): [assets/icon.svg](assets/icon.svg). Listing art: [as
 
 ## Install
 
+**Not listed yet.** Claude Code and Cursor listings are in marketplace submission. They are not published. Until they are listed, install from this GitHub repo.
+
 Invite: [open-ux.dev/invite](https://open-ux.dev/invite) → `uxmcp_`. Then enable. See [SETUP.md](SETUP.md).
 
 ### Claude
@@ -21,11 +23,11 @@ claude plugin marketplace add 3dyonic/open-ux
 claude plugin install open-ux@open-ux
 ```
 
-Paste the key when prompted (`api_key`). Submit: [platform.claude.com/plugins/submit](https://platform.claude.com/plugins/submit). Validate: `claude plugin validate . --strict` (repo marketplace) or `claude plugin validate ./clients/claude --strict`. Cursor: `node scripts/validate-cursor-plugin.mjs --strict` from repo root. CI runs both.
+Paste the key when prompted (`api_key`). Submit (not yet published): [platform.claude.com/plugins/submit](https://platform.claude.com/plugins/submit). Validate: `claude plugin validate . --strict` (repo marketplace) or `claude plugin validate ./clients/claude --strict`. Cursor: `node scripts/validate-cursor-plugin.mjs --strict` from repo root. CI runs both.
 
 ### Cursor
 
-Same pack (`.cursor-plugin/` + `mcp.json`). Set `OPEN_UX_API_KEY` under **Plugins → Configure**. Submit: [cursor.com/marketplace/publish](https://cursor.com/marketplace/publish).
+Same pack (`.cursor-plugin/` + `mcp.json`). Open this repository, enable the plugin, then set `OPEN_UX_API_KEY` under **Plugins → Configure**. Submit (not yet published): [cursor.com/marketplace/publish](https://cursor.com/marketplace/publish).
 
 ## Connect
 
