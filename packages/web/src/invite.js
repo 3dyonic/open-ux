@@ -277,7 +277,7 @@ export function renderRedeem(root) {
           "open-ux": {
             url: mcpUrl,
             headers: {
-              Authorization: "<your key above>",
+              Authorization: "YOUR_KEY",
             },
           },
         },
