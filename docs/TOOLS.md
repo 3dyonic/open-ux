@@ -12,7 +12,7 @@ Fully qualified on the wire: `Open-UX:<name>`. There is **no** `audit` tool — 
 
 ## Criteria
 
-**`pack`** — Returns cited rule criteria for a job. Takes `jobs` (Card, Leaf, or container id) or `guideline_ids`, plus `limit` / `offset` to page (`next_offset`). Host **ignores** `query` — use `helpers/rank_pack.py` locally ([`helpers/registry.json`](../helpers/registry.json)) to reorder one page. Does not take a file, does not return pass/fail — hands back relevant rules to check your own work against.
+**`pack`** — Returns cited rule criteria for a job. Takes `jobs` (Card, Leaf, or container id) or `guideline_ids`, plus `limit` / `offset` to page (`next_offset`). Host **ignores** `query` — use **`open-ux rank-pack`** locally ([`helpers/registry.json`](../helpers/registry.json)) to reorder one page. Does not take a file, does not return pass/fail — hands back relevant rules to check your own work against.
 
 **`get_guideline`** — Fetches one full guideline body by id when you already know which rule you want. Primary deep read after **`pack`**.
 
@@ -34,7 +34,7 @@ Context helper for Cards and **`jobs=`** pulls — not a second catalog map. Rec
 
 ## LLM helper (agent, local)
 
-After **`pack`** returns a page, the model may run [`helpers/rank_pack.py`](../helpers/rank_pack.py) locally to reorder rows — host does not rank. See [`helpers/registry.json`](../helpers/registry.json) → `agent_helpers`. Not a substitute for MCP tools.
+After **`pack`** returns a page, the model may run **`open-ux rank-pack`** locally (`pip install open-ux` on the machine) to reorder rows — host does not rank. See [`helpers/registry.json`](../helpers/registry.json) → `agent_helpers`. Plugin + key alone do not ship the CLI; one local pip install is enough. Not a substitute for MCP tools.
 
 ## Contributor CLI (not agent path)
 

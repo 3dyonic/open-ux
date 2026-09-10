@@ -24,6 +24,7 @@ examples:
   open-ux cite forms.field_labels.visible_label
   open-ux components
   open-ux component button --include-used-on
+  open-ux rank-pack --query "inline error" < pack.json
   open-ux tools list
   python -m open_ux stdio
   OPEN_UX_MODE=hosted python -m open_ux http
@@ -135,7 +136,7 @@ def _build_parser() -> argparse.ArgumentParser:
     )
     pack_parser.add_argument(
         "--query",
-        help="Ignored on the host. Use helpers/rank_pack.py locally if needed.",
+        help="Ignored on the host. Use open-ux rank-pack locally if needed.",
     )
     pack_parser.add_argument(
         "--limit",
@@ -198,6 +199,21 @@ def _build_parser() -> argparse.ArgumentParser:
         nargs="?",
         default="{}",
         help='JSON object of arguments, e.g. \'{"jobs":"design_a_form"}\'.',
+    )
+
+    rank = sub.add_parser(
+        "rank-pack",
+        help="LLM-local BM25 reorder of one pack page (after Open-UX:pack)",
+    )
+    rank.add_argument(
+        "--query",
+        required=True,
+        help="Words to rank this page. Does not drop cites.",
+    )
+    rank.add_argument(
+        "pack",
+        nargs="?",
+        help="Pack JSON path. Default: stdin.",
     )
 
     sub.add_parser("stdio", help="Run the local MCP server on stdio.")
@@ -362,6 +378,16 @@ def main(argv: list[str] | None = None) -> int:
 
     if command in SERVER_MODES:
         return _run_server(command, args)
+
+    if command == "rank-pack":
+        from open_ux.rank_pack_cmd import run_rank_pack
+
+        rank_argv = ["--query", args.query]
+        if args.compact:
+            rank_argv.append("--compact")
+        if args.pack:
+            rank_argv.append(args.pack)
+        return run_rank_pack(rank_argv)
 
     called = _tool_payload(command, args, color=color)
     if isinstance(called, int):

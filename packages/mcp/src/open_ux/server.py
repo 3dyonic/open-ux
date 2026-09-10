@@ -491,8 +491,8 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             str | None,
             Field(
                 description=(
-                    "Ignored. The host does not rank. Use helpers/rank_pack.py locally "
-                    "on the pack page if you want BM25."
+                    "Ignored. The host does not rank. Use open-ux rank-pack locally "
+                    "on the pack page if you want BM25 (pip install open-ux)."
                 )
             ),
         ] = None,

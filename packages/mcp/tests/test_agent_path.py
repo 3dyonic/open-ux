@@ -179,7 +179,7 @@ def test_skill_examples_and_tools_not_sermons() -> None:
     assert "Open-UX:get_guideline" in body
     assert "Open-UX:pack" in body
     assert "need in" in lower
-    assert "helpers/rank_pack.py" in body
+    assert "open-ux rank-pack" in body or "rank-pack" in body
     assert "helpers/registry.json" in body
     assert "mcp" in lower
     assert "choice" in lower
@@ -243,9 +243,9 @@ def test_commands_are_short_mcp_prompts() -> None:
     assert "Open-UX:pack" in pack_cmd
     assert "jobs=" in pack_cmd
     assert "guideline_ids" in pack_cmd
-    assert "helpers/rank_pack.py" in pack_cmd
+    assert "rank-pack" in pack_cmd
     assert "helpers/pack.py" not in pack_cmd
-    assert pack_cmd.index("Open-UX:pack") < pack_cmd.index("helpers/rank_pack.py")
+    assert pack_cmd.index("Open-UX:pack") < pack_cmd.index("rank-pack")
     list_cmd = (COMMANDS / "list.md").read_text(encoding="utf-8")
     get_cmd = (COMMANDS / "get.md").read_text(encoding="utf-8")
     assert "Open-UX:list_situations" in list_cmd
@@ -319,7 +319,7 @@ def test_contributor_pack_wire_and_skill_uses_mcp() -> None:
     assert empty.returncode != 0
     tools = TOOLS_REFERENCE.read_text(encoding="utf-8")
     lower = tools.lower()
-    assert "helpers/rank_pack.py" in tools
+    assert "rank-pack" in tools
     assert "agent_helpers" in lower
     assert "contributor_wire" in lower
     assert "Open-UX:pack" in tools

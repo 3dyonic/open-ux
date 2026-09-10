@@ -19,7 +19,7 @@ Empty shelf → say so. We are a catalog. They choose what to take. Cited criter
 
 One helper for work the host does not do. List: [`helpers/registry.json`](../../../../helpers/registry.json) → **`agent_helpers`**. Do not invent these:
 
-- `python3 helpers/rank_pack.py --query "…" < pack.json` — BM25 over one page you already got from **`Open-UX:pack`** (`overview` / `apply_when` / `hints` / `component`). Run locally after the tool response. Fail-open. No winner.
+- `open-ux rank-pack --query "…" < pack.json` — BM25 over one page you already got from **`Open-UX:pack`**. Requires **`pip install open-ux`** on the machine (ships with the package). Repo shim: `helpers/rank_pack.py`. Fail-open. No winner.
 
 Never use `rank_pack` to fetch a pack, pick a Card, or replace the skill loop.
 

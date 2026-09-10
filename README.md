@@ -94,7 +94,7 @@ There is **no** `audit` tool — use **`pack`**. Full reference: [`docs/TOOLS.md
 - **`suggest_situations`** — `task_text` → full catalog map of all 13 Cards by container. Does not pick or rank.
 - **`list_situations`** — Card index; optional `container` filter. Metadata only, no rule bodies.
 - **`get_situation`** — One Card: when / reject, facets, `leaves: [{ id, count }]`. Leaf id fails. No rule text.
-- **`pack`** — Cited rule criteria for `jobs` (Card, Leaf, or container) or `guideline_ids`. Page with `limit` / `offset` / `next_offset`. Host ignores `query` (use [`helpers/rank_pack.py`](helpers/registry.json) locally). No file, no pass/fail.
+- **`pack`** — Cited rule criteria for `jobs` (Card, Leaf, or container) or `guideline_ids`. Page with `limit` / `offset` / `next_offset`. Host ignores `query` (use **`open-ux rank-pack`** locally; `pip install open-ux`). No file, no pass/fail.
 - **`get_guideline`** — One full rule body by id.
 - **`list_guidelines`** / **`search_guidelines`** — Paged index; scope by jobs / lane. No bodies; host ignores `query` on search.
 - **`list_components`** / **`get_component`** — Component index and record. `get_component`: section switches `include_vs`, `include_variants`, `include_accessibility`, `include_keyboard` (default on); opt-in `include_keywords`, `include_used_on`.

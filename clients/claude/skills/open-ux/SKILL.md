@@ -8,7 +8,8 @@ description: >-
   Open-UX:get_situation (map a Card), pack (browse cites), get_guideline (full
   rule), get_component (control context when stamped). Host fetches catalog data
   via MCP — use tools, not helper substitutes. Optional LLM-local:
-  helpers/rank_pack.py after pack. Sourced criteria — you decide; not pass or
+  open-ux rank-pack after pack (pip install open-ux). Sourced criteria — you
+  decide; not pass or
   fail; do not invent from memory. Hub + references — read on demand.
   Host does not pick a Card.
 ---
@@ -30,7 +31,7 @@ Compose and review share this one trigger. Compare Cards that fit. Open more tha
    - **`Open-UX:get_component`** on row **`component[]`** — context helper when the id is stamped and the ask is the control (variant names, danger vs primary, hit target, a11y, keyboard), not the house. Usually after **`get_guideline`** on the same row.
 6. **Loop the page** — if `next_offset` is set, call **`pack`** again with that **`offset`**.
 
-`pack` pages at 10. The host does not rank. Optional: run **`helpers/rank_pack.py`** locally on one page after **`Open-UX:pack`** — see [tools.md](tools.md). Do not write a pack fetcher or a BM25 ranker.
+`pack` pages at 10. The host does not rank. Optional: **`open-ux rank-pack`** locally on one page after **`Open-UX:pack`** (`pip install open-ux`) — see [tools.md](tools.md). Do not write a pack fetcher or a BM25 ranker.
 
 Cross-reference similar rules — same **`facet`**, **`Open-UX:search_guidelines`**, or other Cards in the table. Two sources on one Card can disagree; say both.
 

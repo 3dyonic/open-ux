@@ -15,6 +15,8 @@ def test_registry_splits_agent_helpers_and_contributor_wire() -> None:
     assert len(agent) == 1
     assert agent[0]["id"] == "rank_pack"
     assert {row["id"] for row in contrib} == {"pack", "mcp_call", "get_component"}
+    assert agent[0]["cli"] == "open-ux rank-pack"
+    assert "pip install" in agent[0]["summary"].lower() or "ships" in agent[0]["summary"].lower()
     for row in agent + contrib:
         path = ROOT / row["path"]
         assert path.is_file(), row["path"]

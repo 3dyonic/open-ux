@@ -1,6 +1,6 @@
 # Scope examples
 
-Each example is a **scope shape** the MCP wire supports. **`Open-UX:pack`** requires **`jobs=`** or **`guideline_ids=`**. Optional: **`helpers/rank_pack.py`** on one page after a pack tool response — LLM-local reorder only.
+Each example is a **scope shape** the MCP wire supports. **`Open-UX:pack`** requires **`jobs=`** or **`guideline_ids=`**. Optional: **`open-ux rank-pack`** on one page after a pack tool response (`pip install open-ux`) — LLM-local reorder only.
 
 | Scope | Satisfy with | Envelope | When to use |
 | --- | --- | --- | --- |
@@ -30,4 +30,4 @@ Each example is a **scope shape** the MCP wire supports. **`Open-UX:pack`** requ
 
 **No `jobs=` yet — vague checkout.** **`Open-UX:suggest_situations`** → pick a Card → **`get_situation`** → satisfy **`jobs=`** (`jobs=build_a_multi_step_flow` or a Leaf). More than one Card → separate packs, each with its own **`jobs=`**.
 
-**Reorder one page (optional, LLM-local).** Save the **`Open-UX:pack`** JSON, then `python3 helpers/rank_pack.py --query "danger button" < pack.json`.
+**Reorder one page (optional, LLM-local).** Save the **`Open-UX:pack`** JSON, then `open-ux rank-pack --query "danger button" < pack.json`.

@@ -222,7 +222,7 @@ def pack(
     """Need in, matching rule criteria out. Leftover target/content are ignored.
 
     ``query`` is accepted for wire compatibility and is not ranked. Catalog /
-    facet order only. Optional local BM25: helpers/rank_pack.py.
+    facet order only. Optional local BM25: open-ux rank-pack.
     """
     del target, content, target_type, query
     cap = _clamp_limit(limit)

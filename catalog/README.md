@@ -44,7 +44,7 @@ Placement on every rule: `container`, `card`, `facet`, and `leaf` when that Face
 | `component` | Card in `jobs.json`; cite file; on pack row | Closed component ids. Join key only (`button`). Not a variant list. |
 | `hints` on a Card | `jobs.json` | Situation-map scan today. Do not copy component `keywords` here. |
 
-Browse works without cite-level tags: use the pack row, then `get_guideline` when you need `agent_hint` or `description`. Optional local reorder: `helpers/rank_pack.py` (BM25 over pack scan fields; host does not rank). See [`helpers/registry.json`](../helpers/registry.json).
+Browse works without cite-level tags: use the pack row, then `get_guideline` when you need `agent_hint` or `description`. Optional local reorder: `open-ux rank-pack` (BM25 over pack scan fields; host does not rank). See [`helpers/registry.json`](../helpers/registry.json).
 
 **Hints pass:** add cite `hints[]` only when the row needs host words skim does not already say; omit the key when it does not. Manifest: `scripts/cite_hints.json`.
 

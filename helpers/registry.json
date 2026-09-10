@@ -1,11 +1,12 @@
 {
-  "note": "MCP (Open-UX:*) is the agent product — the host fetches and serves catalog data. agent_helpers are for the LLM to run locally after a tool response; they are not substitutes for MCP tools. contributor_wire mirrors the same wire for terminal and CI — not the skill path.",
+  "note": "MCP (Open-UX:*) is the agent product — the host fetches catalog data. agent_helpers run on the user's machine after a tool response; pip install open-ux ships open-ux rank-pack. Not substitutes for MCP. contributor_wire is terminal/CI only.",
   "agent_helpers": [
     {
       "id": "rank_pack",
       "path": "helpers/rank_pack.py",
-      "summary": "LLM-local BM25 reorder of one pack page after Open-UX:pack. Host does not rank. Fail-open. No winner.",
-      "usage": "python3 helpers/rank_pack.py --query \"…\" < pack.json"
+      "cli": "open-ux rank-pack",
+      "summary": "LLM-local BM25 reorder of one pack page after Open-UX:pack. Shipped with pip install open-ux. Host does not rank.",
+      "usage": "open-ux rank-pack --query \"…\" < pack.json"
     }
   ],
   "contributor_wire": [
