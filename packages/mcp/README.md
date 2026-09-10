@@ -26,4 +26,4 @@ Browse a local catalog site at `http://127.0.0.1:8080/catalog`. Point MCP client
 
 There is no server-side LLM. `pack` returns cited criteria only — no file upload, no host pass/fail, no WCAG badge.
 
-Full product copy, tool table, and contributing: [github.com/3dyonic/open-ux](https://github.com/3dyonic/open-ux#readme).
+Tool reference (no `audit` — use `pack`): [`docs/TOOLS.md`](../../docs/TOOLS.md). Full product copy and contributing: [github.com/3dyonic/open-ux](https://github.com/3dyonic/open-ux#readme).
