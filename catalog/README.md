@@ -85,7 +85,7 @@ The picker is a Card: one compose job. Containers are how the skill lists them. 
 | Navigation & wayfinding | `orient_in_the_place`, `compose_search` |
 | Layout & data display | `compose_a_data_display`, `compose_the_layout`, `write_the_interface` |
 | Overlays & content structure | `choose_an_overlay` |
-| Multi step flows | `build_a_multi_step_flow` |
+| Multi-step flows | `build_a_multi_step_flow` |
 
 `write_the_interface` is for page voice and link destination text. Button verbs still go to `design_actions_and_ctas`; field labels still go to `design_a_form`.
 

@@ -78,7 +78,7 @@ def test_skill_description_is_compose_task_and_short() -> None:
         "Navigation & wayfinding",
         "Layout & data display",
         "Overlays & content structure",
-        "Multi step flows",
+        "Multi-step flows",
     ):
         assert title in routing
 

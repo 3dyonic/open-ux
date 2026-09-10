@@ -148,7 +148,7 @@ def test_skill_routing_table_has_when_and_cross_container_reject() -> None:
         "Navigation & wayfinding",
         "Layout & data display",
         "Overlays & content structure",
-        "Multi step flows",
+        "Multi-step flows",
     ):
         assert title in body
     assert "`forms`" in body and "`actions`" in body and "`feedback`" in body
