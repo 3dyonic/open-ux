@@ -28,5 +28,11 @@
   "not_when": "Theme palette where a named convention applies, or colour-only encoding.",
   "agent_hint": "Honor domain colour conventions over theme; always add label or pattern channels.",
   "description": "Established colour conventions override the theme palette—traffic-light risk, party colours, water/vegetation, finance red/black. Still label or pattern so colour is not the only channel. Do not generalize the exception. Pass when domain conventions override theme and colour is not the only channel. Fail when theme palette is used where a named convention applies, or colour is the only channel.",
-  "do_not_claim": "A general “always traffic-light” house rule."
+  "do_not_claim": "A general “always traffic-light” house rule.",
+  "component": [
+    "chart"
+  ],
+  "hints": [
+    "graph"
+  ]
 }

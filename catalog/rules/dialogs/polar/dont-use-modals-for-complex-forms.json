@@ -28,5 +28,8 @@
   "not_when": "Complex forms in modals, more than two bottom actions, or tertiary dismiss.",
   "agent_hint": "Keep complex forms out of modals; limit to two bottom actions; tertiary never dismisses.",
   "description": "Don’t use modals for complex forms or large information; max two bottom actions; tertiary never dismisses. Pass when complex forms or large information are not in a modal, the modal has at most two bottom actions, and a tertiary action does not dismiss. Fail when a complex form or large information is in a modal, there are more than two bottom actions, or tertiary dismisses.",
-  "do_not_claim": "NN/g modal 7-list as a merge; `actions.button_groups` “three or four”. Overlap with Actions 40: `button_groups` / confirm."
+  "do_not_claim": "NN/g modal 7-list as a merge; `actions.button_groups` “three or four”. Overlap with Actions 40: `button_groups` / confirm.",
+  "component": [
+    "modal"
+  ]
 }

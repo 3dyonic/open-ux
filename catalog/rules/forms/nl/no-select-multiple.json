@@ -28,5 +28,8 @@
   "not_when": "Not for single-select dropdowns that correctly use ordinary select.",
   "agent_hint": "Replace select multiple with checkboxes for accessible multi-choice.",
   "description": "Do not use native `<select multiple>`—keyboard and VoiceOver on Safari cannot operate it reliably. Use checkboxes for multi-pick instead so every person can select several options. Fail when native `<select multiple>` is the control for multi-choice. Prefer an explicit checkbox group whenever more than one option may be chosen. Apply when offering a multi-select choice set in a form.",
-  "do_not_claim": "GOLD avoid-select-except-long-lists as this multi-select ban; NSW multi-select pattern as a winner."
+  "do_not_claim": "GOLD avoid-select-except-long-lists as this multi-select ban; NSW multi-select pattern as a winner.",
+  "component": [
+    "select"
+  ]
 }

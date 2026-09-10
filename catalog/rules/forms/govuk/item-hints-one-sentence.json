@@ -28,5 +28,8 @@
   "not_when": "Not for page-level help, field labels, or error messages.",
   "agent_hint": "Keep each item hint to one short sentence; ban trailing full stops and links.",
   "description": "Hints on individual radio or select items should be one short sentence, without a trailing full stop, and without links inside the hint text. Short, link-free hints keep options scannable and avoid nesting navigation inside the choice. Multi-sentence or link-filled hints compete with the option label itself. Fail for multi-sentence hints, trailing full stops, or links nested in hint copy. Use this when adding per-item help under radios or select options.",
-  "do_not_claim": "Field-level helper text (Fluent); placeholder-as-hint (skipped)."
+  "do_not_claim": "Field-level helper text (Fluent); placeholder-as-hint (skipped).",
+  "component": [
+    "text_field"
+  ]
 }

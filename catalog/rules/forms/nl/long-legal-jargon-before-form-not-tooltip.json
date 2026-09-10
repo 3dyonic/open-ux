@@ -28,5 +28,8 @@
   "not_when": "Not for one-line field hints that stay beside the control.",
   "agent_hint": "Put long or legal jargon before the form; do not hide it in tooltips alone.",
   "description": "Long or legal jargon lives before the form or on an intro page—not only in tooltips or as loose blocks between questions. Extra clicks hide important copy, and screen readers miss loose interstitial blocks between fields. Put the explanation where it stays available before people start answering. Fail when important long or legal copy is only in a tooltip or only loose between questions. Apply when placing lengthy or legal help for a form.",
-  "do_not_claim": "Spectrum tooltip-last-resort as a merge; format-in-description from the `pattern` ban as this length/placement row."
+  "do_not_claim": "Spectrum tooltip-last-resort as a merge; format-in-description from the `pattern` ban as this length/placement row.",
+  "component": [
+    "tooltip"
+  ]
 }

@@ -28,5 +28,8 @@
   "not_when": "Non-essential details users need only after intentional expand.",
   "agent_hint": "Keep Find-in-page–needed copy outside collapsed-only accordion panels.",
   "description": "Browsers’ Find in page does not match collapsed accordion text, so hidden copy is invisible to find. Dual-cite USWDS “use only if users need a few pieces”; this row names the find-in-page failure. Pass when content people must find with Find in page is not only inside a collapsed accordion; fail when essential copy lives only in collapsed panels Find cannot match.",
-  "do_not_claim": "USWDS accordion-sparingly as a merge that drops the find-in-page name."
+  "do_not_claim": "USWDS accordion-sparingly as a merge that drops the find-in-page name.",
+  "component": [
+    "accordion"
+  ]
 }

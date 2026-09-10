@@ -226,6 +226,22 @@
             }
           ]
         }
+      ],
+      "component": [
+        "autocomplete",
+        "character_count",
+        "checkbox",
+        "date_input",
+        "file_upload",
+        "list_builder",
+        "modal",
+        "radio",
+        "select",
+        "slider",
+        "switch",
+        "text_field",
+        "textarea",
+        "time_input"
       ]
     },
     {
@@ -292,6 +308,11 @@
             }
           ]
         }
+      ],
+      "component": [
+        "button",
+        "error_summary",
+        "text_field"
       ]
     },
     {
@@ -337,6 +358,11 @@
             }
           ]
         }
+      ],
+      "component": [
+        "button",
+        "password",
+        "text_field"
       ]
     },
     {
@@ -363,6 +389,10 @@
         {
           "id": "write_the_interface",
           "why": "page voice or link destination text"
+        },
+        {
+          "id": "compose_feedback",
+          "why": "spinner / loading on the control itself"
         }
       ],
       "hints": [
@@ -464,6 +494,10 @@
             }
           ]
         }
+      ],
+      "component": [
+        "button",
+        "link"
       ]
     },
     {
@@ -532,17 +566,22 @@
             }
           ]
         }
+      ],
+      "component": [
+        "button",
+        "modal",
+        "popconfirm"
       ]
     },
     {
       "id": "compose_feedback",
       "title": "Compose feedback",
       "container": "feedback_and_status",
-      "overview": "Say what happened, what is happening, or that there is nothing here.",
+      "overview": "Say what happened or what is happening.",
       "when": [
         "toast after save",
         "loading state",
-        "write the empty state",
+        "spinner on a button",
         "design a 404",
         "error message for a failed payment or hard error",
         "tone on failure"
@@ -555,15 +594,10 @@
         {
           "id": "build_a_multi_step_flow",
           "why": "progress inside a wizard"
-        },
-        {
-          "id": "design_actions_and_ctas",
-          "why": "button press / loading state on the control itself"
         }
       ],
       "hints": [
         "toast",
-        "empty",
         "404",
         "loading",
         "spinner",
@@ -633,6 +667,16 @@
             }
           ]
         }
+      ],
+      "component": [
+        "alert",
+        "button",
+        "empty_state",
+        "loading_indicator",
+        "site_alert",
+        "skeleton",
+        "task_list",
+        "toast"
       ]
     },
     {
@@ -688,6 +732,12 @@
             }
           ]
         }
+      ],
+      "component": [
+        "breadcrumb",
+        "link",
+        "pagination",
+        "tabs"
       ]
     },
     {
@@ -736,6 +786,9 @@
             }
           ]
         }
+      ],
+      "component": [
+        "search"
       ]
     },
     {
@@ -803,6 +856,12 @@
             }
           ]
         }
+      ],
+      "component": [
+        "chart",
+        "map",
+        "skeleton",
+        "table"
       ]
     },
     {
@@ -850,6 +909,10 @@
             }
           ]
         }
+      ],
+      "component": [
+        "button",
+        "content_card"
       ]
     },
     {
@@ -916,6 +979,9 @@
             }
           ]
         }
+      ],
+      "component": [
+        "link"
       ]
     },
     {
@@ -984,6 +1050,14 @@
             }
           ]
         }
+      ],
+      "component": [
+        "accordion",
+        "button",
+        "drawer",
+        "modal",
+        "popconfirm",
+        "tooltip"
       ]
     },
     {
@@ -1041,6 +1115,11 @@
             }
           ]
         }
+      ],
+      "component": [
+        "button",
+        "progress",
+        "task_list"
       ]
     }
   ]

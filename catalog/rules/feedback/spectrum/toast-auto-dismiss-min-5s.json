@@ -28,5 +28,11 @@
   "not_when": "Dialogs that need attention, or sticky alerts users must dismiss themselves.",
   "agent_hint": "Keep auto-dismiss ≥5s, pause on focus/hover, and preserve actionable paths elsewhere.",
   "description": "Spectrum auto-dismiss toasts stay up at least five seconds so the message can be read, pause the timer on focus or hover (including keyboard focus on toast buttons), and keep any actionable path available elsewhere if the toast dismisses. Shorter timers, timers that ignore focus, or actions that vanish with the toast fail the bar. Use this for low-priority timed feedback; escalate harder decisions to dialogs.",
-  "do_not_claim": "Ant Message default 3s as a house winner; snackbar-only undo (`nng.support-undo-discoverable`)."
+  "do_not_claim": "Ant Message default 3s as a house winner; snackbar-only undo (`nng.support-undo-discoverable`).",
+  "component": [
+    "toast"
+  ],
+  "hints": [
+    "snackbar"
+  ]
 }

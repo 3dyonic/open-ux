@@ -28,5 +28,9 @@
   "not_when": "Values available only inside a hover tooltip.",
   "agent_hint": "Expose values via labels, table, or equivalent—never tooltip-only.",
   "description": "No tooltip-only values—hover is not the values channel for keyboard, touch, or assistive technology. Related empty or failure guidance: do not hide the only message in a dismissible overlay. Pass when values are available without hover via labels, table, or equivalent. Fail when the only values live in a hover tooltip, blocking non-hover access to the numbers.",
-  "do_not_claim": "Chart anatomy table as a substitute that drops this hover ban."
+  "do_not_claim": "Chart anatomy table as a substitute that drops this hover ban.",
+  "component": [
+    "chart",
+    "tooltip"
+  ]
 }

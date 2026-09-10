@@ -28,5 +28,8 @@
   "not_when": "Free-text inputs, multi-line text areas, or icon-only toolbar menus.",
   "agent_hint": "Keep menu items concise and widen the field so the selection is not ellipsized.",
   "description": "A Spectrum picker should keep menu copy short and size the field button wide enough that the selected value is not ellipsized. Frequent wrapping is treated as a copy or pattern problem, not something to leave as-is. Truncating the chosen value in the closed field hides what was picked; wrapping every item usually means the labels need revision or a different control. Apply on form pickers; do not stretch this to free-text fields.",
-  "do_not_claim": "Ant dropdown \"option text fully displayed\" as a merge that drops picker field-button width."
+  "do_not_claim": "Ant dropdown \"option text fully displayed\" as a merge that drops picker field-button width.",
+  "component": [
+    "select"
+  ]
 }

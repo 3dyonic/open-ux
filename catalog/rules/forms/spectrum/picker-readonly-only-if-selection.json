@@ -28,5 +28,8 @@
   "not_when": "Empty unset pickers, or disabled unavailable fields with no value to keep.",
   "agent_hint": "Make a picker read-only only after it has a selection; never empty read-only.",
   "description": "Spectrum allows read-only on a picker only when a selection already exists. An empty picker has no read-only option, because there is no value to preserve. Use read-only when the chosen value must stay visible and non-editable; leave unset pickers interactive or omit the control rather than marking them read-only. Do not confuse this with disabled unavailable fields that are out of play entirely.",
-  "do_not_claim": "Text-field read-only vs disabled as this row."
+  "do_not_claim": "Text-field read-only vs disabled as this row.",
+  "component": [
+    "select"
+  ]
 }

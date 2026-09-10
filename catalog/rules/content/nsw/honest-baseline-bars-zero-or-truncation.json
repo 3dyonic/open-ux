@@ -28,5 +28,11 @@
   "not_when": "Truncated bar axes without a mark, or labels rotated to hide truncation.",
   "agent_hint": "Start bars at zero or mark truncation; never rotate labels to hide a truncated axis.",
   "description": "Honest baseline: bars start at zero or show truncation. Use meaningful scales, consistent time intervals, and readable labels. Don’t rotate labels to hide a truncated axis. Pass when bars start at zero or truncation is shown, scales and intervals are consistent, and labels are not rotated to hide truncation. Fail when a truncated bar axis has no truncation mark or labels are rotated to hide it.",
-  "do_not_claim": "Keep-text-horizontal min px as this baseline row."
+  "do_not_claim": "Keep-text-horizontal min px as this baseline row.",
+  "component": [
+    "chart"
+  ],
+  "hints": [
+    "graph"
+  ]
 }

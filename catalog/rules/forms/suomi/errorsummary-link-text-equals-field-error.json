@@ -28,5 +28,13 @@
   "not_when": "Success summaries, toast confirmations, or summaries that only repeat field labels.",
   "agent_hint": "Match ErrorSummary link text to each field’s error wording exactly.",
   "description": "Suomi.fi ErrorSummary links must use the same wording as the field’s error text so either context still reads clearly. Replacing the error with only the field label, or rewriting the summary in different words, breaks that parallel recognition. Keep the strings identical so users spot the same problem at the summary and beside the field without translating between two phrasings.",
-  "do_not_claim": "Submit-time default as this wording row; GOV.UK error summary as a merge that drops same-wording."
+  "do_not_claim": "Submit-time default as this wording row; GOV.UK error summary as a merge that drops same-wording.",
+  "component": [
+    "error_summary"
+  ],
+  "hints": [
+    "error banner",
+    "top of form",
+    "jump to field"
+  ]
 }

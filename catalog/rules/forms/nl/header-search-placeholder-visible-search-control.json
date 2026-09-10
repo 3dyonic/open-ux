@@ -28,5 +28,8 @@
   "not_when": "Not for ordinary fields; placeholder-as-only-label remains banned elsewhere.",
   "agent_hint": "For header search only: hidden label, Zoek placeholder, and a visible Search control.",
   "description": "Header search is the named exception: a visually hidden `<label>`, placeholder “Zoek”, and a submit with text and/or magnifying-glass. Ordinary fields still need a visible label; this exception does not pass elsewhere. Fail if an ordinary field uses placeholder as its only label citing this exception, or if header search lacks a visible Search control and accessible name. Apply only to site header search with a visible Search affordance.",
-  "do_not_claim": "Placeholder-as-label as passing on non-search fields; GOLD search attributes as this exception."
+  "do_not_claim": "Placeholder-as-label as passing on non-search fields; GOLD search attributes as this exception.",
+  "component": [
+    "search"
+  ]
 }

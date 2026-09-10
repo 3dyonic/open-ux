@@ -28,5 +28,8 @@
   "not_when": "Add-to-collection actions that are not the Fluent New create pattern.",
   "agent_hint": "Label create as New {thing}; menu trigger New; omit New on menu items.",
   "description": "Fluent create labels use “New {thing}.” The menu trigger that opens create options is simply “New”; items inside the menu drop the word New so the list stays scannable. Apply when labeling Fluent create actions and New menus that spawn items. Fail menu items that repeat New, or a create control that is unlabeled or a generic Add where this New pattern applies.",
-  "do_not_claim": "NN/g verb-leading as a merge. Overlap with Actions 40: `actions.copy.verbs_for_actions`."
+  "do_not_claim": "NN/g verb-leading as a merge. Overlap with Actions 40: `actions.copy.verbs_for_actions`.",
+  "component": [
+    "button"
+  ]
 }

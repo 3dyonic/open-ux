@@ -28,5 +28,11 @@
   "not_when": "One toast per related event in a rapid burst.",
   "agent_hint": "Bundle related events into one toast; avoid one toast per event in a burst.",
   "description": "Bundle related events into one toast instead of spamming—for example four uploads become one toast, not four. Stay mindful of frequency even though toasts are weaker than dialogs. Pass when related events share one bundled toast. Fail when each related event in a burst fires its own toast and floods the surface with stacked notifications.",
-  "do_not_claim": "Queueing (previous row) as the bundle rule."
+  "do_not_claim": "Queueing (previous row) as the bundle rule.",
+  "component": [
+    "toast"
+  ],
+  "hints": [
+    "snackbar"
+  ]
 }

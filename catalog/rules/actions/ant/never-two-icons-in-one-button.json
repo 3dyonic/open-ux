@@ -28,5 +28,8 @@
   "not_when": "Separate adjacent icon buttons — each control may have its own icon.",
   "agent_hint": "Put at most one icon in a button; never two icons together.",
   "description": "Ant forbids two icons inside one button. A control may have no icon or a single icon that supports its label; stacking two icons in the same button muddies what the action is. Keep icon content to zero or one per button when composing actions and CTAs. Apply when deciding button content — not when two neighboring buttons each carry one icon of their own. Fail any single button that shows two icons together.",
-  "do_not_claim": "Icon+text supplementary meaning as this row."
+  "do_not_claim": "Icon+text supplementary meaning as this row.",
+  "component": [
+    "button"
+  ]
 }

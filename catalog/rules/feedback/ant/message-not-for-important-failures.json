@@ -28,5 +28,12 @@
   "not_when": "Transient success or low-stakes status that can auto-dismiss.",
   "agent_hint": "Put important failures in a dialog with the reason, not Message.",
   "description": "Ant Message is top-centered, non-blocking, and auto-dismisses (default about three seconds). Important failures need a dialog that states the reason so the user can act; a fleeting Message alone is the wrong vehicle. Use this when severity is high enough that losing the copy on dismiss would leave them stuck — not for ordinary transient status.",
-  "do_not_claim": "Spectrum toast ≥5s as a house winner over 3s; WCAG interruptions."
+  "do_not_claim": "Spectrum toast ≥5s as a house winner over 3s; WCAG interruptions.",
+  "component": [
+    "modal",
+    "toast"
+  ],
+  "hints": [
+    "snackbar"
+  ]
 }

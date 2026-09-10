@@ -28,5 +28,8 @@
   "not_when": "Click-driven popovers or menus that are not hover detail overlays.",
   "agent_hint": "Delay overlay open 0.5 s on hover; close immediately when the pointer leaves.",
   "description": "Hover detail overlays should appear after a 0.5 second mouseover delay and close immediately on mouse-out. Instant open causes flicker as the pointer crosses the target; delayed close leaves stale overlays hanging over content. The half-second delay filters accidental passes while still feeling responsive for intentional hover. Apply this timing to hover detail layers; click-triggered popovers follow different open and close rules.",
-  "do_not_claim": "Click-outside input overlay (next row)."
+  "do_not_claim": "Click-outside input overlay (next row).",
+  "component": [
+    "tooltip"
+  ]
 }

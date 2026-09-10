@@ -27,5 +27,8 @@
   "apply_when": "Object-specific tools would clutter persistent main chrome if always shown.",
   "not_when": "Primary always-needed actions that belong in lasting visible chrome.",
   "agent_hint": "Attach occasional tools to the object via hover or pop-up, not main chrome.",
-  "description": "Tools that apply to a specific object can appear on hover or in a pop-up tied to that object instead of crowding the main chrome. Stuffing occasional tools into persistent chrome wastes space and adds noise for people who rarely need them. Keep always-critical actions visible in lasting chrome; reserve hover or pop-up association for contextual, infrequent tools. The association should stay tied to the object so the tools feel local, not global."
+  "description": "Tools that apply to a specific object can appear on hover or in a pop-up tied to that object instead of crowding the main chrome. Stuffing occasional tools into persistent chrome wastes space and adds noise for people who rarely need them. Keep always-critical actions visible in lasting chrome; reserve hover or pop-up association for contextual, infrequent tools. The association should stay tied to the object so the tools feel local, not global.",
+  "component": [
+    "tooltip"
+  ]
 }

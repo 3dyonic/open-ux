@@ -28,5 +28,8 @@
   "not_when": "Button or CTA labels governed by action-label patterns instead.",
   "agent_hint": "Describe the destination in the link; put type/size inside; avoid click here.",
   "description": "Canada.ca bans “click here” and “read more.” Unique descriptive text per distinct URL; identical wording when two links go to the same page. Do not bury the task-critical link mid-paragraph. Downloads put file type and size in parentheses inside the link; other-language or duration likewise sit inside the link. Fail vague click-here copy, same text to different URLs, or type/size only outside the link.",
-  "do_not_claim": "Intranet parenthetical (next row) as this."
+  "do_not_claim": "Intranet parenthetical (next row) as this.",
+  "component": [
+    "link"
+  ]
 }

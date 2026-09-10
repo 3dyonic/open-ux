@@ -28,5 +28,11 @@
   "not_when": "Not for tiny fixed lists already short enough, or non-public admin tools.",
   "agent_hint": "Ask shrinking questions first; avoid a long public-service select as the first step.",
   "description": "On public services, a long select should be a last resort. Ask questions that shrink the list first, or avoid select entirely when another pattern fits better. Long selects are hard to scan and easy to mis-choose on public flows. Fail when a long public-service select is the first or only way to choose with no shrinking questions beforehand. Prefer progressive questions that reduce options before any remaining select.",
-  "do_not_claim": "A house option-count cutoff (see NN/g / Polar choice cutoffs). Overlap with Forms 54: `forms.inputs.match_control_and_size`, `dropdown_chooser`, `combo_box`, `offer_choices_not_only_text`. Dual-cite DS cutoffs; no house number."
+  "do_not_claim": "A house option-count cutoff (see NN/g / Polar choice cutoffs). Overlap with Forms 54: `forms.inputs.match_control_and_size`, `dropdown_chooser`, `combo_box`, `offer_choices_not_only_text`. Dual-cite DS cutoffs; no house number.",
+  "component": [
+    "select"
+  ],
+  "hints": [
+    "dropdown"
+  ]
 }

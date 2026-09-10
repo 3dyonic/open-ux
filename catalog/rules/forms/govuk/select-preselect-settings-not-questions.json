@@ -28,5 +28,11 @@
   "not_when": "Not for checkboxes that are independently multi-select without a single default.",
   "agent_hint": "Leave question answers unselected or use explicit None; pre-select settings’ current value.",
   "description": "On questions, do not silently preselect a guessed answer; if none is valid, include an explicit None. On settings, select the current or safe value so the control reflects reality. The question-versus-settings split matters: silent defaults influence answers on questions but help on settings. Fail if a question silently preselects a guess, a settings control leaves a logical current value unselected, or a global always/never preselect ignores that split. Apply when deciding defaults for selects or radios.",
-  "do_not_claim": "Forcing a guessed question answer to satisfy “always default a radio”. Overlap with Forms 54: `forms.inputs.good_defaults_smart_prefills`. Encode question vs settings; do not collapse into Tidwell Good Defaults."
+  "do_not_claim": "Forcing a guessed question answer to satisfy “always default a radio”. Overlap with Forms 54: `forms.inputs.good_defaults_smart_prefills`. Encode question vs settings; do not collapse into Tidwell Good Defaults.",
+  "component": [
+    "select"
+  ],
+  "hints": [
+    "dropdown"
+  ]
 }

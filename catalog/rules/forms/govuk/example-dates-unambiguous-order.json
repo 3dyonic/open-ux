@@ -28,5 +28,8 @@
   "not_when": "Not for live user values, or non-date numeric examples.",
   "agent_hint": "Use example dates like 27 3 2007; avoid ambiguous 03/04-style samples.",
   "description": "Date hints and examples should use a day of 13 or more and a month of 9 or less—for example 27 3 2007—so day/month order is unambiguous and leading zeros are not implied as required. Ambiguous samples like 03/04/2007 teach the wrong order or suggest zeros are mandatory. Clear examples help people enter dates correctly without guessing locale order. Fail for ambiguous order examples or examples that imply leading zeros are required. Apply when writing hints beside day/month/year inputs.",
-  "do_not_claim": "Locale date-format law."
+  "do_not_claim": "Locale date-format law.",
+  "component": [
+    "date_input"
+  ]
 }

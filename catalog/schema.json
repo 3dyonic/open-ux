@@ -162,6 +162,18 @@
       "minLength": 1,
       "description": "Closest wrong use. Required unless waive_reason is set."
     },
+    "hints": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Host-language extras this cite’s skim does not already say. Omit the key when there are none."
+    },
+    "component": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1, "pattern": "^[a-z0-9_]+$" },
+      "description": "Closed widget ids. Join key only. Authored on the cite (and the Card). Omit when unset."
+    },
     "agent_hint": {
       "type": "string",
       "minLength": 1,
