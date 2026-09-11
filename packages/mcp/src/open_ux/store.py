@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import base64
 import hashlib
 import json
 import sqlite3
@@ -13,9 +14,25 @@ from open_ux.settings import RATE_PER_DAY, RATE_PER_MINUTE, RETENTION_DAYS, Sett
 
 _local = threading.local()
 
+WAITLIST_PAGE_SIZE = 100
+
 
 def content_hash(content: str) -> str:
     return hashlib.sha256(content.encode("utf-8")).hexdigest()
+
+
+def _encode_waitlist_cursor(created_at: str, row_id: int) -> str:
+    raw = f"{created_at}|{row_id}".encode("utf-8")
+    return base64.urlsafe_b64encode(raw).decode("ascii")
+
+
+def _decode_waitlist_cursor(cursor: str) -> tuple[str, int] | None:
+    try:
+        raw = base64.urlsafe_b64decode(cursor.encode("ascii")).decode("utf-8")
+        created_at, row_id = raw.rsplit("|", 1)
+        return created_at, int(row_id)
+    except (ValueError, UnicodeDecodeError, base64.binascii.Error):
+        return None
 
 
 def _utcnow() -> datetime:
@@ -147,14 +164,41 @@ class Store:
             row = cur.execute("SELECT COUNT(*) AS n FROM waitlist").fetchone()
         return int(row["n"])
 
-    def list_waitlist(self) -> list[dict[str, str]]:
-        """Waitlist emails newest first. Email and created_at only."""
+    def list_waitlist(
+        self, *, limit: int = WAITLIST_PAGE_SIZE, before: str | None = None
+    ) -> dict[str, Any]:
+        """Waitlist emails newest first, keyset-paged. Email and created_at only.
+
+        No OFFSET: cost stays O(log n + limit) at any page depth. `before` is an
+        opaque cursor from a previous page's `next_cursor`; a missing/invalid
+        cursor just returns the first page.
+        """
+        limit = max(1, min(limit, WAITLIST_PAGE_SIZE))
+        where = ""
+        params: list[Any] = []
+        cursor = _decode_waitlist_cursor(before) if before else None
+        if cursor is not None:
+            cursor_created_at, cursor_id = cursor
+            where = "WHERE (created_at < ?) OR (created_at = ? AND id < ?)"
+            params.extend([cursor_created_at, cursor_created_at, cursor_id])
+        params.append(limit + 1)
         with self.cursor() as cur:
             rows = cur.execute(
-                "SELECT email, created_at FROM waitlist "
-                "ORDER BY created_at DESC, id DESC"
+                f"SELECT id, email, created_at FROM waitlist {where} "
+                "ORDER BY created_at DESC, id DESC LIMIT ?",
+                params,
             ).fetchall()
-        return [{"email": r["email"], "created_at": r["created_at"]} for r in rows]
+        has_more = len(rows) > limit
+        rows = rows[:limit]
+        next_cursor = (
+            _encode_waitlist_cursor(rows[-1]["created_at"], rows[-1]["id"])
+            if has_more and rows
+            else None
+        )
+        return {
+            "items": [{"email": r["email"], "created_at": r["created_at"]} for r in rows],
+            "next_cursor": next_cursor,
+        }
 
     def issue_invite(self, email: str, token_hash: str, expires_at: str) -> None:
         now = _iso(_utcnow())

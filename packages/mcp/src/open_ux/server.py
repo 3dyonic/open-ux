@@ -65,7 +65,7 @@ from open_ux.settings import (
     gtm_container_id,
 )
 from open_ux.rate_limit import client_ip
-from open_ux.store import get_store
+from open_ux.store import WAITLIST_PAGE_SIZE, get_store
 
 SPA_HEADERS = {
     "X-Content-Type-Options": "nosniff",
@@ -88,6 +88,7 @@ _PAGE_FILES = {
     "/invite": "invite/index.html",
     "/invite/requested": "invite/requested/index.html",
     "/invite/redeem": "invite/redeem/index.html",
+    "/admin": "admin/index.html",
 }
 
 
@@ -683,6 +684,12 @@ def create_mcp(*, hosted: bool) -> FastMCP:
     async def invite_requested_page(_request: Request) -> Response:
         return _html_page("/invite/requested")
 
+    @mcp.custom_route("/admin", methods=["GET"])
+    async def admin_page(_request: Request) -> Response:
+        if not hosted:
+            return not_found_response(kind="page", detail="/admin", path="/admin")
+        return _html_page("/admin")
+
     @mcp.custom_route("/robots.txt", methods=["GET"])
     async def robots(_request: Request) -> Response:
         return Response(ROBOTS_TXT, media_type="text/plain; charset=utf-8")
@@ -771,7 +778,13 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             return JSONResponse({"error": "Hosted-only."}, status_code=400)
         if not _admin_authorized(request, settings):
             return JSONResponse({"error": "Unauthorized."}, status_code=401)
-        return JSONResponse({"items": store.list_waitlist()})
+        limit_raw = request.query_params.get("limit")
+        try:
+            limit = int(limit_raw) if limit_raw else WAITLIST_PAGE_SIZE
+        except ValueError:
+            limit = WAITLIST_PAGE_SIZE
+        before = request.query_params.get("before") or None
+        return JSONResponse(store.list_waitlist(limit=limit, before=before))
 
     @mcp.custom_route("/admin/stats", methods=["GET"])
     async def admin_stats(request: Request) -> Response:
