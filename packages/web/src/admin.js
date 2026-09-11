@@ -54,25 +54,27 @@ export function adminPage() {
       "admin",
       shell(
         `
-  <main class="page page-invite">
-    <div class="invite-card" id="admin-login-card">
-      <p class="invite-meta"><span class="pip" aria-hidden="true"></span>Admin · invite waitlist</p>
-      <h1 class="invite-title">Admin sign-in</h1>
-      <p class="invite-sub" id="admin-login-sub">Paste the admin bearer token to view and approve the waitlist.</p>
-      <form id="admin-login" class="contents" novalidate>
-        <div class="field-invite">
-          <label class="label-invite" for="admin-token">Admin token</label>
-          <div class="flex w-full items-center gap-2">
-            <input class="input input-invite flex-1" id="admin-token" name="token" type="password" autocomplete="off" spellcheck="false" autocapitalize="none" placeholder="paste token">
-            <button class="btn btn-outline btn-nav" type="button" id="admin-token-toggle" aria-pressed="false">Show</button>
+  <main class="page">
+    <div class="flex w-full flex-1 flex-col items-center justify-center" id="admin-login-view">
+      <div class="invite-card" id="admin-login-card">
+        <p class="invite-meta"><span class="pip" aria-hidden="true"></span>Admin · invite waitlist</p>
+        <h1 class="invite-title">Admin sign-in</h1>
+        <p class="invite-sub" id="admin-login-sub">Paste the admin bearer token to view and approve the waitlist.</p>
+        <form id="admin-login" class="contents" novalidate>
+          <div class="field-invite">
+            <label class="label-invite" for="admin-token">Admin token</label>
+            <div class="flex w-full items-center gap-2">
+              <input class="input input-invite flex-1" id="admin-token" name="token" type="password" autocomplete="off" spellcheck="false" autocapitalize="none" placeholder="paste token">
+              <button class="btn btn-outline btn-nav" type="button" id="admin-token-toggle" aria-pressed="false">Show</button>
+            </div>
           </div>
-        </div>
-        <button class="btn btn-primary" type="submit" id="admin-login-submit">Sign in</button>
-        <p class="foot" id="admin-login-foot">Kept only for this tab — never sent anywhere but this site's /admin endpoints.</p>
-      </form>
+          <button class="btn btn-primary" type="submit" id="admin-login-submit">Sign in</button>
+          <p class="foot" id="admin-login-foot">Kept only for this tab — never sent anywhere but this site's /admin endpoints.</p>
+        </form>
+      </div>
     </div>
 
-    <div class="page w-full max-w-[760px]" id="admin-table-card" hidden>
+    <div class="flex w-full max-w-[760px] flex-col gap-7" id="admin-table-card" hidden>
       <div class="flex items-center justify-between gap-4">
         <div class="flex flex-col gap-1">
           <p class="invite-meta"><span class="pip" aria-hidden="true"></span>Admin · invite waitlist</p>
@@ -163,7 +165,7 @@ export function renderAdmin(root) {
     root.innerHTML = page.body;
   }
 
-  const loginCard = document.getElementById("admin-login-card");
+  const loginView = document.getElementById("admin-login-view");
   const tableCard = document.getElementById("admin-table-card");
   const loginForm = document.getElementById("admin-login");
   const tokenInput = document.getElementById("admin-token");
@@ -190,7 +192,7 @@ export function renderAdmin(root) {
     clearToken();
     token = "";
     tableCard.hidden = true;
-    loginCard.hidden = false;
+    loginView.hidden = false;
     loginSub.textContent = message || LOGIN_SUB;
     loginSub.classList.toggle("invite-sub-error", Boolean(message));
     tokenInput.value = "";
@@ -198,7 +200,7 @@ export function renderAdmin(root) {
   }
 
   function showTable() {
-    loginCard.hidden = true;
+    loginView.hidden = true;
     tableCard.hidden = false;
     list.innerHTML = "";
     tableError.hidden = true;
