@@ -773,6 +773,14 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             return JSONResponse({"error": "Unauthorized."}, status_code=401)
         return JSONResponse({"items": store.list_waitlist()})
 
+    @mcp.custom_route("/admin/stats", methods=["GET"])
+    async def admin_stats(request: Request) -> Response:
+        if not hosted:
+            return JSONResponse({"error": "Hosted-only."}, status_code=400)
+        if not _admin_authorized(request, settings):
+            return JSONResponse({"error": "Unauthorized."}, status_code=401)
+        return JSONResponse(store.telemetry_summary())
+
     @mcp.custom_route("/admin/invite/approve", methods=["POST"])
     async def admin_invite_approve(request: Request) -> Response:
         if not hosted:

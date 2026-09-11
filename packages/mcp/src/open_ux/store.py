@@ -325,6 +325,66 @@ class Store:
             rows = cur.execute("SELECT * FROM telemetry").fetchall()
         return [dict(r) for r in rows]
 
+    def telemetry_summary(self, *, window_days: int = RETENTION_DAYS) -> dict[str, Any]:
+        """Aggregate stats over the telemetry table, plus account/invite/waitlist counts.
+
+        key_hash never appears in the output — only a count of distinct callers.
+        """
+        cutoff = _iso(_utcnow() - timedelta(days=window_days))
+        with self.cursor() as cur:
+            total_requests = cur.execute(
+                "SELECT COUNT(*) AS n FROM telemetry WHERE created_at >= ?", (cutoff,)
+            ).fetchone()["n"]
+            unique_keys = cur.execute(
+                "SELECT COUNT(DISTINCT key_hash) AS n FROM telemetry WHERE created_at >= ?",
+                (cutoff,),
+            ).fetchone()["n"]
+            by_tool = cur.execute(
+                "SELECT tool, COUNT(*) AS n FROM telemetry WHERE created_at >= ? "
+                "GROUP BY tool ORDER BY n DESC, tool ASC",
+                (cutoff,),
+            ).fetchall()
+            by_day = cur.execute(
+                "SELECT substr(created_at, 1, 10) AS day, COUNT(*) AS n FROM telemetry "
+                "WHERE created_at >= ? GROUP BY day ORDER BY day ASC",
+                (cutoff,),
+            ).fetchall()
+            guideline_rows = cur.execute(
+                "SELECT guideline_ids FROM telemetry "
+                "WHERE created_at >= ? AND guideline_ids IS NOT NULL",
+                (cutoff,),
+            ).fetchall()
+            accounts = cur.execute("SELECT COUNT(*) AS n FROM accounts").fetchone()["n"]
+            invites = cur.execute("SELECT COUNT(*) AS n FROM invites").fetchone()["n"]
+            waitlist = cur.execute("SELECT COUNT(*) AS n FROM waitlist").fetchone()["n"]
+
+        guideline_counts: dict[str, int] = {}
+        for row in guideline_rows:
+            try:
+                ids = json.loads(row["guideline_ids"])
+            except (TypeError, ValueError):
+                continue
+            for gid in ids or []:
+                guideline_counts[gid] = guideline_counts.get(gid, 0) + 1
+        top_guideline_ids = [
+            {"id": gid, "count": n}
+            for gid, n in sorted(
+                guideline_counts.items(), key=lambda kv: (-kv[1], kv[0])
+            )[:20]
+        ]
+
+        return {
+            "window_days": window_days,
+            "total_requests": int(total_requests),
+            "unique_keys": int(unique_keys),
+            "requests_by_tool": {r["tool"]: int(r["n"]) for r in by_tool},
+            "requests_by_day": {r["day"]: int(r["n"]) for r in by_day},
+            "top_guideline_ids": top_guideline_ids,
+            "accounts": int(accounts),
+            "invites": int(invites),
+            "waitlist": int(waitlist),
+        }
+
 
 _store: Store | None = None
 
