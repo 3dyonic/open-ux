@@ -90,6 +90,9 @@ class Store:
                     key_hash TEXT NOT NULL,
                     tool TEXT NOT NULL,
                     target_type TEXT,
+                    target_id TEXT,
+                    req_offset INTEGER,
+                    req_limit INTEGER,
                     content_length INTEGER,
                     content_hash TEXT,
                     guideline_ids TEXT,
@@ -121,6 +124,17 @@ class Store:
                 CREATE INDEX IF NOT EXISTS invites_token_hash ON invites(token_hash);
                 """
             )
+            existing_cols = {
+                row["name"]
+                for row in cur.execute("PRAGMA table_info(telemetry)").fetchall()
+            }
+            for column, ddl in (
+                ("target_id", "ALTER TABLE telemetry ADD COLUMN target_id TEXT"),
+                ("req_offset", "ALTER TABLE telemetry ADD COLUMN req_offset INTEGER"),
+                ("req_limit", "ALTER TABLE telemetry ADD COLUMN req_limit INTEGER"),
+            ):
+                if column not in existing_cols:
+                    cur.execute(ddl)
 
     def issue_key(self, email: str, key_hash: str) -> None:
         now = _iso(_utcnow())
