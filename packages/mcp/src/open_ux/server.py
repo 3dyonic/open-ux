@@ -256,6 +256,7 @@ def _maybe_telemetry(
     req_offset: int | None = None,
     req_limit: int | None = None,
     content_length: int | None = None,
+    verdicts: dict[str, Any] | None = None,
 ) -> None:
     if not settings.telemetry:
         return
@@ -272,7 +273,7 @@ def _maybe_telemetry(
         content_length=content_length,
         content_hash=None,
         guideline_ids=guideline_ids,
-        verdicts=None,
+        verdicts=verdicts,
     )
 
 
@@ -391,7 +392,12 @@ def create_mcp(*, hosted: bool) -> FastMCP:
     ) -> dict[str, Any]:
         """Paged index only: id, title, name, jobs, lane, placement. No rule bodies."""
         items, total = list_index(catalog, limit=limit, offset=offset)
-        _maybe_telemetry(settings, tool="list_guidelines")
+        _maybe_telemetry(
+            settings,
+            tool="list_guidelines",
+            req_offset=offset,
+            req_limit=limit,
+        )
         payload: dict[str, Any] = {
             "guidelines": items,
             "count": len(items),
@@ -420,7 +426,15 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             limit=limit,
             offset=offset,
         )
-        _maybe_telemetry(settings, tool="search_guidelines")
+        target_type, target_id = _classify_target(job_tree, jobs)
+        _maybe_telemetry(
+            settings,
+            tool="search_guidelines",
+            target_type=target_type,
+            target_id=target_id,
+            req_offset=offset,
+            req_limit=limit,
+        )
         payload: dict[str, Any] = {
             "guidelines": items,
             "count": len(items),
@@ -434,13 +448,28 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         return payload
 
     @mcp.tool
-    def get_guideline(id: str) -> dict[str, Any]:
+    def get_guideline(
+        id: str,
+        helpful: Annotated[
+            bool | None,
+            Field(
+                description=(
+                    "Optional opt-in signal: was this guideline useful for what "
+                    "you were doing? Never required, never inferred from other "
+                    "calls — omit it if you have no opinion."
+                )
+            ),
+        ] = None,
+    ) -> dict[str, Any]:
         """Fetch one full guideline body by id. Does not invent missing rules."""
         found = get_by_id(catalog, id)
         _maybe_telemetry(
             settings,
             tool="get_guideline",
             guideline_ids=[id],
+            target_type="guideline",
+            target_id=id,
+            verdicts={"helpful": helpful} if helpful is not None else None,
         )
         if found is None:
             return {
@@ -477,7 +506,15 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         result = run_list_situations(
             job_tree, container=container, limit=limit, offset=offset
         )
-        _maybe_telemetry(settings, tool="list_situations")
+        target_type, target_id = _classify_target(job_tree, container)
+        _maybe_telemetry(
+            settings,
+            tool="list_situations",
+            target_type=target_type,
+            target_id=target_id,
+            req_offset=offset,
+            req_limit=limit,
+        )
         return result
 
     @mcp.tool
@@ -494,7 +531,12 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         Does not invent a Card. No rule bodies.
         """
         result = run_get_situation(id, job_tree)
-        _maybe_telemetry(settings, tool="get_situation")
+        _maybe_telemetry(
+            settings,
+            tool="get_situation",
+            target_type="card",
+            target_id=id,
+        )
         return result
 
     @mcp.tool
@@ -529,7 +571,11 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         note repeats the next step. Surface is not an id. No server LLM.
         """
         result = run_suggest_situations(task_text, surface, job_tree)
-        _maybe_telemetry(settings, tool="suggest_situations")
+        _maybe_telemetry(
+            settings,
+            tool="suggest_situations",
+            content_length=len(task_text) if task_text else None,
+        )
         return result
 
     @mcp.tool
@@ -581,10 +627,17 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             limit=limit,
             offset=offset,
         )
+        target_type, target_id = _classify_target(job_tree, jobs)
+        if target_type is None and guideline_ids:
+            target_type, target_id = "guideline_ids", None
         _maybe_telemetry(
             settings,
             tool="pack",
             guideline_ids=[row.get("id") for row in result.get("guidelines") or [] if row.get("id")],
+            target_type=target_type,
+            target_id=target_id,
+            req_offset=offset,
+            req_limit=limit,
         )
         return result
 
@@ -646,7 +699,12 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             include_keywords=include_keywords,
             include_used_on=include_used_on,
         )
-        _maybe_telemetry(settings, tool="get_component")
+        _maybe_telemetry(
+            settings,
+            tool="get_component",
+            target_type="component",
+            target_id=id,
+        )
         return result
 
     @mcp.custom_route("/api/site", methods=["GET"])
