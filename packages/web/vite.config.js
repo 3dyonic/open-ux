@@ -22,6 +22,12 @@ export default defineConfig({
           if (req.method === "GET") return "/index.html";
         },
       },
+      "/admin": {
+        target: backend,
+        bypass(req) {
+          if (req.url.split("?")[0] === "/admin") return "/index.html";
+        },
+      },
     },
   },
 });
