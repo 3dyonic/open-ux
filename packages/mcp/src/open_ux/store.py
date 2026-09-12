@@ -317,19 +317,25 @@ class Store:
         content_hash: str | None,
         guideline_ids: list[str] | None,
         verdicts: dict[str, Any] | None,
+        target_id: str | None = None,
+        req_offset: int | None = None,
+        req_limit: int | None = None,
     ) -> None:
         cutoff = _iso(_utcnow() - timedelta(days=RETENTION_DAYS))
         with self.cursor() as cur:
             cur.execute("DELETE FROM telemetry WHERE created_at < ?", (cutoff,))
             cur.execute(
                 "INSERT INTO telemetry("
-                "key_hash, tool, target_type, content_length, content_hash, "
-                "guideline_ids, verdicts, created_at"
-                ") VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                "key_hash, tool, target_type, target_id, req_offset, req_limit, "
+                "content_length, content_hash, guideline_ids, verdicts, created_at"
+                ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 (
                     key_hash,
                     tool,
                     target_type,
+                    target_id,
+                    req_offset,
+                    req_limit,
                     content_length,
                     content_hash,
                     json.dumps(guideline_ids) if guideline_ids is not None else None,

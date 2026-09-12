@@ -40,6 +40,9 @@ from open_ux.jobs import (
     JobId,
     JobTree,
     MAX_LIMIT,
+    card_by_id,
+    container_by_id_or_alias,
+    leaf_by_id,
     load_job_tree,
 )
 from open_ux.public_html import (
@@ -248,6 +251,11 @@ def _maybe_telemetry(
     *,
     tool: str,
     guideline_ids: list[str] | None = None,
+    target_type: str | None = None,
+    target_id: str | None = None,
+    req_offset: int | None = None,
+    req_limit: int | None = None,
+    content_length: int | None = None,
 ) -> None:
     if not settings.telemetry:
         return
@@ -257,12 +265,29 @@ def _maybe_telemetry(
     get_store(settings).record_telemetry(
         key_hash=key_hash,
         tool=tool,
-        target_type=None,
-        content_length=None,
+        target_type=target_type,
+        target_id=target_id,
+        req_offset=req_offset,
+        req_limit=req_limit,
+        content_length=content_length,
         content_hash=None,
         guideline_ids=guideline_ids,
         verdicts=None,
     )
+
+
+def _classify_target(job_tree: JobTree, jobs: str | None) -> tuple[str | None, str | None]:
+    """Classify a pack `jobs=` value as container/card/leaf, for telemetry only."""
+    if not jobs:
+        return None, None
+    container = container_by_id_or_alias(job_tree, jobs)
+    if container is not None:
+        return "container", container.id
+    if card_by_id(job_tree, jobs) is not None:
+        return "card", jobs
+    if leaf_by_id(job_tree, jobs) is not None:
+        return "leaf", jobs
+    return None, None
 
 
 def _admin_authorized(request: Request, settings: Settings) -> bool:
