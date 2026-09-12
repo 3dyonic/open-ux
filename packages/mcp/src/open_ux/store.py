@@ -417,12 +417,20 @@ class Store:
             )[:20]
         ]
 
+        counted_by_day = {r["day"]: int(r["n"]) for r in by_day}
+        today = _utcnow().date()
+        requests_by_day = {
+            (today - timedelta(days=offset)).isoformat(): 0
+            for offset in range(window_days - 1, -1, -1)
+        }
+        requests_by_day.update(counted_by_day)
+
         return {
             "window_days": window_days,
             "total_requests": int(total_requests),
             "unique_keys": int(unique_keys),
             "requests_by_tool": {r["tool"]: int(r["n"]) for r in by_tool},
-            "requests_by_day": {r["day"]: int(r["n"]) for r in by_day},
+            "requests_by_day": requests_by_day,
             "top_guideline_ids": top_guideline_ids,
             "accounts": int(accounts),
             "invites": int(invites),

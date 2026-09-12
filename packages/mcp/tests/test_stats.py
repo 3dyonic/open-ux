@@ -43,11 +43,43 @@ def test_admin_stats_empty(tmp_env: Path) -> None:
         assert body["total_requests"] == 0
         assert body["unique_keys"] == 0
         assert body["requests_by_tool"] == {}
-        assert body["requests_by_day"] == {}
+        assert len(body["requests_by_day"]) == body["window_days"]
+        assert set(body["requests_by_day"].values()) == {0}
         assert body["top_guideline_ids"] == []
         assert body["accounts"] == 0
         assert body["invites"] == 0
         assert body["waitlist"] == 0
+
+
+def test_admin_stats_zero_fills_missing_days(tmp_env: Path) -> None:
+    from datetime import datetime, timedelta, timezone
+
+    settings = Settings.load(hosted=True)
+    store = get_store(settings)
+    today = datetime.now(timezone.utc).date()
+    with store.cursor() as cur:
+        cur.execute(
+            "INSERT INTO telemetry(key_hash, tool, created_at) VALUES (?, ?, ?)",
+            ("hash-a", "pack", f"{today.isoformat()}T00:00:00+00:00"),
+        )
+
+    with _hosted_client(tmp_env) as client:
+        response = client.get(
+            "/admin/stats", headers={"Authorization": "Bearer test-admin-token"}
+        )
+        body = response.json()
+        by_day = body["requests_by_day"]
+        assert len(by_day) == body["window_days"]
+        days = list(by_day.keys())
+        assert days == sorted(days)
+        expected_days = [
+            (today - timedelta(days=offset)).isoformat()
+            for offset in range(body["window_days"] - 1, -1, -1)
+        ]
+        assert days == expected_days
+        assert by_day[today.isoformat()] == 1
+        yesterday = (today - timedelta(days=1)).isoformat()
+        assert by_day[yesterday] == 0
 
 
 def test_admin_stats_aggregates_telemetry(tmp_env: Path) -> None:
