@@ -40,6 +40,9 @@ from open_ux.jobs import (
     JobId,
     JobTree,
     MAX_LIMIT,
+    card_by_id,
+    container_by_id_or_alias,
+    leaf_by_id,
     load_job_tree,
 )
 from open_ux.public_html import (
@@ -65,7 +68,7 @@ from open_ux.settings import (
     gtm_container_id,
 )
 from open_ux.rate_limit import client_ip
-from open_ux.store import get_store
+from open_ux.store import WAITLIST_PAGE_SIZE, get_store
 
 SPA_HEADERS = {
     "X-Content-Type-Options": "nosniff",
@@ -88,6 +91,7 @@ _PAGE_FILES = {
     "/invite": "invite/index.html",
     "/invite/requested": "invite/requested/index.html",
     "/invite/redeem": "invite/redeem/index.html",
+    "/admin": "admin/index.html",
 }
 
 
@@ -247,6 +251,12 @@ def _maybe_telemetry(
     *,
     tool: str,
     guideline_ids: list[str] | None = None,
+    target_type: str | None = None,
+    target_id: str | None = None,
+    req_offset: int | None = None,
+    req_limit: int | None = None,
+    content_length: int | None = None,
+    verdicts: dict[str, Any] | None = None,
 ) -> None:
     if not settings.telemetry:
         return
@@ -256,12 +266,29 @@ def _maybe_telemetry(
     get_store(settings).record_telemetry(
         key_hash=key_hash,
         tool=tool,
-        target_type=None,
-        content_length=None,
+        target_type=target_type,
+        target_id=target_id,
+        req_offset=req_offset,
+        req_limit=req_limit,
+        content_length=content_length,
         content_hash=None,
         guideline_ids=guideline_ids,
-        verdicts=None,
+        verdicts=verdicts,
     )
+
+
+def _classify_target(job_tree: JobTree, jobs: str | None) -> tuple[str | None, str | None]:
+    """Classify a pack `jobs=` value as container/card/leaf, for telemetry only."""
+    if not jobs:
+        return None, None
+    container = container_by_id_or_alias(job_tree, jobs)
+    if container is not None:
+        return "container", container.id
+    if card_by_id(job_tree, jobs) is not None:
+        return "card", jobs
+    if leaf_by_id(job_tree, jobs) is not None:
+        return "leaf", jobs
+    return None, None
 
 
 def _admin_authorized(request: Request, settings: Settings) -> bool:
@@ -365,7 +392,12 @@ def create_mcp(*, hosted: bool) -> FastMCP:
     ) -> dict[str, Any]:
         """Paged index only: id, title, name, jobs, lane, placement. No rule bodies."""
         items, total = list_index(catalog, limit=limit, offset=offset)
-        _maybe_telemetry(settings, tool="list_guidelines")
+        _maybe_telemetry(
+            settings,
+            tool="list_guidelines",
+            req_offset=offset,
+            req_limit=limit,
+        )
         payload: dict[str, Any] = {
             "guidelines": items,
             "count": len(items),
@@ -394,7 +426,15 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             limit=limit,
             offset=offset,
         )
-        _maybe_telemetry(settings, tool="search_guidelines")
+        target_type, target_id = _classify_target(job_tree, jobs)
+        _maybe_telemetry(
+            settings,
+            tool="search_guidelines",
+            target_type=target_type,
+            target_id=target_id,
+            req_offset=offset,
+            req_limit=limit,
+        )
         payload: dict[str, Any] = {
             "guidelines": items,
             "count": len(items),
@@ -408,13 +448,28 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         return payload
 
     @mcp.tool
-    def get_guideline(id: str) -> dict[str, Any]:
+    def get_guideline(
+        id: str,
+        helpful: Annotated[
+            bool | None,
+            Field(
+                description=(
+                    "Optional opt-in signal: was this guideline useful for what "
+                    "you were doing? Never required, never inferred from other "
+                    "calls — omit it if you have no opinion."
+                )
+            ),
+        ] = None,
+    ) -> dict[str, Any]:
         """Fetch one full guideline body by id. Does not invent missing rules."""
         found = get_by_id(catalog, id)
         _maybe_telemetry(
             settings,
             tool="get_guideline",
             guideline_ids=[id],
+            target_type="guideline",
+            target_id=id,
+            verdicts={"helpful": helpful} if helpful is not None else None,
         )
         if found is None:
             return {
@@ -451,7 +506,15 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         result = run_list_situations(
             job_tree, container=container, limit=limit, offset=offset
         )
-        _maybe_telemetry(settings, tool="list_situations")
+        target_type, target_id = _classify_target(job_tree, container)
+        _maybe_telemetry(
+            settings,
+            tool="list_situations",
+            target_type=target_type,
+            target_id=target_id,
+            req_offset=offset,
+            req_limit=limit,
+        )
         return result
 
     @mcp.tool
@@ -468,7 +531,12 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         Does not invent a Card. No rule bodies.
         """
         result = run_get_situation(id, job_tree)
-        _maybe_telemetry(settings, tool="get_situation")
+        _maybe_telemetry(
+            settings,
+            tool="get_situation",
+            target_type="card",
+            target_id=id,
+        )
         return result
 
     @mcp.tool
@@ -503,7 +571,11 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         note repeats the next step. Surface is not an id. No server LLM.
         """
         result = run_suggest_situations(task_text, surface, job_tree)
-        _maybe_telemetry(settings, tool="suggest_situations")
+        _maybe_telemetry(
+            settings,
+            tool="suggest_situations",
+            content_length=len(task_text) if task_text else None,
+        )
         return result
 
     @mcp.tool
@@ -555,10 +627,17 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             limit=limit,
             offset=offset,
         )
+        target_type, target_id = _classify_target(job_tree, jobs)
+        if target_type is None and guideline_ids:
+            target_type, target_id = "guideline_ids", None
         _maybe_telemetry(
             settings,
             tool="pack",
             guideline_ids=[row.get("id") for row in result.get("guidelines") or [] if row.get("id")],
+            target_type=target_type,
+            target_id=target_id,
+            req_offset=offset,
+            req_limit=limit,
         )
         return result
 
@@ -620,7 +699,12 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             include_keywords=include_keywords,
             include_used_on=include_used_on,
         )
-        _maybe_telemetry(settings, tool="get_component")
+        _maybe_telemetry(
+            settings,
+            tool="get_component",
+            target_type="component",
+            target_id=id,
+        )
         return result
 
     @mcp.custom_route("/api/site", methods=["GET"])
@@ -682,6 +766,12 @@ def create_mcp(*, hosted: bool) -> FastMCP:
     @mcp.custom_route("/invite/requested", methods=["GET"])
     async def invite_requested_page(_request: Request) -> Response:
         return _html_page("/invite/requested")
+
+    @mcp.custom_route("/admin", methods=["GET"])
+    async def admin_page(_request: Request) -> Response:
+        if not hosted:
+            return not_found_response(kind="page", detail="/admin", path="/admin")
+        return _html_page("/admin")
 
     @mcp.custom_route("/robots.txt", methods=["GET"])
     async def robots(_request: Request) -> Response:
@@ -771,7 +861,21 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             return JSONResponse({"error": "Hosted-only."}, status_code=400)
         if not _admin_authorized(request, settings):
             return JSONResponse({"error": "Unauthorized."}, status_code=401)
-        return JSONResponse({"items": store.list_waitlist()})
+        limit_raw = request.query_params.get("limit")
+        try:
+            limit = int(limit_raw) if limit_raw else WAITLIST_PAGE_SIZE
+        except ValueError:
+            limit = WAITLIST_PAGE_SIZE
+        before = request.query_params.get("before") or None
+        return JSONResponse(store.list_waitlist(limit=limit, before=before))
+
+    @mcp.custom_route("/admin/stats", methods=["GET"])
+    async def admin_stats(request: Request) -> Response:
+        if not hosted:
+            return JSONResponse({"error": "Hosted-only."}, status_code=400)
+        if not _admin_authorized(request, settings):
+            return JSONResponse({"error": "Unauthorized."}, status_code=401)
+        return JSONResponse(store.telemetry_summary())
 
     @mcp.custom_route("/admin/invite/approve", methods=["POST"])
     async def admin_invite_approve(request: Request) -> Response:

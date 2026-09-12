@@ -2,6 +2,7 @@ import { readdir, readFile, mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { adminPage } from "../src/admin.js";
 import { catalogNamesPage, rulePage } from "../src/catalog.js";
 import { notFoundPage, serverErrorPage } from "../src/errors.js";
 import { healthPage } from "../src/health.js";
@@ -208,6 +209,7 @@ await writePage("health/index.html", template, healthPage());
 await writePage("invite/index.html", template, invitePage());
 await writePage("invite/requested/index.html", template, requestedPage());
 await writePage("invite/redeem/index.html", template, redeemPage());
+await writePage("admin/index.html", template, adminPage());
 await writePage("404.html", template, notFoundPage("{{detail}}", { kind: "page" }));
 await writePage("404-rule.html", template, notFoundPage("{{detail}}", { kind: "rule" }));
 await writePage("500.html", template, serverErrorPage("{{path}}"));
