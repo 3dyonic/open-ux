@@ -77,13 +77,7 @@ export function telemetryPage() {
           <p class="invite-meta"><span class="pip" aria-hidden="true"></span>Admin · telemetry</p>
           <h1 class="page-title">Telemetry</h1>
         </div>
-        <div class="flex items-center gap-4">
-          <nav class="flex items-center gap-3 text-sm">
-            <a class="text-muted" href="/admin">Invites</a>
-            <span class="font-semibold text-ink">Telemetry</span>
-          </nav>
-          <button class="btn btn-outline btn-nav" type="button" id="admin-logout">Sign out</button>
-        </div>
+        <button class="btn btn-outline btn-nav" type="button" id="admin-logout">Sign out</button>
       </div>
       <p class="invite-sub invite-sub-error" id="admin-stats-error" hidden></p>
 
@@ -107,7 +101,7 @@ export function telemetryPage() {
       </section>
     </div>
   </main>`,
-        { catalog: false, key: false, consent: false, paper: true },
+        { catalog: false, key: false, consent: false, paper: true, adminActive: "telemetry" },
       ),
     ),
   };

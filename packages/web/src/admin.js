@@ -80,13 +80,7 @@ export function adminPage() {
           <p class="invite-meta"><span class="pip" aria-hidden="true"></span>Admin · invite waitlist</p>
           <h1 class="page-title">Invite waitlist</h1>
         </div>
-        <div class="flex items-center gap-4">
-          <nav class="flex items-center gap-3 text-sm">
-            <span class="font-semibold text-ink">Invites</span>
-            <a class="text-muted" href="/admin/telemetry">Telemetry</a>
-          </nav>
-          <button class="btn btn-outline btn-nav" type="button" id="admin-logout">Sign out</button>
-        </div>
+        <button class="btn btn-outline btn-nav" type="button" id="admin-logout">Sign out</button>
       </div>
       <p class="invite-sub invite-sub-error" id="admin-table-error" hidden></p>
       <div class="list" id="admin-waitlist-list"></div>
@@ -98,7 +92,7 @@ export function adminPage() {
       </div>
     </div>
   </main>`,
-        { catalog: false, key: false, consent: false, paper: true },
+        { catalog: false, key: false, consent: false, paper: true, adminActive: "invites" },
       ),
     ),
   };
