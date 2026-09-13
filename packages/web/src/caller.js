@@ -71,9 +71,20 @@ function flagsHtml(flags) {
   return text ? `<span class="font-mono text-muted">${escapeHtml(text)}</span>` : "";
 }
 
-function resultIdsHtml(ids) {
+function resultIdsHtml(ids, { linkToCatalog = false } = {}) {
   if (!ids || ids.length === 0) return "";
-  return `<span class="font-mono text-muted" title="${escapeHtml(ids.join(", "))}">${escapeHtml(ids.join(", "))}</span>`;
+  const itemClass =
+    "inline-flex items-center whitespace-nowrap rounded-sm border border-line bg-card px-2 py-0.5 font-mono text-[11px] text-muted";
+  return `
+  <ul class="flex w-full flex-wrap gap-1.5 pl-6">
+    ${ids
+      .map((id) =>
+        linkToCatalog
+          ? `<li><a class="${itemClass} hover:border-pip hover:text-pip" href="/catalog/${encodeURIComponent(id)}">${escapeHtml(id)}</a></li>`
+          : `<li class="${itemClass}">${escapeHtml(id)}</li>`,
+      )
+      .join("")}
+  </ul>`;
 }
 
 function verdictsHtml(verdicts) {
@@ -97,21 +108,26 @@ function verdictsHtml(verdicts) {
 
 function stepsHtml(steps) {
   return `
-  <ol class="flex flex-col gap-1 border-t border-line py-2 pl-4 text-xs">
+  <ol class="flex flex-col gap-2 border-t border-line py-2 pl-4 text-xs">
     ${steps
-      .map(
-        (s, i) => `
-    <li class="flex flex-wrap items-center gap-2">
-      <span class="text-muted">${i + 1}.</span>
-      <span class="font-mono font-medium text-pip">${escapeHtml(s.tool)}</span>
-      ${s.target_type ? `<span class="font-mono text-muted">${escapeHtml(s.target_type)}=${escapeHtml(s.target_id || "")}</span>` : ""}
-      ${flagsHtml(s.req_flags)}
-      ${typeof s.result_count === "number" ? `<span class="font-mono text-muted">→ ${s.result_count} result${s.result_count === 1 ? "" : "s"}</span>` : ""}
-      ${resultIdsHtml(s.guideline_ids || s.result_ids)}
-      ${verdictsHtml(s.verdicts)}
-      <span class="ml-auto font-mono text-muted">${escapeHtml(s.created_at)}</span>
-    </li>`,
-      )
+      .map((s, i) => {
+        const ruleIds = s.guideline_ids || null;
+        const cardOrComponentIds = s.guideline_ids ? null : s.result_ids;
+        return `
+    <li class="flex flex-col gap-1">
+      <div class="flex flex-wrap items-center gap-2">
+        <span class="text-muted">${i + 1}.</span>
+        <span class="font-mono font-medium text-pip">${escapeHtml(s.tool)}</span>
+        ${s.target_type ? `<span class="font-mono text-muted">${escapeHtml(s.target_type)}=${escapeHtml(s.target_id || "")}</span>` : ""}
+        ${flagsHtml(s.req_flags)}
+        ${typeof s.result_count === "number" ? `<span class="font-mono text-muted">→ ${s.result_count} result${s.result_count === 1 ? "" : "s"}</span>` : ""}
+        ${verdictsHtml(s.verdicts)}
+        <span class="ml-auto font-mono text-muted">${escapeHtml(s.created_at)}</span>
+      </div>
+      ${resultIdsHtml(ruleIds, { linkToCatalog: true })}
+      ${resultIdsHtml(cardOrComponentIds)}
+    </li>`;
+      })
       .join("")}
   </ol>`;
 }
