@@ -656,6 +656,41 @@ class Store:
             sessions[-1]["steps"].append(step)
             prev_at = created_at
 
+        for session in sessions:
+            session["tool_sequence"] = "→".join(s["tool"] for s in session["steps"])
+            started = datetime.fromisoformat(session["started_at"])
+            ended = datetime.fromisoformat(session["ended_at"])
+            session["duration_seconds"] = round((ended - started).total_seconds())
+            session_target_counts: dict[str, int] = {}
+            for s in session["steps"]:
+                if s["target_id"]:
+                    session_target_counts[s["target_id"]] = (
+                        session_target_counts.get(s["target_id"], 0) + 1
+                    )
+            session["target_id"] = (
+                sorted(session_target_counts.items(), key=lambda kv: (-kv[1], kv[0]))[0][0]
+                if session_target_counts
+                else None
+            )
+
+        target_counts: dict[str, int] = {}
+        for row in rows:
+            if row["target_id"]:
+                target_counts[row["target_id"]] = target_counts.get(row["target_id"], 0) + 1
+        top_target = (
+            sorted(target_counts.items(), key=lambda kv: (-kv[1], kv[0]))[0][0]
+            if target_counts
+            else None
+        )
+        summary = {
+            "key_hash": key_hash,
+            "call_count": len(rows),
+            "session_count": len(sessions),
+            "first_seen": rows[0]["created_at"] if rows else None,
+            "last_seen": rows[-1]["created_at"] if rows else None,
+            "top_target": top_target,
+        }
+
         sessions.reverse()  # newest session first
         start_index = 0
         if before is not None:
@@ -669,7 +704,7 @@ class Store:
             if start_index + limit < len(sessions) and page
             else None
         )
-        return {"items": page, "next_cursor": next_cursor}
+        return {"summary": summary, "items": page, "next_cursor": next_cursor}
 
 
 _store: Store | None = None

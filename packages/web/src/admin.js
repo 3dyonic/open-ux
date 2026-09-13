@@ -1,49 +1,12 @@
+import { adminFetch, clearToken, readToken, setBusy, writeToken } from "./admin-shared.js";
 import { shell } from "./chrome.js";
 import { emptyStateHtml } from "./empty-state.js";
 import { escapeHtml, setPresent, setTitle, ssr } from "./util.js";
 
-const TOKEN_KEY = "open_ux_admin_token";
 const PAGE_LIMIT = 100;
 
 const ADMIN_TITLE = "Admin — Open UX";
 const ADMIN_DESCRIPTION = "Invite waitlist admin.";
-
-function setBusy(button, busy, idleLabel, busyLabel) {
-  button.disabled = busy;
-  button.setAttribute("aria-busy", busy ? "true" : "false");
-  button.classList.toggle("btn-busy", busy);
-  button.textContent = busy ? busyLabel : idleLabel;
-}
-
-function readToken() {
-  try {
-    return sessionStorage.getItem(TOKEN_KEY) || "";
-  } catch {
-    return "";
-  }
-}
-
-function writeToken(token) {
-  try {
-    sessionStorage.setItem(TOKEN_KEY, token);
-  } catch {
-    // sessionStorage unavailable (private mode, etc.) — token just won't survive a reload.
-  }
-}
-
-function clearToken() {
-  try {
-    sessionStorage.removeItem(TOKEN_KEY);
-  } catch {
-    // nothing to clear
-  }
-}
-
-async function adminFetch(token, path, options = {}) {
-  const headers = { ...(options.headers || {}), Authorization: `Bearer ${token}` };
-  const response = await fetch(path, { ...options, headers });
-  return response;
-}
 
 export function adminPage() {
   return {

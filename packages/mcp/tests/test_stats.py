@@ -260,6 +260,36 @@ def test_admin_sessions_detail_returns_ordered_steps(tmp_env: Path) -> None:
         assert oldest["call_count"] == 2
         assert [s["tool"] for s in oldest["steps"]] == ["suggest_situations", "get_guideline"]
         assert newest["session_id"].startswith("sess_")
+        assert oldest["tool_sequence"] == "suggest_situations→get_guideline"
+        assert oldest["target_id"] == "ant.checkbox-vs-switch"
+        assert newest["target_id"] == "forms_and_input"
+        assert "duration_seconds" in oldest
+
+        summary = body["summary"]
+        assert summary["key_hash"] == "hash-a"
+        assert summary["call_count"] == 3
+        assert summary["session_count"] == 2
+        assert summary["top_target"] == "ant.checkbox-vs-switch"
+        assert summary["first_seen"] is not None
+        assert summary["last_seen"] is not None
+
+
+def test_admin_sessions_detail_empty_summary(tmp_env: Path) -> None:
+    with _hosted_client(tmp_env) as client:
+        response = client.get(
+            "/admin/sessions/nobody", headers={"Authorization": "Bearer test-admin-token"}
+        )
+        assert response.status_code == 200
+        body = response.json()
+        assert body["items"] == []
+        assert body["summary"] == {
+            "key_hash": "nobody",
+            "call_count": 0,
+            "session_count": 0,
+            "first_seen": None,
+            "last_seen": None,
+            "top_target": None,
+        }
 
 
 def test_admin_sessions_detail_requires_bearer(tmp_env: Path) -> None:

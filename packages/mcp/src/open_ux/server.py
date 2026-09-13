@@ -782,6 +782,17 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             )
         return _html_page("/admin/telemetry")
 
+    @mcp.custom_route("/admin/telemetry/callers/{key_hash}", methods=["GET"])
+    async def admin_telemetry_caller_page(request: Request) -> Response:
+        key_hash = str(request.path_params.get("key_hash") or "")
+        path = f"/admin/telemetry/callers/{key_hash}"
+        if not hosted:
+            return not_found_response(kind="page", detail=path, path=path)
+        # One generic prerendered shell for every key_hash — the caller's data
+        # loads client-side from GET /admin/sessions/{key_hash}, so there is
+        # nothing per-id to bake into the static file.
+        return _html_file("admin/telemetry/callers/index.html")
+
     @mcp.custom_route("/robots.txt", methods=["GET"])
     async def robots(_request: Request) -> Response:
         return Response(ROBOTS_TXT, media_type="text/plain; charset=utf-8")

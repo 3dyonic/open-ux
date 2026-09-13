@@ -1,5 +1,6 @@
 import { renderAdmin } from "./admin.js";
 import { renderTelemetry } from "./telemetry.js";
+import { renderCaller } from "./caller.js";
 import { renderCatalog, renderRule } from "./catalog.js";
 import { renderHealth } from "./health.js";
 import { renderNotFound, renderServerError } from "./errors.js";
@@ -26,6 +27,7 @@ function route() {
   if (path === "/invite/redeem") return renderRedeem(root);
   if (path === "/admin") return renderAdmin(root);
   if (path === "/admin/telemetry") return renderTelemetry(root);
+  if (path.startsWith("/admin/telemetry/callers/")) return renderCaller(root);
   if (painted === "not-found" || painted === "server-error") return;
   return renderNotFound(root, path);
 }
