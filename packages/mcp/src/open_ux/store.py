@@ -21,12 +21,12 @@ def content_hash(content: str) -> str:
     return hashlib.sha256(content.encode("utf-8")).hexdigest()
 
 
-def _encode_waitlist_cursor(created_at: str, row_id: int) -> str:
+def _encode_keyset_cursor(created_at: str, row_id: int) -> str:
     raw = f"{created_at}|{row_id}".encode("utf-8")
     return base64.urlsafe_b64encode(raw).decode("ascii")
 
 
-def _decode_waitlist_cursor(cursor: str) -> tuple[str, int] | None:
+def _decode_keyset_cursor(cursor: str) -> tuple[str, int] | None:
     try:
         raw = base64.urlsafe_b64decode(cursor.encode("ascii")).decode("utf-8")
         created_at, row_id = raw.rsplit("|", 1)
@@ -190,7 +190,7 @@ class Store:
         limit = max(1, min(limit, WAITLIST_PAGE_SIZE))
         where = ""
         params: list[Any] = []
-        cursor = _decode_waitlist_cursor(before) if before else None
+        cursor = _decode_keyset_cursor(before) if before else None
         if cursor is not None:
             cursor_created_at, cursor_id = cursor
             where = "WHERE (created_at < ?) OR (created_at = ? AND id < ?)"
@@ -205,12 +205,56 @@ class Store:
         has_more = len(rows) > limit
         rows = rows[:limit]
         next_cursor = (
-            _encode_waitlist_cursor(rows[-1]["created_at"], rows[-1]["id"])
+            _encode_keyset_cursor(rows[-1]["created_at"], rows[-1]["id"])
             if has_more and rows
             else None
         )
         return {
             "items": [{"email": r["email"], "created_at": r["created_at"]} for r in rows],
+            "next_cursor": next_cursor,
+        }
+
+    def list_invites(
+        self, *, limit: int = WAITLIST_PAGE_SIZE, before: str | None = None
+    ) -> dict[str, Any]:
+        """Issued invites newest first, keyset-paged. No token — issued/expiry/redeemed only.
+
+        One row per issue_invite call; re-approving the same email adds a new
+        row rather than replacing the old one, so a redeemed or expired row
+        stays visible as history.
+        """
+        limit = max(1, min(limit, WAITLIST_PAGE_SIZE))
+        where = ""
+        params: list[Any] = []
+        cursor = _decode_keyset_cursor(before) if before else None
+        if cursor is not None:
+            cursor_created_at, cursor_id = cursor
+            where = "WHERE (created_at < ?) OR (created_at = ? AND id < ?)"
+            params.extend([cursor_created_at, cursor_created_at, cursor_id])
+        params.append(limit + 1)
+        with self.cursor() as cur:
+            rows = cur.execute(
+                f"SELECT id, email, created_at, expires_at, redeemed_at FROM invites {where} "
+                "ORDER BY created_at DESC, id DESC LIMIT ?",
+                params,
+            ).fetchall()
+        has_more = len(rows) > limit
+        rows = rows[:limit]
+        next_cursor = (
+            _encode_keyset_cursor(rows[-1]["created_at"], rows[-1]["id"])
+            if has_more and rows
+            else None
+        )
+        return {
+            "items": [
+                {
+                    "email": r["email"],
+                    "created_at": r["created_at"],
+                    "expires_at": r["expires_at"],
+                    "redeemed_at": r["redeemed_at"],
+                }
+                for r in rows
+            ],
             "next_cursor": next_cursor,
         }
 

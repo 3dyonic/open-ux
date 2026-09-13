@@ -878,6 +878,20 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         before = request.query_params.get("before") or None
         return JSONResponse(store.list_waitlist(limit=limit, before=before))
 
+    @mcp.custom_route("/admin/invite/approved", methods=["GET"])
+    async def admin_invite_approved(request: Request) -> Response:
+        if not hosted:
+            return JSONResponse({"error": "Hosted-only."}, status_code=400)
+        if not _admin_authorized(request, settings):
+            return JSONResponse({"error": "Unauthorized."}, status_code=401)
+        limit_raw = request.query_params.get("limit")
+        try:
+            limit = int(limit_raw) if limit_raw else WAITLIST_PAGE_SIZE
+        except ValueError:
+            limit = WAITLIST_PAGE_SIZE
+        before = request.query_params.get("before") or None
+        return JSONResponse(store.list_invites(limit=limit, before=before))
+
     @mcp.custom_route("/admin/stats", methods=["GET"])
     async def admin_stats(request: Request) -> Response:
         if not hosted:

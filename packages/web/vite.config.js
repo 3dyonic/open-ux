@@ -31,6 +31,7 @@ export default defineConfig({
           const path = req.url.split("?")[0];
           const adminApiPaths = [
             "/admin/invite/waitlist",
+            "/admin/invite/approved",
             "/admin/invite/approve",
             "/admin/stats",
           ];

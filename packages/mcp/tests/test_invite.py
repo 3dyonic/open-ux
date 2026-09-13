@@ -413,3 +413,125 @@ def test_admin_waitlist_response_has_no_secrets(tmp_env: Path) -> None:
     assert "uxmcp_" not in payload
     assert "inv_" not in payload
     assert "content" not in payload
+
+
+def test_admin_approved_empty(tmp_env: Path) -> None:
+    with _hosted_client(tmp_env) as client:
+        response = client.get(
+            "/admin/invite/approved",
+            headers={"Authorization": "Bearer test-admin-token"},
+        )
+        assert response.status_code == 200
+        assert response.json() == {"items": [], "next_cursor": None}
+
+
+def test_admin_approved_lists_issued_invites(tmp_env: Path) -> None:
+    with _hosted_client(tmp_env) as client:
+        client.post("/invite/request", json={"email": "ada@example.com"})
+        client.post(
+            "/admin/invite/approve",
+            headers={"Authorization": "Bearer test-admin-token"},
+            json={"email": "ada@example.com"},
+        )
+        response = client.get(
+            "/admin/invite/approved",
+            headers={"Authorization": "Bearer test-admin-token"},
+        )
+    assert response.status_code == 200
+    body = response.json()
+    assert len(body["items"]) == 1
+    row = body["items"][0]
+    assert row["email"] == "ada@example.com"
+    assert set(row.keys()) == {"email", "created_at", "expires_at", "redeemed_at"}
+    assert row["redeemed_at"] is None
+    parsed = datetime.fromisoformat(row["created_at"])
+    assert parsed.tzinfo is not None
+
+
+def test_admin_approved_shows_redeemed_status(tmp_env: Path) -> None:
+    with _hosted_client(tmp_env) as client:
+        client.post("/invite/request", json={"email": "ada@example.com"})
+        approved = client.post(
+            "/admin/invite/approve",
+            headers={"Authorization": "Bearer test-admin-token"},
+            json={"email": "ada@example.com"},
+        )
+        token = approved.json()["token"]
+        client.post("/invite/redeem", json={"token": token})
+        response = client.get(
+            "/admin/invite/approved",
+            headers={"Authorization": "Bearer test-admin-token"},
+        )
+    body = response.json()
+    assert body["items"][0]["redeemed_at"] is not None
+
+
+def test_admin_approved_keyset_pagination(tmp_env: Path) -> None:
+    settings = Settings.load(hosted=True)
+    store = get_store(settings)
+    rows = [
+        ("a@example.com", "2024-01-01T00:00:00+00:00"),
+        ("b@example.com", "2024-01-02T00:00:00+00:00"),
+        ("c@example.com", "2024-01-03T00:00:00+00:00"),
+    ]
+    for email, created_at in rows:
+        with store.cursor() as cur:
+            cur.execute(
+                "INSERT INTO invites(email, token_hash, created_at, expires_at) "
+                "VALUES (?, ?, ?, ?)",
+                (email, f"hash-{email}", created_at, "2099-01-01T00:00:00+00:00"),
+            )
+
+    with _hosted_client(tmp_env) as client:
+        first = client.get(
+            "/admin/invite/approved?limit=2",
+            headers={"Authorization": "Bearer test-admin-token"},
+        )
+        assert first.status_code == 200
+        first_body = first.json()
+        assert [r["email"] for r in first_body["items"]] == [
+            "c@example.com",
+            "b@example.com",
+        ]
+        assert first_body["next_cursor"] is not None
+
+        second = client.get(
+            f"/admin/invite/approved?limit=2&before={first_body['next_cursor']}",
+            headers={"Authorization": "Bearer test-admin-token"},
+        )
+        assert second.status_code == 200
+        second_body = second.json()
+        assert [r["email"] for r in second_body["items"]] == ["a@example.com"]
+        assert second_body["next_cursor"] is None
+
+
+def test_admin_approved_requires_bearer(tmp_env: Path) -> None:
+    with _hosted_client(tmp_env) as client:
+        missing = client.get("/admin/invite/approved")
+        assert missing.status_code == 401
+        wrong = client.get(
+            "/admin/invite/approved",
+            headers={"Authorization": "Bearer nope"},
+        )
+        assert wrong.status_code == 401
+
+
+def test_admin_approved_response_has_no_secrets(tmp_env: Path) -> None:
+    settings = Settings.load(hosted=True)
+    with _hosted_client(tmp_env) as client:
+        client.post("/invite/request", json={"email": "ada@example.com"})
+        approved = client.post(
+            "/admin/invite/approve",
+            headers={"Authorization": "Bearer test-admin-token"},
+            json={"email": "ada@example.com"},
+        )
+        token = approved.json()["token"]
+        listed = client.get(
+            "/admin/invite/approved",
+            headers={"Authorization": "Bearer test-admin-token"},
+        )
+    assert listed.status_code == 200
+    raw = listed.text
+    assert "uxmcp_" not in raw
+    assert token not in raw
+    assert hash_key(token, settings.pepper) not in raw
