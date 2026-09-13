@@ -175,6 +175,12 @@
   .error-id {
     @apply m-0 rounded-sm border border-line bg-card px-2.5 py-1.5 font-mono text-xs text-pip;
   }
+  .empty-state {
+    @apply flex w-full flex-col items-center gap-3 px-6 py-10 text-center;
+  }
+  .empty-state .error-pip {
+    @apply h-[92px] w-[117px];
+  }
   .page-title {
     @apply m-0 text-[28px] font-bold leading-normal text-ink;
   }

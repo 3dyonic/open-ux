@@ -22,6 +22,25 @@ export default defineConfig({
           if (req.method === "GET") return "/index.html";
         },
       },
+      "/admin": {
+        target: backend,
+        bypass(req) {
+          // Only the admin API calls go to the backend; every /admin/* page
+          // route (bare /admin, /admin/telemetry, future ones) falls through
+          // to the dev SPA shell so vite's client router can render it.
+          const path = req.url.split("?")[0];
+          const adminApiPaths = [
+            "/admin/invite/waitlist",
+            "/admin/invite/approved",
+            "/admin/invite/approve",
+            "/admin/stats",
+            "/admin/sessions",
+          ];
+          const isAdminApi =
+            adminApiPaths.includes(path) || path.startsWith("/admin/sessions/");
+          if (!isAdminApi) return "/index.html";
+        },
+      },
     },
   },
 });
