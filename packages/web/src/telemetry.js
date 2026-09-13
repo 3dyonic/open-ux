@@ -100,6 +100,18 @@ export function telemetryPage() {
         <h2 class="text-sm font-semibold text-ink">Top guideline ids</h2>
         <div id="admin-chart-guidelines" class="flex flex-col gap-2"></div>
       </section>
+
+      <section class="flex flex-col gap-3">
+        <h2 class="text-sm font-semibold text-ink">Callers</h2>
+        <p class="text-xs text-muted">Anonymized key_hash only, never joined to email. Sessions are a 30-minute idle-gap grouping — stateless HTTP has no real MCP session id.</p>
+        <p class="invite-sub invite-sub-error" id="admin-callers-error"></p>
+        <div class="list" id="admin-callers-list"></div>
+        <div id="admin-callers-empty"></div>
+        <div class="pager" id="admin-callers-pager">
+          <p class="pager-meta" id="admin-callers-pager-meta"></p>
+          <button class="btn btn-outline" type="button" id="admin-callers-load-more">Load more</button>
+        </div>
+      </section>
     </div>
   </main>`,
         { catalog: false, key: false, consent: false, paper: true, adminActive: "telemetry" },
@@ -161,6 +173,58 @@ function rankedBarsHtml(rows, { emptyLabel }) {
     .join("");
 }
 
+function stepsHtml(steps) {
+  return `
+  <ol class="flex flex-col gap-1 border-t border-line py-2 pl-4 text-xs">
+    ${steps
+      .map(
+        (s, i) => `
+    <li class="flex flex-wrap items-center gap-2">
+      <span class="text-muted">${i + 1}.</span>
+      <span class="font-mono font-medium text-pip">${escapeHtml(s.tool)}</span>
+      ${s.target_type ? `<span class="font-mono text-muted">${escapeHtml(s.target_type)}=${escapeHtml(s.target_id || "")}</span>` : ""}
+      ${s.verdicts ? `<span class="font-mono text-muted">${escapeHtml(JSON.stringify(s.verdicts))}</span>` : ""}
+      <span class="ml-auto font-mono text-muted">${escapeHtml(s.created_at)}</span>
+    </li>`,
+      )
+      .join("")}
+  </ol>`;
+}
+
+function sessionRowHtml(session) {
+  const email = escapeHtml(session.session_id);
+  return `
+  <div class="border-t border-line" data-session-id="${email}">
+    <button type="button" class="flex w-full items-center justify-between gap-3 py-2.5 pl-4 text-left" data-session-toggle aria-expanded="false">
+      <span class="font-mono text-xs text-ink">${email}</span>
+      <span class="flex items-center gap-3 text-xs text-muted">
+        <span>${session.call_count} call${session.call_count === 1 ? "" : "s"}</span>
+        <span class="font-mono">${escapeHtml(session.started_at)}</span>
+        <span data-chevron>▸</span>
+      </span>
+    </button>
+    <div data-session-steps></div>
+  </div>`;
+}
+
+function callerRowHtml(row) {
+  const keyHash = escapeHtml(row.key_hash);
+  return `
+  <div class="border-b border-line last:border-b-0" data-key-hash="${keyHash}">
+    <button type="button" class="flex w-full flex-wrap items-center justify-between gap-3 px-5 py-3.5 text-left" data-caller-toggle aria-expanded="false">
+      <span class="font-mono text-xs text-ink">${keyHash}</span>
+      <span class="flex flex-wrap items-center gap-4 text-xs text-muted">
+        <span>${row.session_count} session${row.session_count === 1 ? "" : "s"}</span>
+        <span>${row.call_count} call${row.call_count === 1 ? "" : "s"}</span>
+        <span class="font-mono">last ${escapeHtml(row.last_seen)}</span>
+        ${row.top_target ? `<span class="font-mono">${escapeHtml(row.top_target)}</span>` : ""}
+        <span data-chevron>▸</span>
+      </span>
+    </button>
+    <div data-caller-sessions></div>
+  </div>`;
+}
+
 export function renderTelemetry(root) {
   const page = telemetryPage();
   setTitle(page.title);
@@ -185,6 +249,13 @@ export function renderTelemetry(root) {
   const chartDaysEl = document.getElementById("admin-chart-days");
   const chartToolsEl = document.getElementById("admin-chart-tools");
   const chartGuidelinesEl = document.getElementById("admin-chart-guidelines");
+  const callersList = document.getElementById("admin-callers-list");
+  const callersEmpty = document.getElementById("admin-callers-empty");
+  const callersError = document.getElementById("admin-callers-error");
+  const callersPager = document.getElementById("admin-callers-pager");
+  const callersPagerMeta = document.getElementById("admin-callers-pager-meta");
+  const callersLoadMore = document.getElementById("admin-callers-load-more");
+  const callersPanel = callersList.parentNode;
 
   // statsError and emptyEl are the only two banners that sit before the
   // always-present tilesEl; inserting each right before it, in this order,
@@ -243,6 +314,128 @@ export function renderTelemetry(root) {
     });
   }
 
+  const CALLERS_LIMIT = 50;
+  let callersNextCursor = null;
+  let callersLoadedCount = 0;
+  const sessionCache = new Map(); // key_hash -> sessions array, so re-expanding doesn't refetch
+
+  function syncCallers() {
+    setPresent(callersError, Boolean(callersError.textContent), callersPanel);
+    setPresent(callersList, callersLoadedCount > 0, callersPanel);
+    setPresent(callersEmpty, callersLoadedCount === 0, callersPanel);
+    setPresent(callersPager, Boolean(callersNextCursor), callersPanel);
+  }
+
+  function renderCallers(data, { append }) {
+    const items = Array.isArray(data.items) ? data.items : [];
+    if (!append) callersList.innerHTML = "";
+    callersList.innerHTML += items.map(callerRowHtml).join("");
+    callersLoadedCount += items.length;
+    callersNextCursor = data.next_cursor || null;
+    callersEmpty.innerHTML = callersLoadedCount === 0 ? emptyStateHtml("No callers recorded yet.") : "";
+    callersPagerMeta.textContent = `${callersLoadedCount} loaded`;
+    syncCallers();
+  }
+
+  async function loadCallers({ append }) {
+    const params = new URLSearchParams({ limit: String(CALLERS_LIMIT) });
+    if (append && callersNextCursor) params.set("before", callersNextCursor);
+    let response;
+    try {
+      response = await adminFetch(token, `/admin/sessions?${params}`);
+    } catch {
+      callersError.textContent = "Couldn’t reach the server — try again.";
+      syncCallers();
+      return null;
+    }
+    if (response.status === 401) {
+      onUnauthorized();
+      return null;
+    }
+    if (!response.ok) {
+      callersError.textContent = "Couldn’t load callers — try again.";
+      syncCallers();
+      return null;
+    }
+    callersError.textContent = "";
+    return response.json();
+  }
+
+  async function loadCallersFirst() {
+    callersList.innerHTML = "";
+    callersEmpty.innerHTML = "";
+    callersError.textContent = "";
+    callersLoadedCount = 0;
+    callersNextCursor = null;
+    sessionCache.clear();
+    syncCallers();
+    const data = await loadCallers({ append: false });
+    if (data !== null) renderCallers(data, { append: false });
+  }
+
+  callersLoadMore.addEventListener("click", async () => {
+    setBusy(callersLoadMore, true, "Load more", "Loading…");
+    const data = await loadCallers({ append: true });
+    if (data !== null) renderCallers(data, { append: true });
+    setBusy(callersLoadMore, false, "Load more", "Loading…");
+  });
+
+  callersList.addEventListener("click", async (event) => {
+    const sessionToggle = event.target.closest("[data-session-toggle]");
+    if (sessionToggle) {
+      const sessionRow = sessionToggle.closest("[data-session-id]");
+      const stepsEl = sessionRow.querySelector("[data-session-steps]");
+      const expanded = sessionToggle.getAttribute("aria-expanded") === "true";
+      sessionToggle.setAttribute("aria-expanded", expanded ? "false" : "true");
+      sessionToggle.querySelector("[data-chevron]").textContent = expanded ? "▸" : "▾";
+      stepsEl.innerHTML = expanded ? "" : stepsEl.dataset.pendingHtml || "";
+      return;
+    }
+    const callerToggle = event.target.closest("[data-caller-toggle]");
+    if (!callerToggle) return;
+    const callerRow = callerToggle.closest("[data-key-hash]");
+    const keyHash = callerRow.getAttribute("data-key-hash");
+    const sessionsEl = callerRow.querySelector("[data-caller-sessions]");
+    const expanded = callerToggle.getAttribute("aria-expanded") === "true";
+    if (expanded) {
+      callerToggle.setAttribute("aria-expanded", "false");
+      callerToggle.querySelector("[data-chevron]").textContent = "▸";
+      sessionsEl.innerHTML = "";
+      return;
+    }
+    callerToggle.setAttribute("aria-expanded", "true");
+    callerToggle.querySelector("[data-chevron]").textContent = "▾";
+    if (sessionCache.has(keyHash)) {
+      sessionsEl.innerHTML = sessionCache.get(keyHash).map(sessionRowHtml).join("");
+      return;
+    }
+    sessionsEl.innerHTML = `<p class="pl-4 py-2 text-xs text-muted">Loading…</p>`;
+    let response;
+    try {
+      response = await adminFetch(token, `/admin/sessions/${encodeURIComponent(keyHash)}?limit=${CALLERS_LIMIT}`);
+    } catch {
+      sessionsEl.innerHTML = `<p class="pl-4 py-2 text-xs text-muted">Couldn’t reach the server — try again.</p>`;
+      return;
+    }
+    if (response.status === 401) {
+      onUnauthorized();
+      return;
+    }
+    if (!response.ok) {
+      sessionsEl.innerHTML = `<p class="pl-4 py-2 text-xs text-muted">Couldn’t load sessions — try again.</p>`;
+      return;
+    }
+    const data = await response.json();
+    const sessions = Array.isArray(data.items) ? data.items : [];
+    sessionCache.set(keyHash, sessions);
+    sessionsEl.innerHTML = sessions.map(sessionRowHtml).join("");
+    // Steps are pre-fetched with the session; stash their HTML for instant
+    // expand/collapse instead of fetching per session.
+    sessionsEl.querySelectorAll("[data-session-id]").forEach((row, i) => {
+      row.querySelector("[data-session-steps]").dataset.pendingHtml = stepsHtml(sessions[i].steps);
+    });
+  });
+
   async function loadStats() {
     let response;
     try {
@@ -290,6 +483,7 @@ export function renderTelemetry(root) {
     writeToken(token);
     showStats();
     renderStats(data);
+    loadCallersFirst();
   });
 
   logoutBtn.addEventListener("click", () => {
@@ -298,11 +492,13 @@ export function renderTelemetry(root) {
 
   setPresent(statsView, false, mainEl);
   syncBanners({ hasError: false, isEmpty: false });
+  syncCallers();
   if (token) {
     showStats();
     loadStats().then((data) => {
       if (data !== null) renderStats(data);
     });
+    loadCallersFirst();
   } else {
     setPresent(loginView, true, mainEl);
   }

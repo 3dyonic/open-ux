@@ -68,7 +68,7 @@ from open_ux.settings import (
     gtm_container_id,
 )
 from open_ux.rate_limit import client_ip
-from open_ux.store import WAITLIST_PAGE_SIZE, get_store
+from open_ux.store import CALLERS_PAGE_SIZE, WAITLIST_PAGE_SIZE, get_store
 
 SPA_HEADERS = {
     "X-Content-Type-Options": "nosniff",
@@ -899,6 +899,35 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         if not _admin_authorized(request, settings):
             return JSONResponse({"error": "Unauthorized."}, status_code=401)
         return JSONResponse(store.telemetry_summary())
+
+    @mcp.custom_route("/admin/sessions", methods=["GET"])
+    async def admin_sessions(request: Request) -> Response:
+        if not hosted:
+            return JSONResponse({"error": "Hosted-only."}, status_code=400)
+        if not _admin_authorized(request, settings):
+            return JSONResponse({"error": "Unauthorized."}, status_code=401)
+        limit_raw = request.query_params.get("limit")
+        try:
+            limit = int(limit_raw) if limit_raw else CALLERS_PAGE_SIZE
+        except ValueError:
+            limit = CALLERS_PAGE_SIZE
+        before = request.query_params.get("before") or None
+        return JSONResponse(store.list_callers(limit=limit, before=before))
+
+    @mcp.custom_route("/admin/sessions/{key_hash}", methods=["GET"])
+    async def admin_sessions_detail(request: Request) -> Response:
+        if not hosted:
+            return JSONResponse({"error": "Hosted-only."}, status_code=400)
+        if not _admin_authorized(request, settings):
+            return JSONResponse({"error": "Unauthorized."}, status_code=401)
+        key_hash = str(request.path_params.get("key_hash") or "")
+        limit_raw = request.query_params.get("limit")
+        try:
+            limit = int(limit_raw) if limit_raw else CALLERS_PAGE_SIZE
+        except ValueError:
+            limit = CALLERS_PAGE_SIZE
+        before = request.query_params.get("before") or None
+        return JSONResponse(store.get_caller_sessions(key_hash, limit=limit, before=before))
 
     @mcp.custom_route("/admin/invite/approve", methods=["POST"])
     async def admin_invite_approve(request: Request) -> Response:

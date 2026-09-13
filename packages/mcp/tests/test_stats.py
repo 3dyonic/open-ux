@@ -142,3 +142,157 @@ def test_admin_stats_aggregates_telemetry(tmp_env: Path) -> None:
         assert body["waitlist"] == 1
         assert "hash-a" not in response.text
         assert "hash-b" not in response.text
+
+
+def test_admin_sessions_requires_bearer(tmp_env: Path) -> None:
+    with _hosted_client(tmp_env) as client:
+        missing = client.get("/admin/sessions")
+        assert missing.status_code == 401
+        wrong = client.get("/admin/sessions", headers={"Authorization": "Bearer nope"})
+        assert wrong.status_code == 401
+
+
+def test_admin_sessions_disabled_self_host(tmp_env: Path) -> None:
+    mcp = create_mcp(hosted=False)
+    app = mcp.http_app(path="/mcp", stateless_http=True, transport="http")
+    with TestClient(app) as client:
+        response = client.get(
+            "/admin/sessions", headers={"Authorization": "Bearer test-admin-token"}
+        )
+        assert response.status_code == 400
+
+
+def test_admin_sessions_empty(tmp_env: Path) -> None:
+    with _hosted_client(tmp_env) as client:
+        response = client.get(
+            "/admin/sessions", headers={"Authorization": "Bearer test-admin-token"}
+        )
+        assert response.status_code == 200
+        assert response.json() == {"items": [], "next_cursor": None}
+
+
+def test_admin_sessions_groups_by_gap(tmp_env: Path) -> None:
+    from datetime import datetime, timedelta, timezone
+
+    settings = Settings.load(hosted=True)
+    store = get_store(settings)
+    now = datetime.now(timezone.utc)
+    with store.cursor() as cur:
+        rows = [
+            ("hash-a", "suggest_situations", None, None, now - timedelta(hours=2)),
+            (
+                "hash-a",
+                "pack",
+                "card",
+                "protect_destructive_and_leave",
+                now - timedelta(hours=2) + timedelta(seconds=5),
+            ),
+            (
+                "hash-a",
+                "pack",
+                "container",
+                "forms_and_input",
+                now - timedelta(minutes=10),
+            ),
+            ("hash-b", "get_component", "component", "popconfirm", now - timedelta(minutes=5)),
+        ]
+        for key_hash, tool, target_type, target_id, created_at in rows:
+            cur.execute(
+                "INSERT INTO telemetry(key_hash, tool, target_type, target_id, created_at) "
+                "VALUES (?, ?, ?, ?, ?)",
+                (key_hash, tool, target_type, target_id, created_at.isoformat()),
+            )
+
+    with _hosted_client(tmp_env) as client:
+        response = client.get(
+            "/admin/sessions", headers={"Authorization": "Bearer test-admin-token"}
+        )
+        assert response.status_code == 200
+        items = {row["key_hash"]: row for row in response.json()["items"]}
+        assert items["hash-a"]["call_count"] == 3
+        assert items["hash-a"]["session_count"] == 2
+        assert items["hash-b"]["call_count"] == 1
+        assert items["hash-b"]["session_count"] == 1
+        assert items["hash-b"]["top_target"] == "popconfirm"
+
+
+def test_admin_sessions_detail_returns_ordered_steps(tmp_env: Path) -> None:
+    from datetime import datetime, timedelta, timezone
+
+    settings = Settings.load(hosted=True)
+    store = get_store(settings)
+    now = datetime.now(timezone.utc)
+    with store.cursor() as cur:
+        rows = [
+            ("hash-a", "suggest_situations", None, None, now - timedelta(hours=2)),
+            (
+                "hash-a",
+                "get_guideline",
+                "guideline",
+                "ant.checkbox-vs-switch",
+                now - timedelta(hours=2) + timedelta(seconds=5),
+            ),
+            (
+                "hash-a",
+                "pack",
+                "container",
+                "forms_and_input",
+                now - timedelta(minutes=10),
+            ),
+        ]
+        for key_hash, tool, target_type, target_id, created_at in rows:
+            cur.execute(
+                "INSERT INTO telemetry(key_hash, tool, target_type, target_id, created_at) "
+                "VALUES (?, ?, ?, ?, ?)",
+                (key_hash, tool, target_type, target_id, created_at.isoformat()),
+            )
+
+    with _hosted_client(tmp_env) as client:
+        response = client.get(
+            "/admin/sessions/hash-a", headers={"Authorization": "Bearer test-admin-token"}
+        )
+        assert response.status_code == 200
+        body = response.json()
+        assert len(body["items"]) == 2
+        newest, oldest = body["items"]
+        assert newest["call_count"] == 1
+        assert newest["steps"][0]["tool"] == "pack"
+        assert oldest["call_count"] == 2
+        assert [s["tool"] for s in oldest["steps"]] == ["suggest_situations", "get_guideline"]
+        assert newest["session_id"].startswith("sess_")
+
+
+def test_admin_sessions_detail_requires_bearer(tmp_env: Path) -> None:
+    with _hosted_client(tmp_env) as client:
+        response = client.get("/admin/sessions/hash-a")
+        assert response.status_code == 401
+
+
+def test_admin_sessions_keyset_pagination(tmp_env: Path) -> None:
+    from datetime import datetime, timedelta, timezone
+
+    settings = Settings.load(hosted=True)
+    store = get_store(settings)
+    now = datetime.now(timezone.utc)
+    with store.cursor() as cur:
+        for i, key_hash in enumerate(["hash-a", "hash-b", "hash-c"]):
+            cur.execute(
+                "INSERT INTO telemetry(key_hash, tool, created_at) VALUES (?, ?, ?)",
+                (key_hash, "pack", (now - timedelta(minutes=i)).isoformat()),
+            )
+
+    with _hosted_client(tmp_env) as client:
+        first = client.get(
+            "/admin/sessions?limit=2", headers={"Authorization": "Bearer test-admin-token"}
+        )
+        first_body = first.json()
+        assert [r["key_hash"] for r in first_body["items"]] == ["hash-a", "hash-b"]
+        assert first_body["next_cursor"] is not None
+
+        second = client.get(
+            f"/admin/sessions?limit=2&before={first_body['next_cursor']}",
+            headers={"Authorization": "Bearer test-admin-token"},
+        )
+        second_body = second.json()
+        assert [r["key_hash"] for r in second_body["items"]] == ["hash-c"]
+        assert second_body["next_cursor"] is None

@@ -15,6 +15,8 @@ from open_ux.settings import RATE_PER_DAY, RATE_PER_MINUTE, RETENTION_DAYS, Sett
 _local = threading.local()
 
 WAITLIST_PAGE_SIZE = 100
+CALLERS_PAGE_SIZE = 100
+SESSION_GAP_MINUTES = 30
 
 
 def content_hash(content: str) -> str:
@@ -31,6 +33,20 @@ def _decode_keyset_cursor(cursor: str) -> tuple[str, int] | None:
         raw = base64.urlsafe_b64decode(cursor.encode("ascii")).decode("utf-8")
         created_at, row_id = raw.rsplit("|", 1)
         return created_at, int(row_id)
+    except (ValueError, UnicodeDecodeError, base64.binascii.Error):
+        return None
+
+
+def _encode_str_cursor(sort_key: str, tie_key: str) -> str:
+    raw = f"{sort_key}|{tie_key}".encode("utf-8")
+    return base64.urlsafe_b64encode(raw).decode("ascii")
+
+
+def _decode_str_cursor(cursor: str) -> tuple[str, str] | None:
+    try:
+        raw = base64.urlsafe_b64decode(cursor.encode("ascii")).decode("utf-8")
+        sort_key, tie_key = raw.rsplit("|", 1)
+        return sort_key, tie_key
     except (ValueError, UnicodeDecodeError, base64.binascii.Error):
         return None
 
@@ -500,6 +516,160 @@ class Store:
             "invites": int(invites),
             "waitlist": int(waitlist),
         }
+
+    def list_callers(
+        self,
+        *,
+        limit: int = CALLERS_PAGE_SIZE,
+        before: str | None = None,
+        session_gap_minutes: int = SESSION_GAP_MINUTES,
+    ) -> dict[str, Any]:
+        """Per-key_hash rollup: session_count (gap-heuristic), call_count,
+        first/last seen, and the target_id that key_hash hit most. Newest
+        (by last_seen) first, keyset-paged. Never joined to email — key_hash
+        only.
+        """
+        limit = max(1, min(limit, CALLERS_PAGE_SIZE))
+        where = ""
+        params: list[Any] = [session_gap_minutes]
+        cursor = _decode_str_cursor(before) if before else None
+        if cursor is not None:
+            cursor_last_seen, cursor_key_hash = cursor
+            where = "WHERE (agg.last_seen < ?) OR (agg.last_seen = ? AND agg.key_hash < ?)"
+            params.extend([cursor_last_seen, cursor_last_seen, cursor_key_hash])
+        params.append(limit + 1)
+        query = f"""
+            WITH ordered AS (
+                SELECT key_hash, created_at, id,
+                    LAG(created_at) OVER (PARTITION BY key_hash ORDER BY created_at, id) AS prev_at
+                FROM telemetry
+            ),
+            agg AS (
+                SELECT key_hash,
+                    COUNT(*) AS call_count,
+                    MIN(created_at) AS first_seen,
+                    MAX(created_at) AS last_seen,
+                    SUM(
+                        CASE WHEN prev_at IS NULL
+                            OR (julianday(created_at) - julianday(prev_at)) * 1440.0 > ?
+                        THEN 1 ELSE 0 END
+                    ) AS session_count
+                FROM ordered
+                GROUP BY key_hash
+            ),
+            target_counts AS (
+                SELECT key_hash, target_id, COUNT(*) AS n
+                FROM telemetry
+                WHERE target_id IS NOT NULL
+                GROUP BY key_hash, target_id
+            ),
+            ranked_targets AS (
+                SELECT key_hash, target_id,
+                    ROW_NUMBER() OVER (
+                        PARTITION BY key_hash ORDER BY n DESC, target_id ASC
+                    ) AS rn
+                FROM target_counts
+            )
+            SELECT agg.key_hash, agg.call_count, agg.first_seen, agg.last_seen,
+                agg.session_count, rt.target_id AS top_target
+            FROM agg
+            LEFT JOIN ranked_targets rt ON rt.key_hash = agg.key_hash AND rt.rn = 1
+            {where}
+            ORDER BY agg.last_seen DESC, agg.key_hash DESC
+            LIMIT ?
+        """
+        with self.cursor() as cur:
+            rows = cur.execute(query, params).fetchall()
+        has_more = len(rows) > limit
+        rows = rows[:limit]
+        next_cursor = (
+            _encode_str_cursor(rows[-1]["last_seen"], rows[-1]["key_hash"])
+            if has_more and rows
+            else None
+        )
+        return {
+            "items": [
+                {
+                    "key_hash": r["key_hash"],
+                    "session_count": int(r["session_count"]),
+                    "call_count": int(r["call_count"]),
+                    "first_seen": r["first_seen"],
+                    "last_seen": r["last_seen"],
+                    "top_target": r["top_target"],
+                }
+                for r in rows
+            ],
+            "next_cursor": next_cursor,
+        }
+
+    def get_caller_sessions(
+        self,
+        key_hash: str,
+        *,
+        limit: int = CALLERS_PAGE_SIZE,
+        before: str | None = None,
+        session_gap_minutes: int = SESSION_GAP_MINUTES,
+    ) -> dict[str, Any]:
+        """One caller's calls, grouped into sessions by an idle-gap heuristic
+        (there is no real MCP session id on stateless HTTP). Newest session
+        first; `before` pages by session index, not by raw row.
+        """
+        limit = max(1, min(limit, CALLERS_PAGE_SIZE))
+        with self.cursor() as cur:
+            rows = cur.execute(
+                "SELECT tool, target_type, target_id, req_offset, req_limit, "
+                "verdicts, created_at FROM telemetry WHERE key_hash = ? "
+                "ORDER BY created_at ASC, id ASC",
+                (key_hash,),
+            ).fetchall()
+
+        sessions: list[dict[str, Any]] = []
+        gap = timedelta(minutes=session_gap_minutes)
+        prev_at: datetime | None = None
+        for row in rows:
+            created_at = datetime.fromisoformat(row["created_at"])
+            step = {
+                "tool": row["tool"],
+                "target_type": row["target_type"],
+                "target_id": row["target_id"],
+                "req_offset": row["req_offset"],
+                "req_limit": row["req_limit"],
+                "verdicts": json.loads(row["verdicts"]) if row["verdicts"] else None,
+                "created_at": row["created_at"],
+            }
+            if prev_at is None or (created_at - prev_at) > gap:
+                started_at = row["created_at"]
+                session_id = "sess_" + hashlib.sha256(
+                    f"{key_hash}|{started_at}".encode("utf-8")
+                ).hexdigest()[:8]
+                sessions.append(
+                    {
+                        "session_id": session_id,
+                        "started_at": started_at,
+                        "ended_at": started_at,
+                        "call_count": 0,
+                        "steps": [],
+                    }
+                )
+            sessions[-1]["ended_at"] = row["created_at"]
+            sessions[-1]["call_count"] += 1
+            sessions[-1]["steps"].append(step)
+            prev_at = created_at
+
+        sessions.reverse()  # newest session first
+        start_index = 0
+        if before is not None:
+            for i, session in enumerate(sessions):
+                if session["session_id"] == before:
+                    start_index = i + 1
+                    break
+        page = sessions[start_index : start_index + limit]
+        next_cursor = (
+            page[-1]["session_id"]
+            if start_index + limit < len(sessions) and page
+            else None
+        )
+        return {"items": page, "next_cursor": next_cursor}
 
 
 _store: Store | None = None

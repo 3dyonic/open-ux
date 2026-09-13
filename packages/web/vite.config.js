@@ -34,8 +34,11 @@ export default defineConfig({
             "/admin/invite/approved",
             "/admin/invite/approve",
             "/admin/stats",
+            "/admin/sessions",
           ];
-          if (!adminApiPaths.includes(path)) return "/index.html";
+          const isAdminApi =
+            adminApiPaths.includes(path) || path.startsWith("/admin/sessions/");
+          if (!isAdminApi) return "/index.html";
         },
       },
     },
