@@ -178,6 +178,59 @@ def test_get_situation_records_card_target(live_catalog: Path) -> None:
     assert row["target_id"] == "protect_destructive_and_leave"
 
 
+def test_get_situation_records_helpful_verdict(live_catalog: Path) -> None:
+    settings = Settings.load(hosted=True)
+    issued = register("ada@example.com", settings=settings)
+    with _hosted_client(live_catalog) as client:
+        _call(
+            client,
+            issued.key,
+            "get_situation",
+            {"id": "protect_destructive_and_leave", "helpful": True},
+        )
+    row = _rows(live_catalog)[0]
+    assert json.loads(row["verdicts"]) == {"helpful": True}
+
+
+def test_get_situation_without_helpful_records_no_verdict(live_catalog: Path) -> None:
+    settings = Settings.load(hosted=True)
+    issued = register("ada@example.com", settings=settings)
+    with _hosted_client(live_catalog) as client:
+        _call(
+            client,
+            issued.key,
+            "get_situation",
+            {"id": "protect_destructive_and_leave"},
+        )
+    row = _rows(live_catalog)[0]
+    assert row["verdicts"] is None
+
+
+def test_pack_records_helpful_verdict_for_card(live_catalog: Path) -> None:
+    settings = Settings.load(hosted=True)
+    issued = register("ada@example.com", settings=settings)
+    with _hosted_client(live_catalog) as client:
+        _call(
+            client,
+            issued.key,
+            "pack",
+            {"jobs": "protect_destructive_and_leave", "limit": 5, "helpful": False},
+        )
+    row = _rows(live_catalog)[0]
+    assert row["target_type"] == "card"
+    assert json.loads(row["verdicts"]) == {"helpful": False}
+
+
+def test_pack_records_helpful_verdict_for_container(live_catalog: Path) -> None:
+    settings = Settings.load(hosted=True)
+    issued = register("ada@example.com", settings=settings)
+    with _hosted_client(live_catalog) as client:
+        _call(client, issued.key, "pack", {"jobs": "forms", "limit": 5, "helpful": True})
+    row = _rows(live_catalog)[0]
+    assert row["target_type"] == "container"
+    assert json.loads(row["verdicts"]) == {"helpful": True}
+
+
 def test_get_component_records_component_target(live_catalog: Path) -> None:
     settings = Settings.load(hosted=True)
     issued = register("ada@example.com", settings=settings)
@@ -205,6 +258,15 @@ def test_get_component_records_non_default_flags(live_catalog: Path) -> None:
         "include_keywords": True,
         "include_vs": False,
     }
+
+
+def test_get_component_records_helpful_verdict(live_catalog: Path) -> None:
+    settings = Settings.load(hosted=True)
+    issued = register("ada@example.com", settings=settings)
+    with _hosted_client(live_catalog) as client:
+        _call(client, issued.key, "get_component", {"id": "popconfirm", "helpful": True})
+    row = _rows(live_catalog)[0]
+    assert json.loads(row["verdicts"]) == {"helpful": True}
 
 
 def test_list_components_records_result_ids(live_catalog: Path) -> None:

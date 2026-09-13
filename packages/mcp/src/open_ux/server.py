@@ -536,6 +536,16 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             str,
             Field(description="A Situation Card id. A Leaf id fails."),
         ],
+        helpful: Annotated[
+            bool | None,
+            Field(
+                description=(
+                    "Optional opt-in signal: was this Card useful for what you "
+                    "were doing? Never required, never inferred from other "
+                    "calls — omit it if you have no opinion."
+                )
+            ),
+        ] = None,
     ) -> dict[str, Any]:
         """When: a Card is named and you need leaf counts before pack.
 
@@ -549,6 +559,7 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             tool="get_situation",
             target_type="card",
             target_id=id,
+            verdicts={"helpful": helpful} if helpful is not None else None,
         )
         return result
 
@@ -622,6 +633,17 @@ def create_mcp(*, hosted: bool) -> FastMCP:
                 description="Skip this many in-scope rows. Follow next_offset until it is absent.",
             ),
         ] = 0,
+        helpful: Annotated[
+            bool | None,
+            Field(
+                description=(
+                    "Optional opt-in signal: was this pack (the Card, Leaf, or "
+                    "container named by jobs=) useful for what you were doing? "
+                    "Never required, never inferred from other calls — omit it "
+                    "if you have no opinion."
+                )
+            ),
+        ] = None,
     ) -> dict[str, Any]:
         """When: a job is named on jobs= — pull cited criteria.
 
@@ -652,6 +674,7 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             req_offset=offset,
             req_limit=limit,
             result_count=len(result.get("guidelines") or []),
+            verdicts={"helpful": helpful} if helpful is not None else None,
         )
         return result
 
@@ -701,6 +724,16 @@ def create_mcp(*, hosted: bool) -> FastMCP:
                 )
             ),
         ] = False,
+        helpful: Annotated[
+            bool | None,
+            Field(
+                description=(
+                    "Optional opt-in signal: was this component record useful "
+                    "for what you were doing? Never required, never inferred "
+                    "from other calls — omit it if you have no opinion."
+                )
+            ),
+        ] = None,
     ) -> dict[str, Any]:
         """Fetch one component record. Context helper for Cards and jobs.
 
@@ -743,6 +776,7 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             target_type="component",
             target_id=id,
             req_flags=non_default_flags,
+            verdicts={"helpful": helpful} if helpful is not None else None,
         )
         return result
 
