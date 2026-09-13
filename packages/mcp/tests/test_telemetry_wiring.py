@@ -40,7 +40,8 @@ def _rows(tmp_env: Path) -> list[dict[str, Any]]:
     with store.cursor() as cur:
         cur.execute(
             "SELECT tool, target_type, target_id, req_offset, req_limit, "
-            "content_length, verdicts, guideline_ids FROM telemetry ORDER BY id"
+            "content_length, verdicts, guideline_ids, req_flags, result_count, "
+            "result_ids FROM telemetry ORDER BY id"
         )
         return [dict(row) for row in cur.fetchall()]
 
@@ -102,6 +103,7 @@ def test_pack_classifies_card_scope(live_catalog: Path) -> None:
     assert row["req_offset"] == 0
     assert row["req_limit"] == 5
     assert json.loads(row["guideline_ids"])
+    assert row["result_count"] == len(json.loads(row["guideline_ids"]))
 
 
 def test_pack_classifies_container_scope(live_catalog: Path) -> None:
@@ -155,6 +157,9 @@ def test_list_situations_classifies_container_scope(live_catalog: Path) -> None:
     row = _rows(live_catalog)[0]
     assert row["tool"] == "list_situations"
     assert row["target_type"] == "container"
+    assert row["result_count"] is not None
+    assert json.loads(row["result_ids"])
+    assert row["result_count"] == len(json.loads(row["result_ids"]))
 
 
 def test_get_situation_records_card_target(live_catalog: Path) -> None:
@@ -182,6 +187,36 @@ def test_get_component_records_component_target(live_catalog: Path) -> None:
     assert row["tool"] == "get_component"
     assert row["target_type"] == "component"
     assert row["target_id"] == "popconfirm"
+    assert row["req_flags"] is None
+
+
+def test_get_component_records_non_default_flags(live_catalog: Path) -> None:
+    settings = Settings.load(hosted=True)
+    issued = register("ada@example.com", settings=settings)
+    with _hosted_client(live_catalog) as client:
+        _call(
+            client,
+            issued.key,
+            "get_component",
+            {"id": "popconfirm", "include_keywords": True, "include_vs": False},
+        )
+    row = _rows(live_catalog)[0]
+    assert json.loads(row["req_flags"]) == {
+        "include_keywords": True,
+        "include_vs": False,
+    }
+
+
+def test_list_components_records_result_ids(live_catalog: Path) -> None:
+    settings = Settings.load(hosted=True)
+    issued = register("ada@example.com", settings=settings)
+    with _hosted_client(live_catalog) as client:
+        _call(client, issued.key, "list_components", {})
+    row = _rows(live_catalog)[0]
+    assert row["tool"] == "list_components"
+    assert row["result_count"] is not None
+    assert json.loads(row["result_ids"])
+    assert row["result_count"] == len(json.loads(row["result_ids"]))
 
 
 def test_list_guidelines_records_paging(live_catalog: Path) -> None:

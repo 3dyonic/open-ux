@@ -274,6 +274,55 @@ def test_admin_sessions_detail_returns_ordered_steps(tmp_env: Path) -> None:
         assert summary["last_seen"] is not None
 
 
+def test_admin_sessions_detail_includes_req_flags_and_result_ids(tmp_env: Path) -> None:
+    settings = Settings.load(hosted=True)
+    store = get_store(settings)
+    store.record_telemetry(
+        key_hash="hash-a",
+        tool="get_component",
+        target_type="component",
+        target_id="checkbox",
+        content_length=None,
+        content_hash=None,
+        guideline_ids=None,
+        verdicts=None,
+        req_flags={"include_keywords": True},
+        result_count=None,
+        result_ids=None,
+    )
+    store.record_telemetry(
+        key_hash="hash-a",
+        tool="list_situations",
+        target_type=None,
+        target_id=None,
+        content_length=None,
+        content_hash=None,
+        guideline_ids=None,
+        verdicts=None,
+        req_flags=None,
+        result_count=2,
+        result_ids=["card.one", "card.two"],
+    )
+
+    with _hosted_client(tmp_env) as client:
+        response = client.get(
+            "/admin/sessions/hash-a", headers={"Authorization": "Bearer test-admin-token"}
+        )
+        assert response.status_code == 200
+        body = response.json()
+        steps = body["items"][0]["steps"]
+        assert len(steps) == 2
+        get_component_step, list_situations_step = steps
+        assert get_component_step["tool"] == "get_component"
+        assert get_component_step["req_flags"] == {"include_keywords": True}
+        assert get_component_step["result_count"] is None
+        assert get_component_step["result_ids"] is None
+        assert list_situations_step["tool"] == "list_situations"
+        assert list_situations_step["req_flags"] is None
+        assert list_situations_step["result_count"] == 2
+        assert list_situations_step["result_ids"] == ["card.one", "card.two"]
+
+
 def test_admin_sessions_detail_empty_summary(tmp_env: Path) -> None:
     with _hosted_client(tmp_env) as client:
         response = client.get(

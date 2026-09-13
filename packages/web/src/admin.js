@@ -4,9 +4,10 @@ import { emptyStateHtml } from "./empty-state.js";
 import { escapeHtml, setPresent, setTitle, ssr } from "./util.js";
 
 const PAGE_LIMIT = 100;
+const CALLERS_LIMIT = 50;
 
 const ADMIN_TITLE = "Admin — Open UX";
-const ADMIN_DESCRIPTION = "Invite waitlist admin.";
+const ADMIN_DESCRIPTION = "Accounts admin: waitlist, approvals, and callers.";
 
 export function adminPage() {
   return {
@@ -21,7 +22,7 @@ export function adminPage() {
   <main class="page">
     <div class="flex w-full flex-1 flex-col items-center justify-center" id="admin-login-view">
       <div class="invite-card" id="admin-login-card">
-        <p class="invite-meta"><span class="pip" aria-hidden="true"></span>Admin · invite waitlist</p>
+        <p class="invite-meta"><span class="pip" aria-hidden="true"></span>Admin · accounts</p>
         <h1 class="invite-title">Admin sign-in</h1>
         <p class="invite-sub" id="admin-login-sub">Paste the admin bearer token to view and approve the waitlist.</p>
         <form id="admin-login" class="contents" novalidate>
@@ -41,8 +42,8 @@ export function adminPage() {
     <div class="flex w-full flex-col gap-7" id="admin-table-card">
       <div class="flex items-center justify-between gap-4">
         <div class="flex flex-col gap-1">
-          <p class="invite-meta"><span class="pip" aria-hidden="true"></span>Admin · invites</p>
-          <h1 class="page-title">Invites</h1>
+          <p class="invite-meta"><span class="pip" aria-hidden="true"></span>Admin · accounts</p>
+          <h1 class="page-title">Accounts</h1>
         </div>
         <button class="btn btn-outline btn-nav" type="button" id="admin-logout">Sign out</button>
       </div>
@@ -56,7 +57,7 @@ export function adminPage() {
       <div id="admin-tab-approved"></div>
     </div>
   </main>`,
-        { catalog: false, key: false, consent: false, paper: true, adminActive: "invites" },
+        { catalog: false, key: false, consent: false, paper: true, adminActive: "accounts" },
       ),
     ),
   };
@@ -96,6 +97,20 @@ function approvedRowHtml(row) {
       <span class="font-mono text-xs text-muted">${statusMeta}</span>
     </div>
   </div>`;
+}
+
+function callerRowHtml(row) {
+  const keyHash = escapeHtml(row.key_hash);
+  return `
+  <a class="flex w-full flex-wrap items-center justify-between gap-3 border-b border-line px-5 py-3.5 text-left last:border-b-0 hover:bg-paper" href="/admin/telemetry/callers/${encodeURIComponent(row.key_hash)}">
+    <span class="font-mono text-xs text-ink">${keyHash}</span>
+    <span class="flex flex-wrap items-center gap-4 text-xs text-muted">
+      <span>${row.session_count} session${row.session_count === 1 ? "" : "s"}</span>
+      <span>${row.call_count} call${row.call_count === 1 ? "" : "s"}</span>
+      <span class="font-mono">last ${escapeHtml(row.last_seen)}</span>
+      ${row.top_target ? `<span class="font-mono">${escapeHtml(row.top_target)}</span>` : ""}
+    </span>
+  </a>`;
 }
 
 function rowErrorEl(message) {
@@ -161,6 +176,23 @@ function tabPanelHtml({ errorId, listId, emptyId, pagerId, backToTopId, pagerMet
   </div>`;
 }
 
+// Callers (key_hash-keyed) are a separate section within the Approved tab,
+// never joined to the email-keyed invites list above — same tab, distinct keyspace.
+function callersSectionHtml() {
+  return `
+  <section class="flex flex-col gap-3 border-t border-line pt-6">
+    <h2 class="text-sm font-semibold text-ink">Callers</h2>
+    <p class="text-xs text-muted">Anonymized key_hash only, never joined to email. Sessions are a 30-minute idle-gap grouping — stateless HTTP has no real MCP session id.</p>
+    <p class="invite-sub invite-sub-error" id="admin-callers-error"></p>
+    <div class="list" id="admin-callers-list"></div>
+    <div id="admin-callers-empty"></div>
+    <div class="pager" id="admin-callers-pager">
+      <p class="pager-meta" id="admin-callers-pager-meta"></p>
+      <button class="btn btn-outline" type="button" id="admin-callers-load-more">Load more</button>
+    </div>
+  </section>`;
+}
+
 function makeListController({
   endpoint,
   rowHtml,
@@ -174,6 +206,7 @@ function makeListController({
   loadMoreEl,
   getToken,
   onUnauthorized,
+  limit = PAGE_LIMIT,
 }) {
   let nextCursor = null;
   let loadedCount = 0;
@@ -210,7 +243,7 @@ function makeListController({
   }
 
   async function load({ append }) {
-    const params = new URLSearchParams({ limit: String(PAGE_LIMIT) });
+    const params = new URLSearchParams({ limit: String(limit) });
     if (append && nextCursor) params.set("before", nextCursor);
     let response;
     try {
@@ -283,15 +316,16 @@ export function renderAdmin(root) {
     pagerMetaId: "admin-pager-meta",
     loadMoreId: "admin-load-more",
   });
-  approvedPanel.innerHTML = tabPanelHtml({
-    errorId: "admin-approved-error",
-    listId: "admin-approved-list",
-    emptyId: "admin-approved-empty",
-    pagerId: "admin-approved-pager",
-    backToTopId: "admin-approved-back-to-top",
-    pagerMetaId: "admin-approved-pager-meta",
-    loadMoreId: "admin-approved-load-more",
-  });
+  approvedPanel.innerHTML =
+    tabPanelHtml({
+      errorId: "admin-approved-error",
+      listId: "admin-approved-list",
+      emptyId: "admin-approved-empty",
+      pagerId: "admin-approved-pager",
+      backToTopId: "admin-approved-back-to-top",
+      pagerMetaId: "admin-approved-pager-meta",
+      loadMoreId: "admin-approved-load-more",
+    }) + callersSectionHtml();
   const waitlistList = document.getElementById("admin-waitlist-list");
 
   const tabButtons = Array.from(document.querySelectorAll("[data-tab-btn]"));
@@ -338,7 +372,26 @@ export function renderAdmin(root) {
     onUnauthorized,
   });
 
-  const controllers = { waitlist: waitlistController, approved: approvedController };
+  const callersController = makeListController({
+    endpoint: "/admin/sessions",
+    rowHtml: callerRowHtml,
+    panel: document.getElementById("admin-callers-list").parentNode,
+    listEl: document.getElementById("admin-callers-list"),
+    emptyEl: document.getElementById("admin-callers-empty"),
+    emptyMessage: "No callers recorded yet.",
+    errorEl: document.getElementById("admin-callers-error"),
+    pagerEl: document.getElementById("admin-callers-pager"),
+    pagerMetaEl: document.getElementById("admin-callers-pager-meta"),
+    loadMoreEl: document.getElementById("admin-callers-load-more"),
+    getToken: () => token,
+    onUnauthorized,
+    limit: CALLERS_LIMIT,
+  });
+
+  const controllers = {
+    waitlist: [waitlistController],
+    approved: [approvedController, callersController],
+  };
 
   function showLogin(message) {
     clearToken();
@@ -367,7 +420,7 @@ export function renderAdmin(root) {
     }
     if (!loadedTabs.has(tab)) {
       loadedTabs.add(tab);
-      controllers[tab].loadFirst();
+      for (const controller of controllers[tab]) controller.loadFirst();
     }
   }
 

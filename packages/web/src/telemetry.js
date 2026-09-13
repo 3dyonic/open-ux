@@ -64,18 +64,6 @@ export function telemetryPage() {
         <h2 class="text-sm font-semibold text-ink">Top guideline ids</h2>
         <div id="admin-chart-guidelines" class="flex flex-col gap-2"></div>
       </section>
-
-      <section class="flex flex-col gap-3">
-        <h2 class="text-sm font-semibold text-ink">Callers</h2>
-        <p class="text-xs text-muted">Anonymized key_hash only, never joined to email. Sessions are a 30-minute idle-gap grouping — stateless HTTP has no real MCP session id.</p>
-        <p class="invite-sub invite-sub-error" id="admin-callers-error"></p>
-        <div class="list" id="admin-callers-list"></div>
-        <div id="admin-callers-empty"></div>
-        <div class="pager" id="admin-callers-pager">
-          <p class="pager-meta" id="admin-callers-pager-meta"></p>
-          <button class="btn btn-outline" type="button" id="admin-callers-load-more">Load more</button>
-        </div>
-      </section>
     </div>
   </main>`,
         { catalog: false, key: false, consent: false, paper: true, adminActive: "telemetry" },
@@ -137,20 +125,6 @@ function rankedBarsHtml(rows, { emptyLabel }) {
     .join("");
 }
 
-function callerRowHtml(row) {
-  const keyHash = escapeHtml(row.key_hash);
-  return `
-  <a class="flex w-full flex-wrap items-center justify-between gap-3 border-b border-line px-5 py-3.5 text-left last:border-b-0 hover:bg-paper" href="/admin/telemetry/callers/${encodeURIComponent(row.key_hash)}">
-    <span class="font-mono text-xs text-ink">${keyHash}</span>
-    <span class="flex flex-wrap items-center gap-4 text-xs text-muted">
-      <span>${row.session_count} session${row.session_count === 1 ? "" : "s"}</span>
-      <span>${row.call_count} call${row.call_count === 1 ? "" : "s"}</span>
-      <span class="font-mono">last ${escapeHtml(row.last_seen)}</span>
-      ${row.top_target ? `<span class="font-mono">${escapeHtml(row.top_target)}</span>` : ""}
-    </span>
-  </a>`;
-}
-
 export function renderTelemetry(root) {
   const page = telemetryPage();
   setTitle(page.title);
@@ -175,13 +149,6 @@ export function renderTelemetry(root) {
   const chartDaysEl = document.getElementById("admin-chart-days");
   const chartToolsEl = document.getElementById("admin-chart-tools");
   const chartGuidelinesEl = document.getElementById("admin-chart-guidelines");
-  const callersList = document.getElementById("admin-callers-list");
-  const callersEmpty = document.getElementById("admin-callers-empty");
-  const callersError = document.getElementById("admin-callers-error");
-  const callersPager = document.getElementById("admin-callers-pager");
-  const callersPagerMeta = document.getElementById("admin-callers-pager-meta");
-  const callersLoadMore = document.getElementById("admin-callers-load-more");
-  const callersPanel = callersList.parentNode;
 
   // statsError and emptyEl are the only two banners that sit before the
   // always-present tilesEl; inserting each right before it, in this order,
@@ -240,70 +207,6 @@ export function renderTelemetry(root) {
     });
   }
 
-  const CALLERS_LIMIT = 50;
-  let callersNextCursor = null;
-  let callersLoadedCount = 0;
-
-  function syncCallers() {
-    setPresent(callersError, Boolean(callersError.textContent), callersPanel);
-    setPresent(callersList, callersLoadedCount > 0, callersPanel);
-    setPresent(callersEmpty, callersLoadedCount === 0, callersPanel);
-    setPresent(callersPager, Boolean(callersNextCursor), callersPanel);
-  }
-
-  function renderCallers(data, { append }) {
-    const items = Array.isArray(data.items) ? data.items : [];
-    if (!append) callersList.innerHTML = "";
-    callersList.innerHTML += items.map(callerRowHtml).join("");
-    callersLoadedCount += items.length;
-    callersNextCursor = data.next_cursor || null;
-    callersEmpty.innerHTML = callersLoadedCount === 0 ? emptyStateHtml("No callers recorded yet.") : "";
-    callersPagerMeta.textContent = `${callersLoadedCount} loaded`;
-    syncCallers();
-  }
-
-  async function loadCallers({ append }) {
-    const params = new URLSearchParams({ limit: String(CALLERS_LIMIT) });
-    if (append && callersNextCursor) params.set("before", callersNextCursor);
-    let response;
-    try {
-      response = await adminFetch(token, `/admin/sessions?${params}`);
-    } catch {
-      callersError.textContent = "Couldn’t reach the server — try again.";
-      syncCallers();
-      return null;
-    }
-    if (response.status === 401) {
-      onUnauthorized();
-      return null;
-    }
-    if (!response.ok) {
-      callersError.textContent = "Couldn’t load callers — try again.";
-      syncCallers();
-      return null;
-    }
-    callersError.textContent = "";
-    return response.json();
-  }
-
-  async function loadCallersFirst() {
-    callersList.innerHTML = "";
-    callersEmpty.innerHTML = "";
-    callersError.textContent = "";
-    callersLoadedCount = 0;
-    callersNextCursor = null;
-    syncCallers();
-    const data = await loadCallers({ append: false });
-    if (data !== null) renderCallers(data, { append: false });
-  }
-
-  callersLoadMore.addEventListener("click", async () => {
-    setBusy(callersLoadMore, true, "Load more", "Loading…");
-    const data = await loadCallers({ append: true });
-    if (data !== null) renderCallers(data, { append: true });
-    setBusy(callersLoadMore, false, "Load more", "Loading…");
-  });
-
   async function loadStats() {
     let response;
     try {
@@ -351,7 +254,6 @@ export function renderTelemetry(root) {
     writeToken(token);
     showStats();
     renderStats(data);
-    loadCallersFirst();
   });
 
   logoutBtn.addEventListener("click", () => {
@@ -360,13 +262,11 @@ export function renderTelemetry(root) {
 
   setPresent(statsView, false, mainEl);
   syncBanners({ hasError: false, isEmpty: false });
-  syncCallers();
   if (token) {
     showStats();
     loadStats().then((data) => {
       if (data !== null) renderStats(data);
     });
-    loadCallersFirst();
   } else {
     setPresent(loginView, true, mainEl);
   }

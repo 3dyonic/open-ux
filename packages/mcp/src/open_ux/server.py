@@ -247,7 +247,7 @@ def _key_hash_or_none() -> str | None:
     return claims.get("key_hash") or getattr(token, "client_id", None)
 
 
-def _maybe_telemetry(
+def _record_telemetry(
     settings: Settings,
     *,
     tool: str,
@@ -256,6 +256,9 @@ def _maybe_telemetry(
     target_id: str | None = None,
     req_offset: int | None = None,
     req_limit: int | None = None,
+    req_flags: dict[str, Any] | None = None,
+    result_count: int | None = None,
+    result_ids: list[str] | None = None,
     content_length: int | None = None,
     verdicts: dict[str, Any] | None = None,
 ) -> None:
@@ -271,6 +274,9 @@ def _maybe_telemetry(
         target_id=target_id,
         req_offset=req_offset,
         req_limit=req_limit,
+        req_flags=req_flags,
+        result_count=result_count,
+        result_ids=result_ids,
         content_length=content_length,
         content_hash=None,
         guideline_ids=guideline_ids,
@@ -393,11 +399,13 @@ def create_mcp(*, hosted: bool) -> FastMCP:
     ) -> dict[str, Any]:
         """Paged index only: id, title, name, jobs, lane, placement. No rule bodies."""
         items, total = list_index(catalog, limit=limit, offset=offset)
-        _maybe_telemetry(
+        _record_telemetry(
             settings,
             tool="list_guidelines",
             req_offset=offset,
             req_limit=limit,
+            guideline_ids=[row.get("id") for row in items if row.get("id")],
+            result_count=len(items),
         )
         payload: dict[str, Any] = {
             "guidelines": items,
@@ -428,13 +436,15 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             offset=offset,
         )
         target_type, target_id = _classify_target(job_tree, jobs)
-        _maybe_telemetry(
+        _record_telemetry(
             settings,
             tool="search_guidelines",
             target_type=target_type,
             target_id=target_id,
             req_offset=offset,
             req_limit=limit,
+            guideline_ids=[row.get("id") for row in items if row.get("id")],
+            result_count=len(items),
         )
         payload: dict[str, Any] = {
             "guidelines": items,
@@ -464,7 +474,7 @@ def create_mcp(*, hosted: bool) -> FastMCP:
     ) -> dict[str, Any]:
         """Fetch one full guideline body by id. Does not invent missing rules."""
         found = get_by_id(catalog, id)
-        _maybe_telemetry(
+        _record_telemetry(
             settings,
             tool="get_guideline",
             guideline_ids=[id],
@@ -508,13 +518,15 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             job_tree, container=container, limit=limit, offset=offset
         )
         target_type, target_id = _classify_target(job_tree, container)
-        _maybe_telemetry(
+        _record_telemetry(
             settings,
             tool="list_situations",
             target_type=target_type,
             target_id=target_id,
             req_offset=offset,
             req_limit=limit,
+            result_count=result.get("count"),
+            result_ids=[row.get("id") for row in result.get("situations") or [] if row.get("id")],
         )
         return result
 
@@ -532,7 +544,7 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         Does not invent a Card. No rule bodies.
         """
         result = run_get_situation(id, job_tree)
-        _maybe_telemetry(
+        _record_telemetry(
             settings,
             tool="get_situation",
             target_type="card",
@@ -572,7 +584,7 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         note repeats the next step. Surface is not an id. No server LLM.
         """
         result = run_suggest_situations(task_text, surface, job_tree)
-        _maybe_telemetry(
+        _record_telemetry(
             settings,
             tool="suggest_situations",
             content_length=len(task_text) if task_text else None,
@@ -631,7 +643,7 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         target_type, target_id = _classify_target(job_tree, jobs)
         if target_type is None and guideline_ids:
             target_type, target_id = "guideline_ids", None
-        _maybe_telemetry(
+        _record_telemetry(
             settings,
             tool="pack",
             guideline_ids=[row.get("id") for row in result.get("guidelines") or [] if row.get("id")],
@@ -639,6 +651,7 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             target_id=target_id,
             req_offset=offset,
             req_limit=limit,
+            result_count=len(result.get("guidelines") or []),
         )
         return result
 
@@ -646,7 +659,12 @@ def create_mcp(*, hosted: bool) -> FastMCP:
     def list_components() -> dict[str, Any]:
         """Component index — context helper for Cards and jobs. Id, title, overview only. One page. No variants."""
         result = run_list_components(component_registry)
-        _maybe_telemetry(settings, tool="list_components")
+        _record_telemetry(
+            settings,
+            tool="list_components",
+            result_count=result.get("count"),
+            result_ids=[row.get("id") for row in result.get("components") or [] if row.get("id")],
+        )
         return result
 
     @mcp.tool
@@ -700,11 +718,31 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             include_keywords=include_keywords,
             include_used_on=include_used_on,
         )
-        _maybe_telemetry(
+        flag_defaults = {
+            "include_vs": True,
+            "include_variants": True,
+            "include_accessibility": True,
+            "include_keyboard": True,
+            "include_keywords": False,
+            "include_used_on": False,
+        }
+        requested_flags = {
+            "include_vs": include_vs,
+            "include_variants": include_variants,
+            "include_accessibility": include_accessibility,
+            "include_keyboard": include_keyboard,
+            "include_keywords": include_keywords,
+            "include_used_on": include_used_on,
+        }
+        non_default_flags = {
+            k: v for k, v in requested_flags.items() if v != flag_defaults[k]
+        } or None
+        _record_telemetry(
             settings,
             tool="get_component",
             target_type="component",
             target_id=id,
+            req_flags=non_default_flags,
         )
         return result
 

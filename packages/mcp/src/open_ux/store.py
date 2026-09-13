@@ -113,6 +113,9 @@ class Store:
                     content_hash TEXT,
                     guideline_ids TEXT,
                     verdicts TEXT,
+                    req_flags TEXT,
+                    result_count INTEGER,
+                    result_ids TEXT,
                     created_at TEXT NOT NULL
                 );
                 CREATE TABLE IF NOT EXISTS rate_buckets (
@@ -148,6 +151,9 @@ class Store:
                 ("target_id", "ALTER TABLE telemetry ADD COLUMN target_id TEXT"),
                 ("req_offset", "ALTER TABLE telemetry ADD COLUMN req_offset INTEGER"),
                 ("req_limit", "ALTER TABLE telemetry ADD COLUMN req_limit INTEGER"),
+                ("req_flags", "ALTER TABLE telemetry ADD COLUMN req_flags TEXT"),
+                ("result_count", "ALTER TABLE telemetry ADD COLUMN result_count INTEGER"),
+                ("result_ids", "ALTER TABLE telemetry ADD COLUMN result_ids TEXT"),
             ):
                 if column not in existing_cols:
                     cur.execute(ddl)
@@ -380,6 +386,9 @@ class Store:
         target_id: str | None = None,
         req_offset: int | None = None,
         req_limit: int | None = None,
+        req_flags: dict[str, Any] | None = None,
+        result_count: int | None = None,
+        result_ids: list[str] | None = None,
     ) -> None:
         cutoff = _iso(_utcnow() - timedelta(days=RETENTION_DAYS))
         with self.cursor() as cur:
@@ -387,8 +396,9 @@ class Store:
             cur.execute(
                 "INSERT INTO telemetry("
                 "key_hash, tool, target_type, target_id, req_offset, req_limit, "
-                "content_length, content_hash, guideline_ids, verdicts, created_at"
-                ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                "content_length, content_hash, guideline_ids, verdicts, req_flags, "
+                "result_count, result_ids, created_at"
+                ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 (
                     key_hash,
                     tool,
@@ -400,6 +410,9 @@ class Store:
                     content_hash,
                     json.dumps(guideline_ids) if guideline_ids is not None else None,
                     json.dumps(verdicts) if verdicts is not None else None,
+                    json.dumps(req_flags) if req_flags is not None else None,
+                    result_count,
+                    json.dumps(result_ids) if result_ids is not None else None,
                     _iso(_utcnow()),
                 ),
             )
@@ -618,8 +631,9 @@ class Store:
         with self.cursor() as cur:
             rows = cur.execute(
                 "SELECT tool, target_type, target_id, req_offset, req_limit, "
-                "verdicts, created_at FROM telemetry WHERE key_hash = ? "
-                "ORDER BY created_at ASC, id ASC",
+                "verdicts, req_flags, result_count, guideline_ids, result_ids, "
+                "created_at FROM telemetry "
+                "WHERE key_hash = ? ORDER BY created_at ASC, id ASC",
                 (key_hash,),
             ).fetchall()
 
@@ -635,6 +649,10 @@ class Store:
                 "req_offset": row["req_offset"],
                 "req_limit": row["req_limit"],
                 "verdicts": json.loads(row["verdicts"]) if row["verdicts"] else None,
+                "req_flags": json.loads(row["req_flags"]) if row["req_flags"] else None,
+                "result_count": row["result_count"],
+                "guideline_ids": json.loads(row["guideline_ids"]) if row["guideline_ids"] else None,
+                "result_ids": json.loads(row["result_ids"]) if row["result_ids"] else None,
                 "created_at": row["created_at"],
             }
             if prev_at is None or (created_at - prev_at) > gap:

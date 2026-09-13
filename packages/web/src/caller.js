@@ -20,7 +20,7 @@ export function callerPage() {
   <main class="page">
     <div class="flex w-full flex-1 flex-col items-center justify-center" id="admin-login-view">
       <div class="invite-card" id="admin-login-card">
-        <p class="invite-meta"><span class="pip" aria-hidden="true"></span>Admin · telemetry</p>
+        <p class="invite-meta"><span class="pip" aria-hidden="true"></span>Admin · accounts</p>
         <h1 class="invite-title">Admin sign-in</h1>
         <p class="invite-sub" id="admin-login-sub">Paste the admin bearer token to view this caller.</p>
         <form id="admin-login" class="contents" novalidate>
@@ -38,9 +38,9 @@ export function callerPage() {
     </div>
 
     <div class="flex w-full flex-col gap-7" id="admin-caller-view">
-      <a class="back" href="/admin/telemetry">← Back to callers</a>
+      <a class="back" href="/admin">← Back to accounts</a>
       <div class="flex flex-col gap-1">
-        <p class="invite-meta"><span class="pip" aria-hidden="true"></span>Admin · Telemetry · Callers</p>
+        <p class="invite-meta"><span class="pip" aria-hidden="true"></span>Admin · Accounts · Callers</p>
         <h1 class="page-title font-mono" id="admin-caller-title"></h1>
         <p class="lede" id="admin-caller-summary"></p>
       </div>
@@ -53,10 +53,27 @@ export function callerPage() {
       </div>
     </div>
   </main>`,
-        { catalog: false, key: false, consent: false, paper: true, adminActive: "telemetry" },
+        { catalog: false, key: false, consent: false, paper: true, adminActive: "accounts" },
       ),
     ),
   };
+}
+
+function flagsHtml(flags) {
+  if (!flags) return "";
+  const on = Object.entries(flags)
+    .filter(([, v]) => v)
+    .map(([k]) => `+${k.replace(/^include_/, "")}`);
+  const off = Object.entries(flags)
+    .filter(([, v]) => !v)
+    .map(([k]) => `-${k.replace(/^include_/, "")}`);
+  const text = [...on, ...off].join(" ");
+  return text ? `<span class="font-mono text-muted">${escapeHtml(text)}</span>` : "";
+}
+
+function resultIdsHtml(ids) {
+  if (!ids || ids.length === 0) return "";
+  return `<span class="font-mono text-muted" title="${escapeHtml(ids.join(", "))}">${escapeHtml(ids.join(", "))}</span>`;
 }
 
 function stepsHtml(steps) {
@@ -69,6 +86,9 @@ function stepsHtml(steps) {
       <span class="text-muted">${i + 1}.</span>
       <span class="font-mono font-medium text-pip">${escapeHtml(s.tool)}</span>
       ${s.target_type ? `<span class="font-mono text-muted">${escapeHtml(s.target_type)}=${escapeHtml(s.target_id || "")}</span>` : ""}
+      ${flagsHtml(s.req_flags)}
+      ${typeof s.result_count === "number" ? `<span class="font-mono text-muted">→ ${s.result_count} result${s.result_count === 1 ? "" : "s"}</span>` : ""}
+      ${resultIdsHtml(s.guideline_ids || s.result_ids)}
       ${s.verdicts ? `<span class="font-mono text-muted">${escapeHtml(JSON.stringify(s.verdicts))}</span>` : ""}
       <span class="ml-auto font-mono text-muted">${escapeHtml(s.created_at)}</span>
     </li>`,
