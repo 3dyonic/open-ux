@@ -113,16 +113,18 @@ def test_catalog_api_get_returns_guideline_or_404(live_catalog: Path) -> None:
     assert ok.json()["rule"] == found["rule"]
     assert missing.status_code == 404
     assert missing.json() == {"found": False, "id": "does.not.exist"}
+    # /api/nope matches no route at all (unlike /api/catalog/<id>, which is a
+    # real registered endpoint returning its own structured 404 above) and
+    # falls through to the catch-all, which renders the same designed 404
+    # page as any other unknown URL — never a bare JSON error.
     assert unknown_api.status_code == 404
-    assert unknown_api.headers["content-type"].startswith("application/json")
-    assert unknown_api.json() == {"error": "Not found."}
+    assert unknown_api.headers["content-type"].startswith("text/html")
 
 
-def test_server_error_response_stays_json_on_api_paths() -> None:
+def test_server_error_response_is_always_the_designed_500_page() -> None:
     api = server_error_response("/api/catalog/x")
     assert api.status_code == 500
-    assert api.headers["content-type"].startswith("application/json")
-    assert b"This page could not be loaded." in api.body
+    assert api.headers["content-type"].startswith("text/html")
 
 
 def test_no_dist_is_json_only_no_shell(tmp_env: Path, monkeypatch) -> None:
@@ -205,8 +207,13 @@ def test_mcp_and_account_are_not_swallowed(tmp_env: Path, monkeypatch) -> None:
     dist = _write_dist(tmp_env)
     monkeypatch.setenv("OPEN_UX_WEB_DIST", str(dist))
     with _client() as client:
+        # A bare GET has no matching MCP route and falls through to the
+        # catch-all — it must not be mistaken for a real page (status 200
+        # with the SPA shell as if something loaded); a real 404 is correct
+        # even though this synthetic dist has no distinct 404.html to show
+        # (it falls back to the shell content, still under a 404 status).
         mcp = client.get("/mcp")
-        assert "open-ux-shell" not in mcp.text
+        assert mcp.status_code == 404
         deleted = client.post(
             "/account/delete", json={"email": "ada@example.com", "key": "uxmcp_nope"}
         )
