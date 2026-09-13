@@ -1,4 +1,5 @@
 import { shell } from "./chrome.js";
+import { emptyStateHtml } from "./empty-state.js";
 import { escapeHtml, setTitle, ssr } from "./util.js";
 
 const TOKEN_KEY = "open_ux_admin_token";
@@ -81,7 +82,7 @@ export function telemetryPage() {
       </div>
       <p class="invite-sub invite-sub-error" id="admin-stats-error" hidden></p>
 
-      <div id="admin-empty" class="lede" hidden>No requests recorded yet.</div>
+      <div id="admin-empty" hidden>${emptyStateHtml("No requests recorded yet.")}</div>
 
       <div id="admin-tiles" class="grid grid-cols-2 gap-3 sm:grid-cols-3"></div>
 
@@ -143,7 +144,7 @@ function daysChartSvg(requestsByDay) {
 
 function rankedBarsHtml(rows, { emptyLabel }) {
   if (rows.length === 0) {
-    return `<p class="text-sm text-muted">${escapeHtml(emptyLabel)}</p>`;
+    return emptyStateHtml(emptyLabel);
   }
   const max = Math.max(1, ...rows.map((r) => r.count));
   return rows

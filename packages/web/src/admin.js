@@ -1,4 +1,5 @@
 import { shell } from "./chrome.js";
+import { emptyStateHtml } from "./empty-state.js";
 import { escapeHtml, setTitle, ssr } from "./util.js";
 
 const TOKEN_KEY = "open_ux_admin_token";
@@ -91,7 +92,7 @@ export function adminPage() {
       <div id="admin-tab-waitlist">
         <p class="invite-sub invite-sub-error" id="admin-table-error" hidden></p>
         <div class="list" id="admin-waitlist-list"></div>
-        <p class="lede" id="admin-empty" hidden>No one on the waitlist yet.</p>
+        <div id="admin-empty" hidden>${emptyStateHtml("No one on the waitlist yet.")}</div>
         <div class="pager" id="admin-pager" hidden>
           <a class="back" href="#admin-table-card" id="admin-back-to-top">↑ Back to top</a>
           <p class="pager-meta" id="admin-pager-meta"></p>
@@ -102,7 +103,7 @@ export function adminPage() {
       <div id="admin-tab-approved" hidden>
         <p class="invite-sub invite-sub-error" id="admin-approved-error" hidden></p>
         <div class="list" id="admin-approved-list"></div>
-        <p class="lede" id="admin-approved-empty" hidden>No approved invites yet.</p>
+        <div id="admin-approved-empty" hidden>${emptyStateHtml("No approved invites yet.")}</div>
         <div class="pager" id="admin-approved-pager" hidden>
           <a class="back" href="#admin-table-card" id="admin-approved-back-to-top">↑ Back to top</a>
           <p class="pager-meta" id="admin-approved-pager-meta"></p>
