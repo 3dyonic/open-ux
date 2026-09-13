@@ -1,6 +1,6 @@
 import { shell } from "./chrome.js";
 import { emptyStateHtml } from "./empty-state.js";
-import { escapeHtml, setTitle, ssr } from "./util.js";
+import { escapeHtml, setPresent, setTitle, ssr } from "./util.js";
 
 const TOKEN_KEY = "open_ux_admin_token";
 
@@ -72,7 +72,7 @@ export function telemetryPage() {
       </div>
     </div>
 
-    <div class="flex w-full flex-col gap-7" id="admin-stats-view" hidden>
+    <div class="flex w-full flex-col gap-7" id="admin-stats-view">
       <div class="flex items-center justify-between gap-4">
         <div class="flex flex-col gap-1">
           <p class="invite-meta"><span class="pip" aria-hidden="true"></span>Admin · telemetry</p>
@@ -80,9 +80,9 @@ export function telemetryPage() {
         </div>
         <button class="btn btn-outline btn-nav" type="button" id="admin-logout">Sign out</button>
       </div>
-      <p class="invite-sub invite-sub-error" id="admin-stats-error" hidden></p>
+      <p class="invite-sub invite-sub-error" id="admin-stats-error"></p>
 
-      <div id="admin-empty" hidden>${emptyStateHtml("No requests recorded yet.")}</div>
+      <div id="admin-empty"></div>
 
       <div id="admin-tiles" class="grid grid-cols-2 gap-3 sm:grid-cols-3"></div>
 
@@ -168,6 +168,7 @@ export function renderTelemetry(root) {
     root.innerHTML = page.body;
   }
 
+  const mainEl = document.querySelector("main.page");
   const loginView = document.getElementById("admin-login-view");
   const statsView = document.getElementById("admin-stats-view");
   const loginForm = document.getElementById("admin-login");
@@ -185,6 +186,15 @@ export function renderTelemetry(root) {
   const chartToolsEl = document.getElementById("admin-chart-tools");
   const chartGuidelinesEl = document.getElementById("admin-chart-guidelines");
 
+  // statsError and emptyEl are the only two banners that sit before the
+  // always-present tilesEl; inserting each right before it, in this order,
+  // is what keeps [statsError, emptyEl, tilesEl] in the correct visual order
+  // however many times sync() below re-runs (see setPresent's doc comment).
+  function syncBanners({ hasError, isEmpty }) {
+    setPresent(statsError, hasError, statsView, tilesEl);
+    setPresent(emptyEl, isEmpty, statsView, tilesEl);
+  }
+
   const LOGIN_SUB = "Paste the admin bearer token to view telemetry.";
   const REJECTED_SUB = "That token was rejected. Check it and try again.";
 
@@ -193,8 +203,8 @@ export function renderTelemetry(root) {
   function showLogin(message) {
     clearToken();
     token = "";
-    statsView.hidden = true;
-    loginView.hidden = false;
+    setPresent(statsView, false, mainEl);
+    setPresent(loginView, true, mainEl);
     loginSub.textContent = message || LOGIN_SUB;
     loginSub.classList.toggle("invite-sub-error", Boolean(message));
     tokenInput.value = "";
@@ -207,7 +217,8 @@ export function renderTelemetry(root) {
 
   function renderStats(data) {
     windowDaysEl.textContent = String(data.window_days);
-    emptyEl.hidden = data.total_requests > 0;
+    emptyEl.innerHTML = data.total_requests === 0 ? emptyStateHtml("No requests recorded yet.") : "";
+    syncBanners({ hasError: false, isEmpty: data.total_requests === 0 });
 
     tilesEl.innerHTML = [
       tileHtml("Total requests", data.total_requests),
@@ -238,7 +249,7 @@ export function renderTelemetry(root) {
       response = await adminFetch(token, "/admin/stats");
     } catch {
       statsError.textContent = "Couldn't reach the server — try again.";
-      statsError.hidden = false;
+      syncBanners({ hasError: true, isEmpty: false });
       return null;
     }
     if (response.status === 401) {
@@ -247,16 +258,15 @@ export function renderTelemetry(root) {
     }
     if (!response.ok) {
       statsError.textContent = "Couldn't load telemetry — try again.";
-      statsError.hidden = false;
+      syncBanners({ hasError: true, isEmpty: false });
       return null;
     }
-    statsError.hidden = true;
     return response.json();
   }
 
   function showStats() {
-    loginView.hidden = true;
-    statsView.hidden = false;
+    setPresent(loginView, false, mainEl);
+    setPresent(statsView, true, mainEl);
   }
 
   toggleBtn.addEventListener("click", () => {
@@ -271,11 +281,11 @@ export function renderTelemetry(root) {
     const candidate = tokenInput.value.trim();
     if (!candidate) return;
     setBusy(loginSubmit, true, "Sign in", "Signing in…");
-    footEl.hidden = true;
+    setPresent(footEl, false, loginForm);
     token = candidate;
     const data = await loadStats();
     setBusy(loginSubmit, false, "Sign in", "Signing in…");
-    footEl.hidden = false;
+    setPresent(footEl, true, loginForm);
     if (data === null) return;
     writeToken(token);
     showStats();
@@ -286,10 +296,14 @@ export function renderTelemetry(root) {
     showLogin();
   });
 
+  setPresent(statsView, false, mainEl);
+  syncBanners({ hasError: false, isEmpty: false });
   if (token) {
     showStats();
     loadStats().then((data) => {
       if (data !== null) renderStats(data);
     });
+  } else {
+    setPresent(loginView, true, mainEl);
   }
 }

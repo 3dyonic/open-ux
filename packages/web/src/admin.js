@@ -1,6 +1,6 @@
 import { shell } from "./chrome.js";
 import { emptyStateHtml } from "./empty-state.js";
-import { escapeHtml, setTitle, ssr } from "./util.js";
+import { escapeHtml, setPresent, setTitle, ssr } from "./util.js";
 
 const TOKEN_KEY = "open_ux_admin_token";
 const PAGE_LIMIT = 100;
@@ -75,7 +75,7 @@ export function adminPage() {
       </div>
     </div>
 
-    <div class="flex w-full flex-col gap-7" id="admin-table-card" hidden>
+    <div class="flex w-full flex-col gap-7" id="admin-table-card">
       <div class="flex items-center justify-between gap-4">
         <div class="flex flex-col gap-1">
           <p class="invite-meta"><span class="pip" aria-hidden="true"></span>Admin · invites</p>
@@ -89,27 +89,8 @@ export function adminPage() {
         <button type="button" class="border-b-2 border-transparent pb-2.5 text-sm font-medium text-muted" data-tab-btn="approved" aria-selected="false">Approved</button>
       </div>
 
-      <div id="admin-tab-waitlist">
-        <p class="invite-sub invite-sub-error" id="admin-table-error" hidden></p>
-        <div class="list" id="admin-waitlist-list"></div>
-        <div id="admin-empty" hidden>${emptyStateHtml("No one on the waitlist yet.")}</div>
-        <div class="pager" id="admin-pager" hidden>
-          <a class="back" href="#admin-table-card" id="admin-back-to-top">↑ Back to top</a>
-          <p class="pager-meta" id="admin-pager-meta"></p>
-          <button class="btn btn-outline" type="button" id="admin-load-more">Load more</button>
-        </div>
-      </div>
-
-      <div id="admin-tab-approved" hidden>
-        <p class="invite-sub invite-sub-error" id="admin-approved-error" hidden></p>
-        <div class="list" id="admin-approved-list"></div>
-        <div id="admin-approved-empty" hidden>${emptyStateHtml("No approved invites yet.")}</div>
-        <div class="pager" id="admin-approved-pager" hidden>
-          <a class="back" href="#admin-table-card" id="admin-approved-back-to-top">↑ Back to top</a>
-          <p class="pager-meta" id="admin-approved-pager-meta"></p>
-          <button class="btn btn-outline" type="button" id="admin-approved-load-more">Load more</button>
-        </div>
-      </div>
+      <div id="admin-tab-waitlist"></div>
+      <div id="admin-tab-approved"></div>
     </div>
   </main>`,
         { catalog: false, key: false, consent: false, paper: true, adminActive: "invites" },
@@ -127,10 +108,8 @@ function rowHtml(row) {
       <span class="overflow-hidden text-ellipsis whitespace-nowrap text-sm font-medium text-ink">${email}</span>
       <span class="font-mono text-xs text-muted">${createdAt}</span>
     </div>
-    <div class="flex shrink-0 items-center gap-2">
+    <div class="flex shrink-0 items-center gap-2" data-row-actions>
       <button type="button" class="btn btn-primary btn-nav" data-approve>Approve</button>
-      <span class="status-chip" data-approved hidden>Approved</span>
-      <p class="invite-sub invite-sub-error" data-row-error hidden></p>
     </div>
   </div>`;
 }
@@ -156,13 +135,21 @@ function approvedRowHtml(row) {
   </div>`;
 }
 
+function rowErrorEl(message) {
+  const el = document.createElement("p");
+  el.className = "invite-sub invite-sub-error";
+  el.setAttribute("data-row-error", "");
+  el.textContent = message;
+  return el;
+}
+
 async function approveRow(token, row, onUnauthorized) {
   const email = row.getAttribute("data-email") || "";
-  const button = row.querySelector("[data-approve]");
-  const chip = row.querySelector("[data-approved]");
-  const errorEl = row.querySelector("[data-row-error]");
+  const actions = row.querySelector("[data-row-actions]");
+  const button = actions.querySelector("[data-approve]");
   if (!button) return;
-  errorEl.hidden = true;
+  const existingError = actions.querySelector("[data-row-error]");
+  if (existingError) existingError.remove();
   setBusy(button, true, "Approve", "Approving…");
   try {
     const response = await adminFetch(token, "/admin/invite/approve", {
@@ -177,33 +164,47 @@ async function approveRow(token, row, onUnauthorized) {
     const data = await response.json().catch(() => ({}));
     if (!response.ok) {
       setBusy(button, false, "Approve", "Approving…");
-      errorEl.textContent =
-        "Couldn’t approve this email — check it and try again.";
-      errorEl.hidden = false;
+      actions.appendChild(rowErrorEl("Couldn’t approve this email — check it and try again."));
       return;
     }
-    button.hidden = true;
-    chip.hidden = false;
+    button.remove();
+    const chip = document.createElement("span");
+    chip.className = "status-chip";
+    chip.textContent = "Approved";
+    actions.appendChild(chip);
     if (data.redeem_url) {
+      actions.insertAdjacentText("beforeend", " · ");
       const link = document.createElement("a");
       link.className = "invite-link";
       link.href = data.redeem_url;
       link.textContent = "redeem link";
-      chip.insertAdjacentText("afterend", " · ");
-      chip.insertAdjacentElement("afterend", link);
+      actions.appendChild(link);
     }
   } catch {
     setBusy(button, false, "Approve", "Approving…");
-    errorEl.textContent = "Couldn’t reach the server — try again.";
-    errorEl.hidden = false;
+    actions.appendChild(rowErrorEl("Couldn’t reach the server — try again."));
   }
+}
+
+function tabPanelHtml({ errorId, listId, emptyId, pagerId, backToTopId, pagerMetaId, loadMoreId }) {
+  return `
+  <p class="invite-sub invite-sub-error" id="${errorId}"></p>
+  <div class="list" id="${listId}"></div>
+  <div id="${emptyId}"></div>
+  <div class="pager" id="${pagerId}">
+    <a class="back" href="#admin-table-card" id="${backToTopId}">↑ Back to top</a>
+    <p class="pager-meta" id="${pagerMetaId}"></p>
+    <button class="btn btn-outline" type="button" id="${loadMoreId}">Load more</button>
+  </div>`;
 }
 
 function makeListController({
   endpoint,
   rowHtml,
+  panel,
   listEl,
   emptyEl,
+  emptyMessage,
   errorEl,
   pagerEl,
   pagerMetaEl,
@@ -213,10 +214,23 @@ function makeListController({
 }) {
   let nextCursor = null;
   let loadedCount = 0;
+  let errorMessage = "";
+
+  // These four are the only children of `panel`, always processed together in
+  // this fixed order — see setPresent's doc comment for why we insert/remove
+  // rather than toggle `hidden`.
+  function sync() {
+    setPresent(errorEl, Boolean(errorMessage), panel);
+    setPresent(listEl, loadedCount > 0, panel);
+    setPresent(emptyEl, loadedCount === 0, panel);
+    setPresent(pagerEl, Boolean(nextCursor), panel);
+  }
 
   function reset() {
     listEl.innerHTML = "";
-    errorEl.hidden = true;
+    emptyEl.innerHTML = "";
+    errorMessage = "";
+    errorEl.textContent = "";
     loadedCount = 0;
     nextCursor = null;
   }
@@ -227,9 +241,9 @@ function makeListController({
     listEl.innerHTML += items.map(rowHtml).join("");
     loadedCount += items.length;
     nextCursor = data.next_cursor || null;
-    emptyEl.hidden = loadedCount > 0;
-    pagerEl.hidden = !nextCursor;
+    emptyEl.innerHTML = loadedCount === 0 ? emptyStateHtml(emptyMessage) : "";
     pagerMetaEl.textContent = `${loadedCount} loaded`;
+    sync();
   }
 
   async function load({ append }) {
@@ -239,8 +253,9 @@ function makeListController({
     try {
       response = await adminFetch(getToken(), `${endpoint}?${params}`);
     } catch {
-      errorEl.textContent = "Couldn’t reach the server — try again.";
-      errorEl.hidden = false;
+      errorMessage = "Couldn’t reach the server — try again.";
+      errorEl.textContent = errorMessage;
+      sync();
       return null;
     }
     if (response.status === 401) {
@@ -248,11 +263,12 @@ function makeListController({
       return null;
     }
     if (!response.ok) {
-      errorEl.textContent = "Couldn’t load this list — try again.";
-      errorEl.hidden = false;
+      errorMessage = "Couldn’t load this list — try again.";
+      errorEl.textContent = errorMessage;
+      sync();
       return null;
     }
-    errorEl.hidden = true;
+    errorMessage = "";
     return response.json();
   }
 
@@ -266,8 +282,10 @@ function makeListController({
   return {
     async loadFirst() {
       reset();
+      sync();
       const data = await load({ append: false });
       if (data !== null) render(data, { append: false });
+      else sync();
       return data;
     },
   };
@@ -280,6 +298,7 @@ export function renderAdmin(root) {
     root.innerHTML = page.body;
   }
 
+  const mainEl = document.querySelector("main.page");
   const loginView = document.getElementById("admin-login-view");
   const tableCard = document.getElementById("admin-table-card");
   const loginForm = document.getElementById("admin-login");
@@ -289,19 +308,37 @@ export function renderAdmin(root) {
   const loginSubmit = document.getElementById("admin-login-submit");
   const footEl = document.getElementById("admin-login-foot");
   const logoutBtn = document.getElementById("admin-logout");
+
+  const waitlistPanel = document.getElementById("admin-tab-waitlist");
+  const approvedPanel = document.getElementById("admin-tab-approved");
+  waitlistPanel.innerHTML = tabPanelHtml({
+    errorId: "admin-table-error",
+    listId: "admin-waitlist-list",
+    emptyId: "admin-empty",
+    pagerId: "admin-pager",
+    backToTopId: "admin-back-to-top",
+    pagerMetaId: "admin-pager-meta",
+    loadMoreId: "admin-load-more",
+  });
+  approvedPanel.innerHTML = tabPanelHtml({
+    errorId: "admin-approved-error",
+    listId: "admin-approved-list",
+    emptyId: "admin-approved-empty",
+    pagerId: "admin-approved-pager",
+    backToTopId: "admin-approved-back-to-top",
+    pagerMetaId: "admin-approved-pager-meta",
+    loadMoreId: "admin-approved-load-more",
+  });
   const waitlistList = document.getElementById("admin-waitlist-list");
 
   const tabButtons = Array.from(document.querySelectorAll("[data-tab-btn]"));
-  const tabPanels = {
-    waitlist: document.getElementById("admin-tab-waitlist"),
-    approved: document.getElementById("admin-tab-approved"),
-  };
+  const tabPanels = { waitlist: waitlistPanel, approved: approvedPanel };
+  const tabsParent = waitlistPanel.parentNode;
 
   const LOGIN_SUB = "Paste the admin bearer token to view and approve the waitlist.";
   const REJECTED_SUB = "That token was rejected. Check it and try again.";
 
   let token = readToken();
-  let activeTab = "waitlist";
   const loadedTabs = new Set();
 
   function onUnauthorized() {
@@ -311,8 +348,10 @@ export function renderAdmin(root) {
   const waitlistController = makeListController({
     endpoint: "/admin/invite/waitlist",
     rowHtml,
+    panel: waitlistPanel,
     listEl: waitlistList,
     emptyEl: document.getElementById("admin-empty"),
+    emptyMessage: "No one on the waitlist yet.",
     errorEl: document.getElementById("admin-table-error"),
     pagerEl: document.getElementById("admin-pager"),
     pagerMetaEl: document.getElementById("admin-pager-meta"),
@@ -324,8 +363,10 @@ export function renderAdmin(root) {
   const approvedController = makeListController({
     endpoint: "/admin/invite/approved",
     rowHtml: approvedRowHtml,
+    panel: approvedPanel,
     listEl: document.getElementById("admin-approved-list"),
     emptyEl: document.getElementById("admin-approved-empty"),
+    emptyMessage: "No approved invites yet.",
     errorEl: document.getElementById("admin-approved-error"),
     pagerEl: document.getElementById("admin-approved-pager"),
     pagerMetaEl: document.getElementById("admin-approved-pager-meta"),
@@ -339,8 +380,8 @@ export function renderAdmin(root) {
   function showLogin(message) {
     clearToken();
     token = "";
-    tableCard.hidden = true;
-    loginView.hidden = false;
+    setPresent(tableCard, false, mainEl);
+    setPresent(loginView, true, mainEl);
     loginSub.textContent = message || LOGIN_SUB;
     loginSub.classList.toggle("invite-sub-error", Boolean(message));
     tokenInput.value = "";
@@ -348,7 +389,6 @@ export function renderAdmin(root) {
   }
 
   function setActiveTab(tab) {
-    activeTab = tab;
     for (const btn of tabButtons) {
       const isActive = btn.dataset.tabBtn === tab;
       btn.setAttribute("aria-selected", isActive ? "true" : "false");
@@ -360,7 +400,7 @@ export function renderAdmin(root) {
       btn.classList.toggle("font-medium", !isActive);
     }
     for (const [name, panel] of Object.entries(tabPanels)) {
-      panel.hidden = name !== tab;
+      setPresent(panel, name === tab, tabsParent);
     }
     if (!loadedTabs.has(tab)) {
       loadedTabs.add(tab);
@@ -369,8 +409,8 @@ export function renderAdmin(root) {
   }
 
   function showTable() {
-    loginView.hidden = true;
-    tableCard.hidden = false;
+    setPresent(loginView, false, mainEl);
+    setPresent(tableCard, true, mainEl);
     loadedTabs.clear();
     setActiveTab("waitlist");
   }
@@ -387,18 +427,18 @@ export function renderAdmin(root) {
     const candidate = tokenInput.value.trim();
     if (!candidate) return;
     setBusy(loginSubmit, true, "Sign in", "Signing in…");
-    footEl.hidden = true;
+    setPresent(footEl, false, loginForm);
     token = candidate;
     const data = await waitlistController.loadFirst();
     setBusy(loginSubmit, false, "Sign in", "Signing in…");
-    footEl.hidden = false;
+    setPresent(footEl, true, loginForm);
     if (data === null) {
       token = "";
       return;
     }
     writeToken(token);
-    loginView.hidden = true;
-    tableCard.hidden = false;
+    setPresent(loginView, false, mainEl);
+    setPresent(tableCard, true, mainEl);
     loadedTabs.clear();
     loadedTabs.add("waitlist");
     setActiveTab("waitlist");
@@ -420,7 +460,10 @@ export function renderAdmin(root) {
     approveRow(token, row, onUnauthorized);
   });
 
+  setPresent(tableCard, false, mainEl);
   if (token) {
     showTable();
+  } else {
+    setPresent(loginView, true, mainEl);
   }
 }
