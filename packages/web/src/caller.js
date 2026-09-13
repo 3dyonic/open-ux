@@ -71,19 +71,13 @@ function flagsHtml(flags) {
   return text ? `<span class="font-mono text-muted">${escapeHtml(text)}</span>` : "";
 }
 
-function resultIdsHtml(ids, { linkToCatalog = false } = {}) {
+function resultIdsHtml(ids) {
   if (!ids || ids.length === 0) return "";
   const itemClass =
     "inline-flex items-center whitespace-nowrap rounded-sm border border-line bg-card px-2 py-0.5 font-mono text-[11px] text-muted";
   return `
   <ul class="flex w-full flex-wrap gap-1.5 pl-6">
-    ${ids
-      .map((id) =>
-        linkToCatalog
-          ? `<li><a class="${itemClass} hover:border-pip hover:text-pip" href="/catalog/${encodeURIComponent(id)}">${escapeHtml(id)}</a></li>`
-          : `<li class="${itemClass}">${escapeHtml(id)}</li>`,
-      )
-      .join("")}
+    ${ids.map((id) => `<li class="${itemClass}">${escapeHtml(id)}</li>`).join("")}
   </ul>`;
 }
 
@@ -124,7 +118,7 @@ function stepsHtml(steps) {
         ${verdictsHtml(s.verdicts)}
         <span class="ml-auto font-mono text-muted">${escapeHtml(s.created_at)}</span>
       </div>
-      ${resultIdsHtml(ruleIds, { linkToCatalog: true })}
+      ${resultIdsHtml(ruleIds)}
       ${resultIdsHtml(cardOrComponentIds)}
     </li>`;
       })
