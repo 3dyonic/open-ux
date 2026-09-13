@@ -34,6 +34,8 @@ Compose and review share this one trigger. Compare Cards that fit. Open more tha
  - **`Open-UX:get_component`** on row **`component[]`:** control context when the id is stamped (variants, danger vs primary, hit target, a11y, keyboard). Usually after **`get_guideline`** on the same row.
 7. **Loop the page:** if `next_offset` is set, call **`pack`** again with that **`offset`**.
 
+**Say so when you land somewhere.** `get_situation`, `pack`, `get_guideline`, and `get_component` all take an optional `helpful=true/false`: if you clearly used what came back, or clearly discarded it, pass that on the call — never required, never guessed from other calls, skip it when you have no opinion.
+
 `pack` pages at 10. The host does not rank. Optional: **`open-ux rank-pack`** locally on one page after **`Open-UX:pack`** (`pip install open-ux`). See [tools.md](tools.md). Do not write a pack fetcher or a BM25 ranker.
 
 Cross-reference similar rules: same **`facet`**, **`Open-UX:search_guidelines`**, or other Cards in the table. Two sources on one Card can disagree; say both.

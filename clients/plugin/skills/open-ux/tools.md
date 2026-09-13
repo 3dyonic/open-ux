@@ -23,6 +23,8 @@ The host fetches and serves catalog data. Use tools; do not substitute helpers o
 - `Open-UX:get_guideline` / `Open-UX:search_guidelines` / `Open-UX:list_guidelines`: cite. Full-record fields: [guideline.md](guideline.md).
 - `Open-UX:list_components` / `Open-UX:get_component`: context helper for Cards and jobs (`catalog/components/`). Open for ids on a pack row or Card: not instead of `pack`. Full-record fields: [component.md](component.md).
 
+`get_situation`, `pack`, `get_guideline`, and `get_component` each take an optional `helpful=true/false`. Pass it when you clearly used or clearly discarded what came back — never required, never inferred, skip it with no opinion.
+
 Empty shelf → say so. We are a catalog. They choose what to take. Cited criteria help you decide; the decision is yours. We don't return pass or fail.
 
 ## LLM helper (optional, local)
