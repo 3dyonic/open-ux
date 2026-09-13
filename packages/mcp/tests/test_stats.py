@@ -33,6 +33,20 @@ def test_admin_stats_disabled_self_host(tmp_env: Path) -> None:
         assert response.status_code == 400
 
 
+def test_admin_telemetry_page_hosted(tmp_env: Path) -> None:
+    with _hosted_client(tmp_env) as client:
+        response = client.get("/admin/telemetry")
+        assert response.status_code == 200
+
+
+def test_admin_telemetry_page_disabled_self_host(tmp_env: Path) -> None:
+    mcp = create_mcp(hosted=False)
+    app = mcp.http_app(path="/mcp", stateless_http=True, transport="http")
+    with TestClient(app) as client:
+        response = client.get("/admin/telemetry")
+        assert response.status_code == 404
+
+
 def test_admin_stats_empty(tmp_env: Path) -> None:
     with _hosted_client(tmp_env) as client:
         response = client.get(

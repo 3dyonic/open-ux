@@ -92,6 +92,7 @@ _PAGE_FILES = {
     "/invite/requested": "invite/requested/index.html",
     "/invite/redeem": "invite/redeem/index.html",
     "/admin": "admin/index.html",
+    "/admin/telemetry": "admin/telemetry/index.html",
 }
 
 
@@ -772,6 +773,14 @@ def create_mcp(*, hosted: bool) -> FastMCP:
         if not hosted:
             return not_found_response(kind="page", detail="/admin", path="/admin")
         return _html_page("/admin")
+
+    @mcp.custom_route("/admin/telemetry", methods=["GET"])
+    async def admin_telemetry_page(_request: Request) -> Response:
+        if not hosted:
+            return not_found_response(
+                kind="page", detail="/admin/telemetry", path="/admin/telemetry"
+            )
+        return _html_page("/admin/telemetry")
 
     @mcp.custom_route("/robots.txt", methods=["GET"])
     async def robots(_request: Request) -> Response:

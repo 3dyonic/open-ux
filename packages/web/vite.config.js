@@ -25,7 +25,16 @@ export default defineConfig({
       "/admin": {
         target: backend,
         bypass(req) {
-          if (req.url.split("?")[0] === "/admin") return "/index.html";
+          // Only the admin API calls go to the backend; every /admin/* page
+          // route (bare /admin, /admin/telemetry, future ones) falls through
+          // to the dev SPA shell so vite's client router can render it.
+          const path = req.url.split("?")[0];
+          const adminApiPaths = [
+            "/admin/invite/waitlist",
+            "/admin/invite/approve",
+            "/admin/stats",
+          ];
+          if (!adminApiPaths.includes(path)) return "/index.html";
         },
       },
     },

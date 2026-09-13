@@ -74,13 +74,19 @@ export function adminPage() {
       </div>
     </div>
 
-    <div class="flex w-full max-w-[760px] flex-col gap-7" id="admin-table-card" hidden>
+    <div class="flex w-full flex-col gap-7" id="admin-table-card" hidden>
       <div class="flex items-center justify-between gap-4">
         <div class="flex flex-col gap-1">
           <p class="invite-meta"><span class="pip" aria-hidden="true"></span>Admin · invite waitlist</p>
           <h1 class="page-title">Invite waitlist</h1>
         </div>
-        <button class="btn btn-outline btn-nav" type="button" id="admin-logout">Sign out</button>
+        <div class="flex items-center gap-4">
+          <nav class="flex items-center gap-3 text-sm">
+            <span class="font-semibold text-ink">Invites</span>
+            <a class="text-muted" href="/admin/telemetry">Telemetry</a>
+          </nav>
+          <button class="btn btn-outline btn-nav" type="button" id="admin-logout">Sign out</button>
+        </div>
       </div>
       <p class="invite-sub invite-sub-error" id="admin-table-error" hidden></p>
       <div class="list" id="admin-waitlist-list"></div>
