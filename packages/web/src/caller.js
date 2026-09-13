@@ -100,15 +100,42 @@ function verdictsHtml(verdicts) {
   return badges.join("");
 }
 
+// Tools whose target_id names the job itself (a Card, Leaf, container, or
+// component) — as opposed to get_guideline, whose target_id is the cite
+// being read, not the job it was read for.
+const JOB_SCOPE_TOOLS = new Set(["get_situation", "pack", "list_situations", "get_component"]);
+
+function jobScopeLabel(s) {
+  if (!JOB_SCOPE_TOOLS.has(s.tool) || !s.target_id) return null;
+  return s.target_type ? `${s.target_type}=${s.target_id}` : s.target_id;
+}
+
+// Steps are grouped under the last job-level call (get_situation/pack/
+// list_situations/get_component) rather than each step's own target, since
+// get_guideline's target is the cite id, not the job it was fetched for.
+// A session that jumps between unrelated jobs then reads as distinct
+// blocks instead of one flat numbered list.
 function stepsHtml(steps) {
+  let scope = undefined; // undefined = not yet set; null = "no job yet" shown once
   return `
-  <ol class="flex flex-col gap-2 border-t border-line py-2 pl-4 text-xs">
+  <div class="flex flex-col border-t border-line py-2 pl-4 text-xs">
     ${steps
       .map((s, i) => {
         const ruleIds = s.guideline_ids || null;
         const cardOrComponentIds = s.guideline_ids ? null : s.result_ids;
+        const nextScope = jobScopeLabel(s);
+        const scopeChanged = nextScope !== undefined && nextScope !== null && nextScope !== scope;
+        const showNoScopeHeader = scope === undefined && nextScope === null;
+        const groupHeader = scopeChanged
+          ? `<p class="mt-3 mb-1 font-mono text-[11px] font-semibold text-ink first:mt-0">${escapeHtml(nextScope)}</p>`
+          : showNoScopeHeader
+            ? `<p class="mt-3 mb-1 font-mono text-[11px] font-semibold text-muted first:mt-0">no job yet</p>`
+            : "";
+        if (nextScope !== null) scope = nextScope;
+        else if (scope === undefined) scope = null;
         return `
-    <li class="flex flex-col gap-1">
+    ${groupHeader}
+    <div class="flex flex-col gap-1 py-0.5" data-step>
       <div class="flex flex-wrap items-center gap-2">
         <span class="text-muted">${i + 1}.</span>
         <span class="font-mono font-medium text-pip">${escapeHtml(s.tool)}</span>
@@ -120,10 +147,10 @@ function stepsHtml(steps) {
       </div>
       ${resultIdsHtml(ruleIds)}
       ${resultIdsHtml(cardOrComponentIds)}
-    </li>`;
+    </div>`;
       })
       .join("")}
-  </ol>`;
+  </div>`;
 }
 
 function sessionRowHtml(session) {
