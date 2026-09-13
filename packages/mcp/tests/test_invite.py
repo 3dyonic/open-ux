@@ -259,11 +259,15 @@ def test_approve_invite_cli(tmp_env: Path, capsys: pytest.CaptureFixture[str]) -
     assert "/invite/redeem?token=" in out["redeem_url"]
 
 
-def test_admin_approve_is_json_only_no_html(tmp_env: Path) -> None:
+def test_admin_approve_post_is_json_get_falls_back_to_404_page(tmp_env: Path) -> None:
     with _hosted_client(tmp_env) as client:
+        # /admin/invite/approve is POST-only; a stray GET has no matching
+        # route and falls through to the catch-all, which renders the same
+        # designed 404 page as any other unknown URL — never a bare JSON
+        # error, regardless of path prefix.
         get = client.get("/admin/invite/approve")
-        assert get.status_code != 200
-        assert "text/html" not in get.headers.get("content-type", "")
+        assert get.status_code == 404
+        assert get.headers.get("content-type", "").startswith("text/html")
 
         posted = client.post(
             "/admin/invite/approve",

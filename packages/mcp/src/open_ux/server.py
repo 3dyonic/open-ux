@@ -164,11 +164,6 @@ def _html_page(path: str, *, status_code: int = 200) -> Response:
 
 def server_error_response(path: str = "/") -> Response:
     clean = path or "/"
-    if clean.startswith(("/api", "/mcp", "/admin", "/account")):
-        return JSONResponse(
-            {"error": "This page could not be loaded."},
-            status_code=500,
-        )
     return _html_file(
         "500.html",
         status_code=500,
@@ -1076,8 +1071,12 @@ def create_mcp(*, hosted: bool) -> FastMCP:
     async def public_not_found(request: Request) -> Response:
         raw = str(request.path_params.get("path") or "")
         path = f"/{raw}" if raw else "/"
-        if path.startswith(("/api", "/mcp", "/admin", "/account")):
-            return JSONResponse({"error": "Not found."}, status_code=404)
+        # No route below is registered with a trailing slash, so one lands
+        # here even when the un-slashed path is a real page (e.g. /admin/).
+        # Redirect to the canonical form instead of treating it as missing.
+        if path != "/" and path.endswith("/"):
+            query = f"?{request.url.query}" if request.url.query else ""
+            return RedirectResponse(f"{path.rstrip('/')}{query}", status_code=308)
         return not_found_response(kind="page", detail=path, path=path)
 
     return mcp
