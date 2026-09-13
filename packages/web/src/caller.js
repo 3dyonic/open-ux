@@ -76,6 +76,25 @@ function resultIdsHtml(ids) {
   return `<span class="font-mono text-muted" title="${escapeHtml(ids.join(", "))}">${escapeHtml(ids.join(", "))}</span>`;
 }
 
+function verdictsHtml(verdicts) {
+  if (!verdicts) return "";
+  const badges = [];
+  if (typeof verdicts.helpful === "boolean") {
+    badges.push(
+      verdicts.helpful
+        ? `<span class="status-chip">helpful</span>`
+        : `<span class="status-chip status-chip-neutral">not helpful</span>`,
+    );
+  }
+  const rest = Object.fromEntries(
+    Object.entries(verdicts).filter(([k]) => k !== "helpful"),
+  );
+  if (Object.keys(rest).length > 0) {
+    badges.push(`<span class="font-mono text-muted">${escapeHtml(JSON.stringify(rest))}</span>`);
+  }
+  return badges.join("");
+}
+
 function stepsHtml(steps) {
   return `
   <ol class="flex flex-col gap-1 border-t border-line py-2 pl-4 text-xs">
@@ -89,7 +108,7 @@ function stepsHtml(steps) {
       ${flagsHtml(s.req_flags)}
       ${typeof s.result_count === "number" ? `<span class="font-mono text-muted">→ ${s.result_count} result${s.result_count === 1 ? "" : "s"}</span>` : ""}
       ${resultIdsHtml(s.guideline_ids || s.result_ids)}
-      ${s.verdicts ? `<span class="font-mono text-muted">${escapeHtml(JSON.stringify(s.verdicts))}</span>` : ""}
+      ${verdictsHtml(s.verdicts)}
       <span class="ml-auto font-mono text-muted">${escapeHtml(s.created_at)}</span>
     </li>`,
       )
