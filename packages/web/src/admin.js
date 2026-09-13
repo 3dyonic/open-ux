@@ -176,8 +176,17 @@ function tabPanelHtml({ errorId, listId, emptyId, pagerId, backToTopId, pagerMet
   </div>`;
 }
 
-// Callers (key_hash-keyed) are a separate section within the Approved tab,
-// never joined to the email-keyed invites list above — same tab, distinct keyspace.
+// The Approved tab holds two structurally separate sections: invites
+// (email-keyed) and callers (key_hash-keyed), never joined to each other.
+// Each gets its own heading so they can't read as one merged list.
+function invitesSectionHtml(panelHtml) {
+  return `
+  <section class="flex flex-col gap-3">
+    <h2 class="text-sm font-semibold text-ink">Invites</h2>
+    ${panelHtml}
+  </section>`;
+}
+
 function callersSectionHtml() {
   return `
   <section class="flex flex-col gap-3 border-t border-line pt-6">
@@ -317,15 +326,17 @@ export function renderAdmin(root) {
     loadMoreId: "admin-load-more",
   });
   approvedPanel.innerHTML =
-    tabPanelHtml({
-      errorId: "admin-approved-error",
-      listId: "admin-approved-list",
-      emptyId: "admin-approved-empty",
-      pagerId: "admin-approved-pager",
-      backToTopId: "admin-approved-back-to-top",
-      pagerMetaId: "admin-approved-pager-meta",
-      loadMoreId: "admin-approved-load-more",
-    }) + callersSectionHtml();
+    invitesSectionHtml(
+      tabPanelHtml({
+        errorId: "admin-approved-error",
+        listId: "admin-approved-list",
+        emptyId: "admin-approved-empty",
+        pagerId: "admin-approved-pager",
+        backToTopId: "admin-approved-back-to-top",
+        pagerMetaId: "admin-approved-pager-meta",
+        loadMoreId: "admin-approved-load-more",
+      }),
+    ) + callersSectionHtml();
   const waitlistList = document.getElementById("admin-waitlist-list");
 
   const tabButtons = Array.from(document.querySelectorAll("[data-tab-btn]"));
@@ -360,7 +371,7 @@ export function renderAdmin(root) {
   const approvedController = makeListController({
     endpoint: "/admin/invite/approved",
     rowHtml: approvedRowHtml,
-    panel: approvedPanel,
+    panel: document.getElementById("admin-approved-list").parentNode,
     listEl: document.getElementById("admin-approved-list"),
     emptyEl: document.getElementById("admin-approved-empty"),
     emptyMessage: "No approved invites yet.",
