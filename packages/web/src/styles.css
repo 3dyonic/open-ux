@@ -283,7 +283,7 @@
     @apply font-medium text-ink;
   }
   .install-cmd {
-    @apply mt-2 mb-0 w-full overflow-x-auto rounded-sm border border-line bg-paper p-3 font-mono text-sm leading-5 text-ink;
+    @apply mt-2 mb-0 w-full overflow-x-auto rounded-sm border border-line bg-paper p-3 font-mono text-sm leading-5 text-ink whitespace-pre-wrap break-words;
   }
   .install-hint {
     @apply mt-2 mb-0 text-sm leading-5 text-muted;
