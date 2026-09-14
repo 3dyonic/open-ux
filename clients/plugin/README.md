@@ -12,11 +12,13 @@ Logo (Cursor `logo` field): [assets/icon.svg](assets/icon.svg). Listing art: [as
 
 ## Install
 
-Plugins are not in the public marketplaces yet; install from this GitHub repo. See [SETUP.md](SETUP.md) for keys and MCP.
+Plugins are not in the public marketplaces yet; install from this GitHub repo. See [SETUP.md](SETUP.md) for keys.
 
 ### Get a key
 
 [open-ux.dev/invite](https://open-ux.dev/invite) → redeem → `uxmcp_…`
+
+Paste the key into plugin config (`api_key`, or Cursor `OPEN_UX_API_KEY`) — not into mcp.json first.
 
 ### Claude Code
 
@@ -25,11 +27,17 @@ claude plugin marketplace add 3dyonic/open-ux
 claude plugin install open-ux@open-ux
 ```
 
-Enable the plugin; paste your key when prompted.
+Enable the plugin; paste your `uxmcp_` key into plugin `api_key` when prompted.
+
+Desktop **Code** panel: local plugins only (no remote marketplace add). Use CLI Code, or enable a local plugin from a checkout and paste `api_key`, or use Cowork / Desktop Chat for marketplace-style install.
 
 ### Cursor
 
 Open this repository, enable the Open UX plugin, set **`OPEN_UX_API_KEY`** under **Plugins → Configure**.
+
+### Advanced / other clients
+
+Paste MCP config only here — not the primary install path. Point the client at `https://open-ux.dev/mcp` with `Authorization: Bearer uxmcp_…`. This plugin’s [`.mcp.json`](.mcp.json) uses `Authorization: Bearer ${user_config.api_key}` for that URL.
 
 Validate: `claude plugin validate . --strict` · `node scripts/validate-cursor-plugin.mjs --strict` (repo root).
 

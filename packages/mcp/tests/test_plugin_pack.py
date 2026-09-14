@@ -43,9 +43,59 @@ def test_listing_assets_and_setup_exist() -> None:
     assert "assets/hero.svg" in readme
     assert "assets/icon.svg" in readme
     assert "assets/offerings.svg" in readme
-    assert "cursor.com/marketplace/publish" in readme
     assert "OPEN_UX_API_KEY" in readme
     assert "public marketplaces yet" in readme
+    assert "paused" not in readme.lower()
+    assert "do not submit" not in readme.lower()
+    assert "cursor.com/marketplace/publish" in readme
+    assert "Listing submit" in readme
+
+
+def _after_heading(text: str, heading: str) -> str:
+    idx = text.find(heading)
+    assert idx != -1, heading
+    rest = text[idx + len(heading) :]
+    next_heading = re.search(r"\n## ", rest)
+    return rest if next_heading is None else rest[: next_heading.start()]
+
+
+def test_plugin_docs_cover_cli_code_and_desktop_local_only() -> None:
+    readme = (PACK / "README.md").read_text(encoding="utf-8")
+    setup = (PACK / "SETUP.md").read_text(encoding="utf-8")
+    assert "MCP" not in setup.split("\n", 1)[0]
+    for text in (readme, setup):
+        assert "claude plugin marketplace add 3dyonic/open-ux" in text
+        assert "claude plugin install open-ux@open-ux" in text
+        assert "api_key" in text
+        assert "local plugins only" in text
+        assert "no remote marketplace add" in text
+        assert "marketplace-style install" in text
+        assert "### Claude Cowork" not in text
+        assert "## Claude Cowork" not in text
+        assert "Claude Desktop (Chat)" not in text
+        assert "Customize" not in text
+        assert "public marketplaces yet" in text
+        assert "paused" not in text.lower()
+        assert "do not submit" not in text.lower()
+        assert "not into mcp.json first" in text or "not mcp.json first" in text
+        code = _after_heading(
+            text, "### Claude Code" if "### Claude Code" in text else "## Claude Code"
+        )
+        assert "enable" in code.lower()
+        assert "api_key" in code
+        assert "local plugins only" in code
+        advanced = _after_heading(text, "## Advanced / other clients")
+        assert "mcp.json" in advanced
+        assert "${user_config.api_key}" in advanced
+        assert "https://open-ux.dev/mcp" in advanced
+        assert "Authorization: Bearer" in advanced
+        before_advanced = text[: text.find("## Advanced / other clients")]
+        assert "Authorization: Bearer" not in before_advanced
+        cursor = _after_heading(
+            text, "### Cursor" if "### Cursor" in text else "## Cursor"
+        )
+        assert "OPEN_UX_API_KEY" in cursor
+        assert "Plugins → Configure" in cursor
 
 
 def test_host_mounts_are_symlinks_into_pack() -> None:
