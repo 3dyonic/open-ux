@@ -1022,7 +1022,7 @@ def create_mcp(*, hosted: bool) -> FastMCP:
             issued = approve_invite(email, settings=settings, store=store)
         except AuthError as exc:
             return JSONResponse({"error": str(exc)}, status_code=400)
-        send_invite_email(issued, settings=settings)
+        mail_sent = send_invite_email(issued, settings=settings)
         return JSONResponse(
             {
                 "email": issued.email,
@@ -1030,6 +1030,7 @@ def create_mcp(*, hosted: bool) -> FastMCP:
                 "token_prefix": "inv_",
                 "redeem_url": issued.redeem_url,
                 "expires_at": issued.expires_at,
+                "mail_sent": mail_sent,
             }
         )
 

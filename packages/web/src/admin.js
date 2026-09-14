@@ -87,14 +87,15 @@ function approvedRowHtml(row) {
     ? `redeemed ${escapeHtml(row.redeemed_at)}`
     : `expires ${escapeHtml(row.expires_at)}`;
   return `
-  <div class="flex w-full flex-wrap items-center justify-between gap-3 border-b border-line px-5 py-3.5 last:border-b-0">
+  <div class="flex w-full flex-wrap items-center justify-between gap-3 border-b border-line px-5 py-3.5 last:border-b-0" data-email="${email}">
     <div class="flex min-w-0 flex-1 flex-col gap-0.5">
       <span class="overflow-hidden text-ellipsis whitespace-nowrap text-sm font-medium text-ink">${email}</span>
       <span class="font-mono text-xs text-muted">issued ${createdAt}</span>
     </div>
-    <div class="flex shrink-0 items-center gap-2">
+    <div class="flex shrink-0 flex-wrap items-center justify-end gap-2" data-row-actions>
       <span class="status-chip${redeemed ? "" : " status-chip-neutral"}">${statusText}</span>
       <span class="font-mono text-xs text-muted">${statusMeta}</span>
+      <button type="button" class="btn btn-outline btn-nav" data-send title="Issues a fresh invite link and emails it to this address">Send</button>
     </div>
   </div>`;
 }
@@ -121,12 +122,35 @@ function rowErrorEl(message) {
   return el;
 }
 
+function appendInviteOutcome(actions, data) {
+  const existing = actions.querySelector("[data-invite-outcome]");
+  if (existing) existing.remove();
+  if (!data.redeem_url && data.mail_sent) return;
+  const wrap = document.createElement("span");
+  wrap.setAttribute("data-invite-outcome", "");
+  wrap.className = "contents";
+  if (data.redeem_url) {
+    wrap.insertAdjacentText("beforeend", " · ");
+    const link = document.createElement("a");
+    link.className = "invite-link";
+    link.href = data.redeem_url;
+    link.textContent = "redeem link";
+    wrap.appendChild(link);
+  }
+  if (!data.mail_sent) {
+    wrap.appendChild(
+      rowErrorEl("Email not sent — mail isn’t configured. Copy the redeem link above and send it yourself."),
+    );
+  }
+  actions.appendChild(wrap);
+}
+
 async function approveRow(token, row, onUnauthorized) {
   const email = row.getAttribute("data-email") || "";
   const actions = row.querySelector("[data-row-actions]");
   const button = actions.querySelector("[data-approve]");
   if (!button) return;
-  const existingError = actions.querySelector("[data-row-error]");
+  const existingError = actions.querySelector(":scope > [data-row-error]");
   if (existingError) existingError.remove();
   setBusy(button, true, "Approve", "Approving…");
   try {
@@ -150,16 +174,40 @@ async function approveRow(token, row, onUnauthorized) {
     chip.className = "status-chip";
     chip.textContent = "Approved";
     actions.appendChild(chip);
-    if (data.redeem_url) {
-      actions.insertAdjacentText("beforeend", " · ");
-      const link = document.createElement("a");
-      link.className = "invite-link";
-      link.href = data.redeem_url;
-      link.textContent = "redeem link";
-      actions.appendChild(link);
-    }
+    appendInviteOutcome(actions, data);
   } catch {
     setBusy(button, false, "Approve", "Approving…");
+    actions.appendChild(rowErrorEl("Couldn’t reach the server — try again."));
+  }
+}
+
+async function sendInviteRow(token, row, onUnauthorized) {
+  const email = row.getAttribute("data-email") || "";
+  const actions = row.querySelector("[data-row-actions]");
+  const button = actions.querySelector("[data-send]");
+  if (!button) return;
+  const existingError = actions.querySelector(":scope > [data-row-error]");
+  if (existingError) existingError.remove();
+  setBusy(button, true, "Send", "Sending…");
+  try {
+    const response = await adminFetch(token, "/admin/invite/approve", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ email }),
+    });
+    if (response.status === 401) {
+      onUnauthorized();
+      return;
+    }
+    const data = await response.json().catch(() => ({}));
+    setBusy(button, false, "Send", "Sending…");
+    if (!response.ok) {
+      actions.appendChild(rowErrorEl("Couldn’t send this invite — check the email and try again."));
+      return;
+    }
+    appendInviteOutcome(actions, data);
+  } catch {
+    setBusy(button, false, "Send", "Sending…");
     actions.appendChild(rowErrorEl("Couldn’t reach the server — try again."));
   }
 }
@@ -338,6 +386,7 @@ export function renderAdmin(root) {
       }),
     ) + callersSectionHtml();
   const waitlistList = document.getElementById("admin-waitlist-list");
+  const approvedList = document.getElementById("admin-approved-list");
 
   const tabButtons = Array.from(document.querySelectorAll("[data-tab-btn]"));
   const tabPanels = { waitlist: waitlistPanel, approved: approvedPanel };
@@ -485,6 +534,14 @@ export function renderAdmin(root) {
     const row = button.closest("[data-email]");
     if (!row) return;
     approveRow(token, row, onUnauthorized);
+  });
+
+  approvedList.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-send]");
+    if (!button) return;
+    const row = button.closest("[data-email]");
+    if (!row) return;
+    sendInviteRow(token, row, onUnauthorized);
   });
 
   setPresent(tableCard, false, mainEl);
