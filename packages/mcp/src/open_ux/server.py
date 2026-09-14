@@ -33,7 +33,7 @@ from open_ux.components import (
     load_components,
 )
 from open_ux.health import HealthState, health_payload
-from open_ux.mail import send_invite_email
+from open_ux.mail import mail_configured, send_invite_email
 from open_ux.jobs import (
     DEFAULT_LIMIT,
     JOB_FIELD_DESCRIPTION,
@@ -1031,6 +1031,7 @@ def create_mcp(*, hosted: bool) -> FastMCP:
                 "redeem_url": issued.redeem_url,
                 "expires_at": issued.expires_at,
                 "mail_sent": mail_sent,
+                "mail_configured": mail_configured(settings),
             }
         )
 

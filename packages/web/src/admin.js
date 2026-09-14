@@ -138,9 +138,10 @@ function appendInviteOutcome(actions, data) {
     wrap.appendChild(link);
   }
   if (!data.mail_sent) {
-    wrap.appendChild(
-      rowErrorEl("Email not sent — mail isn’t configured. Copy the redeem link above and send it yourself."),
-    );
+    const message = data.mail_configured === false
+      ? "Email not sent — mail isn’t configured. Copy the redeem link above and send it yourself."
+      : "Email not sent — delivery failed. Copy the redeem link above and send it yourself.";
+    wrap.appendChild(rowErrorEl(message));
   }
   actions.appendChild(wrap);
 }
