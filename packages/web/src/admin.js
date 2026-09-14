@@ -158,6 +158,11 @@ async function approveRow(token, row, onUnauthorized) {
       link.textContent = "redeem link";
       actions.appendChild(link);
     }
+    if (!data.mail_sent) {
+      actions.appendChild(
+        rowErrorEl("Email not sent — mail isn’t configured. Copy the redeem link above and send it yourself."),
+      );
+    }
   } catch {
     setBusy(button, false, "Approve", "Approving…");
     actions.appendChild(rowErrorEl("Couldn’t reach the server — try again."));

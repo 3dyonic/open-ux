@@ -117,6 +117,10 @@ def test_invite_request_approve_redeem_burn(tmp_env: Path) -> None:
         assert token.startswith("inv_")
         assert body["redeem_url"].startswith("https://open-ux.test/invite/redeem?token=")
         assert token not in store.dump_text()
+        # Mail isn't configured in tests (no OPEN_UX_MAIL_* env), so delivery
+        # is skipped — the response must say so rather than silently implying
+        # the invite email went out.
+        assert body["mail_sent"] is False
 
         minted = client.post("/invite/redeem", json={"token": token})
         assert minted.status_code == 200
