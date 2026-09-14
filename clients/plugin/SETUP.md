@@ -1,6 +1,6 @@
 # Open UX: enable
 
-Plugins are not in the public marketplaces yet; install from this GitHub repo. Marketplace submit is paused until Cowork and Desktop Chat smoke paths exist.
+Plugins are not in the public marketplaces yet; install from this GitHub repo.
 
 ## Get a key (hosted)
 

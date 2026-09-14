@@ -45,10 +45,10 @@ def test_listing_assets_and_setup_exist() -> None:
     assert "assets/offerings.svg" in readme
     assert "OPEN_UX_API_KEY" in readme
     assert "public marketplaces yet" in readme
-    assert "paused" in readme.lower()
-    assert "cursor.com/marketplace/publish" not in readme
-    assert "platform.claude.com/plugins/submit" not in readme
-    assert "Listing submit" not in readme
+    assert "paused" not in readme.lower()
+    assert "do not submit" not in readme.lower()
+    assert "cursor.com/marketplace/publish" in readme
+    assert "Listing submit" in readme
 
 
 def _after_heading(text: str, heading: str) -> str:
@@ -74,9 +74,8 @@ def test_plugin_docs_cover_cli_code_and_desktop_local_only() -> None:
         assert "Claude Desktop (Chat)" not in text
         assert "Customize" not in text
         assert "public marketplaces yet" in text
-        assert "paused" in text.lower()
-        assert "Listing submit" not in text
-        assert "cursor.com/marketplace/publish" not in text
+        assert "paused" not in text.lower()
+        assert "do not submit" not in text.lower()
         assert "not into mcp.json first" in text or "not mcp.json first" in text
         code = _after_heading(
             text, "### Claude Code" if "### Claude Code" in text else "## Claude Code"
