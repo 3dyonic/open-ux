@@ -164,33 +164,32 @@ export function redeemPage() {
       </form>
     </div>
     <div class="${CARD} invite-card-success" id="success-card" hidden>
-      <p class="invite-meta"><span class="pip" aria-hidden="true"></span>Redeemed · key once</p>
-      <h1 class="invite-title">You’re in</h1>
-      <p class="invite-sub">Install Open UX. Cited UX rules agents audit against.</p>
-      <ol class="install-steps">
-        <li>
-          <p><span class="install-label">Claude</span> — add the plugin.</p>
-          <pre class="install-cmd">claude plugins add 3dyonic/open-ux</pre>
-          <p class="install-hint">Or marketplace install: <code class="install-inline">claude plugin marketplace add 3dyonic/open-ux</code> then <code class="install-inline">claude plugin install open-ux@open-ux</code>.</p>
-        </li>
-        <li>
-          <p><span class="install-label">Cursor</span> — enable the Open UX plugin.</p>
-        </li>
-        <li>
-          <p>Paste this key into plugin settings.</p>
-          <p class="install-hint">We won’t show it in full again.</p>
+      <div class="install-header">
+        <h1 class="invite-title">You’re in</h1>
+        <p class="invite-sub">Your key shows once — copy it now. We won’t show it in full again.</p>
+      </div>
+      <div class="install-steps">
+        <div class="install-step">
+          <p class="install-heading">1. Claude — Install</p>
+          <p class="install-cmd">claude plugins add 3dyonic/open-ux</p>
+          <p class="install-hint">or add from the Claude marketplace</p>
+        </div>
+        <div class="install-step">
+          <p class="install-heading">2. Cursor — Install</p>
+          <p class="install-hint">Add from marketplace / repo</p>
+        </div>
+        <div class="install-step install-step-key">
+          <p class="install-heading">3. Paste your key into the plugin</p>
           <div class="install-key">
             <div class="key-box" id="key-text"></div>
-            <button class="btn btn-primary" type="button" id="copy-key">Copy</button>
+            <button class="btn btn-copy-key" type="button" id="copy-key">Copy</button>
           </div>
-        </li>
-      </ol>
-      <details class="install-advanced">
-        <summary>Advanced</summary>
-        <p class="install-hint">Paste into mcp.json, or send as bearer on /mcp.</p>
-        <pre class="config-box" id="mcp-config"></pre>
-        <button class="btn btn-outline" type="button" id="copy-mcp-config">Copy to config</button>
-      </details>
+        </div>
+      </div>
+      <div class="install-advanced">
+        <p class="install-advanced-title">Advanced</p>
+        <p class="install-hint">Bearer on /mcp · mcp.json for HTTP hosts. Self-host stdio needs no auth.</p>
+      </div>
     </div>
   </main>`,
         { catalog: false, consent: false },
@@ -284,10 +283,7 @@ export function renderRedeem(root) {
   const redeemCard = document.getElementById("redeem-card");
   const successCard = document.getElementById("success-card");
   const keyText = document.getElementById("key-text");
-  const mcpConfig = document.getElementById("mcp-config");
   const copyKeyBtn = document.getElementById("copy-key");
-  const copyMcpBtn = document.getElementById("copy-mcp-config");
-  const advanced = successCard.querySelector(".install-advanced");
   const params = new URLSearchParams(location.search);
   const q = params.get("token");
   if (q) tokenInput.value = q;
@@ -295,10 +291,7 @@ export function renderRedeem(root) {
   function hideSuccess() {
     issuedKey = "";
     keyText.textContent = "";
-    mcpConfig.textContent = "";
     resetCopyButton(copyKeyBtn, "Copy");
-    resetCopyButton(copyMcpBtn, "Copy to config");
-    if (advanced) advanced.open = false;
     successCard.hidden = true;
     setTitle("Redeem invite — Open UX");
   }
@@ -319,24 +312,6 @@ export function renderRedeem(root) {
   function maskKey(key) {
     if (key.startsWith("uxmcp_")) return MASK;
     return "\u2022".repeat(16);
-  }
-
-  function mcpServerBlock(authValue) {
-    const mcpUrl = `${location.origin}/mcp`;
-    return `"open-ux": {
-  "url": ${JSON.stringify(mcpUrl)},
-  "headers": {
-    "Authorization": ${JSON.stringify(authValue)}
-  }
-}`;
-  }
-
-  function mcpConfigText(key) {
-    return mcpServerBlock(`Bearer ${key}`);
-  }
-
-  function mcpConfigDisplayText() {
-    return mcpServerBlock("YOUR_KEY");
   }
 
   form.addEventListener("submit", async (event) => {
@@ -362,10 +337,7 @@ export function renderRedeem(root) {
       setBusy(submit, false, "Redeem", "Redeeming…");
       issuedKey = data.key;
       keyText.textContent = maskKey(issuedKey);
-      mcpConfig.textContent = mcpConfigDisplayText();
       resetCopyButton(copyKeyBtn, "Copy");
-      resetCopyButton(copyMcpBtn, "Copy to config");
-      if (advanced) advanced.open = false;
       redeemCard.hidden = true;
       successCard.hidden = false;
       setTitle("You’re in — Open UX");
@@ -376,10 +348,6 @@ export function renderRedeem(root) {
 
   copyKeyBtn?.addEventListener("click", () => {
     copyText(copyKeyBtn, issuedKey, "Copied");
-  });
-
-  copyMcpBtn?.addEventListener("click", () => {
-    copyText(copyMcpBtn, mcpConfigText(issuedKey), "Copied");
   });
 }
 
