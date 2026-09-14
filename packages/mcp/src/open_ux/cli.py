@@ -264,14 +264,17 @@ def _run_server(command: str, args: argparse.Namespace) -> int:
             print("usage: open-ux approve-invite EMAIL", file=sys.stderr)
             return 2
         from open_ux.auth import AuthError, approve_invite
-        from open_ux.mail import send_invite_email
+        from open_ux.mail import mail_configured, mail_not_sent_hint, send_invite_email
+        from open_ux.settings import Settings
 
+        settings = Settings.load()
         try:
-            issued = approve_invite(email)
+            issued = approve_invite(email, settings=settings)
         except AuthError as exc:
             print(str(exc), file=sys.stderr)
             return 1
-        mail_sent = send_invite_email(issued)
+        mail_sent = send_invite_email(issued, settings=settings)
+        configured = mail_configured(settings)
         print(
             json.dumps(
                 {
@@ -281,16 +284,13 @@ def _run_server(command: str, args: argparse.Namespace) -> int:
                     "redeem_url": issued.redeem_url,
                     "expires_at": issued.expires_at,
                     "mail_sent": mail_sent,
+                    "mail_configured": configured,
                 },
                 indent=2,
             )
         )
         if not mail_sent:
-            print(
-                "Email not sent — mail isn't configured (or delivery failed). "
-                "Send the redeem_url above yourself.",
-                file=sys.stderr,
-            )
+            print(mail_not_sent_hint(configured=configured), file=sys.stderr)
         return 0
 
     if command == "stdio":

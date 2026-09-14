@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-import json
 import logging
-import urllib.error
-import urllib.request
+import smtplib
+import ssl
 from datetime import datetime
+from email.message import EmailMessage
 from html import escape
 from typing import TYPE_CHECKING
 
@@ -14,7 +14,10 @@ if TYPE_CHECKING:
 
 logger = logging.getLogger(__name__)
 
-RESEND_URL = "https://api.resend.com/emails"
+RESEND_SMTP_HOST = "smtp.resend.com"
+RESEND_SMTP_PORT = 465
+RESEND_SMTP_STARTTLS_PORT = 587
+RESEND_SMTP_USER = "resend"
 INVITE_SUBJECT = "Your Open UX invite"
 DEFAULT_PUBLIC_URL = "https://open-ux.dev"
 
@@ -34,6 +37,19 @@ def mail_configured(settings: Settings) -> bool:
         settings.mail_provider
         and settings.mail_api_key
         and settings.mail_from
+    )
+
+
+def mail_not_sent_hint(*, configured: bool) -> str:
+    """Operator-facing reason when approval succeeded but mail did not send."""
+    if configured:
+        return (
+            "Email not sent — delivery failed. "
+            "Send the redeem_url above yourself."
+        )
+    return (
+        "Email not sent — mail isn't configured. "
+        "Send the redeem_url above yourself."
     )
 
 
@@ -137,29 +153,66 @@ def _invite_body_html(*, redeem_url: str, expires_at: str, public_base: str) -> 
 </html>"""
 
 
+def _invite_message(
+    *, to: str, subject: str, text: str, html: str, mail_from: str
+) -> EmailMessage:
+    msg = EmailMessage()
+    msg["From"] = mail_from
+    msg["To"] = to
+    msg["Subject"] = subject
+    msg.set_content(text)
+    msg.add_alternative(html, subtype="html")
+    return msg
+
+
+def _smtp_login_and_send(
+    smtp: smtplib.SMTP, msg: EmailMessage, settings: Settings
+) -> None:
+    smtp.login(RESEND_SMTP_USER, settings.mail_api_key)
+    smtp.send_message(msg)
+
+
+def _send_resend_starttls(
+    msg: EmailMessage, settings: Settings, context: ssl.SSLContext
+) -> None:
+    with smtplib.SMTP(
+        RESEND_SMTP_HOST, RESEND_SMTP_STARTTLS_PORT, timeout=30
+    ) as smtp:
+        smtp.ehlo()
+        smtp.starttls(context=context)
+        smtp.ehlo()
+        _smtp_login_and_send(smtp, msg, settings)
+
+
 def _send_resend(
     *, to: str, subject: str, text: str, html: str, settings: Settings
 ) -> None:
-    payload = json.dumps(
-        {
-            "from": settings.mail_from,
-            "to": [to],
-            "subject": subject,
-            "text": text,
-            "html": html,
-        }
-    ).encode("utf-8")
-    request = urllib.request.Request(
-        RESEND_URL,
-        data=payload,
-        headers={
-            "Authorization": f"Bearer {settings.mail_api_key}",
-            "Content-Type": "application/json",
-        },
-        method="POST",
+    # Fly egress to api.resend.com is blocked (Cloudflare 1010). SMTP still
+    # works from the same machines: smtp.resend.com:465 / :587.
+    msg = _invite_message(
+        to=to,
+        subject=subject,
+        text=text,
+        html=html,
+        mail_from=settings.mail_from,
     )
-    with urllib.request.urlopen(request, timeout=30):
-        return
+    context = ssl.create_default_context()
+    try:
+        with smtplib.SMTP_SSL(
+            RESEND_SMTP_HOST,
+            RESEND_SMTP_PORT,
+            context=context,
+            timeout=30,
+        ) as smtp:
+            _smtp_login_and_send(smtp, msg, settings)
+    except (TimeoutError, OSError, smtplib.SMTPException) as exc:
+        # SMTPException subclasses OSError. Only retry STARTTLS when the SMTPS
+        # socket never came up — not on auth or recipient rejections.
+        if isinstance(exc, smtplib.SMTPException) and not isinstance(
+            exc, (smtplib.SMTPConnectError, smtplib.SMTPServerDisconnected)
+        ):
+            raise
+        _send_resend_starttls(msg, settings, context)
 
 
 def send_invite_email(
@@ -195,7 +248,12 @@ def send_invite_email(
         else:
             logger.warning("invite mail skipped: unknown provider %r", provider)
             return False
-    except (urllib.error.URLError, urllib.error.HTTPError, RuntimeError, TimeoutError) as exc:
+    except (
+        smtplib.SMTPException,
+        OSError,
+        TimeoutError,
+        RuntimeError,
+    ) as exc:
         logger.warning(
             "invite mail failed for %s via %s: %s",
             issued.email,

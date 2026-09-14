@@ -121,6 +121,7 @@ def test_invite_request_approve_redeem_burn(tmp_env: Path) -> None:
         # is skipped — the response must say so rather than silently implying
         # the invite email went out.
         assert body["mail_sent"] is False
+        assert body["mail_configured"] is False
 
         minted = client.post("/invite/redeem", json={"token": token})
         assert minted.status_code == 200
@@ -266,7 +267,10 @@ def test_approve_invite_cli(tmp_env: Path, capsys: pytest.CaptureFixture[str]) -
     # attempts delivery same as the admin endpoint, reports it didn't send,
     # and prints a hint on stderr rather than silently dropping it.
     assert out["mail_sent"] is False
+    assert out["mail_configured"] is False
     assert "Email not sent" in captured.err
+    assert "isn't configured" in captured.err
+    assert "delivery failed" not in captured.err
 
 
 def test_admin_approve_post_is_json_get_falls_back_to_404_page(tmp_env: Path) -> None:
