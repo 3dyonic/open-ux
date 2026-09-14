@@ -163,15 +163,34 @@ export function redeemPage() {
         <p class="foot" id="redeem-foot">Redeeming burns the invite and mints your uxmcp_ key once.</p>
       </form>
     </div>
-    <div class="${CARD}" id="success-card" hidden>
+    <div class="${CARD} invite-card-success" id="success-card" hidden>
       <p class="invite-meta"><span class="pip" aria-hidden="true"></span>Redeemed · key once</p>
-      <h1 class="invite-title">Your key</h1>
-      <p class="invite-sub">Invite redeemed. Copy your key — we won’t show it in full again.</p>
-      <div class="key-box" id="key-text"></div>
-      <button class="btn btn-primary" type="button" id="copy-key">Copy key</button>
-      <p class="invite-sub">Add this MCP server in your client — paste into <span class="font-mono text-ink">mcp.json</span> or your editor’s MCP settings.</p>
-      <pre class="config-box" id="mcp-config"></pre>
-      <button class="btn btn-outline" type="button" id="copy-mcp-config">Copy to config</button>
+      <h1 class="invite-title">You’re in</h1>
+      <p class="invite-sub">Install Open UX. Cited UX rules agents audit against.</p>
+      <ol class="install-steps">
+        <li>
+          <p><span class="install-label">Claude</span> — add the plugin.</p>
+          <pre class="install-cmd">claude plugins add 3dyonic/open-ux</pre>
+          <p class="install-hint">Or marketplace install: <code class="install-inline">claude plugin marketplace add 3dyonic/open-ux</code> then <code class="install-inline">claude plugin install open-ux@open-ux</code>.</p>
+        </li>
+        <li>
+          <p><span class="install-label">Cursor</span> — enable the Open UX plugin.</p>
+        </li>
+        <li>
+          <p>Paste this key into plugin settings.</p>
+          <p class="install-hint">We won’t show it in full again.</p>
+          <div class="install-key">
+            <div class="key-box" id="key-text"></div>
+            <button class="btn btn-primary" type="button" id="copy-key">Copy</button>
+          </div>
+        </li>
+      </ol>
+      <details class="install-advanced">
+        <summary>Advanced</summary>
+        <p class="install-hint">Paste into mcp.json, or send as bearer on /mcp.</p>
+        <pre class="config-box" id="mcp-config"></pre>
+        <button class="btn btn-outline" type="button" id="copy-mcp-config">Copy to config</button>
+      </details>
     </div>
   </main>`,
         { catalog: false, consent: false },
@@ -268,6 +287,7 @@ export function renderRedeem(root) {
   const mcpConfig = document.getElementById("mcp-config");
   const copyKeyBtn = document.getElementById("copy-key");
   const copyMcpBtn = document.getElementById("copy-mcp-config");
+  const advanced = successCard.querySelector(".install-advanced");
   const params = new URLSearchParams(location.search);
   const q = params.get("token");
   if (q) tokenInput.value = q;
@@ -276,8 +296,9 @@ export function renderRedeem(root) {
     issuedKey = "";
     keyText.textContent = "";
     mcpConfig.textContent = "";
-    resetCopyButton(copyKeyBtn, "Copy key");
+    resetCopyButton(copyKeyBtn, "Copy");
     resetCopyButton(copyMcpBtn, "Copy to config");
+    if (advanced) advanced.open = false;
     successCard.hidden = true;
     setTitle("Redeem invite — Open UX");
   }
@@ -342,11 +363,12 @@ export function renderRedeem(root) {
       issuedKey = data.key;
       keyText.textContent = maskKey(issuedKey);
       mcpConfig.textContent = mcpConfigDisplayText();
-      resetCopyButton(copyKeyBtn, "Copy key");
+      resetCopyButton(copyKeyBtn, "Copy");
       resetCopyButton(copyMcpBtn, "Copy to config");
+      if (advanced) advanced.open = false;
       redeemCard.hidden = true;
       successCard.hidden = false;
-      setTitle("Your key — Open UX");
+      setTitle("You’re in — Open UX");
     } catch {
       showError();
     }
