@@ -29,7 +29,7 @@ claude plugin install open-ux@open-ux
 
 Enable the plugin; paste your `uxmcp_` key into plugin `api_key` when prompted.
 
-Desktop **Code** panel: local plugins only — it cannot add a remote GitHub marketplace. Use the CLI path above, or enable a local plugin from a repo checkout and paste `api_key`.
+Desktop **Code** panel: local plugins only (no remote marketplace add). Use CLI Code, or enable a local plugin from a checkout and paste `api_key`, or use Cowork / Desktop Chat for marketplace-style install.
 
 ### Cursor
 

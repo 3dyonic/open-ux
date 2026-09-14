@@ -68,7 +68,8 @@ def test_plugin_docs_cover_cli_code_and_desktop_local_only() -> None:
         assert "claude plugin install open-ux@open-ux" in text
         assert "api_key" in text
         assert "local plugins only" in text
-        assert "cannot add a remote GitHub marketplace" in text
+        assert "no remote marketplace add" in text
+        assert "marketplace-style install" in text
         assert "### Claude Cowork" not in text
         assert "## Claude Cowork" not in text
         assert "Claude Desktop (Chat)" not in text
