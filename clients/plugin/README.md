@@ -12,11 +12,13 @@ Logo (Cursor `logo` field): [assets/icon.svg](assets/icon.svg). Listing art: [as
 
 ## Install
 
-Plugins are not in the public marketplaces yet; install from this GitHub repo. See [SETUP.md](SETUP.md) for keys and MCP.
+Plugins are not in the public marketplaces yet; install from this GitHub repo. Marketplace submit is paused until Cowork and Desktop Chat smoke paths exist. See [SETUP.md](SETUP.md) for keys and each surface.
 
 ### Get a key
 
 [open-ux.dev/invite](https://open-ux.dev/invite) → redeem → `uxmcp_…`
+
+Paste the key into plugin config (`api_key`, or Cursor `OPEN_UX_API_KEY`) — not into mcp.json first.
 
 ### Claude Code
 
@@ -25,15 +27,35 @@ claude plugin marketplace add 3dyonic/open-ux
 claude plugin install open-ux@open-ux
 ```
 
-Enable the plugin; paste your key when prompted.
+Enable the plugin; paste your `uxmcp_` key into plugin `api_key` when prompted.
+
+### Claude Cowork
+
+1. Open the **Cowork** tab.
+2. **Customize** (left sidebar) → **Plugins**.
+3. Add marketplace from GitHub repo `3dyonic/open-ux` (or Browse once listed).
+4. Install **Open UX** → enable.
+5. Paste the key into plugin userConfig (`api_key`).
+
+### Claude Desktop (Chat)
+
+Desktop Chat uses the same Cowork-class plugin:
+
+1. **Customize** (left sidebar) → **Plugins**.
+2. Add marketplace from GitHub (`3dyonic/open-ux`) / Install **Open UX**.
+3. Enable → paste `api_key`.
+
+The Desktop **Code** panel uses the Claude Code install path above.
 
 ### Cursor
 
 Open this repository, enable the Open UX plugin, set **`OPEN_UX_API_KEY`** under **Plugins → Configure**.
 
-Validate: `claude plugin validate . --strict` · `node scripts/validate-cursor-plugin.mjs --strict` (repo root).
+### Advanced / other clients
 
-Listing submit (maintainers): [Claude](https://platform.claude.com/plugins/submit) · [Cursor](https://cursor.com/marketplace/publish).
+Paste MCP config only here — not the primary install path. Point the client at `https://open-ux.dev/mcp` with `Authorization: Bearer uxmcp_…`. This plugin’s [`.mcp.json`](.mcp.json) uses `Authorization: Bearer ${user_config.api_key}` for that URL.
+
+Validate: `claude plugin validate . --strict` · `node scripts/validate-cursor-plugin.mjs --strict` (repo root).
 
 Contributors: [`docs/CONTRIBUTING.md`](../../docs/CONTRIBUTING.md).
 
