@@ -262,11 +262,52 @@
   .foot-meta {
     @apply font-mono text-[11px];
   }
+  .invite-card-success {
+    @apply w-[560px] gap-5;
+  }
+  .invite-card-success .invite-sub,
+  .invite-card-success .foot,
+  .invite-card-success .foot-meta {
+    @apply text-sm leading-5;
+  }
+  .install-header {
+    @apply flex w-full flex-col gap-2;
+  }
+  .install-steps {
+    @apply m-0 flex w-full flex-col gap-4 p-0;
+  }
+  .install-step {
+    @apply flex w-full flex-col gap-1.5;
+  }
+  .install-step-key {
+    @apply gap-2;
+  }
+  .install-heading {
+    @apply m-0 text-base font-semibold leading-normal text-ink;
+  }
+  .install-cmd {
+    @apply m-0 font-mono text-sm font-medium leading-normal text-ink break-words;
+  }
+  .install-hint {
+    @apply m-0 text-sm font-normal leading-5 text-muted;
+  }
+  .install-key {
+    @apply flex w-full flex-wrap items-center gap-2;
+  }
+  .invite-card-success .key-box {
+    @apply min-w-0 flex-1 px-3 py-2.5;
+  }
+  .btn-copy-key {
+    @apply shrink-0 border border-pip bg-card px-3.5 py-2 text-sm font-medium text-pip;
+  }
+  .install-advanced {
+    @apply flex w-full flex-col gap-1 border-t border-line pt-4;
+  }
+  .install-advanced-title {
+    @apply m-0 text-sm font-medium leading-normal text-muted;
+  }
   .key-box {
     @apply w-full rounded-sm border border-pip bg-pip-soft p-3 font-mono text-sm font-medium text-pip;
-  }
-  .config-box {
-    @apply w-full overflow-x-auto rounded-sm border border-line bg-paper p-3 font-mono text-xs leading-5 text-ink whitespace-pre-wrap break-all;
   }
 
   .status-chip {

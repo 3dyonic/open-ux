@@ -473,6 +473,49 @@ def test_public_pages_embed_copy_for_fetchers(
     assert "<title>You’re on the list — Open UX</title>" in requested.text
     assert "<title>Redeem invite — Open UX</title>" in redeem.text
     assert 'for="token"' in redeem.text
+    assert "You’re in" in redeem.text
+    assert "claude plugins add 3dyonic/open-ux" in redeem.text
+    assert "Advanced" in redeem.text
+    assert "Add this MCP server" not in redeem.text
+
+
+def test_redeem_success_card_leads_with_plugin_install() -> None:
+    root = Path(__file__).resolve().parents[3]
+    invite = (root / "packages" / "web" / "src" / "invite.js").read_text(
+        encoding="utf-8"
+    )
+    styles = (root / "packages" / "web" / "src" / "styles.css").read_text(
+        encoding="utf-8"
+    )
+    landing = (root / "packages" / "web" / "src" / "landing.js").read_text(
+        encoding="utf-8"
+    )
+    success = invite[invite.index('id="success-card"') : invite.index("export function renderInvite")]
+    assert '<h1 class="invite-title">You’re in</h1>' in success
+    assert "Your key shows once — copy it now" in success
+    assert "We won’t show it in full again" in success
+    assert "1. Claude — Install" in success
+    assert "claude plugins add 3dyonic/open-ux" in success
+    assert "or add from the Claude marketplace" in success
+    assert "2. Cursor — Install" in success
+    assert "Add from marketplace / repo" in success
+    assert "3. Paste your key into the plugin" in success
+    assert 'id="key-text"' in success
+    assert 'id="copy-key">Copy</button>' in success
+    assert success.find("Paste your key into the plugin") < success.find("install-advanced")
+    assert "Bearer on /mcp · mcp.json for HTTP hosts" in success
+    assert "<details" not in success
+    assert "mcp-config" not in success
+    assert "Copy to config" not in success
+    assert '<h1 class="invite-title">Your key</h1>' not in invite
+    assert "Add this MCP server" not in invite
+    assert 'setTitle("You’re in — Open UX")' in invite
+    assert 'setTitle("Your key — Open UX")' not in invite
+    assert "MCP" not in '<h1 class="invite-title">You’re in</h1>'
+    assert "MCP" not in "Advanced"
+    assert ".invite-card-success" in styles
+    assert ".install-heading" in styles
+    assert "Cited UX rules agents audit against" in landing
 
 
 def test_register_still_redirects_to_invite(tmp_env: Path) -> None:
