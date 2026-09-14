@@ -59,27 +59,31 @@ def _after_heading(text: str, heading: str) -> str:
     return rest if next_heading is None else rest[: next_heading.start()]
 
 
-def test_plugin_docs_cover_code_cowork_and_desktop_chat() -> None:
+def test_plugin_docs_cover_cli_code_and_desktop_local_only() -> None:
     readme = (PACK / "README.md").read_text(encoding="utf-8")
     setup = (PACK / "SETUP.md").read_text(encoding="utf-8")
     assert "MCP" not in setup.split("\n", 1)[0]
     for text in (readme, setup):
-        assert "Claude Code" in text
-        assert "Claude Cowork" in text
-        assert "Claude Desktop (Chat)" in text
         assert "claude plugin marketplace add 3dyonic/open-ux" in text
         assert "claude plugin install open-ux@open-ux" in text
         assert "api_key" in text
-        assert "Customize" in text
-        assert "3dyonic/open-ux" in text
-        assert "userConfig" in text
-        assert "Code" in text and "panel" in text
-        assert "enable" in text.lower()
+        assert "local plugins only" in text
+        assert "cannot add a remote GitHub marketplace" in text
+        assert "### Claude Cowork" not in text
+        assert "## Claude Cowork" not in text
+        assert "Claude Desktop (Chat)" not in text
+        assert "Customize" not in text
         assert "public marketplaces yet" in text
         assert "paused" in text.lower()
         assert "Listing submit" not in text
         assert "cursor.com/marketplace/publish" not in text
         assert "not into mcp.json first" in text or "not mcp.json first" in text
+        code = _after_heading(
+            text, "### Claude Code" if "### Claude Code" in text else "## Claude Code"
+        )
+        assert "enable" in code.lower()
+        assert "api_key" in code
+        assert "local plugins only" in code
         advanced = _after_heading(text, "## Advanced / other clients")
         assert "mcp.json" in advanced
         assert "${user_config.api_key}" in advanced
@@ -87,12 +91,6 @@ def test_plugin_docs_cover_code_cowork_and_desktop_chat() -> None:
         assert "Authorization: Bearer" in advanced
         before_advanced = text[: text.find("## Advanced / other clients")]
         assert "Authorization: Bearer" not in before_advanced
-        for surface in ("### Claude Code", "### Claude Cowork", "### Claude Desktop (Chat)"):
-            heading = surface if surface in text else surface.replace("### ", "## ")
-            assert heading in text, heading
-            body = _after_heading(text, heading)
-            assert "enable" in body.lower()
-            assert "api_key" in body
         cursor = _after_heading(
             text, "### Cursor" if "### Cursor" in text else "## Cursor"
         )

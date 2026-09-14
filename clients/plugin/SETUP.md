@@ -8,7 +8,6 @@ Plugins are not in the public marketplaces yet; install from this GitHub repo. M
 2. Redeem the invite → copy bearer token `uxmcp_…`.
 3. Paste into plugin config (not mcp.json first):
    - **Claude Code:** when the plugin asks (`api_key`).
-   - **Claude Cowork** and **Claude Desktop (Chat):** plugin userConfig (`api_key`).
    - **Cursor:** **Plugins → Configure** → `OPEN_UX_API_KEY`.
 
 ## Claude Code
@@ -20,23 +19,7 @@ claude plugin install open-ux@open-ux
 
 Enable the plugin; paste `uxmcp_` into plugin `api_key` when prompted.
 
-## Claude Cowork
-
-1. Open the **Cowork** tab.
-2. **Customize** (left sidebar) → **Plugins**.
-3. Add marketplace from GitHub repo `3dyonic/open-ux` (or Browse once listed).
-4. Install **Open UX** → enable.
-5. Paste the key into plugin userConfig (`api_key`).
-
-## Claude Desktop (Chat)
-
-Same Cowork-class plugin path:
-
-1. **Customize** (left sidebar) → **Plugins**.
-2. Add marketplace from GitHub / Install **Open UX**.
-3. Enable → paste `api_key`.
-
-The Desktop **Code** panel uses the Claude Code path above.
+Desktop **Code** panel: local plugins only — it cannot add a remote GitHub marketplace. Use the CLI path above, or enable a local plugin from a repo checkout and paste `api_key`.
 
 ## Cursor
 

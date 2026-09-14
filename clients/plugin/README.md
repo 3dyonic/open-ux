@@ -12,7 +12,7 @@ Logo (Cursor `logo` field): [assets/icon.svg](assets/icon.svg). Listing art: [as
 
 ## Install
 
-Plugins are not in the public marketplaces yet; install from this GitHub repo. Marketplace submit is paused until Cowork and Desktop Chat smoke paths exist. See [SETUP.md](SETUP.md) for keys and each surface.
+Plugins are not in the public marketplaces yet; install from this GitHub repo. Marketplace submit is paused until Cowork and Desktop Chat smoke paths exist. See [SETUP.md](SETUP.md) for keys.
 
 ### Get a key
 
@@ -29,23 +29,7 @@ claude plugin install open-ux@open-ux
 
 Enable the plugin; paste your `uxmcp_` key into plugin `api_key` when prompted.
 
-### Claude Cowork
-
-1. Open the **Cowork** tab.
-2. **Customize** (left sidebar) → **Plugins**.
-3. Add marketplace from GitHub repo `3dyonic/open-ux` (or Browse once listed).
-4. Install **Open UX** → enable.
-5. Paste the key into plugin userConfig (`api_key`).
-
-### Claude Desktop (Chat)
-
-Desktop Chat uses the same Cowork-class plugin:
-
-1. **Customize** (left sidebar) → **Plugins**.
-2. Add marketplace from GitHub (`3dyonic/open-ux`) / Install **Open UX**.
-3. Enable → paste `api_key`.
-
-The Desktop **Code** panel uses the Claude Code install path above.
+Desktop **Code** panel: local plugins only — it cannot add a remote GitHub marketplace. Use the CLI path above, or enable a local plugin from a repo checkout and paste `api_key`.
 
 ### Cursor
 
