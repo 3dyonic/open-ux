@@ -257,10 +257,16 @@ def test_expired_invite_cannot_redeem(tmp_env: Path) -> None:
 
 def test_approve_invite_cli(tmp_env: Path, capsys: pytest.CaptureFixture[str]) -> None:
     assert main(["approve-invite", "ada@example.com"]) == 0
-    out = json.loads(capsys.readouterr().out)
+    captured = capsys.readouterr()
+    out = json.loads(captured.out)
     assert out["email"] == "ada@example.com"
     assert out["token"].startswith("inv_")
     assert "/invite/redeem?token=" in out["redeem_url"]
+    # Mail isn't configured in tests (no OPEN_UX_MAIL_* env), so the CLI
+    # attempts delivery same as the admin endpoint, reports it didn't send,
+    # and prints a hint on stderr rather than silently dropping it.
+    assert out["mail_sent"] is False
+    assert "Email not sent" in captured.err
 
 
 def test_admin_approve_post_is_json_get_falls_back_to_404_page(tmp_env: Path) -> None:
