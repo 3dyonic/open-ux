@@ -177,6 +177,25 @@ function bindCatalog(rows, jobs) {
   apply();
 }
 
+function catalogLoadingHtml() {
+  return `
+  <main class="page catalog-loading-page" aria-busy="true">
+    <div class="catalog-loading" role="status">
+      <span class="pip catalog-loading-pip" aria-hidden="true"></span>
+      <p class="catalog-loading-label">Loading catalog…</p>
+    </div>
+  </main>`;
+}
+
+const CATALOG_LOADING_CRITICAL_CSS = `<style>
+[data-ssr-page="catalog"] .catalog-loading-page{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#F9F6F2}
+[data-ssr-page="catalog"] .catalog-loading{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}
+[data-ssr-page="catalog"] .catalog-loading-pip{display:block;width:8px;height:8px;border-radius:50%;background:#FF4B00;animation:catalog-loading-pulse 1.1s ease-in-out infinite}
+[data-ssr-page="catalog"] .catalog-loading-label{margin:0;font-size:14px;font-weight:400;color:#6A6056}
+@keyframes catalog-loading-pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.2)}}
+@media (prefers-reduced-motion:reduce){[data-ssr-page="catalog"] .catalog-loading-pip{animation:none}}
+</style>`;
+
 export async function renderCatalog(root) {
   setTitle("Catalog — Open UX");
   const params = new URLSearchParams(location.search);
@@ -186,10 +205,7 @@ export async function renderCatalog(root) {
   if (!Number.isFinite(page) || page < 1) page = 1;
   const hasSsr = root.querySelector('[data-ssr-page="catalog"]');
   if (!hasSsr && !indexCache) {
-    root.innerHTML = shell(
-      `<main class="page"><p class="lede">Loading catalog…</p></main>`,
-      { catalogActive: true, paper: true },
-    );
+    root.innerHTML = shell(catalogLoadingHtml(), { catalogActive: true, paper: true });
   }
   let data;
   try {
@@ -326,10 +342,11 @@ export function catalogNamesPage(guidelines) {
     .map((row) => {
       const gid = String(row.id || "");
       if (!gid) return "";
-      return `<a href="${escapeHtml(hrefId(gid))}">${escapeHtml(displayName(row))}</a>`;
+      return `<li><a href="${escapeHtml(hrefId(gid))}">${escapeHtml(displayName(row))}</a></li>`;
     })
     .filter(Boolean)
     .join("");
+  const names = items ? `<noscript><ul class="catalog-ssr-names">${items}</ul></noscript>` : "";
   return {
     title: "Catalog — Open UX",
     description: "Cited UX rules agents audit against",
@@ -340,16 +357,10 @@ export function catalogNamesPage(guidelines) {
     ],
     body: ssr(
       "catalog",
-      shell(
-        `
-  <main class="page">
-    <h1 class="page-title">Catalog</h1>
-    <p class="lede">Cited UX rules agents audit against</p>
-    <p>${rows.length} shown</p>
-    <div class="list">${items}</div>
-  </main>`,
+      `${CATALOG_LOADING_CRITICAL_CSS}${shell(
+        `${catalogLoadingHtml()}${names}`,
         { catalogActive: true, paper: true },
-      ),
+      )}`,
     ),
   };
 }
