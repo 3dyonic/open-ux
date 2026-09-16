@@ -24,7 +24,7 @@ def test_cursor_marketplace_points_at_same_pack() -> None:
     assert plugin["version"] == "1.2.1"
     assert market["metadata"]["version"] == "1.2.1"
     assert plugin.get("homepage") == "https://open-ux.dev"
-    assert plugin.get("logo") == "assets/icon.svg"
+    assert plugin.get("logo") == "assets/icon-512.png"
     assert ".." not in plugin["source"]
 
 
@@ -40,9 +40,11 @@ def test_listing_assets_and_setup_exist() -> None:
     assert "MCP" not in readme.split("\n", 1)[0]
     assert "https://open-ux.dev" in readme
     assert "claude plugin marketplace add 3dyonic/open-ux" in readme
-    assert "assets/hero.svg" in readme
-    assert "assets/icon.svg" in readme
+    assert "![Open UX](assets/hero.png)" in readme
+    assert "assets/icon-512.png" in readme
     assert "assets/offerings.svg" in readme
+    assert "assets/hero.svg" not in readme
+    assert "assets/icon.svg" not in readme
     assert "OPEN_UX_API_KEY" in readme
     assert "public marketplaces yet" in readme
     assert "paused" not in readme.lower()
@@ -84,6 +86,18 @@ def test_plugin_docs_cover_cli_code_and_desktop_local_only() -> None:
         assert "enable" in code.lower()
         assert "api_key" in code
         assert "local plugins only" in code
+        desktop = _after_heading(
+            text,
+            "### Claude Desktop Chat"
+            if "### Claude Desktop Chat" in text
+            else "## Claude Desktop Chat",
+        )
+        assert "No sign-in" in desktop
+        assert "Authorization" in desktop
+        assert "Bearer uxmcp_" in desktop
+        assert "https://open-ux.dev/mcp" in desktop
+        assert "api_key" in desktop
+        assert "api-key" in desktop
         advanced = _after_heading(text, "## Advanced / other clients")
         assert "mcp.json" in advanced
         assert "${user_config.api_key}" in advanced
@@ -96,6 +110,7 @@ def test_plugin_docs_cover_cli_code_and_desktop_local_only() -> None:
         )
         assert "OPEN_UX_API_KEY" in cursor
         assert "Plugins → Configure" in cursor
+        assert "uxmcp_" in cursor
 
 
 def test_host_mounts_are_symlinks_into_pack() -> None:
@@ -130,7 +145,7 @@ def test_cursor_pack_uses_variables_not_user_config() -> None:
     assert plugin["name"] == "open-ux"
     assert "MCP" not in plugin["name"]
     assert "MCP" not in plugin.get("description", "")
-    assert plugin.get("logo") == "assets/icon.svg"
+    assert plugin.get("logo") == "assets/icon-512.png"
     assert plugin.get("homepage") == "https://open-ux.dev"
     assert "userConfig" not in plugin
     assert "hooks" not in plugin
