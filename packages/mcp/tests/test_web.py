@@ -533,6 +533,23 @@ def test_redeem_success_card_leads_with_plugin_install() -> None:
     assert "Cited UX rules agents audit against" in landing
 
 
+def test_landing_how_it_works_copy() -> None:
+    root = Path(__file__).resolve().parents[3]
+    landing = (root / "packages" / "web" / "src" / "landing.js").read_text(
+        encoding="utf-8"
+    )
+    assert "How it works" in landing
+    assert "Install the plugin and configure your key." in landing
+    assert "Map the job" in landing
+    assert "Pick a situation, from the whole surface down to a small piece." in landing
+    assert "Get guidelines" in landing
+    assert "Open UX gives cited rules with examples. The LLM judges the UI." in landing
+    assert "List · get" not in landing
+    assert "Install the Claude client" not in landing
+    assert "paste your key." not in landing
+    assert ">Audit</h3>" not in landing
+
+
 def test_register_still_redirects_to_invite(tmp_env: Path) -> None:
     with _client() as client:
         response = client.get("/register", follow_redirects=False)
