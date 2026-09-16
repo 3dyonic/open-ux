@@ -551,6 +551,8 @@ def test_landing_how_it_works_copy() -> None:
     assert "Pick a situation, from the whole surface down to a small piece." in landing
     assert "Get guidelines" in landing
     assert "Open UX gives cited rules with examples. The LLM judges the UI." in landing
+    assert landing.count('class="m-0 text-[14px] leading-[18px] text-muted"') == 3
+    assert 'class="m-0 text-[13px] leading-[18px] text-muted"' not in landing
     assert "List · get" not in landing
     assert "Install the Claude client" not in landing
     assert "paste your key." not in landing
