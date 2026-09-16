@@ -453,7 +453,14 @@ def test_public_pages_embed_copy_for_fetchers(
     assert "https://open-ux.dev/icon.png" in home.text
     assert '<link rel="icon" href="/icon.png"' in home.text
     assert "<h1" in home.text and "Open UX</h1>" in home.text
-    assert "Say the compose job" in home.text
+    assert "How it works" in home.text
+    assert "Install the plugin and configure your key." in home.text
+    assert "Map the job" in home.text
+    assert "Pick a situation, from the whole surface down to a small piece." in home.text
+    assert "Get guidelines" in home.text
+    assert "Open UX gives cited rules with examples. The LLM judges the UI." in home.text
+    assert "Say the compose job" not in home.text
+    assert "List · get" not in home.text
     assert "<title>Catalog — Open UX</title>" in listing.text
     assert "Loading catalog…" in listing.text
     assert "catalog-loading-pip" in listing.text
