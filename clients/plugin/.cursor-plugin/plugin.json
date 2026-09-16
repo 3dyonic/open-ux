@@ -9,7 +9,7 @@
   "repository": "https://github.com/3dyonic/open-ux",
   "license": "MIT",
   "keywords": ["ux", "guidelines", "audit", "forms", "actions"],
-  "logo": "assets/icon.svg",
+  "logo": "assets/icon-512.png",
   "variables": {
     "type": "object",
     "properties": {

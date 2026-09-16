@@ -1,6 +1,6 @@
 # Open UX
 
-![Open UX](assets/hero.svg)
+![Open UX](assets/hero.png)
 
 Cited UX rules agents audit against. Open Cards that fit, then get a criteria pack. You decide.
 
@@ -8,7 +8,7 @@ Homepage: [open-ux.dev](https://open-ux.dev)
 
 Do not put “MCP” in the marketplace / plugin title or landing H1.
 
-Logo (Cursor `logo` field): [assets/icon.svg](assets/icon.svg). Listing art: [assets/hero.svg](assets/hero.svg), [assets/offerings.svg](assets/offerings.svg).
+Logo (Cursor `logo` field): [assets/icon-512.png](assets/icon-512.png). Listing art: [assets/hero.png](assets/hero.png), [assets/offerings.svg](assets/offerings.svg).
 
 ## Install
 
@@ -18,7 +18,7 @@ Plugins are not in the public marketplaces yet; install from this GitHub repo. S
 
 [open-ux.dev/invite](https://open-ux.dev/invite) → redeem → `uxmcp_…`
 
-Paste the key into plugin config (`api_key`, or Cursor `OPEN_UX_API_KEY`) — not into mcp.json first.
+Paste the key into plugin config (`api_key`, Cursor `OPEN_UX_API_KEY` = `uxmcp_…`, or Desktop Chat header `Authorization` = `Bearer uxmcp_…`) — not into mcp.json first.
 
 ### Claude Code
 
@@ -31,9 +31,13 @@ Enable the plugin; paste your `uxmcp_` key into plugin `api_key` when prompted.
 
 Desktop **Code** panel: local plugins only (no remote marketplace add). Use CLI Code, or enable a local plugin from a checkout and paste `api_key`, or use Cowork / Desktop Chat for marketplace-style install.
 
+### Claude Desktop Chat
+
+After Install → Connect `open-ux` → **No sign-in**. Request header **Name** `Authorization`, **Value** `Bearer uxmcp_…` (include the word Bearer and a space). Server URL `https://open-ux.dev/mcp`. Desktop often skips the plugin `api_key` prompt; a header named `api-key` fails.
+
 ### Cursor
 
-Open this repository, enable the Open UX plugin, set **`OPEN_UX_API_KEY`** under **Plugins → Configure**.
+Open this repository, enable the Open UX plugin, set **`OPEN_UX_API_KEY`** = `uxmcp_…` under **Plugins → Configure** (not mcp.json first).
 
 ### Advanced / other clients
 

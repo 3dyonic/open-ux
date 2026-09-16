@@ -8,7 +8,8 @@ Plugins are not in the public marketplaces yet; install from this GitHub repo.
 2. Redeem the invite → copy bearer token `uxmcp_…`.
 3. Paste into plugin config (not mcp.json first):
    - **Claude Code:** when the plugin asks (`api_key`).
-   - **Cursor:** **Plugins → Configure** → `OPEN_UX_API_KEY`.
+   - **Claude Desktop Chat:** Connect header **Name** `Authorization`, **Value** `Bearer uxmcp_…` (include Bearer).
+   - **Cursor:** **Plugins → Configure** → `OPEN_UX_API_KEY` = `uxmcp_…`.
 
 ## Claude Code
 
@@ -21,9 +22,13 @@ Enable the plugin; paste `uxmcp_` into plugin `api_key` when prompted.
 
 Desktop **Code** panel: local plugins only (no remote marketplace add). Use CLI Code, or enable a local plugin from a checkout and paste `api_key`, or use Cowork / Desktop Chat for marketplace-style install.
 
+## Claude Desktop Chat
+
+After Install → Connect `open-ux` → **No sign-in**. Request header **Name** `Authorization`, **Value** `Bearer uxmcp_…` (include the word Bearer and a space). Server URL `https://open-ux.dev/mcp`. Desktop often skips the plugin `api_key` prompt; a header named `api-key` fails.
+
 ## Cursor
 
-Enable the Open UX plugin in this repository. **Plugins → Configure** → `OPEN_UX_API_KEY`.
+Enable the Open UX plugin in this repository. **Plugins → Configure** → `OPEN_UX_API_KEY` = `uxmcp_…` (not mcp.json first).
 
 ## Use the plugin
 
