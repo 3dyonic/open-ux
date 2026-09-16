@@ -69,19 +69,19 @@ export function landingPage() {
         <div class="flex h-2.5 gap-1" aria-hidden="true"><span class="block h-2.5 w-7 rounded bg-clay"></span><span class="block h-2.5 w-[18px] rounded bg-clay-back"></span></div>
         <p class="m-0 font-mono text-[11px] font-medium text-pip">01</p>
         <h3 class="m-0 text-base font-semibold text-ink">Connect</h3>
-        <p class="m-0 text-[13px] leading-[18px] text-muted">Install the Claude client (or any MCP client) and paste your key.</p>
+        <p class="m-0 text-[13px] leading-[18px] text-muted">Install the plugin and configure your key.</p>
       </article>
       <article class="flex h-auto flex-1 flex-col gap-2.5 overflow-hidden rounded-sm border border-line bg-card p-4 md:h-[143px]">
         <div class="flex h-2.5 gap-1" aria-hidden="true"><span class="block h-2.5 w-[22px] rounded bg-clay"></span><span class="block h-2.5 w-[26px] rounded bg-clay-back"></span></div>
         <p class="m-0 font-mono text-[11px] font-medium text-pip">02</p>
-        <h3 class="m-0 text-base font-semibold text-ink">List · get</h3>
-        <p class="m-0 text-[13px] leading-[18px] text-muted">Browse the shared catalog; every rule carries a citation.</p>
+        <h3 class="m-0 text-base font-semibold text-ink">Map the job</h3>
+        <p class="m-0 text-[13px] leading-[18px] text-muted">Pick a situation, from the whole surface down to a small piece.</p>
       </article>
       <article class="flex h-auto flex-1 flex-col gap-2.5 overflow-hidden rounded-sm border border-line bg-card p-4 md:h-[143px]">
         <div class="flex h-2.5 gap-1" aria-hidden="true"><span class="block h-2.5 w-4 rounded bg-clay-back"></span><span class="block h-2.5 w-[30px] rounded bg-clay"></span></div>
         <p class="m-0 font-mono text-[11px] font-medium text-pip">03</p>
-        <h3 class="m-0 text-base font-semibold text-ink">Audit</h3>
-        <p class="m-0 text-[13px] leading-[18px] text-muted">Say the compose job; get cited criteria. The host does not take a file or return pass or fail.</p>
+        <h3 class="m-0 text-base font-semibold text-ink">Get guidelines</h3>
+        <p class="m-0 text-[13px] leading-[18px] text-muted">Open UX gives cited rules with examples. The LLM judges the UI.</p>
       </article>
     </div>
   </section>
