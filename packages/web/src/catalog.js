@@ -192,6 +192,7 @@ const CATALOG_LOADING_CRITICAL_CSS = `<style>
 [data-ssr-page="catalog"] .catalog-loading{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}
 [data-ssr-page="catalog"] .catalog-loading-pip{display:block;width:8px;height:8px;border-radius:50%;background:#FF4B00;animation:catalog-loading-pulse 1.1s ease-in-out infinite}
 [data-ssr-page="catalog"] .catalog-loading-label{margin:0;font-size:14px;font-weight:400;color:#6A6056}
+[data-ssr-page="catalog"] .catalog-ssr-names{display:none!important}
 @keyframes catalog-loading-pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.2)}}
 @media (prefers-reduced-motion:reduce){[data-ssr-page="catalog"] .catalog-loading-pip{animation:none}}
 </style>`;
@@ -346,7 +347,7 @@ export function catalogNamesPage(guidelines) {
     })
     .filter(Boolean)
     .join("");
-  const names = items ? `<noscript><ul class="catalog-ssr-names">${items}</ul></noscript>` : "";
+  const names = items ? `<ul class="catalog-ssr-names" hidden>${items}</ul>` : "";
   return {
     title: "Catalog — Open UX",
     description: "Cited UX rules agents audit against",

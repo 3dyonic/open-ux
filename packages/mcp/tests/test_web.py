@@ -256,8 +256,8 @@ def test_sources_is_a_vite_tailwind_page() -> None:
     assert "catalog-loading" in catalog_js
     assert "catalog-loading-pip" in catalog_js
     assert "Loading catalog…" in catalog_js
-    assert "<noscript>" in catalog_js
-    assert "catalog-ssr-names" in catalog_js
+    assert 'class="catalog-ssr-names" hidden' in catalog_js
+    assert "<noscript>" not in catalog_js
     assert '<div class="list">${items}</div>' not in catalog_js
     assert "catalog-loading-pulse" in styles
     assert "1.1s ease-in-out infinite" in styles
@@ -460,7 +460,7 @@ def test_public_pages_embed_copy_for_fetchers(
     assert 'data-ssr-page="catalog"' in listing.text
     assert 'class="list"' not in listing.text
     assert 'id="catalog-list"' not in listing.text
-    assert "<noscript>" in listing.text
+    assert 'class="catalog-ssr-names" hidden' in listing.text
     assert "actions.button_groups" in listing.text
     assert "Button groups" in listing.text
     assert listing.text.index("Loading catalog…") < listing.text.index("Button groups")
