@@ -153,6 +153,18 @@
   .page {
     @apply flex w-full flex-1 flex-col gap-7 px-5 py-10 pb-12 md:px-12;
   }
+  .catalog-loading-page {
+    @apply items-center justify-center gap-3;
+  }
+  .catalog-loading {
+    @apply flex flex-col items-center justify-center gap-3;
+  }
+  .catalog-loading-pip {
+    animation: catalog-loading-pulse 1.1s ease-in-out infinite;
+  }
+  .catalog-loading-label {
+    @apply m-0 text-sm font-normal leading-normal text-muted;
+  }
   .page-privacy,
   .page-sources {
     @apply max-w-[720px] gap-6;
@@ -475,5 +487,23 @@
   }
   .rule-text {
     @apply m-0 text-lg leading-7 text-ink;
+  }
+}
+
+@keyframes catalog-loading-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(1.2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .catalog-loading-pip {
+    animation: none;
   }
 }
