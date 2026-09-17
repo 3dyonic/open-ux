@@ -37,7 +37,7 @@ After Install → Connect `open-ux` → **No sign-in**. Request header **Name** 
 
 ### Cursor
 
-Open this repository, enable the Open UX plugin, set **`OPEN_UX_API_KEY`** = `uxmcp_…` under **Plugins → Configure** (not mcp.json first).
+Add from repo `3dyonic/open-ux`. Enable the Open UX plugin in this repository. **Plugins → Configure** → set **`OPEN_UX_API_KEY`** = `uxmcp_…` (not mcp.json first).
 
 ### Advanced / other clients
 

@@ -496,7 +496,13 @@ def test_public_pages_embed_copy_for_fetchers(
     assert "<title>Redeem invite — Open UX</title>" in redeem.text
     assert 'for="token"' in redeem.text
     assert "You’re in" in redeem.text
-    assert "claude plugins add 3dyonic/open-ux" in redeem.text
+    assert "claude plugin marketplace add 3dyonic/open-ux" in redeem.text
+    assert "claude plugin install open-ux@open-ux" in redeem.text
+    assert "Add from repo 3dyonic/open-ux" in redeem.text
+    assert "claude plugins add 3dyonic/open-ux" not in redeem.text
+    assert "open-ux@claude-community" not in redeem.text
+    assert "anthropics/claude-plugins-community" not in redeem.text
+    assert "Add from marketplace / repo" not in redeem.text
     assert "Advanced" in redeem.text
     assert "Add this MCP server" not in redeem.text
 
@@ -517,10 +523,32 @@ def test_redeem_success_card_leads_with_plugin_install() -> None:
     assert "Your key shows once — copy it now" in success
     assert "We won’t show it in full again" in success
     assert "1. Claude — Install" in success
-    assert "claude plugins add 3dyonic/open-ux" in success
-    assert "or add from the Claude marketplace" in success
+    claude_step = success[
+        success.index("1. Claude — Install") : success.index("2. Cursor — Install")
+    ]
+    assert "claude plugin marketplace add 3dyonic/open-ux" in claude_step
+    assert "claude plugin install open-ux@open-ux" in claude_step
+    assert "or add from the Claude marketplace" in claude_step
+    assert "claude plugins add" not in claude_step
+    assert "open-ux@claude-community" not in claude_step
+    assert "anthropics/claude-plugins-community" not in claude_step
+    assert claude_step.find("claude plugin marketplace add 3dyonic/open-ux") < claude_step.find(
+        "claude plugin install open-ux@open-ux"
+    )
+    assert claude_step.find("claude plugin install open-ux@open-ux") < claude_step.find(
+        "or add from the Claude marketplace"
+    )
+    assert "open-ux@claude-community" not in success
+    assert "anthropics/claude-plugins-community" not in success
+    assert "claude plugins add" not in success
     assert "2. Cursor — Install" in success
-    assert "Add from marketplace / repo" in success
+    cursor_step = success[
+        success.index("2. Cursor — Install") : success.index("3. Paste your key into the plugin")
+    ]
+    assert "Add from repo 3dyonic/open-ux" in cursor_step
+    assert "Add from marketplace / repo" not in cursor_step
+    assert "marketplace" not in cursor_step.lower()
+    assert "Add from marketplace / repo" not in success
     assert "3. Paste your key into the plugin" in success
     assert 'id="key-text"' in success
     assert 'id="copy-key">Copy</button>' in success

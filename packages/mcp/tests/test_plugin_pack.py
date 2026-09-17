@@ -40,6 +40,10 @@ def test_listing_assets_and_setup_exist() -> None:
     assert "MCP" not in readme.split("\n", 1)[0]
     assert "https://open-ux.dev" in readme
     assert "claude plugin marketplace add 3dyonic/open-ux" in readme
+    assert "claude plugin install open-ux@open-ux" in readme
+    assert "open-ux@claude-community" not in readme
+    assert "anthropics/claude-plugins-community" not in readme
+    assert "claude plugins add" not in readme
     assert "![Open UX](assets/hero.png)" in readme
     assert "assets/icon-512.png" in readme
     assert "assets/offerings.svg" in readme
@@ -68,6 +72,9 @@ def test_plugin_docs_cover_cli_code_and_desktop_local_only() -> None:
     for text in (readme, setup):
         assert "claude plugin marketplace add 3dyonic/open-ux" in text
         assert "claude plugin install open-ux@open-ux" in text
+        assert "open-ux@claude-community" not in text
+        assert "anthropics/claude-plugins-community" not in text
+        assert "claude plugins add" not in text
         assert "api_key" in text
         assert "local plugins only" in text
         assert "no remote marketplace add" in text
@@ -83,6 +90,9 @@ def test_plugin_docs_cover_cli_code_and_desktop_local_only() -> None:
         code = _after_heading(
             text, "### Claude Code" if "### Claude Code" in text else "## Claude Code"
         )
+        assert "claude plugin marketplace add 3dyonic/open-ux" in code
+        assert "claude plugin install open-ux@open-ux" in code
+        assert "open-ux@claude-community" not in code
         assert "enable" in code.lower()
         assert "api_key" in code
         assert "local plugins only" in code
@@ -108,9 +118,12 @@ def test_plugin_docs_cover_cli_code_and_desktop_local_only() -> None:
         cursor = _after_heading(
             text, "### Cursor" if "### Cursor" in text else "## Cursor"
         )
+        assert "Add from repo" in cursor
+        assert "3dyonic/open-ux" in cursor
         assert "OPEN_UX_API_KEY" in cursor
         assert "Plugins → Configure" in cursor
         assert "uxmcp_" in cursor
+        assert "Add from marketplace / repo" not in cursor
 
 
 def test_host_mounts_are_symlinks_into_pack() -> None:

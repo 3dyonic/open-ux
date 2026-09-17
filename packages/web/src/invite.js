@@ -171,12 +171,13 @@ export function redeemPage() {
       <div class="install-steps">
         <div class="install-step">
           <p class="install-heading">1. Claude — Install</p>
-          <p class="install-cmd">claude plugins add 3dyonic/open-ux</p>
+          <p class="install-cmd">claude plugin marketplace add 3dyonic/open-ux</p>
+          <p class="install-cmd">claude plugin install open-ux@open-ux</p>
           <p class="install-hint">or add from the Claude marketplace</p>
         </div>
         <div class="install-step">
           <p class="install-heading">2. Cursor — Install</p>
-          <p class="install-hint">Add from marketplace / repo</p>
+          <p class="install-cmd">Add from repo 3dyonic/open-ux</p>
         </div>
         <div class="install-step install-step-key">
           <p class="install-heading">3. Paste your key into the plugin</p>
