@@ -169,12 +169,16 @@ Plugins are not in the public marketplaces yet. Install from this repo until lis
 
 ### Contribute
 
+uv is preferred in this repo (lockfile: [`packages/mcp/uv.lock`](packages/mcp/uv.lock)). End users stay on `pip install open-ux` above.
+
 ```bash
-pip install -e "packages/mcp[dev]"
-python -m open_ux validate-catalog --strict-fit
-python -m open_ux stdio
-cd packages/mcp && python -m pytest
+make install
+uv run --directory packages/mcp python -m open_ux validate-catalog --strict-fit
+uv run --directory packages/mcp python -m open_ux stdio
+make test
 ```
+
+No uv? `make install-pip` (`pip install -e "packages/mcp[dev]"`) then the same `python -m …` commands on your interpreter, including `cd packages/mcp && python -m pytest`. Details: [`docs/CONTRIBUTING.md`](docs/CONTRIBUTING.md).
 
 ## Tools
 

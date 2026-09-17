@@ -6,16 +6,37 @@ PRs welcome. Prefer small PRs; one concern each: catalog rows, server behavior, 
 
 **See also:** [Documentation map](README.md) · [Glossary](glossary.md) · [MCP tools](TOOLS.md) · [Agent skill](../clients/plugin/skills/open-ux/SKILL.md) · [Catalog authoring](../catalog/README.md)
 
+## Install
+
+Contributors: **uv** (lockfile at [`packages/mcp/uv.lock`](../packages/mcp/uv.lock)). End users stay on `pip install open-ux`.
+
+From the repo root:
+
+```bash
+make install
+# uv not installed: make install-pip
+```
+
+`make install` is `uv sync --frozen --extra dev --directory packages/mcp` (editable + `[dev]` into `packages/mcp/.venv`). After that, run Python via `uv run` from `packages/mcp`, or `make catalog` / `make test`.
+
+When you change dependencies in [`packages/mcp/pyproject.toml`](../packages/mcp/pyproject.toml), refresh and commit the lock:
+
+```bash
+uv lock --directory packages/mcp
+```
+
+Do not edit Hatch/PyPI metadata for lockfile work; uv consumes the existing project table.
+
 ## Before you open a PR
 
-From the repo root, after `pip install -e "packages/mcp[dev]"`:
+From the repo root, after `make install`:
 
 | Command | What it checks |
 | --- | --- |
-| `python -m open_ux validate-catalog --strict-fit` | Catalog JSON vs schema; task language `apply_when` on gate Leaves |
+| `uv run --directory packages/mcp python -m open_ux validate-catalog --strict-fit` | Catalog JSON vs schema; task language `apply_when` on gate Leaves |
 | `claude plugin validate . --strict` | Claude Code plugin + marketplace layout |
 | `node scripts/validate-cursor-plugin.mjs --strict` | Cursor plugin manifest and required files |
-| `cd packages/mcp && python -m pytest` | Python server, tools, catalog loader, plugin contracts |
+| `make test` | Python server, tools, catalog loader, plugin contracts |
 
 Maintainer harvest scripts live in [`scripts/`](../scripts/): not part of this checklist unless your PR touches them.
 
@@ -80,7 +101,7 @@ Optional on the cite:
 ### Validate
 
 ```bash
-python -m open_ux validate-catalog --strict-fit
+uv run --directory packages/mcp python -m open_ux validate-catalog --strict-fit
 ```
 
 Schema reference: [`catalog/schema.json`](../catalog/schema.json). Deeper authoring (pack row, hints pass, components): [`catalog/README.md`](../catalog/README.md).

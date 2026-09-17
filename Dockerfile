@@ -13,6 +13,7 @@ ENV OPEN_UX_CATALOG=/catalog
 RUN npm run build
 
 FROM python:3.12-slim AS python-build
+COPY --from=ghcr.io/astral-sh/uv:0.12.15 /uv /uvx /bin/
 WORKDIR /src
 RUN apt-get update \
   && apt-get install -y --no-install-recommends git \
@@ -20,9 +21,10 @@ RUN apt-get update \
 COPY .git /src/.git
 COPY packages/mcp /src/packages/mcp
 COPY catalog /src/catalog
+ENV UV_PROJECT_ENVIRONMENT=/opt/venv
+ENV UV_LINK_MODE=copy
 RUN git config --global --add safe.directory /src \
-  && python -m venv /opt/venv \
-  && /opt/venv/bin/pip install --no-cache-dir /src/packages/mcp
+  && uv sync --frozen --no-dev --no-editable --no-cache --directory packages/mcp
 
 FROM python:3.12-slim
 WORKDIR /app

@@ -28,10 +28,16 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
+      - name: Install uv
+        uses: astral-sh/setup-uv@v10.0.1
+        with:
+          version: "0.12.15"
+          enable-cache: true
+          cache-dependency-glob: "packages/mcp/uv.lock"
       - name: Install
-        run: python -m pip install -e ".[dev]"
+        run: uv sync --frozen --extra dev
       - name: Validate catalog
-        run: python -m open_ux validate-catalog --strict-fit
+        run: uv run python -m open_ux validate-catalog --strict-fit
       - name: Validate Claude plugin
         working-directory: ${{ github.workspace }}
         run: |
@@ -42,4 +48,4 @@ jobs:
         working-directory: ${{ github.workspace }}
         run: node scripts/validate-cursor-plugin.mjs --strict
       - name: Test
-        run: python -m pytest -q
+        run: uv run python -m pytest -q
