@@ -178,7 +178,7 @@ uv run --directory packages/mcp python -m open_ux stdio
 make test
 ```
 
-No uv? `make install-pip` then the same `python -m …` commands on your interpreter. Details: [`docs/CONTRIBUTING.md`](docs/CONTRIBUTING.md).
+No uv? `make install-pip` (`pip install -e "packages/mcp[dev]"`) then the same `python -m …` commands on your interpreter, including `cd packages/mcp && python -m pytest`. Details: [`docs/CONTRIBUTING.md`](docs/CONTRIBUTING.md).
 
 ## Tools
 
