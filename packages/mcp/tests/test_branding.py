@@ -26,6 +26,12 @@ def test_readme_embeds_relative_hero() -> None:
     assert "UNS-" not in readme
     assert "Apple HIG" not in readme
     assert "### Claude Code and Cursor" in readme
+    assert "**Claude Code**" in readme
+    assert "claude plugin marketplace add 3dyonic/open-ux" in readme
+    assert "claude plugin install open-ux@open-ux" in readme
+    assert "open-ux@claude-community" not in readme
+    assert "anthropics/claude-plugins-community" not in readme
+    assert "claude plugins add" not in readme
     assert "**Cursor**" in readme
     assert "Plugins → Configure" in readme
     assert "OPEN_UX_API_KEY" in readme
