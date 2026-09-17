@@ -40,6 +40,6 @@ Enable the Open UX plugin in this repository. **Plugins → Configure** → `OPE
 
 Paste MCP config only here. Other clients: `Authorization: Bearer uxmcp_…` on `https://open-ux.dev/mcp`. This plugin’s [`.mcp.json`](.mcp.json) is `Authorization: Bearer ${user_config.api_key}` for that URL.
 
-No key? `pip install open-ux` (or `pip install -e "packages/mcp[dev]"` in this repo) and point MCP at [`mcp.stdio.json`](mcp.stdio.json); local `python -m open_ux stdio`, same catalog. Hosted Cursor [`mcp.json`](mcp.json) updates on deploy.
+No key? End users: `pip install open-ux`. In this repo, contributors: `make install` (uv + lockfile; `make install-pip` if you do not have uv). Point MCP at [`mcp.stdio.json`](mcp.stdio.json); local `python -m open_ux stdio` (after `make install`, `uv run --directory packages/mcp python -m open_ux stdio`), same catalog. Hosted Cursor [`mcp.json`](mcp.json) updates on deploy.
 
 Do not invent a key. Do not send a file.
